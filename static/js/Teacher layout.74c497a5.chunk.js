@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkap_education=self.webpackChunkap_education||[]).push([[372],{2275:(e,a,t)=>{t.r(a),t.d(a,{default:()=>u});var s=t(5294),c=t(3084),o=t(2791),n=t(7689),r=t(184);s.Z.defaults.baseURL="https://aggregator-server.onrender.com";const u=()=>((0,o.useLayoutEffect)((()=>{(async()=>{try{const e=await s.Z.get("/");console.log(e.data)}catch(e){console.log(e)}})()}),[]),(0,r.jsx)(c.OZ,{children:(0,r.jsx)(n.j3,{})}))}}]);
+//# sourceMappingURL=Teacher layout.74c497a5.chunk.js.map
