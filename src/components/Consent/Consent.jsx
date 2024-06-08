@@ -33,7 +33,7 @@ export const Consent = () => {
           <span> Погоджуюсь </span>
         </>
       }
-      cookieName="aggregator-consent"
+      cookieName="ap-consent"
       style={{
         background: '#fff',
         justifyContent: 'center',

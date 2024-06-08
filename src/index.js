@@ -6,7 +6,7 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/aggregator">
+    <BrowserRouter basename="/ap-site">
       <App />
     </BrowserRouter>
   </React.StrictMode>

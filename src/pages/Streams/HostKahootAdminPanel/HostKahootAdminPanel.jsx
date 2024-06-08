@@ -44,7 +44,7 @@ import { TrialsKidsKahootForm } from '../KahootAdminPanel/TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from '../KahootAdminPanel/TrialsPlKahootForm';
 import { HostAdminPanelSection } from './HostKahootAdminPanel.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
@@ -140,8 +140,12 @@ export const HostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('a2')}>A2</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('b1')}>B1</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('b2')}>B2</KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('a1free')}>A1 Free</KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('a2free')}>A2 Free</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('a1free')}>
+              A1 Free
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('a2free')}>
+              A2 Free
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('de-a0')}>
               DE A0
             </KahootLvlBtn>
@@ -149,7 +153,9 @@ export const HostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('de-a2')}>
               DE A2
             </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('defree')}>DE Free</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('defree')}>
+              DE Free
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('de-a2free')}>
               DE A2 Free
             </KahootLvlBtn>
@@ -160,7 +166,9 @@ export const HostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('pl-a2')}>
               PL A2
             </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('plfree')}>PL Free</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('plfree')}>
+              PL Free
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('trial-en')}>
               Trial EN
             </KahootLvlBtn>
@@ -205,8 +213,12 @@ export const HostKahootAdminPanel = () => {
           {levels.includes('a2') && <A2KahootForm destination={destination} />}
           {levels.includes('b1') && <B1KahootForm destination={destination} />}
           {levels.includes('b2') && <B2KahootForm destination={destination} />}
-          {levels.includes('a1free') && <A1FreeKahootForm destination={destination} />}
-          {levels.includes('a2free') && <A2FreeKahootForm destination={destination} />}
+          {levels.includes('a1free') && (
+            <A1FreeKahootForm destination={destination} />
+          )}
+          {levels.includes('a2free') && (
+            <A2FreeKahootForm destination={destination} />
+          )}
           {levels.includes('de-a0') && (
             <DeutschA0KahootForm destination={destination} />
           )}
@@ -216,7 +228,7 @@ export const HostKahootAdminPanel = () => {
           {levels.includes('de-a2') && (
             <DeutschA2KahootForm destination={destination} />
           )}
-           {levels.includes('defree') && (
+          {levels.includes('defree') && (
             <DeutschFreeKahootForm destination={destination} />
           )}
           {levels.includes('de-a2free') && (

@@ -38,7 +38,7 @@ import { Chat } from 'utils/Chat/Chat';
 import { io } from 'socket.io-client';
 import { nanoid } from 'nanoid';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const StreamTrialPolski = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);

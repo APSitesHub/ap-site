@@ -11,7 +11,7 @@ import {
   UsersEditForm,
 } from '../UserAdminPanel.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const UserEditForm = ({ userToEdit, closeEditForm }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +48,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
       .required(
         "Вік - обов'язкове поле, якщо віку з якоїсь причини ми не знаємо, введіть N/A"
       ),
-      lang: yup
+    lang: yup
       .string()
       .optional()
       .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
@@ -145,13 +145,9 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
             <AdminInputNote component="p" name="course" />
           </Label>
           <Label>
-                <AdminInput
-                  type="text"
-                  name="package"
-                  placeholder="Пакет послуг"
-                />
-                <AdminInputNote component="p" name="package" />
-              </Label>
+            <AdminInput type="text" name="package" placeholder="Пакет послуг" />
+            <AdminInputNote component="p" name="package" />
+          </Label>
           <Label>
             <AdminInput
               type="text"

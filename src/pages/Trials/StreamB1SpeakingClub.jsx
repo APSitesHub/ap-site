@@ -38,7 +38,7 @@ import {
   VideoBox,
 } from '../../components/Stream/Stream.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const StreamB1SpeakingClub = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -287,7 +287,9 @@ const StreamB1SpeakingClub = () => {
               {links.trials_de &&
               !links.trials_de.includes('youtube') &&
               !links.trials_de.includes('youtu.be')
-                ? window.location.replace('https://us06web.zoom.us/j/87998399840?pwd=FJXK8UlERuqFy5QTEhwYPgpXqQbV7d.1#success')
+                ? window.location.replace(
+                    'https://us06web.zoom.us/j/87998399840?pwd=FJXK8UlERuqFy5QTEhwYPgpXqQbV7d.1#success'
+                  )
                 : null}
               {height > width && (
                 <ChatBox

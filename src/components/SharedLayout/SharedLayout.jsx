@@ -13,7 +13,7 @@ import { SuspenseBox, SuspenseTitle } from './SharedLayout.styled';
 import { MainFooterUniversity } from 'components/MainFooter/MainFooterUniversity';
 import { MainFooterSchool } from 'components/MainFooter/MainFooterSchool';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const SharedLayout = ({ utms }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);

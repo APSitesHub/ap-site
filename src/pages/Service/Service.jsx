@@ -3,7 +3,7 @@ import { StreamsBackgroundWrapper } from 'components/BackgroundWrapper/Backgroun
 import { Outlet, useLocation } from 'react-router-dom';
 import { ServiceNav } from './ServiceNav/ServiceNav';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const Service = () => {
   let location = useLocation();

@@ -3,7 +3,7 @@ import { TeacherPageSection } from 'pages/TeacherPage/TeacherPage.styled';
 import { useLayoutEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const Teacher = () => {
   const wakeupRequest = async () => {

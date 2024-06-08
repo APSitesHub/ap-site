@@ -37,7 +37,7 @@ import {
   VideoBox,
 } from '../../components/Stream/Stream.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const StreamB2KidsSpeakingClub = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);

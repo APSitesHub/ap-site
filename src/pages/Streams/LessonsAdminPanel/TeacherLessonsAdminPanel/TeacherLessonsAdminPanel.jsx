@@ -25,7 +25,7 @@ import {
 } from '../../UserAdminPanel/UserAdminPanel.styled';
 import { LessonInfo } from '../LessonsAdminPanel.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };

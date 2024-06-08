@@ -42,7 +42,7 @@ import {
   PageFormWrapper,
 } from './LeadFormPage.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const LeadFormPage = ({ utms }) => {
   const [isLoading, setIsLoading] = useState(false);

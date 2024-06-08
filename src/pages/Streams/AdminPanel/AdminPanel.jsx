@@ -14,7 +14,7 @@ import {
   LoginForm,
 } from './AdminPanel.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
@@ -201,11 +201,19 @@ export const AdminPanel = () => {
                 <AdminInputNote component="p" name="b2" />
               </Label>
               <Label>
-                <AdminInput type="text" name="a1free" placeholder="A1 free link" />
+                <AdminInput
+                  type="text"
+                  name="a1free"
+                  placeholder="A1 free link"
+                />
                 <AdminInputNote component="p" name="a1free" />
               </Label>
               <Label>
-                <AdminInput type="text" name="a2free" placeholder="A2 free link" />
+                <AdminInput
+                  type="text"
+                  name="a2free"
+                  placeholder="A2 free link"
+                />
                 <AdminInputNote component="p" name="a2free" />
               </Label>
               <Label>
@@ -279,7 +287,7 @@ export const AdminPanel = () => {
                   placeholder="Polski A1 free link"
                 />
                 <AdminInputNote component="p" name="polskifree" />
-              </Label> 
+              </Label>
               <Label>
                 <AdminInput
                   type="text"

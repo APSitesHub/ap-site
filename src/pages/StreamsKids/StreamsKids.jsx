@@ -21,7 +21,7 @@ import {
   LoginForm,
 } from '../Streams/AdminPanel/AdminPanel.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -124,7 +124,7 @@ const StreamsKids = () => {
       console.log('token refresher');
       try {
         const res = await axios.post(
-          'https://aggregator-server.onrender.com/users/refresh',
+          'https://ap-server-8qi1.onrender.com/users/refresh',
           { mail: localStorage.getItem('mail') }
         );
         setIsUserLogged(isLogged => (isLogged = true));
@@ -177,9 +177,7 @@ const StreamsKids = () => {
           location.pathname === '/streams-kids/' ? (
           <StreamNavKids />
         ) : (
-          <Outlet
-            context={[links, isLoading, currentUser, room]}
-          />
+          <Outlet context={[links, isLoading, currentUser, room]} />
         )}
 
         {isLoading && (

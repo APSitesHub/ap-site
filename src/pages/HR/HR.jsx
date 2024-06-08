@@ -3,7 +3,7 @@ import { StreamsBackgroundWrapper } from 'components/BackgroundWrapper/Backgroun
 import { Outlet, useLocation } from 'react-router-dom';
 import { HRNav } from './HRNav/HRNav';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const HR = () => {
   let location = useLocation();
@@ -11,9 +11,8 @@ const HR = () => {
   return (
     <>
       <StreamsBackgroundWrapper>
-        {location.pathname === '/hr' ||
-        location.pathname === '/hr/' ? (
-          <HRNav/>
+        {location.pathname === '/hr' || location.pathname === '/hr/' ? (
+          <HRNav />
         ) : (
           <Outlet />
         )}

@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { SectionTitleNew } from 'components/HowItWorks/HowItWorks.styled';
-import {
-  HiddenInput,
-  InputNote
-} from 'components/LeadForm/LeadForm.styled';
+import { HiddenInput, InputNote } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useState } from 'react';
@@ -19,7 +16,7 @@ import {
   StyledFormNew,
 } from './PageFormNew.styled';
 
-axios.defaults.baseURL = 'https://aggregator-server.onrender.com';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const PageFormNew = ({ utms }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +94,7 @@ export const PageFormNew = ({ utms }) => {
   };
 
   return (
-    <PageFormNewSection id='form-anchor'>
+    <PageFormNewSection id="form-anchor">
       <PageFormTitleBox>
         <SectionTitleNew>Бажаєте отримати консультацію?</SectionTitleNew>
         <PageFormDescription>
