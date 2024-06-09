@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkap_education=self.webpackChunkap_education||[]).push([[4372],{2275:(e,a,s)=>{s.r(a),s.d(a,{default:()=>l});var t=s(5294),c=s(3084),o=s(2791),n=s(7689),u=s(184);t.Z.defaults.baseURL="https://ap-server-8qi1.onrender.com";const l=()=>((0,o.useLayoutEffect)((()=>{(async()=>{try{const e=await t.Z.get("/");console.log(e.data)}catch(e){console.log(e)}})()}),[]),(0,u.jsx)(c.OZ,{children:(0,u.jsx)(n.j3,{})}))}}]);
+//# sourceMappingURL=Teacher layout.543220e2.chunk.js.map
