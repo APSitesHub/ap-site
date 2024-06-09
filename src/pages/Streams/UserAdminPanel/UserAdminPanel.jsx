@@ -46,11 +46,13 @@ export const UserAdminPanel = () => {
   const [daysAfterLastLogin, setDaysAfterLastLogin] = useState(7);
   const [isManagerPickerOpen, setIsManagerPickerOpen] = useState(false);
   const [isLangPickerOpen, setIsLangPickerOpen] = useState(false);
+  const [isDaysPickerOpen, setIsDaysPickerOpen] = useState(false);
   const [isLevelPickerOpen, setIsLevelPickerOpen] = useState(false);
   const [isCoursePickerOpen, setIsCoursePickerOpen] = useState(false);
 
   const persistentUsers = useRef([]);
   const sortedUsers = useRef([]);
+  const filteredUsers = useRef([]);
 
   useEffect(() => {
     document.title = 'User Admin Panel | AP Education';
@@ -143,22 +145,22 @@ export const UserAdminPanel = () => {
     password: yup.string().required('Введіть пароль!'),
   });
 
-  const calculateDaysFilter = current => {
-    setDaysAfterLastLogin(
-      days =>
-        (days = DAYS_SET[DAYS_SET.findIndex(days => current === days) + 1])
-    );
+  // const calculateDaysFilter = current => {
+  //   setDaysAfterLastLogin(
+  //     days =>
+  //       (days = DAYS_SET[DAYS_SET.findIndex(days => current === days) + 1])
+  //   );
 
-    sortedUsers.current = [
-      ...users.sort(
-        (a, b) =>
-          (changeDateFormat(a.visitedTime[a.visitedTime.length - 1]) || 0) -
-          (changeDateFormat(b.visitedTime[b.visitedTime.length - 1]) || 0)
-      ),
-    ];
-
-    setUsers(users => (users = [...sortedUsers.current]));
-  };
+  //   sortedUsers.current = [
+  //     ...users.sort(
+  //       (a, b) =>
+  //         (changeDateFormat(a.visited[a.visited.length - 1]) || 0) -
+  //         (changeDateFormat(b.visited[b.visited.length - 1]) || 0)
+  //     ),
+  //   ];
+  //   console.log(sortedUsers.current);
+  //   setUsers(users => (users = [...sortedUsers.current]));
+  // };
 
   const changeDateFormat = dateString => {
     if (dateString) {
@@ -170,79 +172,191 @@ export const UserAdminPanel = () => {
     return;
   };
 
-  const filterByManager = current =>
-    current === '' && sortedUsers.current.length === 0
-      ? setUsers(users => (users = [...persistentUsers.current]))
-      : sortedUsers.current.length < 0
-      ? setUsers(
-          users =>
-            (users = [
-              ...sortedUsers.current.filter(user => user.manager === current),
-            ])
-        )
-      : setUsers(
-          users =>
-            (users = [
-              ...persistentUsers.current.filter(
-                user => user.manager === current
-              ),
-            ])
-        );
+  const filterByManager = current => {
+    if (current === '' && sortedUsers.current.length === 0) {
+      setUsers(users => (users = [...persistentUsers.current]));
+      sortedUsers.current = [];
+    } else if (
+      sortedUsers.current.length > 0 &&
+      filteredUsers.current.length === 0
+    ) {
+      setUsers(
+        users =>
+          (users = [
+            ...sortedUsers.current.filter(user => user.manager === current),
+          ])
+      );
+      filteredUsers.current = [
+        ...sortedUsers.current.filter(user => user.manager === current),
+      ];
+    } else {
+      console.log('managers else');
+      console.log(filteredUsers);
+      setUsers(
+        users =>
+          (users = [
+            ...persistentUsers.current.filter(user => user.manager === current),
+          ])
+      );
+      sortedUsers.current = [
+        ...persistentUsers.current.filter(user => user.manager === current),
+      ];
+      filteredUsers.current = [
+        ...persistentUsers.current.filter(user => user.manager === current),
+      ];
+      console.log(filteredUsers);
+    }
+  };
 
-  const filterByCourse = current =>
-    current === '' && sortedUsers.current.length === 0
-      ? setUsers(users => (users = [...persistentUsers.current]))
-      : sortedUsers.current.length < 0
-      ? setUsers(
-          users =>
-            (users = [
-              ...sortedUsers.current.filter(user => user.course === current),
-            ])
-        )
-      : setUsers(
-          users =>
-            (users = [
-              ...persistentUsers.current.filter(
-                user => user.course === current
-              ),
-            ])
-        );
+  const filterByCourse = current => {
+    if (current === '' && sortedUsers.current.length === 0) {
+      setUsers(users => (users = [...persistentUsers.current]));
+      sortedUsers.current = [];
+    } else if (
+      sortedUsers.current.length > 0 &&
+      filteredUsers.current.length === 0
+    ) {
+      setUsers(
+        users =>
+          (users = [
+            ...sortedUsers.current.filter(user => user.course === current),
+          ])
+      );
+      filteredUsers.current = [
+        ...sortedUsers.current.filter(user => user.course === current),
+      ];
+    } else {
+      setUsers(
+        users =>
+          (users = [
+            ...persistentUsers.current.filter(user => user.course === current),
+          ])
+      );
+      sortedUsers.current = [
+        ...persistentUsers.current.filter(user => user.course === current),
+      ];
+      filteredUsers.current = [
+        ...persistentUsers.current.filter(user => user.course === current),
+      ];
+    }
+  };
 
-  const filterByLang = current =>
-    current === '' && sortedUsers.current.length === 0
-      ? setUsers(users => (users = [...persistentUsers.current]))
-      : sortedUsers.current.length < 0
-      ? setUsers(
-          users =>
-            (users = [
-              ...sortedUsers.current.filter(user => user.lang === current),
-            ])
-        )
-      : setUsers(
-          users =>
-            (users = [
-              ...persistentUsers.current.filter(user => user.lang === current),
-            ])
-        );
+  const filterByLang = current => {
+    if (current === '' && sortedUsers.current.length === 0) {
+      setUsers(users => (users = [...persistentUsers.current]));
+      sortedUsers.current = [];
+    } else if (
+      sortedUsers.current.length > 0 &&
+      filteredUsers.current.length === 0
+    ) {
+      setUsers(
+        users =>
+          (users = [
+            ...sortedUsers.current.filter(user => user.lang === current),
+          ])
+      );
+      filteredUsers.current = [
+        ...sortedUsers.current.filter(user => user.lang === current),
+      ];
+    } else {
+      setUsers(
+        users =>
+          (users = [
+            ...persistentUsers.current.filter(user => user.lang === current),
+          ])
+      );
+      sortedUsers.current = [
+        ...persistentUsers.current.filter(user => user.lang === current),
+      ];
+      filteredUsers.current = [
+        ...persistentUsers.current.filter(user => user.lang === current),
+      ];
+    }
+  };
 
-  const filterByLevel = current =>
-    current === '' && sortedUsers.current.length === 0
-      ? setUsers(users => (users = [...persistentUsers.current]))
-      : sortedUsers.current.length < 0
-      ? setUsers(
-          users =>
-            (users = [
-              ...sortedUsers.current.filter(user => user.knowledge === current),
-            ])
-        )
-      : setUsers(
-          users =>
-            (users = [
-              ...persistentUsers.current.filter(
-                user => user.knowledge === current
+  const filterByDays = current => {
+    if (current === '' && sortedUsers.current.length === 0) {
+      console.log("current === '' && sortedUsers.current.length === 0");
+      setUsers(users => (users = [...persistentUsers.current]));
+      sortedUsers.current = [];
+    } else if (filteredUsers.current.length > 0) {
+      setUsers(
+        users =>
+          (users = [
+            ...filteredUsers.current
+              .filter(user =>
+                user.visited.length > 0
+                  ? (Date.now() -
+                      changeDateFormat(user.visited[user.visited.length - 1])) /
+                      86400000 >
+                    current
+                  : 0
+              )
+              .sort(
+                (a, b) =>
+                  (changeDateFormat(a.visited[a.visited.length - 1]) || 0) -
+                  (changeDateFormat(b.visited[b.visited.length - 1]) || 0)
               ),
-            ])
-        );
+          ])
+      );
+    } else {
+      console.log('else');
+      setUsers(
+        users =>
+          (users = [
+            ...persistentUsers.current
+              .filter(user =>
+                user.visited.length > 0
+                  ? (Date.now() -
+                      changeDateFormat(user.visited[user.visited.length - 1])) /
+                      86400000 >
+                    current
+                  : 0
+              )
+              .sort(
+                (a, b) =>
+                  (changeDateFormat(b.visited[b.visited.length - 1]) || 0) -
+                  (changeDateFormat(a.visited[a.visited.length - 1]) || 0)
+              ),
+          ])
+      );
+    }
+  };
+
+  const filterByLevel = current => {
+    if (current === '' && sortedUsers.current.length === 0) {
+      setUsers(users => (users = [...persistentUsers.current]));
+      sortedUsers.current = [];
+    } else if (
+      sortedUsers.current.length > 0 &&
+      filteredUsers.current.length === 0
+    ) {
+      setUsers(
+        users =>
+          (users = [
+            ...sortedUsers.current.filter(user => user.knowledge === current),
+          ])
+      );
+      filteredUsers.current = [
+        ...sortedUsers.current.filter(user => user.knowledge === current),
+      ];
+    } else {
+      setUsers(
+        users =>
+          (users = [
+            ...persistentUsers.current.filter(
+              user => user.knowledge === current
+            ),
+          ])
+      );
+      sortedUsers.current = [
+        ...persistentUsers.current.filter(user => user.knowledge === current),
+      ];
+      filteredUsers.current = [
+        ...persistentUsers.current.filter(user => user.knowledge === current),
+      ];
+    }
+  };
 
   const handleLoginSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
@@ -347,6 +461,10 @@ export const UserAdminPanel = () => {
     if (e.target.id === 'close-on-click') {
       setIsEditFormOpen(false);
     }
+  };
+
+  const toggleDaysSinceLastVisitPicker = () => {
+    setIsDaysPickerOpen(isOpen => !isOpen);
   };
 
   const toggleLevelPicker = () => {
@@ -514,13 +632,38 @@ export const UserAdminPanel = () => {
                 <UserHeadCell>Пошта (логін)</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
-                {/* <UserHeadCell>Апдейт</UserHeadCell> */}
+                <UserHeadCell>Юзера створено</UserHeadCell>
                 <UserHeadCell>
                   <Filterable>
                     Відвідини
                     <FilterButton
-                      onClick={() => calculateDaysFilter(daysAfterLastLogin)}
+                      onClick={toggleDaysSinceLastVisitPicker}
                     ></FilterButton>
+                    {isDaysPickerOpen && (
+                      <FilterPicker>
+                        {DAYS_SET.map((days, i) => (
+                          <FilterPickerButton
+                            key={i}
+                            onClick={() => {
+                              filterByDays(days);
+                              setDaysAfterLastLogin(days);
+                              toggleDaysSinceLastVisitPicker();
+                            }}
+                          >
+                            {days === undefined ? '—' : days}
+                          </FilterPickerButton>
+                        ))}
+                        <FilterPickerButton
+                          onClick={() => {
+                            filterByDays('');
+                            setDaysAfterLastLogin(7);
+                            toggleDaysSinceLastVisitPicker();
+                          }}
+                        >
+                          ВСІ
+                        </FilterPickerButton>
+                      </FilterPicker>
+                    )}
                     {daysAfterLastLogin}
                   </Filterable>
                 </UserHeadCell>
@@ -657,17 +800,9 @@ export const UserAdminPanel = () => {
                   <UserCell>{user.mail}</UserCell>
                   <UserCell>{user.password}</UserCell>
                   <UserCell>{user.pupilId}</UserCell>
-                  {/* <UserCell
-                    className={
-                      Math.floor(
-                        (Date.now() - Date.parse(user.updatedAt)) / 86400000
-                      ) > daysAfterLastLogin
-                        ? 'attention'
-                        : ''
-                    }
-                  >
-                    {new Date(user.updatedAt).toLocaleString('uk-UA')}
-                  </UserCell> */}
+                  <UserCell>
+                    {new Date(user.createdAt).toLocaleDateString('uk-UA')}
+                  </UserCell>
                   <UserCell
                     className={
                       Math.floor(

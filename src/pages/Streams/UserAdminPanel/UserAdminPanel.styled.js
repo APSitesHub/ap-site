@@ -129,6 +129,7 @@ export const Filterable = styled.div`
 export const UserCell = styled.td`
   border: 1px solid #000;
   padding: 3px;
+  height: 3em;
 
   &.last-name {
     text-transform: capitalize;
