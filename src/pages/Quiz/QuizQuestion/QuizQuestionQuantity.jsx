@@ -1,7 +1,4 @@
-import zero from '../../../img/quiz/zero.png';
-import beginner from '../../../img/quiz/beginner.png';
-import middle from '../../../img/quiz/middle.png';
-import senior from '../../../img/quiz/senior.png';
+import study from '../../../img/quiz/study.png';
 
 import {
   BackgroundFilterBottomLeft,
@@ -23,16 +20,15 @@ import {
   QuizButtonContent,
 } from '../Quiz.styled';
 
-export const QuizQuestionLevel = ({
+export const QuizQuestionQuantity = ({
   activeSlide,
-  isChild,
   continueQuiz,
   previousQuestion,
   nextQuestion,
   quizValues,
 }) => {
   const setQuizValue = (e, value) => {
-    quizValues.current.knowledge = value;
+    quizValues.current.quantity = value;
     continueQuiz(e);
   };
 
@@ -41,32 +37,32 @@ export const QuizQuestionLevel = ({
       <QuizBox>
         <Logo />
         <Question>
-          {isChild ? 'Вкажіть рівень дитини' : 'Вкажіть ваш рівень'}
+          Скільки разів на тиждень готові займатись?
+          <Emoji
+            src={study}
+            alt="Person in front of laptop emoji"
+            width="35"
+            style={{
+              position: 'absolute',
+              bottom: '22px',
+              right: '27px',
+            }}
+          />
         </Question>
         <QuizButtonBox>
-          <QuizButton onClick={e => setQuizValue(e, 'a0')}>
-            <QuizButtonContent>
-              <Emoji src={zero} alt="Running man emoji" width="21" />
-              Нульовий
-            </QuizButtonContent>
+          <QuizButton onClick={e => setQuizValue(e, '1 раз на тиждень')}>
+            <QuizButtonContent>1 раз на тиждень</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'a1')}>
-            <QuizButtonContent>
-              <Emoji src={beginner} alt="Face in glasses emoji" width="21" />
-              Початковий
-            </QuizButtonContent>
+          <QuizButton onClick={e => setQuizValue(e, '2 рази на тиждень')}>
+            <QuizButtonContent>2 рази на тиждень</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'a2')}>
-            <QuizButtonContent>
-              <Emoji src={middle} alt="Alumni hat emoji" width="21" />
-              Середній
-            </QuizButtonContent>
+          <QuizButton onClick={e => setQuizValue(e, '3 рази на тиждень')}>
+            <QuizButtonContent>3 рази на тиждень</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'b1')}>
-            <QuizButtonContent>
-              <Emoji src={senior} alt="Prize cup emoji" width="21" />
-              Високий
-            </QuizButtonContent>
+          <QuizButton
+            onClick={e => setQuizValue(e, '4 і більше разів на тиждень')}
+          >
+            <QuizButtonContent>4 і більше разів</QuizButtonContent>
           </QuizButton>
         </QuizButtonBox>
         <BackgroundFilterTopRight />

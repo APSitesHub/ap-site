@@ -20,7 +20,7 @@ import {
   QuizBox,
   QuizButton,
   QuizButtonBox,
-  QuizButtonContent
+  QuizButtonContent,
 } from '../Quiz.styled';
 
 export const QuizQuestionWho = ({
@@ -29,17 +29,23 @@ export const QuizQuestionWho = ({
   continueQuizForChild,
   previousQuestion,
   nextQuestion,
+  quizValues,
 }) => {
+  const setQuizValue = (e, value) => {
+    quizValues.current.adult = value;
+    !value ? continueQuizForChild(e) : continueQuiz(e);
+  };
+
   return (
     <>
       <QuizBox>
         <Logo />
         <Question>Для кого цікавить вивчення мови?</Question>
         <QuizButtonBox>
-          <QuizButton onClick={e => continueQuiz(e)}>
+          <QuizButton onClick={e => setQuizValue(e, true)}>
             <QuizButtonContent>Для себе</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => continueQuizForChild(e)}>
+          <QuizButton onClick={e => setQuizValue(e, false)}>
             <QuizButtonContent>Для дитини</QuizButtonContent>
           </QuizButton>
         </QuizButtonBox>
@@ -54,7 +60,9 @@ export const QuizQuestionWho = ({
             className={activeSlide - 1 < 1 && 'disabled'}
             disabled={activeSlide - 1 < 1 && true}
             onClick={previousQuestion}
-          ><QuizArrowLeft/></PreviousPageBtn>
+          >
+            <QuizArrowLeft />
+          </PreviousPageBtn>
           <PageCounter>
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
@@ -62,7 +70,9 @@ export const QuizQuestionWho = ({
             className={activeSlide + 1 < 1 && 'disabled'}
             disabled={activeSlide + 1 < 1 && true}
             onClick={nextQuestion}
-          ><QuizArrowRight/></NextPageBtn>
+          >
+            <QuizArrowRight />
+          </NextPageBtn>
         </Pagination>
       </QuizBox>
     </>

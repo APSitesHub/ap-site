@@ -1,0 +1,53 @@
+import rocket from '../../../img/quiz/rocket.png';
+import {
+  BackgroundFilterBottom,
+  BackgroundFilterTop,
+  BackgroungStarLarge,
+  BackgroungStarSmall,
+  ChatBotLink,
+  ChatBotRedirectItem,
+  ChatBotRedirectList,
+  Description,
+  HiEmoji,
+  Logo,
+  QuizBox,
+  TelegramBotLink,
+  Title,
+  ViberBotLink,
+} from '../Quiz.styled';
+
+export const QuizRedirect = () => {
+  return (
+    <>
+      <QuizBox>
+        <Logo />
+        <Title>{`Дякуємо за ваші 
+        відповіді!`}</Title>
+        <Description>
+          Переходьте в будь-який месенджер, в якому вам буде зручно продовжити
+          реєстрацію на марафон!
+        </Description>
+        <ChatBotRedirectList>
+          {/* <ChatBotRedirectItem>
+            <ChatBotLink>
+              <WhatsAppBotLink />
+            </ChatBotLink>
+          </ChatBotRedirectItem> */}
+          <ChatBotRedirectItem>
+            <ChatBotLink to={'/marathon/tg'}>
+              <TelegramBotLink />
+            </ChatBotLink>
+          </ChatBotRedirectItem>
+          <ChatBotRedirectItem>
+            <ChatBotLink to={'/marathon/viber'}>
+              <ViberBotLink />
+            </ChatBotLink>
+          </ChatBotRedirectItem>
+        </ChatBotRedirectList>
+        <HiEmoji src={rocket} alt="Rocket emoji" width="80" />
+        <BackgroundFilterTop /> <BackgroundFilterBottom />
+        <BackgroungStarSmall /> <BackgroungStarLarge />
+      </QuizBox>
+    </>
+  );
+};

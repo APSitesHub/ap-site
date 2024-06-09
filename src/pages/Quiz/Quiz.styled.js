@@ -1,6 +1,10 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as LogoIcon } from '../../img/svg/logoNew.svg';
+import { ReactComponent as TelegramIcon } from '../../img/quiz/telegram.svg';
+import { ReactComponent as ViberIcon } from '../../img/quiz/viber.svg';
+import { ReactComponent as WhatsAppIcon } from '../../img/quiz/whatsapp.svg';
 import { ReactComponent as StarIcon } from '../../img/svg/heroStar.svg';
+import { ReactComponent as LogoIcon } from '../../img/svg/logoNew.svg';
 import { ReactComponent as ArrowLeft } from '../../img/svg/month-switch-left.svg';
 import { ReactComponent as ArrowRight } from '../../img/svg/month-switch-right.svg';
 
@@ -15,6 +19,9 @@ export const QuizBox = styled.div`
 
   overflow: hidden;
   padding: 95px 20px;
+
+  max-width: 768px;
+  margin: 0 auto;
 `;
 
 export const BackgroundFilterTop = styled.div`
@@ -80,6 +87,8 @@ export const Question = styled.h2`
 
   margin: 0 auto;
   margin-bottom: 40px;
+
+  position: relative;
 `;
 
 export const Description = styled.p`
@@ -177,7 +186,7 @@ export const QuizButtonContent = styled.div`
   gap: 6px;
 
   position: absolute;
-  top: calc(50% + 2px);
+  top: 50%;
   left: 50%;
 
   width: max-content;
@@ -228,6 +237,8 @@ export const PreviousPageBtn = styled.button`
   border-radius: 50%;
   background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%);
 
+  position: relative;
+
   &.disabled {
     background: rgba(0, 0, 0, 0.1);
   }
@@ -271,5 +282,48 @@ export const PageCounter = styled.span`
 `;
 
 export const CurrentPage = styled(PageCounter)`
-font-weight: 700;
+  font-weight: 700;
+`;
+
+export const ChatBotRedirectList = styled.ul`
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 110px;
+`;
+
+export const ChatBotRedirectItem = styled.li`
+  width: max-content;
+`;
+
+export const ChatBotLink = styled(Link)`
+  display: block;
+
+  cursor: pointer;
+
+  transition: transform var(--animation-global), filter var(--animation-global);
+
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+    filter: drop-shadow(0px 0px 0.5px #00000054);
+  }
+`;
+
+export const TelegramBotLink = styled(TelegramIcon)`
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+`;
+
+export const ViberBotLink = styled(ViberIcon)`
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+`;
+
+export const WhatsAppBotLink = styled(WhatsAppIcon)`
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
 `;

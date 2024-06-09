@@ -1,7 +1,7 @@
-import zero from '../../../img/quiz/zero.png';
-import beginner from '../../../img/quiz/beginner.png';
-import middle from '../../../img/quiz/middle.png';
-import senior from '../../../img/quiz/senior.png';
+import book from '../../../img/quiz/book.png';
+import brain from '../../../img/quiz/brainmelt.png';
+import speak from '../../../img/quiz/speak.png';
+import ear from '../../../img/quiz/ear.png';
 
 import {
   BackgroundFilterBottomLeft,
@@ -23,16 +23,15 @@ import {
   QuizButtonContent,
 } from '../Quiz.styled';
 
-export const QuizQuestionLevel = ({
+export const QuizQuestionDifficulties = ({
   activeSlide,
-  isChild,
   continueQuiz,
   previousQuestion,
   nextQuestion,
   quizValues,
 }) => {
   const setQuizValue = (e, value) => {
-    quizValues.current.knowledge = value;
+    quizValues.current.difficulties = value;
     continueQuiz(e);
   };
 
@@ -41,31 +40,31 @@ export const QuizQuestionLevel = ({
       <QuizBox>
         <Logo />
         <Question>
-          {isChild ? 'Вкажіть рівень дитини' : 'Вкажіть ваш рівень'}
+          Які труднощі у вас виникають під час вивчення іноземної мови?
         </Question>
         <QuizButtonBox>
-          <QuizButton onClick={e => setQuizValue(e, 'a0')}>
+          <QuizButton onClick={e => setQuizValue(e, 'Незнайомі слова')}>
             <QuizButtonContent>
-              <Emoji src={zero} alt="Running man emoji" width="21" />
-              Нульовий
+              <Emoji src={book} alt="Vocabulary emoji" width="21" />
+              Незнайомі слова
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'a1')}>
+          <QuizButton onClick={e => setQuizValue(e, 'Граматика')}>
             <QuizButtonContent>
-              <Emoji src={beginner} alt="Face in glasses emoji" width="21" />
-              Початковий
+              <Emoji src={brain} alt="Brain explosion emoji" width="21" />
+              Граматика
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'a2')}>
+          <QuizButton onClick={e => setQuizValue(e, 'Спілкування')}>
             <QuizButtonContent>
-              <Emoji src={middle} alt="Alumni hat emoji" width="21" />
-              Середній
+              <Emoji src={speak} alt="Speaking emoji" width="21" />
+              Спілкування
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'b1')}>
+          <QuizButton onClick={e => setQuizValue(e, 'Розуміння мови на слух')}>
             <QuizButtonContent>
-              <Emoji src={senior} alt="Prize cup emoji" width="21" />
-              Високий
+              <Emoji src={ear} alt="Ear emoji" width="21" />
+              Розуміння мови на слух
             </QuizButtonContent>
           </QuizButton>
         </QuizButtonBox>
