@@ -7,7 +7,7 @@ import { ReactComponent as StarIcon } from '../../img/svg/heroStar.svg';
 import { ReactComponent as LogoIcon } from '../../img/svg/logoNew.svg';
 import { ReactComponent as ArrowLeft } from '../../img/svg/month-switch-left.svg';
 import { ReactComponent as ArrowRight } from '../../img/svg/month-switch-right.svg';
-import { Input } from 'components/LeadForm/LeadForm.styled';
+import { FormBtn, Input } from 'components/LeadForm/LeadForm.styled';
 
 export const QuizBox = styled.div`
   position: relative;
@@ -39,9 +39,10 @@ export const BackgroundFilterTop = styled.div`
   flex-shrink: 0;
 
   border-radius: 602px;
-  background: #0f645b;
+  background-color: #0f645b;
+  backdrop-filter: blur(167px);
   -webkit-filter: blur(167px);
-          filter: blur(167px);
+  filter: blur(167px);
 
   @media screen and (min-width: 768px) {
     top: -25%;
@@ -391,4 +392,8 @@ export const WhatsAppBotLink = styled(WhatsAppIcon)`
 export const QuizInput = styled(Input)`
   font-size: 16px;
   padding: 22.5px 20px;
+`;
+
+export const QuizFormBtn = styled(FormBtn)`
+  font-size: 24px;
 `;

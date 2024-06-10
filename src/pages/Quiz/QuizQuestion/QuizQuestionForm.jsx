@@ -1,10 +1,9 @@
 import axios from 'axios';
 import {
-  FormBtn,
   FormInputBox,
   HiddenInput,
   InputNote,
-  Label,
+  Label
 } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
@@ -30,6 +29,7 @@ import {
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
+  QuizFormBtn,
   QuizInput,
   Title,
 } from '../Quiz.styled';
@@ -146,7 +146,7 @@ export const QuizQuestionForm = ({ nextQuestion, quizValues, activeSlide, previo
             <HiddenInput type="text" name="quantity" />
             <HiddenInput type="text" name="difficulties" />
             <HiddenInput type="text" name="interests" />
-            <FormBtn type="submit">Надіслати</FormBtn>
+            <QuizFormBtn type="submit">Надіслати</QuizFormBtn>
             {isLoading && <Loader />}
           </PageForm>
         </Formik>

@@ -409,7 +409,7 @@ export const UserAdminPanel = () => {
       .string()
       .optional()
       .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
-    course: yup.string().optional(),
+      course: yup.string().required("Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"),
     package: yup.string().optional(),
     knowledge: yup
       .string()

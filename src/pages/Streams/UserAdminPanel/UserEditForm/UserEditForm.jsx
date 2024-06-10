@@ -52,7 +52,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
       .string()
       .optional()
       .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
-    course: yup.string().optional(),
+    course: yup.string().required("Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"),
     package: yup.string().optional(),
     knowledge: yup
       .string()
@@ -75,6 +75,10 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
       values.package === undefined
         ? ''
         : values.package.toLowerCase().trim().trimStart();
+    values.course =
+      values.course === undefined
+        ? ''
+        : values.course.toLowerCase().trim().trimStart();
     values.knowledge =
       values.knowledge === undefined
         ? ''
