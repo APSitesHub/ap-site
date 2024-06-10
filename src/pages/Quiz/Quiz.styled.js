@@ -19,7 +19,8 @@ export const QuizBox = styled.div`
   font-family: var(--main-font-family);
 
   overflow: hidden;
-  padding: 95px 20px;
+  padding: 75px 20px;
+  padding-top: 50px;
 
   @media screen and (min-width: 768px) {
     max-width: 768px;
@@ -39,7 +40,8 @@ export const BackgroundFilterTop = styled.div`
 
   border-radius: 602px;
   background: #0f645b;
-  filter: blur(167px);
+  -webkit-filter: blur(167px);
+          filter: blur(167px);
 
   @media screen and (min-width: 768px) {
     top: -25%;
@@ -207,6 +209,7 @@ export const QuizButton = styled.button`
   justify-content: center;
   gap: 6px;
 
+  color: #000;
   background-color: var(--secondary-color);
 
   border-radius: 50px;
@@ -223,7 +226,6 @@ export const QuizButton = styled.button`
 
   &.chosen {
     background-color: var(--main-color);
-    color: var(--secondary-color);
   }
 `;
 
@@ -232,12 +234,18 @@ export const QuizButtonContent = styled.div`
   align-items: flex-start;
   gap: 6px;
 
+  color: #000;
+
   position: absolute;
   top: 50%;
   left: 50%;
 
   width: max-content;
   transform: translate(-50%, -50%);
+
+  .chosen & {
+    color: var(--secondary-color);
+  }
 `;
 
 export const BackgroungStarSmall = styled(StarIcon)`
@@ -263,7 +271,7 @@ export const BackgroungStarLarge = styled(StarIcon)`
 export const Pagination = styled.div`
   width: calc(100% - 40px);
   position: absolute;
-  bottom: 65px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
 

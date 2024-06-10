@@ -44,7 +44,8 @@ export const QuizQuestionAge = ({
             }
             className={
               (quizValues.current?.age === 'до 7 років' ||
-              quizValues.current?.age === 'до 18 років') && 'chosen'
+                quizValues.current?.age === 'до 18 років') &&
+              'chosen'
             }
           >
             <QuizButtonContent>
@@ -55,7 +56,8 @@ export const QuizQuestionAge = ({
             onClick={e => setQuizValue(e, isChild ? '7-9 років' : '18-24 роки')}
             className={
               (quizValues.current?.age === '7-9 років' ||
-              quizValues.current?.age === '18-24 років') && 'chosen'
+                quizValues.current?.age === '18-24 років') &&
+              'chosen'
             }
           >
             <QuizButtonContent>
@@ -68,7 +70,8 @@ export const QuizQuestionAge = ({
             }
             className={
               (quizValues.current?.age === '9-11 років' ||
-              quizValues.current?.age === '25-35 років') && 'chosen'
+                quizValues.current?.age === '25-35 років') &&
+              'chosen'
             }
           >
             <QuizButtonContent>
@@ -84,7 +87,8 @@ export const QuizQuestionAge = ({
             }
             className={
               (quizValues.current?.age === '12 років і більше' ||
-              quizValues.current?.age === '35 років і більше') && 'chosen'
+                quizValues.current?.age === '35 років і більше') &&
+              'chosen'
             }
           >
             <QuizButtonContent>
