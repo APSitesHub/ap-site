@@ -5,7 +5,7 @@ import {
   BackgroundFilterTopRight,
   BackgroungStarSmall,
   CurrentPage,
-  Emoji,
+  InterestsEmoji,
   Logo,
   NextPageBtn,
   PageCounter,
@@ -17,7 +17,7 @@ import {
   QuizBox,
   QuizButton,
   QuizButtonBox,
-  QuizButtonContent,
+  QuizButtonContent
 } from '../Quiz.styled';
 
 export const QuizQuestionInterests = ({
@@ -38,31 +38,40 @@ export const QuizQuestionInterests = ({
         <Logo />
         <Question>
           Що вас зараз цікавить у вивченні мови?
-          <Emoji
-            src={middle}
-            alt="Alumni hat emoji"
-            width="35"
-            style={{
-              position: 'absolute',
-              bottom: '24px',
-              right: '75px',
-              transform: 'rotate(-12deg)',
-            }}
-          />
+          <InterestsEmoji src={middle} alt="Alumni hat emoji" />
         </Question>
         <QuizButtonBox>
           <QuizButton
             onClick={e => setQuizValue(e, 'Розширити словниковий запас')}
+            className={
+              quizValues.current?.interests === 'Розширити словниковий запас' &&
+              'chosen'
+            }
           >
             <QuizButtonContent>Вивчити слова</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'Вивчити граматику')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'Вивчити граматику')}
+            className={
+              quizValues.current?.interests === 'Вивчити граматику' && 'chosen'
+            }
+          >
             <QuizButtonContent>Вивчити граматику</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'Вільно розмовляти')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'Вільно розмовляти')}
+            className={
+              quizValues.current?.interests === 'Вільно розмовляти' && 'chosen'
+            }
+          >
             <QuizButtonContent>Вільно розмовляти</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'Все разом')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'Все разом')}
+            className={
+              quizValues.current?.interests === 'Все разом' && 'chosen'
+            }
+          >
             <QuizButtonContent>Все разом</QuizButtonContent>
           </QuizButton>
         </QuizButtonBox>
@@ -81,8 +90,14 @@ export const QuizQuestionInterests = ({
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
           <NextPageBtn
-            className={activeSlide + 1 < 1 && 'disabled'}
-            disabled={activeSlide + 1 < 1 && true}
+            className={
+              activeSlide + 1 > 1 &&
+              !quizValues.current?.interests &&
+              'disabled'
+            }
+            disabled={
+              activeSlide + 1 > 1 && !quizValues.current?.interests && true
+            }
             onClick={nextQuestion}
           >
             <QuizArrowRight />

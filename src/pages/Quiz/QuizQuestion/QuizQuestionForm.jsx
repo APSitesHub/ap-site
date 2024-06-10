@@ -3,7 +3,6 @@ import {
   FormBtn,
   FormInputBox,
   HiddenInput,
-  Input,
   InputNote,
   Label,
 } from 'components/LeadForm/LeadForm.styled';
@@ -21,15 +20,23 @@ import {
   BackgroundFilterTop,
   BackgroungStarLarge,
   BackgroungStarSmall,
+  CurrentPage,
   Description,
   Logo,
+  NextPageBtn,
+  PageCounter,
+  Pagination,
+  PreviousPageBtn,
+  QuizArrowLeft,
+  QuizArrowRight,
   QuizBox,
+  QuizInput,
   Title,
 } from '../Quiz.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const QuizQuestionForm = ({ nextQuestion, quizValues }) => {
+export const QuizQuestionForm = ({ nextQuestion, quizValues, activeSlide, previousQuestion }) => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation().pathname;
 
@@ -119,7 +126,7 @@ export const QuizQuestionForm = ({ nextQuestion, quizValues }) => {
             <FormBottomStar />
             <FormInputBox>
               <Label>
-                <Input
+                <QuizInput
                   type="text"
                   name="name"
                   placeholder="Ім'я та прізвище*"
@@ -127,7 +134,7 @@ export const QuizQuestionForm = ({ nextQuestion, quizValues }) => {
                 <InputNote component="p" name="name" />
               </Label>
               <Label>
-                <Input type="tel" name="phone" placeholder="Телефон*" />
+                <QuizInput type="tel" name="phone" placeholder="Телефон*" />
                 <InputNote component="p" name="phone" />
               </Label>
             </FormInputBox>
@@ -145,6 +152,24 @@ export const QuizQuestionForm = ({ nextQuestion, quizValues }) => {
         </Formik>
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
+        <Pagination>
+          <PreviousPageBtn
+            className={activeSlide - 1 < 1 && 'disabled'}
+            disabled={activeSlide - 1 < 1 && true}
+            onClick={previousQuestion}
+          >
+            <QuizArrowLeft />
+          </PreviousPageBtn>
+          <PageCounter>
+            <CurrentPage>{activeSlide}</CurrentPage>/8
+          </PageCounter>
+          <NextPageBtn
+            className="hidden"
+            onClick={nextQuestion}
+          >
+            <QuizArrowRight />
+          </NextPageBtn>
+        </Pagination>
       </QuizBox>
     </>
   );

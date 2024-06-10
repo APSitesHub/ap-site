@@ -50,13 +50,28 @@ export const QuizQuestionQuantity = ({
           />
         </Question>
         <QuizButtonBox>
-          <QuizButton onClick={e => setQuizValue(e, '1 раз на тиждень')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, '1 раз на тиждень')}
+            className={
+              quizValues.current?.quantity === '1 раз на тиждень' && 'chosen'
+            }
+          >
             <QuizButtonContent>1 раз на тиждень</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, '2 рази на тиждень')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, '2 рази на тиждень')}
+            className={
+              quizValues.current?.quantity === '2 рази на тиждень' && 'chosen'
+            }
+          >
             <QuizButtonContent>2 рази на тиждень</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, '3 рази на тиждень')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, '3 рази на тиждень')}
+            className={
+              quizValues.current?.quantity === '3 рази на тиждень' && 'chosen'
+            }
+          >
             <QuizButtonContent>3 рази на тиждень</QuizButtonContent>
           </QuizButton>
           <QuizButton
@@ -80,8 +95,12 @@ export const QuizQuestionQuantity = ({
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
           <NextPageBtn
-            className={activeSlide + 1 < 1 && 'disabled'}
-            disabled={activeSlide + 1 < 1 && true}
+            className={
+              activeSlide + 1 > 1 && !quizValues.current?.quantity && 'disabled'
+            }
+            disabled={
+              activeSlide + 1 > 1 && !quizValues.current?.quantity && true
+            }
             onClick={nextQuestion}
           >
             <QuizArrowRight />

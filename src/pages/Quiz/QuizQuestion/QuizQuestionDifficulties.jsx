@@ -43,25 +43,46 @@ export const QuizQuestionDifficulties = ({
           Які труднощі у вас виникають під час вивчення іноземної мови?
         </Question>
         <QuizButtonBox>
-          <QuizButton onClick={e => setQuizValue(e, 'Незнайомі слова')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'Незнайомі слова')}
+            className={
+              quizValues.current?.difficulties === 'Незнайомі слова' && 'chosen'
+            }
+          >
             <QuizButtonContent>
               <Emoji src={book} alt="Vocabulary emoji" width="21" />
               Незнайомі слова
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'Граматика')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'Граматика')}
+            className={
+              quizValues.current?.difficulties === 'Граматика' && 'chosen'
+            }
+          >
             <QuizButtonContent>
               <Emoji src={brain} alt="Brain explosion emoji" width="21" />
               Граматика
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'Спілкування')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'Спілкування')}
+            className={
+              quizValues.current?.difficulties === 'Спілкування' && 'chosen'
+            }
+          >
             <QuizButtonContent>
               <Emoji src={speak} alt="Speaking emoji" width="21" />
               Спілкування
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'Розуміння мови на слух')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'Розуміння мови на слух')}
+            className={
+              quizValues.current?.difficulties === 'Розуміння мови на слух' &&
+              'chosen'
+            }
+          >
             <QuizButtonContent>
               <Emoji src={ear} alt="Ear emoji" width="21" />
               Розуміння мови на слух
@@ -83,8 +104,14 @@ export const QuizQuestionDifficulties = ({
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
           <NextPageBtn
-            className={activeSlide + 1 < 1 && 'disabled'}
-            disabled={activeSlide + 1 < 1 && true}
+            className={
+              activeSlide + 1 > 1 &&
+              !quizValues.current?.difficulties &&
+              'disabled'
+            }
+            disabled={
+              activeSlide + 1 > 1 && !quizValues.current?.difficulties && true
+            }
             onClick={nextQuestion}
           >
             <QuizArrowRight />

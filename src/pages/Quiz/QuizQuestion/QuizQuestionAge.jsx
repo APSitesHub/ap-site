@@ -42,6 +42,10 @@ export const QuizQuestionAge = ({
             onClick={e =>
               setQuizValue(e, isChild ? 'до 7 років' : 'до 18 років')
             }
+            className={
+              (quizValues.current?.age === 'до 7 років' ||
+              quizValues.current?.age === 'до 18 років') && 'chosen'
+            }
           >
             <QuizButtonContent>
               {isChild ? 'до 7 років' : 'до 18 років'}
@@ -49,6 +53,10 @@ export const QuizQuestionAge = ({
           </QuizButton>
           <QuizButton
             onClick={e => setQuizValue(e, isChild ? '7-9 років' : '18-24 роки')}
+            className={
+              (quizValues.current?.age === '7-9 років' ||
+              quizValues.current?.age === '18-24 років') && 'chosen'
+            }
           >
             <QuizButtonContent>
               {isChild ? '7-9 років' : '18-24 роки'}
@@ -57,6 +65,10 @@ export const QuizQuestionAge = ({
           <QuizButton
             onClick={e =>
               setQuizValue(e, isChild ? '9-11 років' : '25-35 років')
+            }
+            className={
+              (quizValues.current?.age === '9-11 років' ||
+              quizValues.current?.age === '25-35 років') && 'chosen'
             }
           >
             <QuizButtonContent>
@@ -69,6 +81,10 @@ export const QuizQuestionAge = ({
                 e,
                 isChild ? '12 років і більше' : '35 років і більше'
               )
+            }
+            className={
+              (quizValues.current?.age === '12 років і більше' ||
+              quizValues.current?.age === '35 років і більше') && 'chosen'
             }
           >
             <QuizButtonContent>
@@ -91,8 +107,10 @@ export const QuizQuestionAge = ({
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
           <NextPageBtn
-            className={activeSlide + 1 < 1 && 'disabled'}
-            disabled={activeSlide + 1 < 1 && true}
+            className={
+              activeSlide + 1 > 1 && !quizValues.current?.age && 'disabled'
+            }
+            disabled={activeSlide + 1 > 1 && !quizValues.current?.age && true}
             onClick={nextQuestion}
           >
             <QuizArrowRight />

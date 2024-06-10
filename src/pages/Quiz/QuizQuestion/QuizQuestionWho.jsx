@@ -33,6 +33,9 @@ export const QuizQuestionWho = ({
 }) => {
   const setQuizValue = (e, value) => {
     quizValues.current.adult = value;
+    if (quizValues.current.age)
+      quizValues.current = { lang: quizValues.current.lang, adult: value };
+
     !value ? continueQuizForChild(e) : continueQuiz(e);
   };
 
@@ -42,10 +45,16 @@ export const QuizQuestionWho = ({
         <Logo />
         <Question>Для кого цікавить вивчення мови?</Question>
         <QuizButtonBox>
-          <QuizButton onClick={e => setQuizValue(e, true)}>
+          <QuizButton
+            onClick={e => setQuizValue(e, true)}
+            className={quizValues.current?.adult === true && 'chosen'}
+          >
             <QuizButtonContent>Для себе</QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, false)}>
+          <QuizButton
+            onClick={e => setQuizValue(e, false)}
+            className={quizValues.current?.adult === false && 'chosen'}
+          >
             <QuizButtonContent>Для дитини</QuizButtonContent>
           </QuizButton>
         </QuizButtonBox>
@@ -67,8 +76,16 @@ export const QuizQuestionWho = ({
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
           <NextPageBtn
-            className={activeSlide + 1 < 1 && 'disabled'}
-            disabled={activeSlide + 1 < 1 && true}
+            className={
+              activeSlide + 1 > 1 &&
+              quizValues.current?.adult === undefined &&
+              'disabled'
+            }
+            disabled={
+              activeSlide + 1 > 1 &&
+              quizValues.current?.adult === undefined &&
+              true
+            }
             onClick={nextQuestion}
           >
             <QuizArrowRight />

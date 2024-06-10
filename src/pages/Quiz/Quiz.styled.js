@@ -7,6 +7,7 @@ import { ReactComponent as StarIcon } from '../../img/svg/heroStar.svg';
 import { ReactComponent as LogoIcon } from '../../img/svg/logoNew.svg';
 import { ReactComponent as ArrowLeft } from '../../img/svg/month-switch-left.svg';
 import { ReactComponent as ArrowRight } from '../../img/svg/month-switch-right.svg';
+import { Input } from 'components/LeadForm/LeadForm.styled';
 
 export const QuizBox = styled.div`
   position: relative;
@@ -20,8 +21,10 @@ export const QuizBox = styled.div`
   overflow: hidden;
   padding: 95px 20px;
 
-  max-width: 768px;
-  margin: 0 auto;
+  @media screen and (min-width: 768px) {
+    max-width: 768px;
+    margin: 0 auto;
+  }
 `;
 
 export const BackgroundFilterTop = styled.div`
@@ -37,11 +40,21 @@ export const BackgroundFilterTop = styled.div`
   border-radius: 602px;
   background: #0f645b;
   filter: blur(167px);
+
+  @media screen and (min-width: 768px) {
+    top: -25%;
+    right: -100%;
+  }
 `;
 
 export const BackgroundFilterTopRight = styled(BackgroundFilterTop)`
   top: -172px;
   right: -668px;
+
+  @media screen and (min-width: 768px) {
+    top: -25%;
+    right: -100%;
+  }
 `;
 
 export const BackgroundFilterBottom = styled(BackgroundFilterTop)`
@@ -49,11 +62,21 @@ export const BackgroundFilterBottom = styled(BackgroundFilterTop)`
   right: unset;
   bottom: -395px;
   left: -544px;
+
+  @media screen and (min-width: 768px) {
+    bottom: -25%;
+    left: -100%;
+  }
 `;
 
 export const BackgroundFilterBottomLeft = styled(BackgroundFilterBottom)`
   bottom: -654px;
   left: -301px;
+
+  @media screen and (min-width: 768px) {
+    bottom: -25%;
+    left: -100%;
+  }
 `;
 
 export const Logo = styled(LogoIcon)`
@@ -146,6 +169,30 @@ export const HatImg = styled.img`
 
 export const Emoji = styled.img`
   display: block;
+`;
+
+export const InterestsEmoji = styled.img`
+  display: block;
+  width: 35px;
+  position: absolute;
+  bottom: 24px;
+  right: 25px;
+  transform: rotate(-12deg);
+
+  @media screen and (max-width: 339px) {
+    bottom: -10px;
+    right: 10px;
+  }
+
+  @media screen and (min-width: 380px) {
+    bottom: 24px;
+    right: 0px;
+  }
+
+  @media screen and (min-width: 410px) {
+    bottom: 24px;
+    right: 25px;
+  }
 `;
 
 export const QuizButtonBox = styled.div`
@@ -244,10 +291,15 @@ export const PreviousPageBtn = styled.button`
   }
 `;
 
-export const NextPageBtn = styled(PreviousPageBtn)``;
+export const NextPageBtn = styled(PreviousPageBtn)`
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+`;
 
 export const QuizArrowLeft = styled(ArrowLeft)`
-  color: #ffffff;
+  color: var(--secondary-color);
 
   position: absolute;
   top: 50%;
@@ -256,13 +308,13 @@ export const QuizArrowLeft = styled(ArrowLeft)`
   transform: translate(-50%, -50%);
   transition: color var(--animation-global);
 
-  &.available {
-    color: var(--secondary-color);
+  .disabled & {
+    color: var(--main-color);
   }
 `;
 
 export const QuizArrowRight = styled(ArrowRight)`
-  color: #ffffff;
+  color: var(--secondary-color);
 
   position: absolute;
   top: 50%;
@@ -271,8 +323,8 @@ export const QuizArrowRight = styled(ArrowRight)`
   transform: translate(-50%, -50%);
   transition: color var(--animation-global);
 
-  &.available {
-    color: var(--secondary-color);
+  .disabled & {
+    color: var(--main-color);
   }
 `;
 
@@ -326,4 +378,9 @@ export const WhatsAppBotLink = styled(WhatsAppIcon)`
   width: 60px;
   height: 60px;
   flex-shrink: 0;
+`;
+
+export const QuizInput = styled(Input)`
+  font-size: 16px;
+  padding: 22.5px 20px;
 `;

@@ -41,19 +41,28 @@ export const QuizQuestionLang = ({
         <Logo />
         <Question>Вивчення якої мови вас цікавить?</Question>
         <QuizButtonBox>
-          <QuizButton onClick={e => setQuizValue(e, 'en')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'en')}
+            className={quizValues.current?.lang === 'en' && 'chosen'}
+          >
             <QuizButtonContent>
               <Emoji src={gb} alt="Great Britain flag emoji" width="21" />
               Англійська
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'de')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'de')}
+            className={quizValues.current?.lang === 'de' && 'chosen'}
+          >
             <QuizButtonContent>
               <Emoji src={de} alt="Germany flag emoji" width="21" />
               Німецька
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'pl')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'pl')}
+            className={quizValues.current?.lang === 'pl' && 'chosen'}
+          >
             <QuizButtonContent>
               <Emoji src={pl} alt="Poland flag emoji" width="21" /> Польська
             </QuizButtonContent>
@@ -74,8 +83,10 @@ export const QuizQuestionLang = ({
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
           <NextPageBtn
-            className={activeSlide + 1 < 1 && 'disabled'}
-            disabled={activeSlide + 1 < 1 && true}
+            className={
+              activeSlide + 1 > 1 && !quizValues.current?.lang && 'disabled'
+            }
+            disabled={activeSlide + 1 > 1 && !quizValues.current?.lang && true}
             onClick={nextQuestion}
           >
             <QuizArrowRight />

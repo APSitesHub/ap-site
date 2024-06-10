@@ -44,25 +44,37 @@ export const QuizQuestionLevel = ({
           {isChild ? 'Вкажіть рівень дитини' : 'Вкажіть ваш рівень'}
         </Question>
         <QuizButtonBox>
-          <QuizButton onClick={e => setQuizValue(e, 'a0')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'a0')}
+            className={quizValues.current?.knowledge === 'a0' && 'chosen'}
+          >
             <QuizButtonContent>
               <Emoji src={zero} alt="Running man emoji" width="21" />
               Нульовий
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'a1')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'a1')}
+            className={quizValues.current?.knowledge === 'a1' && 'chosen'}
+          >
             <QuizButtonContent>
               <Emoji src={beginner} alt="Face in glasses emoji" width="21" />
               Початковий
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'a2')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'a2')}
+            className={quizValues.current?.knowledge === 'a2' && 'chosen'}
+          >
             <QuizButtonContent>
               <Emoji src={middle} alt="Alumni hat emoji" width="21" />
               Середній
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton onClick={e => setQuizValue(e, 'b1')}>
+          <QuizButton
+            onClick={e => setQuizValue(e, 'b1')}
+            className={quizValues.current?.knowledge === 'b1' && 'chosen'}
+          >
             <QuizButtonContent>
               <Emoji src={senior} alt="Prize cup emoji" width="21" />
               Високий
@@ -84,8 +96,14 @@ export const QuizQuestionLevel = ({
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
           <NextPageBtn
-            className={activeSlide + 1 < 1 && 'disabled'}
-            disabled={activeSlide + 1 < 1 && true}
+            className={
+              activeSlide + 1 > 1 &&
+              !quizValues.current?.knowledge &&
+              'disabled'
+            }
+            disabled={
+              activeSlide + 1 > 1 && !quizValues.current?.knowledge && true
+            }
             onClick={nextQuestion}
           >
             <QuizArrowRight />

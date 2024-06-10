@@ -105,7 +105,12 @@ export const Quiz = () => {
         />
       )}
       {activeSlide === 8 && (
-        <QuizQuestionForm nextQuestion={nextQuestion} quizValues={quizValues} />
+        <QuizQuestionForm
+          nextQuestion={nextQuestion}
+          quizValues={quizValues}
+          activeSlide={activeSlide}
+          previousQuestion={previousQuestion}
+        />
       )}
       {activeSlide === 9 && <QuizRedirect />}
     </>
