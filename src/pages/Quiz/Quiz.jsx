@@ -1,18 +1,49 @@
 import { useRef, useState } from 'react';
-import { QuizQuestionLang } from './QuizQuestion/QuizQuestionLang';
-import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
-import { QuizTitle } from './QuizTitle/QuizTitle';
 import { QuizQuestionAge } from './QuizQuestion/QuizQuestionAge';
+import { QuizQuestionDifficulties } from './QuizQuestion/QuizQuestionDifficulties';
+import { QuizQuestionForm } from './QuizQuestion/QuizQuestionForm';
+import { QuizQuestionInterests } from './QuizQuestion/QuizQuestionInterests';
+import { QuizQuestionLang } from './QuizQuestion/QuizQuestionLang';
 import { QuizQuestionLevel } from './QuizQuestion/QuizQuestionLevel';
 import { QuizQuestionQuantity } from './QuizQuestion/QuizQuestionQuantity';
-import { QuizQuestionDifficulties } from './QuizQuestion/QuizQuestionDifficulties';
-import { QuizQuestionInterests } from './QuizQuestion/QuizQuestionInterests';
-import { QuizQuestionForm } from './QuizQuestion/QuizQuestionForm';
+import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
 import { QuizRedirect } from './QuizRedirect/QuizRedirect';
+import { QuizTitle } from './QuizTitle/QuizTitle';
 
 export const Quiz = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isChild, setIsChild] = useState(false);
+  // const [coordinate, setCoordinate] = useState(0);
+
+  // useEffect(() => {
+  //   const onTouchStartSetCoordinate = event => {
+  //     console.log('fired touchstart');
+
+  //     event.target.nodeName === 'DIV' &&
+  //       setCoordinate(event.changedTouches[0].screenX);
+  //   };
+
+  //   const onTouchEndSwipe = event => {
+  //     console.log('fired touchend');
+  //     console.log(coordinate - event.changedTouches[0].screenX);
+
+  //     return coordinate - event.changedTouches[0].screenX > 150 &&
+  //       activeSlide - 1 > 1
+  //       ? previousQuestion()
+  //       : coordinate - event.changedTouches[0].screenX < -150 &&
+  //         activeSlide + 1 < 8
+  //       ? nextQuestion()
+  //       : null;
+  //   };
+
+  //   window.addEventListener('touchstart', onTouchStartSetCoordinate);
+  //   window.addEventListener('touchend', onTouchEndSwipe);
+
+  //   return () => {
+  //     window.removeEventListener('touchstart', onTouchStartSetCoordinate);
+  //     window.addEventListener('touchend', onTouchEndSwipe);
+  //   };
+  // }, [activeSlide, coordinate]);
 
   const quizValues = useRef();
 

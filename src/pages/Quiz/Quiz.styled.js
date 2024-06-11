@@ -40,9 +40,7 @@ export const BackgroundFilterTop = styled.div`
 
   border-radius: 602px;
   background-color: #0f645b;
-  backdrop-filter: blur(167px);
-  -webkit-filter: blur(167px);
-  filter: blur(167px);
+  filter: drop-shadow(10px 10px 150px #0f645b);
 
   @media screen and (min-width: 768px) {
     top: -25%;
@@ -51,8 +49,8 @@ export const BackgroundFilterTop = styled.div`
 `;
 
 export const BackgroundFilterTopRight = styled(BackgroundFilterTop)`
-  top: -172px;
-  right: -668px;
+  top: -200px;
+  right: -650px;
 
   @media screen and (min-width: 768px) {
     top: -25%;
@@ -63,8 +61,8 @@ export const BackgroundFilterTopRight = styled(BackgroundFilterTop)`
 export const BackgroundFilterBottom = styled(BackgroundFilterTop)`
   top: unset;
   right: unset;
-  bottom: -395px;
-  left: -544px;
+  bottom: -500px;
+  left: -655px;
 
   @media screen and (min-width: 768px) {
     bottom: -25%;
@@ -73,8 +71,8 @@ export const BackgroundFilterBottom = styled(BackgroundFilterTop)`
 `;
 
 export const BackgroundFilterBottomLeft = styled(BackgroundFilterBottom)`
-  bottom: -654px;
-  left: -301px;
+  bottom: -375px;
+  left: -625px;
 
   @media screen and (min-width: 768px) {
     bottom: -25%;
