@@ -100,7 +100,7 @@ const MyAP = () => {
         en: `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=621674`,
         pl: `https://online.ap.education/MarathonClass/?marathonId=41057&pupilId=${user.pupilId}&marathonLessonId=629354`,
         de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=629357`,
-        //online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673 - FromZeroToHero Children
+        enkids: `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673`,
       };
 
       const marathonLink =
@@ -110,10 +110,8 @@ const MyAP = () => {
           ? 'ena2'
           : user.lang === 'pl'
           ? 'pl'
-          : user.lang === 'de' && user.knowledge === 'a1'
-          ? 'dea1'
-          : user.lang === 'de' && user.knowledge === 'a2'
-          ? 'dea2'
+          : user.lang === 'de'
+          ? 'de'
           : user.lang === 'enkids'
           ? 'kids'
           : '';
@@ -123,8 +121,7 @@ const MyAP = () => {
         ena1: `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=854277`,
         ena2: `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=854278`,
         pl: `https://online.ap.education/MarathonClass/?marathonId=41057&pupilId=${user.pupilId}&marathonLessonId=853147`,
-        dea1: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=854256`,
-        dea2: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=854258`,
+        de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=854256`,
       };
 
       setPlatformLink(link => (link = LINKS[user.lang]));
