@@ -55,10 +55,17 @@ export const QuizQuestionForm = ({
   };
 
   const tag = getTag(location);
+  const mailRandomId = Math.floor(Math.random() * 10000).toString();
+  const passwordRandom = Math.floor(Math.random() * 10000).toString();
 
   const initialValues = {
     name: '',
     phone: '',
+    mail:
+      mailRandomId.length < 4
+        ? `marathon-ap0${mailRandomId}@ap.edu`
+        : `marathon-ap${mailRandomId}@ap.edu`,
+    password: passwordRandom.length < 4 ? '0' + passwordRandom : passwordRandom,
     tag: tag,
     lang: quizValues.current.lang,
     adult: quizValues.current.adult,
@@ -88,6 +95,8 @@ export const QuizQuestionForm = ({
       )
       .min(10, 'Номер телефону має складатися не менше ніж з 10 символів!')
       .max(15, 'Номер телефону має складатися не більше ніж з 15 символів!'),
+    mail: yup.string().required(),
+    password: yup.string().required(),
     tag: yup.string().required(),
     lang: yup.string().required(),
     adult: yup.boolean().required(),
@@ -102,12 +111,10 @@ export const QuizQuestionForm = ({
     setIsLoading(isLoading => (isLoading = true));
 
     const userSubmit = async crmId => {
-      const password = Math.floor(Math.random() * 10000).toString();
-
       const userValues = {
         name: values.name.trim().trimStart(),
-        mail: `marathon-ap${Math.floor(Math.random() * 1000).toString()}@ap.edu`,
-        password: password.length < 4 ? '0' + password : password,
+        mail: values.mail,
+        password: values.password,
         pupilId: '0000000',
         crmId: crmId,
         age: quizValues.current.age,
