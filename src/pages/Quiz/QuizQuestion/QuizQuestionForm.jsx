@@ -3,7 +3,7 @@ import {
   FormInputBox,
   HiddenInput,
   InputNote,
-  Label
+  Label,
 } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
@@ -36,7 +36,12 @@ import {
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const QuizQuestionForm = ({ nextQuestion, quizValues, activeSlide, previousQuestion }) => {
+export const QuizQuestionForm = ({
+  nextQuestion,
+  quizValues,
+  activeSlide,
+  previousQuestion,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation().pathname;
 
@@ -96,9 +101,35 @@ export const QuizQuestionForm = ({ nextQuestion, quizValues, activeSlide, previo
   const handleSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
 
+    const userSubmit = async crmId => {
+      const password = Math.floor(Math.random() * 10000).toString();
+
+      const userValues = {
+        name: values.name.trim().trimStart(),
+        mail: `marathon-ap${Math.floor(Math.random() * 1000).toString()}@ap.edu`,
+        password: password.length < 4 ? '0' + password : password,
+        pupilId: '0000000',
+        crmId: crmId,
+        age: quizValues.current.age,
+        lang: quizValues.current.lang,
+        course: '0',
+        package: 'Марафон',
+        knowledge: quizValues.current.knowledge,
+        manager: 'суліган',
+      };
+
+      try {
+        const response = await axios.post('/users/new', userValues);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     try {
       const response = await axios.post('/leads/quiz', values);
       console.log(response);
+      userSubmit(response.data.crmId);
       resetForm();
       nextQuestion();
     } catch (error) {
@@ -163,10 +194,7 @@ export const QuizQuestionForm = ({ nextQuestion, quizValues, activeSlide, previo
           <PageCounter>
             <CurrentPage>{activeSlide}</CurrentPage>/8
           </PageCounter>
-          <NextPageBtn
-            className="hidden"
-            onClick={nextQuestion}
-          >
+          <NextPageBtn className="hidden" onClick={nextQuestion}>
             <QuizArrowRight />
           </NextPageBtn>
         </Pagination>

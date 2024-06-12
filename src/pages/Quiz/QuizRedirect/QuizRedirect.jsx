@@ -21,10 +21,9 @@ export const QuizRedirect = () => {
     <>
       <QuizBox>
         <Logo />
-        <Title>{`Дякуємо за ваші 
-        відповіді!`}</Title>
+        <Title>{`Майже готово!`}</Title>
         <Description>
-          Переходьте в будь-який месенджер, в якому вам буде зручно продовжити
+          Оберіть месенджер, в якому вам буде зручно продовжити
           реєстрацію на марафон!
         </Description>
         <ChatBotRedirectList>
