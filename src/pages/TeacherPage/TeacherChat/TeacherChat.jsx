@@ -72,7 +72,7 @@ export const TeacherChat = ({ page }) => {
   useEffect(() => {
     document.title = 'AP Chat Window';
 
-    socketRef.current = io('https://ap-chat.onrender.com/');
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
     checkLogin();
 
     socketRef.current.on('connected', (connected, handshake) => {
@@ -84,7 +84,7 @@ export const TeacherChat = ({ page }) => {
       console.log('get');
       try {
         const dbMessages = await axios.get(
-          `https://ap-chat.onrender.com/messages/room`,
+          `https://ap-chat-server.onrender.com/messages/room`,
           {
             params: {
               room,
@@ -107,7 +107,7 @@ export const TeacherChat = ({ page }) => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat.onrender.com/messages', data);
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -129,7 +129,7 @@ export const TeacherChat = ({ page }) => {
       const editMessage = async () => {
         try {
           await axios.patch(
-            `https://ap-chat.onrender.com/messages/${id}`,
+            `https://ap-chat-server.onrender.com/messages/${id}`,
             data
           );
         } catch (error) {
@@ -147,7 +147,7 @@ export const TeacherChat = ({ page }) => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat.onrender.com/messages/${id}`);
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }
@@ -162,7 +162,7 @@ export const TeacherChat = ({ page }) => {
         console.log(userID);
         console.log(userIP);
         try {
-          await axios.patch(`https://ap-chat.onrender.com/users/${userID}`, {
+          await axios.patch(`https://ap-chat-server.onrender.com/users/${userID}`, {
             isBanned: true,
           });
         } catch (error) {

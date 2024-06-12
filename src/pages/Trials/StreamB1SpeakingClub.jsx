@@ -136,7 +136,7 @@ const StreamB1SpeakingClub = () => {
   useEffect(() => {
     document.title = 'B1 Speaking Club | AP Education';
 
-    socketRef.current = io('https://ap-chat.onrender.com/');
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
     checkLogin();
 
     socketRef.current.on('connected', (connected, handshake) => {
@@ -147,7 +147,7 @@ const StreamB1SpeakingClub = () => {
     const getMessages = async () => {
       try {
         const dbMessages = await axios.get(
-          'https://ap-chat.onrender.com/messages'
+          'https://ap-chat-server.onrender.com/messages'
         );
         const todayMessages = dbMessages.data.filter(
           message =>
@@ -163,7 +163,7 @@ const StreamB1SpeakingClub = () => {
     socketRef.current.on('message', async data => {
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat.onrender.com/messages', data);
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
           setMessages(messages => (messages = [...messages, data]));
         } catch (error) {
           console.log(error);

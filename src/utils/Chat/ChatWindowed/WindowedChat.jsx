@@ -17,7 +17,7 @@ export const WindowedChat = () => {
   useEffect(() => {
     document.title = 'AP Chat Window';
 
-    socketRef.current = io('https://ap-chat.onrender.com/');
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
@@ -28,7 +28,7 @@ export const WindowedChat = () => {
       console.log('get');
       try {
         const dbMessages = await axios.get(
-          `https://ap-chat.onrender.com/messages/room`,
+          `https://ap-chat-server.onrender.com/messages/room`,
           {
             params: {
               room,
@@ -51,7 +51,7 @@ export const WindowedChat = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat.onrender.com/messages', data);
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -73,7 +73,7 @@ export const WindowedChat = () => {
       const editMessage = async () => {
         try {
           await axios.patch(
-            `https://ap-chat.onrender.com/messages/${id}`,
+            `https://ap-chat-server.onrender.com/messages/${id}`,
             data
           );
         } catch (error) {
@@ -91,7 +91,7 @@ export const WindowedChat = () => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat.onrender.com/messages/${id}`);
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }
@@ -114,7 +114,7 @@ export const WindowedChat = () => {
         console.log(userID);
         console.log(userIP);
         try {
-          await axios.patch(`https://ap-chat.onrender.com/users/${userID}`, {
+          await axios.patch(`https://ap-chat-server.onrender.com/users/${userID}`, {
             isBanned: true,
           });
         } catch (error) {

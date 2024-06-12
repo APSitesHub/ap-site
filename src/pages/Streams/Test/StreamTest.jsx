@@ -84,7 +84,7 @@ export const StreamTest = () => {
   useEffect(() => {
     document.title = 'Test Page | AP Education';
 
-    socketRef.current = io('https://ap-chat.onrender.com/');
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
@@ -94,7 +94,7 @@ export const StreamTest = () => {
     const getMessages = async () => {
       try {
         const dbMessages = await axios.get(
-          `https://ap-chat.onrender.com/messages/room`,
+          `https://ap-chat-server.onrender.com/messages/room`,
           {
             params: {
               room,
@@ -120,7 +120,7 @@ export const StreamTest = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat.onrender.com/messages', data);
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -160,7 +160,7 @@ export const StreamTest = () => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat.onrender.com/messages/${id}`);
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }

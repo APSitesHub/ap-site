@@ -52,7 +52,7 @@ const Streams = () => {
         console.log(error);
       }
       const id = localStorage.getItem('userID');
-      const user = await axios.get(`https://ap-chat.onrender.com/users/${id}`);
+      const user = await axios.get(`https://ap-chat-server.onrender.com/users/${id}`);
       console.log(user.data, 'detect');
       setCurrentUser(
         currentUser =>

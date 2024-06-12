@@ -84,7 +84,7 @@ export const KidsA2 = () => {
   useEffect(() => {
     document.title = 'A2 English Kids | AP Education';
 
-    socketRef.current = io('https://ap-chat.onrender.com/');
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
@@ -94,7 +94,7 @@ export const KidsA2 = () => {
     const getMessages = async () => {
       try {
         const dbMessages = await axios.get(
-          `https://ap-chat.onrender.com/messages/room`,
+          `https://ap-chat-server.onrender.com/messages/room`,
           {
             params: {
               room,
@@ -117,7 +117,7 @@ export const KidsA2 = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat.onrender.com/messages', data);
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -147,7 +147,7 @@ export const KidsA2 = () => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat.onrender.com/messages/${id}`);
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }

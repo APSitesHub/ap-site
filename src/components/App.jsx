@@ -58,7 +58,7 @@ const NewDesign = lazy(() =>
   )
 );
 const School = lazy(() =>
-  import(/* webpackChunkName: "School epage" */ '../pages/School/School')
+  import(/* webpackChunkName: "School page" */ '../pages/School/School')
 );
 const University = lazy(() =>
   import(
@@ -306,6 +306,7 @@ export const App = () => {
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
           <Route path="my-ap" element={<MyAP />} noindex={true} />
+          <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
             <Route path="a0" element={<StreamA0 />} />
             <Route path="a0sc" element={<StreamA0SpeakingClub />} />

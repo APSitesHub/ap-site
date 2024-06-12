@@ -55,7 +55,7 @@ const StreamsKids = () => {
         console.log(error);
       }
       const id = localStorage.getItem('userID');
-      const user = await axios.get(`https://ap-chat.onrender.com/users/${id}`);
+      const user = await axios.get(`https://ap-chat-server.onrender.com/users/${id}`);
       setCurrentUser(
         currentUser =>
           (currentUser = user.data || {
