@@ -17,6 +17,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const initialUserValues = {
+    crmId: userToEdit.crmId,
     name: userToEdit.name,
     mail: userToEdit.mail,
     password: userToEdit.password,
@@ -52,7 +53,11 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
       .string()
       .optional()
       .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
-    course: yup.string().required("Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"),
+    course: yup
+      .string()
+      .required(
+        "Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"
+      ),
     package: yup.string().optional(),
     knowledge: yup
       .string()

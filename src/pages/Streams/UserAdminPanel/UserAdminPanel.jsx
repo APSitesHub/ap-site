@@ -409,7 +409,11 @@ export const UserAdminPanel = () => {
       .string()
       .optional()
       .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
-      course: yup.string().required("Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"),
+    course: yup
+      .string()
+      .required(
+        "Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"
+      ),
     package: yup.string().optional(),
     knowledge: yup
       .string()
@@ -627,7 +631,7 @@ export const UserAdminPanel = () => {
             <UserDBCaption>Список юзерів з доступом до уроків</UserDBCaption>
             <thead>
               <UserDBRow>
-                <UserHeadCell>ID</UserHeadCell>
+                <UserHeadCell>CRM ID</UserHeadCell>
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Пошта (логін)</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
@@ -795,7 +799,7 @@ export const UserAdminPanel = () => {
             <tbody>
               {users.map(user => (
                 <UserDBRow key={user._id}>
-                  <UserCell>{user._id}</UserCell>
+                  <UserCell>{user.crmId}</UserCell>
                   <UserCell>{user.name}</UserCell>
                   <UserCell>{user.mail}</UserCell>
                   <UserCell>{user.password}</UserCell>
