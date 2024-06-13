@@ -18,10 +18,12 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
 
   const initialUserValues = {
     crmId: userToEdit.crmId,
+    contactId: userToEdit.contactId,
     name: userToEdit.name,
     mail: userToEdit.mail,
     password: userToEdit.password,
     pupilId: userToEdit.pupilId,
+    adult: userToEdit.adult,
     age: userToEdit.age,
     lang: userToEdit.lang,
     course: userToEdit.course,
@@ -38,6 +40,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
       ),
     mail: yup.string().required("Пошта - обов'язкове поле!"),
     password: yup.string().required("Пароль - обов'язкове поле!"),
+    crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
     pupilId: yup
       .string()
       .min(6, 'Не менше 6 цифр')
@@ -74,7 +77,14 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
     values.mail = values.mail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.pupilId = values.pupilId.trim().trimStart();
+    values.crmId =
+      values.crmId && typeof values.crmId !== 'number'
+        ? +values.crmId.trim().trimStart()
+        : typeof values.crmId === 'number'
+        ? values.crmId
+        : undefined;
     values.age = values.age.trim().trimStart();
+    values.adult = +values.age > 18 ? true : false;
     values.lang = values.lang.toLowerCase().trim().trimStart();
     values.package =
       values.package === undefined
@@ -132,6 +142,10 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
           <Label>
             <AdminInput type="text" name="password" placeholder="Пароль" />
             <AdminInputNote component="p" name="password" />
+          </Label>
+          <Label>
+            <AdminInput type="text" name="crmId" placeholder="ID ліда в CRM" />
+            <AdminInputNote component="p" name="crmId" />
           </Label>
           <Label>
             <AdminInput

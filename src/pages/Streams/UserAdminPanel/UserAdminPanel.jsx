@@ -377,8 +377,10 @@ export const UserAdminPanel = () => {
     name: '',
     mail: '',
     password: '',
+    crmId: '',
     pupilId: '',
     age: '',
+    adult: true,
     lang: '',
     course: '',
     package: '',
@@ -394,6 +396,7 @@ export const UserAdminPanel = () => {
       ),
     mail: yup.string().required("Пошта - обов'язкове поле!"),
     password: yup.string().required("Пароль - обов'язкове поле!"),
+    crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
     pupilId: yup
       .string()
       .min(6, 'Не менше 6 цифр')
@@ -429,8 +432,10 @@ export const UserAdminPanel = () => {
     values.name = values.name.trim().trimStart();
     values.mail = values.mail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
+    values.crmId = values.crmId ? +values.crmId.trim().trimStart() : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
     values.age = values.age.trim().trimStart();
+    values.adult = +values.age >= 18 ? true : false;
     values.lang = values.lang.toLowerCase().trim().trimStart();
     values.package = values.package.toLowerCase().trim().trimStart();
     values.knowledge = values.knowledge.toLowerCase().trim().trimStart();
@@ -577,6 +582,14 @@ export const UserAdminPanel = () => {
               <Label>
                 <AdminInput type="text" name="password" placeholder="Пароль" />
                 <AdminInputNote component="p" name="password" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="crmId"
+                  placeholder="ID ліда в CRM"
+                />
+                <AdminInputNote component="p" name="crmId" />
               </Label>
               <Label>
                 <AdminInput
