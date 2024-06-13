@@ -110,13 +110,14 @@ export const QuizQuestionForm = ({
   const handleSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
 
-    const userSubmit = async crmId => {
+    const userSubmit = async (crmId, contactId) => {
       const userValues = {
         name: values.name.trim().trimStart(),
         mail: values.mail,
         password: values.password,
         pupilId: '0000000',
         crmId: crmId,
+        contactId: contactId,
         age: quizValues.current.age,
         lang: quizValues.current.lang,
         course: '0',
@@ -136,7 +137,7 @@ export const QuizQuestionForm = ({
     try {
       const response = await axios.post('/leads/quiz', values);
       console.log(response);
-      userSubmit(response.data.crmId);
+      userSubmit(response.data.crmId, response.data.contactId);
       resetForm();
       nextQuestion();
     } catch (error) {
