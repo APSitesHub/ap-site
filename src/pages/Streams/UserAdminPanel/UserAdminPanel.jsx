@@ -644,7 +644,7 @@ export const UserAdminPanel = () => {
             <UserDBCaption>Список юзерів з доступом до уроків</UserDBCaption>
             <thead>
               <UserDBRow>
-                <UserHeadCell>CRM ID</UserHeadCell>
+                <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Пошта (логін)</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
@@ -812,7 +812,22 @@ export const UserAdminPanel = () => {
             <tbody>
               {users.map(user => (
                 <UserDBRow key={user._id}>
-                  <UserCell>{user.crmId}</UserCell>
+                  <UserCell>
+                    <a
+                      href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {user.crmId}
+                    </a>{' '}
+                    <a
+                      href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {user.contactId}
+                    </a>
+                  </UserCell>
                   <UserCell>{user.name}</UserCell>
                   <UserCell>{user.mail}</UserCell>
                   <UserCell>{user.password}</UserCell>

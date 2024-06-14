@@ -144,6 +144,7 @@ export const QuizQuestionForm = ({
       console.error(error);
     } finally {
       setIsLoading(isLoading => (isLoading = false));
+      // redirect()
     }
   };
 
