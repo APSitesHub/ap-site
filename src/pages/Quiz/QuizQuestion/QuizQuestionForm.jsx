@@ -8,7 +8,7 @@ import {
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import {
   FormBottomStar,
@@ -31,7 +31,9 @@ import {
   QuizBox,
   QuizFormBtn,
   QuizInput,
+  TelegramBotLink,
   Title,
+  ViberBotLink,
 } from '../Quiz.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -43,7 +45,9 @@ export const QuizQuestionForm = ({
   previousQuestion,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [route, setRoute] = useState('');
   const location = useLocation().pathname;
+  const navigate = useNavigate();
 
   const getTag = location => {
     switch (location) {
@@ -79,10 +83,10 @@ export const QuizQuestionForm = ({
   const leadSchema = yup.object().shape({
     name: yup
       .string()
-      .required("Будь ласка, вкажіть своє ім'я та прізвище!")
+      .required("Будь ласка, вкажіть своє ім'я!")
       .matches(
-        /^[A-Za-zА-Яа-яіІїЇ]+(?:[-'\s][A-Za-zА-Яа-яіІїЇєЄ]+)+$/,
-        "Будь ласка, введіть ім'я та прізвище, не менше двох слів, без цифр та спецсимволів!"
+        /^[A-Za-zА-Яа-яіІїЇ]/,
+        "Будь ласка, введіть ім'я, без цифр та спецсимволів!"
       )
       .min(2, 'Необхідно ввести не менше ніж 2 символи!')
       .max(50, 'Необхідно ввести не більше ніж 50 символів!'),
@@ -139,12 +143,12 @@ export const QuizQuestionForm = ({
       console.log(response);
       userSubmit(response.data.crmId, response.data.contactId);
       resetForm();
-      nextQuestion();
+      console.log(route);
+      navigate(route, { replace: true });
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(isLoading => (isLoading = false));
-      // redirect()
     }
   };
 
@@ -186,7 +190,22 @@ export const QuizQuestionForm = ({
             <HiddenInput type="text" name="quantity" />
             <HiddenInput type="text" name="difficulties" />
             <HiddenInput type="text" name="interests" />
-            <QuizFormBtn type="submit">Надіслати</QuizFormBtn>
+            <QuizFormBtn
+              type="submit"
+              onClick={() => {
+                setRoute('/marathon/tg');
+              }}
+            >
+              <TelegramBotLink />
+            </QuizFormBtn>
+            <QuizFormBtn
+              type="submit"
+              onClick={() => {
+                setRoute('/marathon/viber');
+              }}
+            >
+              <ViberBotLink />
+            </QuizFormBtn>
             {isLoading && <Loader />}
           </PageForm>
         </Formik>
