@@ -19,6 +19,9 @@ import {
   BackgroundFilterTop,
   BackgroungStarLarge,
   BackgroungStarSmall,
+  ChatBotBtn,
+  ChatBotRedirectItem,
+  ChatBotRedirectList,
   CurrentPage,
   Description,
   Logo,
@@ -29,11 +32,11 @@ import {
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
-  QuizFormBtn,
   QuizInput,
   TelegramBotLink,
   Title,
   ViberBotLink,
+  WhatsAppBotLink
 } from '../Quiz.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -156,10 +159,11 @@ export const QuizQuestionForm = ({
     <>
       <QuizBox>
         <Logo />
-        <Title>Давайте познайомимось!</Title>
+        <Title>Майже готово!</Title>
         <Description>
-          Обов’язково введіть свої актуальні дані, щоб отримати доступ до
-          марафону!
+          Щоб якомога швидше отримати доступ до марафону, введіть своє ім'я та
+          номер. Увага! Вводьте актуальні дані, щоб ми змогли з вами зв'язатися
+          і надіслати вам логін і пароль!
         </Description>
         <Formik
           initialValues={initialValues}
@@ -190,22 +194,43 @@ export const QuizQuestionForm = ({
             <HiddenInput type="text" name="quantity" />
             <HiddenInput type="text" name="difficulties" />
             <HiddenInput type="text" name="interests" />
-            <QuizFormBtn
-              type="submit"
-              onClick={() => {
-                setRoute('/marathon/tg');
-              }}
-            >
+
+            <ChatBotRedirectList>
+              <ChatBotRedirectItem>
+                <ChatBotBtn type="submit"
+                  onClick={() => {
+                    setRoute('/marathon/wa');
+                  }}>
+                  <WhatsAppBotLink />
+                </ChatBotBtn>
+              </ChatBotRedirectItem>
+              <ChatBotRedirectItem>
+                <ChatBotBtn
+                  type="submit"
+                  onClick={() => {
+                    setRoute('/marathon/tg');
+                  }}
+                >
+                  <TelegramBotLink />
+                </ChatBotBtn>
+              </ChatBotRedirectItem>
+              <ChatBotRedirectItem>
+                <ChatBotBtn
+                  type="submit"
+                  onClick={() => {
+                    setRoute('/marathon/viber');
+                  }}
+                >
+                  <ViberBotLink />
+                </ChatBotBtn>
+              </ChatBotRedirectItem>
+            </ChatBotRedirectList>
+            {/* <QuizFormBtn>
               <TelegramBotLink />
             </QuizFormBtn>
-            <QuizFormBtn
-              type="submit"
-              onClick={() => {
-                setRoute('/marathon/viber');
-              }}
-            >
+            <QuizFormBtn>
               <ViberBotLink />
-            </QuizFormBtn>
+            </QuizFormBtn> */}
             {isLoading && <Loader />}
           </PageForm>
         </Formik>

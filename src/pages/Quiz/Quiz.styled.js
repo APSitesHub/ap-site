@@ -355,6 +355,20 @@ export const ChatBotRedirectItem = styled.li`
   width: max-content;
 `;
 
+export const ChatBotBtn = styled.button`
+  display: block;
+
+  cursor: pointer;
+
+  transition: transform var(--animation-global), filter var(--animation-global);
+
+  &:hover,
+  &:focus {
+    transform: scale(1.1);
+    filter: drop-shadow(0px 0px 0.5px #00000054);
+  }
+`;
+
 export const ChatBotLink = styled(Link)`
   display: block;
 
