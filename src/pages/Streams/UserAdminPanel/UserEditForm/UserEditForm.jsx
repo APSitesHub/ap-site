@@ -17,8 +17,8 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const initialUserValues = {
-    crmId: userToEdit.crmId,
-    contactId: userToEdit.contactId,
+    crmId: userToEdit.crmId || '',
+    contactId: userToEdit.contactId || '',
     name: userToEdit.name,
     mail: userToEdit.mail,
     password: userToEdit.password,
@@ -41,6 +41,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
     mail: yup.string().required("Пошта - обов'язкове поле!"),
     password: yup.string().required("Пароль - обов'язкове поле!"),
     crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
+    contactId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
     pupilId: yup
       .string()
       .min(6, 'Не менше 6 цифр')
@@ -82,6 +83,12 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
         ? +values.crmId.trim().trimStart()
         : typeof values.crmId === 'number'
         ? values.crmId
+        : undefined;
+    values.contactId =
+      values.contactId && typeof values.contactId !== 'number'
+        ? +values.contactId.trim().trimStart()
+        : typeof values.contactId === 'number'
+        ? values.contactId
         : undefined;
     values.age = values.age.trim().trimStart();
     values.adult = +values.age > 18 ? true : false;
@@ -146,6 +153,14 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
           <Label>
             <AdminInput type="text" name="crmId" placeholder="ID ліда в CRM" />
             <AdminInputNote component="p" name="crmId" />
+          </Label>
+          <Label>
+            <AdminInput
+              type="text"
+              name="contactId"
+              placeholder="ID контакту в CRM"
+            />
+            <AdminInputNote component="p" name="contactId" />
           </Label>
           <Label>
             <AdminInput
