@@ -404,6 +404,7 @@ export const App = () => {
           <Route path="marathon" element={<Service />}>
             <Route path="viber" element={<ViberMarathonRedirect />} />
             <Route path="tg" element={<TelegramMarathonRedirect />} />
+            <Route path="wa" element={<TelegramMarathonRedirect />} />
           </Route>
           <Route path="hr" element={<HR />}>
             <Route path="viber" element={<ViberHRRedirect />} />
