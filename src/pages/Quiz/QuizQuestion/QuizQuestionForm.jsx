@@ -19,9 +19,6 @@ import {
   BackgroundFilterTop,
   BackgroungStarLarge,
   BackgroungStarSmall,
-  ChatBotBtn,
-  ChatBotRedirectItem,
-  ChatBotRedirectList,
   CurrentPage,
   Description,
   Logo,
@@ -33,10 +30,7 @@ import {
   QuizArrowRight,
   QuizBox,
   QuizInput,
-  TelegramBotLink,
-  Title,
-  ViberBotLink,
-  WhatsAppBotLink
+  Title
 } from '../Quiz.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -48,6 +42,7 @@ export const QuizQuestionForm = ({
   previousQuestion,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line
   const [route, setRoute] = useState('');
   const location = useLocation().pathname;
   const navigate = useNavigate();
@@ -195,7 +190,7 @@ export const QuizQuestionForm = ({
             <HiddenInput type="text" name="difficulties" />
             <HiddenInput type="text" name="interests" />
 
-            <ChatBotRedirectList>
+            {/* <ChatBotRedirectList>
               <ChatBotRedirectItem>
                 <ChatBotBtn type="submit"
                   onClick={() => {
@@ -224,7 +219,7 @@ export const QuizQuestionForm = ({
                   <ViberBotLink />
                 </ChatBotBtn>
               </ChatBotRedirectItem>
-            </ChatBotRedirectList>
+            </ChatBotRedirectList> */}
             {/* <QuizFormBtn>
               <TelegramBotLink />
             </QuizFormBtn>
@@ -234,6 +229,7 @@ export const QuizQuestionForm = ({
             {isLoading && <Loader />}
           </PageForm>
         </Formik>
+        <iframe src="https://button.kommo.com/rlrmddz/rmctzrww" title='engagement page'  height='50%' width='100%' onClick={() => {console.log('click');}}></iframe>
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>
