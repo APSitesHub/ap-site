@@ -6,7 +6,7 @@ import {
   Label,
 } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { Formik } from 'formik';
+import { Formik, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
@@ -30,7 +30,7 @@ import {
   QuizArrowRight,
   QuizBox,
   QuizInput,
-  Title
+  Title,
 } from '../Quiz.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -229,7 +229,13 @@ export const QuizQuestionForm = ({
             {isLoading && <Loader />}
           </PageForm>
         </Formik>
-        <iframe src="https://button.kommo.com/rlrmddz/rmctzrww" title='engagement page'  height='50%' width='100%' onClick={() => {console.log('click');}}></iframe>
+        <iframe
+          src="https://button.kommo.com/rlrmddz/rmctzrww"
+          title="engagement page"
+          height="50%"
+          width="100%"
+          onClick={handleSubmit}
+        ></iframe>
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>
