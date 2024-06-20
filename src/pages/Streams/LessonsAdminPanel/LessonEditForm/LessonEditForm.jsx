@@ -51,7 +51,7 @@ export const LessonEditForm = ({ lessonToEdit, closeEditForm }) => {
     level: yup
       .string()
       .required("Рівень - обов'язкове поле!")
-      .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
+      .matches(/^[A-Za-z0-9-]+$/, 'Лише латинські літери'),
     lesson: yup.string().required("Урок - обов'язкове поле!"),
     topic: yup
       .string()

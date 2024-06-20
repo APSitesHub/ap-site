@@ -180,7 +180,7 @@ export const LessonsAdminPanel = () => {
     level: yup
       .string()
       .required("Рівень - обов'язкове поле!")
-      .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери та цифри'),
+      .matches(/^[A-Za-z0-9-]+$/, 'Лише латинські літери та цифри'),
     lesson: yup.string().required("Урок - обов'язкове поле!"),
     topic: yup
       .string()
