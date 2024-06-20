@@ -59,7 +59,31 @@
       href="https://fonts.macpaw.com/css?family=FixelDisplay:500;400;700"
     />
     <title>AP Education Center</title>
-
+    <script>
+      if (window.location.pathname.includes('/ratings-admin-panel')) {
+        (function (a, m, o, c, r, m) {
+          a[m] = {
+            id: '1018775',
+            hash: '4aec48e9df064f25d7498d82186ac9400e50f9789e1b044e6877eb203678f919',
+            locale: 'en',
+            setMeta: function (p) {
+              this.params = (this.params || []).concat([p]);
+            },
+          };
+          a[o] =
+            a[o] ||
+            function () {
+              (a[o].q = a[o].q || []).push(arguments);
+            };
+          var d = a.document,
+            s = d.createElement('script');
+          s.async = true;
+          s.id = m + '_script';
+          s.src = 'https://gso.kommo.com/js/button.js';
+          d.head && d.head.appendChild(s);
+        })(window, 0, 'crmPlugin', 0, 0, 'crm_plugin');
+      }
+    </script>
     <!-- Start Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
