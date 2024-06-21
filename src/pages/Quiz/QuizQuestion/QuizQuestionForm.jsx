@@ -6,7 +6,7 @@ import {
   Label,
 } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { Formik, useFormikContext } from 'formik';
+import { Formik } from 'formik';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
@@ -29,6 +29,7 @@ import {
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
+  QuizFormBtn,
   QuizInput,
   Title,
 } from '../Quiz.styled';
@@ -42,6 +43,7 @@ export const QuizQuestionForm = ({
   previousQuestion,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [leadPage, setLeadPage] = useState('');
   // eslint-disable-next-line
   const [route, setRoute] = useState('');
   const location = useLocation().pathname;
@@ -139,6 +141,7 @@ export const QuizQuestionForm = ({
     try {
       const response = await axios.post('/leads/quiz', values);
       console.log(response);
+      setLeadPage(leadPage => (leadPage = response.data.leadPage));
       userSubmit(response.data.crmId, response.data.contactId);
       resetForm();
       console.log(route);
@@ -165,32 +168,43 @@ export const QuizQuestionForm = ({
           onSubmit={handleSubmit}
           validationSchema={leadSchema}
         >
-          <PageForm>
-            <FormBottomStar />
-            <FormInputBox>
-              <Label>
-                <QuizInput
-                  type="text"
-                  name="name"
-                  placeholder="Ім'я та прізвище*"
-                />
-                <InputNote component="p" name="name" />
-              </Label>
-              <Label>
-                <QuizInput type="tel" name="phone" placeholder="Телефон*" />
-                <InputNote component="p" name="phone" />
-              </Label>
-            </FormInputBox>
-            <HiddenInput type="text" name="tag" />
-            <HiddenInput type="text" name="lang" />
-            <HiddenInput type="text" name="adult" />
-            <HiddenInput type="text" name="age" />
-            <HiddenInput type="text" name="knowledge" />
-            <HiddenInput type="text" name="quantity" />
-            <HiddenInput type="text" name="difficulties" />
-            <HiddenInput type="text" name="interests" />
-
-            {/* <ChatBotRedirectList>
+          <>
+            <PageForm>
+              <FormBottomStar />
+              <FormInputBox>
+                <Label>
+                  <QuizInput
+                    type="text"
+                    name="name"
+                    placeholder="Ім'я та прізвище*"
+                  />
+                  <InputNote component="p" name="name" />
+                </Label>
+                <Label>
+                  <QuizInput type="tel" name="phone" placeholder="Телефон*" />
+                  <InputNote component="p" name="phone" />
+                </Label>
+              </FormInputBox>
+              <HiddenInput type="text" name="tag" />
+              <HiddenInput type="text" name="lang" />
+              <HiddenInput type="text" name="adult" />
+              <HiddenInput type="text" name="age" />
+              <HiddenInput type="text" name="knowledge" />
+              <HiddenInput type="text" name="quantity" />
+              <HiddenInput type="text" name="difficulties" />
+              <HiddenInput type="text" name="interests" />
+              <QuizFormBtn type="submit" height={leadPage ? "500" : "74"}>
+                {leadPage && (
+                  <iframe
+                    src={leadPage}
+                    title="engagement page"
+                    height="50%"
+                    width="100%"
+                    onClick={handleSubmit}
+                  ></iframe>
+                )}
+              </QuizFormBtn>
+              {/* <ChatBotRedirectList>
               <ChatBotRedirectItem>
                 <ChatBotBtn type="submit"
                   onClick={() => {
@@ -220,22 +234,16 @@ export const QuizQuestionForm = ({
                 </ChatBotBtn>
               </ChatBotRedirectItem>
             </ChatBotRedirectList> */}
-            {/* <QuizFormBtn>
+              {/* <QuizFormBtn>
               <TelegramBotLink />
             </QuizFormBtn>
             <QuizFormBtn>
               <ViberBotLink />
             </QuizFormBtn> */}
-            {isLoading && <Loader />}
-          </PageForm>
+              {isLoading && <Loader />}
+            </PageForm>
+          </>
         </Formik>
-        <iframe
-          src="https://button.kommo.com/rlrmddz/rmctzrww"
-          title="engagement page"
-          height="50%"
-          width="100%"
-          onClick={handleSubmit}
-        ></iframe>
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>
