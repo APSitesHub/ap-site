@@ -72,6 +72,8 @@ export const Kahoots = ({
         return 'deutsch';
       case 'b1beginner':
         return 'b1kidsbeginner';
+      case 'b2beginner':
+        return 'b2kidsbeginner';
       case 'pilot-a1':
         return 'a1';
       case 'test1':

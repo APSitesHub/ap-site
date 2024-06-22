@@ -31,7 +31,7 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-export const StreamPolskiA0 = () => {
+export const KidsC1 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -82,7 +82,7 @@ export const StreamPolskiA0 = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'Polski A0 | AP Education';
+    document.title = 'C1 English Kids | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
@@ -92,7 +92,6 @@ export const StreamPolskiA0 = () => {
     });
 
     const getMessages = async () => {
-      console.log('get');
       try {
         const dbMessages = await axios.get(
           `https://ap-chat-server.onrender.com/messages/room`,
@@ -106,6 +105,7 @@ export const StreamPolskiA0 = () => {
           message =>
             new Date(message.createdAt).getDate() === new Date().getDate()
         );
+        console.log(todayMessages);
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
         console.log(error);
@@ -185,8 +185,7 @@ export const StreamPolskiA0 = () => {
 
   return (
     <>
-      {(links.polskia0 === undefined || links.polskia0[0] < 10) &&
-      !isLoading ? (
+      {(links.c1kids === undefined || links.c1kids[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Поки що трансляції тут немає! <br />
@@ -258,7 +257,7 @@ export const StreamPolskiA0 = () => {
                 }}
                 width="100%"
                 height="100vh"
-                url={links.polskia0}
+                url={links.c1kids}
               />
             </VideoBox>
 

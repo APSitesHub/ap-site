@@ -48,6 +48,8 @@ const TeacherPage = () => {
         return 'deutscha2';
       case 'deutsch-a2free':
         return 'deutscha2free';
+      case 'deutsch-b1':
+        return 'deutschb1';
       case 'polski-a0':
         return 'polskia0';
       case 'polski-a1':
@@ -56,6 +58,8 @@ const TeacherPage = () => {
         return 'polskifree';
       case 'polski-a2':
         return 'polskia2';
+      case 'polski-b1':
+        return 'polskib1';
       default:
         return location;
     }

@@ -12,10 +12,12 @@ import { StreamA2Free } from 'pages/Streams/A2/StreamA2Free';
 import { AdminPanel } from 'pages/Streams/AdminPanel/AdminPanel';
 import { StreamB1 } from 'pages/Streams/B1/StreamB1';
 import { StreamB2 } from 'pages/Streams/B2/StreamB2';
+import { StreamC1 } from 'pages/Streams/C1/StreamC1';
 import { CollectionsAdminPanel } from 'pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel';
 import { StreamDeutschA0 } from 'pages/Streams/Deutsch A0/StreamDeutschA0';
 import { StreamDeutschA2 } from 'pages/Streams/Deutsch A2/StreamDeutschA2';
 import { StreamDeutschA2Free } from 'pages/Streams/Deutsch A2/StreamDeutschA2Free';
+import { StreamDeutschB1 } from 'pages/Streams/Deutsch B1/StreamDeutschB1';
 import { StreamDeutsch } from 'pages/Streams/Deutsch/StreamDeutsch';
 import { StreamDeutschFree } from 'pages/Streams/Deutsch/StreamDeutschFree';
 import { HostKahootAdminPanel } from 'pages/Streams/HostKahootAdminPanel/HostKahootAdminPanel';
@@ -24,6 +26,7 @@ import { LessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/LessonsAdminP
 import { TeacherLessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/TeacherLessonsAdminPanel/TeacherLessonsAdminPanel';
 import { StreamPolskiA0 } from 'pages/Streams/Polski A0/StreamPolskiA0';
 import { StreamPolskiA2 } from 'pages/Streams/Polski A2/StreamPolskiA2';
+import { StreamPolskiB1 } from 'pages/Streams/Polski B1/StreamPolskiB1';
 import { StreamPolski } from 'pages/Streams/Polski/StreamPolski';
 import { StreamPolskiFree } from 'pages/Streams/Polski/StreamPolskiFree';
 import { RatingsAdminPanel } from 'pages/Streams/RatingsAdminPanel/RatingsAdminPanel';
@@ -36,6 +39,8 @@ import { KidsA2 } from 'pages/StreamsKids/KidsA2/KidsA2';
 import { KidsB1 } from 'pages/StreamsKids/KidsB1/KidsB1';
 import { KidsB1Beginner } from 'pages/StreamsKids/KidsB1Beginner/KidsB1Beginner';
 import { KidsB2 } from 'pages/StreamsKids/KidsB2/KidsB2';
+import { KidsB2Beginner } from 'pages/StreamsKids/KidsB2Beginner/KidsB2Beginner';
+import { KidsC1 } from 'pages/StreamsKids/KidsС1/KidsС1';
 import TeacherTrialPage from 'pages/TeacherPage/TeacherTrialPage';
 import { ThankYouPage } from 'pages/ThankYouPage/ThankYouPage';
 import { Suspense, lazy } from 'react';
@@ -43,8 +48,8 @@ import { Toaster } from 'react-hot-toast';
 import { Route, Routes, useSearchParams } from 'react-router-dom';
 import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
-import { SharedLayout } from './SharedLayout/SharedLayout';
 import { Loader } from './SharedLayout/Loaders/Loader';
+import { SharedLayout } from './SharedLayout/SharedLayout';
 
 // const Home = lazy(() =>
 //   import(/* webpackChunkName: "Homepage" */ '../pages/Home/Home')
@@ -115,15 +120,19 @@ const StreamA2SpeakingClub = lazy(() =>
 );
 const StreamB1SpeakingClub = lazy(() =>
   import(
-    /* webpackChunkName: "Speaking Club A1 page" */ '../pages/Trials/StreamB1SpeakingClub'
+    /* webpackChunkName: "Speaking Club B1 page" */ '../pages/Trials/StreamB1SpeakingClub'
   )
 );
 const StreamB2SpeakingClub = lazy(() =>
   import(
-    /* webpackChunkName: "Speaking Club A2 page" */ '../pages/Trials/StreamB2SpeakingClub'
+    /* webpackChunkName: "Speaking Club B2 page" */ '../pages/Trials/StreamB2SpeakingClub'
   )
 );
-
+const StreamC1SpeakingClub = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Club C1 page" */ '../pages/Trials/StreamC1SpeakingClub'
+  )
+);
 const StreamA0KidsSpeakingClub = lazy(() =>
   import(
     /* webpackChunkName: "Speaking Club A0 Kids page" */ '../pages/Trials/StreamA0KidsSpeakingClub'
@@ -144,6 +153,11 @@ const StreamB1KidsBeginnerSpeakingClub = lazy(() =>
     /* webpackChunkName: "Speaking Club B1 Kids Beginner page" */ '../pages/Trials/StreamB1KidsBeginnerSpeakingClub'
   )
 );
+const StreamB2KidsBeginnerSpeakingClub = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Club B2 Kids Beginner page" */ '../pages/Trials/StreamB2KidsBeginnerSpeakingClub'
+  )
+);
 const StreamB1KidsSpeakingClub = lazy(() =>
   import(
     /* webpackChunkName: "Speaking Club B1 Kids page" */ '../pages/Trials/StreamB1KidsSpeakingClub'
@@ -154,7 +168,11 @@ const StreamB2KidsSpeakingClub = lazy(() =>
     /* webpackChunkName: "Speaking Club B2 Kids page" */ '../pages/Trials/StreamB2KidsSpeakingClub'
   )
 );
-
+const StreamC1KidsSpeakingClub = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Club C1 Kids page" */ '../pages/Trials/StreamC1KidsSpeakingClub'
+  )
+);
 const StreamDeutschA0Sprechclub = lazy(() =>
   import(
     /* webpackChunkName: "Deutsch Sprechclub A0 page" */ '../pages/Trials/StreamDeutschA0Sprechclub'
@@ -168,6 +186,11 @@ const StreamDeutschA1Sprechclub = lazy(() =>
 const StreamDeutschA2Sprechclub = lazy(() =>
   import(
     /* webpackChunkName: "Deutsch Sprechclub A2 page" */ '../pages/Trials/StreamDeutschA2Sprechclub'
+  )
+);
+const StreamDeutschB1Sprechclub = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Sprechclub B1 page" */ '../pages/Trials/StreamDeutschB1Sprechclub'
   )
 );
 
@@ -186,7 +209,11 @@ const StreamPolskiA2SpeakingClub = lazy(() =>
     /* webpackChunkName: "Polski Speaking Club A2 page" */ '../pages/Trials/StreamPolskiA2SpeakingClub'
   )
 );
-
+const StreamPolskiB1SpeakingClub = lazy(() =>
+  import(
+    /* webpackChunkName: "Polski Speaking Club B1 page" */ '../pages/Trials/StreamPolskiB1SpeakingClub'
+  )
+);
 const StreamTrialPolski = lazy(() =>
   import(
     /* webpackChunkName: "Polska trials page" */ '../pages/Trials/StreamTrialPolski'
@@ -323,6 +350,9 @@ export const App = () => {
             <Route path="b2" element={<StreamB2 />} />
             <Route path="b2sc" element={<StreamB2SpeakingClub />} />
             <Route path="b2-chat" element={<WindowedChat />} />
+            <Route path="c1" element={<StreamC1 />} />
+            <Route path="c1sc" element={<StreamC1SpeakingClub />} />
+            <Route path="c1-chat" element={<WindowedChat />} />
             <Route path="a1free" element={<StreamA1Free />} />
             <Route path="a1free-chat" element={<WindowedChat />} />
             <Route path="a2free" element={<StreamA2Free />} />
@@ -336,6 +366,9 @@ export const App = () => {
             <Route path="deutscha2" element={<StreamDeutschA2 />} />
             <Route path="dea2sc" element={<StreamDeutschA2Sprechclub />} />
             <Route path="deutscha2-chat" element={<WindowedChat />} />
+            <Route path="deutschb1" element={<StreamDeutschB1 />} />
+            <Route path="deb1sc" element={<StreamDeutschB1Sprechclub />} />
+            <Route path="deutschb1-chat" element={<WindowedChat />} />
             <Route path="deutschfree" element={<StreamDeutschFree />} />
             <Route path="deutschfree-chat" element={<WindowedChat />} />
             <Route path="deutscha2free" element={<StreamDeutschA2Free />} />
@@ -349,6 +382,9 @@ export const App = () => {
             <Route path="polskia2" element={<StreamPolskiA2 />} />
             <Route path="pla2sc" element={<StreamPolskiA2SpeakingClub />} />
             <Route path="polskia2-chat" element={<WindowedChat />} />
+            <Route path="polskib1" element={<StreamPolskiB1 />} />
+            <Route path="plb1sc" element={<StreamPolskiB1SpeakingClub />} />
+            <Route path="polskib1-chat" element={<WindowedChat />} />
             <Route path="polskifree" element={<StreamPolskiFree />} />
             <Route path="polskifree-chat" element={<WindowedChat />} />
             <Route path="test" element={<StreamTest />} />
@@ -388,12 +424,21 @@ export const App = () => {
             <Route path="b2" element={<KidsB2 />} />
             <Route path="b2sc" element={<StreamB2KidsSpeakingClub />} />
             <Route path="b2-chat" element={<WindowedChat />} />
+            <Route path="c1" element={<KidsC1 />} />
+            <Route path="c1sc" element={<StreamC1KidsSpeakingClub />} />
+            <Route path="c1-chat" element={<WindowedChat />} />
             <Route path="b1beginner" element={<KidsB1Beginner />} />
             <Route
               path="b1beginnersc"
               element={<StreamB1KidsBeginnerSpeakingClub />}
             />
             <Route path="b1beginner-chat" element={<WindowedChat />} />
+            <Route path="b2beginner" element={<KidsB2Beginner />} />
+            <Route
+              path="b2beginnersc"
+              element={<StreamB2KidsBeginnerSpeakingClub />}
+            />
+            <Route path="b2beginner-chat" element={<WindowedChat />} />
             <Route path="a1free" element={<KidsA1Free />} />
             <Route path="a1free-chat" element={<WindowedChat />} />
           </Route>
@@ -420,6 +465,7 @@ export const App = () => {
             <Route path="a2" element={<TeacherPage />} />
             <Route path="b1" element={<TeacherPage />} />
             <Route path="b2" element={<TeacherPage />} />
+            <Route path="c1" element={<TeacherPage />} />
             <Route path="a1free" element={<TeacherPage />} />
             <Route path="a2free" element={<TeacherPage />} />
             <Route path="a0kids" element={<TeacherPage />} />
@@ -427,17 +473,21 @@ export const App = () => {
             <Route path="a2kids" element={<TeacherPage />} />
             <Route path="b1kids" element={<TeacherPage />} />
             <Route path="b2kids" element={<TeacherPage />} />
+            <Route path="c1kids" element={<TeacherPage />} />
             <Route path="a1kidsfree" element={<TeacherPage />} />
             <Route path="b1kidsbeginner" element={<TeacherPage />} />
+            <Route path="b2kidsbeginner" element={<TeacherPage />} />
             <Route path="deutsch-a0" element={<TeacherPage />} />
             <Route path="deutsch-a1" element={<TeacherPage />} />
             <Route path="deutsch-a2" element={<TeacherPage />} />
+            <Route path="deutsch-b1" element={<TeacherPage />} />
             <Route path="deutsch-a1free" element={<TeacherPage />} />
             <Route path="deutsch-a2free" element={<TeacherPage />} />
             <Route path="polski-a0" element={<TeacherPage />} />
             <Route path="polski-a1" element={<TeacherPage />} />
             <Route path="polski-a1free" element={<TeacherPage />} />
             <Route path="polski-a2" element={<TeacherPage />} />
+            <Route path="polski-b1" element={<TeacherPage />} />
             <Route path="test" element={<TeacherPage />} />
             <Route path="trials" element={<TeacherTrialPage />} />
             <Route path="trials-kids" element={<TeacherTrialPage />} />

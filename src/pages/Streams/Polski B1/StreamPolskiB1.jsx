@@ -31,7 +31,7 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-export const StreamPolskiA0 = () => {
+export const StreamPolskiB1 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -82,7 +82,7 @@ export const StreamPolskiA0 = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'Polski A0 | AP Education';
+    document.title = 'Polski B1 | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
@@ -185,7 +185,7 @@ export const StreamPolskiA0 = () => {
 
   return (
     <>
-      {(links.polskia0 === undefined || links.polskia0[0] < 10) &&
+      {(links.polskib1 === undefined || links.polskib1[0] < 10) &&
       !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
@@ -258,7 +258,7 @@ export const StreamPolskiA0 = () => {
                 }}
                 width="100%"
                 height="100vh"
-                url={links.polskia0}
+                url={links.polskib1}
               />
             </VideoBox>
 

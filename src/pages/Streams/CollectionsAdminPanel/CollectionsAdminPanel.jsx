@@ -72,16 +72,19 @@ export const CollectionsAdminPanel = () => {
     a2: '',
     b1: '',
     b2: '',
+    c1: '',
     a1free: '',
     a2free: '',
     deutscha0: '',
     deutsch: '',
     deutscha2: '',
+    deutschb1: '',
     deutschfree: '',
     deutscha2free: '',
     polskia0: '',
     polski: '',
     polskia2: '',
+    polskib1: '',
     polskifree: '',
     trials: '',
     trials_kids: '',
@@ -92,7 +95,9 @@ export const CollectionsAdminPanel = () => {
     a2kids: '',
     b1kids: '',
     b2kids: '',
+    c1kids: '',
     b1kidsbeginner: '',
+    b2kidsbeginner: '',
     a1kidsfree: '',
     test: '',
   };
@@ -103,16 +108,19 @@ export const CollectionsAdminPanel = () => {
     a2: yup.string().optional(),
     b1: yup.string().optional(),
     b2: yup.string().optional(),
+    c1: yup.string().optional(),
     a1free: yup.string().optional(),
     a2free: yup.string().optional(),
     deutscha0: yup.string().optional(),
     deutsch: yup.string().optional(),
     deutscha2: yup.string().optional(),
+    deutschb1: yup.string().optional(),
     deutschfree: yup.string().optional(),
     deutscha2free: yup.string().optional(),
     polskia0: yup.string().optional(),
     polski: yup.string().optional(),
     polskia2: yup.string().optional(),
+    polskib1: yup.string().optional(),
     polskifree: yup.string().optional(),
     trials: yup.string().optional(),
     trials_kids: yup.string().optional(),
@@ -123,7 +131,9 @@ export const CollectionsAdminPanel = () => {
     a2kids: yup.string().optional(),
     b1kids: yup.string().optional(),
     b2kids: yup.string().optional(),
+    c1kids: yup.string().optional(),
     b1kidsbeginner: yup.string().optional(),
+    b2kidsbeginner: yup.string().optional(),
     a1kidsfree: yup.string().optional(),
     test: yup.string().optional(),
   });
@@ -207,6 +217,10 @@ export const CollectionsAdminPanel = () => {
                 <AdminInputNote component="p" name="b2" />
               </Label>
               <Label>
+                <AdminInput type="text" name="c1" placeholder="C1 collection" />
+                <AdminInputNote component="p" name="c1" />
+              </Label>
+              <Label>
                 <AdminInput
                   type="text"
                   name="a1free"
@@ -249,6 +263,14 @@ export const CollectionsAdminPanel = () => {
               <Label>
                 <AdminInput
                   type="text"
+                  name="deutschb1"
+                  placeholder="Deutsch B1 collection"
+                />
+                <AdminInputNote component="p" name="deutschb1" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
                   name="deutschfree"
                   placeholder="Deutsch A1 free collection"
                 />
@@ -285,6 +307,14 @@ export const CollectionsAdminPanel = () => {
                   placeholder="Polski A2 collection"
                 />
                 <AdminInputNote component="p" name="polskia2" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="polskib1"
+                  placeholder="Polski B1 collection"
+                />
+                <AdminInputNote component="p" name="polskib1" />
               </Label>
               <Label>
                 <AdminInput
@@ -369,10 +399,26 @@ export const CollectionsAdminPanel = () => {
               <Label>
                 <AdminInput
                   type="text"
+                  name="c1kids"
+                  placeholder="C1 Kids collection"
+                />
+                <AdminInputNote component="p" name="b2kids" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
                   name="b1kidsbeginner"
                   placeholder="B1 Kids Beginner collection"
                 />
                 <AdminInputNote component="p" name="b1kidsbeginner" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="b2kidsbeginner"
+                  placeholder="B2 Kids Beginner collection"
+                />
+                <AdminInputNote component="p" name="b2kidsbeginner" />
               </Label>
               <Label>
                 <AdminInput

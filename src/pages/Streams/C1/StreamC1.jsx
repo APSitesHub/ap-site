@@ -31,7 +31,7 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-export const StreamPolskiA0 = () => {
+export const StreamC1 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -82,7 +82,7 @@ export const StreamPolskiA0 = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'Polski A0 | AP Education';
+    document.title = 'C1 English | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
@@ -185,8 +185,7 @@ export const StreamPolskiA0 = () => {
 
   return (
     <>
-      {(links.polskia0 === undefined || links.polskia0[0] < 10) &&
-      !isLoading ? (
+      {(links.c1 === undefined || links.c1[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Поки що трансляції тут немає! <br />
@@ -258,7 +257,7 @@ export const StreamPolskiA0 = () => {
                 }}
                 width="100%"
                 height="100vh"
-                url={links.polskia0}
+                url={links.c1}
               />
             </VideoBox>
 
