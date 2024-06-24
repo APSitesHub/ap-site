@@ -58,7 +58,7 @@ export const LeadFormPage = ({ utms }) => {
       case '/form-b':
         return 'digitalization';
       case '/form-c':
-        return 'ukryoutube_sonia';
+        return 'travinska';
       case '/form-d':
         return 'eng_for_ukr';
       case '/form-e':

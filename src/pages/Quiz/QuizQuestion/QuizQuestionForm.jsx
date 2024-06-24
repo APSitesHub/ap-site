@@ -6,8 +6,8 @@ import {
   Label,
 } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { Formik } from 'formik';
-import { useState } from 'react';
+import { Formik, useFormikContext } from 'formik';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -29,9 +29,8 @@ import {
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
-  QuizFormBtn,
   QuizInput,
-  Title,
+  Title
 } from '../Quiz.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -46,6 +45,7 @@ export const QuizQuestionForm = ({
   const [leadPage, setLeadPage] = useState('');
   // eslint-disable-next-line
   const [route, setRoute] = useState('');
+  const [okay, setOkay] = useState([false, false]);
   const location = useLocation().pathname;
   const navigate = useNavigate();
 
@@ -111,6 +111,23 @@ export const QuizQuestionForm = ({
     interests: yup.string().required(),
   });
 
+  const AutoSubmitForm = () => {
+    const { values, submitForm } = useFormikContext();
+    console.log(values);
+    console.log(submitForm);
+    useEffect(() => {
+      // Submit the form imperatively as an effect as soon as form values.token are 6 digits long
+      if (okay[0] && okay[1]) {
+        submitForm();
+      }
+    }, [values, submitForm]);
+    return null;
+  };
+
+  const handleBlur = i => {
+    setOkay(okay => (okay = okay.toSpliced(i, 1, true)));
+  };
+
   const handleSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
 
@@ -150,6 +167,7 @@ export const QuizQuestionForm = ({
       console.error(error);
     } finally {
       setIsLoading(isLoading => (isLoading = false));
+      setOkay(okay => (okay = [false, false]));
     }
   };
 
@@ -177,11 +195,17 @@ export const QuizQuestionForm = ({
                     type="text"
                     name="name"
                     placeholder="Ім'я та прізвище*"
+                    onBlur={() => handleBlur(0)}
                   />
                   <InputNote component="p" name="name" />
                 </Label>
                 <Label>
-                  <QuizInput type="tel" name="phone" placeholder="Телефон*" />
+                  <QuizInput
+                    type="tel"
+                    name="phone"
+                    placeholder="Телефон*"
+                    onBlur={() => handleBlur(1)}
+                  />
                   <InputNote component="p" name="phone" />
                 </Label>
               </FormInputBox>
@@ -193,17 +217,18 @@ export const QuizQuestionForm = ({
               <HiddenInput type="text" name="quantity" />
               <HiddenInput type="text" name="difficulties" />
               <HiddenInput type="text" name="interests" />
-              <QuizFormBtn type="submit" height={leadPage ? "500" : "74"}>
-                {leadPage && (
+              <AutoSubmitForm />
+              {/* <QuizFormBtn type="submit" height={leadPage ? '500' : '74'}> */}
+              {/* {leadPage && (
                   <iframe
                     src={leadPage}
                     title="engagement page"
-                    height="50%"
+                    height="100%"
                     width="100%"
                     onClick={handleSubmit}
                   ></iframe>
-                )}
-              </QuizFormBtn>
+                )} */}
+              {/* </QuizFormBtn> */}
               {/* <ChatBotRedirectList>
               <ChatBotRedirectItem>
                 <ChatBotBtn type="submit"
@@ -244,6 +269,16 @@ export const QuizQuestionForm = ({
             </PageForm>
           </>
         </Formik>
+        leadPage: {leadPage}
+        {leadPage && (
+          <iframe
+            src={leadPage}
+            title="engagement page"
+            height="100%"
+            width="100%"
+            onClick={handleSubmit}
+          ></iframe>
+        )}
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>

@@ -409,3 +409,13 @@ export const QuizInput = styled(Input)`
 export const QuizFormBtn = styled(FormBtn)`
   font-size: 24px;
 `;
+
+export const QuizEngagementPage = styled.iframe`
+  position: absolute;
+  top: 43%;
+  left: 0;
+
+  @media screen and (min-width: 410px) {
+    top: 43%;
+  }
+`;
