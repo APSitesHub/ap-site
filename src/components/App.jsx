@@ -273,6 +273,10 @@ const TelegramMarathonRedirect = lazy(() =>
   )
 );
 
+const WhatsAppRedirect = lazy(() => import(
+  /* webpackChunkName: "Marathon redirect page to WhatsApp chat" */ '../pages/Service/WhatsAppRedirect/WhatsAppRedirect'
+));
+
 const NotFound = lazy(() =>
   import(/* webpackChunkName: "Not Found" */ '../pages/NotFound/NotFound')
 );
@@ -449,7 +453,7 @@ export const App = () => {
           <Route path="marathon" element={<Service />}>
             <Route path="viber" element={<ViberMarathonRedirect />} />
             <Route path="tg" element={<TelegramMarathonRedirect />} />
-            <Route path="wa" element={<TelegramMarathonRedirect />} />
+            <Route path="wa" element={<WhatsAppRedirect />} />
           </Route>
           <Route path="hr" element={<HR />}>
             <Route path="viber" element={<ViberHRRedirect />} />

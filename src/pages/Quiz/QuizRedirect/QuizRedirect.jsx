@@ -14,6 +14,7 @@ import {
   TelegramBotLink,
   Title,
   ViberBotLink,
+  WhatsAppBotLink,
 } from '../Quiz.styled';
 
 export const QuizRedirect = () => {
@@ -21,17 +22,17 @@ export const QuizRedirect = () => {
     <>
       <QuizBox>
         <Logo />
-        <Title>{`Майже готово!`}</Title>
+        <Title>{`Обов'язково перейдіть в месенджер!`}</Title>
         <Description>
           Оберіть месенджер, в якому вам буде зручно продовжити
           реєстрацію на марафон!
         </Description>
         <ChatBotRedirectList>
-          {/* <ChatBotRedirectItem>
-            <ChatBotLink>
+          <ChatBotRedirectItem>
+            <ChatBotLink to={'/marathon/wa'}>
               <WhatsAppBotLink />
             </ChatBotLink>
-          </ChatBotRedirectItem> */}
+          </ChatBotRedirectItem>
           <ChatBotRedirectItem>
             <ChatBotLink to={'/marathon/tg'}>
               <TelegramBotLink />

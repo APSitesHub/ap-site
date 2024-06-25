@@ -6,8 +6,8 @@ import {
   Label,
 } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { Formik, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { Formik } from 'formik';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -29,6 +29,7 @@ import {
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
+  QuizFormBtn,
   QuizInput,
   Title
 } from '../Quiz.styled';
@@ -42,12 +43,11 @@ export const QuizQuestionForm = ({
   previousQuestion,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [leadPage, setLeadPage] = useState('');
   // eslint-disable-next-line
-  const [route, setRoute] = useState('');
-  const [okay, setOkay] = useState([false, false]);
+  const [route, setRoute] = useState('/thankyou');
   const location = useLocation().pathname;
   const navigate = useNavigate();
+  // const [wrong, setWrong] = useState('');
 
   const getTag = location => {
     switch (location) {
@@ -85,7 +85,7 @@ export const QuizQuestionForm = ({
       .string()
       .required("Будь ласка, вкажіть своє ім'я!")
       .matches(
-        /^[A-Za-zА-Яа-яіІїЇ]/,
+        /^[A-Za-zА-Яа-яіІїЇєЄ]/,
         "Будь ласка, введіть ім'я, без цифр та спецсимволів!"
       )
       .min(2, 'Необхідно ввести не менше ніж 2 символи!')
@@ -111,23 +111,6 @@ export const QuizQuestionForm = ({
     interests: yup.string().required(),
   });
 
-  const AutoSubmitForm = () => {
-    const { values, submitForm } = useFormikContext();
-    console.log(values);
-    console.log(submitForm);
-    useEffect(() => {
-      // Submit the form imperatively as an effect as soon as form values.token are 6 digits long
-      if (okay[0] && okay[1]) {
-        submitForm();
-      }
-    }, [values, submitForm]);
-    return null;
-  };
-
-  const handleBlur = i => {
-    setOkay(okay => (okay = okay.toSpliced(i, 1, true)));
-  };
-
   const handleSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
 
@@ -148,7 +131,10 @@ export const QuizQuestionForm = ({
       };
 
       try {
-        const response = await axios.post('/users/new', userValues);
+        const response = await axios.post(
+          '/users/new',
+          userValues
+        );
         console.log(response);
       } catch (error) {
         console.error(error);
@@ -156,18 +142,20 @@ export const QuizQuestionForm = ({
     };
 
     try {
-      const response = await axios.post('/leads/quiz', values);
+      const response = await axios.post(
+        '/leads/quiz',
+        values
+      );
       console.log(response);
-      setLeadPage(leadPage => (leadPage = response.data.leadPage));
       userSubmit(response.data.crmId, response.data.contactId);
       resetForm();
       console.log(route);
       navigate(route, { replace: true });
     } catch (error) {
       console.error(error);
+      // setWrong(wrong => (wrong = error));
     } finally {
       setIsLoading(isLoading => (isLoading = false));
-      setOkay(okay => (okay = [false, false]));
     }
   };
 
@@ -186,55 +174,40 @@ export const QuizQuestionForm = ({
           onSubmit={handleSubmit}
           validationSchema={leadSchema}
         >
-          <>
-            <PageForm>
-              <FormBottomStar />
-              <FormInputBox>
-                <Label>
-                  <QuizInput
-                    type="text"
-                    name="name"
-                    placeholder="Ім'я та прізвище*"
-                    onBlur={() => handleBlur(0)}
-                  />
-                  <InputNote component="p" name="name" />
-                </Label>
-                <Label>
-                  <QuizInput
-                    type="tel"
-                    name="phone"
-                    placeholder="Телефон*"
-                    onBlur={() => handleBlur(1)}
-                  />
-                  <InputNote component="p" name="phone" />
-                </Label>
-              </FormInputBox>
-              <HiddenInput type="text" name="tag" />
-              <HiddenInput type="text" name="lang" />
-              <HiddenInput type="text" name="adult" />
-              <HiddenInput type="text" name="age" />
-              <HiddenInput type="text" name="knowledge" />
-              <HiddenInput type="text" name="quantity" />
-              <HiddenInput type="text" name="difficulties" />
-              <HiddenInput type="text" name="interests" />
-              <AutoSubmitForm />
-              {/* <QuizFormBtn type="submit" height={leadPage ? '500' : '74'}> */}
-              {/* {leadPage && (
-                  <iframe
-                    src={leadPage}
-                    title="engagement page"
-                    height="100%"
-                    width="100%"
-                    onClick={handleSubmit}
-                  ></iframe>
-                )} */}
-              {/* </QuizFormBtn> */}
-              {/* <ChatBotRedirectList>
+          <PageForm>
+            <FormBottomStar />
+            <FormInputBox>
+              <Label>
+                <QuizInput
+                  type="text"
+                  name="name"
+                  placeholder="Ім'я та прізвище*"
+                />
+                <InputNote component="p" name="name" />
+              </Label>
+              <Label>
+                <QuizInput type="tel" name="phone" placeholder="Телефон*" />
+                <InputNote component="p" name="phone" />
+              </Label>
+            </FormInputBox>
+            <HiddenInput type="text" name="tag" />
+            <HiddenInput type="text" name="lang" />
+            <HiddenInput type="text" name="adult" />
+            <HiddenInput type="text" name="age" />
+            <HiddenInput type="text" name="knowledge" />
+            <HiddenInput type="text" name="quantity" />
+            <HiddenInput type="text" name="difficulties" />
+            <HiddenInput type="text" name="interests" />
+            {/* <button type="submit">Надіслати</button> */}
+            {/* {wrong && `щось не цейво, а саме: ${wrong}`} */}
+            {/* <ChatBotRedirectList>
               <ChatBotRedirectItem>
-                <ChatBotBtn type="submit"
+                <ChatBotBtn
+                  type="submit"
                   onClick={() => {
                     setRoute('/marathon/wa');
-                  }}>
+                  }}
+                >
                   <WhatsAppBotLink />
                 </ChatBotBtn>
               </ChatBotRedirectItem>
@@ -259,26 +232,16 @@ export const QuizQuestionForm = ({
                 </ChatBotBtn>
               </ChatBotRedirectItem>
             </ChatBotRedirectList> */}
-              {/* <QuizFormBtn>
+            {/* <QuizFormBtn>
               <TelegramBotLink />
             </QuizFormBtn>
             <QuizFormBtn>
               <ViberBotLink />
             </QuizFormBtn> */}
-              {isLoading && <Loader />}
-            </PageForm>
-          </>
+            <QuizFormBtn>НАДІСЛАТИ</QuizFormBtn>
+            {isLoading && <Loader />}
+          </PageForm>
         </Formik>
-        leadPage: {leadPage}
-        {leadPage && (
-          <iframe
-            src={leadPage}
-            title="engagement page"
-            height="100%"
-            width="100%"
-            onClick={handleSubmit}
-          ></iframe>
-        )}
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>

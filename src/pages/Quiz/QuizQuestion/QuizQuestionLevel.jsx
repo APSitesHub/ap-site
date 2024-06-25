@@ -1,8 +1,7 @@
-import zero from '../../../img/quiz/zero.png';
 import beginner from '../../../img/quiz/beginner.png';
 import middle from '../../../img/quiz/middle.png';
 import senior from '../../../img/quiz/senior.png';
-
+import zero from '../../../img/quiz/zero.png';
 import {
   BackgroundFilterBottomLeft,
   BackgroundFilterTopRight,
@@ -31,9 +30,35 @@ export const QuizQuestionLevel = ({
   nextQuestion,
   quizValues,
 }) => {
-  const setQuizValue = (e, value) => {
+  // const [isLoading, setIsLoading] = useState(false);
+
+  const mailRandomId = Math.floor(Math.random() * 10000).toString();
+  const passwordRandom = Math.floor(Math.random() * 10000).toString();
+
+  quizValues.current.mail =
+    mailRandomId.length < 4
+      ? `marathon-ap0${mailRandomId}@ap.edu`
+      : `marathon-ap${mailRandomId}@ap.edu`;
+  quizValues.current.password =
+    passwordRandom.length < 4 ? '0' + passwordRandom : passwordRandom;
+
+  // const interimLeadSubmit = async () => {
+  //   setIsLoading(isLoading => (isLoading = true));
+  //   try {
+  //     setIsLoading(isLoading => (isLoading = true));
+  //     const response = await axios.post('http://localhost:5000/leads/quiz-int', quizValues.current);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setIsLoading(isLoading => (isLoading = false));
+  //   }
+  // };
+
+  const setQuizValue = async (e, value) => {
     quizValues.current.knowledge = value;
     continueQuiz(e);
+    // await interimLeadSubmit();
   };
 
   return (
@@ -45,7 +70,9 @@ export const QuizQuestionLevel = ({
         </Question>
         <QuizButtonBox>
           <QuizButton
-            onClick={e => setQuizValue(e, 'a0')}
+            onClick={e => {
+              setQuizValue(e, 'a0');
+            }}
             className={quizValues.current?.knowledge === 'a0' && 'chosen'}
           >
             <QuizButtonContent>
@@ -109,6 +136,7 @@ export const QuizQuestionLevel = ({
             <QuizArrowRight />
           </NextPageBtn>
         </Pagination>
+        {/* {isLoading && <Loader />} */}
       </QuizBox>
     </>
   );
