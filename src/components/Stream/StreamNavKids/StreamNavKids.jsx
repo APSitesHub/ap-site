@@ -18,9 +18,9 @@ export const StreamNavKids = () => {
             Щоб знайти потрібну трансляцію, просто оберіть рівень:
           </StreamNavDescription>
           <StreamNavList>
-            <StreamNavItem>
+            {/* <StreamNavItem>
               <StreamNavLink to={'/streams-kids/a0'}>A0</StreamNavLink>
-            </StreamNavItem>
+            </StreamNavItem> */}
             <StreamNavItem>
               <StreamNavLink to={'/streams-kids/a1'}>A1</StreamNavLink>
             </StreamNavItem>
@@ -31,7 +31,10 @@ export const StreamNavKids = () => {
               <StreamNavLink to={'/streams-kids/b1'}>B1</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
-              <StreamNavLink to={'/streams-kids/b2'}>B2</StreamNavLink>
+              <StreamNavLink to={'/streams-kids/b1beginner'}>B1 Beginner</StreamNavLink>
+            </StreamNavItem>
+            <StreamNavItem>
+              <StreamNavLink to={'/streams-kids/b2beginner'}>B2 Beginner</StreamNavLink>
             </StreamNavItem>
           </StreamNavList>
         </StreamNavigation>

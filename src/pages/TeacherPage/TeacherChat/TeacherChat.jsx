@@ -24,6 +24,7 @@ export const TeacherChat = ({ page }) => {
   const [isLoggedToChat, setIsLoggedToChat] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [counter, setCounter] = useState(0);
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
@@ -56,7 +57,7 @@ export const TeacherChat = ({ page }) => {
       setIsLoggedToChat(isLogged => (isLogged = true));
     }
   };
-
+  console.log('counter', counter);
   const handleSubmit = e => {
     e.preventDefault();
     const idGen = nanoid(8);
@@ -78,7 +79,15 @@ export const TeacherChat = ({ page }) => {
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
       console.log(handshake);
+      setCounter(counter => (counter = counter + 1));
+      console.log('list is about to emit');
+      socketRef.current.emit('list');
+      console.log('list was emitted?');
     });
+
+    socketRef.current.on('connected:list', clients =>
+      console.log('86', clients)
+    );
 
     const getMessages = async () => {
       console.log('get');
@@ -107,7 +116,10 @@ export const TeacherChat = ({ page }) => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat-server.onrender.com/messages', data);
+          await axios.post(
+            'https://ap-chat-server.onrender.com/messages',
+            data
+          );
         } catch (error) {
           console.log(error);
         }
@@ -147,7 +159,9 @@ export const TeacherChat = ({ page }) => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
+          await axios.delete(
+            `https://ap-chat-server.onrender.com/messages/${id}`
+          );
         } catch (error) {
           console.log(error);
         }
@@ -162,9 +176,12 @@ export const TeacherChat = ({ page }) => {
         console.log(userID);
         console.log(userIP);
         try {
-          await axios.patch(`https://ap-chat-server.onrender.com/users/${userID}`, {
-            isBanned: true,
-          });
+          await axios.patch(
+            `https://ap-chat-server.onrender.com/users/${userID}`,
+            {
+              isBanned: true,
+            }
+          );
         } catch (error) {
           console.log(error);
         }

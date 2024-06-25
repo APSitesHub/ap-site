@@ -18,9 +18,9 @@ export const StreamNav = () => {
             Щоб знайти потрібну трансляцію, просто оберіть рівень або мову:
           </StreamNavDescription>
           <StreamNavList>
-            <StreamNavItem>
+            {/* <StreamNavItem>
               <StreamNavLink to={'/streams/a0'}>A0</StreamNavLink>
-            </StreamNavItem>
+            </StreamNavItem> */}
             <StreamNavItem>
               <StreamNavLink to={'/streams/a1'}>A1</StreamNavLink>
             </StreamNavItem>
@@ -34,16 +34,25 @@ export const StreamNav = () => {
               <StreamNavLink to={'/streams/b2'}>B2</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
+              <StreamNavLink to={'/streams/c1'}>C1</StreamNavLink>
+            </StreamNavItem>
+            <StreamNavItem>
               <StreamNavLink to={'/streams/deutsch'}>DE A1</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
               <StreamNavLink to={'/streams/deutscha2'}>DE A2</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
+              <StreamNavLink to={'/streams/deutschb1'}>DE B1</StreamNavLink>
+            </StreamNavItem>
+            <StreamNavItem>
               <StreamNavLink to={'/streams/polski'}>PL A1</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
               <StreamNavLink to={'/streams/polskia2'}>PL A2</StreamNavLink>
+            </StreamNavItem>
+            <StreamNavItem>
+              <StreamNavLink to={'/streams/polskib1'}>PL B1</StreamNavLink>
             </StreamNavItem>
           </StreamNavList>
         </StreamNavigation>
