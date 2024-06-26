@@ -8,7 +8,7 @@ import {
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import {
   FormBottomStar,
