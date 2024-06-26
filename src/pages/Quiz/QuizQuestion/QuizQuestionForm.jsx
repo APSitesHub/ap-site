@@ -46,7 +46,7 @@ export const QuizQuestionForm = ({
   // eslint-disable-next-line
   const [route, setRoute] = useState('/thankyou');
   const location = useLocation().pathname;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const [wrong, setWrong] = useState('');
 
   const getTag = location => {
@@ -131,10 +131,7 @@ export const QuizQuestionForm = ({
       };
 
       try {
-        const response = await axios.post(
-          '/users/new',
-          userValues
-        );
+        const response = await axios.post('/users/new', userValues);
         console.log(response);
       } catch (error) {
         console.error(error);
@@ -150,7 +147,7 @@ export const QuizQuestionForm = ({
       userSubmit(response.data.crmId, response.data.contactId);
       resetForm();
       console.log(route);
-      navigate(route, { replace: true });
+      // navigate(route, { replace: true });
     } catch (error) {
       console.error(error);
       // setWrong(wrong => (wrong = error));
@@ -238,10 +235,19 @@ export const QuizQuestionForm = ({
             <QuizFormBtn>
               <ViberBotLink />
             </QuizFormBtn> */}
-            <QuizFormBtn>НАДІСЛАТИ</QuizFormBtn>
+            <QuizFormBtn type="submit">НАДІСЛАТИ</QuizFormBtn>
             {isLoading && <Loader />}
           </PageForm>
         </Formik>
+        {quizValues.current.leadPage ? (
+          <iframe
+            src={quizValues.current.leadPage}
+            title="engagement page"
+            height="50%"
+            width="100%"
+            // onClick={handleSubmit}
+          ></iframe>
+        ) : "NO LEADPAGE"}
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>

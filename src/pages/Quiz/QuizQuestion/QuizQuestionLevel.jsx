@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import beginner from '../../../img/quiz/beginner.png';
 import middle from '../../../img/quiz/middle.png';
 import senior from '../../../img/quiz/senior.png';
@@ -21,6 +22,8 @@ import {
   QuizButtonBox,
   QuizButtonContent,
 } from '../Quiz.styled';
+import axios from 'axios';
+import { Loader } from 'components/SharedLayout/Loaders/Loader';
 
 export const QuizQuestionLevel = ({
   activeSlide,
@@ -30,7 +33,8 @@ export const QuizQuestionLevel = ({
   nextQuestion,
   quizValues,
 }) => {
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [shownError, setShownError] = useState('');
 
   const mailRandomId = Math.floor(Math.random() * 10000).toString();
   const passwordRandom = Math.floor(Math.random() * 10000).toString();
@@ -42,23 +46,29 @@ export const QuizQuestionLevel = ({
   quizValues.current.password =
     passwordRandom.length < 4 ? '0' + passwordRandom : passwordRandom;
 
-  // const interimLeadSubmit = async () => {
-  //   setIsLoading(isLoading => (isLoading = true));
-  //   try {
-  //     setIsLoading(isLoading => (isLoading = true));
-  //     const response = await axios.post('http://localhost:5000/leads/quiz-int', quizValues.current);
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setIsLoading(isLoading => (isLoading = false));
-  //   }
-  // };
+  const interimLeadSubmit = async () => {
+    setIsLoading(isLoading => (isLoading = true));
+    try {
+      setIsLoading(isLoading => (isLoading = true));
+      const response = await axios.post(
+        '/leads/quiz-int',
+        quizValues.current
+      );
+      console.log(response.data);
+      quizValues.current.leadPage = response.data;
+      console.log(quizValues.current);
+    } catch (error) {
+      console.error(error);
+      setShownError(shownError => (shownError = error));
+    } finally {
+      setIsLoading(isLoading => (isLoading = false));
+      nextQuestion();
+    }
+  };
 
-  const setQuizValue = async (e, value) => {
+  const setQuizValue = (e, value) => {
     quizValues.current.knowledge = value;
-    continueQuiz(e);
-    // await interimLeadSubmit();
+    quizValues.current.leadPage && continueQuiz(e);
   };
 
   return (
@@ -70,8 +80,9 @@ export const QuizQuestionLevel = ({
         </Question>
         <QuizButtonBox>
           <QuizButton
-            onClick={e => {
+            onClick={async e => {
               setQuizValue(e, 'a0');
+              await interimLeadSubmit();
             }}
             className={quizValues.current?.knowledge === 'a0' && 'chosen'}
           >
@@ -81,7 +92,10 @@ export const QuizQuestionLevel = ({
             </QuizButtonContent>
           </QuizButton>
           <QuizButton
-            onClick={e => setQuizValue(e, 'a1')}
+            onClick={async e => {
+              setQuizValue(e, 'a1');
+              await interimLeadSubmit();
+            }}
             className={quizValues.current?.knowledge === 'a1' && 'chosen'}
           >
             <QuizButtonContent>
@@ -90,7 +104,10 @@ export const QuizQuestionLevel = ({
             </QuizButtonContent>
           </QuizButton>
           <QuizButton
-            onClick={e => setQuizValue(e, 'a2')}
+            onClick={async e => {
+              setQuizValue(e, 'a2');
+              await interimLeadSubmit();
+            }}
             className={quizValues.current?.knowledge === 'a2' && 'chosen'}
           >
             <QuizButtonContent>
@@ -99,7 +116,10 @@ export const QuizQuestionLevel = ({
             </QuizButtonContent>
           </QuizButton>
           <QuizButton
-            onClick={e => setQuizValue(e, 'b1')}
+            onClick={async e => {
+              setQuizValue(e, 'b1');
+              await interimLeadSubmit();
+            }}
             className={quizValues.current?.knowledge === 'b1' && 'chosen'}
           >
             <QuizButtonContent>
@@ -108,6 +128,7 @@ export const QuizQuestionLevel = ({
             </QuizButtonContent>
           </QuizButton>
         </QuizButtonBox>
+        {shownError}
         <BackgroundFilterTopRight />
         <BackgroundFilterBottomLeft />
         <BackgroungStarSmall />
@@ -136,7 +157,7 @@ export const QuizQuestionLevel = ({
             <QuizArrowRight />
           </NextPageBtn>
         </Pagination>
-        {/* {isLoading && <Loader />} */}
+        {isLoading && <Loader />}
       </QuizBox>
     </>
   );
