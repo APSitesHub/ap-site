@@ -43,6 +43,7 @@ import { PolskiB1KahootForm } from './PolskiB1KahootForm';
 import { PolskiFreeKahootForm } from './PolskiFreeKahootForm';
 import { PolskiKahootForm } from './PolskiKahootForm';
 import { TestKahootForm } from './TestKahootForm';
+import { TrendetsKahootForm } from './TrendetsKahootForm';
 import { TrialsDeKahootForm } from './TrialsDeKahootForm';
 import { TrialsEngKahootForm } from './TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from './TrialsKidsKahootForm';
@@ -222,6 +223,9 @@ export const KahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('test')}>
               Test
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('trendets')}>
+              Trendets
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -311,6 +315,9 @@ export const KahootAdminPanel = () => {
           )}
           {levels.includes('test') && (
             <TestKahootForm destination={destination} />
+          )}
+          {levels.includes('trendets') && (
+            <TrendetsKahootForm destination={destination} />
           )}
         </KahootFormBox>
         {isLoading && <Loader />}

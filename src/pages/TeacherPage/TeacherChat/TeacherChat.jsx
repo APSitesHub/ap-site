@@ -30,7 +30,7 @@ export const TeacherChat = ({ page }) => {
     setIsChatOpen(!isChatOpen);
   };
 
-  console.log(page);
+  console.log(33, page);
   const getMessagesByPage = page =>
     page.includes('kidsfree')
       ? '/streams-kids/' + page.replace('kids', '')
@@ -38,6 +38,8 @@ export const TeacherChat = ({ page }) => {
       ? '/streams-kids/' + page.replace('kids', '')
       : page.includes('kids')
       ? '/streams-kids/' + page.split('kids')[0]
+      : page.includes('trendets')
+      ? '/streams-kids/' + page
       : '/streams/' + page;
 
   const room = getMessagesByPage(page);

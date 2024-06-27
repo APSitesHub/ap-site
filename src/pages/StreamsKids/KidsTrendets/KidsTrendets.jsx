@@ -82,7 +82,7 @@ export const KidsTrendets = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'C1 English Kids | AP Education';
+    document.title = 'Trendets Kids | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
@@ -185,7 +185,7 @@ export const KidsTrendets = () => {
 
   return (
     <>
-      {(links.c1kids === undefined || links.c1kids[0] < 10) && !isLoading ? (
+      {(links.trendets === undefined || links.trendets[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Поки що трансляції тут немає! <br />
@@ -257,7 +257,7 @@ export const KidsTrendets = () => {
                 }}
                 width="100%"
                 height="100vh"
-                url={links.c1kids}
+                url={links.trendets}
               />
             </VideoBox>
 

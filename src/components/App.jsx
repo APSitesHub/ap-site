@@ -40,6 +40,7 @@ import { KidsB1 } from 'pages/StreamsKids/KidsB1/KidsB1';
 import { KidsB1Beginner } from 'pages/StreamsKids/KidsB1Beginner/KidsB1Beginner';
 import { KidsB2 } from 'pages/StreamsKids/KidsB2/KidsB2';
 import { KidsB2Beginner } from 'pages/StreamsKids/KidsB2Beginner/KidsB2Beginner';
+import { KidsTrendets } from 'pages/StreamsKids/KidsTrendets/KidsTrendets';
 import { KidsC1 } from 'pages/StreamsKids/KidsС1/KidsС1';
 import TeacherTrialPage from 'pages/TeacherPage/TeacherTrialPage';
 import { ThankYouPage } from 'pages/ThankYouPage/ThankYouPage';
@@ -445,6 +446,8 @@ export const App = () => {
             <Route path="b2beginner-chat" element={<WindowedChat />} />
             <Route path="a1free" element={<KidsA1Free />} />
             <Route path="a1free-chat" element={<WindowedChat />} />
+            <Route path="trendets" element={<KidsTrendets />} />
+            <Route path="trendets-chat" element={<WindowedChat />} />
           </Route>
           <Route path="service" element={<Service />}>
             <Route path="viber" element={<ViberRedirect />} />
@@ -481,6 +484,7 @@ export const App = () => {
             <Route path="a1kidsfree" element={<TeacherPage />} />
             <Route path="b1kidsbeginner" element={<TeacherPage />} />
             <Route path="b2kidsbeginner" element={<TeacherPage />} />
+            <Route path="trendets" element={<TeacherPage />} />
             <Route path="deutsch-a0" element={<TeacherPage />} />
             <Route path="deutsch-a1" element={<TeacherPage />} />
             <Route path="deutsch-a2" element={<TeacherPage />} />

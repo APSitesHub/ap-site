@@ -100,6 +100,7 @@ export const CollectionsAdminPanel = () => {
     b2kidsbeginner: '',
     a1kidsfree: '',
     test: '',
+    trendets: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -136,6 +137,7 @@ export const CollectionsAdminPanel = () => {
     b2kidsbeginner: yup.string().optional(),
     a1kidsfree: yup.string().optional(),
     test: yup.string().optional(),
+    trendets: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -435,6 +437,14 @@ export const CollectionsAdminPanel = () => {
                   placeholder="Test collection, do not change"
                 />
                 <AdminInputNote component="p" name="test" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="trendets"
+                  placeholder="Trendets Kids collection"
+                />
+                <AdminInputNote component="p" name="trendets" />
               </Label>
               <AdminFormBtn type="submit">Замінити колекції</AdminFormBtn>
             </LinksForm>
