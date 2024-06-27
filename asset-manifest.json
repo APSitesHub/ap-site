@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.f8cd8523.js",
+    "main.js": "/ap-site/static/js/main.8906592c.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.b015d4ba.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -77,6 +77,7 @@
     "static/media/desktop-bg@2x.png": "/ap-site/static/media/desktop-bg@2x.5dec6146f202bedd5700.png",
     "static/media/host-kahoot-panel.png": "/ap-site/static/media/host-kahoot-panel.baad972a96e3ffb88ce6.png",
     "static/media/thank-you-person.webp": "/ap-site/static/media/thank-you-person.8ea27357815fd9203011.webp",
+    "static/media/present.png": "/ap-site/static/media/present.bbf6aee3acc743e3c33f.png",
     "static/media/tablet-bg@2x.png": "/ap-site/static/media/tablet-bg@2x.049ae0d6cae6773a51eb.png",
     "static/media/laptop.png": "/ap-site/static/media/laptop.1f9868c7694a6e624c74.png",
     "static/media/monoPaw.svg": "/ap-site/static/media/monoPaw.74d8d0148fe0f5dd7ce256ac6bdc0b08.svg",
@@ -193,7 +194,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.f8cd8523.js.map": "/ap-site/static/js/main.f8cd8523.js.map",
+    "main.8906592c.js.map": "/ap-site/static/js/main.8906592c.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.b015d4ba.chunk.js.map": "/ap-site/static/js/New Design Homepage.b015d4ba.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -262,6 +263,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.f8cd8523.js"
+    "static/js/main.8906592c.js"
   ]
 }
