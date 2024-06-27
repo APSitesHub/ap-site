@@ -132,6 +132,7 @@ export const QuizQuestionForm = ({
       console.error(error);
     } finally {
       setIsLoading(isLoading => (isLoading = false));
+      window.open(quizValues.current.leadPage);
     }
   };
 
@@ -141,9 +142,8 @@ export const QuizQuestionForm = ({
         <Logo />
         <Title>Майже готово!</Title>
         <Description>
-          Щоб якомога швидше отримати доступ до марафону, введіть своє ім'я та
-          номер. Увага! Вводьте актуальні дані, щоб ми змогли з вами зв'язатися
-          і надіслати вам логін і пароль!
+          Щоб отримати доступ до марафону, введіть своє ім’я і актуальний номер
+          телефону та перейдіть у зручний для вас месенджер.
         </Description>
         <Formik
           initialValues={initialValues}
@@ -154,11 +154,7 @@ export const QuizQuestionForm = ({
             <FormBottomStar />
             <FormInputBox>
               <Label>
-                <QuizInput
-                  type="text"
-                  name="name"
-                  placeholder="Ім'я та прізвище*"
-                />
+                <QuizInput type="text" name="name" placeholder="Ім'я*" />
                 <InputNote component="p" name="name" />
               </Label>
               <Label>
@@ -174,21 +170,10 @@ export const QuizQuestionForm = ({
             <HiddenInput type="text" name="quantity" />
             <HiddenInput type="text" name="difficulties" />
             <HiddenInput type="text" name="interests" />
-            <QuizFormBtn type="submit">НАДІСЛАТИ</QuizFormBtn>
+            <QuizFormBtn type="submit">Перейти в месенджер</QuizFormBtn>
             {isLoading && <Loader />}
           </PageForm>
         </Formik>
-        {quizValues.current.leadPage ? (
-          <iframe
-            src={quizValues.current.leadPage}
-            title="engagement page"
-            height="50%"
-            width="100%"
-            // onClick={handleSubmit}
-          ></iframe>
-        ) : (
-          'NO LEADPAGE'
-        )}
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>

@@ -115,12 +115,27 @@ export const Question = styled.h2`
   position: relative;
 `;
 
+export const QuestionLevel = styled(Question)`
+  height: auto;
+  padding-top: 30px;
+  margin-bottom: 8px;
+`;
+
 export const Description = styled.p`
   text-align: center;
   font-size: 16px;
   line-height: 1.3;
 
   margin-bottom: 40px;
+`;
+
+export const DescriptionLevel = styled(Description)`
+  padding-bottom: 30px;
+  position: relative;
+`;
+
+export const DescriptionHighlight = styled.span`
+  font-weight: 700;
 `;
 
 export const QuizStart = styled.button`
@@ -170,6 +185,14 @@ export const HatImg = styled.img`
 
 export const Emoji = styled.img`
   display: block;
+`;
+
+export const PresentEmoji = styled.img`
+  display: block;
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 export const InterestsEmoji = styled.img`
@@ -407,15 +430,13 @@ export const QuizInput = styled(Input)`
 `;
 
 export const QuizFormBtn = styled(FormBtn)`
-  font-size: 24px;
-`;
+  font-size: 18px;
 
-export const QuizEngagementPage = styled.iframe`
-  position: absolute;
-  top: 43%;
-  left: 0;
+  @media screen and (min-width: 371px) {
+    font-size: 22px;
+  }
 
-  @media screen and (min-width: 410px) {
-    top: 43%;
+  @media screen and (min-width: 420px) {
+    font-size: 24px;
   }
 `;

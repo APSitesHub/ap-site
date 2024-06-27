@@ -1,6 +1,10 @@
+import axios from 'axios';
+import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import beginner from '../../../img/quiz/beginner.png';
 import middle from '../../../img/quiz/middle.png';
+import present from '../../../img/quiz/present.png';
 import senior from '../../../img/quiz/senior.png';
 import zero from '../../../img/quiz/zero.png';
 import {
@@ -8,13 +12,16 @@ import {
   BackgroundFilterTopRight,
   BackgroungStarSmall,
   CurrentPage,
+  DescriptionHighlight,
+  DescriptionLevel,
   Emoji,
   Logo,
   NextPageBtn,
   PageCounter,
   Pagination,
+  PresentEmoji,
   PreviousPageBtn,
-  Question,
+  QuestionLevel,
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
@@ -22,9 +29,6 @@ import {
   QuizButtonBox,
   QuizButtonContent,
 } from '../Quiz.styled';
-import axios from 'axios';
-import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { useLocation } from 'react-router-dom';
 
 export const QuizQuestionLevel = ({
   activeSlide,
@@ -88,9 +92,16 @@ export const QuizQuestionLevel = ({
     <>
       <QuizBox>
         <Logo />
-        <Question>
+        <QuestionLevel>
           {isChild ? 'Вкажіть рівень дитини' : 'Вкажіть ваш рівень'}
-        </Question>
+        </QuestionLevel>
+        <DescriptionLevel>
+          Оберіть рівень та отримайте гарантовані{' '}
+          <DescriptionHighlight>подарунки</DescriptionHighlight> в кінці
+          опитування
+          <PresentEmoji src={present} alt="Present emoji" width="30" />
+        </DescriptionLevel>
+        
         <QuizButtonBox>
           <QuizButton
             onClick={async e => {
