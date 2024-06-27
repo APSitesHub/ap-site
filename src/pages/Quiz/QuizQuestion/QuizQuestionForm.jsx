@@ -8,7 +8,6 @@ import {
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import {
   FormBottomStar,
@@ -31,7 +30,7 @@ import {
   QuizBox,
   QuizFormBtn,
   QuizInput,
-  Title
+  Title,
 } from '../Quiz.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -43,34 +42,13 @@ export const QuizQuestionForm = ({
   previousQuestion,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line
-  const [route, setRoute] = useState('/thankyou');
-  const location = useLocation().pathname;
-  // const navigate = useNavigate();
-  // const [wrong, setWrong] = useState('');
-
-  const getTag = location => {
-    switch (location) {
-      case '/quiz':
-        return 'quiz';
-      default:
-        break;
-    }
-  };
-
-  const tag = getTag(location);
-  const mailRandomId = Math.floor(Math.random() * 10000).toString();
-  const passwordRandom = Math.floor(Math.random() * 10000).toString();
 
   const initialValues = {
     name: '',
     phone: '',
-    mail:
-      mailRandomId.length < 4
-        ? `marathon-ap0${mailRandomId}@ap.edu`
-        : `marathon-ap${mailRandomId}@ap.edu`,
-    password: passwordRandom.length < 4 ? '0' + passwordRandom : passwordRandom,
-    tag: tag,
+    mail: quizValues.current.mail,
+    password: quizValues.current.password,
+    tag: quizValues.current.tag,
     lang: quizValues.current.lang,
     adult: quizValues.current.adult,
     age: quizValues.current.age,
@@ -78,6 +56,8 @@ export const QuizQuestionForm = ({
     quantity: quizValues.current.quantity,
     difficulties: quizValues.current.difficulties,
     interests: quizValues.current.interests,
+    crmId: quizValues.current.crmId,
+    contactId: quizValues.current.contactId,
   };
 
   const leadSchema = yup.object().shape({
@@ -109,6 +89,8 @@ export const QuizQuestionForm = ({
     quantity: yup.string().required(),
     difficulties: yup.string().required(),
     interests: yup.string().required(),
+    crmId: yup.number().required(),
+    contactId: yup.number().required(),
   });
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -139,18 +121,15 @@ export const QuizQuestionForm = ({
     };
 
     try {
-      const response = await axios.post(
-        '/leads/quiz',
+      const response = await axios.patch(
+        `/leads/quiz/${quizValues.current.crmId}`,
         values
       );
       console.log(response);
       userSubmit(response.data.crmId, response.data.contactId);
       resetForm();
-      console.log(route);
-      // navigate(route, { replace: true });
     } catch (error) {
       console.error(error);
-      // setWrong(wrong => (wrong = error));
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -195,46 +174,6 @@ export const QuizQuestionForm = ({
             <HiddenInput type="text" name="quantity" />
             <HiddenInput type="text" name="difficulties" />
             <HiddenInput type="text" name="interests" />
-            {/* <button type="submit">Надіслати</button> */}
-            {/* {wrong && `щось не цейво, а саме: ${wrong}`} */}
-            {/* <ChatBotRedirectList>
-              <ChatBotRedirectItem>
-                <ChatBotBtn
-                  type="submit"
-                  onClick={() => {
-                    setRoute('/marathon/wa');
-                  }}
-                >
-                  <WhatsAppBotLink />
-                </ChatBotBtn>
-              </ChatBotRedirectItem>
-              <ChatBotRedirectItem>
-                <ChatBotBtn
-                  type="submit"
-                  onClick={() => {
-                    setRoute('/marathon/tg');
-                  }}
-                >
-                  <TelegramBotLink />
-                </ChatBotBtn>
-              </ChatBotRedirectItem>
-              <ChatBotRedirectItem>
-                <ChatBotBtn
-                  type="submit"
-                  onClick={() => {
-                    setRoute('/marathon/viber');
-                  }}
-                >
-                  <ViberBotLink />
-                </ChatBotBtn>
-              </ChatBotRedirectItem>
-            </ChatBotRedirectList> */}
-            {/* <QuizFormBtn>
-              <TelegramBotLink />
-            </QuizFormBtn>
-            <QuizFormBtn>
-              <ViberBotLink />
-            </QuizFormBtn> */}
             <QuizFormBtn type="submit">НАДІСЛАТИ</QuizFormBtn>
             {isLoading && <Loader />}
           </PageForm>
@@ -247,7 +186,9 @@ export const QuizQuestionForm = ({
             width="100%"
             // onClick={handleSubmit}
           ></iframe>
-        ) : "NO LEADPAGE"}
+        ) : (
+          'NO LEADPAGE'
+        )}
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>

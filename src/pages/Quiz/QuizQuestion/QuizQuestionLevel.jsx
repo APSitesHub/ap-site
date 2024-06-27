@@ -24,6 +24,7 @@ import {
 } from '../Quiz.styled';
 import axios from 'axios';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
+import { useLocation } from 'react-router-dom';
 
 export const QuizQuestionLevel = ({
   activeSlide,
@@ -35,10 +36,23 @@ export const QuizQuestionLevel = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [shownError, setShownError] = useState('');
+  const location = useLocation().pathname;
+
+  const getTag = location => {
+    switch (location) {
+      case '/quiz':
+        return 'quiz';
+      default:
+        break;
+    }
+  };
+
+  const tag = getTag(location);
 
   const mailRandomId = Math.floor(Math.random() * 10000).toString();
   const passwordRandom = Math.floor(Math.random() * 10000).toString();
 
+  quizValues.current.tag = tag;
   quizValues.current.mail =
     mailRandomId.length < 4
       ? `marathon-ap0${mailRandomId}@ap.edu`
@@ -50,12 +64,11 @@ export const QuizQuestionLevel = ({
     setIsLoading(isLoading => (isLoading = true));
     try {
       setIsLoading(isLoading => (isLoading = true));
-      const response = await axios.post(
-        '/leads/quiz-int',
-        quizValues.current
-      );
+      const response = await axios.post('/leads/quiz-int', quizValues.current);
       console.log(response.data);
-      quizValues.current.leadPage = response.data;
+      quizValues.current.leadPage = response.data.engPage;
+      quizValues.current.crmId = response.data.crmId;
+      quizValues.current.contactId = response.data.contactId;
       console.log(quizValues.current);
     } catch (error) {
       console.error(error);
