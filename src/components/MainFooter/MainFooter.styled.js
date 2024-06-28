@@ -8,6 +8,8 @@ import { ReactComponent as LogoSchoolWhite } from '../../img/svg/logoSchoolWhite
 import { ReactComponent as LogoUniversityWhite } from '../../img/svg/logoUniversityWhite.svg';
 import { ReactComponent as MonoIcon } from '../../img/svg/monoPaw.svg';
 import { ReactComponent as MonoIconWhite } from '../../img/svg/monoPawWhite.svg';
+import { ReactComponent as PumbIcon } from '../../img/svg/pumbIcon.svg';
+import { ReactComponent as PrivatBankIcon } from '../../img/svg/privatBank.svg';
 import { ReactComponent as FacebookIcon } from '../../img/svg/social-links/facebook.svg';
 import { ReactComponent as InstagramIcon } from '../../img/svg/social-links/instagram.svg';
 import { ReactComponent as TikTokIcon } from '../../img/svg/social-links/tiktok.svg';
@@ -173,8 +175,7 @@ export const FooterLogoSchool = styled(LogoSchoolWhite)`
   }
 `;
 
-export const FooterLogoUniversity
- = styled(LogoUniversityWhite)`
+export const FooterLogoUniversity = styled(LogoUniversityWhite)`
   width: 264px;
   display: block;
   flex-shrink: 0;
@@ -326,17 +327,32 @@ export const MonoPawIcon = styled(MonoIcon)`
 `;
 
 export const MonoPawIconWhite = styled(MonoIconWhite)`
-  height: 40px;
-  width: 140px;
-
-  @media screen and (min-width: 768px) {
-    height: 27px;
-    width: 91px;
-  }
+  height: 27px;
+  width: 91px;
 
   @media screen and (min-width: 1280px) {
     height: 45px;
     width: 155px;
+  }
+`;
+
+export const PumbLogoIcon = styled(PumbIcon)`
+  height: 26px;
+  width: 26px;
+
+  @media screen and (min-width: 1280px) {
+    height: 57px;
+    width: 57px;
+  }
+`;
+
+export const PrivatBankLogoIcon = styled(PrivatBankIcon)`
+  height: 26px;
+  width: 28px;
+
+  @media screen and (min-width: 1280px) {
+    height: 61px;
+    width: 57px;
   }
 `;
 
@@ -441,7 +457,22 @@ export const FooterLeadBtnNew = styled.button`
   position: relative;
   outline: transparent;
   transition: box-shadow var(--animation-global),
-    transform var(--animation-global);
+    transform var(--animation-global), background-color var(--animation-global),
+    color var(--animation-global);
+
+  &:hover,
+  &:focus {
+    background-color: #fff;
+    color: var(--main-color);
+
+    &[data-pagename='school'] {
+      color: var(--school-color);
+    }
+
+    &[data-pagename='university'] {
+      color: var(--university-color);
+    }
+  }
 `;
 
 export const FooterLeadBtn = styled(LeadBtn)`
@@ -766,4 +797,9 @@ export const FooterFileLinkNew = styled(Link)`
   @media screen and (min-width: 1280px) {
     font-size: 16px;
   }
+`;
+
+export const MobileLogoBox = styled.div`
+  display: flex;
+  gap: 32px;
 `;

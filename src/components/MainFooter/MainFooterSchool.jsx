@@ -24,7 +24,10 @@ import {
   LinkList,
   LinkListItemNew,
   LinkListTitleNew,
+  MobileLogoBox,
   MonoPawIconWhite,
+  PrivatBankLogoIcon,
+  PumbLogoIcon,
   SocialLogoLink,
   SocialsLinkWrapperNew,
   TikTokBtnNew,
@@ -64,7 +67,7 @@ export const MainFooterSchool = ({ toggleModal }) => {
               </FooterLogoLink>
               <LeadWrapperNew>
                 <LeadDescNew>... якщо залишились запитання </LeadDescNew>
-                <FooterLeadBtnNew onClick={toggleModal}>
+                <FooterLeadBtnNew data-pagename="school" onClick={toggleModal} >
                   ЗАЛИШИТИ ЗАЯВКУ
                 </FooterLeadBtnNew>
               </LeadWrapperNew>
@@ -159,9 +162,15 @@ export const MainFooterSchool = ({ toggleModal }) => {
                 Публічна оферта
               </FooterFileLinkNew>
               {width >= 768 && <MonoPawIconWhite />}
+              {width >= 768 && <PumbLogoIcon />}
+              {width >= 768 && <PrivatBankLogoIcon />}
             </FooterLinksContainerNew>
           </FooterBottomContainerNew>
-          {width < 768 && <MonoPawIconWhite />}
+          <MobileLogoBox>
+            {width < 768 && <MonoPawIconWhite />}
+            {width < 768 && <PumbLogoIcon />}
+            {width < 768 && <PrivatBankLogoIcon />}
+          </MobileLogoBox>
         </FooterBoxNew>
       </Box>
       <Map />
