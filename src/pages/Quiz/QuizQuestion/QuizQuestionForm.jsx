@@ -6,7 +6,7 @@ import {
   Label,
 } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { Formik } from 'formik';
+import { Formik, useFormikContext } from 'formik';
 import { useState } from 'react';
 import * as yup from 'yup';
 import {
@@ -28,7 +28,7 @@ import {
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
-  QuizFormBtn,
+  QuizFormLink,
   QuizInput,
   Title,
 } from '../Quiz.styled';
@@ -93,6 +93,26 @@ export const QuizQuestionForm = ({
     contactId: yup.number().required(),
   });
 
+  const QuizSubmitLink = () => {
+    const { values, isValid, submitForm } = useFormikContext();
+    return (
+      <QuizFormLink
+        href={quizValues.current.leadPage}
+        onClick={async e => {
+          e.preventDefault();
+          console.log(isValid);
+          if (values.name && values.phone && isValid) {
+            console.log('valid');
+            await submitForm();
+            window.location.replace(quizValues.current.leadPage);
+          }
+        }}
+      >
+        Перейти в месенджер
+      </QuizFormLink>
+    );
+  };
+
   const handleSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
 
@@ -130,9 +150,6 @@ export const QuizQuestionForm = ({
       resetForm();
     } catch (error) {
       console.error(error);
-    } finally {
-      setIsLoading(isLoading => (isLoading = false));
-      window.open(quizValues.current.leadPage);
     }
   };
 
@@ -170,7 +187,7 @@ export const QuizQuestionForm = ({
             <HiddenInput type="text" name="quantity" />
             <HiddenInput type="text" name="difficulties" />
             <HiddenInput type="text" name="interests" />
-            <QuizFormBtn type="submit">Перейти в месенджер</QuizFormBtn>
+            <QuizSubmitLink />
             {isLoading && <Loader />}
           </PageForm>
         </Formik>

@@ -440,3 +440,48 @@ export const QuizFormBtn = styled(FormBtn)`
     font-size: 24px;
   }
 `;
+
+export const QuizFormLink = styled.a`
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+
+  text-align: center;
+  text-decoration: none;
+
+  padding: 20px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  border-radius: 50px;
+  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #0f645b;
+  border: none;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  outline: transparent;
+
+  @media screen and (min-width: 768px) {
+    font-size: 20px;
+    letter-spacing: 0.6px;
+    height: 70px;
+  }
+
+  transition: opacity var(--animation-global);
+
+  &.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  font-size: 18px;
+
+  @media screen and (min-width: 371px) {
+    font-size: 22px;
+  }
+
+  @media screen and (min-width: 420px) {
+    font-size: 24px;
+  }
+`;

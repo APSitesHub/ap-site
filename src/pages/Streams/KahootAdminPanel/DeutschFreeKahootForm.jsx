@@ -31,6 +31,7 @@ export const DeutschFreeKahootForm = ({ destination }) => {
     deutschfree_3: '',
     deutschfree_4: '',
     deutschfree_5: '',
+    deutschfree_6: '',
     replace: true,
   };
 
@@ -40,6 +41,7 @@ export const DeutschFreeKahootForm = ({ destination }) => {
     deutschfree_3: yup.string().optional(),
     deutschfree_4: yup.string().optional(),
     deutschfree_5: yup.string().optional(),
+    deutschfree_6: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
