@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.b373f764.js",
+    "main.js": "/ap-site/static/js/main.e7a04922.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.b015d4ba.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -46,7 +46,7 @@
     "Deutsch courses page.css": "/ap-site/static/css/Deutsch courses page.e8ee1c85.chunk.css",
     "Deutsch courses page.js": "/ap-site/static/js/Deutsch courses page.2da39c28.chunk.js",
     "Teacher Page.js": "/ap-site/static/js/Teacher Page.c506afcf.chunk.js",
-    "My AP Page.js": "/ap-site/static/js/My AP Page.e880eeee.chunk.js",
+    "My AP Page.js": "/ap-site/static/js/My AP Page.c647a4ab.chunk.js",
     "Marathon redirect page to Viber chatbot.js": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js",
     "Marathon redirect page to Telegram chatbot.js": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js",
     "Marathon redirect page to WhatsApp chat.js": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.a46805db.chunk.js",
@@ -64,7 +64,7 @@
     "reactPlayerKaltura.js": "/ap-site/static/js/reactPlayerKaltura.346de120.chunk.js",
     "reactPlayerFilePlayer.js": "/ap-site/static/js/reactPlayerFilePlayer.985f4fb7.chunk.js",
     "reactPlayerPreview.js": "/ap-site/static/js/reactPlayerPreview.bfdac92c.chunk.js",
-    "static/js/4286.0676f66e.chunk.js": "/ap-site/static/js/4286.0676f66e.chunk.js",
+    "static/js/627.c33eaab8.chunk.js": "/ap-site/static/js/627.c33eaab8.chunk.js",
     "static/js/5090.81ad1d75.chunk.js": "/ap-site/static/js/5090.81ad1d75.chunk.js",
     "static/js/6337.3f367b59.chunk.js": "/ap-site/static/js/6337.3f367b59.chunk.js",
     "static/media/thank-you.png": "/ap-site/static/media/thank-you.26b42b0974f823b6458a.png",
@@ -96,6 +96,7 @@
     "static/media/tablet-bg@2x.webp": "/ap-site/static/media/tablet-bg@2x.c391cbe389051ce72d33.webp",
     "static/media/logoSchool.svg": "/ap-site/static/media/logoSchool.0a33ddad0e4f9c614f0488a4dfc82d9a.svg",
     "static/media/logoSchoolWhite.svg": "/ap-site/static/media/logoSchoolWhite.805b54634c933193418f823d2701b823.svg",
+    "static/media/quizlet.svg": "/ap-site/static/media/quizlet.4bbecae77f43ad52e17164a4acbc0cb2.svg",
     "static/media/viber.svg": "/ap-site/static/media/viber.52f25fd3352ede143ca5694b558c8427.svg",
     "static/media/desktop-bg@1x.webp": "/ap-site/static/media/desktop-bg@1x.6759fe5d86b2bd97fb43.webp",
     "static/media/mobile-bg@2x.webp": "/ap-site/static/media/mobile-bg@2x.c463e5de7030972db5f0.webp",
@@ -113,7 +114,7 @@
     "static/media/pdf-icon.svg": "/ap-site/static/media/pdf-icon.7198cf3e3b1ce048581b728d3e292860.svg",
     "static/media/instagram.svg": "/ap-site/static/media/instagram.b9daf875938ed610101b860a8d9931ea.svg",
     "static/media/cup.svg": "/ap-site/static/media/cup.7ffbf5a4563d0fd9b73163d2e214d6c6.svg",
-    "static/media/youtube.svg": "/ap-site/static/media/youtube.7c0e9b63551b95de8f58fd34bd9d86e3.svg",
+    "static/media/youtube.svg": "/ap-site/static/media/youtube.7f3e16df19602146190329d708a52d50.svg",
     "static/media/reset.svg": "/ap-site/static/media/reset.8cb2261880980856d09baa07725fe4fc.svg",
     "static/media/facebook.svg": "/ap-site/static/media/facebook.c1f8cad764fca7b64ee97522a571dee7.svg",
     "static/media/telegram.svg": "/ap-site/static/media/telegram.526870d3dac8805ee2ecb23bf55b83bf.svg",
@@ -196,7 +197,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.b373f764.js.map": "/ap-site/static/js/main.b373f764.js.map",
+    "main.e7a04922.js.map": "/ap-site/static/js/main.e7a04922.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.b015d4ba.chunk.js.map": "/ap-site/static/js/New Design Homepage.b015d4ba.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -241,7 +242,7 @@
     "Deutsch courses page.e8ee1c85.chunk.css.map": "/ap-site/static/css/Deutsch courses page.e8ee1c85.chunk.css.map",
     "Deutsch courses page.2da39c28.chunk.js.map": "/ap-site/static/js/Deutsch courses page.2da39c28.chunk.js.map",
     "Teacher Page.c506afcf.chunk.js.map": "/ap-site/static/js/Teacher Page.c506afcf.chunk.js.map",
-    "My AP Page.e880eeee.chunk.js.map": "/ap-site/static/js/My AP Page.e880eeee.chunk.js.map",
+    "My AP Page.c647a4ab.chunk.js.map": "/ap-site/static/js/My AP Page.c647a4ab.chunk.js.map",
     "Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map",
     "Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map",
     "Marathon redirect page to WhatsApp chat.a46805db.chunk.js.map": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.a46805db.chunk.js.map",
@@ -259,12 +260,12 @@
     "reactPlayerKaltura.346de120.chunk.js.map": "/ap-site/static/js/reactPlayerKaltura.346de120.chunk.js.map",
     "reactPlayerFilePlayer.985f4fb7.chunk.js.map": "/ap-site/static/js/reactPlayerFilePlayer.985f4fb7.chunk.js.map",
     "reactPlayerPreview.bfdac92c.chunk.js.map": "/ap-site/static/js/reactPlayerPreview.bfdac92c.chunk.js.map",
-    "4286.0676f66e.chunk.js.map": "/ap-site/static/js/4286.0676f66e.chunk.js.map",
+    "627.c33eaab8.chunk.js.map": "/ap-site/static/js/627.c33eaab8.chunk.js.map",
     "5090.81ad1d75.chunk.js.map": "/ap-site/static/js/5090.81ad1d75.chunk.js.map",
     "6337.3f367b59.chunk.js.map": "/ap-site/static/js/6337.3f367b59.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.b373f764.js"
+    "static/js/main.e7a04922.js"
   ]
 }
