@@ -51,6 +51,7 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
+import { Gifts } from 'pages/Gifts/Gifts';
 
 // const Home = lazy(() =>
 //   import(/* webpackChunkName: "Homepage" */ '../pages/Home/Home')
@@ -274,9 +275,11 @@ const TelegramMarathonRedirect = lazy(() =>
   )
 );
 
-const WhatsAppRedirect = lazy(() => import(
-  /* webpackChunkName: "Marathon redirect page to WhatsApp chat" */ '../pages/Service/WhatsAppRedirect/WhatsAppRedirect'
-));
+const WhatsAppRedirect = lazy(() =>
+  import(
+    /* webpackChunkName: "Marathon redirect page to WhatsApp chat" */ '../pages/Service/WhatsAppRedirect/WhatsAppRedirect'
+  )
+);
 
 const NotFound = lazy(() =>
   import(/* webpackChunkName: "Not Found" */ '../pages/NotFound/NotFound')
@@ -504,6 +507,8 @@ export const App = () => {
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route path="quiz" element={<Quiz utms={utms} />} />
+          <Route path="quiz-en" element={<Quiz utms={utms} />} />
+          <Route path="gifts" element={<Gifts />} noindex={true} />
           <Route
             path="form"
             element={<LeadFormPage utms={utms} />}

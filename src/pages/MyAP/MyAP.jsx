@@ -36,12 +36,6 @@ const MyAP = () => {
   // const linkToSet = `https://online.ap.education/student/lessons`;
 
   useEffect(() => {
-    // const changeProtocol = () =>
-    //   window.location.protocol === 'https:'
-    //     ? window.location.replace('http://www.ap.education/my-ap')
-    //     : console.log('protocol okay');
-    // changeProtocol();
-
     document.title = 'My AP | AP Education';
 
     const getLessons = async () => {

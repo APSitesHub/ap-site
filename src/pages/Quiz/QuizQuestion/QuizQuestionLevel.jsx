@@ -101,7 +101,7 @@ export const QuizQuestionLevel = ({
           опитування
           <PresentEmoji src={present} alt="Present emoji" width="30" />
         </DescriptionLevel>
-        
+
         <QuizButtonBox>
           <QuizButton
             onClick={async e => {
@@ -139,18 +139,20 @@ export const QuizQuestionLevel = ({
               Середній
             </QuizButtonContent>
           </QuizButton>
-          <QuizButton
-            onClick={async e => {
-              setQuizValue(e, 'b1');
-              await interimLeadSubmit();
-            }}
-            className={quizValues.current?.knowledge === 'b1' && 'chosen'}
-          >
-            <QuizButtonContent>
-              <Emoji src={senior} alt="Prize cup emoji" width="21" />
-              Високий
-            </QuizButtonContent>
-          </QuizButton>
+          {quizValues.current.lang === 'en' && quizValues.current.adult && (
+            <QuizButton
+              onClick={async e => {
+                setQuizValue(e, 'b1');
+                await interimLeadSubmit();
+              }}
+              className={quizValues.current?.knowledge === 'b1' && 'chosen'}
+            >
+              <QuizButtonContent>
+                <Emoji src={senior} alt="Prize cup emoji" width="21" />
+                Високий
+              </QuizButtonContent>
+            </QuizButton>
+          )}
         </QuizButtonBox>
         {shownError}
         <BackgroundFilterTopRight />
