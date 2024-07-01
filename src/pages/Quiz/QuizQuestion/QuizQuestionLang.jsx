@@ -31,7 +31,7 @@ export const QuizQuestionLang = ({
   console.log(quizValues);
 
   const setQuizValue = (e, value) => {
-    quizValues.current = { lang: value };
+    quizValues.current.lang = value;
     continueQuiz(e);
   };
 

@@ -46,6 +46,12 @@ export const QuizQuestionLevel = ({
     switch (location) {
       case '/quiz':
         return 'quiz';
+      case '/quiz/':
+        return 'quiz';
+      case '/quiz-en':
+        return 'quiz-en';
+      case '/quiz-en/':
+        return 'quiz-en';
       default:
         break;
     }

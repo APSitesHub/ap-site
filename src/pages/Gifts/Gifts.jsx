@@ -1654,7 +1654,6 @@ export const Gifts = () => {
                       // className={!isGrammarOpen && 'minimized'}
                     >
                       <PdfWrapper
-                        key={gift.link}
                         id={gift.link}
                         onMouseEnter={e => openPdfPreviewOnHover(e)}
                         onTouchEnd={() => togglePdfPreviewOnTouch(gift.link)}

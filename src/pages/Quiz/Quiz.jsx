@@ -10,7 +10,7 @@ import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
 import { QuizRedirect } from './QuizRedirect/QuizRedirect';
 import { QuizTitle } from './QuizTitle/QuizTitle';
 
-export const Quiz = () => {
+export const Quiz = ({ utms }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isChild, setIsChild] = useState(false);
   // const [coordinate, setCoordinate] = useState(0);
@@ -49,6 +49,17 @@ export const Quiz = () => {
 
   const beginQuiz = () => {
     setActiveSlide(1);
+    quizValues.current = {pipeline_id: 8956372};
+    quizValues.current.utm_content = utms.utm_content;
+    quizValues.current.utm_medium = utms.utm_medium;
+    quizValues.current.utm_campaign = utms.utm_campaign;
+    quizValues.current.utm_source = utms.utm_source;
+    quizValues.current.utm_term = utms.utm_term;
+    quizValues.current.utm_referrer = utms.utm_referrer;
+    quizValues.current.referrer = utms.referrer;
+    quizValues.current.gclientid = utms.gclientid;
+    quizValues.current.gclid = utms.gclid;
+    quizValues.current.fbclid = utms.fbclid;
   };
   const continueQuiz = e => {
     e.currentTarget.classList.add('chosen');

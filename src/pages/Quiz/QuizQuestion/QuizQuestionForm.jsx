@@ -125,7 +125,10 @@ export const QuizQuestionForm = ({
         crmId: crmId,
         contactId: contactId,
         age: quizValues.current.age,
-        lang: quizValues.current.lang,
+        lang:
+          quizValues.current.lang === 'en' &&
+          !quizValues.current.adult &&
+          'enkids',
         course: '0',
         package: 'Марафон',
         knowledge: quizValues.current.knowledge,
