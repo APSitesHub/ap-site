@@ -52,6 +52,9 @@ import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { Gifts } from 'pages/Gifts/Gifts';
+import { QuizEn } from 'pages/Quiz/QuizEn';
+import { QuizDe } from 'pages/Quiz/QuizDe';
+import { QuizPl } from 'pages/Quiz/QuizPl';
 
 // const Home = lazy(() =>
 //   import(/* webpackChunkName: "Homepage" */ '../pages/Home/Home')
@@ -507,7 +510,9 @@ export const App = () => {
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route path="quiz" element={<Quiz utms={utms} />} />
-          <Route path="quiz-en" element={<Quiz utms={utms} />} />
+          <Route path="quiz-en" element={<QuizEn utms={utms} />} />
+          <Route path="quiz-de" element={<QuizDe utms={utms} />} />
+          <Route path="quiz-pl" element={<QuizPl utms={utms} />} />
           <Route path="gifts" element={<Gifts />} noindex={true} />
           <Route
             path="form"

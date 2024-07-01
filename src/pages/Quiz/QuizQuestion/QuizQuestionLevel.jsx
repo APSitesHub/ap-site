@@ -37,6 +37,7 @@ export const QuizQuestionLevel = ({
   previousQuestion,
   nextQuestion,
   quizValues,
+  lang,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [shownError, setShownError] = useState('');
@@ -52,6 +53,14 @@ export const QuizQuestionLevel = ({
         return 'quiz-en';
       case '/quiz-en/':
         return 'quiz-en';
+      case '/quiz-de':
+        return 'quiz-de';
+      case '/quiz-de/':
+        return 'quiz-de';
+      case '/quiz-pl':
+        return 'quiz-pl';
+      case '/quiz-pl/':
+        return 'quiz-pl';
       default:
         break;
     }
@@ -173,7 +182,7 @@ export const QuizQuestionLevel = ({
             <QuizArrowLeft />
           </PreviousPageBtn>
           <PageCounter>
-            <CurrentPage>{activeSlide}</CurrentPage>/8
+            <CurrentPage>{activeSlide}</CurrentPage>/{lang ? 7 : 8}
           </PageCounter>
           <NextPageBtn
             className={

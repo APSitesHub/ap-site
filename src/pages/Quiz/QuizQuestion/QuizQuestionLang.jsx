@@ -27,6 +27,7 @@ export const QuizQuestionLang = ({
   previousQuestion,
   nextQuestion,
   quizValues,
+  lang,
 }) => {
   console.log(quizValues);
 
@@ -80,7 +81,7 @@ export const QuizQuestionLang = ({
             <QuizArrowLeft />
           </PreviousPageBtn>
           <PageCounter>
-            <CurrentPage>{activeSlide}</CurrentPage>/8
+            <CurrentPage>{activeSlide}</CurrentPage>/{lang ? 7 : 8}
           </PageCounter>
           <NextPageBtn
             className={

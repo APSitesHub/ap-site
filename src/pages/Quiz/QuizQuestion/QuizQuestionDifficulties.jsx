@@ -29,6 +29,7 @@ export const QuizQuestionDifficulties = ({
   previousQuestion,
   nextQuestion,
   quizValues,
+  lang
 }) => {
   const setQuizValue = (e, value) => {
     quizValues.current.difficulties = value;
@@ -40,7 +41,13 @@ export const QuizQuestionDifficulties = ({
       <QuizBox>
         <Logo />
         <Question>
-          Які труднощі у вас виникають під час вивчення іноземної мови?
+          Які труднощі у вас виникають під час вивчення {quizValues.current.lang === 'en'
+            ? 'англійської'
+            : quizValues.current.lang === 'de'
+            ? 'німецької'
+            : quizValues.current.lang === 'pl'
+            ? 'польської'
+            : 'іноземної'} мови?
         </Question>
         <QuizButtonBox>
           <QuizButton
@@ -101,7 +108,7 @@ export const QuizQuestionDifficulties = ({
             <QuizArrowLeft />
           </PreviousPageBtn>
           <PageCounter>
-            <CurrentPage>{activeSlide}</CurrentPage>/8
+            <CurrentPage>{activeSlide}</CurrentPage>/{lang ? 7 : 8}
           </PageCounter>
           <NextPageBtn
             className={

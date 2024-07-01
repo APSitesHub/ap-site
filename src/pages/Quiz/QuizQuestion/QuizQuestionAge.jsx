@@ -24,6 +24,7 @@ export const QuizQuestionAge = ({
   previousQuestion,
   nextQuestion,
   quizValues,
+  lang
 }) => {
   const setQuizValue = (e, value) => {
     quizValues.current.age = value;
@@ -108,7 +109,7 @@ export const QuizQuestionAge = ({
             <QuizArrowLeft />
           </PreviousPageBtn>
           <PageCounter>
-            <CurrentPage>{activeSlide}</CurrentPage>/8
+            <CurrentPage>{activeSlide}</CurrentPage>/{lang ? 7 : 8}
           </PageCounter>
           <NextPageBtn
             className={

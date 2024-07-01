@@ -30,6 +30,7 @@ export const QuizQuestionWho = ({
   previousQuestion,
   nextQuestion,
   quizValues,
+  lang,
 }) => {
   const setQuizValue = (e, value) => {
     quizValues.current.adult = value;
@@ -43,7 +44,17 @@ export const QuizQuestionWho = ({
     <>
       <QuizBox>
         <Logo />
-        <Question>Для кого цікавить вивчення мови?</Question>
+        <Question>
+          Для кого цікавить вивчення{' '}
+          {lang === 'en'
+            ? 'англійської'
+            : lang === 'de'
+            ? 'німецької'
+            : lang === 'pl'
+            ? 'польської'
+            : 'мови'}
+          ?
+        </Question>
         <QuizButtonBox>
           <QuizButton
             onClick={e => setQuizValue(e, true)}
@@ -73,7 +84,7 @@ export const QuizQuestionWho = ({
             <QuizArrowLeft />
           </PreviousPageBtn>
           <PageCounter>
-            <CurrentPage>{activeSlide}</CurrentPage>/8
+            <CurrentPage>{activeSlide}</CurrentPage>/{lang ? 7 : 8}
           </PageCounter>
           <NextPageBtn
             className={

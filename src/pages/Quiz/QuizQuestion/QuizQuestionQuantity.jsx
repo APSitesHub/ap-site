@@ -26,6 +26,7 @@ export const QuizQuestionQuantity = ({
   previousQuestion,
   nextQuestion,
   quizValues,
+  lang
 }) => {
   const setQuizValue = (e, value) => {
     quizValues.current.quantity = value;
@@ -92,7 +93,7 @@ export const QuizQuestionQuantity = ({
             <QuizArrowLeft />
           </PreviousPageBtn>
           <PageCounter>
-            <CurrentPage>{activeSlide}</CurrentPage>/8
+            <CurrentPage>{activeSlide}</CurrentPage>/{lang ? 7 : 8}
           </PageCounter>
           <NextPageBtn
             className={

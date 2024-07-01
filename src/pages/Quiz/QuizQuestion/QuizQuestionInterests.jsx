@@ -17,7 +17,7 @@ import {
   QuizBox,
   QuizButton,
   QuizButtonBox,
-  QuizButtonContent
+  QuizButtonContent,
 } from '../Quiz.styled';
 
 export const QuizQuestionInterests = ({
@@ -26,6 +26,7 @@ export const QuizQuestionInterests = ({
   previousQuestion,
   nextQuestion,
   quizValues,
+  lang
 }) => {
   const setQuizValue = (e, value) => {
     quizValues.current.interests = value;
@@ -37,7 +38,15 @@ export const QuizQuestionInterests = ({
       <QuizBox>
         <Logo />
         <Question>
-          Що вас зараз цікавить у вивченні мови?
+          Що вас зараз цікавить у вивченні{' '}
+          {quizValues.current.lang === 'en'
+            ? 'англійської'
+            : quizValues.current.lang === 'de'
+            ? 'німецької'
+            : quizValues.current.lang === 'pl'
+            ? 'польської'
+            : 'іноземної'}{' '}
+          мови?
           <InterestsEmoji src={middle} alt="Alumni hat emoji" />
         </Question>
         <QuizButtonBox>
@@ -87,7 +96,7 @@ export const QuizQuestionInterests = ({
             <QuizArrowLeft />
           </PreviousPageBtn>
           <PageCounter>
-            <CurrentPage>{activeSlide}</CurrentPage>/8
+            <CurrentPage>{activeSlide}</CurrentPage>/{lang ? 7 : 8}
           </PageCounter>
           <NextPageBtn
             className={

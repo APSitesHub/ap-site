@@ -40,6 +40,7 @@ export const QuizQuestionForm = ({
   quizValues,
   activeSlide,
   previousQuestion,
+  lang,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -126,9 +127,9 @@ export const QuizQuestionForm = ({
         contactId: contactId,
         age: quizValues.current.age,
         lang:
-          quizValues.current.lang === 'en' &&
-          !quizValues.current.adult &&
-          'enkids',
+          quizValues.current.lang === 'en' && !quizValues.current.adult
+            ? 'enkids'
+            : quizValues.current.lang,
         course: '0',
         package: 'Марафон',
         knowledge: quizValues.current.knowledge,
@@ -162,8 +163,9 @@ export const QuizQuestionForm = ({
         <Logo />
         <Title>Майже готово!</Title>
         <Description>
-          Щоб отримати доступ до марафону, введіть своє ім’я і актуальний номер
-          телефону та перейдіть у зручний для вас месенджер.
+          Щоб отримати доступ до {lang ? 'пробних занять' : 'марафону'}, введіть
+          своє ім’я і актуальний номер телефону та перейдіть у зручний для вас
+          месенджер.
         </Description>
         <Formik
           initialValues={initialValues}
@@ -205,7 +207,7 @@ export const QuizQuestionForm = ({
             <QuizArrowLeft />
           </PreviousPageBtn>
           <PageCounter>
-            <CurrentPage>{activeSlide}</CurrentPage>/8
+            <CurrentPage>{activeSlide}</CurrentPage>/{lang ? 7 : 8}
           </PageCounter>
           <NextPageBtn className="hidden" onClick={nextQuestion}>
             <QuizArrowRight />
