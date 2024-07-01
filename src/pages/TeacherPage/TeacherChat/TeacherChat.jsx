@@ -76,6 +76,7 @@ export const TeacherChat = ({ page }) => {
     document.title = 'AP Chat Window';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
+    // socketRef.current = io('http://localhost:4000/');
     checkLogin();
 
     socketRef.current.on('connected', (connected, handshake) => {
@@ -87,9 +88,17 @@ export const TeacherChat = ({ page }) => {
       console.log('list was emitted?');
     });
 
-    socketRef.current.on('connected:list', clients =>
-      console.log('86', clients)
-    );
+    // socketRef.current.on('connected:list', clients => {
+    //   console.log('86', clients);
+    //   setCounter(counter => (counter += 1));
+    //   // console.log(counter);
+    // });
+
+    // socketRef.current.on('connected:list', clients => {
+    //   console.log('86', clients);
+    //   setCounter(counter => (counter += 1));
+    //   // console.log(counter);
+    // });
 
     const getMessages = async () => {
       console.log('get');

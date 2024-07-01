@@ -85,10 +85,15 @@ export const StreamA1 = () => {
     document.title = 'A1 English | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
+    // socketRef.current = io('http://localhost:4000/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
       console.log(handshake.time);
+      // console.log('list is about to emit');
+      // console.log(socketRef.current);
+      // socketRef.current.emit('connected:user');
+      // console.log('list was emitted?');
     });
 
     const getMessages = async () => {

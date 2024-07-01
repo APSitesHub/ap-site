@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Description } from 'components/Hero/Hero.styled';
 import {
   Label,
   LeftFormBackgroundStar,
@@ -37,6 +36,8 @@ import {
   PdfPreviewBackground,
   QuizletLink,
   QuizletLogo,
+  QuizletShortLogo,
+  SubTitle,
   YouTubeLogo,
 } from './Gifts.styled';
 
@@ -215,7 +216,7 @@ export const Gifts = () => {
         },
         {
           type: 'video',
-          name: '11.Теперішній тривалий час',
+          name: '11. Теперішній тривалий час',
           link: 'https://youtu.be/3eVoyiRqZaQ',
         },
         {
@@ -727,7 +728,7 @@ export const Gifts = () => {
       a2: [
         {
           type: 'quizlet',
-          name: 'Elementary',
+          name: 'Pre-intermediate',
           link: 'https://quizlet.com/class/16351612/',
         },
         {
@@ -1573,9 +1574,8 @@ export const Gifts = () => {
             <LoginFormText>
               Привіт!
               <br />
-              Ця сторінка недоступна для неавторизованих користувачів. Але якщо
-              ви маєте доступ до нашої платформи, то й до цієї сторінки теж.
-              Введіть дані, які ви використовуєте для входу на платформу.
+              Логін і пароль від цієї сторінки ми надіслали вам в обраний вами
+              месенджер!
             </LoginFormText>
             <Label>
               <AdminInput type="text" name="mail" placeholder="Login" />
@@ -1593,104 +1593,107 @@ export const Gifts = () => {
           </LoginForm>
         </Formik>
       ) : (
-        <GiftsBox>
+        <>
           <Logo />
           <Title>Подарункові матеріали</Title>
-          <Description>
+          <SubTitle>
             Розпочніть своє навчання вже зараз з безкоштовними подарунковими
             матеріалами!
-          </Description>
-          {gifts[user.lang][user.knowledge].map((gift, i) => (
-            <>
-              <GiftsBoxItem key={i}>
-                {gift.type === 'quizlet' && (
-                  <LessonTopBox>
-                    <QuizletLink
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      to={gift.link}
-                    >
-                      <QuizletLogo />
-                      <GiftsDescription>
-                        Набір вправ для самостійного вивчення слів для рівня{' '}
-                        {gift.name}
-                      </GiftsDescription>
-                      <GiftLinkIcon />
-                    </QuizletLink>
-                  </LessonTopBox>
-                )}
-                {gift.type === 'video' && (
-                  <GiftsVideoBox
-                  // className={!isVideoOpen && 'minimized'}
-                  >
+          </SubTitle>
+          <GiftsBox>
+            {gifts[user.lang][user.knowledge].map((gift, i) => (
+              <>
+                <GiftsBoxItem key={i}>
+                  {gift.type === 'quizlet' && (
                     <LessonTopBox>
-                      <YouTubeLogo />
-                      <GiftsDescription>{gift.name}</GiftsDescription>
-                    </LessonTopBox>
-                    <LessonVideoBox>
-                      <ReactPlayer
-                        loop={true}
-                        muted={false}
-                        controls={true}
-                        style={{
-                          display: 'block',
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                        }}
-                        width="100%"
-                        height="100%"
-                        url={gift.link}
-                      />
-                    </LessonVideoBox>
-                  </GiftsVideoBox>
-                )}
-
-                {gift.type === 'grammar' && (
-                  <PdfBox
-                    onMouseLeave={closePdfPreviewOnMouseOut}
-                    // className={!isGrammarOpen && 'minimized'}
-                  >
-                    <PdfWrapper
-                      key={gift.link}
-                      id={gift.link}
-                      onMouseEnter={e => openPdfPreviewOnHover(e)}
-                      onTouchEnd={() => togglePdfPreviewOnTouch(gift.link)}
-                    >
-                      <PdfIcon />
-                      <LessonValuePdfLink
+                      <QuizletLink
                         target="_blank"
                         rel="noopener noreferrer"
                         to={gift.link}
                       >
-                        <GiftsDescription>{gift.name}</GiftsDescription>
-                        <ExternalLinkIcon />
-                      </LessonValuePdfLink>
-                    </PdfWrapper>
-                    <PdfPreviewBackground
-                      className={
-                        isPdfPreviewOpen &&
-                        openedPdf === gift.link &&
-                        'preview-open'
-                      }
+                        <QuizletLogo />
+                        <QuizletShortLogo />
+                        <GiftsDescription>
+                          Набір вправ для самостійного вивчення слів для рівня{' '}
+                          {gift.name}
+                        </GiftsDescription>
+                        <GiftLinkIcon />
+                      </QuizletLink>
+                    </LessonTopBox>
+                  )}
+                  {gift.type === 'video' && (
+                    <GiftsVideoBox
+                    // className={!isVideoOpen && 'minimized'}
                     >
-                      {isPdfPreviewOpen && openedPdf === gift.link && (
-                        <PdfPreview
-                          title={`Preview of ${gift.link}`}
-                          src={gift.link
-                            .replace('open?id=', 'file/d/')
-                            .replace('view', 'preview')
-                            .replace('&usp=drive_copy', '/preview')}
-                          allow="autoplay"
-                        ></PdfPreview>
-                      )}
-                    </PdfPreviewBackground>
-                  </PdfBox>
-                )}
-              </GiftsBoxItem>
-            </>
-          ))}
-        </GiftsBox>
+                      <LessonTopBox>
+                        <YouTubeLogo />
+                        <GiftsDescription>{gift.name}</GiftsDescription>
+                      </LessonTopBox>
+                      <LessonVideoBox>
+                        <ReactPlayer
+                          loop={true}
+                          muted={false}
+                          controls={true}
+                          style={{
+                            display: 'block',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                          }}
+                          width="100%"
+                          height="100%"
+                          url={gift.link}
+                        />
+                      </LessonVideoBox>
+                    </GiftsVideoBox>
+                  )}
+
+                  {gift.type === 'grammar' && (
+                    <PdfBox
+                      onMouseLeave={closePdfPreviewOnMouseOut}
+                      // className={!isGrammarOpen && 'minimized'}
+                    >
+                      <PdfWrapper
+                        key={gift.link}
+                        id={gift.link}
+                        onMouseEnter={e => openPdfPreviewOnHover(e)}
+                        onTouchEnd={() => togglePdfPreviewOnTouch(gift.link)}
+                      >
+                        <PdfIcon />
+                        <LessonValuePdfLink
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          to={gift.link}
+                        >
+                          <GiftsDescription>{gift.name}</GiftsDescription>
+                          <ExternalLinkIcon />
+                        </LessonValuePdfLink>
+                      </PdfWrapper>
+                      <PdfPreviewBackground
+                        className={
+                          isPdfPreviewOpen &&
+                          openedPdf === gift.link &&
+                          'preview-open'
+                        }
+                      >
+                        {isPdfPreviewOpen && openedPdf === gift.link && (
+                          <PdfPreview
+                            title={`Preview of ${gift.link}`}
+                            src={gift.link
+                              .replace('open?id=', 'file/d/')
+                              .replace('view', 'preview')
+                              .replace('&usp=drive_copy', '/preview')}
+                            allow="autoplay"
+                          ></PdfPreview>
+                        )}
+                      </PdfPreviewBackground>
+                    </PdfBox>
+                  )}
+                </GiftsBoxItem>
+              </>
+            ))}
+          </GiftsBox>
+        </>
       )}
     </>
   );

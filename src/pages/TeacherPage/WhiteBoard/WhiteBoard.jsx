@@ -33,6 +33,7 @@ export const WhiteBoard = ({
     b1kidsbeginner: 'http://go.limnu.com/goatsbeard-naked',
     b2kidsbeginner: 'http://go.limnu.com/caladium-pasteurized',
     test: 'https://limnu.com/d/draw.html?b=B_N65K69RyegUKa5&',
+    trendets: 'http://go.limnu.com/phoenix-plump',
     deutscha0: 'http://go.limnu.com/blanket-mealy',
     deutsch: 'http://go.limnu.com/cobra-potent',
     deutscha2: 'http://go.limnu.com/woodruff-dreamy',

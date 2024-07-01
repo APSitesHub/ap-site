@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as LogoIcon } from '../../img/svg/logoNew.svg';
 import { ReactComponent as QuizletIcon } from '../../img/svg/quizlet.svg';
+import { ReactComponent as QuizletMobileIcon } from '../../img/svg/quizlet-short.svg';
 import { ReactComponent as YoutubeIcon } from '../../img/svg/youtube.svg';
 import { ReactComponent as ExternalLink } from '../../img/svg/externalLink.svg';
 import { Link } from 'react-router-dom';
@@ -40,8 +41,30 @@ export const Logo = styled(LogoIcon)`
   width: 200px;
   height: 40px;
 
-  margin: 0 auto;
-  margin-bottom: 30px;
+  margin: 48px auto;
+`;
+
+export const SubTitle = styled.p`
+  text-align: center;
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 30px;
+
+  @media screen and (min-width: 480px) {
+    font-size: 16px;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+    padding: 0 40px;
+    max-width: 600px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    padding: 0 55px;
+    max-width: 900px;
+  }
 `;
 
 export const QuizletLogo = styled(QuizletIcon)`
@@ -54,6 +77,27 @@ export const QuizletLogo = styled(QuizletIcon)`
   a:hover &,
   a:focus & {
     color: var(--accent-color);
+  }
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+export const QuizletShortLogo = styled(QuizletMobileIcon)`
+  display: block;
+  flex-shrink: 0;
+  width: 32px;
+  color: #4255ff;
+  transition: color var(--animation-global);
+
+  a:hover &,
+  a:focus & {
+    color: var(--accent-color);
+  }
+
+  @media screen and (min-width: 768px) {
+    display: none;
   }
 `;
 
@@ -69,10 +113,13 @@ export const QuizletLink = styled(Link)`
   align-items: flex-end;
   width: 100%;
   font-size: 16px;
-  font-weight: 500;
   color: #000;
   text-decoration: none;
-  gap: 16px;
+  gap: 12px;
+
+    @media screen and (min-width: 480px) {
+    gap: 16px;
+  }
 `;
 
 export const GiftLinkIcon = styled(ExternalLink)`
@@ -89,8 +136,16 @@ export const GiftLinkIcon = styled(ExternalLink)`
 `;
 
 export const GiftsDescription = styled.p`
-  font-size: 16px;
+  font-size: 12px;
   transform: translateY(2px);
+
+  @media screen and (min-width: 480px) {
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 export const GiftsVideoBox = styled.div`
