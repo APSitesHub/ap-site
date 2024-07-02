@@ -97,7 +97,8 @@ export const ClickDisabler = styled.div`
 `;
 
 export const KahootBackground = styled(StreamsBackgroundWrapper)`
-  background: unset;
+  background: #4ec82d;
+  height: 0;
 
   transition: transform var(--animation-global);
 
@@ -106,10 +107,11 @@ export const KahootBackground = styled(StreamsBackgroundWrapper)`
     top: 0;
     left: 0;
     z-index: inherit;
+    height: auto;
   }
 
   .minimized & {
-    background: unset;
+    background: #4ec82d;
   }
 `;
 

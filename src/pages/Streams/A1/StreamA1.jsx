@@ -96,6 +96,11 @@ export const StreamA1 = () => {
       console.log('connected:user was emitted?');
     });
 
+    socketRef.current.on('connected:user', (id, lvl) => {
+      console.log(id);
+      console.log(lvl);
+    });
+
     const getMessages = async () => {
       console.log('get');
       try {
