@@ -43,7 +43,7 @@ export const TeacherChat = ({ page }) => {
       : '/streams/' + page;
 
   const room = getMessagesByPage(page);
-  console.log(room);
+  console.log(46, room);
 
   const checkLogin = e => {
     const name = localStorage.getItem('userName');
@@ -83,22 +83,26 @@ export const TeacherChat = ({ page }) => {
       console.log(connected);
       console.log(handshake);
       setCounter(counter => (counter = counter + 1));
-      console.log('list is about to emit');
-      socketRef.current.emit('list');
-      console.log('list was emitted?');
+      // console.log('list is about to emit');
+      // socketRef.current.emit('list');
+      // console.log('list was emitted?');
     });
 
-    // socketRef.current.on('connected:list', clients => {
-    //   console.log('86', clients);
-    //   setCounter(counter => (counter += 1));
-    //   // console.log(counter);
-    // });
+    socketRef.current.on('connected:user', (id, lvl) => {
+      console.log('onlist');
+      console.log('93', id);
+      console.log('94', lvl);
+      setCounter(counter => (counter += 1));
+      // console.log(counter);
+    });
 
-    // socketRef.current.on('connected:list', clients => {
-    //   console.log('86', clients);
-    //   setCounter(counter => (counter += 1));
-    //   // console.log(counter);
-    // });
+    socketRef.current.on('list', (id, lvl) => {
+      console.log('list');
+      console.log('93', id);
+      console.log('94', lvl);
+      setCounter(counter => (counter += 1));
+      // console.log(counter);
+    });
 
     const getMessages = async () => {
       console.log('get');

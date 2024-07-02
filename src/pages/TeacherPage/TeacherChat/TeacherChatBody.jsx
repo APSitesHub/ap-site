@@ -26,7 +26,7 @@ export const TeacherChatBody = ({ messages, socket, room }) => {
     scrollToBottom();
   });
 
-  console.log(room);
+  console.log(29, 'chatbody - room', room);
 
   const calculateHeights = () => {
     setScroll(

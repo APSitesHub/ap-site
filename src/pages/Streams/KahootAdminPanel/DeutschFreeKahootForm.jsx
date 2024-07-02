@@ -161,6 +161,14 @@ export const DeutschFreeKahootForm = ({ destination }) => {
                 placeholder="П'ятий кахут для безкоштовного марафону рівня A1 з німецької"
               />
             </Label>
+            <Label>
+              <AdminInput
+                type="text"
+                name="deutschfree_6"
+                autoComplete="off"
+                placeholder="Шостий кахут для безкоштовного марафону рівня A1 з німецької"
+              />
+            </Label>
             <LabelCheckBox>
               <AdminCheckbox type="checkbox" name="replace" />
               Якщо не зняти галочку, всі лінки перезапишуться повністю. <br />{' '}

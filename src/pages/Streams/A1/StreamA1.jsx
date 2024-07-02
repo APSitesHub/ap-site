@@ -90,10 +90,10 @@ export const StreamA1 = () => {
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
       console.log(handshake.time);
-      // console.log('list is about to emit');
-      // console.log(socketRef.current);
-      // socketRef.current.emit('connected:user');
-      // console.log('list was emitted?');
+      console.log('connected:user is about to emit');
+      console.log(socketRef.current);
+      socketRef.current.emit('connected:user', socketRef.current.id, room);
+      console.log('connected:user was emitted?');
     });
 
     const getMessages = async () => {
