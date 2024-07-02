@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.e6cff07c.js",
+    "main.js": "/ap-site/static/js/main.7b173041.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.b015d4ba.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -45,7 +45,7 @@
     "Polski courses page.js": "/ap-site/static/js/Polski courses page.980d68d3.chunk.js",
     "Deutsch courses page.css": "/ap-site/static/css/Deutsch courses page.e8ee1c85.chunk.css",
     "Deutsch courses page.js": "/ap-site/static/js/Deutsch courses page.2da39c28.chunk.js",
-    "Teacher Page.js": "/ap-site/static/js/Teacher Page.d3c03a64.chunk.js",
+    "Teacher Page.js": "/ap-site/static/js/Teacher Page.e7891501.chunk.js",
     "My AP Page.js": "/ap-site/static/js/My AP Page.c647a4ab.chunk.js",
     "Marathon redirect page to Viber chatbot.js": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js",
     "Marathon redirect page to Telegram chatbot.js": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js",
@@ -198,7 +198,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.e6cff07c.js.map": "/ap-site/static/js/main.e6cff07c.js.map",
+    "main.7b173041.js.map": "/ap-site/static/js/main.7b173041.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.b015d4ba.chunk.js.map": "/ap-site/static/js/New Design Homepage.b015d4ba.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -242,7 +242,7 @@
     "Polski courses page.980d68d3.chunk.js.map": "/ap-site/static/js/Polski courses page.980d68d3.chunk.js.map",
     "Deutsch courses page.e8ee1c85.chunk.css.map": "/ap-site/static/css/Deutsch courses page.e8ee1c85.chunk.css.map",
     "Deutsch courses page.2da39c28.chunk.js.map": "/ap-site/static/js/Deutsch courses page.2da39c28.chunk.js.map",
-    "Teacher Page.d3c03a64.chunk.js.map": "/ap-site/static/js/Teacher Page.d3c03a64.chunk.js.map",
+    "Teacher Page.e7891501.chunk.js.map": "/ap-site/static/js/Teacher Page.e7891501.chunk.js.map",
     "My AP Page.c647a4ab.chunk.js.map": "/ap-site/static/js/My AP Page.c647a4ab.chunk.js.map",
     "Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map",
     "Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map",
@@ -267,6 +267,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.e6cff07c.js"
+    "static/js/main.7b173041.js"
   ]
 }
