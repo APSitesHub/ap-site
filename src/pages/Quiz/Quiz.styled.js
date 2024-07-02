@@ -273,7 +273,7 @@ export const QuizButtonContent = styled.div`
 export const BackgroungStarSmall = styled(StarIcon)`
   position: absolute;
   left: 3px;
-  top: 149px;
+  top: 119px;
 
   flex-shrink: 0;
   width: 32px;

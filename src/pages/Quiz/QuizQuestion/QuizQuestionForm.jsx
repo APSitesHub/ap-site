@@ -105,7 +105,10 @@ export const QuizQuestionForm = ({
           if (values.name && values.phone && isValid) {
             console.log('valid');
             await submitForm();
-            window.location.replace(quizValues.current.leadPage);
+            setTimeout(() => {
+              setIsLoading(isLoading => (isLoading = false));
+              window.location.replace(quizValues.current.leadPage);
+            }, 1500);
           }
         }}
       >
@@ -133,7 +136,7 @@ export const QuizQuestionForm = ({
         course: '0',
         package: 'Марафон',
         knowledge: quizValues.current.knowledge,
-        manager: 'суліган',
+        manager: '-',
       };
 
       try {
@@ -150,8 +153,12 @@ export const QuizQuestionForm = ({
         values
       );
       console.log(response);
+      console.log(response.data.crmId, response.data.contactId);
       userSubmit(response.data.crmId, response.data.contactId);
-      resetForm();
+      // alert('reseting')
+      setTimeout(() => {
+        resetForm();
+      }, 1500);
     } catch (error) {
       console.error(error);
     }
