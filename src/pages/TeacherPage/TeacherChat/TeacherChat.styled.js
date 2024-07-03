@@ -584,6 +584,34 @@ export const TeacherChatSwitch = styled.button`
   width: 42px;
 `;
 
+export const TeacherChatCounter = styled.div`
+  position: absolute;
+  bottom: 5px;
+  left: -35px;
+
+  color: var(--main-color);
+  background-color: rgb(240, 240, 240);
+  border-radius: 50%;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 600;
+  height: 30px;
+  width: 30px;
+
+  &.big-number{
+    bottom: -5px;
+    left: -40px;
+
+    height: 40px;
+  width: 40px;
+  }
+`;
+
 export const ChatHideLeftSwitch = styled(BoxSwitchLeft)`
   stroke: var(--main-color);
   transition: stroke var(--animation-global);

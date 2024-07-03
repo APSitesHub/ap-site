@@ -84,6 +84,25 @@
         })(window, 0, 'crmPlugin', 0, 0, 'crm_plugin');
       }
     </script>
+    <!-- Salesbot Trigger -->
+    <script type="text/javascript">
+      if (window.location.pathname.includes('/gifts')) {
+        (function (w, d) {
+          w.amo_pixel_token =
+            'p1Ip4iB8yqaEyXU9HPmcTDHG+/aHT8W0D6+dfzknynC5qNfBilbJDx/Zo9M68uDLoB3J6ssatccwUYGB/QkENg==';
+          var s = document.createElement('script'),
+            f = d.getElementsByTagName('script')[0];
+          s.id = 'amo_pixel_js';
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src =
+            'https://piper.amocrm.com/pixel/js/tracker/pixel.js?token=' +
+            w.amo_pixel_token;
+          f.parentNode.insertBefore(s, f);
+        })(window, document);
+      }
+    </script>
+    <!-- End Of Salesbot Trigger -->
     <!-- Start Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages

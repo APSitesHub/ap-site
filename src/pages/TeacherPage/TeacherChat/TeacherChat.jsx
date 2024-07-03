@@ -13,6 +13,7 @@ import {
   ChatHideLeftSwitch,
   ChatHideRightSwitch,
   TeacherChatBox,
+  TeacherChatCounter,
   TeacherChatSwitch,
 } from './TeacherChat.styled';
 import { TeacherChatContainer } from './TeacherChatContainer';
@@ -90,7 +91,7 @@ export const TeacherChat = ({ page }) => {
       console.log('90', new Date());
       console.log('91', id);
       console.log('92', lvl);
-      setCounter(counter => (counter += 1));
+      room === lvl && setCounter(counter => (counter += 1));
     });
 
     socketRef.current.on('connected:disconnect', (id, lvl) => {
@@ -98,7 +99,7 @@ export const TeacherChat = ({ page }) => {
       console.log('99', new Date());
       console.log('100', id);
       console.log('101', lvl);
-      setCounter(counter => (counter -= 1));
+      room === lvl && setCounter(counter => (counter -= 1));
     });
 
     const getMessages = async () => {
@@ -214,6 +215,9 @@ export const TeacherChat = ({ page }) => {
         <TeacherChatSwitch onClick={toggleChat}>
           {isChatOpen ? <ChatHideRightSwitch /> : <ChatHideLeftSwitch />}
         </TeacherChatSwitch>
+        <TeacherChatCounter className={counter > 99 && 'big-number'}>
+          {counter}
+        </TeacherChatCounter>
         {!isLoggedToChat ? (
           <ChatLoginForm onSubmit={handleSubmit}>
             <ChatLoginHeader>AP Open Chat</ChatLoginHeader>
