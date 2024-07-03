@@ -90,10 +90,7 @@ export const StreamA1 = () => {
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
       console.log(handshake.time);
-      console.log('connected:user is about to emit');
-      console.log(socketRef.current);
       socketRef.current.emit('connected:user', socketRef.current.id, room);
-      console.log('connected:user was emitted?');
     });
 
     socketRef.current.on('connected:user', (id, lvl) => {
@@ -182,8 +179,11 @@ export const StreamA1 = () => {
     });
 
     return () => {
+      console.log('disconnecting');
+      socketRef.current.emit('connected:disconnect', socketRef.current.id, room)
       socketRef.current.off('connected');
       socketRef.current.off('message');
+      socketRef.current.off('user');
       socketRef.current.disconnect();
     };
   }, [currentUser, room]);

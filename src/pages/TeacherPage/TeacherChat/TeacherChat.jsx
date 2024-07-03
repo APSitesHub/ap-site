@@ -83,25 +83,22 @@ export const TeacherChat = ({ page }) => {
       console.log(connected);
       console.log(handshake);
       setCounter(counter => (counter = counter + 1));
-      // console.log('list is about to emit');
-      // socketRef.current.emit('list');
-      // console.log('list was emitted?');
     });
 
     socketRef.current.on('connected:user', (id, lvl) => {
-      console.log('onlist');
-      console.log('93', id);
-      console.log('94', lvl);
+      console.log('connected:user');
+      console.log('90', new Date());
+      console.log('91', id);
+      console.log('92', lvl);
       setCounter(counter => (counter += 1));
-      // console.log(counter);
     });
 
-    socketRef.current.on('list', (id, lvl) => {
-      console.log('list');
-      console.log('93', id);
-      console.log('94', lvl);
-      setCounter(counter => (counter += 1));
-      // console.log(counter);
+    socketRef.current.on('connected:disconnect', (id, lvl) => {
+      console.log('connected:disconnect');
+      console.log('99', new Date());
+      console.log('100', id);
+      console.log('101', lvl);
+      setCounter(counter => (counter -= 1));
     });
 
     const getMessages = async () => {
