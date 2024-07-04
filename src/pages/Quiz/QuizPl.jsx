@@ -9,7 +9,7 @@ import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
 import { QuizRedirect } from './QuizRedirect/QuizRedirect';
 import { QuizTitle } from './QuizTitle/QuizTitle';
 
-export const QuizPl = ({ utms }) => {
+const QuizPl = ({ utms }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isChild, setIsChild] = useState(false);
 
@@ -125,3 +125,5 @@ export const QuizPl = ({ utms }) => {
     </>
   );
 };
+
+export default QuizPl;

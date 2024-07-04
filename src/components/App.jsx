@@ -1,7 +1,6 @@
 import TelegramHRRedirect from 'pages/HR/TelegramHRRedirect/TelegramHRRedirect';
 import ViberHRRedirect from 'pages/HR/ViberHRRedirect/ViberHRRedirect';
 import { LeadFormPage } from 'pages/LeadFormPage/LeadFormPage';
-import { Quiz } from 'pages/Quiz/Quiz';
 import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
 import { StreamA0 } from 'pages/Streams/A0/StreamA0';
@@ -51,10 +50,6 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
-import { Gifts } from 'pages/Gifts/Gifts';
-import { QuizEn } from 'pages/Quiz/QuizEn';
-import { QuizDe } from 'pages/Quiz/QuizDe';
-import { QuizPl } from 'pages/Quiz/QuizPl';
 
 // const Home = lazy(() =>
 //   import(/* webpackChunkName: "Homepage" */ '../pages/Home/Home')
@@ -284,6 +279,50 @@ const WhatsAppRedirect = lazy(() =>
   )
 );
 
+const Gifts = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts page" */ '../pages/Gifts/Gifts')
+);
+
+const GiftsAuth = lazy(() =>
+  import(
+    /* webpackChunkName: "Post-quiz gifts page with sms-code auth" */ '../pages/Gifts/GiftsAuth'
+  )
+);
+
+const Quiz = lazy(() =>
+  import(/* webpackChunkName: "Marathon quiz page" */ '../pages/Quiz/Quiz')
+);
+
+const QuizAuth = lazy(() =>
+  import(
+    /* webpackChunkName: "Marathon quiz page for new Auth" */ '../pages/Quiz/QuizAuth'
+  )
+);
+
+const QuizEn = lazy(() =>
+  import(
+    /* webpackChunkName: "Sales english quiz page" */ '../pages/Quiz/QuizEn'
+  )
+);
+
+const QuizDe = lazy(() =>
+  import(
+    /* webpackChunkName: "Sales deutsch quiz page" */ '../pages/Quiz/QuizDe'
+  )
+);
+
+const QuizPl = lazy(() =>
+  import(
+    /* webpackChunkName: "Sales polish quiz page" */ '../pages/Quiz/QuizPl'
+  )
+);
+
+const QuizEnAuth = lazy(() =>
+  import(
+    /* webpackChunkName: "Sales english quiz page for new Auth" */ '../pages/Quiz/QuizEnAuth'
+  )
+);
+
 const NotFound = lazy(() =>
   import(/* webpackChunkName: "Not Found" */ '../pages/NotFound/NotFound')
 );
@@ -510,10 +549,15 @@ export const App = () => {
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route path="quiz" element={<Quiz utms={utms} />} />
+          <Route path="quiz-code" element={<QuizAuth utms={utms} />} />
           <Route path="quiz-en" element={<QuizEn utms={utms} />} />
+          <Route path="quiz-en-code" element={<QuizEnAuth utms={utms} />} />
           <Route path="quiz-de" element={<QuizDe utms={utms} />} />
           <Route path="quiz-pl" element={<QuizPl utms={utms} />} />
           <Route path="gifts" element={<Gifts />} noindex={true} />
+          <Route path="gifts-a" noindex={true}>
+            <Route path=":userId" element={<GiftsAuth />} />
+          </Route>
           <Route
             path="form"
             element={<LeadFormPage utms={utms} />}

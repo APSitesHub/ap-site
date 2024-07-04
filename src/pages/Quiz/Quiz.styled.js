@@ -87,12 +87,12 @@ export const Logo = styled(LogoIcon)`
   height: 34px;
 
   margin: 0 auto;
-  margin-bottom: 52px;
+  margin-bottom: 32px;
 `;
 
 export const Title = styled.h1`
   text-align: center;
-  font-size: 30px;
+  font-size: 28px;
   line-height: 1.2;
 
   margin: 0 auto;
@@ -126,7 +126,7 @@ export const Description = styled.p`
   font-size: 16px;
   line-height: 1.3;
 
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 export const DescriptionLevel = styled(Description)`
@@ -155,7 +155,7 @@ export const QuizStart = styled.button`
 
   border-radius: 50px;
   background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #0f645b;
-  margin-bottom: 76px;
+  margin-bottom: 36px;
 `;
 
 export const HiEmoji = styled.img`

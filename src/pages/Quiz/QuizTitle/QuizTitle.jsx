@@ -1,15 +1,13 @@
-import hiPng from '../../../img/quiz/hi.png';
 import {
   BackgroundFilterBottom,
   BackgroundFilterTop,
   BackgroungStarLarge,
   BackgroungStarSmall,
   Description,
-  HiEmoji,
   Logo,
   QuizBox,
   QuizStart,
-  Title,
+  Title
 } from '../Quiz.styled';
 
 export const QuizTitle = ({ beginQuiz, lang }) => {
@@ -17,19 +15,27 @@ export const QuizTitle = ({ beginQuiz, lang }) => {
     <>
       <QuizBox>
         <Logo />
-        <Title>{`Вітаємо вас в 
-        AP Education Center!`}</Title>
+        <Title>{`Пройдіть тест і 
+        отримайте подарунки вже зараз!`}</Title>
         <Description>
-          {lang === 'en'
-            ? 'Пройдіть короткий квіз та отримайте доступ до безкоштовних пробних занять з англійської мови!'
-            : lang === 'de'
-            ? 'Пройдіть короткий квіз та отримайте доступ до безкоштовних пробних занять з німецької мови!'
-            : lang === 'pl'
-            ? 'Пройдіть короткий квіз та отримайте доступ до безкоштовних пробних занять з польської мови!'
-            : 'Пройдіть короткий квіз та отримайте доступ на безкоштовний марафон: вивчайте будь-яку мову на вибір, повноцінні заняття із викладачем, графік обираєте ви!'}
+          Лише <b>7 кроків</b> і ми автоматично <br />
+          відправимо вам доступ до матеріалів
+          <br />
+          <b>на цілий рівень</b>.
+          <br />
+          <br />
+          Ваші відповіді формують <b>подарунок!</b> 🎁
         </Description>
-        <QuizStart onClick={beginQuiz}>Старт</QuizStart>
-        <HiEmoji src={hiPng} alt="Hi emoji" width="80" />
+        <QuizStart onClick={beginQuiz}>Розпочати</QuizStart>
+        {/* <HiEmoji src={hiPng} alt="Hi emoji" width="80" /> */}
+        <video
+          src="https://ap.education/static/video/quiz/presents.mp4"
+          loop
+          controls={false}
+          autoPlay={true}
+          playsInline
+          muted={true}
+        ></video>
         <BackgroundFilterTop /> <BackgroundFilterBottom />
         <BackgroungStarSmall /> <BackgroungStarLarge />
       </QuizBox>

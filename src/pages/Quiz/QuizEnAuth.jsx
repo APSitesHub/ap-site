@@ -3,53 +3,22 @@ import { QuizQuestionAge } from './QuizQuestion/QuizQuestionAge';
 import { QuizQuestionDifficulties } from './QuizQuestion/QuizQuestionDifficulties';
 import { QuizQuestionForm } from './QuizQuestion/QuizQuestionForm';
 import { QuizQuestionInterests } from './QuizQuestion/QuizQuestionInterests';
-import { QuizQuestionLang } from './QuizQuestion/QuizQuestionLang';
 import { QuizQuestionLevel } from './QuizQuestion/QuizQuestionLevel';
 import { QuizQuestionQuantity } from './QuizQuestion/QuizQuestionQuantity';
 import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
 import { QuizRedirect } from './QuizRedirect/QuizRedirect';
 import { QuizTitle } from './QuizTitle/QuizTitle';
 
-const Quiz = ({ utms }) => {
+const QuizEnAuth = ({ utms }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isChild, setIsChild] = useState(false);
-  // const [coordinate, setCoordinate] = useState(0);
-
-  // useEffect(() => {
-  //   const onTouchStartSetCoordinate = event => {
-  //     console.log('fired touchstart');
-
-  //     event.target.nodeName === 'DIV' &&
-  //       setCoordinate(event.changedTouches[0].screenX);
-  //   };
-
-  //   const onTouchEndSwipe = event => {
-  //     console.log('fired touchend');
-  //     console.log(coordinate - event.changedTouches[0].screenX);
-
-  //     return coordinate - event.changedTouches[0].screenX > 150 &&
-  //       activeSlide - 1 > 1
-  //       ? previousQuestion()
-  //       : coordinate - event.changedTouches[0].screenX < -150 &&
-  //         activeSlide + 1 < 8
-  //       ? nextQuestion()
-  //       : null;
-  //   };
-
-  //   window.addEventListener('touchstart', onTouchStartSetCoordinate);
-  //   window.addEventListener('touchend', onTouchEndSwipe);
-
-  //   return () => {
-  //     window.removeEventListener('touchstart', onTouchStartSetCoordinate);
-  //     window.addEventListener('touchend', onTouchEndSwipe);
-  //   };
-  // }, [activeSlide, coordinate]);
 
   const quizValues = useRef();
 
   const beginQuiz = () => {
     setActiveSlide(1);
-    quizValues.current = {pipeline_id: 8956372};
+    quizValues.current = { pipeline_id: 6453287 };
+    quizValues.current.lang = 'en';
     quizValues.current.utm_content = utms.utm_content;
     quizValues.current.utm_medium = utms.utm_medium;
     quizValues.current.utm_campaign = utms.utm_campaign;
@@ -79,17 +48,8 @@ const Quiz = ({ utms }) => {
 
   return (
     <>
-      {activeSlide === 0 && <QuizTitle beginQuiz={beginQuiz} />}
+      {activeSlide === 0 && <QuizTitle beginQuiz={beginQuiz} lang={'en'} />}
       {activeSlide === 1 && (
-        <QuizQuestionLang
-          continueQuiz={continueQuiz}
-          activeSlide={activeSlide}
-          previousQuestion={previousQuestion}
-          nextQuestion={nextQuestion}
-          quizValues={quizValues}
-        />
-      )}
-      {activeSlide === 2 && (
         <QuizQuestionWho
           activeSlide={activeSlide}
           continueQuiz={continueQuiz}
@@ -97,9 +57,10 @@ const Quiz = ({ utms }) => {
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
           quizValues={quizValues}
+          lang={'en'}
         />
       )}
-      {activeSlide === 3 && (
+      {activeSlide === 2 && (
         <QuizQuestionAge
           activeSlide={activeSlide}
           isChild={isChild}
@@ -107,9 +68,10 @@ const Quiz = ({ utms }) => {
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
           quizValues={quizValues}
+          lang={'en'}
         />
       )}
-      {activeSlide === 4 && (
+      {activeSlide === 3 && (
         <QuizQuestionLevel
           activeSlide={activeSlide}
           isChild={isChild}
@@ -117,46 +79,51 @@ const Quiz = ({ utms }) => {
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
           quizValues={quizValues}
+          lang={'en'}
         />
       )}
-      {activeSlide === 5 && (
+      {activeSlide === 4 && (
         <QuizQuestionQuantity
           activeSlide={activeSlide}
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
           quizValues={quizValues}
+          lang={'en'}
         />
       )}
-      {activeSlide === 6 && (
+      {activeSlide === 5 && (
         <QuizQuestionDifficulties
           activeSlide={activeSlide}
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
           quizValues={quizValues}
+          lang={'en'}
         />
       )}
-      {activeSlide === 7 && (
+      {activeSlide === 6 && (
         <QuizQuestionInterests
           activeSlide={activeSlide}
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
           quizValues={quizValues}
+          lang={'en'}
         />
       )}
-      {activeSlide === 8 && (
+      {activeSlide === 7 && (
         <QuizQuestionForm
           nextQuestion={nextQuestion}
           quizValues={quizValues}
           activeSlide={activeSlide}
           previousQuestion={previousQuestion}
+          lang={'en'}
         />
       )}
-      {activeSlide === 9 && <QuizRedirect />}
+      {activeSlide === 8 && <QuizRedirect />}
     </>
   );
 };
 
-export default Quiz;
+export default QuizEnAuth;

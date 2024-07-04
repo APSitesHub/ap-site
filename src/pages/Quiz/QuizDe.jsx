@@ -9,7 +9,7 @@ import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
 import { QuizRedirect } from './QuizRedirect/QuizRedirect';
 import { QuizTitle } from './QuizTitle/QuizTitle';
 
-export const QuizDe = ({ utms }) => {
+const QuizDe = ({ utms }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isChild, setIsChild] = useState(false);
 
@@ -67,7 +67,8 @@ export const QuizDe = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'de'}
+          quizValues={quizValues}
+          lang={'de'}
         />
       )}
       {activeSlide === 3 && (
@@ -77,7 +78,8 @@ export const QuizDe = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'de'}
+          quizValues={quizValues}
+          lang={'de'}
         />
       )}
       {activeSlide === 4 && (
@@ -86,7 +88,8 @@ export const QuizDe = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'de'}
+          quizValues={quizValues}
+          lang={'de'}
         />
       )}
       {activeSlide === 5 && (
@@ -95,7 +98,8 @@ export const QuizDe = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'de'}
+          quizValues={quizValues}
+          lang={'de'}
         />
       )}
       {activeSlide === 6 && (
@@ -104,7 +108,8 @@ export const QuizDe = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'de'}
+          quizValues={quizValues}
+          lang={'de'}
         />
       )}
       {activeSlide === 7 && (
@@ -112,10 +117,13 @@ export const QuizDe = ({ utms }) => {
           nextQuestion={nextQuestion}
           quizValues={quizValues}
           activeSlide={activeSlide}
-          previousQuestion={previousQuestion}lang={'de'}
+          previousQuestion={previousQuestion}
+          lang={'de'}
         />
       )}
       {activeSlide === 8 && <QuizRedirect />}
     </>
   );
 };
+
+export default QuizDe;

@@ -9,7 +9,7 @@ import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
 import { QuizRedirect } from './QuizRedirect/QuizRedirect';
 import { QuizTitle } from './QuizTitle/QuizTitle';
 
-export const QuizEn = ({ utms }) => {
+const QuizEn = ({ utms }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isChild, setIsChild] = useState(false);
 
@@ -17,7 +17,7 @@ export const QuizEn = ({ utms }) => {
 
   const beginQuiz = () => {
     setActiveSlide(1);
-    quizValues.current = {pipeline_id: 6453287};
+    quizValues.current = { pipeline_id: 6453287 };
     quizValues.current.lang = 'en';
     quizValues.current.utm_content = utms.utm_content;
     quizValues.current.utm_medium = utms.utm_medium;
@@ -48,7 +48,7 @@ export const QuizEn = ({ utms }) => {
 
   return (
     <>
-      {activeSlide === 0 && <QuizTitle beginQuiz={beginQuiz} lang={'en'}/>}
+      {activeSlide === 0 && <QuizTitle beginQuiz={beginQuiz} lang={'en'} />}
       {activeSlide === 1 && (
         <QuizQuestionWho
           activeSlide={activeSlide}
@@ -67,7 +67,8 @@ export const QuizEn = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'en'}
+          quizValues={quizValues}
+          lang={'en'}
         />
       )}
       {activeSlide === 3 && (
@@ -77,7 +78,8 @@ export const QuizEn = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'en'}
+          quizValues={quizValues}
+          lang={'en'}
         />
       )}
       {activeSlide === 4 && (
@@ -86,7 +88,8 @@ export const QuizEn = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'en'}
+          quizValues={quizValues}
+          lang={'en'}
         />
       )}
       {activeSlide === 5 && (
@@ -95,7 +98,8 @@ export const QuizEn = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'en'}
+          quizValues={quizValues}
+          lang={'en'}
         />
       )}
       {activeSlide === 6 && (
@@ -104,7 +108,8 @@ export const QuizEn = ({ utms }) => {
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
           nextQuestion={nextQuestion}
-          quizValues={quizValues}lang={'en'}
+          quizValues={quizValues}
+          lang={'en'}
         />
       )}
       {activeSlide === 7 && (
@@ -112,10 +117,13 @@ export const QuizEn = ({ utms }) => {
           nextQuestion={nextQuestion}
           quizValues={quizValues}
           activeSlide={activeSlide}
-          previousQuestion={previousQuestion}lang={'en'}
+          previousQuestion={previousQuestion}
+          lang={'en'}
         />
       )}
       {activeSlide === 8 && <QuizRedirect />}
     </>
   );
 };
+
+export default QuizEn;
