@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.6c808f93.js",
+    "main.js": "/ap-site/static/js/main.22bde820.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.b015d4ba.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -51,7 +51,7 @@
     "Marathon redirect page to Telegram chatbot.js": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js",
     "Marathon redirect page to WhatsApp chat.js": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.a46805db.chunk.js",
     "Post-quiz gifts page.js": "/ap-site/static/js/Post-quiz gifts page.1f75661b.chunk.js",
-    "Post-quiz gifts page with sms-code auth.js": "/ap-site/static/js/Post-quiz gifts page with sms-code auth.2fbddaef.chunk.js",
+    "Post-quiz gifts page with sms-code auth.js": "/ap-site/static/js/Post-quiz gifts page with sms-code auth.16600d24.chunk.js",
     "Marathon quiz page.js": "/ap-site/static/js/Marathon quiz page.aa1427a9.chunk.js",
     "Marathon quiz page for new Auth.js": "/ap-site/static/js/Marathon quiz page for new Auth.0334df00.chunk.js",
     "Sales english quiz page.js": "/ap-site/static/js/Sales english quiz page.1c703c05.chunk.js",
@@ -209,7 +209,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.6c808f93.js.map": "/ap-site/static/js/main.6c808f93.js.map",
+    "main.22bde820.js.map": "/ap-site/static/js/main.22bde820.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.b015d4ba.chunk.js.map": "/ap-site/static/js/New Design Homepage.b015d4ba.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -259,7 +259,7 @@
     "Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map",
     "Marathon redirect page to WhatsApp chat.a46805db.chunk.js.map": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.a46805db.chunk.js.map",
     "Post-quiz gifts page.1f75661b.chunk.js.map": "/ap-site/static/js/Post-quiz gifts page.1f75661b.chunk.js.map",
-    "Post-quiz gifts page with sms-code auth.2fbddaef.chunk.js.map": "/ap-site/static/js/Post-quiz gifts page with sms-code auth.2fbddaef.chunk.js.map",
+    "Post-quiz gifts page with sms-code auth.16600d24.chunk.js.map": "/ap-site/static/js/Post-quiz gifts page with sms-code auth.16600d24.chunk.js.map",
     "Marathon quiz page.aa1427a9.chunk.js.map": "/ap-site/static/js/Marathon quiz page.aa1427a9.chunk.js.map",
     "Marathon quiz page for new Auth.0334df00.chunk.js.map": "/ap-site/static/js/Marathon quiz page for new Auth.0334df00.chunk.js.map",
     "Sales english quiz page.1c703c05.chunk.js.map": "/ap-site/static/js/Sales english quiz page.1c703c05.chunk.js.map",
@@ -290,6 +290,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.6c808f93.js"
+    "static/js/main.22bde820.js"
   ]
 }
