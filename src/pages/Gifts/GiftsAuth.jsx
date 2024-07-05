@@ -116,9 +116,10 @@ const GiftsAuth = () => {
     values.phone = values.phone.trim().trimStart();
     try {
       const response = await axios.put(`/users/crm/${id}`, values);
+      console.log(response);
       setAuthToken(response.data.token);
       setIsPhoneSent(isPhoneSent => (isPhoneSent = true));
-      setUser(user => (user = { ...response.data.user }));
+      setUser(user => (user = { ...response.data }));
       resetForm();
     } catch (error) {
       console.error(error);
@@ -131,7 +132,7 @@ const GiftsAuth = () => {
       const response = await axios.post('/users/login-code', values);
       setAuthToken(response.data.token);
       setIsUserLogged(isLogged => (isLogged = true));
-      setUser(user => (user = { ...response.data.user }));
+      setUser(user => (user = { ...response.data }));
       localStorage.setItem('mail', user.mail);
       resetForm();
     } catch (error) {
@@ -173,7 +174,7 @@ const GiftsAuth = () => {
 
   return (
     <>
-      {!isUserLogged ? (
+      {!isUserLogged && !isPhoneSent ? (
         <Formik
           initialValues={initialPhoneValue}
           onSubmit={handlePhoneSubmit}
@@ -196,7 +197,7 @@ const GiftsAuth = () => {
               />
               <AdminInputNote component="p" name="phone" />
             </Label>
-            <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+            <AdminFormBtn type="submit">Отримати код</AdminFormBtn>
           </LoginForm>
         </Formik>
       ) : !isUserLogged && isPhoneSent ? (

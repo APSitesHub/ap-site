@@ -30,7 +30,7 @@ import {
   QuizButtonContent,
 } from '../Quiz.styled';
 
-export const QuizQuestionLevel = ({
+export const QuizQuestionLevelAuth = ({
   activeSlide,
   isChild,
   continueQuiz,

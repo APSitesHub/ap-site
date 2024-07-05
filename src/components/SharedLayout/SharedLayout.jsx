@@ -18,7 +18,13 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 export const SharedLayout = ({ utms }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const location = useLocation();
-  console.log(location);
+
+  if (
+    window.location.protocol === 'http:' &&
+    window.location.hostname.includes('ap.education')
+  ) {
+    window.location.protocol = 'https:';
+  }
 
   const toggleModal = () => {
     setIsOpenModal(isOpen => !isOpen);

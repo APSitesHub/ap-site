@@ -73,11 +73,13 @@ const NewDesign = ({ utms }) => {
       {/* <Admission /> */}
       {/* <Translations utms={utms} /> */}
       <ReviewsNew />
-      <PageFormNew utms={utms}/>
+      <PageFormNew utms={utms} />
       {/* <ExamCenter toggleModal={toggleModal} closeModal={closeModal} /> */}
       <Consent />
       {isOpenModal && <LeadForm closeModal={closeModal} utms={utms} />}
-      {isOpenTrialModal && <LeadTrialForm closeTrialModal={closeTrialModal} utms={utms} />}
+      {isOpenTrialModal && (
+        <LeadTrialForm closeTrialModal={closeTrialModal} utms={utms} />
+      )}
     </>
   );
 };

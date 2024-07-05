@@ -33,9 +33,9 @@ import {
   Title,
 } from '../Quiz.styled';
 
-axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+axios.defaults.baseURL = 'http://localhost:5000';
 
-export const QuizQuestionForm = ({
+export const QuizQuestionFormAuth = ({
   nextQuestion,
   quizValues,
   activeSlide,
@@ -46,7 +46,7 @@ export const QuizQuestionForm = ({
 
   const initialValues = {
     name: '',
-    authCode: '',
+    authCode: quizValues.current.authCode,
     mail: quizValues.current.mail,
     password: quizValues.current.password,
     tag: quizValues.current.tag,
@@ -71,15 +71,7 @@ export const QuizQuestionForm = ({
       )
       .min(2, 'Необхідно ввести не менше ніж 2 символи!')
       .max(50, 'Необхідно ввести не більше ніж 50 символів!'),
-    phone: yup
-      .string()
-      .required('Будь ласка, вкажіть свій номер телефону!')
-      .matches(
-        /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
-        'Будь ласка, введіть валідний номер телефону!'
-      )
-      .min(10, 'Номер телефону має складатися не менше ніж з 10 символів!')
-      .max(15, 'Номер телефону має складатися не більше ніж з 15 символів!'),
+    authCode: yup.string().required(),
     mail: yup.string().required(),
     password: yup.string().required(),
     tag: yup.string().required(),
@@ -95,6 +87,7 @@ export const QuizQuestionForm = ({
   });
 
   const QuizSubmitLink = () => {
+    console.log(useFormikContext());
     const { values, isValid, submitForm } = useFormikContext();
     return (
       <QuizFormLink
@@ -102,7 +95,7 @@ export const QuizQuestionForm = ({
         onClick={async e => {
           e.preventDefault();
           console.log(isValid);
-          if (values.name && values.phone && isValid) {
+          if (values.name && isValid) {
             console.log('valid');
             await submitForm();
             setTimeout(() => {
@@ -124,6 +117,7 @@ export const QuizQuestionForm = ({
       const userValues = {
         name: values.name.trim().trimStart(),
         mail: values.mail,
+        authCode: values.authCode,
         password: values.password,
         pupilId: '0000000',
         crmId: crmId,
@@ -149,7 +143,7 @@ export const QuizQuestionForm = ({
 
     try {
       const response = await axios.patch(
-        `/leads/quiz/${quizValues.current.crmId}`,
+        `/leads/quiz-code/${quizValues.current.crmId}`,
         values
       );
       console.log(response);
@@ -185,10 +179,6 @@ export const QuizQuestionForm = ({
               <Label>
                 <QuizInput type="text" name="name" placeholder="Ім'я*" />
                 <InputNote component="p" name="name" />
-              </Label>
-              <Label>
-                <QuizInput type="tel" name="phone" placeholder="Телефон*" />
-                <InputNote component="p" name="phone" />
               </Label>
             </FormInputBox>
             <HiddenInput type="text" name="tag" />

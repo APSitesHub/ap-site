@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { QuizQuestionAge } from './QuizQuestion/QuizQuestionAge';
 import { QuizQuestionDifficulties } from './QuizQuestion/QuizQuestionDifficulties';
-import { QuizQuestionForm } from './QuizQuestion/QuizQuestionForm';
+import { QuizQuestionFormAuth } from './QuizQuestion/QuizQuestionFormAuth';
 import { QuizQuestionInterests } from './QuizQuestion/QuizQuestionInterests';
-import { QuizQuestionLevel } from './QuizQuestion/QuizQuestionLevel';
+import { QuizQuestionLevelAuth } from './QuizQuestion/QuizQuestionLevelAuth';
 import { QuizQuestionQuantity } from './QuizQuestion/QuizQuestionQuantity';
 import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
 import { QuizRedirect } from './QuizRedirect/QuizRedirect';
@@ -72,7 +72,7 @@ const QuizEnAuth = ({ utms }) => {
         />
       )}
       {activeSlide === 3 && (
-        <QuizQuestionLevel
+        <QuizQuestionLevelAuth
           activeSlide={activeSlide}
           isChild={isChild}
           continueQuiz={continueQuiz}
@@ -113,7 +113,7 @@ const QuizEnAuth = ({ utms }) => {
         />
       )}
       {activeSlide === 7 && (
-        <QuizQuestionForm
+        <QuizQuestionFormAuth
           nextQuestion={nextQuestion}
           quizValues={quizValues}
           activeSlide={activeSlide}
