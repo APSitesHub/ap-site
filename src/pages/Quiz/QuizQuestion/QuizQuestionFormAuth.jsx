@@ -33,7 +33,7 @@ import {
   Title,
 } from '../Quiz.styled';
 
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const QuizQuestionFormAuth = ({
   nextQuestion,

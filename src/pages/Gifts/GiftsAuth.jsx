@@ -57,7 +57,7 @@ const GiftsAuth = () => {
   const id = useLocation().pathname.match(/(\d+)/)[0];
   console.log(id);
 
-  axios.defaults.baseURL = 'http://localhost:5000';
+  axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
   const setAuthToken = token => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
