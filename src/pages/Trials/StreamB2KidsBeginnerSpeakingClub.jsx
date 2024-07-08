@@ -290,7 +290,7 @@ const StreamTrialB2KidsBeginnerSpeakingClub = () => {
               !links.trials_de.includes('youtube') &&
               !links.trials_de.includes('youtu.be')
                 ? window.location.replace(
-                    'https://us06web.zoom.us/j/88623146862?pwd=kEvE3OWoiSJ4gZswnr8XKEahelxjZY.1#success'
+                    'https://us06web.zoom.us/j/88442358550?pwd=OMp2fYaEAHKm67kadd9hoaGof42RFH.1#success'
                   )
                 : null}
               {height > width && (

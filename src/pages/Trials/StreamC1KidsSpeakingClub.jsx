@@ -290,7 +290,7 @@ const StreamC1KidsSpeakingClub = () => {
               !links.trials_de.includes('youtube') &&
               !links.trials_de.includes('youtu.be')
                 ? window.location.replace(
-                    'https://us06web.zoom.us/j/85336588826?pwd=jWdE0SJs7Z46f7tMqgYYc0O9MkPaQP.1#success'
+                    'https://us06web.zoom.us/j/83774863587?pwd=59HlYWn9dwImP1ljq2uQgVks6hXDsL.1#success'
                   )
                 : null}
               {height > width && (

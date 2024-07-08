@@ -291,7 +291,7 @@ const StreamPolskiB1SpeakingClub = () => {
               !links.trials_de.includes('youtube') &&
               !links.trials_de.includes('youtu.be')
                 ? window.location.replace(
-                    'https://us06web.zoom.us/j/82875184008?pwd=MchWN0Xir6iLegtbjE1YisAG61FFHY.1#success'
+                    'https://us06web.zoom.us/j/83098442715?pwd=RJ0j4p48pkli3KFMezlXFCxpvdHpRi.1#success'
                   )
                 : null}
               {height > width && (

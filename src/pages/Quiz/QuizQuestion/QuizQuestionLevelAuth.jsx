@@ -68,17 +68,17 @@ export const QuizQuestionLevelAuth = ({
 
   const tag = getTag(location);
 
-  const mailRandomId = Math.floor(Math.random() * 10000).toString();
-  const passwordRandom = Math.floor(Math.random() * 10000).toString();
+  const mailRandomId = Math.floor(Math.random() * 1000000).toString();
+  const passwordRandom = Math.floor(Math.random() * 1000000).toString();
   const authCodeRandom = Math.floor(Math.random() * 1000000).toString();
 
   quizValues.current.tag = tag;
   quizValues.current.mail =
-    mailRandomId.length < 4
+    mailRandomId.length < 6
       ? `marathon-ap0${mailRandomId}@ap.edu`
       : `marathon-ap${mailRandomId}@ap.edu`;
   quizValues.current.password =
-    passwordRandom.length < 4 ? '0' + passwordRandom : passwordRandom;
+    passwordRandom.length < 6 ? '0' + passwordRandom : passwordRandom;
   quizValues.current.authCode =
     authCodeRandom.length < 6 ? '0' + authCodeRandom : authCodeRandom;
 

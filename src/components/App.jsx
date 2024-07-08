@@ -282,6 +282,46 @@ const WhatsAppRedirect = lazy(() =>
 const Gifts = lazy(() =>
   import(/* webpackChunkName: "Post-quiz gifts page" */ '../pages/Gifts/Gifts')
 );
+const GiftsEnA0 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts EN A0 page" */ '../pages/Gifts/GiftsEnA0')
+);
+const GiftsEnA1 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts EN A1 page" */ '../pages/Gifts/GiftsEnA1')
+);
+const GiftsEnA2 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts EN A2 page" */ '../pages/Gifts/GiftsEnA2')
+);
+const GiftsEnB1 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts EN B1 page" */ '../pages/Gifts/GiftsEnB1')
+);
+const GiftsEnKidsA0 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts EN Kids A0 page" */ '../pages/Gifts/GiftsEnKidsA0')
+);
+const GiftsEnKidsA1 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts EN Kids A1 page" */ '../pages/Gifts/GiftsEnKidsA1')
+);
+const GiftsEnKidsA2 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts EN Kids A2 page" */ '../pages/Gifts/GiftsEnKidsA2')
+);
+const GiftsDeA0 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts DE A0 page" */ '../pages/Gifts/GiftsDeA0')
+);
+const GiftsDeA1 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts DE A1 page" */ '../pages/Gifts/GiftsDeA1')
+);
+const GiftsDeA2 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts DE A2 page" */ '../pages/Gifts/GiftsDeA2')
+);
+const GiftsPlA0 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts PL A0 page" */ '../pages/Gifts/GiftsPlA0')
+);
+const GiftsPlA1 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts PL A1 page" */ '../pages/Gifts/GiftsPlA1')
+);
+const GiftsPlA2 = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts PL A2 page" */ '../pages/Gifts/GiftsPlA2')
+);
+
 
 const GiftsAuth = lazy(() =>
   import(
@@ -555,6 +595,19 @@ export const App = () => {
           <Route path="quiz-de" element={<QuizDe utms={utms} />} />
           <Route path="quiz-pl" element={<QuizPl utms={utms} />} />
           <Route path="gifts" element={<Gifts />} noindex={true} />
+          <Route path="gifts-en-a0" element={<GiftsEnA0 />} noindex={true} />
+          <Route path="gifts-en-a1" element={<GiftsEnA1 />} noindex={true} />
+          <Route path="gifts-en-a2" element={<GiftsEnA2 />} noindex={true} />
+          <Route path="gifts-en-b1" element={<GiftsEnB1 />} noindex={true} />
+          <Route path="gifts-enkids-a0" element={<GiftsEnKidsA0 />} noindex={true} />
+          <Route path="gifts-enkids-a1" element={<GiftsEnKidsA1 />} noindex={true} />
+          <Route path="gifts-enkids-a2" element={<GiftsEnKidsA2 />} noindex={true} />
+          <Route path="gifts-de-a0" element={<GiftsDeA0 />} noindex={true} />
+          <Route path="gifts-de-a1" element={<GiftsDeA1 />} noindex={true} />
+          <Route path="gifts-de-a2" element={<GiftsDeA2 />} noindex={true} />
+          <Route path="gifts-pl-a0" element={<GiftsPlA0 />} noindex={true} />
+          <Route path="gifts-pl-a1" element={<GiftsPlA1 />} noindex={true} />
+          <Route path="gifts-pl-a2" element={<GiftsPlA2 />} noindex={true} />
           <Route path="gifts-a" noindex={true}>
             <Route path=":userId" element={<GiftsAuth />} />
           </Route>

@@ -291,7 +291,7 @@ const StreamDeutschB1Sprechclub = () => {
               !links.trials_de.includes('youtube') &&
               !links.trials_de.includes('youtu.be')
                 ? window.location.replace(
-                    'https://us06web.zoom.us/j/86584290292?pwd=60MTTDUFbQSE6Qh2bRNvnjbB6Re1Gu.1#success'
+                    'https://us06web.zoom.us/j/82741629820?pwd=rcxZ1LE8HzIWpl8N7aRxpnmbDqQPnZ.1#success'
                   )
                 : null}
               {height > width && (
