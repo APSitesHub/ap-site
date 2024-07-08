@@ -321,6 +321,9 @@ const GiftsPlA1 = lazy(() =>
 const GiftsPlA2 = lazy(() =>
   import(/* webpackChunkName: "Post-quiz gifts PL A2 page" */ '../pages/Gifts/GiftsPlA2')
 );
+const GiftsDirect = lazy(() =>
+  import(/* webpackChunkName: "Post-quiz gifts from Instagram direct" */ '../pages/Gifts/GiftsDirect')
+);
 
 
 const GiftsAuth = lazy(() =>
@@ -610,6 +613,9 @@ export const App = () => {
           <Route path="gifts-pl-a2" element={<GiftsPlA2 />} noindex={true} />
           <Route path="gifts-a" noindex={true}>
             <Route path=":userId" element={<GiftsAuth />} />
+          </Route>
+          <Route path="gifts-direct" noindex={true}>
+            <Route path=":userId" element={<GiftsDirect />} />
           </Route>
           <Route
             path="form"
