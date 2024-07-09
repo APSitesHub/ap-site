@@ -1,48 +1,19 @@
 import { useRef, useState } from 'react';
 import { QuizQuestionAge } from './QuizQuestion/QuizQuestionAge';
 import { QuizQuestionDifficulties } from './QuizQuestion/QuizQuestionDifficulties';
-import { QuizQuestionInterestsSubmit } from './QuizQuestion/QuizQuestionInterestsSubmit';
+import { QuizQuestionFormOneRequest } from './QuizQuestion/QuizQuestionFormOneRequest';
+import { QuizQuestionInterests } from './QuizQuestion/QuizQuestionInterests';
 import { QuizQuestionLang } from './QuizQuestion/QuizQuestionLang';
 import { QuizQuestionLevelNoSubmit } from './QuizQuestion/QuizQuestionLevelNoSubmit';
 import { QuizQuestionQuantity } from './QuizQuestion/QuizQuestionQuantity';
 import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
+import { QuizRedirect } from './QuizRedirect/QuizRedirect';
 import { QuizTitle } from './QuizTitle/QuizTitle';
 
-const QuizAuth = ({ utms }) => {
+const QuizOneRequest = ({ utms }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isChild, setIsChild] = useState(false);
-  // const [coordinate, setCoordinate] = useState(0);
-
-  // useEffect(() => {
-  //   const onTouchStartSetCoordinate = event => {
-  //     console.log('fired touchstart');
-
-  //     event.target.nodeName === 'DIV' &&
-  //       setCoordinate(event.changedTouches[0].screenX);
-  //   };
-
-  //   const onTouchEndSwipe = event => {
-  //     console.log('fired touchend');
-  //     console.log(coordinate - event.changedTouches[0].screenX);
-
-  //     return coordinate - event.changedTouches[0].screenX > 150 &&
-  //       activeSlide - 1 > 1
-  //       ? previousQuestion()
-  //       : coordinate - event.changedTouches[0].screenX < -150 &&
-  //         activeSlide + 1 < 8
-  //       ? nextQuestion()
-  //       : null;
-  //   };
-
-  //   window.addEventListener('touchstart', onTouchStartSetCoordinate);
-  //   window.addEventListener('touchend', onTouchEndSwipe);
-
-  //   return () => {
-  //     window.removeEventListener('touchstart', onTouchStartSetCoordinate);
-  //     window.addEventListener('touchend', onTouchEndSwipe);
-  //   };
-  // }, [activeSlide, coordinate]);
-
+  
   const quizValues = useRef();
 
   const beginQuiz = () => {
@@ -136,7 +107,7 @@ const QuizAuth = ({ utms }) => {
         />
       )}
       {activeSlide === 7 && (
-        <QuizQuestionInterestsSubmit
+        <QuizQuestionInterests
           activeSlide={activeSlide}
           continueQuiz={continueQuiz}
           previousQuestion={previousQuestion}
@@ -144,8 +115,17 @@ const QuizAuth = ({ utms }) => {
           quizValues={quizValues}
         />
       )}
+      {activeSlide === 8 && (
+        <QuizQuestionFormOneRequest
+          nextQuestion={nextQuestion}
+          quizValues={quizValues}
+          activeSlide={activeSlide}
+          previousQuestion={previousQuestion}
+        />
+      )}
+      {activeSlide === 9 && <QuizRedirect />}
     </>
   );
 };
 
-export default QuizAuth;
+export default QuizOneRequest;

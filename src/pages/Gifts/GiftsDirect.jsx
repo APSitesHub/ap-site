@@ -4,6 +4,7 @@ import {
   LeftFormBackgroundStar,
   RightFormBackgroundStar,
 } from 'components/LeadForm/LeadForm.styled';
+import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { LoginFormText } from 'components/Stream/Stream.styled';
 import { Formik, useFormikContext } from 'formik';
 import {
@@ -23,6 +24,7 @@ import {
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
+import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import { ReactComponent as PdfIcon } from '../../img/svg/pdf-icon.svg';
 import {
@@ -41,9 +43,6 @@ import {
   YouTubeLogo,
 } from './Gifts.styled';
 import { gifts } from './giftsSet';
-import { useLocation } from 'react-router-dom';
-
-console.log(gifts);
 
 const GiftsDirect = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -51,6 +50,7 @@ const GiftsDirect = () => {
   const [isPhoneSent, setIsPhoneSent] = useState(false);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [openedPdf, setOpenedPdf] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const mailRandomId = Math.floor(Math.random() * 1000000).toString();
   const passwordRandom = Math.floor(Math.random() * 1000000).toString();
@@ -71,6 +71,7 @@ const GiftsDirect = () => {
     document.title = 'Подарункові матеріали | AP Education';
 
     const refreshToken = async () => {
+      // setIsLoading(true);
       console.log('token refresher');
       console.log(localStorage.getItem('authCode'));
       if (localStorage.getItem('authCode')) {
@@ -83,7 +84,7 @@ const GiftsDirect = () => {
           setUser(user => (user = { ...res.data.user }));
         } catch (error) {
           console.log(error);
-        }
+        } 
       }
     };
 
@@ -149,6 +150,7 @@ const GiftsDirect = () => {
   const handlePhoneSubmit = async (values, { resetForm }) => {
     values.phone = values.phone.trim().trimStart();
     try {
+      setIsLoading(true);
       const response = await axios.put(`/users/crm-gifts/${id}`, values);
       console.log(response);
       setAuthToken(response.data.token);
@@ -157,6 +159,8 @@ const GiftsDirect = () => {
       resetForm();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -164,6 +168,7 @@ const GiftsDirect = () => {
     values = { authCode: values.authCode.trim().trimStart() };
     console.log(values);
     try {
+      setIsLoading(true);
       const response = await axios.post('/users/login-direct', values);
       setAuthToken(response.data.token);
       setIsUserLogged(isLogged => (isLogged = true));
@@ -172,6 +177,8 @@ const GiftsDirect = () => {
       resetForm();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -357,6 +364,7 @@ const GiftsDirect = () => {
           </GiftsBox>
         </>
       )}
+      {isLoading && <Loader />}
     </>
   );
 };

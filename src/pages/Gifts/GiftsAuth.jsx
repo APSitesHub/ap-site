@@ -23,6 +23,7 @@ import {
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
+import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import { ReactComponent as PdfIcon } from '../../img/svg/pdf-icon.svg';
 import {
@@ -41,9 +42,7 @@ import {
   YouTubeLogo,
 } from './Gifts.styled';
 import { gifts } from './giftsSet';
-import { useLocation } from 'react-router-dom';
-
-console.log(gifts);
+import { Loader } from 'components/SharedLayout/Loaders/Loader';
 
 const GiftsAuth = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -51,6 +50,7 @@ const GiftsAuth = () => {
   const [isPhoneSent, setIsPhoneSent] = useState(false);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [openedPdf, setOpenedPdf] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log(user);
 
@@ -96,7 +96,7 @@ const GiftsAuth = () => {
 
   const QuizSubmitLink = () => {
     console.log(useFormikContext());
-    const { values, isValid, submitForm } = useFormikContext();
+    const { values, isValid, submitForm, resetForm } = useFormikContext();
     return (
       <QuizFormLink
         onClick={async e => {
@@ -104,6 +104,7 @@ const GiftsAuth = () => {
           if (values.authCode && isValid) {
             console.log('valid');
             await submitForm();
+            resetForm();
             // setIsLoading(isLoading => (isLoading = false));
           }
         }}
@@ -134,6 +135,7 @@ const GiftsAuth = () => {
   const handlePhoneSubmit = async (values, { resetForm }) => {
     values.phone = values.phone.trim().trimStart();
     try {
+      setIsLoading(true);
       const response = await axios.put(`/users/crm/${id}`, values);
       console.log(response);
       setAuthToken(response.data.token);
@@ -142,13 +144,17 @@ const GiftsAuth = () => {
       resetForm();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleCodeSubmit = async (values, { resetForm }) => {
     values = { authCode: values.authCode.trim().trimStart() };
+    resetForm();
     console.log(values);
     try {
+      setIsLoading(true);
       const response = await axios.post('/users/login-code', values);
       setAuthToken(response.data.token);
       setIsUserLogged(isLogged => (isLogged = true));
@@ -157,6 +163,8 @@ const GiftsAuth = () => {
       resetForm();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -237,7 +245,7 @@ const GiftsAuth = () => {
               <AdminInputNote component="p" name="authCode" />
             </Label>
             <QuizSubmitLink>Перейти до подарунків</QuizSubmitLink>
-            <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+            {/* <AdminFormBtn type="submit">Увійти</AdminFormBtn> */}
           </LoginForm>
         </Formik>
       ) : (
@@ -342,6 +350,7 @@ const GiftsAuth = () => {
           </GiftsBox>
         </>
       )}
+      {isLoading && <Loader />}
     </>
   );
 };

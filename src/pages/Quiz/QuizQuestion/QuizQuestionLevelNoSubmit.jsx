@@ -1,6 +1,3 @@
-import axios from 'axios';
-import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import beginner from '../../../img/quiz/beginner.png';
 import middle from '../../../img/quiz/middle.png';
@@ -30,7 +27,7 @@ import {
   QuizButtonContent,
 } from '../Quiz.styled';
 
-export const QuizQuestionLevelAuth = ({
+export const QuizQuestionLevelNoSubmit = ({
   activeSlide,
   isChild,
   continueQuiz,
@@ -39,28 +36,14 @@ export const QuizQuestionLevelAuth = ({
   quizValues,
   lang,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [shownError, setShownError] = useState('');
   const location = useLocation().pathname;
 
   const getTag = location => {
     switch (location) {
-      case '/quiz-code':
-        return 'quiz-code';
-      case '/quiz-code/':
-        return 'quiz-code';
-      case '/quiz-en-code':
-        return 'quiz-en-code';
-      case '/quiz-en-code/':
-        return 'quiz-en-code';
-      case '/quiz-de-code':
-        return 'quiz-de-code';
-      case '/quiz-de-code/':
-        return 'quiz-de-code';
-      case '/quiz-pl-code':
-        return 'quiz-pl-code';
-      case '/quiz-pl-code/':
-        return 'quiz-pl-code';
+      case '/quiz-one':
+        return 'quiz-one';
+      case '/quiz-one/':
+        return 'quiz-one';
       default:
         break;
     }
@@ -68,42 +51,20 @@ export const QuizQuestionLevelAuth = ({
 
   const tag = getTag(location);
 
-  const mailRandomId = Math.floor(Math.random() * 10000).toString();
-  const passwordRandom = Math.floor(Math.random() * 10000).toString();
-  const authCodeRandom = Math.floor(Math.random() * 1000000).toString();
+  const mailRandomId = Math.floor(Math.random() * 1000000).toString();
+  const passwordRandom = Math.floor(Math.random() * 1000000).toString();
 
   quizValues.current.tag = tag;
   quizValues.current.mail =
-    mailRandomId.length < 4
+    mailRandomId.length < 6
       ? `marathon-ap0${mailRandomId}@ap.edu`
       : `marathon-ap${mailRandomId}@ap.edu`;
   quizValues.current.password =
-    passwordRandom.length < 4 ? '0' + passwordRandom : passwordRandom;
-  quizValues.current.authCode =
-    authCodeRandom.length < 6 ? '0' + authCodeRandom : authCodeRandom;
-
-  const interimLeadSubmit = async () => {
-    setIsLoading(isLoading => (isLoading = true));
-    try {
-      setIsLoading(isLoading => (isLoading = true));
-      const response = await axios.post('/leads/quiz-int', quizValues.current);
-      console.log(response.data);
-      quizValues.current.leadPage = response.data.engPage;
-      quizValues.current.crmId = response.data.crmId;
-      quizValues.current.contactId = response.data.contactId;
-      console.log(quizValues.current);
-    } catch (error) {
-      console.error(error);
-      setShownError(shownError => (shownError = error));
-    } finally {
-      setIsLoading(isLoading => (isLoading = false));
-      nextQuestion();
-    }
-  };
+    passwordRandom.length < 6 ? '0' + passwordRandom : passwordRandom;
 
   const setQuizValue = (e, value) => {
     quizValues.current.knowledge = value;
-    quizValues.current.leadPage && continueQuiz(e);
+    continueQuiz(e);
   };
 
   return (
@@ -124,7 +85,6 @@ export const QuizQuestionLevelAuth = ({
           <QuizButton
             onClick={async e => {
               setQuizValue(e, 'a0');
-              await interimLeadSubmit();
             }}
             className={quizValues.current?.knowledge === 'a0' && 'chosen'}
           >
@@ -136,7 +96,6 @@ export const QuizQuestionLevelAuth = ({
           <QuizButton
             onClick={async e => {
               setQuizValue(e, 'a1');
-              await interimLeadSubmit();
             }}
             className={quizValues.current?.knowledge === 'a1' && 'chosen'}
           >
@@ -148,7 +107,6 @@ export const QuizQuestionLevelAuth = ({
           <QuizButton
             onClick={async e => {
               setQuizValue(e, 'a2');
-              await interimLeadSubmit();
             }}
             className={quizValues.current?.knowledge === 'a2' && 'chosen'}
           >
@@ -161,7 +119,6 @@ export const QuizQuestionLevelAuth = ({
             <QuizButton
               onClick={async e => {
                 setQuizValue(e, 'b1');
-                await interimLeadSubmit();
               }}
               className={quizValues.current?.knowledge === 'b1' && 'chosen'}
             >
@@ -172,7 +129,6 @@ export const QuizQuestionLevelAuth = ({
             </QuizButton>
           )}
         </QuizButtonBox>
-        {shownError}
         <BackgroundFilterTopRight />
         <BackgroundFilterBottomLeft />
         <BackgroungStarSmall />
@@ -201,7 +157,6 @@ export const QuizQuestionLevelAuth = ({
             <QuizArrowRight />
           </NextPageBtn>
         </Pagination>
-        {isLoading && <Loader />}
       </QuizBox>
     </>
   );
