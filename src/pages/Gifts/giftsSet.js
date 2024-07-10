@@ -688,7 +688,7 @@ export const gifts = {
         {
           type: 'video',
           name: 'Минулий простий час дієслова "бути"',
-          link: 'https://youtu.be/VkwXcrIria8?list=PLtJh4LHDDrT-_AdNIL2Sz43dVGQ9dNP2J',
+          link: 'https://youtu.be/VkwXcrIria8',
         },
         {
           type: 'video',
@@ -698,37 +698,37 @@ export const gifts = {
         {
           type: 'video',
           name: 'Минулий простий час: неправильні дієслова',
-          link: 'https://youtu.be/s41ukaTDoag?list=PLtJh4LHDDrT-_AdNIL2Sz43dVGQ9dNP2J',
+          link: 'https://youtu.be/s41ukaTDoag',
         },
         {
           type: 'video',
           name: 'Неозначені займенники',
-          link: 'https://youtu.be/oWkiaUus9AI?list=PLtJh4LHDDrT-_AdNIL2Sz43dVGQ9dNP2J',
+          link: 'https://youtu.be/oWkiaUus9AI',
         },
         {
           type: 'video',
           name: 'Визначники кількості',
-          link: 'https://youtu.be/87D6YgWRtVc?list=PLtJh4LHDDrT-_AdNIL2Sz43dVGQ9dNP2J',
+          link: 'https://youtu.be/87D6YgWRtVc',
         },
         {
           type: 'video',
           name: 'Минулий тривалий час',
-          link: 'https://youtu.be/yAOqwTOahgc?list=PLtJh4LHDDrT-_AdNIL2Sz43dVGQ9dNP2J',
+          link: 'https://youtu.be/yAOqwTOahgc',
         },
         {
           type: 'video',
           name: 'Майбутня конструкція "Be going to"',
-          link: 'https://youtu.be/1v96Hkgupho?list=PLtJh4LHDDrT-_AdNIL2Sz43dVGQ9dNP2J',
+          link: 'https://youtu.be/1v96Hkgupho',
         },
         {
           type: 'video',
           name: 'Модальне дієслово "should"',
-          link: 'https://youtu.be/46383LT1aKI?list=PLtJh4LHDDrT-_AdNIL2Sz43dVGQ9dNP2J',
+          link: 'https://youtu.be/46383LT1aKI',
         },
         {
           type: 'video',
           name: 'Займенники',
-          link: 'https://youtu.be/NSlDXmyiS-E?list=PLtJh4LHDDrT-_AdNIL2Sz43dVGQ9dNP2J',
+          link: 'https://youtu.be/NSlDXmyiS-E',
         },
         {
           type: 'grammar',
@@ -883,77 +883,72 @@ export const gifts = {
         },
         {
           type: 'video',
-          name: '4. Займенники',
-          link: 'https://youtu.be/pE9HQaRQ_3A',
-        },
-        {
-          type: 'video',
-          name: '5. Питальні слова',
+          name: '4. Питальні слова',
           link: 'https://www.youtube.com/watch?v=W-fZfXSAnQc&ab_channel=APEducationCenter',
         },
         {
           type: 'video',
-          name: '6. Заперечення + Kein',
+          name: '5. Заперечення + Kein',
           link: 'https://youtu.be/YegJWwy-qCc',
         },
         {
           type: 'video',
-          name: '7. Присвійний артикль / присвійний займенник',
+          name: '6. Присвійний артикль / присвійний займенник',
           link: 'https://youtu.be/1fppks-GpwY?list=PLtJh4LHDDrT9p3KUaqr4TK7JCi_4j0CPa',
         },
         {
           type: 'video',
-          name: '8. Відмінювання простих дієслів в теперішньому часі',
+          name: '7. Відмінювання простих дієслів в теперішньому часі',
           link: 'https://youtu.be/5vfWH_g1cTs',
         },
         {
           type: 'video',
-          name: '9. Відмінювання Haben, sein',
+          name: '8. Відмінювання Haben, sein',
           link: 'https://youtu.be/5OMtWWegMLY',
         },
         {
           type: 'video',
-          name: '10. Відмінювання модального дієслова mögen',
+          name: '9. Відмінювання модального дієслова mögen',
           link: 'https://www.youtube.com/watch?v=vtcgCABWfe8&ab_channel=APEducationCenter',
         },
         {
           type: 'video',
-          name: '11. Особові займенники в Akkusativ',
+          name: '10. Особові займенники в Akkusativ',
           link: 'https://youtu.be/XOvsek3si_Q?si=XLhg9gkuQGdy9Wac',
         },
         {
           type: 'video',
-          name: '12. Займенники "alle", "wenige", "viele"',
+          name: '11. Займенники "alle", "wenige", "viele"',
           link: 'https://www.youtube.com/watch?v=kDs5bMIIYf8&list=PLtJh4LHDDrT9SJJG3JkWlYv90m7JAqO6M&index=50&ab_channel=APEducationCenter',
         },
         {
           type: 'video',
-          name: '13. Ступені порівняння прикметників',
+          name: '12. Ступені порівняння прикметників',
           link: 'https://www.youtube.com/watch?v=kDs5bMIIYf8&list=PLtJh4LHDDrT9SJJG3JkWlYv90m7JAqO6M&index=50&ab_channel=APEducationCenter',
         },
         {
           type: 'video',
-          name: '14. Präteritum haben/sein',
+          name: '13. Präteritum haben/sein',
           link: 'https://youtu.be/IAaWBct0GwE?si=zjuoU_RBKrMvTfVb',
         },
         {
           type: 'video',
-          name: '15. Артиклі в Akkusativ',
+          name: '14. Артиклі в Akkusativ',
           link: 'https://youtu.be/-4zGxMaJsfI?si=r0Y8vHUQCkr9ZNAd',
         },
         {
           type: 'video',
-          name: '16. Як представитись німецькою',
+          name: '15. Як представитись німецькою',
           link: 'https://youtu.be/mTUiAo2JmeA?si=CP6F2ktD9CB6eD6e',
         },
         {
           type: 'video',
-          name: '17. Вимова букви S',
+          name: '16. Вимова букви S',
           link: 'https://youtu.be/1xEwcxPPOA8?si=lUeb5Ae4d9dukEXl',
         },
         {
           type: 'video',
-          name: '18. Однина і множина',
+          name: '17. Однина і множина',
           link: 'https://youtu.be/h953xJ1a840?si=t4gSQEFZ7GIRp8N5',
         },
         {
@@ -1025,37 +1020,32 @@ export const gifts = {
         },
         {
           type: 'video',
-          name: '4. Займенники',
-          link: 'https://youtu.be/pE9HQaRQ_3A',
-        },
-        {
-          type: 'video',
-          name: '5. Питальні слова',
+          name: '4. Питальні слова',
           link: 'https://www.youtube.com/watch?v=W-fZfXSAnQc&ab_channel=APEducationCenter',
         },
         {
           type: 'video',
-          name: '6. Заперечення + Kein',
+          name: '5. Заперечення + Kein',
           link: 'https://youtu.be/YegJWwy-qCc',
         },
         {
           type: 'video',
-          name: '7. Присвійний артикль / присвійний займенник',
+          name: '6. Присвійний артикль / присвійний займенник',
           link: 'https://youtu.be/1fppks-GpwY?list=PLtJh4LHDDrT9p3KUaqr4TK7JCi_4j0CPa',
         },
         {
           type: 'video',
-          name: '8. Відмінювання простих дієслів в теперішньому часі',
+          name: '7. Відмінювання простих дієслів в теперішньому часі',
           link: 'https://youtu.be/5vfWH_g1cTs',
         },
         {
           type: 'video',
-          name: '9. Порівняння (Такий як, не такий... як)',
+          name: '8. Порівняння (Такий як, не такий... як)',
           link: 'https://www.youtube.com/watch?v=XAjUNk83-7A&list=PLtJh4LHDDrT8JXPQ796BRrPatxIc62j3-&index=19&ab_channel=APEducationCenter',
         },
         {
           type: 'video',
-          name: '10. Ступені порівняння прикметників',
+          name: '9. Ступені порівняння прикметників',
           link: 'https://www.youtube.com/watch?v=r_skk86wXmg&list=PLtJh4LHDDrT8JXPQ796BRrPatxIc62j3-&index=21&ab_channel=APEducationCenter',
         },
         {
@@ -1115,37 +1105,37 @@ export const gifts = {
         {
           type: 'video',
           name: 'Алфавіт / стиль офіційний і не офіційний',
-          link: 'https://youtu.be/u7XlzRQsRmY?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/u7XlzRQsRmY',
         },
         {
           type: 'video',
           name: 'Відміна дієслова бути + займенники',
-          link: 'https://youtu.be/xPjykvbo7o4?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/xPjykvbo7o4',
         },
         {
           type: 'video',
           name: 'Числівники 1-10/роки/дієвідміна -м;-ш',
-          link: 'https://youtu.be/BY_Nwr81M68?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/BY_Nwr81M68',
         },
         {
           type: 'video',
           name: 'Називний відмінок іменників',
-          link: 'https://youtu.be/eRUjdPXM2Nw?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/eRUjdPXM2Nw',
         },
         {
           type: 'video',
           name: 'Називний відмінок прикметників',
-          link: 'https://youtu.be/Z1R6rMSAcUg?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/Z1R6rMSAcUg',
         },
         {
           type: 'video',
           name: 'Прикметник / роки / числівники 10-100',
-          link: 'https://youtu.be/IoU0Y82a2lY?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/IoU0Y82a2lY',
         },
         {
           type: 'video',
           name: 'Орудний відмінок однина',
-          link: 'https://youtu.be/XGp23LBUKWI?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/XGp23LBUKWI',
         },
         {
           type: 'video',
@@ -1217,17 +1207,17 @@ export const gifts = {
         {
           type: 'video',
           name: 'Алфавіт / стиль офіційний і не офіційний',
-          link: 'https://youtu.be/u7XlzRQsRmY?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/u7XlzRQsRmY',
         },
         {
           type: 'video',
           name: 'Відміна дієслова бути + займенники',
-          link: 'https://youtu.be/xPjykvbo7o4?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/xPjykvbo7o4',
         },
         {
           type: 'video',
           name: 'Числівники 1-10/роки/дієвідміна -м;-ш',
-          link: 'https://youtu.be/BY_Nwr81M68?list=PLtJh4LHDDrT_NieAz3ab3kwFE0m3dvnGN',
+          link: 'https://youtu.be/BY_Nwr81M68',
         },
         {
           type: 'video',
@@ -1319,12 +1309,12 @@ export const gifts = {
         {
           type: 'video',
           name: 'Повторення часів',
-          link: 'https://www.youtube.com/watch?v=rOByn4Fvrig&list=PLtJh4LHDDrT_iO1gJaIYFdvp5etevkMFZ',
+          link: 'https://youtu.be/rOByn4Fvrig',
         },
         {
           type: 'video',
           name: 'Повторення відміни іменників і прикметників',
-          link: 'https://www.youtube.com/watch?v=2XOwRhF2ZBM&list=PLtJh4LHDDrT_iO1gJaIYFdvp5etevkMFZ&index=2',
+          link: 'https://youtu.be/2XOwRhF2ZBM',
         },
         {
           type: 'video',
@@ -1339,22 +1329,22 @@ export const gifts = {
         {
           type: 'video',
           name: 'Давальний відмінок множини + займенники в давальному відмінку',
-          link: 'https://www.youtube.com/watch?v=bVikC8BFBaM&list=PLtJh4LHDDrT_iO1gJaIYFdvp5etevkMFZ&index=3',
+          link: 'https://youtu.be/bVikC8BFBaM',
         },
         {
           type: 'video',
           name: 'Повторення відмін',
-          link: 'https://www.youtube.com/watch?v=nYBn0dR6h3Y&list=PLtJh4LHDDrT_iO1gJaIYFdvp5etevkMFZ&index=4',
+          link: 'https://youtu.be/nYBn0dR6h3Y',
         },
         {
           type: 'video',
-          name: 'Утворення прислівник',
-          link: 'https://www.youtube.com/watch?v=XfTUNgIIGEw&list=PLtJh4LHDDrT_iO1gJaIYFdvp5etevkMFZ&index=5',
+          name: 'Утворення прислівника',
+          link: 'https://youtu.be/XfTUNgIIGEw',
         },
         {
           type: 'video',
-          name: 'Ступені порівняня прислівників',
-          link: 'https://www.youtube.com/watch?v=lTQrL1-stPM&list=PLtJh4LHDDrT_iO1gJaIYFdvp5etevkMFZ&index=6',
+          name: 'Ступені порівняння прислівників',
+          link: 'https://youtu.be/lTQrL1-stPM',
         },
         {
           type: 'video',

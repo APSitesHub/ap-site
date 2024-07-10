@@ -54,7 +54,7 @@ export const LeadFormPage = ({ utms }) => {
       case '/form':
         return '';
       case '/form-a':
-        return 'korysnosti';
+        return 'korysnosti.2';
       case '/form-b':
         return 'digitalization';
       case '/form-c':

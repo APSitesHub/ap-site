@@ -27,7 +27,7 @@ import {
   QuizButtonContent,
 } from '../Quiz.styled';
 
-export const QuizQuestionLevelNoSubmit = ({
+export const QuizQuestionLevelOneRequest = ({
   activeSlide,
   isChild,
   continueQuiz,
@@ -40,10 +40,10 @@ export const QuizQuestionLevelNoSubmit = ({
 
   const getTag = location => {
     switch (location) {
-      case '/quiz-code':
-        return 'quiz-code';
-      case '/quiz-code/':
-        return 'quiz-code';
+      case '/quiz-one':
+        return 'quiz-one';
+      case '/quiz-one/':
+        return 'quiz-one';
       default:
         break;
     }
@@ -53,7 +53,6 @@ export const QuizQuestionLevelNoSubmit = ({
 
   const mailRandomId = Math.floor(Math.random() * 1000000).toString();
   const passwordRandom = Math.floor(Math.random() * 1000000).toString();
-  const authCodeRandom = Math.floor(Math.random() * 1000000).toString();
 
   quizValues.current.tag = tag;
   quizValues.current.mail =
@@ -62,8 +61,6 @@ export const QuizQuestionLevelNoSubmit = ({
       : `marathon-ap${mailRandomId}@ap.edu`;
   quizValues.current.password =
     passwordRandom.length < 6 ? '0' + passwordRandom : passwordRandom;
-  quizValues.current.authCode =
-    authCodeRandom.length < 6 ? '0' + authCodeRandom : authCodeRandom;
 
   const setQuizValue = (e, value) => {
     quizValues.current.knowledge = value;
