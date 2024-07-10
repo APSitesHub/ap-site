@@ -4,7 +4,7 @@ import { QuizQuestionDifficulties } from './QuizQuestion/QuizQuestionDifficultie
 import { QuizQuestionFormOneRequest } from './QuizQuestion/QuizQuestionFormOneRequest';
 import { QuizQuestionInterests } from './QuizQuestion/QuizQuestionInterests';
 import { QuizQuestionLang } from './QuizQuestion/QuizQuestionLang';
-import { QuizQuestionLevelNoSubmit } from './QuizQuestion/QuizQuestionLevelNoSubmit';
+import { QuizQuestionLevelOneRequest } from './QuizQuestion/QuizQuestionLevelOneRequest';
 import { QuizQuestionQuantity } from './QuizQuestion/QuizQuestionQuantity';
 import { QuizQuestionWho } from './QuizQuestion/QuizQuestionWho';
 import { QuizRedirect } from './QuizRedirect/QuizRedirect';
@@ -79,7 +79,7 @@ const QuizOneRequest = ({ utms }) => {
         />
       )}
       {activeSlide === 4 && (
-        <QuizQuestionLevelNoSubmit
+        <QuizQuestionLevelOneRequest
           activeSlide={activeSlide}
           isChild={isChild}
           continueQuiz={continueQuiz}

@@ -102,10 +102,6 @@ export const QuizQuestionFormOneRequest = ({
           if (values.name && values.phone && isValid) {
             console.log('valid');
             await submitForm();
-            setTimeout(() => {
-              setIsLoading(isLoading => (isLoading = false));
-              // window.location.replace(quizValues.current.leadPage);
-            }, 1500);
           }
         }}
       >
@@ -145,10 +141,7 @@ export const QuizQuestionFormOneRequest = ({
     };
 
     try {
-      const response = await axios.post(
-        '/leads/quiz-one/',
-        quizValues.current
-      );
+      const response = await axios.post('/leads/quiz-one/', values);
       console.log(response);
       quizValues.current.leadPage = response.data.engPage;
       quizValues.current.crmId = response.data.crmId;
@@ -158,6 +151,8 @@ export const QuizQuestionFormOneRequest = ({
       // alert('reseting')
       setTimeout(() => {
         resetForm();
+        setIsLoading(isLoading => (isLoading = false));
+        window.location.replace(quizValues.current.leadPage);
       }, 1500);
     } catch (error) {
       console.error(error);
@@ -207,7 +202,7 @@ export const QuizQuestionFormOneRequest = ({
         <BackgroungStarSmall /> <BackgroungStarLarge />
         <Pagination>
           <PreviousPageBtn
-            className={activeSlide - 1 < 1 && 'disabled'} 
+            className={activeSlide - 1 < 1 && 'disabled'}
             disabled={activeSlide - 1 < 1 && true}
             onClick={previousQuestion}
           >
