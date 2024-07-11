@@ -4,6 +4,7 @@ import {
   TimetableDay,
   TimetableDays,
   TimetableDaysItem,
+  TimetableDayTime,
   TimetableHeading,
   TimetableIcon,
   TimetableLessonLink,
@@ -41,7 +42,7 @@ export const Timetable = ({ user, timetable }) => {
               .map((lesson, i) => (
                 <TimetableDaysItem key={i} style={lesson.day === new Date().getDay() ? { backgroundColor: '#F9C838'} : {}}>
                   <TimetableDay>{DAYS[lesson.day - 1]}</TimetableDay>
-                  <TimetableDay>{lesson.time}</TimetableDay>
+                  <TimetableDayTime>{lesson.time}</TimetableDayTime>
                 </TimetableDaysItem>
               ))}
           </TimetableDays>
@@ -60,7 +61,7 @@ export const Timetable = ({ user, timetable }) => {
               .map((lesson, i) => (
                 <TimetableDaysItem key={i} style={lesson.day === new Date().getDay() ? { backgroundColor: '#F9C838'} : {}}>
                   <TimetableDay>{DAYS[lesson.day - 1]}</TimetableDay>
-                  <TimetableDay>{lesson.time}</TimetableDay>
+                  <TimetableDayTime>{lesson.time}</TimetableDayTime>
                 </TimetableDaysItem>
               ))}
           </TimetableDays>

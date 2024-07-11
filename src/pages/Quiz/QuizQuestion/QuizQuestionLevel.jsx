@@ -119,6 +119,7 @@ export const QuizQuestionLevel = ({
 
         <QuizButtonBox>
           <QuizButton
+            disabled={isLoading && true}
             onClick={async e => {
               setQuizValue(e, 'a0');
               await interimLeadSubmit();
@@ -131,6 +132,7 @@ export const QuizQuestionLevel = ({
             </QuizButtonContent>
           </QuizButton>
           <QuizButton
+            disabled={isLoading && true}
             onClick={async e => {
               setQuizValue(e, 'a1');
               await interimLeadSubmit();
@@ -143,6 +145,7 @@ export const QuizQuestionLevel = ({
             </QuizButtonContent>
           </QuizButton>
           <QuizButton
+            disabled={isLoading && true}
             onClick={async e => {
               setQuizValue(e, 'a2');
               await interimLeadSubmit();
@@ -156,6 +159,7 @@ export const QuizQuestionLevel = ({
           </QuizButton>
           {quizValues.current.lang === 'en' && quizValues.current.adult && (
             <QuizButton
+              disabled={isLoading && true}
               onClick={async e => {
                 setQuizValue(e, 'b1');
                 await interimLeadSubmit();

@@ -185,6 +185,7 @@ export const HatImg = styled.img`
 
 export const Emoji = styled.img`
   display: block;
+  pointer-events: none;
 `;
 
 export const PresentEmoji = styled.img`
@@ -255,6 +256,7 @@ export const QuizButtonContent = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 6px;
+  pointer-events: none;
 
   color: #000;
 

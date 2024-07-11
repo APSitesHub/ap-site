@@ -128,7 +128,7 @@ export const TimetableLessonType = styled.span`
 export const TimetableLessonLink = styled.a`
   display: block;
   padding: 5px 0;
-  margin-top: 6px;
+  margin-bottom: 6px;
   height: 26px;
 
   position: relative;
@@ -136,7 +136,7 @@ export const TimetableLessonLink = styled.a`
   text-align: center;
   text-decoration: none;
   width: 100%;
-  color: #000;
+  color: #525266;
   font-weight: 400;
   border: 1.5px solid #525266;
 
@@ -188,10 +188,16 @@ export const TimetableDays = styled.ul`
 `;
 
 export const TimetableDaysItem = styled.li`
-  padding: 5px 0;
+  padding: 5px 42px;
+  gap: 32px;
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (min-width: 390px) {
+    gap: 8px;
+    padding: 5px;
+  }
 `;
 
 export const TimetableDay = styled.span`
@@ -199,4 +205,8 @@ export const TimetableDay = styled.span`
   font-size: 14px;
   text-align: center;
   color: #525266;
+`;
+
+export const TimetableDayTime = styled(TimetableDay)`
+  min-width: 82px;
 `;
