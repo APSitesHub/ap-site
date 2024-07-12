@@ -47,7 +47,9 @@ export const ThankYouPage = () => {
       <ThankYouSection>
         <ThankYouTextWrapper>
           <ThankYouArrow />
-          <ThankYouHeading>Дякуємо, що заповнили форму!</ThankYouHeading>
+          <ThankYouHeading data-gtm="thankyou">
+            Дякуємо, що заповнили форму!
+          </ThankYouHeading>
           <ThankYouDesc>
             Ви можете повернутися на головну, щоб переглянути наші інші напрямки
             роботи!
