@@ -153,11 +153,15 @@ export const MainFooterNew = ({ toggleModal }) => {
             <FooterLinksContainerNew>
               <FooterFileLinkNew
                 to={'https://ap.education/static/docs/privacy_policy.docx'}
+                target="_blank"
+                download
               >
                 Політика конфіденційності
               </FooterFileLinkNew>
               <FooterFileLinkNew
                 to={'https://ap.education/static/docs/public_offer.docx'}
+                target="_blank"
+                download
               >
                 Публічна оферта
               </FooterFileLinkNew>

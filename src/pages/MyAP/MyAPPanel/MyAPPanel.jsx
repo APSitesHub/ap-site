@@ -7,16 +7,18 @@ import {
   APPanel,
   APPanelBtn,
   APPanelResetBtn,
+  APPanelToggleBtn,
   CalendarBtnIcon,
   CupBtnIcon,
   IframeResetLinkButton,
   IframeSetLinkIcon,
+  IframeToggleLinkIcon,
   PanelBackdrop,
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
   PanelHideSwitch,
   SearchBtnIcon,
-  TimetableBtnIcon
+  TimetableBtnIcon,
 } from './MyAPPanel.styled';
 
 export const MyAPPanel = ({
@@ -37,6 +39,7 @@ export const MyAPPanel = ({
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
   const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
     useState(true);
+  const [isMultipleCourses, setIsMultipleCourses] = useState(false);
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
   // const [isMarathonBtnClicked, setIsMarathonBtnClicked] = useState(false);
 
@@ -121,6 +124,18 @@ export const MyAPPanel = ({
       e.currentTarget.classList.toggle('tooltip-open');
   };
 
+  const tooltipStyles = () => {
+    return {
+      top: isMultipleCourses ? '184px' : '142px',
+    };
+  };
+
+  const panelStyles = () => {
+    return {
+      top: isMultipleCourses ? '184px' : '142px',
+    };
+  };
+
   const toggleTooltipTimeout = () => {
     const resetBtnEl = document.querySelector('#reset-btn');
 
@@ -143,6 +158,11 @@ export const MyAPPanel = ({
   //     }, 15000);
   //   }
   // };
+
+  const langCounter = user.lang.split('/').length;
+  if (langCounter > 1) {
+    setIsMultipleCourses(true);
+  }
 
   useEffect(() => {
     const onEscapeClose = event => {
@@ -190,8 +210,11 @@ export const MyAPPanel = ({
           </APPanelMarathonBtn>
         </IframeMarathonLinkPanel>
       )} */}
-      <APPanel className={isButtonBoxShown ? '' : 'hidden'}>
-        <IframeResetLinkButton>
+      <APPanel
+        className={isButtonBoxShown ? '' : 'hidden'}
+        style={{ ...panelStyles() }}
+      >
+        <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
           <APPanelResetBtn
             id="reset-btn"
             onMouseEnter={e => toggleTooltip(e)}
@@ -202,6 +225,18 @@ export const MyAPPanel = ({
           >
             <IframeSetLinkIcon />
           </APPanelResetBtn>
+          {isMultipleCourses && (
+            <APPanelToggleBtn
+              id="toggle-btn"
+              onMouseEnter={e => toggleTooltip(e)}
+              onMouseOut={e => toggleTooltip(e)}
+              onClick={() => {
+                setPlatformIframeLink(link + ' ');
+              }}
+            >
+              <IframeToggleLinkIcon />
+            </APPanelToggleBtn>
+          )}
         </IframeResetLinkButton>
         <APPanelBtn onClick={toggleSearch}>
           <SearchBtnIcon className={isLessonFinderShown && 'active'} />

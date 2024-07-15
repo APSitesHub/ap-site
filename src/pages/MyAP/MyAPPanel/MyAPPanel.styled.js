@@ -6,6 +6,7 @@ import { ReactComponent as TimetableIcon } from '../../../img/svg/myap/timetable
 import { ReactComponent as CupIcon } from '../../../img/svg/myap/cup.svg';
 import { ReactComponent as SearchIcon } from '../../../img/svg/myap/search.svg';
 import { ReactComponent as ResetIcon } from '../../../img/svg/myap/reset.svg';
+import { ReactComponent as ToggleIcon } from '../../../img/svg/myap/toggle.svg';
 import { ReactComponent as PointerIcon } from '../../../img/svg/myap/pointer.svg';
 import { ReactComponent as GuideIcon } from '../../../img/svg/myap/guide.svg';
 
@@ -61,6 +62,10 @@ export const APPanel = styled.div`
   &.hidden {
     transform: translateX(200%);
   }
+
+  &.multiple {
+    top: 184px;
+  }
 `;
 
 export const APPanelBtn = styled.button`
@@ -109,9 +114,29 @@ export const APPanelResetBtn = styled(APPanelBtn)`
     transition: transform var(--animation-global);
   }
 
+  &.multiple::before {
+    top: 25%;
+  }
+
   &.tooltip-open::before {
     transform: translateY(-50%) scale(1, 1);
     transition: transform var(--animation-global);
+  }
+
+  &.multiple.tooltip-open::before {
+    transform: translateY(-25%) scale(1, 1);
+    transition: transform var(--animation-global);
+  }
+`;
+
+export const APPanelToggleBtn = styled(APPanelResetBtn)`
+  &::before {
+    content: 'Якщо урок на платформі не відкривається, натисніть на цю кнопку';
+
+    top: 75%;
+  }
+  &.tooltip-open::before {
+    transform: translateY(-75%) scale(1, 1);
   }
 `;
 
@@ -269,7 +294,12 @@ export const IframeResetLinkButton = styled(APPanel)`
   @media screen and (min-width: 768px) {
     top: -66px;
     padding: 15px;
+
+    &.multiple {
+      top: -108px;
+    }
   }
+
   &:hover,
   &:focus {
     background-color: none;
@@ -286,6 +316,22 @@ export const APPanelInstructionsPanel = styled(IframeResetLinkButton)`
 `;
 
 export const IframeSetLinkIcon = styled(ResetIcon)`
+  height: 25px;
+  width: 25px;
+
+  @media screen and (min-width: 768px) {
+    height: 30px;
+    width: 30px;
+  }
+
+  color: #bebecc;
+  position: relative;
+  pointer-events: none;
+
+  transition: color var(--animation-global);
+`;
+
+export const IframeToggleLinkIcon = styled(ToggleIcon)`
   height: 25px;
   width: 25px;
 
