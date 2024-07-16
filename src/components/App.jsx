@@ -30,6 +30,7 @@ import { StreamPolski } from 'pages/Streams/Polski/StreamPolski';
 import { StreamPolskiFree } from 'pages/Streams/Polski/StreamPolskiFree';
 import { RatingsAdminPanel } from 'pages/Streams/RatingsAdminPanel/RatingsAdminPanel';
 import { StreamTest } from 'pages/Streams/Test/StreamTest';
+import { TimeTableAdminPanel } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel';
 import { UserAdminPanel } from 'pages/Streams/UserAdminPanel/UserAdminPanel';
 import { KidsA0 } from 'pages/StreamsKids/KidsA0/KidsA0';
 import { KidsA1 } from 'pages/StreamsKids/KidsA1/KidsA1';
@@ -283,48 +284,75 @@ const Gifts = lazy(() =>
   import(/* webpackChunkName: "Post-quiz gifts page" */ '../pages/Gifts/Gifts')
 );
 const GiftsEnA0 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts EN A0 page" */ '../pages/Gifts/GiftsEnA0')
+  import(
+    /* webpackChunkName: "Post-quiz gifts EN A0 page" */ '../pages/Gifts/GiftsEnA0'
+  )
 );
 const GiftsEnA1 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts EN A1 page" */ '../pages/Gifts/GiftsEnA1')
+  import(
+    /* webpackChunkName: "Post-quiz gifts EN A1 page" */ '../pages/Gifts/GiftsEnA1'
+  )
 );
 const GiftsEnA2 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts EN A2 page" */ '../pages/Gifts/GiftsEnA2')
+  import(
+    /* webpackChunkName: "Post-quiz gifts EN A2 page" */ '../pages/Gifts/GiftsEnA2'
+  )
 );
 const GiftsEnB1 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts EN B1 page" */ '../pages/Gifts/GiftsEnB1')
+  import(
+    /* webpackChunkName: "Post-quiz gifts EN B1 page" */ '../pages/Gifts/GiftsEnB1'
+  )
 );
 const GiftsEnKidsA0 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts EN Kids A0 page" */ '../pages/Gifts/GiftsEnKidsA0')
+  import(
+    /* webpackChunkName: "Post-quiz gifts EN Kids A0 page" */ '../pages/Gifts/GiftsEnKidsA0'
+  )
 );
 const GiftsEnKidsA1 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts EN Kids A1 page" */ '../pages/Gifts/GiftsEnKidsA1')
+  import(
+    /* webpackChunkName: "Post-quiz gifts EN Kids A1 page" */ '../pages/Gifts/GiftsEnKidsA1'
+  )
 );
 const GiftsEnKidsA2 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts EN Kids A2 page" */ '../pages/Gifts/GiftsEnKidsA2')
+  import(
+    /* webpackChunkName: "Post-quiz gifts EN Kids A2 page" */ '../pages/Gifts/GiftsEnKidsA2'
+  )
 );
 const GiftsDeA0 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts DE A0 page" */ '../pages/Gifts/GiftsDeA0')
+  import(
+    /* webpackChunkName: "Post-quiz gifts DE A0 page" */ '../pages/Gifts/GiftsDeA0'
+  )
 );
 const GiftsDeA1 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts DE A1 page" */ '../pages/Gifts/GiftsDeA1')
+  import(
+    /* webpackChunkName: "Post-quiz gifts DE A1 page" */ '../pages/Gifts/GiftsDeA1'
+  )
 );
 const GiftsDeA2 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts DE A2 page" */ '../pages/Gifts/GiftsDeA2')
+  import(
+    /* webpackChunkName: "Post-quiz gifts DE A2 page" */ '../pages/Gifts/GiftsDeA2'
+  )
 );
 const GiftsPlA0 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts PL A0 page" */ '../pages/Gifts/GiftsPlA0')
+  import(
+    /* webpackChunkName: "Post-quiz gifts PL A0 page" */ '../pages/Gifts/GiftsPlA0'
+  )
 );
 const GiftsPlA1 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts PL A1 page" */ '../pages/Gifts/GiftsPlA1')
+  import(
+    /* webpackChunkName: "Post-quiz gifts PL A1 page" */ '../pages/Gifts/GiftsPlA1'
+  )
 );
 const GiftsPlA2 = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts PL A2 page" */ '../pages/Gifts/GiftsPlA2')
+  import(
+    /* webpackChunkName: "Post-quiz gifts PL A2 page" */ '../pages/Gifts/GiftsPlA2'
+  )
 );
 const GiftsDirect = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts from Instagram direct" */ '../pages/Gifts/GiftsDirect')
+  import(
+    /* webpackChunkName: "Post-quiz gifts from Instagram direct" */ '../pages/Gifts/GiftsDirect'
+  )
 );
-
 
 const GiftsAuth = lazy(() =>
   import(
@@ -499,6 +527,10 @@ export const App = () => {
             <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} />
             <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} />
             <Route
+              path="timetable-admin-panel"
+              element={<TimeTableAdminPanel />}
+            />
+            <Route
               path="teacher-admin-panel"
               element={<TeacherLessonsAdminPanel />}
             />
@@ -609,9 +641,21 @@ export const App = () => {
           <Route path="gifts-en-a1" element={<GiftsEnA1 />} noindex={true} />
           <Route path="gifts-en-a2" element={<GiftsEnA2 />} noindex={true} />
           <Route path="gifts-en-b1" element={<GiftsEnB1 />} noindex={true} />
-          <Route path="gifts-enkids-a0" element={<GiftsEnKidsA0 />} noindex={true} />
-          <Route path="gifts-enkids-a1" element={<GiftsEnKidsA1 />} noindex={true} />
-          <Route path="gifts-enkids-a2" element={<GiftsEnKidsA2 />} noindex={true} />
+          <Route
+            path="gifts-enkids-a0"
+            element={<GiftsEnKidsA0 />}
+            noindex={true}
+          />
+          <Route
+            path="gifts-enkids-a1"
+            element={<GiftsEnKidsA1 />}
+            noindex={true}
+          />
+          <Route
+            path="gifts-enkids-a2"
+            element={<GiftsEnKidsA2 />}
+            noindex={true}
+          />
           <Route path="gifts-de-a0" element={<GiftsDeA0 />} noindex={true} />
           <Route path="gifts-de-a1" element={<GiftsDeA1 />} noindex={true} />
           <Route path="gifts-de-a2" element={<GiftsDeA2 />} noindex={true} />

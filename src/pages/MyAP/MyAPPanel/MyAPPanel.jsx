@@ -124,12 +124,6 @@ export const MyAPPanel = ({
       e.currentTarget.classList.toggle('tooltip-open');
   };
 
-  const tooltipStyles = () => {
-    return {
-      top: isMultipleCourses ? '184px' : '142px',
-    };
-  };
-
   const panelStyles = () => {
     return {
       top: isMultipleCourses ? '184px' : '142px',
