@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
-import { Formik } from 'formik';
+import { useField, Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
@@ -12,6 +12,7 @@ import {
   UsersForm,
 } from '../UserAdminPanel/UserAdminPanel.styled';
 import {
+  FormSelect,
   ScheduleData,
   ScheduleInfo,
   ScheduleItem,
@@ -23,11 +24,17 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const TimeTableAdminPanel = () => {
+export const TimeTableAdminPanel = props => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [lessons, setLessons] = useState([]);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+  // const [field, meta, helpers] = useField(props);
+  console.log(useField);
+  // console.log(FormikProps);
+  // console.log(useField);
+  // console.log(field);
+  // console.log(meta);
 
   useEffect(() => {
     document.title = 'Timetable Admin Panel | AP Education';
@@ -99,79 +106,29 @@ export const TimeTableAdminPanel = () => {
     }
   };
 
-  const initialLessonValues = {
-    marathonId: '',
-    lessonId: '',
-    marathonName: '',
+  const initialTimetableValues = {
     lang: '',
     level: '',
-    lesson: '',
-    topic: '',
-    keysEn: '',
-    keysUa: '',
-    pdf: '',
-    video: '',
+    day: '',
+    type: '',
+    package: '',
+    time: '',
   };
 
-  const lessonSchema = yup.object().shape({
-    marathonId: yup
-      .string()
-      .required(
-        "marathonId - обов'язкове поле! Значення дивись на платформі в адресному рядку"
-      )
-      .max(7, 'Не більше 7 цифр')
-      .matches(/^\d{1,7}$/, 'Лише цифри'),
-    lessonId: yup
-      .string()
-      .required(
-        "marathonLessonId - обов'язкове поле! Значення дивись на платформі в адресному рядку"
-      )
-      .max(7, 'Не більше 7 цифр')
-      .matches(/^\d{1,7}$/, 'Лише цифри'),
-    marathonName: yup
-      .string()
-      .required("Назва і номер марафону - обов'язкове поле!"),
-    lang: yup
-      .string()
-      .required("Мова - обов'язкове поле!")
-      .matches(/^[A-Za-z]+$/, 'Лише латинські літери'),
-    level: yup
-      .string()
-      .required("Рівень - обов'язкове поле!")
-      .matches(/^[A-Za-z0-9-]+$/, 'Лише латинські літери та цифри'),
-    lesson: yup.string().required("Урок - обов'язкове поле!"),
-    topic: yup
-      .string()
-      .required(
-        "Тема уроку - обов'язкове поле! Введи теми як граматики, так і словника одним рядком"
-      ),
-    keysEn: yup
-      .string()
-      .required(
-        "Ключі англійською - обов'язкове поле! Введи переклад тему уроку або її фрагментів англійською"
-      ),
-    keysUa: yup
-      .string()
-      .required(
-        "Ключі українською - обов'язкове поле! Введи переклад тему уроку або її фрагментів українською"
-      ),
-    pdf: yup.string() || yup.array().of(yup.string()),
-    video: yup.string() || yup.array().of(yup.string()),
+  const timetableSchema = yup.object().shape({
+    lang: yup.string(),
+    level: yup.string(),
+    day: yup.string(),
+    type: yup.string(),
+    package: yup.string(),
+    time: yup.string(),
   });
 
-  const handleLessonSubmit = async (values, { resetForm }) => {
+  const handleTimetableSubmit = async (values, { resetForm }) => {
+    console.log(values);
     setIsLoading(isLoading => (isLoading = true));
-
-    values.pdf =
-      values.pdf === ''
-        ? []
-        : [...values.pdf.split(',').map(link => link.trim().trimStart())];
-    values.video =
-      values.video === ''
-        ? []
-        : [...values.video.split(',').map(link => link.trim().trimStart())];
     try {
-      const response = await axios.post('/lessons', values);
+      const response = await axios.post('/timetable', values);
       console.log(response);
       resetForm();
       alert('Урок додано');
@@ -188,6 +145,121 @@ export const TimeTableAdminPanel = () => {
   const closeEditForm = e => {
     setIsEditFormOpen(false);
   };
+
+  const languageOptions = [
+    {
+      label: 'Англійська',
+      value: 'en',
+    },
+    {
+      label: 'Англійська, діти',
+      value: 'enkids',
+    },
+    {
+      label: 'Німецька',
+      value: 'de',
+    },
+    {
+      label: 'Польська',
+      value: 'pl',
+    },
+  ];
+
+  const levelOptions = [
+    {
+      label: 'A0',
+      value: 'a0',
+    },
+    {
+      label: 'A1',
+      value: 'a1',
+    },
+    {
+      label: 'A2',
+      value: 'a2',
+    },
+    {
+      label: 'B1',
+      value: 'b1',
+    },
+    {
+      label: 'B2',
+      value: 'b2',
+    },
+    {
+      label: 'C1',
+      value: 'c1',
+    },
+  ];
+
+  const daysOptions = [
+    {
+      label: 'Понеділок',
+      value: '1',
+    },
+    {
+      label: 'Вівторок',
+      value: '2',
+    },
+    {
+      label: 'Середа',
+      value: '3',
+    },
+    {
+      label: 'Четвер',
+      value: '4',
+    },
+    {
+      label: "П'ятниця",
+      value: '5',
+    },
+    {
+      label: 'Субота',
+      value: '6',
+    },
+    {
+      label: 'Неділя',
+      value: '0',
+    },
+  ];
+
+  const typeOptions = [
+    {
+      label: 'Вебінар',
+      value: 'webinar',
+    },
+    {
+      label: 'Вебінар, повторення',
+      value: 'webinar',
+    },
+    {
+      label: 'Мовна практика',
+      value: 'speaking',
+    },
+  ];
+
+  const packageOptions = [
+    {
+      label: 'Student',
+      value: 'student',
+    },
+    {
+      label: 'Basic',
+      value: 'basic',
+    },
+    {
+      label: 'Standart',
+      value: 'standart',
+    },
+    {
+      label: 'Pro',
+      value: 'pro',
+    },
+    {
+      label: 'VIP Pro',
+      value: 'vip',
+    },
+  ];
 
   return (
     <>
@@ -218,96 +290,77 @@ export const TimeTableAdminPanel = () => {
 
         {isUserAdmin && (
           <Formik
-            initialValues={initialLessonValues}
-            onSubmit={handleLessonSubmit}
-            validationSchema={lessonSchema}
+            initialValues={initialTimetableValues}
+            onSubmit={handleTimetableSubmit}
+            validationSchema={timetableSchema}
           >
             <UsersForm>
+              <FormSelect
+                options={languageOptions}
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    border: 'none',
+                    borderRadius: '0px',
+                  }),
+                }}
+                // onChange={() => editSelectValue()}
+                placeholder="Мова"
+                name="lang"
+              />
+              <FormSelect
+                options={levelOptions}
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    border: 'none',
+                    borderRadius: '0px',
+                  }),
+                }}
+                placeholder="Рівень"
+                name="level"
+              />
+              <FormSelect
+                options={daysOptions}
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    border: 'none',
+                    borderRadius: '0px',
+                  }),
+                }}
+                placeholder="День"
+                name="day"
+              />
+              <FormSelect
+                options={typeOptions}
+                styles={{
+                  control: baseStyles => ({
+                    ...baseStyles,
+                    border: 'none',
+                    borderRadius: '0px',
+                  }),
+                }}
+                placeholder="Тип заняття"
+                name="type"
+              />
+              <FormSelect
+                options={packageOptions}
+                styles={{
+                  control: baseStyles => ({
+                    ...baseStyles,
+                    border: 'none',
+                    borderRadius: '0px',
+                  }),
+                }}
+                placeholder="Найнижчий доступний пакет"
+                name="package"
+              />
               <Label>
-                <AdminInput
-                  type="text"
-                  name="marathonId"
-                  placeholder="marathonId"
-                />
-                <AdminInputNote component="p" name="marathonId" />
+                <AdminInput type="text" name="time" placeholder="Час" />
+                <AdminInputNote component="p" name="time" />
               </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="lessonId"
-                  placeholder="marathonLessonId"
-                />
-                <AdminInputNote component="p" name="lessonId" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="marathonName"
-                  placeholder="Назва і номер марафону"
-                />
-                <AdminInputNote component="p" name="marathonName" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="lang"
-                  placeholder="Мова (en/de/pl)"
-                />
-                <AdminInputNote component="p" name="lang" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="level"
-                  placeholder="Рівень (A1/A2/B1/B2)"
-                />
-                <AdminInputNote component="p" name="level" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="lesson"
-                  placeholder="Номер уроку (Lesson 12)"
-                />
-                <AdminInputNote component="p" name="lesson" />
-              </Label>
-              <Label>
-                <AdminInput type="text" name="topic" placeholder="Тема уроку" />
-                <AdminInputNote component="p" name="topic" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="keysUa"
-                  placeholder="Ключові слова українською"
-                />
-                <AdminInputNote component="p" name="keysUa" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="keysEn"
-                  placeholder="Ключові слова англійською"
-                />
-                <AdminInputNote component="p" name="keysEn" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="video"
-                  placeholder="Внести посилання на відео через кому"
-                />
-                <AdminInputNote component="p" name="knowledge" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="pdf"
-                  placeholder="Внести посилання на таблиці через кому"
-                />
-                <AdminInputNote component="p" name="pdf" />
-              </Label>
-              <AdminFormBtn type="submit">Додати урок</AdminFormBtn>
+              <AdminFormBtn type="submit">Додати до розкладу</AdminFormBtn>
             </UsersForm>
           </Formik>
         )}

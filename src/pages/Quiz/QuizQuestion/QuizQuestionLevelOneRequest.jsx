@@ -44,6 +44,10 @@ export const QuizQuestionLevelOneRequest = ({
         return 'quiz-one';
       case '/quiz-one/':
         return 'quiz-one';
+        case '/quiz-google':
+          return 'quiz-google';
+        case '/quiz-google/':
+          return 'quiz-google';
       default:
         break;
     }

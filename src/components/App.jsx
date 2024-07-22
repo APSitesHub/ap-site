@@ -376,6 +376,12 @@ const QuizOneRequest = lazy(() =>
   )
 );
 
+const QuizOneRequestGoogle = lazy(() =>
+  import(
+    /* webpackChunkName: "Sales quiz page for one request via Google ads" */ '../pages/Quiz/QuizOneRequestGoogle'
+  )
+);
+
 const QuizEn = lazy(() =>
   import(
     /* webpackChunkName: "Sales english quiz page" */ '../pages/Quiz/QuizEn'
@@ -631,6 +637,7 @@ export const App = () => {
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route path="quiz" element={<Quiz utms={utms} />} />
           <Route path="quiz-one" element={<QuizOneRequest utms={utms} />} />
+          <Route path="quiz-google" element={<QuizOneRequestGoogle utms={utms} />} />
           <Route path="quiz-code" element={<QuizAuth utms={utms} />} />
           <Route path="quiz-en" element={<QuizEn utms={utms} />} />
           <Route path="quiz-en-code" element={<QuizEnAuth utms={utms} />} />

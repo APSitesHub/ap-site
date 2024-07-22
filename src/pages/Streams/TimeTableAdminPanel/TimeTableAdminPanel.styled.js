@@ -1,6 +1,7 @@
 import { FormBtn, Input, InputNote } from 'components/LeadForm/LeadForm.styled';
 import { Form } from 'formik';
 import styled from 'styled-components';
+import Select from 'react-select';
 
 export const AdminPanelSection = styled.section`
   height: max-content;
@@ -79,7 +80,25 @@ export const ScheduleData = styled.li`
 `;
 
 export const ScheduleParagraph = styled.p`
-display: flex;
-flex-direction: row;
+  display: flex;
+  flex-direction: row;
   gap: 20px;
+`;
+
+export const FormSelect = styled(Select)`
+  width: 100%;
+  font-size: 14px;
+  border: 2px solid var(--main-color);
+
+  line-height: 1;
+
+  @media screen and (min-width: 768px) {
+    font-size: 19px;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: var(--secondary-burnt-color);
+    outline: transparent;
+  }
 `;
