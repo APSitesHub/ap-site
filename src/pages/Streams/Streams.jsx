@@ -74,9 +74,9 @@ const Streams = () => {
     password: '',
   };
 
-  const initialLoginByNameValues = {
-    username: '',
-  };
+  // const initialLoginByNameValues = {
+  //   username: '',
+  // };
 
   const loginSchema = yup.object().shape({
     mail: yup
@@ -89,9 +89,9 @@ const Streams = () => {
       ),
   });
 
-  const loginByNameSchema = yup.object().shape({
-    name: yup.string().required("Необхідно ввести ім'я та прізвище!"),
-  });
+  // const loginByNameSchema = yup.object().shape({
+  //   username: yup.string().required("Необхідно ввести ім'я та прізвище!"),
+  // });
 
   const handleLoginSubmit = async (values, { resetForm }) => {
     values.mail = values.mail.toLowerCase().trim().trimStart();
@@ -112,24 +112,23 @@ const Streams = () => {
     }
   };
 
-  const handleLoginByNameSubmit = async (values, { resetForm }) => {
-    values.mail = values.mail.toLowerCase().trim().trimStart();
-    values.password = values.password.trim().trimStart();
-    try {
-      const response = await axios.post('/users/login', values);
-      console.log(values);
-      console.log(response);
-      setAuthToken(response.data.token);
-      setIsUserLogged(isLogged => (isLogged = true));
-      setCurrentUser(currentUser => (currentUser = response.data.user));
-      localStorage.setItem('userID', nanoid(8));
-      localStorage.setItem('mail', values.mail);
-      localStorage.setItem('userName', response.data.user.name);
-      resetForm();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleLoginByNameSubmit = async (values, { resetForm }) => {
+  //   values.username = values.username.trim().trimStart();
+  //   try {
+  //     const response = await axios.post('/users/login', values);
+  //     console.log(values);
+  //     console.log(response);
+  //     setAuthToken(response.data.token);
+  //     setIsUserLogged(isLogged => (isLogged = true));
+  //     setCurrentUser(currentUser => (currentUser = response.data.user));
+  //     localStorage.setItem('userID', nanoid(8));
+  //     localStorage.setItem('mail', values.mail);
+  //     localStorage.setItem('userName', response.data.user.name);
+  //     resetForm();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useLayoutEffect(() => {
     wakeupRequest();
@@ -206,32 +205,32 @@ const Streams = () => {
               <AdminFormBtn type="submit">Увійти</AdminFormBtn>
             </LoginForm>
           </Formik>
-        ) : location.pathname.includes('free') ? (
-          <Formik
-            initialValues={initialLoginByNameValues}
-            onSubmit={handleLoginByNameSubmit}
-            validationSchema={loginByNameSchema}
-          >
-            <LoginForm>
-              <LoginLogo />
-              <StreamAuthText>
-                <StreamAuthTextHello>
-                  Вітаємо вас на сторінці пробних занять!
-                </StreamAuthTextHello>
-                Для отримання доступу, будь ласка, введіть своє ім'я та прізвище
-                у відповідне поле та натисніть кнопку "Увійти".
-              </StreamAuthText>
-              <Label>
-                <LoginInput
-                  type="text"
-                  name="username"
-                  placeholder="Ім'я та прізвище*"
-                />
-                <LoginInputNote component="p" name="username" />
-              </Label>
-              <AdminFormBtn type="submit">Увійти</AdminFormBtn>
-            </LoginForm>
-          </Formik>
+        // ) : location.pathname.includes('free') ? (
+        //   <Formik
+        //     initialValues={initialLoginByNameValues}
+        //     onSubmit={handleLoginByNameSubmit}
+        //     validationSchema={loginByNameSchema}
+        //   >
+        //     <LoginForm>
+        //       <LoginLogo />
+        //       <StreamAuthText>
+        //         <StreamAuthTextHello>
+        //           Вітаємо вас на сторінці пробних занять!
+        //         </StreamAuthTextHello>
+        //         Для отримання доступу, будь ласка, введіть своє ім'я та прізвище
+        //         у відповідне поле та натисніть кнопку "Увійти".
+        //       </StreamAuthText>
+        //       <Label>
+        //         <LoginInput
+        //           type="text"
+        //           name="username"
+        //           placeholder="Ім'я та прізвище*"
+        //         />
+        //         <LoginInputNote component="p" name="username" />
+        //       </Label>
+        //       <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+        //     </LoginForm>
+        //   </Formik>
         ) : location.pathname === '/streams' ||
           location.pathname === '/streams/' ? (
           <StreamNav />
