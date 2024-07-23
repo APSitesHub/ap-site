@@ -55,7 +55,9 @@ const StreamsKids = () => {
         console.log(error);
       }
       const id = localStorage.getItem('userID');
-      const user = await axios.get(`https://ap-chat-server.onrender.com/users/${id}`);
+      const user = await axios.get(
+        `https://ap-chat-server.onrender.com/users/${id}`
+      );
       setCurrentUser(
         currentUser =>
           (currentUser = user.data || {
@@ -74,6 +76,13 @@ const StreamsKids = () => {
     password: '',
   };
 
+  const initialLoginByNameValues = {
+    name: '',
+    userId: '',
+    lang: '',
+    knowledge: '',
+  };
+
   const loginSchema = yup.object().shape({
     mail: yup
       .string()
@@ -83,6 +92,10 @@ const StreamsKids = () => {
       .required(
         'Введіть пароль, який ви використовуєте для входу на нашу платформу!'
       ),
+  });
+
+  const loginByNameSchema = yup.object().shape({
+    name: yup.string().required("Необхідно ввести ім'я та прізвище!"),
   });
 
   const handleLoginSubmit = async (values, { resetForm }) => {
@@ -97,6 +110,31 @@ const StreamsKids = () => {
       setCurrentUser(currentUser => (currentUser = response.data.user));
       localStorage.setItem('userID', nanoid(8));
       localStorage.setItem('mail', values.mail);
+      localStorage.setItem('userName', response.data.user.name);
+      resetForm();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleLoginByNameSubmit = async (values, { resetForm }) => {
+    values.name = values.name.trim().trimStart();
+    values.userId = nanoid(8);
+    values.lang = room.includes('deutsch')
+      ? 'de'
+      : room.includes('polski')
+      ? 'pl'
+      : 'en';
+    values.knowledge = room.includes('a2') ? 'a2' : 'a1';
+    console.log(values);
+    try {
+      const response = await axios.post('/trialUsers/login', values);
+      console.log(values);
+      console.log(response);
+      setAuthToken(response.data.token);
+      setIsUserLogged(isLogged => (isLogged = true));
+      setCurrentUser(currentUser => (currentUser = response.data.user));
+      localStorage.setItem('userID', values.userId);
       localStorage.setItem('userName', response.data.user.name);
       resetForm();
     } catch (error) {
@@ -139,12 +177,29 @@ const StreamsKids = () => {
       }
     };
     refreshToken();
-  }, []);
+
+    const refreshTrialToken = async () => {
+      console.log('token refresher');
+      try {
+        const res = await axios.post('/trialUsers/refresh', {
+          name: localStorage.getItem('userName'),
+          userId: localStorage.getItem('userID'),
+        });
+        setIsUserLogged(isLogged => (isLogged = true));
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    room.includes('free') && refreshTrialToken();
+  }, [room]);
 
   return (
     <>
       <StreamsBackgroundWrapper>
-        {!isUserLogged && !location.pathname.includes('-chat') ? (
+        {!isUserLogged &&
+        !location.pathname.includes('-chat') &&
+        !location.pathname.includes('free') ? (
           <Formik
             initialValues={initialLoginValues}
             onSubmit={handleLoginSubmit}
@@ -169,6 +224,32 @@ const StreamsKids = () => {
                   placeholder="Password"
                 />
                 <LoginInputNote component="p" name="password" />
+              </Label>
+              <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+            </LoginForm>
+          </Formik>
+        ) : !isUserLogged && location.pathname.includes('free') ? (
+          <Formik
+            initialValues={initialLoginByNameValues}
+            onSubmit={handleLoginByNameSubmit}
+            validationSchema={loginByNameSchema}
+          >
+            <LoginForm>
+              <LoginLogo />
+              <StreamAuthText>
+                <StreamAuthTextHello>
+                  Вітаємо вас на сторінці пробних занять!
+                </StreamAuthTextHello>
+                Для отримання доступу, будь ласка, введіть своє ім'я та прізвище
+                у відповідне поле та натисніть кнопку "Увійти".
+              </StreamAuthText>
+              <Label>
+                <LoginInput
+                  type="text"
+                  name="name"
+                  placeholder="Ім'я та прізвище*"
+                />
+                <LoginInputNote component="p" name="name" />
               </Label>
               <AdminFormBtn type="submit">Увійти</AdminFormBtn>
             </LoginForm>

@@ -29,6 +29,8 @@ export const PlatformBox = styled.div`
     position: absolute;
     z-index: 4;
     top: 100%;
+    transform: scale(1.7);
+  transform-origin: 0 0;
   }
 
   & > iframe.active {

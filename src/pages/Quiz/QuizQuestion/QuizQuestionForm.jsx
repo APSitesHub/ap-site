@@ -108,6 +108,7 @@ export const QuizQuestionForm = ({
             setTimeout(() => {
               setIsLoading(isLoading => (isLoading = false));
               window.location.replace(quizValues.current.leadPage);
+              // window.location.replace('/ap-site/thankyou');
             }, 1500);
           }
         }}

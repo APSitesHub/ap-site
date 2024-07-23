@@ -30,14 +30,6 @@ import {
   SupportPointer,
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
-import {
-  ChatLoginButton,
-  ChatLoginForm,
-  ChatLoginHeader,
-  ChatLoginInput,
-  ChatLoginLabel,
-} from 'utils/Chat/Chat.styled';
-import { nanoid } from 'nanoid';
 
 export const StreamA1Free = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -53,10 +45,6 @@ export const StreamA1Free = () => {
   const [chatWidth, chatHeight] = useSize(chatEl);
   const [width, height] = useSize(document.body);
   const [isBanned, setIsBanned] = useState(false);
-  const [userName, setUserName] = useState('');
-  // eslint-disable-next-line
-  const [userID, setUserID] = useState('');
-  const [isLoggedToChat, setIsLoggedToChat] = useState(false);
   const [messages, setMessages] = useState([]);
 
   const toggleKahoot = e => {
@@ -86,14 +74,6 @@ export const StreamA1Free = () => {
     if (!isAnimated) {
       setIsAnimated(isAnimated => !isAnimated);
     }
-  };
-  const handleSubmit = e => {
-    e.preventDefault();
-    const idGen = nanoid(8);
-    setUserID(id => (id = idGen));
-    localStorage.setItem('userName', userName.trim());
-    localStorage.setItem('userID', idGen);
-    setIsLoggedToChat(isLogged => !isLogged);
   };
 
   const videoBoxWidth =
@@ -317,30 +297,12 @@ export const StreamA1Free = () => {
                   isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
                 }
               >
-                {!isLoggedToChat ? (
-                  <ChatLoginForm onSubmit={handleSubmit}>
-                    <ChatLoginHeader>AP Open Chat</ChatLoginHeader>
-                    <ChatLoginLabel htmlFor="username">
-                      Введіть ваше ім'я та прізвище повністю
-                    </ChatLoginLabel>
-                    <ChatLoginInput
-                      type="text"
-                      minLength={3}
-                      name="username"
-                      id="username"
-                      value={userName}
-                      onChange={e => setUserName(e.target.value)}
-                    />
-                    <ChatLoginButton>Готово!</ChatLoginButton>
-                  </ChatLoginForm>
-                ) : (
-                  <Chat
-                    socket={socketRef.current}
-                    messages={messages}
-                    isChatOpen={isChatOpen}
-                    currentUser={currentUser}
-                  />
-                )}
+                <Chat
+                  socket={socketRef.current}
+                  messages={messages}
+                  isChatOpen={isChatOpen}
+                  currentUser={currentUser}
+                />
               </ChatBox>
             )}
 
@@ -369,30 +331,12 @@ export const StreamA1Free = () => {
                 isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
               }
             >
-              {!isLoggedToChat ? (
-                <ChatLoginForm onSubmit={handleSubmit}>
-                  <ChatLoginHeader>AP Open Chat</ChatLoginHeader>
-                  <ChatLoginLabel htmlFor="username">
-                    Введіть ваше ім'я та прізвище повністю
-                  </ChatLoginLabel>
-                  <ChatLoginInput
-                    type="text"
-                    minLength={3}
-                    name="username"
-                    id="username"
-                    value={userName}
-                    onChange={e => setUserName(e.target.value)}
-                  />
-                  <ChatLoginButton>Готово!</ChatLoginButton>
-                </ChatLoginForm>
-              ) : (
-                <Chat
-                  socket={socketRef.current}
-                  messages={messages}
-                  isChatOpen={isChatOpen}
-                  currentUser={currentUser}
-                />
-              )}
+              <Chat
+                socket={socketRef.current}
+                messages={messages}
+                isChatOpen={isChatOpen}
+                currentUser={currentUser}
+              />
             </ChatBox>
           )}
         </>

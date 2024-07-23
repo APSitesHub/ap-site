@@ -33,6 +33,10 @@ import {
 export const ThankYouPage = () => {
   useEffect(() => {
     document.title = 'Дякуємо! | AP Education';
+
+    // setTimeout(() => {
+    //   window.location.replace('https://button.kommo.com/cdcxml/rmxldvtz');
+    // }, 3000);
   }, []);
 
   return (

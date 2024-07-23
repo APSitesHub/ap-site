@@ -86,8 +86,8 @@ export const Platform = ({
           id="platform-window"
           title="platform-pin"
           src="https://online.ap.education/school/"
-          width="100%"
-          height="100%"
+          width="58.83%"
+          height="58.83%"
         ></iframe>
         {lessons > 1 && (
           <iframe
@@ -96,8 +96,8 @@ export const Platform = ({
             id={`platform-window-${lessons}`}
             title={`platform-pin-${lessons}`}
             src="https://online.ap.education/school/"
-            width="100%"
-            height="100%"
+            width="58.83%"
+            height="58.83%"
           ></iframe>
         )}
         {lessons > 2 && (
@@ -107,8 +107,8 @@ export const Platform = ({
             id={`platform-window-${lessons}`}
             title={`platform-pin-${lessons}`}
             src="https://online.ap.education/school/"
-            width="100%"
-            height="100%"
+            width="58.83%"
+            height="58.83%"
           ></iframe>
         )}
       </PlatformBox>
