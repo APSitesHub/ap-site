@@ -1,6 +1,6 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
-import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
+import { KahootsFree } from 'components/Stream/Kahoots/KahootsFree';
 import { Support } from 'components/Stream/Support/Support';
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -10,8 +10,8 @@ import { Chat } from 'utils/Chat/Chat';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
-  BoxHideSwitch,
-  ButtonBox,
+  BoxHideSwitchFree,
+  ButtonBoxFree,
   ChatBox,
   ChatBtn,
   ChatLogo,
@@ -19,6 +19,8 @@ import {
   KahootLogo,
   MoldingNoClick,
   MoldingNoClickSecondary,
+  SpeakingLink,
+  SpeakingLogo,
   StreamPlaceHolder,
   StreamPlaceHolderText,
   StreamSection,
@@ -117,7 +119,10 @@ export const StreamDeutschFree = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat-server.onrender.com/messages', data);
+          await axios.post(
+            'https://ap-chat-server.onrender.com/messages',
+            data
+          );
         } catch (error) {
           console.log(error);
         }
@@ -147,7 +152,9 @@ export const StreamDeutschFree = () => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
+          await axios.delete(
+            `https://ap-chat-server.onrender.com/messages/${id}`
+          );
         } catch (error) {
           console.log(error);
         }
@@ -180,7 +187,8 @@ export const StreamDeutschFree = () => {
 
   return (
     <>
-      {(links.deutschfree === undefined || links.deutschfree[0] < 10) && !isLoading ? (
+      {(links.deutschfree === undefined || links.deutschfree[0] < 10) &&
+      !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Поки що трансляції тут немає! <br />
@@ -256,7 +264,7 @@ export const StreamDeutschFree = () => {
               />
             </VideoBox>
 
-            <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
+            <ButtonBoxFree className={!isButtonBoxOpen ? 'hidden' : ''}>
               <KahootBtn
                 onClick={toggleKahoot}
                 className={
@@ -278,11 +286,19 @@ export const StreamDeutschFree = () => {
               <SupportBtn onClick={toggleSupport}>
                 <SupportLogo />
               </SupportBtn>
-            </ButtonBox>
 
-            <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
+              <SpeakingLink
+                href="https://meet.google.com/znw-tjfp-kxm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SpeakingLogo />
+              </SpeakingLink>
+            </ButtonBoxFree>
+
+            <BoxHideSwitchFree id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
-            </BoxHideSwitch>
+            </BoxHideSwitchFree>
 
             {height > width && (
               <ChatBox
@@ -310,7 +326,7 @@ export const StreamDeutschFree = () => {
               isKahootOpen={isKahootOpen}
             />
 
-            <Kahoots
+            <KahootsFree
               sectionWidth={width}
               sectionHeight={height}
               isKahootOpen={isKahootOpen}

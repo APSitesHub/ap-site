@@ -5,6 +5,9 @@ import { ReactComponent as BoxSwitchRight } from '../../img/svg/btnbox-switch-ri
 import { ReactComponent as KahootIcon } from '../../img/svg/kahootIcon.svg';
 import { ReactComponent as LogoClean } from '../../img/svg/myap/logo-clean.svg';
 import { ReactComponent as SupportIcon } from '../../img/svg/supportIcon.svg';
+// eslint-disable-next-line
+import { ReactComponent as SpeakingIcon } from '../../img/svg/speaking.svg';
+import { ReactComponent as SpeakingIconOption } from '../../img/svg/speaking2.svg';
 import { ReactComponent as SupportArrowIcon } from '../../img/svg/supportIcons/supportArrow.svg';
 import { ReactComponent as SupportPointerIcon } from '../../img/svg/supportIcons/supportPointer.svg';
 import { ReactComponent as ChatIcon } from '../../img/svg/youTubeChat.svg';
@@ -230,6 +233,15 @@ export const ButtonBox = styled.div`
   }
 `;
 
+export const ButtonBoxFree = styled(ButtonBox)`
+  top: 50%;
+  transform: translateY(-50%);
+
+  &.hidden {
+    transform: translate(calc(-100% - 30px), -50%);
+  }
+`;
+
 export const ChatBtn = styled.button`
   display: flex;
   align-items: center;
@@ -323,6 +335,74 @@ export const SupportLogo = styled(SupportIcon)`
   }
 `;
 
+export const SpeakingLink = styled.a`
+  background-color: rgb(240, 240, 240);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  font-size: 20px;
+  border-radius: 50%;
+  border: none;
+  margin: 0 auto;
+  transition: all var(--animation-global);
+
+  @media screen and (min-width: 768px) {
+    width: 70px;
+    height: 70px;
+  }
+
+  &:focus,
+  &:hover,
+  &:active {
+    background-color: var(--accent-color);
+    box-shadow: -10px -10px 30px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &.animated {
+    animation: ${pulse} 1000ms infinite ease-in-out alternate;
+  }
+
+  &:before {
+    content: '';
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+  }
+
+  &.animated:before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    border-radius: 50%;
+    display: block;
+    width: 55px;
+    height: 55px;
+    /* animation: ${pulse} 1000ms infinite ease-in-out alternate; */
+
+    filter: blur(10px);
+    opacity: 1;
+    background: linear-gradient(360deg, var(--main-color), #f9ea38);
+
+    @media screen and (min-width: 768px) {
+      width: 80px;
+      height: 80px;
+    }
+  }
+`;
+
+export const SpeakingLogo = styled(SpeakingIconOption)`
+  fill: var(--main-color);
+  width: 31px;
+  height: 31px;
+  z-index: 5;
+
+  @media screen and (min-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
+`;
+
 export const BoxHideSwitch = styled.div`
   position: absolute;
   top: 118px;
@@ -350,6 +430,15 @@ export const BoxHideSwitch = styled.div`
 
   @media screen and (min-width: 768px) {
     top: 155px;
+  }
+`;
+
+export const BoxHideSwitchFree = styled(BoxHideSwitch)`
+  top: 50%;
+  transform: translateY(-50%);
+
+  @media screen and (min-width: 768px) {
+    top: 50%;
   }
 `;
 
@@ -426,7 +515,7 @@ export const StreamPlaceHolderText = styled.p`
 export const LoginFormText = styled.p`
   font-size: 16px;
   text-align: center;
-  
+
   @media screen and (min-width: 1280px) {
     font-size: 24px;
     max-width: 840px;

@@ -98,6 +98,7 @@ export const QuizQuestionForm = ({
     const { values, isValid, submitForm } = useFormikContext();
     return (
       <QuizFormLink
+        data-gtm="quizformsubmit"
         href={quizValues.current.leadPage}
         onClick={async e => {
           e.preventDefault();

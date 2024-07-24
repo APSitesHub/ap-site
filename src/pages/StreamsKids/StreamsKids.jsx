@@ -228,7 +228,9 @@ const StreamsKids = () => {
               <AdminFormBtn type="submit">Увійти</AdminFormBtn>
             </LoginForm>
           </Formik>
-        ) : !isUserLogged && location.pathname.includes('free') ? (
+        ) : !isUserLogged &&
+          location.pathname.includes('free') &&
+          !location.pathname.includes('-chat') ? (
           <Formik
             initialValues={initialLoginByNameValues}
             onSubmit={handleLoginByNameSubmit}

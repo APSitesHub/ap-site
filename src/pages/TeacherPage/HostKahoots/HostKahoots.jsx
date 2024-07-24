@@ -82,16 +82,12 @@ export const HostKahoots = ({
     <>
       {Object.keys(kahoots).length && (
         <KahootBox
-          width={isMinimized ? minimizedWidth : kahootWidth}
-          height={!isMinimized ? sectionHeight : minimizedHeight}
           className={classNames()}
-          style={
-            isOpenedLast === 'kahoot'
-              ? { zIndex: '3' }
-              : isMinimized
-              ? { zIndex: '5' }
-              : { zIndex: '1' }
-          }
+          style={{
+            zIndex: isOpenedLast === 'kahoot' ? '3' : isMinimized ? '5' : '1',
+            width: isMinimized ? minimizedWidth : kahootWidth,
+            height: !isMinimized ? sectionHeight : minimizedHeight,
+          }}
           onTransitionEnd={kahootLinksRefresher}
         >
           {isMinimized && (
@@ -109,18 +105,20 @@ export const HostKahoots = ({
           <KahootEnlargeButton onClick={toggleKahootWidth}>
             +
           </KahootEnlargeButton>
-          <KahootPicker>
-            {Object.values(kahoots[page].links).map((link, i) => (
-              <KahootNumbersBtn
-                key={i}
-                onClick={setKahootNumber}
-                className={activeKahoot === i + 1 ? 'active' : ''}
-                tabIndex={-1}
-              >
-                {i + 1}
-              </KahootNumbersBtn>
-            ))}
-          </KahootPicker>
+          {Object.values(kahoots[page].links) > 1 && (
+            <KahootPicker>
+              {Object.values(kahoots[page].links).map((link, i) => (
+                <KahootNumbersBtn
+                  key={i}
+                  onClick={setKahootNumber}
+                  className={activeKahoot === i + 1 ? 'active' : ''}
+                  tabIndex={-1}
+                >
+                  {i + 1}
+                </KahootNumbersBtn>
+              ))}
+            </KahootPicker>
+          )}
           {getLinksForLocation().map((link, i) => (
             <KahootBackground
               key={i}

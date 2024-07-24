@@ -1,6 +1,6 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
-import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
+import { KahootsFree } from 'components/Stream/Kahoots/KahootsFree';
 import { Support } from 'components/Stream/Support/Support';
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -10,8 +10,8 @@ import { Chat } from 'utils/Chat/Chat';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
-  BoxHideSwitch,
-  ButtonBox,
+  BoxHideSwitchFree,
+  ButtonBoxFree,
   ChatBox,
   ChatBtn,
   ChatLogo,
@@ -19,6 +19,8 @@ import {
   KahootLogo,
   MoldingNoClick,
   MoldingNoClickSecondary,
+  SpeakingLink,
+  SpeakingLogo,
   StreamPlaceHolder,
   StreamPlaceHolderText,
   StreamSection,
@@ -261,7 +263,7 @@ export const StreamA1Free = () => {
               />
             </VideoBox>
 
-            <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
+            <ButtonBoxFree className={!isButtonBoxOpen ? 'hidden' : ''}>
               <KahootBtn
                 onClick={toggleKahoot}
                 className={
@@ -283,11 +285,19 @@ export const StreamA1Free = () => {
               <SupportBtn onClick={toggleSupport}>
                 <SupportLogo />
               </SupportBtn>
-            </ButtonBox>
 
-            <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
+              <SpeakingLink
+                href="https://meet.google.com/maz-mkqn-zir"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SpeakingLogo />
+              </SpeakingLink>
+            </ButtonBoxFree>
+
+            <BoxHideSwitchFree id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
-            </BoxHideSwitch>
+            </BoxHideSwitchFree>
             {console.log(socketRef.current)}
             {height > width && (
               <ChatBox
@@ -315,7 +325,7 @@ export const StreamA1Free = () => {
               isKahootOpen={isKahootOpen}
             />
 
-            <Kahoots
+            <KahootsFree
               sectionWidth={width}
               sectionHeight={height}
               isKahootOpen={isKahootOpen}

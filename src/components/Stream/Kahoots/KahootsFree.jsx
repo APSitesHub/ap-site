@@ -41,7 +41,7 @@ import {
   NameReverseBtn,
 } from './Kahoots.styled';
 
-export const Kahoots = ({
+export const KahootsFree = ({
   sectionWidth,
   sectionHeight,
   isKahootOpen,
@@ -55,7 +55,7 @@ export const Kahoots = ({
     localStorage.getItem('userName') || ''
   );
   const [kahoots, setKahoots] = useState({});
-  const [activeKahoot, setActiveKahoot] = useState(0);
+  const [activeKahoot, setActiveKahoot] = useState(1);
 
   let location = useLocation();
 
@@ -381,9 +381,9 @@ export const Kahoots = ({
                       title="kahoot-pin"
                       src={link}
                       width={
-                        !isChatOpen
+                        !isChatOpen && isKahootOpen
                           ? kahootWidth
-                          : isFullScreen
+                          : isFullScreen && isKahootOpen
                           ? kahootWidth - 300
                           : kahootWidth
                       }

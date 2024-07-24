@@ -177,18 +177,17 @@ const Streams = () => {
 
     const refreshTrialToken = async () => {
       console.log('token refresher');
-  
-        try {
-          const res = await axios.post('/trialUsers/refresh', {
-            name: localStorage.getItem('userName'),
-            userId: localStorage.getItem('userID'),
-          });
-          setIsUserLogged(isLogged => (isLogged = true));
-          console.log(res);
-        } catch (error) {
-          console.log(error);
-        }
-      
+
+      try {
+        const res = await axios.post('/trialUsers/refresh', {
+          name: localStorage.getItem('userName'),
+          userId: localStorage.getItem('userID'),
+        });
+        setIsUserLogged(isLogged => (isLogged = true));
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
     };
     room.includes('free') && refreshTrialToken();
   }, [room]);
@@ -232,7 +231,9 @@ const Streams = () => {
               <AdminFormBtn type="submit">Увійти</AdminFormBtn>
             </LoginForm>
           </Formik>
-        ) : !isUserLogged && location.pathname.includes('free') ? (
+        ) : !isUserLogged &&
+          location.pathname.includes('free') &&
+          !location.pathname.includes('-chat') ? (
           <Formik
             initialValues={initialLoginByNameValues}
             onSubmit={handleLoginByNameSubmit}
