@@ -26,6 +26,7 @@ import ReactPlayer from 'react-player/youtube';
 import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import { ReactComponent as PdfIcon } from '../../img/svg/pdf-icon.svg';
+import { PhoneInput } from 'react-international-phone';
 import {
   GiftLinkIcon,
   GiftsBox,
@@ -43,11 +44,13 @@ import {
 } from './Gifts.styled';
 import { gifts } from './giftsSet';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
+import 'react-international-phone/style.css';
 
 const GiftsAuth = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
   const [user, setUser] = useState({});
   const [isPhoneSent, setIsPhoneSent] = useState(false);
+  const [phone, setPhone] = useState('');
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [openedPdf, setOpenedPdf] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -218,10 +221,16 @@ const GiftsAuth = () => {
               актуальний номер!
             </LoginFormText>
             <Label>
-              <AdminInput
-                type="text"
-                name="phone"
-                placeholder="Номер телефону*"
+              <PhoneInput
+                defaultCountry="ua"
+                // countries={defaultCountries.filter(
+                //   country => !country.includes('Russia')
+                // )}
+                value={phone}
+                forceDialCode={true}
+                onChange={phone => setPhone(phone)}
+                style={{ width: '40%' }}
+                inputStyle={{ width: '100%', fontSize: '20px' }}
               />
               <AdminInputNote component="p" name="phone" />
             </Label>
