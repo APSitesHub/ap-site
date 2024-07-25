@@ -105,7 +105,8 @@ export const HostKahoots = ({
           <KahootEnlargeButton onClick={toggleKahootWidth}>
             +
           </KahootEnlargeButton>
-          {Object.values(kahoots[page].links) > 1 && (
+
+          {Object.values(kahoots[page].links).length > 1 && (
             <KahootPicker>
               {Object.values(kahoots[page].links).map((link, i) => (
                 <KahootNumbersBtn
