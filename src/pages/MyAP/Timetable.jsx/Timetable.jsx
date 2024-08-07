@@ -19,6 +19,14 @@ export const Timetable = ({ user, timetable }) => {
     timeline => timeline.lang === user.lang && timeline.level === user.knowledge
   );
 
+  const getLink = () => {
+    console.log(user.lang);
+    console.log(user.adult === undefined ? true : user.adult);
+    console.log(user.knowledge);
+    console.log(user.package === undefined ? 'vippro' : user.package);
+  };
+  getLink();
+
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
   return (
@@ -40,7 +48,14 @@ export const Timetable = ({ user, timetable }) => {
             {personalTimetable.schedule
               .filter(lesson => lesson.type === 'webinar')
               .map((lesson, i) => (
-                <TimetableDaysItem key={i} style={lesson.day === new Date().getDay() ? { backgroundColor: '#F9C838'} : {}}>
+                <TimetableDaysItem
+                  key={i}
+                  style={
+                    lesson.day === new Date().getDay()
+                      ? { backgroundColor: '#F9C838' }
+                      : {}
+                  }
+                >
                   <TimetableDay>{DAYS[lesson.day - 1]}</TimetableDay>
                   <TimetableDayTime>{lesson.time}</TimetableDayTime>
                 </TimetableDaysItem>
@@ -59,7 +74,14 @@ export const Timetable = ({ user, timetable }) => {
             {personalTimetable.schedule
               .filter(lesson => lesson.type === 'speaking')
               .map((lesson, i) => (
-                <TimetableDaysItem key={i} style={lesson.day === new Date().getDay() ? { backgroundColor: '#F9C838'} : {}}>
+                <TimetableDaysItem
+                  key={i}
+                  style={
+                    lesson.day === new Date().getDay()
+                      ? { backgroundColor: '#F9C838' }
+                      : {}
+                  }
+                >
                   <TimetableDay>{DAYS[lesson.day - 1]}</TimetableDay>
                   <TimetableDayTime>{lesson.time}</TimetableDayTime>
                 </TimetableDaysItem>

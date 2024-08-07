@@ -259,6 +259,10 @@ export const TimeTableAdminPanel = props => {
       label: 'VIP Pro',
       value: 'vip',
     },
+    {
+      label: 'Online Курс',
+      value: 'online',
+    },
   ];
 
   return (
