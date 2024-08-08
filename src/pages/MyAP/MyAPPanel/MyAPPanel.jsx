@@ -241,9 +241,11 @@ export const MyAPPanel = ({
         <APPanelBtn onClick={toggleCalendar}>
           <CalendarBtnIcon className={isCalendarShown && 'active'} />
         </APPanelBtn>
-        <APPanelBtn onClick={toggleTimetable}>
-          <TimetableBtnIcon className={isTimetableShown && 'active'} />
-        </APPanelBtn>
+        {user.package !== 'online' && (
+          <APPanelBtn onClick={toggleTimetable}>
+            <TimetableBtnIcon className={isTimetableShown && 'active'} />
+          </APPanelBtn>
+        )}
         {/* <APPanelInstructionsPanel>
           <APPanelBtn onClick={toggleSearch}>
             <GuideBtnIcon className={isLessonFinderShown && 'active'} />

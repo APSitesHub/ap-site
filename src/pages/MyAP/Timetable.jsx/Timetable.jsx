@@ -15,17 +15,34 @@ import {
 } from './Timetable.styled';
 
 export const Timetable = ({ user, timetable }) => {
+  console.log(timetable);
   const personalTimetable = timetable.find(
     timeline => timeline.lang === user.lang && timeline.level === user.knowledge
   );
 
   const getLink = () => {
+    const baseStreamUrl = 'https://ap.education/streams/';
+    const baseKidsStreamUrl = 'https://ap.education/streams-kids/';
     console.log(user.lang);
     console.log(user.adult === undefined ? true : user.adult);
     console.log(user.knowledge);
     console.log(user.package === undefined ? 'vippro' : user.package);
+    return user.lang === 'en'
+      ? baseStreamUrl + user.knowledge
+      : user.lang === 'enkids'
+      ? baseKidsStreamUrl + user.knowledge
+      : user.lang === 'de' && user.knowledge !== 'a1'
+      ? baseStreamUrl + 'deutsch' + user.knowledge
+      : user.lang === 'de' && user.knowledge === 'a1'
+      ? baseStreamUrl + 'deutsch'
+      : user.lang === 'pl' && user.knowledge !== 'a1'
+      ? baseStreamUrl + 'polski' + user.knowledge
+      : user.lang === 'pl' && user.knowledge === 'a1'
+      ? baseStreamUrl + 'polski' + user.knowledge
+      : baseStreamUrl;
   };
-  getLink();
+  console.log(getLink());
+  const link = getLink();
 
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
@@ -38,10 +55,7 @@ export const Timetable = ({ user, timetable }) => {
       <TimetableBody>
         <TimetableWebinars>
           <TimetableLessonType>Вебінари</TimetableLessonType>
-          <TimetableLessonLink
-            href="https://www.ap.education/streams/a1"
-            target="_blank"
-          >
+          <TimetableLessonLink href={link} target="_blank">
             <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
           </TimetableLessonLink>
           <TimetableDays>

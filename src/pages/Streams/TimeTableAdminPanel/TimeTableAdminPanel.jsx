@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
-import { useField, Formik } from 'formik';
+import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
@@ -24,14 +24,18 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const TimeTableAdminPanel = props => {
+export const TimeTableAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [lessons, setLessons] = useState([]);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-  // const [field, meta, helpers] = useField(props);
-  console.log(useField);
-  // console.log(FormikProps);
+  const [langValue, setLangValue] = useState('');
+  const [levelValue, setLevelValue] = useState('');
+  const [dayValue, setDayValue] = useState('');
+  const [typeValue, setTypeValue] = useState('');
+  const [packageValue, setPackageValue] = useState('');
+  // console.log(useField);
+  // console.log(FieldProps);
   // console.log(useField);
   // console.log(field);
   // console.log(meta);
@@ -125,6 +129,19 @@ export const TimeTableAdminPanel = props => {
   });
 
   const handleTimetableSubmit = async (values, { resetForm }) => {
+    values = {
+      lang: langValue,
+      level: levelValue,
+      schedule: [
+        {
+          day: dayValue,
+          type: typeValue,
+          package: packageValue,
+          time: values.time,
+        },
+      ],
+    };
+
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
@@ -308,9 +325,11 @@ export const TimeTableAdminPanel = props => {
                     borderRadius: '0px',
                   }),
                 }}
-                // onChange={() => editSelectValue()}
                 placeholder="Мова"
                 name="lang"
+                onChange={lang => {
+                  setLangValue(lang.value);
+                }}
               />
               <FormSelect
                 options={levelOptions}
@@ -323,6 +342,9 @@ export const TimeTableAdminPanel = props => {
                 }}
                 placeholder="Рівень"
                 name="level"
+                onChange={level => {
+                  setLevelValue(level.value);
+                }}
               />
               <FormSelect
                 options={daysOptions}
@@ -335,6 +357,9 @@ export const TimeTableAdminPanel = props => {
                 }}
                 placeholder="День"
                 name="day"
+                onChange={day => {
+                  setDayValue(day.value);
+                }}
               />
               <FormSelect
                 options={typeOptions}
@@ -347,6 +372,9 @@ export const TimeTableAdminPanel = props => {
                 }}
                 placeholder="Тип заняття"
                 name="type"
+                onChange={type => {
+                  setTypeValue(type.value);
+                }}
               />
               <FormSelect
                 options={packageOptions}
@@ -359,6 +387,9 @@ export const TimeTableAdminPanel = props => {
                 }}
                 placeholder="Найнижчий доступний пакет"
                 name="package"
+                onChange={pack => {
+                  setPackageValue(pack.value);
+                }}
               />
               <Label>
                 <AdminInput type="text" name="time" placeholder="Час" />
