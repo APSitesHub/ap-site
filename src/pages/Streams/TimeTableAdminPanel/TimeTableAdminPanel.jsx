@@ -9,11 +9,17 @@ import {
   AdminInputNote,
   AdminPanelSection,
   LoginForm,
+  UserDeleteButton,
+  UserEditButton,
   UsersForm,
 } from '../UserAdminPanel/UserAdminPanel.styled';
 import {
   FormSelect,
   ScheduleData,
+  ScheduleDataDayText,
+  ScheduleDataTimeText,
+  ScheduleDataTypeText,
+  ScheduleHeading,
   ScheduleInfo,
   ScheduleItem,
   ScheduleList,
@@ -28,6 +34,8 @@ export const TimeTableAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [lessons, setLessons] = useState([]);
+  // eslint-disable-next-line
+  const [lessonToEdit, setLessonToEdit] = useState({});
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [langValue, setLangValue] = useState('');
   const [levelValue, setLevelValue] = useState('');
@@ -145,7 +153,10 @@ export const TimeTableAdminPanel = () => {
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.post('/timetable', values);
+      const response = await axios.post(
+        'http://localhost:5000/timetable',
+        values
+      );
       console.log(response);
       resetForm();
       alert('Урок додано');
@@ -247,7 +258,7 @@ export const TimeTableAdminPanel = () => {
     },
     {
       label: 'Вебінар, повторення',
-      value: 'webinar',
+      value: 'webinar, repeat',
     },
     {
       label: 'Мовна практика',
@@ -281,6 +292,32 @@ export const TimeTableAdminPanel = () => {
       value: 'online',
     },
   ];
+
+  const handleEdit = async id => {
+    setIsEditFormOpen(true);
+    setLessonToEdit(
+      lessonToEdit => (lessonToEdit = lessons.find(lesson => lesson._id === id))
+    );
+  };
+
+  const handleDelete = async (id, parentId) => {
+    setIsLoading(isLoading => (isLoading = true));
+    console.log(id);
+
+    try {
+      const response = await axios.patch(
+        `http://localhost:5000/timetable/schedule/${id}`,
+        { _id: parentId, scheduleId: id }
+      );
+      console.log(response);
+      alert('Урок видалено');
+    } catch (error) {
+      console.error(error);
+      alert('Десь якась проблема - роби скрін консолі, відправляй Кирилу');
+    } finally {
+      setIsLoading(isLoading => (isLoading = false));
+    }
+  };
 
   return (
     <>
@@ -403,15 +440,32 @@ export const TimeTableAdminPanel = () => {
           {lessons &&
             lessons.map(timetable => (
               <ScheduleItem key={timetable._id}>
-                <h1>
+                <ScheduleHeading>
                   {timetable.lang} {timetable.level}
-                </h1>
+                </ScheduleHeading>
                 <ScheduleInfo>
                   {timetable.schedule.map(schedule => (
-                    <ScheduleData>
-                      {DAYS[schedule.day - 1]}
-                      {schedule.type}
-                      {schedule.time}
+                    <ScheduleData key={schedule._id}>
+                      <ScheduleDataDayText>
+                        {DAYS[schedule.day - 1]}
+                      </ScheduleDataDayText>
+                      <ScheduleDataTypeText>
+                        {schedule.type}
+                      </ScheduleDataTypeText>
+                      <ScheduleDataTimeText>
+                        {schedule.time}
+                      </ScheduleDataTimeText>
+                      <UserEditButton onClick={() => handleEdit(schedule._id)}>
+                        Edit
+                      </UserEditButton>
+
+                      <UserDeleteButton
+                        onClick={() =>
+                          handleDelete(schedule._id, timetable._id)
+                        }
+                      >
+                        Del
+                      </UserDeleteButton>
                     </ScheduleData>
                   ))}
                 </ScheduleInfo>

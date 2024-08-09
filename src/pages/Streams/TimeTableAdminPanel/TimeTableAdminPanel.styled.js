@@ -57,26 +57,54 @@ export const AdminInputNote = styled(InputNote)`
 
 export const ScheduleList = styled.ul`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 14px;
 
   text-transform: capitalize;
   font-weight: 600;
+  margin-left: auto;
+`;
+
+export const ScheduleHeading = styled.h2`
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 12px;
 `;
 
 export const ScheduleItem = styled.li`
-  width: max-content;
+  width: 100%;
+  flex-basis: 40%;
+  flex-grow: 0;
 `;
 
 export const ScheduleInfo = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 `;
 
 export const ScheduleData = styled.li`
   font-size: 14px;
   font-weight: 400;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+`;
+
+export const ScheduleDataDayText = styled.span`
+  min-width: 24px;
+`;
+
+export const ScheduleDataTypeText = styled.span`
+  min-width: 120px;
+  text-align: center;
+`;
+
+export const ScheduleDataTimeText = styled.span`
+  min-width: 100px;
+  text-align: center;
 `;
 
 export const ScheduleParagraph = styled.p`
