@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Label } from 'components/LeadForm/LeadForm.styled';
+import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
@@ -24,6 +26,7 @@ import {
   ScheduleItem,
   ScheduleList,
 } from './TimeTableAdminPanel.styled';
+import { TimeTableEditForm } from './TimeTableEditForm/TimeTableEditForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -34,19 +37,14 @@ export const TimeTableAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [lessons, setLessons] = useState([]);
-  // eslint-disable-next-line
   const [lessonToEdit, setLessonToEdit] = useState({});
+  const [scheduleToEdit, setScheduleToEdit] = useState('');
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [langValue, setLangValue] = useState('');
   const [levelValue, setLevelValue] = useState('');
   const [dayValue, setDayValue] = useState('');
   const [typeValue, setTypeValue] = useState('');
   const [packageValue, setPackageValue] = useState('');
-  // console.log(useField);
-  // console.log(FieldProps);
-  // console.log(useField);
-  // console.log(field);
-  // console.log(meta);
 
   useEffect(() => {
     document.title = 'Timetable Admin Panel | AP Education';
@@ -293,21 +291,32 @@ export const TimeTableAdminPanel = () => {
     },
   ];
 
-  const handleEdit = async id => {
+  const closeEditFormOnClick = e => {
+    if (e.target.id === 'close-on-click') {
+      setIsEditFormOpen(false);
+    }
+  };
+
+  const handleEdit = async (id, scheduleId) => {
     setIsEditFormOpen(true);
     setLessonToEdit(
       lessonToEdit => (lessonToEdit = lessons.find(lesson => lesson._id === id))
     );
+    setScheduleToEdit(scheduleToEdit =>
+      lessons
+        .find(lesson => lesson._id === id)
+        .schedule.find(lesson => lesson._id === scheduleId)
+    );
   };
 
-  const handleDelete = async (id, parentId) => {
+  const handleDelete = async (parentId, scheduleId) => {
     setIsLoading(isLoading => (isLoading = true));
-    console.log(id);
+    console.log(parentId);
 
     try {
       const response = await axios.patch(
-        `http://localhost:5000/timetable/schedule/${id}`,
-        { _id: parentId, scheduleId: id }
+        `http://localhost:5000/timetable/schedule/${parentId}`,
+        { _id: parentId, scheduleId }
       );
       console.log(response);
       alert('Урок видалено');
@@ -455,13 +464,15 @@ export const TimeTableAdminPanel = () => {
                       <ScheduleDataTimeText>
                         {schedule.time}
                       </ScheduleDataTimeText>
-                      <UserEditButton onClick={() => handleEdit(schedule._id)}>
+                      <UserEditButton
+                        onClick={() => handleEdit(timetable._id, schedule._id)}
+                      >
                         Edit
                       </UserEditButton>
 
                       <UserDeleteButton
                         onClick={() =>
-                          handleDelete(schedule._id, timetable._id)
+                          handleDelete(timetable._id, schedule._id)
                         }
                       >
                         Del
@@ -472,6 +483,21 @@ export const TimeTableAdminPanel = () => {
               </ScheduleItem>
             ))}
         </ScheduleList>
+        {isEditFormOpen && (
+          <Backdrop onClick={closeEditFormOnClick} id="close-on-click">
+            <TimeTableEditForm
+              lessonToEdit={lessonToEdit}
+              scheduleToEdit={scheduleToEdit}
+              languageOptions={languageOptions}
+              levelOptions={levelOptions}
+              daysOptions={daysOptions}
+              typeOptions={typeOptions}
+              packageOptions={packageOptions}
+              closeEditForm={closeEditForm}
+            />
+          </Backdrop>
+        )}
+        {isLoading && <Loader />}
       </AdminPanelSection>
     </>
   );
