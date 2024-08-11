@@ -89,7 +89,7 @@ export const TimeTableAdminPanel = () => {
     };
   }, [isUserAdmin, isLoading, isEditFormOpen]);
 
-  const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+  const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
   const initialLoginValues = {
     login: '',
@@ -151,10 +151,7 @@ export const TimeTableAdminPanel = () => {
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.post(
-        'http://localhost:5000/timetable',
-        values
-      );
+      const response = await axios.post('/timetable', values);
       console.log(response);
       resetForm();
       alert('Урок додано');
@@ -211,6 +208,41 @@ export const TimeTableAdminPanel = () => {
     {
       label: 'B2',
       value: 'b2',
+    },
+    {
+      label: 'C1',
+      value: 'c1',
+    },
+  ];
+
+  const levelOptionsWithBeginners = [
+    {
+      label: 'A0',
+      value: 'a0',
+    },
+    {
+      label: 'A1',
+      value: 'a1',
+    },
+    {
+      label: 'A2',
+      value: 'a2',
+    },
+    {
+      label: 'B1',
+      value: 'b1',
+    },
+    {
+      label: 'B1 Beginner',
+      value: 'b1beginner',
+    },
+    {
+      label: 'B2',
+      value: 'b2',
+    },
+    {
+      label: 'B2 Beginner',
+      value: 'b2beginner',
     },
     {
       label: 'C1',
@@ -314,10 +346,10 @@ export const TimeTableAdminPanel = () => {
     console.log(parentId);
 
     try {
-      const response = await axios.patch(
-        `http://localhost:5000/timetable/schedule/${parentId}`,
-        { _id: parentId, scheduleId }
-      );
+      const response = await axios.patch(`/timetable/schedule/${parentId}`, {
+        _id: parentId,
+        scheduleId,
+      });
       console.log(response);
       alert('Урок видалено');
     } catch (error) {
@@ -378,7 +410,11 @@ export const TimeTableAdminPanel = () => {
                 }}
               />
               <FormSelect
-                options={levelOptions}
+                options={
+                  langValue !== 'enkids'
+                    ? levelOptions
+                    : levelOptionsWithBeginners
+                }
                 styles={{
                   control: (baseStyles, state) => ({
                     ...baseStyles,
@@ -447,41 +483,50 @@ export const TimeTableAdminPanel = () => {
         )}
         <ScheduleList>
           {lessons &&
-            lessons.map(timetable => (
-              <ScheduleItem key={timetable._id}>
-                <ScheduleHeading>
-                  {timetable.lang} {timetable.level}
-                </ScheduleHeading>
-                <ScheduleInfo>
-                  {timetable.schedule.map(schedule => (
-                    <ScheduleData key={schedule._id}>
-                      <ScheduleDataDayText>
-                        {DAYS[schedule.day - 1]}
-                      </ScheduleDataDayText>
-                      <ScheduleDataTypeText>
-                        {schedule.type}
-                      </ScheduleDataTypeText>
-                      <ScheduleDataTimeText>
-                        {schedule.time}
-                      </ScheduleDataTimeText>
-                      <UserEditButton
-                        onClick={() => handleEdit(timetable._id, schedule._id)}
-                      >
-                        Edit
-                      </UserEditButton>
+            lessons
+              .sort(
+                (a, b) =>
+                  a.lang.localeCompare(b.lang) || a.level.localeCompare(b.level)
+              )
+              .map(timetable => (
+                <ScheduleItem key={timetable._id}>
+                  <ScheduleHeading>
+                    {timetable.lang} {timetable.level}
+                  </ScheduleHeading>
+                  <ScheduleInfo>
+                    {timetable.schedule
+                      .sort((a, b) => a.day - b.day)
+                      .map(schedule => (
+                        <ScheduleData key={schedule._id}>
+                          <ScheduleDataDayText>
+                            {DAYS[schedule.day - 1] || DAYS[DAYS.length - 1]}
+                          </ScheduleDataDayText>
+                          <ScheduleDataTypeText>
+                            {schedule.type}
+                          </ScheduleDataTypeText>
+                          <ScheduleDataTimeText>
+                            {schedule.time}
+                          </ScheduleDataTimeText>
+                          <UserEditButton
+                            onClick={() =>
+                              handleEdit(timetable._id, schedule._id)
+                            }
+                          >
+                            Edit
+                          </UserEditButton>
 
-                      <UserDeleteButton
-                        onClick={() =>
-                          handleDelete(timetable._id, schedule._id)
-                        }
-                      >
-                        Del
-                      </UserDeleteButton>
-                    </ScheduleData>
-                  ))}
-                </ScheduleInfo>
-              </ScheduleItem>
-            ))}
+                          <UserDeleteButton
+                            onClick={() =>
+                              handleDelete(timetable._id, schedule._id)
+                            }
+                          >
+                            Del
+                          </UserDeleteButton>
+                        </ScheduleData>
+                      ))}
+                  </ScheduleInfo>
+                </ScheduleItem>
+              ))}
         </ScheduleList>
         {isEditFormOpen && (
           <Backdrop onClick={closeEditFormOnClick} id="close-on-click">
@@ -490,6 +535,7 @@ export const TimeTableAdminPanel = () => {
               scheduleToEdit={scheduleToEdit}
               languageOptions={languageOptions}
               levelOptions={levelOptions}
+              levelOptionsWithBeginners={levelOptionsWithBeginners}
               daysOptions={daysOptions}
               typeOptions={typeOptions}
               packageOptions={packageOptions}

@@ -41,10 +41,20 @@ export const Timetable = ({ user, timetable }) => {
       ? baseStreamUrl + 'polski' + user.knowledge
       : baseStreamUrl;
   };
-  console.log(getLink());
-  const link = getLink();
+  const getSpeakingLink = () => {
+    const baseStreamUrl = 'https://ap.education/streams/';
+    const baseKidsStreamUrl = 'https://ap.education/streams-kids/';
+    return user.lang === 'en'
+      ? baseStreamUrl + user.knowledge + 'sc'
+      : user.lang === 'enkids'
+      ? baseKidsStreamUrl + user.knowledge + 'sc'
+      : baseStreamUrl + user.lang + user.knowledge + 'sc';
+  };
 
-  const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+  const link = getLink();
+  const speakingLink = getSpeakingLink();
+
+  const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
   return (
     <TimetableBox>
@@ -60,7 +70,11 @@ export const Timetable = ({ user, timetable }) => {
           </TimetableLessonLink>
           <TimetableDays>
             {personalTimetable.schedule
-              .filter(lesson => lesson.type === 'webinar')
+              .filter(
+                lesson =>
+                  lesson.type === 'webinar' || lesson.type === 'webinar, repeat'
+              )
+              .sort((a, b) => a.day - b.day)
               .map((lesson, i) => (
                 <TimetableDaysItem
                   key={i}
@@ -78,15 +92,13 @@ export const Timetable = ({ user, timetable }) => {
         </TimetableWebinars>{' '}
         <TimetableSpeakings>
           <TimetableLessonType>Мовні практики</TimetableLessonType>
-          <TimetableLessonLink
-            href="https://www.ap.education/streams/a1-sc"
-            target="_blank"
-          >
+          <TimetableLessonLink href={speakingLink} target="_blank">
             <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
           </TimetableLessonLink>
           <TimetableDays>
             {personalTimetable.schedule
               .filter(lesson => lesson.type === 'speaking')
+              .sort((a, b) => a.day - b.day)
               .map((lesson, i) => (
                 <TimetableDaysItem
                   key={i}

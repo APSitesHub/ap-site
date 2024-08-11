@@ -19,6 +19,7 @@ export const TimeTableEditForm = ({
   scheduleToEdit,
   languageOptions,
   levelOptions,
+  levelOptionsWithBeginners,
   daysOptions,
   typeOptions,
   packageOptions,
@@ -66,10 +67,10 @@ export const TimeTableEditForm = ({
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.put(
-        `http://localhost:5000/timetable/${lessonToEdit._id}`,
-        { lessonId: scheduleToEdit._id, body: values }
-      );
+      const response = await axios.put(`/timetable/${lessonToEdit._id}`, {
+        lessonId: scheduleToEdit._id,
+        body: values,
+      });
       console.log(response);
       closeEditForm();
       alert('Урок відредаговано');
@@ -111,7 +112,9 @@ export const TimeTableEditForm = ({
             }}
           />
           <FormSelect
-            options={levelOptions}
+            options={
+              langValue !== 'enkids' ? levelOptions : levelOptionsWithBeginners
+            }
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -121,9 +124,14 @@ export const TimeTableEditForm = ({
             }}
             placeholder="Рівень"
             name="level"
-            defaultValue={levelOptions.find(
-              option => option.value === lessonToEdit.level
-            )}
+            defaultValue={
+              levelOptions.find(
+                option => option.value === lessonToEdit.level
+              ) ||
+              levelOptionsWithBeginners.find(
+                option => option.value === lessonToEdit.level
+              )
+            }
             isDisabled
             onChange={level => {
               setLevelValue(level.value);
