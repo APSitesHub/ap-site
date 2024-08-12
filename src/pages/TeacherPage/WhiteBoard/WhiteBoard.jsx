@@ -16,6 +16,7 @@ export const WhiteBoard = ({
 
   const BOARDS = {
     a0: 'http://go.limnu.com/poppy-naked',
+    a0_2: 'http://go.limnu.com/butterfly-organic',
     a1: 'http://go.limnu.com/browallia-bursting',
     a2: 'http://go.limnu.com/sealion-nasty',
     b1: 'http://go.limnu.com/marker-powerless',
@@ -30,6 +31,10 @@ export const WhiteBoard = ({
     b2kids: 'http://go.limnu.com/rattlesnake-naughty',
     c1kids: 'http://go.limnu.com/rattlesnake-naughty',
     a1kidsfree: 'http://go.limnu.com/cyclamen-depressed',
+    dea1kids: 'http://go.limnu.com/bellflower-hot',
+    dekidsfree: 'http://go.limnu.com/hyssop-dried',
+    pla1kids: 'http://go.limnu.com/duscle-bumpy',
+    plkidsfree: 'http://go.limnu.com/dahlia-bulky',
     b1kidsbeginner: 'http://go.limnu.com/goatsbeard-naked',
     b2kidsbeginner: 'http://go.limnu.com/caladium-pasteurized',
     test: 'https://limnu.com/d/draw.html?b=B_N65K69RyegUKa5&',

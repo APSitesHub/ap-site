@@ -1,6 +1,6 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
-import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
+import { KahootsFree } from 'components/Stream/Kahoots/KahootsFree';
 import { Support } from 'components/Stream/Support/Support';
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -10,8 +10,8 @@ import { Chat } from 'utils/Chat/Chat';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
-  BoxHideSwitch,
-  ButtonBox,
+  BoxHideSwitchFree,
+  ButtonBoxFree,
   ChatBox,
   ChatBtn,
   ChatLogo,
@@ -19,6 +19,8 @@ import {
   KahootLogo,
   MoldingNoClick,
   MoldingNoClickSecondary,
+  SpeakingLink,
+  SpeakingLogo,
   StreamPlaceHolder,
   StreamPlaceHolderText,
   StreamSection,
@@ -31,7 +33,7 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-const StreamA1 = () => {
+const KidsDeA1Free = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -82,24 +84,16 @@ const StreamA1 = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'A1 English | AP Education';
+    document.title = 'A1 Deutsch Kids Free | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
-    // socketRef.current = io('http://localhost:4000/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
       console.log(handshake.time);
-      socketRef.current.emit('connected:user', socketRef.current.id, room);
-    });
-
-    socketRef.current.on('connected:user', (id, lvl) => {
-      console.log(id);
-      console.log(lvl);
     });
 
     const getMessages = async () => {
-      console.log('get');
       try {
         const dbMessages = await axios.get(
           `https://ap-chat-server.onrender.com/messages/room`,
@@ -113,6 +107,7 @@ const StreamA1 = () => {
           message =>
             new Date(message.createdAt).getDate() === new Date().getDate()
         );
+        console.log(todayMessages);
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
         console.log(error);
@@ -184,22 +179,16 @@ const StreamA1 = () => {
     });
 
     return () => {
-      console.log('disconnecting');
-      socketRef.current.emit(
-        'connected:disconnect',
-        socketRef.current.id,
-        room
-      );
       socketRef.current.off('connected');
       socketRef.current.off('message');
-      socketRef.current.off('user');
       socketRef.current.disconnect();
     };
   }, [currentUser, room]);
 
   return (
     <>
-      {(links.a1 === undefined || links.a1[0] < 10) && !isLoading ? (
+      {(links.dekidsfree === undefined || links.dekidsfree[0] < 10) &&
+      !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Поки що трансляції тут немає! <br />
@@ -271,11 +260,11 @@ const StreamA1 = () => {
                 }}
                 width="100%"
                 height="100vh"
-                url={links.a1}
+                url={links.dekidsfree}
               />
             </VideoBox>
 
-            <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
+            <ButtonBoxFree className={!isButtonBoxOpen ? 'hidden' : ''}>
               <KahootBtn
                 onClick={toggleKahoot}
                 className={
@@ -297,12 +286,20 @@ const StreamA1 = () => {
               <SupportBtn onClick={toggleSupport}>
                 <SupportLogo />
               </SupportBtn>
-            </ButtonBox>
 
-            <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
+              <SpeakingLink
+                href="https://meet.google.com/iob-kwip-fhb"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SpeakingLogo />
+              </SpeakingLink>
+            </ButtonBoxFree>
+
+            <BoxHideSwitchFree id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
-            </BoxHideSwitch>
-            {console.log(socketRef.current)}
+            </BoxHideSwitchFree>
+
             {height > width && (
               <ChatBox
                 ref={chatEl}
@@ -329,7 +326,7 @@ const StreamA1 = () => {
               isKahootOpen={isKahootOpen}
             />
 
-            <Kahoots
+            <KahootsFree
               sectionWidth={width}
               sectionHeight={height}
               isKahootOpen={isKahootOpen}
@@ -359,4 +356,4 @@ const StreamA1 = () => {
   );
 };
 
-export default StreamA1;
+export default KidsDeA1Free;

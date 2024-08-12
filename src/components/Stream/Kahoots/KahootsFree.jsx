@@ -68,6 +68,10 @@ export const KahootsFree = ({
     switch (path) {
       case 'a1free':
         return 'a1kidsfree';
+      case 'dea1free':
+        return 'dekidsfree';
+      case 'pla1free':
+        return 'plkidsfree';
       case 'pilot':
         return 'deutsch';
       case 'b1beginner':

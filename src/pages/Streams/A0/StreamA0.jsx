@@ -31,7 +31,7 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-export const StreamA0 = () => {
+const StreamA0 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -117,7 +117,10 @@ export const StreamA0 = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat-server.onrender.com/messages', data);
+          await axios.post(
+            'https://ap-chat-server.onrender.com/messages',
+            data
+          );
         } catch (error) {
           console.log(error);
         }
@@ -147,7 +150,9 @@ export const StreamA0 = () => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
+          await axios.delete(
+            `https://ap-chat-server.onrender.com/messages/${id}`
+          );
         } catch (error) {
           console.log(error);
         }
@@ -339,3 +344,5 @@ export const StreamA0 = () => {
     </>
   );
 };
+
+export default StreamA0;

@@ -68,6 +68,7 @@ export const CollectionsAdminPanel = () => {
 
   const initialLinksValues = {
     a0: '',
+    a0_2: '',
     a1: '',
     a2: '',
     b1: '',
@@ -98,13 +99,18 @@ export const CollectionsAdminPanel = () => {
     c1kids: '',
     b1kidsbeginner: '',
     b2kidsbeginner: '',
+    dea1kids: '',
+    pla1kids: '',
     a1kidsfree: '',
+    dekidsfree: '',
+    plkidsfree: '',
     test: '',
     trendets: '',
   };
 
   const linksSchema = yup.object().shape({
     a0: yup.string().optional(),
+    a0_2: yup.string().optional(),
     a1: yup.string().optional(),
     a2: yup.string().optional(),
     b1: yup.string().optional(),
@@ -135,7 +141,11 @@ export const CollectionsAdminPanel = () => {
     c1kids: yup.string().optional(),
     b1kidsbeginner: yup.string().optional(),
     b2kidsbeginner: yup.string().optional(),
+    dea1kids: yup.string().optional(),
+    pla1kids: yup.string().optional(),
     a1kidsfree: yup.string().optional(),
+    dekidsfree: yup.string().optional(),
+    plkidsfree: yup.string().optional(),
     test: yup.string().optional(),
     trendets: yup.string().optional(),
   });
@@ -201,6 +211,14 @@ export const CollectionsAdminPanel = () => {
               <Label>
                 <AdminInput type="text" name="a0" placeholder="A0 collection" />
                 <AdminInputNote component="p" name="a0" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="a0_2"
+                  placeholder="A0_2 collection"
+                />
+                <AdminInputNote component="p" name="a0_2" />
               </Label>
               <Label>
                 <AdminInput type="text" name="a1" placeholder="A1 collection" />
@@ -429,6 +447,38 @@ export const CollectionsAdminPanel = () => {
                   placeholder="A1 Kids free collection"
                 />
                 <AdminInputNote component="p" name="a1kidsfree" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="dea1kids"
+                  placeholder="A1 Kids Deutsch collection"
+                />
+                <AdminInputNote component="p" name="dea1kids" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="pla1kids"
+                  placeholder="A1 Kids Polski collection"
+                />
+                <AdminInputNote component="p" name="pla1kids" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="dekidsfree"
+                  placeholder="A1 Kids Deutsch free collection"
+                />
+                <AdminInputNote component="p" name="dekidsfree" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="plkidsfree"
+                  placeholder="A1 Kids Polski free collection"
+                />
+                <AdminInputNote component="p" name="plkidsfree" />
               </Label>
               <Label>
                 <AdminInput

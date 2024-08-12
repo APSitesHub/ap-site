@@ -123,6 +123,8 @@ export const TimeTableAdminPanel = () => {
     type: '',
     package: '',
     time: '',
+    lessonNumber: '',
+    teacher: '',
   };
 
   const timetableSchema = yup.object().shape({
@@ -132,6 +134,8 @@ export const TimeTableAdminPanel = () => {
     type: yup.string(),
     package: yup.string(),
     time: yup.string(),
+    lessonNumber: yup.string(),
+    teacher: yup.string(),
   });
 
   const handleTimetableSubmit = async (values, { resetForm }) => {
@@ -144,6 +148,8 @@ export const TimeTableAdminPanel = () => {
           type: typeValue,
           package: packageValue,
           time: values.time,
+          lessonNumber: values.lessonNumber,
+          teacher: values.teacher,
         },
       ],
     };
@@ -183,8 +189,16 @@ export const TimeTableAdminPanel = () => {
       value: 'de',
     },
     {
+      label: 'Німецька, діти',
+      value: 'dekids',
+    },
+    {
       label: 'Польська',
       value: 'pl',
+    },
+    {
+      label: 'Польська, діти',
+      value: 'plkids',
     },
   ];
 
@@ -247,6 +261,20 @@ export const TimeTableAdminPanel = () => {
     {
       label: 'C1',
       value: 'c1',
+    },
+  ];
+
+  const levelOptionsForDeKids = [
+    {
+      label: 'A1',
+      value: 'a1',
+    },
+  ];
+
+  const levelOptionsForPlKids = [
+    {
+      label: 'A1',
+      value: 'a1',
     },
   ];
 
@@ -411,9 +439,13 @@ export const TimeTableAdminPanel = () => {
               />
               <FormSelect
                 options={
-                  langValue !== 'enkids'
-                    ? levelOptions
-                    : levelOptionsWithBeginners
+                  langValue === 'enkids'
+                    ? levelOptionsWithBeginners
+                    : langValue === 'dekids'
+                    ? levelOptionsForDeKids
+                    : langValue === 'plkids'
+                    ? levelOptionsForPlKids
+                    : levelOptions
                 }
                 styles={{
                   control: (baseStyles, state) => ({
@@ -477,6 +509,18 @@ export const TimeTableAdminPanel = () => {
                 <AdminInput type="text" name="time" placeholder="Час" />
                 <AdminInputNote component="p" name="time" />
               </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="lessonNumber"
+                  placeholder="Номер уроку"
+                />
+                <AdminInputNote component="p" name="lessonNumber" />
+              </Label>
+              <Label>
+                <AdminInput type="text" name="teacher" placeholder="Викладач" />
+                <AdminInputNote component="p" name="teacher" />
+              </Label>
               <AdminFormBtn type="submit">Додати до розкладу</AdminFormBtn>
             </UsersForm>
           </Formik>
@@ -506,6 +550,15 @@ export const TimeTableAdminPanel = () => {
                           </ScheduleDataTypeText>
                           <ScheduleDataTimeText>
                             {schedule.time}
+                          </ScheduleDataTimeText>
+                          <ScheduleDataTimeText>
+                            {schedule.lessonNumber}
+                          </ScheduleDataTimeText>
+                          <ScheduleDataTimeText>
+                            {schedule.teacher}
+                          </ScheduleDataTimeText>
+                          <ScheduleDataTimeText>
+                            {schedule.package}
                           </ScheduleDataTimeText>
                           <UserEditButton
                             onClick={() =>

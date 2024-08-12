@@ -3,15 +3,7 @@ import ViberHRRedirect from 'pages/HR/ViberHRRedirect/ViberHRRedirect';
 import { LeadFormPage } from 'pages/LeadFormPage/LeadFormPage';
 import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
-import { StreamA0 } from 'pages/Streams/A0/StreamA0';
-import { StreamA1 } from 'pages/Streams/A1/StreamA1';
-import { StreamA1Free } from 'pages/Streams/A1/StreamA1Free';
-import { StreamA2 } from 'pages/Streams/A2/StreamA2';
-import { StreamA2Free } from 'pages/Streams/A2/StreamA2Free';
 import { AdminPanel } from 'pages/Streams/AdminPanel/AdminPanel';
-import { StreamB1 } from 'pages/Streams/B1/StreamB1';
-import { StreamB2 } from 'pages/Streams/B2/StreamB2';
-import { StreamC1 } from 'pages/Streams/C1/StreamC1';
 import { CollectionsAdminPanel } from 'pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel';
 import { StreamDeutschA0 } from 'pages/Streams/Deutsch A0/StreamDeutschA0';
 import { StreamDeutschA2 } from 'pages/Streams/Deutsch A2/StreamDeutschA2';
@@ -74,6 +66,51 @@ const University = lazy(() =>
 const Streams = lazy(() =>
   import(/* webpackChunkName: "Streams page" */ '../pages/Streams/Streams')
 );
+const StreamA0 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams A0 page" */ '../pages/Streams/A0/StreamA0'
+  )
+);
+const StreamA02 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams A0_2 page" */ '../pages/Streams/A0/StreamA02'
+  )
+);
+const StreamA1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams A1 page" */ '../pages/Streams/A1/StreamA1'
+  )
+);
+const StreamA1Free = lazy(() =>
+  import(
+    /* webpackChunkName: "Free streams A1 page" */ '../pages/Streams/A1/StreamA1Free'
+  )
+);
+const StreamA2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams A2 page" */ '../pages/Streams/A2/StreamA2'
+  )
+);
+const StreamA2Free = lazy(() =>
+  import(
+    /* webpackChunkName: "Free streams A2 page" */ '../pages/Streams/A2/StreamA2Free'
+  )
+);
+const StreamB1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams B1 page" */ '../pages/Streams/B1/StreamB1'
+  )
+);
+const StreamB2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams B2 page" */ '../pages/Streams/B2/StreamB2'
+  )
+);
+const StreamC1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams C1 page" */ '../pages/Streams/C1/StreamC1'
+  )
+);
 const Service = lazy(() =>
   import(/* webpackChunkName: "Service page" */ '../pages/Service/Service')
 );
@@ -83,6 +120,26 @@ const HR = lazy(() =>
 const StreamsKids = lazy(() =>
   import(
     /* webpackChunkName: "Streams Kids page" */ '../pages/StreamsKids/StreamsKids'
+  )
+);
+const KidsDeA1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Streams A1 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1'
+  )
+);
+const KidsPlA1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Polski Streams A1 Kids page" */ '../pages/StreamsKids/KidsPlA1/KidsPlA1'
+  )
+);
+const KidsDeA1Free = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Free Streams A1 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1Free'
+  )
+);
+const KidsPlA1Free = lazy(() =>
+  import(
+    /* webpackChunkName: "Polski Free Streams A1 Kids page" */ '../pages/StreamsKids/KidsPlA1/KidsPlA1Free'
   )
 );
 const Teacher = lazy(() =>
@@ -471,6 +528,8 @@ export const App = () => {
             <Route path="a0" element={<StreamA0 />} />
             <Route path="a0sc" element={<StreamA0SpeakingClub />} />
             <Route path="a0-chat" element={<WindowedChat />} />
+            <Route path="a0_2" element={<StreamA02 />} />
+            <Route path="a0_2-chat" element={<WindowedChat />} />
             <Route path="a1" element={<StreamA1 />} />
             <Route path="a1sc" element={<StreamA1SpeakingClub />} />
             <Route path="a1-chat" element={<WindowedChat />} />
@@ -576,8 +635,16 @@ export const App = () => {
               element={<StreamB2KidsBeginnerSpeakingClub />}
             />
             <Route path="b2beginner-chat" element={<WindowedChat />} />
+            <Route path="dea1" element={<KidsDeA1 />} />
+            <Route path="dea1-chat" element={<WindowedChat />} />
+            <Route path="pla1" element={<KidsPlA1 />} />
+            <Route path="pla1-chat" element={<WindowedChat />} />
             <Route path="a1free" element={<KidsA1Free />} />
             <Route path="a1free-chat" element={<WindowedChat />} />
+            <Route path="dea1free" element={<KidsDeA1Free />} />
+            <Route path="dea1free-chat" element={<WindowedChat />} />
+            <Route path="pla1free" element={<KidsPlA1Free />} />
+            <Route path="pla1free-chat" element={<WindowedChat />} />
             <Route path="trendets" element={<KidsTrendets />} />
             <Route path="trendets-chat" element={<WindowedChat />} />
           </Route>
@@ -600,6 +667,7 @@ export const App = () => {
           <Route path="trial-kids" element={<StreamTrialKids />} />
           <Route path="teacher" element={<Teacher />} noindex={true}>
             <Route path="a0" element={<TeacherPage />} />
+            <Route path="a0_2" element={<TeacherPage />} />
             <Route path="a1" element={<TeacherPage />} />
             <Route path="a2" element={<TeacherPage />} />
             <Route path="b1" element={<TeacherPage />} />
@@ -623,11 +691,15 @@ export const App = () => {
             <Route path="deutsch-b1" element={<TeacherPage />} />
             <Route path="deutsch-a1free" element={<TeacherPage />} />
             <Route path="deutsch-a2free" element={<TeacherPage />} />
+            <Route path="dea1kids" element={<TeacherPage />} />
+            <Route path="dekidsfree" element={<TeacherPage />} />
             <Route path="polski-a0" element={<TeacherPage />} />
             <Route path="polski-a1" element={<TeacherPage />} />
             <Route path="polski-a1free" element={<TeacherPage />} />
             <Route path="polski-a2" element={<TeacherPage />} />
             <Route path="polski-b1" element={<TeacherPage />} />
+            <Route path="pla1kids" element={<TeacherPage />} />
+            <Route path="plkidsfree" element={<TeacherPage />} />
             <Route path="test" element={<TeacherPage />} />
             <Route path="trials" element={<TeacherTrialPage />} />
             <Route path="trials-kids" element={<TeacherTrialPage />} />
@@ -637,7 +709,10 @@ export const App = () => {
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route path="quiz" element={<Quiz utms={utms} />} />
           <Route path="quiz-one" element={<QuizOneRequest utms={utms} />} />
-          <Route path="quiz-google" element={<QuizOneRequestGoogle utms={utms} />} />
+          <Route
+            path="quiz-google"
+            element={<QuizOneRequestGoogle utms={utms} />}
+          />
           <Route path="quiz-code" element={<QuizAuth utms={utms} />} />
           <Route path="quiz-en" element={<QuizEn utms={utms} />} />
           <Route path="quiz-en-code" element={<QuizEnAuth utms={utms} />} />

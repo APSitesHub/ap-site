@@ -31,7 +31,7 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-const StreamA1 = () => {
+const StreamA02 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -82,20 +82,13 @@ const StreamA1 = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'A1 English | AP Education';
+    document.title = 'A0 English, 2 | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
-    // socketRef.current = io('http://localhost:4000/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
       console.log(handshake.time);
-      socketRef.current.emit('connected:user', socketRef.current.id, room);
-    });
-
-    socketRef.current.on('connected:user', (id, lvl) => {
-      console.log(id);
-      console.log(lvl);
     });
 
     const getMessages = async () => {
@@ -184,22 +177,15 @@ const StreamA1 = () => {
     });
 
     return () => {
-      console.log('disconnecting');
-      socketRef.current.emit(
-        'connected:disconnect',
-        socketRef.current.id,
-        room
-      );
       socketRef.current.off('connected');
       socketRef.current.off('message');
-      socketRef.current.off('user');
       socketRef.current.disconnect();
     };
   }, [currentUser, room]);
 
   return (
     <>
-      {(links.a1 === undefined || links.a1[0] < 10) && !isLoading ? (
+      {(links.a0_2 === undefined || links.a0_2[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Поки що трансляції тут немає! <br />
@@ -271,7 +257,7 @@ const StreamA1 = () => {
                 }}
                 width="100%"
                 height="100vh"
-                url={links.a1}
+                url={links.a0_2}
               />
             </VideoBox>
 
@@ -302,7 +288,7 @@ const StreamA1 = () => {
             <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
             </BoxHideSwitch>
-            {console.log(socketRef.current)}
+
             {height > width && (
               <ChatBox
                 ref={chatEl}
@@ -359,4 +345,4 @@ const StreamA1 = () => {
   );
 };
 
-export default StreamA1;
+export default StreamA02;

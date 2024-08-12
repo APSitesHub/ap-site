@@ -33,7 +33,7 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-export const StreamA2Free = () => {
+const StreamA2Free = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -354,3 +354,5 @@ export const StreamA2Free = () => {
     </>
   );
 };
+
+export default StreamA2Free;

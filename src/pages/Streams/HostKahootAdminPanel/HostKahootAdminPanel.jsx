@@ -4,6 +4,7 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { A02KahootForm } from '../KahootAdminPanel/A02KahootForm';
 import { A0KahootForm } from '../KahootAdminPanel/A0KahootForm';
 import { A0KidsKahootForm } from '../KahootAdminPanel/A0KidsKahootForm';
 import { A1FreeKahootForm } from '../KahootAdminPanel/A1FreeKahootForm';
@@ -27,6 +28,8 @@ import { DeutschA2KahootForm } from '../KahootAdminPanel/DeutschA2KahootForm';
 import { DeutschB1KahootForm } from '../KahootAdminPanel/DeutschB1KahootForm';
 import { DeutschFreeKahootForm } from '../KahootAdminPanel/DeutschFreeKahootForm';
 import { DeutschKahootForm } from '../KahootAdminPanel/DeutschKahootForm';
+import { DeutschKidsFreeKahootForm } from '../KahootAdminPanel/DeutschKidsFreeKahootForm';
+import { DeutschKidsKahootForm } from '../KahootAdminPanel/DeutschKidsKahootForm';
 import {
   AdminFormBtn,
   AdminInput,
@@ -41,6 +44,8 @@ import { PolskiA2KahootForm } from '../KahootAdminPanel/PolskiA2KahootForm';
 import { PolskiB1KahootForm } from '../KahootAdminPanel/PolskiB1KahootForm';
 import { PolskiFreeKahootForm } from '../KahootAdminPanel/PolskiFreeKahootForm';
 import { PolskiKahootForm } from '../KahootAdminPanel/PolskiKahootForm';
+import { PolskiKidsFreeKahootForm } from '../KahootAdminPanel/PolskiKidsFreeKahootForm';
+import { PolskiKidsKahootForm } from '../KahootAdminPanel/PolskiKidsKahootForm';
 import { TestKahootForm } from '../KahootAdminPanel/TestKahootForm';
 import { TrendetsKahootForm } from '../KahootAdminPanel/TrendetsKahootForm';
 import { TrialsDeKahootForm } from '../KahootAdminPanel/TrialsDeKahootForm';
@@ -141,6 +146,9 @@ export const HostKahootAdminPanel = () => {
         {isUserAdmin && (
           <KahootLvlBtnBox>
             <KahootLvlBtn onClick={() => handleBtnClick('a0')}>A0</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('a0_2')}>
+              A0_2
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('a1')}>A1</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('a2')}>A2</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('b1')}>B1</KahootLvlBtn>
@@ -220,6 +228,18 @@ export const HostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('b2kidsbeginner')}>
               B2 Kids Beginner
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('dea1kids')}>
+              De Kids
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('pla1kids')}>
+              Pl Kids
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('dekidsfree')}>
+              De Kids Free
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('plkidsfree')}>
+              Pl Kids Free
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('test')}>
               Test
             </KahootLvlBtn>
@@ -230,6 +250,9 @@ export const HostKahootAdminPanel = () => {
         )}
         <KahootFormBox>
           {levels.includes('a0') && <A0KahootForm destination={destination} />}
+          {levels.includes('a0_2') && (
+            <A02KahootForm destination={destination} />
+          )}
           {levels.includes('a1') && <A1KahootForm destination={destination} />}
           {levels.includes('a2') && <A2KahootForm destination={destination} />}
           {levels.includes('b1') && <B1KahootForm destination={destination} />}
@@ -310,8 +333,20 @@ export const HostKahootAdminPanel = () => {
           {levels.includes('b2kidsbeginner') && (
             <B2KidsBeginnerKahootForm destination={destination} />
           )}
+          {levels.includes('dea1kids') && (
+            <DeutschKidsKahootForm destination={destination} />
+          )}
+          {levels.includes('pla1kids') && (
+            <PolskiKidsKahootForm destination={destination} />
+          )}
           {levels.includes('a1kidsfree') && (
             <A1KidsFreeKahootForm destination={destination} />
+          )}
+          {levels.includes('dekidsfree') && (
+            <DeutschKidsFreeKahootForm destination={destination} />
+          )}
+          {levels.includes('plkidsfree') && (
+            <PolskiKidsFreeKahootForm destination={destination} />
           )}
           {levels.includes('test') && (
             <TestKahootForm destination={destination} />

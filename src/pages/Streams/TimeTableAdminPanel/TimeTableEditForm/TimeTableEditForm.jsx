@@ -39,6 +39,8 @@ export const TimeTableEditForm = ({
     type: scheduleToEdit.type,
     package: scheduleToEdit.package,
     time: scheduleToEdit.time,
+    lessonNumber: scheduleToEdit.lessonNumber,
+    teacher: scheduleToEdit.teacher,
   };
 
   const timetableSchema = yup.object().shape({
@@ -48,6 +50,8 @@ export const TimeTableEditForm = ({
     type: yup.string(),
     package: yup.string(),
     time: yup.string(),
+    lessonNumber: yup.string(),
+    teacher: yup.string(),
   });
 
   const handleEditTimetableSubmit = async values => {
@@ -60,6 +64,8 @@ export const TimeTableEditForm = ({
           type: typeValue,
           package: packageValue,
           time: values.time,
+          lessonNumber: values.lessonNumber,
+          teacher: values.teacher,
         },
       ],
     };
@@ -194,6 +200,18 @@ export const TimeTableEditForm = ({
           <Label>
             <AdminInput type="text" name="time" placeholder="Час" />
             <AdminInputNote component="p" name="time" />
+          </Label>
+          <Label>
+            <AdminInput
+              type="text"
+              name="lessonNumber"
+              placeholder="Номер уроку"
+            />
+            <AdminInputNote component="p" name="lessonNumber" />
+          </Label>
+          <Label>
+            <AdminInput type="text" name="teacher" placeholder="Викладач" />
+            <AdminInputNote component="p" name="teacher" />
           </Label>
           <AdminFormBtn type="submit">Змінити розклад</AdminFormBtn>
         </UsersEditForm>

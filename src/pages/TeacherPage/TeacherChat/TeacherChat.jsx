@@ -33,7 +33,11 @@ export const TeacherChat = ({ page }) => {
 
   console.log(33, page);
   const getMessagesByPage = page =>
-    page.includes('kidsfree')
+    page.includes('dekidsfree')
+      ? '/streams-kids/' + page.replace('kids', 'a1')
+      : page.includes('plkidsfree')
+      ? '/streams-kids/' + page.replace('kids', 'a1')
+      : page.includes('kidsfree')
       ? '/streams-kids/' + page.replace('kids', '')
       : page.includes('beginner')
       ? '/streams-kids/' + page.replace('kids', '')

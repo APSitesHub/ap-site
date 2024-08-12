@@ -2,7 +2,6 @@ import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
-// eslint-disable-next-line
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
@@ -70,6 +69,7 @@ export const AdminPanel = () => {
 
   const initialLinksValues = {
     a0: '',
+    a0_2: '',
     a1: '',
     a2: '',
     b1: '',
@@ -100,13 +100,18 @@ export const AdminPanel = () => {
     c1kids: '',
     b1kidsbeginner: '',
     b2kidsbeginner: '',
+    dea1kids: '',
+    pla1kids: '',
     a1kidsfree: '',
+    dekidsfree: '',
+    plkidsfree: '',
     test: '',
     trendets: '',
   };
 
   const linksSchema = yup.object().shape({
     a0: yup.string().optional(),
+    a0_2: yup.string().optional(),
     a1: yup.string().optional(),
     a2: yup.string().optional(),
     b1: yup.string().optional(),
@@ -137,7 +142,11 @@ export const AdminPanel = () => {
     c1kids: yup.string().optional(),
     b1kidsbeginner: yup.string().optional(),
     b2kidsbeginner: yup.string().optional(),
+    dea1kids: yup.string().optional(),
+    pla1kids: yup.string().optional(),
     a1kidsfree: yup.string().optional(),
+    dekidsfree: yup.string().optional(),
+    plkidsfree: yup.string().optional(),
     test: yup.string().optional(),
     trendets: yup.string().optional(),
   });
@@ -195,6 +204,10 @@ export const AdminPanel = () => {
               <Label>
                 <AdminInput type="text" name="a0" placeholder="A0 link" />
                 <AdminInputNote component="p" name="a0" />
+              </Label>
+              <Label>
+                <AdminInput type="text" name="a0_2" placeholder="A0_2 link" />
+                <AdminInputNote component="p" name="a0_2" />
               </Label>
               <Label>
                 <AdminInput type="text" name="a1" placeholder="A1 link" />
@@ -423,6 +436,38 @@ export const AdminPanel = () => {
                   placeholder="A1 Kids free link"
                 />
                 <AdminInputNote component="p" name="a1kidsfree" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="dea1kids"
+                  placeholder="A1 Kids Deutsch link"
+                />
+                <AdminInputNote component="p" name="dea1kids" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="pla1kids"
+                  placeholder="A1 Kids Polski link"
+                />
+                <AdminInputNote component="p" name="pla1kids" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="dekidsfree"
+                  placeholder="A1 Kids Deutsch free link"
+                />
+                <AdminInputNote component="p" name="dekidsfree" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="plkidsfree"
+                  placeholder="A1 Kids Polski free link"
+                />
+                <AdminInputNote component="p" name="plkidsfree" />
               </Label>
               <Label>
                 <AdminInput
