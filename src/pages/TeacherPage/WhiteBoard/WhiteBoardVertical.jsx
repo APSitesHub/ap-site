@@ -3,10 +3,10 @@ import {
   KahootFullScreenBtn,
   KahootFullScreenIcon,
 } from 'components/Stream/Kahoots/Kahoots.styled';
-import { WhiteBoardBox } from './WhiteBoard.styled';
 import { useState } from 'react';
+import { WhiteBoardBoxVertical } from './WhiteBoard.styled';
 
-export const WhiteBoard = ({
+export const WhiteBoardVertical = ({
   page,
   isWhiteBoardOpen,
   isOpenedLast,
@@ -40,19 +40,16 @@ export const WhiteBoard = ({
     test: 'https://limnu.com/d/draw.html?b=B_N65K69RyegUKa5&',
     trendets: 'http://go.limnu.com/phoenix-plump',
     deutscha0: 'http://go.limnu.com/blanket-mealy',
-    deutscha0_2: 'http://go.limnu.com/toaster-messy',
     deutsch: 'http://go.limnu.com/cobra-potent',
     deutscha2: 'http://go.limnu.com/woodruff-dreamy',
     deutschb1: 'http://go.limnu.com/backpack-obnoxious',
     deutschfree: 'http://go.limnu.com/artemisia-exquisite',
     deutscha2free: 'http://go.limnu.com/mouse-melodic',
     polskia0: 'http://go.limnu.com/dahlia-junior',
-    polskia0_2: 'http://go.limnu.com/banyan-mammoth',
     polski: 'http://go.limnu.com/hippogryph-pouched',
     polskia2: 'http://go.limnu.com/emu-meek',
     polskib1: 'http://go.limnu.com/beetle-meek',
     polskifree: 'http://go.limnu.com/bluebell-mammoth',
-    record: 'http://go.limnu.com/chestnut-eatable',
     trials: 'http://go.limnu.com/hare-patchy',
     trials_kids: 'http://go.limnu.com/pine-brisk',
     trials_pl: 'http://go.limnu.com/cherry-arcane',
@@ -72,7 +69,7 @@ export const WhiteBoard = ({
 
   return (
     <>
-      <WhiteBoardBox
+      <WhiteBoardBoxVertical
         className={isWhiteBoardOpen ? 'shown' : 'hidden'}
         style={{ ...supportBoxStylesHandler() }}
       >
@@ -91,7 +88,7 @@ export const WhiteBoard = ({
           width="100%"
           height="100%"
         ></iframe>
-      </WhiteBoardBox>
+      </WhiteBoardBoxVertical>
     </>
   );
 };

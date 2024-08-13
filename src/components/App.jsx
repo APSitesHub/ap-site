@@ -111,6 +111,16 @@ const StreamC1 = lazy(() =>
     /* webpackChunkName: "Streams C1 page" */ '../pages/Streams/C1/StreamC1'
   )
 );
+const StreamDeutschA02 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Deutsch A0_2 page" */ '../pages/Streams/Deutsch A0/StreamDeutschA02'
+  )
+);
+const StreamPolskiA02 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski A0_2 page" */ '../pages/Streams/Polski A0/StreamPolskiA02'
+  )
+);
 const Service = lazy(() =>
   import(/* webpackChunkName: "Service page" */ '../pages/Service/Service')
 );
@@ -314,6 +324,11 @@ const Deutsch = lazy(() =>
 const TeacherPage = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPage'
+  )
+);
+const TeacherPageVertical = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPageVertical'
   )
 );
 const MyAP = lazy(() =>
@@ -552,6 +567,8 @@ export const App = () => {
             <Route path="deutscha0" element={<StreamDeutschA0 />} />
             <Route path="dea0sc" element={<StreamDeutschA0Sprechclub />} />
             <Route path="deutscha0-chat" element={<WindowedChat />} />
+            <Route path="deutscha0_2" element={<StreamDeutschA02 />} />
+            <Route path="deutscha0_2-chat" element={<WindowedChat />} />
             <Route path="deutsch" element={<StreamDeutsch />} />
             <Route path="dea1sc" element={<StreamDeutschA1Sprechclub />} />
             <Route path="deutsch-chat" element={<WindowedChat />} />
@@ -568,6 +585,8 @@ export const App = () => {
             <Route path="polskia0" element={<StreamPolskiA0 />} />
             <Route path="pla0sc" element={<StreamPolskiA0SpeakingClub />} />
             <Route path="polskia0-chat" element={<WindowedChat />} />
+            <Route path="polskia0_2" element={<StreamPolskiA02 />} />
+            <Route path="polskia0_2-chat" element={<WindowedChat />} />
             <Route path="polski" element={<StreamPolski />} />
             <Route path="pla1sc" element={<StreamPolskiA1SpeakingClub />} />
             <Route path="polski-chat" element={<WindowedChat />} />
@@ -686,6 +705,7 @@ export const App = () => {
             <Route path="b2kidsbeginner" element={<TeacherPage />} />
             <Route path="trendets" element={<TeacherPage />} />
             <Route path="deutsch-a0" element={<TeacherPage />} />
+            <Route path="deutsch-a0_2" element={<TeacherPage />} />
             <Route path="deutsch-a1" element={<TeacherPage />} />
             <Route path="deutsch-a2" element={<TeacherPage />} />
             <Route path="deutsch-b1" element={<TeacherPage />} />
@@ -694,12 +714,14 @@ export const App = () => {
             <Route path="dea1kids" element={<TeacherPage />} />
             <Route path="dekidsfree" element={<TeacherPage />} />
             <Route path="polski-a0" element={<TeacherPage />} />
+            <Route path="polski-a0_2" element={<TeacherPage />} />
             <Route path="polski-a1" element={<TeacherPage />} />
             <Route path="polski-a1free" element={<TeacherPage />} />
             <Route path="polski-a2" element={<TeacherPage />} />
             <Route path="polski-b1" element={<TeacherPage />} />
             <Route path="pla1kids" element={<TeacherPage />} />
             <Route path="plkidsfree" element={<TeacherPage />} />
+            <Route path="record" element={<TeacherPageVertical />} />
             <Route path="test" element={<TeacherPage />} />
             <Route path="trials" element={<TeacherTrialPage />} />
             <Route path="trials-kids" element={<TeacherTrialPage />} />

@@ -29,9 +29,49 @@ export const TeacherButtonBox = styled.div`
   }
 `;
 
+export const TeacherButtonBoxVertical = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 25px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  transition: transform var(--animation-global);
+
+  &.hidden {
+    transform: translate(200px, -50%);
+  }
+`;
+
 export const TeacherButtonBoxHideSwitch = styled.div`
   position: absolute;
   bottom: 210px;
+  right: 0;
+
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.09));
+
+  z-index: 10;
+
+  width: 18px;
+  height: 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;
+
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+`;
+
+export const TeacherButtonBoxHideSwitchVertical = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   right: 0;
 
   filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.09));

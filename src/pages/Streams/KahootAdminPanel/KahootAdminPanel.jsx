@@ -22,6 +22,7 @@ import { B2KidsBeginnerKahootForm } from './B2KidsBeginnerKahootForm';
 import { B2KidsKahootForm } from './B2KidsKahootForm';
 import { C1KahootForm } from './C1KahootForm';
 import { C1KidsKahootForm } from './C1KidsKahootForm';
+import { DeutschA02KahootForm } from './DeutschA02KahootForm';
 import { DeutschA0KahootForm } from './DeutschA0KahootForm';
 import { DeutschA2FreeKahootForm } from './DeutschA2FreeKahootForm';
 import { DeutschA2KahootForm } from './DeutschA2KahootForm';
@@ -40,6 +41,7 @@ import {
   KahootLvlBtnBox,
   LoginForm,
 } from './KahootAdminPanel.styled';
+import { PolskiA02KahootForm } from './PolskiA02KahootForm';
 import { PolskiA0KahootForm } from './PolskiA0KahootForm';
 import { PolskiA2KahootForm } from './PolskiA2KahootForm';
 import { PolskiB1KahootForm } from './PolskiB1KahootForm';
@@ -163,6 +165,9 @@ export const KahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('de-a0')}>
               DE A0
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('de-a0_2')}>
+              DE A0_2
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('de')}>DE</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('de-a2')}>
               DE A2
@@ -178,6 +183,9 @@ export const KahootAdminPanel = () => {
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pl-a0')}>
               PL A0
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('pl-a0_2')}>
+              PL A0_2
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pl')}>PL</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pl-a2')}>
@@ -267,6 +275,9 @@ export const KahootAdminPanel = () => {
           {levels.includes('de-a0') && (
             <DeutschA0KahootForm destination={destination} />
           )}
+          {levels.includes('de-a0_2') && (
+            <DeutschA02KahootForm destination={destination} />
+          )}
           {levels.includes('de') && (
             <DeutschKahootForm destination={destination} />
           )}
@@ -284,6 +295,9 @@ export const KahootAdminPanel = () => {
           )}
           {levels.includes('pl-a0') && (
             <PolskiA0KahootForm destination={destination} />
+          )}
+          {levels.includes('pl-a0_2') && (
+            <PolskiA02KahootForm destination={destination} />
           )}
           {levels.includes('pl') && (
             <PolskiKahootForm destination={destination} />

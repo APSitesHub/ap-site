@@ -40,6 +40,45 @@ export const PlatformBox = styled.div`
   }
 `;
 
+export const PlatformBoxVertical = styled.div`
+  height: 40%;
+  width: 100%;
+
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+
+  background-color: white;
+  position: absolute;
+  border-radius: 20px;
+  bottom: 0;
+  left: 0;
+
+  font-family: var(--streams-font-family);
+
+  transition: transform var(--animation-global);
+
+  &.hidden {
+    transform: translateY(100%);
+  }
+
+  &.shown {
+    transform: translateY(0);
+  }
+
+  & > iframe {
+    position: absolute;
+    z-index: 4;
+    top: 100%;
+  transform-origin: 0 0;
+  }
+
+  & > iframe.active {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+  }
+`;
+
 export const AddLessonBtn = styled.button`
   position: absolute;
   z-index: 6;

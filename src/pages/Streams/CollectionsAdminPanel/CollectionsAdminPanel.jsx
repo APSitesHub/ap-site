@@ -77,12 +77,14 @@ export const CollectionsAdminPanel = () => {
     a1free: '',
     a2free: '',
     deutscha0: '',
+    deutscha0_2: '',
     deutsch: '',
     deutscha2: '',
     deutschb1: '',
     deutschfree: '',
     deutscha2free: '',
     polskia0: '',
+    polskia0_2: '',
     polski: '',
     polskia2: '',
     polskib1: '',
@@ -119,12 +121,14 @@ export const CollectionsAdminPanel = () => {
     a1free: yup.string().optional(),
     a2free: yup.string().optional(),
     deutscha0: yup.string().optional(),
+    deutscha0_2: yup.string().optional(),
     deutsch: yup.string().optional(),
     deutscha2: yup.string().optional(),
     deutschb1: yup.string().optional(),
     deutschfree: yup.string().optional(),
     deutscha2free: yup.string().optional(),
     polskia0: yup.string().optional(),
+    polskia0_2: yup.string().optional(),
     polski: yup.string().optional(),
     polskia2: yup.string().optional(),
     polskib1: yup.string().optional(),
@@ -267,6 +271,14 @@ export const CollectionsAdminPanel = () => {
               <Label>
                 <AdminInput
                   type="text"
+                  name="deutscha0_2"
+                  placeholder="Deutsch A0_2 collection"
+                />
+                <AdminInputNote component="p" name="deutscha0_2" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
                   name="deutsch"
                   placeholder="Deutsch A1 collection"
                 />
@@ -311,6 +323,14 @@ export const CollectionsAdminPanel = () => {
                   placeholder="Polski A0 collection"
                 />
                 <AdminInputNote component="p" name="polskia0" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="polskia0_2"
+                  placeholder="Polski A0_2 collection"
+                />
+                <AdminInputNote component="p" name="polskia0_2" />
               </Label>
               <Label>
                 <AdminInput

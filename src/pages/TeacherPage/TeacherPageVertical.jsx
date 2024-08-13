@@ -2,35 +2,30 @@ import useSize from '@react-hook/size';
 import axios from 'axios';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
-import { KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { HostKahoots } from './HostKahoots/HostKahoots';
-import { Platform } from './Platform/Platform';
-import { TeacherChat } from './TeacherChat/TeacherChat';
+import { PlatformVertical } from './Platform/PlatformVertical';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
   PlatformBtn,
   PlatformLogo,
-  TeacherButtonBox,
-  TeacherButtonBoxHideSwitch,
-  ViewerBtn,
-  ViewerLogo,
+  TeacherButtonBoxHideSwitchVertical,
+  TeacherButtonBoxVertical,
   WhiteBoardBtn,
   WhiteBoardLogo,
 } from './TeacherPage.styled';
-import { Viewer } from './Viewer/Viewer';
-import { WhiteBoard } from './WhiteBoard/WhiteBoard';
+import { WhiteBoardVertical } from './WhiteBoard/WhiteBoardVertical';
 
-const TeacherPage = () => {
+const TeacherPageVertical = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
-  const [isKahootOpen, setIsKahootOpen] = useState(false);
+
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line
   const [collection, setCollection] = useState({});
   // eslint-disable-next-line
   const [width, height] = useSize(document.body);
@@ -40,8 +35,6 @@ const TeacherPage = () => {
     switch (location) {
       case 'deutsch-a0':
         return 'deutscha0';
-      case 'deutsch-a0_2':
-        return 'deutscha0_2';
       case 'deutsch-a1':
         return 'deutsch';
       case 'deutsch-a1free':
@@ -54,8 +47,6 @@ const TeacherPage = () => {
         return 'deutschb1';
       case 'polski-a0':
         return 'polskia0';
-      case 'polski-a0_2':
-        return 'polskia0_2';
       case 'polski-a1':
         return 'polski';
       case 'polski-a1free':
@@ -64,6 +55,8 @@ const TeacherPage = () => {
         return 'polskia2';
       case 'polski-b1':
         return 'polskib1';
+      case 'record':
+        return 'record';
       default:
         return location;
     }
@@ -85,13 +78,13 @@ const TeacherPage = () => {
     };
     getCollectionsRequest();
   }, [page]);
-
+// eslint-disable-next-line
   const toggleViewer = () => {
     !isOpenedLast
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)
       : isOpenedLast === 'viewer' &&
         setIsViewerOpen(isViewerOpen => !isViewerOpen);
-    isWhiteBoardOpen || isPlatformOpen || isKahootOpen
+    isWhiteBoardOpen || isPlatformOpen
       ? setIsOpenedLast(isOpenedLast => 'viewer')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -100,7 +93,7 @@ const TeacherPage = () => {
       ? setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen)
       : isOpenedLast === 'whiteboard' &&
         setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen);
-    isViewerOpen || isPlatformOpen || isKahootOpen
+    isViewerOpen || isPlatformOpen
       ? setIsOpenedLast(isOpenedLast => 'whiteboard')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -109,17 +102,8 @@ const TeacherPage = () => {
       ? setIsPlatformOpen(isPlatformOpen => !isPlatformOpen)
       : isOpenedLast === 'platform' &&
         setIsPlatformOpen(isPlatformOpen => !isPlatformOpen);
-    isViewerOpen || isWhiteBoardOpen || isKahootOpen
+    isViewerOpen || isWhiteBoardOpen
       ? setIsOpenedLast(isOpenedLast => 'platform')
-      : setIsOpenedLast(isOpenedLast => '');
-  };
-  const toggleKahoot = () => {
-    !isOpenedLast
-      ? setIsKahootOpen(isKahootOpen => !isKahootOpen)
-      : isOpenedLast === 'kahoot' &&
-        setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    isPlatformOpen || isWhiteBoardOpen || isViewerOpen
-      ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleButtonBox = () => {
@@ -128,10 +112,10 @@ const TeacherPage = () => {
 
   return (
     <>
-      <TeacherButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
-        <ViewerBtn onClick={toggleViewer}>
+      <TeacherButtonBoxVertical className={!isButtonBoxOpen ? 'hidden' : ''}>
+        {/* <ViewerBtn onClick={toggleViewer}>
           <ViewerLogo />
-        </ViewerBtn>
+        </ViewerBtn> */}
 
         <WhiteBoardBtn onClick={toggleWhiteBoard}>
           <WhiteBoardLogo />
@@ -140,15 +124,14 @@ const TeacherPage = () => {
         <PlatformBtn onClick={togglePlatform}>
           <PlatformLogo />
         </PlatformBtn>
-
-        <KahootBtn onClick={toggleKahoot}>
-          <KahootLogo />
-        </KahootBtn>
-      </TeacherButtonBox>
-      <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
+      </TeacherButtonBoxVertical>
+      <TeacherButtonBoxHideSwitchVertical
+        id="no-transform"
+        onClick={toggleButtonBox}
+      >
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
-      </TeacherButtonBoxHideSwitch>
-      {collection.length && (
+      </TeacherButtonBoxHideSwitchVertical>
+      {/* {collection.length && (
         <Viewer
           page={page}
           collection={collection}
@@ -156,27 +139,18 @@ const TeacherPage = () => {
           isViewerOpen={isViewerOpen}
           isOpenedLast={isOpenedLast}
         />
-      )}
-      <WhiteBoard
+      )} */}
+      <WhiteBoardVertical
         page={page}
         sectionWidth={width}
         isWhiteBoardOpen={isWhiteBoardOpen}
         isOpenedLast={isOpenedLast}
       />
-      <Platform
+      <PlatformVertical
         page={page}
-        sectionWidth={width}
         isPlatformOpen={isPlatformOpen}
         isOpenedLast={isOpenedLast}
       />
-      <HostKahoots
-        page={page}
-        sectionWidth={width}
-        sectionHeight={height}
-        isKahootOpen={isKahootOpen}
-        isOpenedLast={isOpenedLast}
-      />
-      <TeacherChat page={page} />
       {isLoading && (
         <LoaderWrapper>
           <Loader />
@@ -186,4 +160,4 @@ const TeacherPage = () => {
   );
 };
 
-export default TeacherPage;
+export default TeacherPageVertical;
