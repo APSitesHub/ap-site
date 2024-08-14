@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import { ReactComponent as BoxSwitchLeft } from '../../../img/svg/btnbox-switch-left-gray.svg';
 import { ReactComponent as BoxSwitchRight } from '../../../img/svg/btnbox-switch-right-gray.svg';
+import { ReactComponent as AttendanceIcon } from '../../../img/svg/myap/attendance.svg';
 import { ReactComponent as CalendarIcon } from '../../../img/svg/myap/calendar.svg';
-import { ReactComponent as TimetableIcon } from '../../../img/svg/myap/timetable.svg';
 import { ReactComponent as CupIcon } from '../../../img/svg/myap/cup.svg';
-import { ReactComponent as SearchIcon } from '../../../img/svg/myap/search.svg';
-import { ReactComponent as ResetIcon } from '../../../img/svg/myap/reset.svg';
-import { ReactComponent as ToggleIcon } from '../../../img/svg/myap/toggle.svg';
-import { ReactComponent as PointerIcon } from '../../../img/svg/myap/pointer.svg';
 import { ReactComponent as GuideIcon } from '../../../img/svg/myap/guide.svg';
+import { ReactComponent as PointerIcon } from '../../../img/svg/myap/pointer.svg';
+import { ReactComponent as ResetIcon } from '../../../img/svg/myap/reset.svg';
+import { ReactComponent as SearchIcon } from '../../../img/svg/myap/search.svg';
+import { ReactComponent as ToggleIcon } from '../../../img/svg/myap/toggle.svg';
 
 export const PanelBackdrop = styled.div`
   width: 100%;
@@ -179,7 +179,7 @@ export const CupBtnIcon = styled(CupIcon)`
   }
 `;
 
-export const CalendarBtnIcon = styled(CalendarIcon)`
+export const CalendarBtnIcon = styled(AttendanceIcon)`
   height: 25px;
   width: 25px;
   user-select: none;
@@ -194,7 +194,7 @@ export const CalendarBtnIcon = styled(CalendarIcon)`
   }
 `;
 
-export const TimetableBtnIcon = styled(TimetableIcon)`
+export const TimetableBtnIcon = styled(CalendarIcon)`
   height: 25px;
   width: 25px;
   user-select: none;

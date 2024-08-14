@@ -56,7 +56,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
     lang: yup
       .string()
       .optional()
-      .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
+      .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     course: yup
       .string()
       .required(
@@ -66,7 +66,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
     knowledge: yup
       .string()
       .optional()
-      .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
+      .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     manager: yup
       .string()
       .required("Менеджер - обов'язкове поле, введіть прізвище"),

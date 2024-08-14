@@ -10,12 +10,12 @@ import {
   AttendanceDebugList,
   AttendanceFlex,
   AttendanceHeading,
+  AttendanceIcon,
   AttendancePeriod,
   AttendancePoints,
   AttendancePointsBox,
   AttendancePointsContainer,
   AttendanceVisitedBox,
-  CalendarIcon,
   MonthSwitchBox,
   VisitedCounter,
   VisitedItem,
@@ -403,7 +403,7 @@ export const Attendance = ({ user }) => {
   return (
     <AttendanceBox>
       <AttendanceHeading>
-        <CalendarIcon />
+        <AttendanceIcon />
         Відвідуваність
       </AttendanceHeading>
       <AttendanceVisitedBox>

@@ -1,17 +1,18 @@
+import { CalendarIcon } from '../Attendance/Attendance.styled';
 import {
   TimetableBody,
   TimetableBox,
-  TimetableDay,
-  TimetableDays,
+  TimetableDaysCell,
   TimetableDaysItem,
-  TimetableDayTime,
+  TimetableHead,
   TimetableHeading,
-  TimetableIcon,
   TimetableLessonLink,
   TimetableLessonLinkText,
   TimetableLessonType,
   TimetableSpeakings,
+  TimetableTable,
   TimetableWebinars,
+  TimetableWebinarsHead,
 } from './Timetable.styled';
 
 export const Timetable = ({ user, timetable }) => {
@@ -59,60 +60,105 @@ export const Timetable = ({ user, timetable }) => {
   return (
     <TimetableBox>
       <TimetableHeading>
-        <TimetableIcon />
+        <CalendarIcon />
         Графік занять
       </TimetableHeading>
       <TimetableBody>
         <TimetableWebinars>
-          <TimetableLessonType>Вебінари</TimetableLessonType>
-          <TimetableLessonLink href={link} target="_blank">
-            <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
-          </TimetableLessonLink>
-          <TimetableDays>
-            {personalTimetable.schedule
-              .filter(
-                lesson =>
-                  lesson.type === 'webinar' || lesson.type === 'webinar, repeat'
-              )
-              .sort((a, b) => a.day - b.day)
-              .map((lesson, i) => (
-                <TimetableDaysItem
-                  key={i}
-                  style={
-                    lesson.day === new Date().getDay()
-                      ? { backgroundColor: '#F9C838' }
-                      : {}
-                  }
-                >
-                  <TimetableDay>{DAYS[lesson.day - 1]}</TimetableDay>
-                  <TimetableDayTime>{lesson.time}</TimetableDayTime>
-                </TimetableDaysItem>
-              ))}
-          </TimetableDays>
+          <TimetableWebinarsHead>
+            <TimetableLessonType>Теоретичні заняття</TimetableLessonType>
+            <TimetableLessonLink href={link} target="_blank">
+              <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
+            </TimetableLessonLink>
+          </TimetableWebinarsHead>
+          <TimetableTable>
+            <thead>
+              <tr>
+                <TimetableHead className="day">День</TimetableHead>
+                <TimetableHead className="time">Час</TimetableHead>
+                <TimetableHead className="lessonNumber">№ уроку</TimetableHead>
+                <TimetableHead className="teacher">Викладач</TimetableHead>
+              </tr>
+            </thead>
+            <tbody>
+              {personalTimetable.schedule
+                .filter(
+                  lesson =>
+                    lesson.type === 'webinar' ||
+                    lesson.type === 'webinar, repeat'
+                )
+                .sort((a, b) => a.day - b.day)
+                .map((lesson, i) => (
+                  <TimetableDaysItem
+                    key={i}
+                    style={
+                      lesson.day === new Date().getDay()
+                        ? { backgroundColor: '#F9C838' }
+                        : {}
+                    }
+                  >
+                    <TimetableDaysCell className="day">
+                      {DAYS[lesson.day - 1]}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="time">
+                      {lesson.time}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="lessonNumber">
+                      {lesson.lessonNumber}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="teacher">
+                      {lesson.teacher}
+                    </TimetableDaysCell>
+                  </TimetableDaysItem>
+                ))}
+            </tbody>
+          </TimetableTable>
         </TimetableWebinars>{' '}
         <TimetableSpeakings>
-          <TimetableLessonType>Мовні практики</TimetableLessonType>
-          <TimetableLessonLink href={speakingLink} target="_blank">
-            <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
-          </TimetableLessonLink>
-          <TimetableDays>
-            {personalTimetable.schedule
-              .filter(lesson => lesson.type === 'speaking')
-              .sort((a, b) => a.day - b.day)
-              .map((lesson, i) => (
-                <TimetableDaysItem
-                  key={i}
-                  style={
-                    lesson.day === new Date().getDay()
-                      ? { backgroundColor: '#F9C838' }
-                      : {}
-                  }
-                >
-                  <TimetableDay>{DAYS[lesson.day - 1]}</TimetableDay>
-                  <TimetableDayTime>{lesson.time}</TimetableDayTime>
-                </TimetableDaysItem>
-              ))}
-          </TimetableDays>
+          <TimetableWebinarsHead>
+            <TimetableLessonType>Практичні заняття</TimetableLessonType>
+            <TimetableLessonLink href={speakingLink} target="_blank">
+              <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
+            </TimetableLessonLink>
+          </TimetableWebinarsHead>
+          <TimetableTable>
+            <thead>
+              <tr>
+                <TimetableHead className="day">День</TimetableHead>
+                <TimetableHead className="time">Час</TimetableHead>
+                <TimetableHead className="lessonNumber">№ уроку</TimetableHead>
+                <TimetableHead className="teacher">Викладач</TimetableHead>
+              </tr>
+            </thead>
+            <tbody>
+              {personalTimetable.schedule
+                .filter(lesson => lesson.type === 'speaking')
+                .sort((a, b) => a.day - b.day)
+                .map((lesson, i) => (
+                  <TimetableDaysItem
+                    key={i}
+                    style={
+                      lesson.day === new Date().getDay()
+                        ? { backgroundColor: '#F9C838' }
+                        : {}
+                    }
+                  >
+                    <TimetableDaysCell className="day">
+                      {DAYS[lesson.day - 1]}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="time">
+                      {lesson.time}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="lessonNumber">
+                      {lesson.lessonNumber}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="teacher">
+                      {lesson.teacher}
+                    </TimetableDaysCell>
+                  </TimetableDaysItem>
+                ))}
+            </tbody>
+          </TimetableTable>
         </TimetableSpeakings>
       </TimetableBody>
     </TimetableBox>

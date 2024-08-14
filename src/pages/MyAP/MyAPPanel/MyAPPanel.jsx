@@ -29,7 +29,9 @@ export const MyAPPanel = ({
   timetable,
   marathonLink,
   montlyPoints,
+  isMultipleCourses,
   setPlatformIframeLink,
+  setUser,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
   const [isLessonFinderShown, setIsLessonFinderShown] = useState(false);
@@ -39,7 +41,6 @@ export const MyAPPanel = ({
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
   const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
     useState(true);
-  const [isMultipleCourses, setIsMultipleCourses] = useState(false);
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
   // const [isMarathonBtnClicked, setIsMarathonBtnClicked] = useState(false);
 
@@ -153,11 +154,6 @@ export const MyAPPanel = ({
   //   }
   // };
 
-  const langCounter = user.lang.split('/').length;
-  if (langCounter > 1) {
-    setIsMultipleCourses(true);
-  }
-
   useEffect(() => {
     const onEscapeClose = event => {
       if (event.code === 'Escape' && isBackdropShown) {
@@ -214,6 +210,8 @@ export const MyAPPanel = ({
             onMouseEnter={e => toggleTooltip(e)}
             onMouseOut={e => toggleTooltip(e)}
             onClick={() => {
+              console.log(link);
+
               setPlatformIframeLink(link + ' ');
             }}
           >
@@ -222,10 +220,22 @@ export const MyAPPanel = ({
           {isMultipleCourses && (
             <APPanelToggleBtn
               id="toggle-btn"
-              onMouseEnter={e => toggleTooltip(e)}
-              onMouseOut={e => toggleTooltip(e)}
               onClick={() => {
-                setPlatformIframeLink(link + ' ');
+                console.log(link);
+                console.log(user);
+                const index = user.lang
+                  .split('/')
+                  .findIndex(lang => lang === user.lang);
+                setUser(
+                  user =>
+                    (user = {
+                      ...user,
+                      lang:
+                        index + 1 < user.lang.length
+                          ? user.lang.split('/')[index + 1]
+                          : user.lang.split('/')[0],
+                    })
+                );
               }}
             >
               <IframeToggleLinkIcon />

@@ -58,52 +58,47 @@ export const TimetableBody = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  gap: 21px;
 
   font-size: 14px;
   line-height: 1.2;
   color: #525266;
-
-  @media screen and (min-width: 390px) {
-    flex-direction: row;
-  }
 `;
 
 export const TimetableWebinars = styled.div`
-  padding: 0 22.5px;
   position: relative;
 
   @media screen and (max-width: 389px) {
     padding-top: 5px;
     padding-bottom: 20px;
   }
+`;
 
-  &::before {
-    content: '';
-    height: 132px;
-    width: 1px;
+export const TimetableWebinarsHelmet = styled.ul`
+  display: flex;
+  justify-content: space-between;
+`;
 
-    @media screen and (max-width: 389px) {
-      width: 75%;
-      height: 1px;
-      top: unset;
-      bottom: 10px;
-      left: 50%;
+export const TimetableWebinarsHelmetItem = styled.li`
+  color: #bebecc;
+`;
 
-      transform: translateX(-50%);
-    }
+export const TimetableWebinarsHelmetText = styled.span`
+  display: block;
+  font-size: 12px;
+`;
 
-    position: absolute;
-    top: 21px;
-    right: 0;
-    z-index: 1;
+export const TimetableWebinarsHead = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    background-color: #0000000d;
-  }
+  padding: 6px;
+
+  border-bottom: 1px solid var(--accent-color);
 `;
 
 export const TimetableSpeakings = styled.div`
-  padding: 0 22.5px;
-
   @media screen and (max-width: 389px) {
     padding-bottom: 5px;
   }
@@ -111,38 +106,24 @@ export const TimetableSpeakings = styled.div`
 
 export const TimetableLessonType = styled.span`
   display: block;
-  padding: 6px 0;
-
-  @media screen and (max-width: 389px) {
-    width: 87%;
-  }
-
-  text-align: center;
-  width: 118px;
-
-  border-bottom: 1px solid var(--accent-color);
-  margin: 0 auto;
-  margin-bottom: 10px;
 `;
 
 export const TimetableLessonLink = styled.a`
   display: block;
   padding: 5px 0;
-  margin-bottom: 6px;
-  height: 26px;
+  height: 36px;
 
   position: relative;
 
   text-align: center;
   text-decoration: none;
-  width: 100%;
-  color: #525266;
-  font-weight: 400;
-  border: 1.5px solid #525266;
+  width: 110px;
+  color: #fff;
+  font-weight: 500;
+  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #09c6cc;
 
   border-radius: 5px;
   overflow: hidden;
-  background: transparent;
 
   transition: all var(--animation-global);
 
@@ -163,10 +144,6 @@ export const TimetableLessonLink = styled.a`
 
   &:hover,
   &:focus {
-    border: 1.5px solid transparent;
-    color: #fff;
-    font-weight: 500;
-
     &::before {
       opacity: 1;
     }
@@ -182,31 +159,38 @@ export const TimetableLessonLinkText = styled.span`
   transform: translate(-50%, -50%);
 `;
 
-export const TimetableDays = styled.ul`
-  display: flex;
-  flex-direction: column;
+export const TimetableTable = styled.table`
+  width: 100%;
+  max-width: 331px;
+  table-layout: auto;
+  border-collapse: collapse;
+  text-align: center;
 `;
 
-export const TimetableDaysItem = styled.li`
-  padding: 5px 42px;
-  gap: 32px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
+export const TimetableHead = styled.th`
+  color: #bebecc;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 6px 0;
 
-  @media screen and (min-width: 390px) {
-    gap: 8px;
-    padding: 5px;
+  &.day {
+    width: 37px;
+  }
+  &.time {
+    width: 105px;
+  }
+  &.lessonNumber {
+    width: 66px;
+  }
+  &.teacher {
   }
 `;
 
-export const TimetableDay = styled.span`
-  display: block;
-  font-size: 14px;
-  text-align: center;
-  color: #525266;
+export const TimetableDaysItem = styled.tr`
+  height: 36px;
+  clip-path: xywh(0 0 100% 100% round 7px);
 `;
 
-export const TimetableDayTime = styled(TimetableDay)`
-  min-width: 82px;
+export const TimetableDaysCell = styled.td`
+  border: none;
 `;

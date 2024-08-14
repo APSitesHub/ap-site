@@ -31,12 +31,14 @@ const MyAP = () => {
   const [marathonLink, setMarathonLink] = useState(
     `https://online.ap.education/`
   );
+  const [isMultipleCourses, setIsMultipleCourses] = useState(false);
   axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
   const location = useLocation();
   // const linkToSet = `https://online.ap.education/student/lessons`;
 
   useEffect(() => {
     document.title = 'My AP | AP Education';
+    console.log('effect');
 
     const getLessons = async () => {
       console.log('lessons getter');
@@ -118,8 +120,16 @@ const MyAP = () => {
         de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=854256`,
       };
 
-      setPlatformLink(link => (link = LINKS[user.lang]));
-      setMarathonLink(link => (link = FREE_LINKS[marathonLink]));
+      setPlatformLink(
+        link => (link = LINKS[user.lang] || LINKS[user.lang.split('/')[0]])
+      );
+      console.log(user.lang.split('/').length);
+      user.lang.split('/').length > 1 && setIsMultipleCourses(true);
+      setMarathonLink(
+        link =>
+          (link =
+            FREE_LINKS[marathonLink] || FREE_LINKS[user.lang.split('/')[0]])
+      );
     };
 
     setIframeLinks();
@@ -208,7 +218,9 @@ const MyAP = () => {
               montlyPoints={montlyPoints}
               link={platformLink}
               marathonLink={marathonLink}
+              isMultipleCourses={isMultipleCourses}
               setPlatformIframeLink={setPlatformIframeLink}
+              setUser={setUser}
               timetable={timetable}
             />
           )}

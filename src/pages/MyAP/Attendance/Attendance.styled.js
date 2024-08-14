@@ -1,7 +1,10 @@
 import styled from 'styled-components';
-import { CalendarBtnIcon } from '../MyAPPanel/MyAPPanel.styled';
 import { ReactComponent as ArrowLeft } from '../../../img/svg/month-switch-left.svg';
 import { ReactComponent as ArrowRight } from '../../../img/svg/month-switch-right.svg';
+import {
+  CalendarBtnIcon,
+  TimetableBtnIcon,
+} from '../MyAPPanel/MyAPPanel.styled';
 
 export const AttendanceBox = styled.div`
   position: absolute;
@@ -58,7 +61,9 @@ export const AttendanceHeading = styled.h3`
   gap: 10px;
 `;
 
-export const CalendarIcon = styled(CalendarBtnIcon)``;
+export const CalendarIcon = styled(TimetableBtnIcon)``;
+
+export const AttendanceIcon = styled(CalendarBtnIcon)``;
 
 export const AttendanceVisitedBox = styled.div`
   padding: 7px 4px;

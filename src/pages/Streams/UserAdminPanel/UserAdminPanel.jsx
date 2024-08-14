@@ -413,7 +413,7 @@ export const UserAdminPanel = () => {
     lang: yup
       .string()
       .optional()
-      .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
+      .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     course: yup
       .string()
       .required(
@@ -423,7 +423,7 @@ export const UserAdminPanel = () => {
     knowledge: yup
       .string()
       .optional()
-      .matches(/^[A-Za-z0-9]+$/, 'Лише латинські літери'),
+      .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     manager: yup
       .string()
       .required("Менеджер - обов'язкове поле, введіть прізвище"),
@@ -435,7 +435,9 @@ export const UserAdminPanel = () => {
     values.mail = values.mail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.crmId = values.crmId ? +values.crmId.trim().trimStart() : undefined;
-    values.contactId = values.contactId ? +values.contactId.trim().trimStart() : undefined;
+    values.contactId = values.contactId
+      ? +values.contactId.trim().trimStart()
+      : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
     values.age = values.age.trim().trimStart();
     values.adult = +values.age >= 18 ? true : false;
@@ -601,7 +603,7 @@ export const UserAdminPanel = () => {
                   placeholder="ID контакту в CRM"
                 />
                 <AdminInputNote component="p" name="contactId" />
-              </Label>              
+              </Label>
               <Label>
                 <AdminInput
                   type="text"
