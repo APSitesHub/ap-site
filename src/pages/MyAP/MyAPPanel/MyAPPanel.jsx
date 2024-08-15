@@ -25,13 +25,16 @@ export const MyAPPanel = ({
   lessons,
   link,
   user,
+  language,
   points,
   timetable,
   marathonLink,
   montlyPoints,
   isMultipleCourses,
   setPlatformIframeLink,
-  setUser,
+  languageIndex,
+  setLanguage,
+  setLanguageIndex,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
   const [isLessonFinderShown, setIsLessonFinderShown] = useState(false);
@@ -146,6 +149,21 @@ export const MyAPPanel = ({
     }
   };
 
+  const toggleLangTooltipTimeout = () => {
+    const resetBtnEl = document.querySelector('#toggle-btn');
+
+    if (isDisclaimerTimeoutActive) {
+      setTimeout(() => {
+        resetBtnEl.classList.add('tooltip-open');
+      }, 10000);
+
+      setTimeout(() => {
+        resetBtnEl.classList.remove('tooltip-open');
+        setIsDisclaimerTimeoutActive(false);
+      }, 20000);
+    }
+  };
+
   // const toggleMarathonButtonTimeout = () => {
   //   if (!isMarathonBtnClicked) {
   //     setTimeout(() => {
@@ -161,6 +179,7 @@ export const MyAPPanel = ({
       }
     };
     toggleTooltipTimeout();
+    toggleLangTooltipTimeout();
     // toggleMarathonButtonTimeout();
 
     window.addEventListener('keydown', onEscapeClose);
@@ -207,6 +226,7 @@ export const MyAPPanel = ({
         <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
           <APPanelResetBtn
             id="reset-btn"
+            className={isMultipleCourses ? 'multiple' : ''}
             onMouseEnter={e => toggleTooltip(e)}
             onMouseOut={e => toggleTooltip(e)}
             onClick={() => {
@@ -222,19 +242,17 @@ export const MyAPPanel = ({
               id="toggle-btn"
               onClick={() => {
                 console.log(link);
-                console.log(user);
-                const index = user.lang
-                  .split('/')
-                  .findIndex(lang => lang === user.lang);
-                setUser(
-                  user =>
-                    (user = {
-                      ...user,
-                      lang:
-                        index + 1 < user.lang.length
-                          ? user.lang.split('/')[index + 1]
-                          : user.lang.split('/')[0],
-                    })
+                setLanguage(
+                  language =>
+                    (language =
+                      languageIndex + 1 < user.lang.split('/').length
+                        ? user.lang.split('/')[languageIndex + 1]
+                        : user.lang.split('/')[0])
+                );
+                setLanguageIndex(
+                  index =>
+                    (index =
+                      index + 1 < user.lang.split('/').length ? index + 1 : 0)
                 );
               }}
             >
@@ -267,7 +285,9 @@ export const MyAPPanel = ({
         <LessonFinder
           lessons={lessons}
           user={user}
+          language={language}
           setPlatformIframeLink={setPlatformIframeLink}
+          isMultipleCourses={isMultipleCourses}
         />
       )}
       {isRatingShown && (
@@ -275,10 +295,20 @@ export const MyAPPanel = ({
           user={user}
           flatPoints={flatPoints}
           flatMonthlyPoints={flatMonthlyPoints}
+          isMultipleCourses={isMultipleCourses}
         />
       )}
-      {isCalendarShown && <Attendance user={user} />}
-      {isTimetableShown && <Timetable user={user} timetable={timetable} />}
+      {isCalendarShown && (
+        <Attendance user={user} isMultipleCourses={isMultipleCourses} />
+      )}
+      {isTimetableShown && (
+        <Timetable
+          user={user}
+          language={language}
+          timetable={timetable}
+          isMultipleCourses={isMultipleCourses}
+        />
+      )}
     </>
   );
 };

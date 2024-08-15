@@ -78,7 +78,7 @@ const TeacherPageVertical = () => {
     };
     getCollectionsRequest();
   }, [page]);
-// eslint-disable-next-line
+  // eslint-disable-next-line
   const toggleViewer = () => {
     !isOpenedLast
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)

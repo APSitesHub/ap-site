@@ -25,6 +25,8 @@ const MyAP = () => {
   const [timetable, setTimetable] = useState({});
   const [montlyPoints, setMonthlyPoints] = useState({});
   const [user, setUser] = useState({});
+  const [languageIndex, setLanguageIndex] = useState(0);
+  const [language, setLanguage] = useState('');
   const [platformLink, setPlatformLink] = useState(
     `https://online.ap.education/`
   );
@@ -39,6 +41,28 @@ const MyAP = () => {
   useEffect(() => {
     document.title = 'My AP | AP Education';
     console.log('effect');
+
+    const refreshToken = async () => {
+      console.log('token refresher');
+      try {
+        const res = await axios.post('/users/refresh', {
+          mail: localStorage.getItem('mail'),
+        });
+        setIsUserLogged(isLogged => (isLogged = true));
+        console.log(res);
+        setUser(user => (user = { ...res.data.user }));
+        const lang = res.data.user.lang.split('/');
+        if (lang.length > 1 && !language) {
+          setIsMultipleCourses(true);
+          setLanguage(lang[languageIndex]);
+        } else if (lang.length <= 1) {
+          setLanguage(res.data.user.lang);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    refreshToken();
 
     const getLessons = async () => {
       console.log('lessons getter');
@@ -76,21 +100,6 @@ const MyAP = () => {
     };
     getTimetable();
 
-    const refreshToken = async () => {
-      console.log('token refresher');
-      try {
-        const res = await axios.post('/users/refresh', {
-          mail: localStorage.getItem('mail'),
-        });
-        setIsUserLogged(isLogged => (isLogged = true));
-        console.log(res);
-        setUser(user => (user = { ...res.data.user }));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    refreshToken();
-
     const setIframeLinks = async () => {
       const LINKS = {
         en: `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=621674`,
@@ -100,15 +109,15 @@ const MyAP = () => {
       };
 
       const marathonLink =
-        user.lang === 'en' && user.knowledge === 'a1'
+        language === 'en' && user.knowledge === 'a1'
           ? 'ena1'
-          : user.lang === 'en' && user.knowledge === 'a2'
+          : language === 'en' && user.knowledge === 'a2'
           ? 'ena2'
-          : user.lang === 'pl'
+          : language === 'pl'
           ? 'pl'
-          : user.lang === 'de'
+          : language === 'de'
           ? 'de'
-          : user.lang === 'enkids'
+          : language === 'enkids'
           ? 'kids'
           : '';
 
@@ -120,20 +129,12 @@ const MyAP = () => {
         de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=854256`,
       };
 
-      setPlatformLink(
-        link => (link = LINKS[user.lang] || LINKS[user.lang.split('/')[0]])
-      );
-      console.log(user.lang.split('/').length);
-      user.lang.split('/').length > 1 && setIsMultipleCourses(true);
-      setMarathonLink(
-        link =>
-          (link =
-            FREE_LINKS[marathonLink] || FREE_LINKS[user.lang.split('/')[0]])
-      );
+      setPlatformLink(link => (link = LINKS[language]));
+      setMarathonLink(link => (link = FREE_LINKS[marathonLink]));
     };
 
     setIframeLinks();
-  }, [user.lang, user.pupilId, user.knowledge]);
+  }, [language, languageIndex, user.pupilId, user.knowledge]);
 
   const setAuthToken = token => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -160,9 +161,16 @@ const MyAP = () => {
     values.password = values.password.trim().trimStart();
     try {
       const response = await axios.post('/users/login', values);
+      console.log(response);
+
       setAuthToken(response.data.token);
       setIsUserLogged(isLogged => (isLogged = true));
       setUser(user => (user = { ...response.data.user }));
+      const lang = response.data.user.lang.split('/');
+      if (lang.length > 1) {
+        setLanguage(lang[0]);
+        setIsMultipleCourses(true);
+      }
       localStorage.setItem('mail', values.mail);
       resetForm();
     } catch (error) {
@@ -220,7 +228,10 @@ const MyAP = () => {
               marathonLink={marathonLink}
               isMultipleCourses={isMultipleCourses}
               setPlatformIframeLink={setPlatformIframeLink}
-              setUser={setUser}
+              language={language}
+              setLanguage={setLanguage}
+              languageIndex={languageIndex}
+              setLanguageIndex={setLanguageIndex}
               timetable={timetable}
             />
           )}

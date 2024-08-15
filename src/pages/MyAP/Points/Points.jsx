@@ -19,7 +19,12 @@ import {
 } from './Points.styled';
 import { useState } from 'react';
 
-export const Points = ({ user, flatPoints, flatMonthlyPoints }) => {
+export const Points = ({
+  user,
+  flatPoints,
+  flatMonthlyPoints,
+  isMultipleCourses,
+}) => {
   const [position, setPosition] = useState('0%');
   const [activeRating, setActiveRating] = useState(0);
 
@@ -39,8 +44,14 @@ export const Points = ({ user, flatPoints, flatMonthlyPoints }) => {
     setActiveRating(i);
   };
 
+  const panelStyles = () => {
+    return {
+      top: isMultipleCourses ? '184px' : '142px',
+    };
+  };
+
   return (
-    <PointsBox>
+    <PointsBox style={{ ...panelStyles() }}>
       <PointsBoxHeading>
         <CupIcon />
         Рейтинг

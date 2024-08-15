@@ -131,7 +131,7 @@ export const APPanelResetBtn = styled(APPanelBtn)`
 
 export const APPanelToggleBtn = styled(APPanelResetBtn)`
   &::before {
-    content: 'Якщо урок на платформі не відкривається, натисніть на цю кнопку';
+    content: 'Щоб переключитися на іншу мову на платформі, натисніть цю кнопку';
 
     top: 75%;
   }

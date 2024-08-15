@@ -15,41 +15,48 @@ import {
   TimetableWebinarsHead,
 } from './Timetable.styled';
 
-export const Timetable = ({ user, timetable }) => {
+export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
   console.log(timetable);
   const personalTimetable = timetable.find(
-    timeline => timeline.lang === user.lang && timeline.level === user.knowledge
+    timeline => timeline.lang === language && timeline.level === user.knowledge
   );
 
   const getLink = () => {
     const baseStreamUrl = 'https://ap.education/streams/';
     const baseKidsStreamUrl = 'https://ap.education/streams-kids/';
     console.log(user.lang);
+    console.log(language);
     console.log(user.adult === undefined ? true : user.adult);
     console.log(user.knowledge);
     console.log(user.package === undefined ? 'vippro' : user.package);
-    return user.lang === 'en'
+    return language === 'en'
       ? baseStreamUrl + user.knowledge
-      : user.lang === 'enkids'
+      : language === 'enkids'
       ? baseKidsStreamUrl + user.knowledge
-      : user.lang === 'de' && user.knowledge !== 'a1'
+      : language === 'de' && user.knowledge !== 'a1'
       ? baseStreamUrl + 'deutsch' + user.knowledge
-      : user.lang === 'de' && user.knowledge === 'a1'
+      : language === 'de' && user.knowledge === 'a1'
       ? baseStreamUrl + 'deutsch'
-      : user.lang === 'pl' && user.knowledge !== 'a1'
+      : language === 'pl' && user.knowledge !== 'a1'
       ? baseStreamUrl + 'polski' + user.knowledge
-      : user.lang === 'pl' && user.knowledge === 'a1'
+      : language === 'pl' && user.knowledge === 'a1'
       ? baseStreamUrl + 'polski' + user.knowledge
       : baseStreamUrl;
   };
   const getSpeakingLink = () => {
     const baseStreamUrl = 'https://ap.education/streams/';
     const baseKidsStreamUrl = 'https://ap.education/streams-kids/';
-    return user.lang === 'en'
+    return language === 'en'
       ? baseStreamUrl + user.knowledge + 'sc'
-      : user.lang === 'enkids'
+      : language === 'enkids'
       ? baseKidsStreamUrl + user.knowledge + 'sc'
-      : baseStreamUrl + user.lang + user.knowledge + 'sc';
+      : baseStreamUrl + language + user.knowledge + 'sc';
+  };
+
+  const panelStyles = () => {
+    return {
+      top: isMultipleCourses ? '184px' : '142px',
+    };
   };
 
   const link = getLink();
@@ -58,7 +65,7 @@ export const Timetable = ({ user, timetable }) => {
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
   return (
-    <TimetableBox>
+    <TimetableBox style={{ ...panelStyles() }}>
       <TimetableHeading>
         <CalendarIcon />
         Графік занять

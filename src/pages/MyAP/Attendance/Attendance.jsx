@@ -25,13 +25,19 @@ import {
   VisitedYearBox,
 } from './Attendance.styled';
 
-export const Attendance = ({ user }) => {
+export const Attendance = ({ user, isMultipleCourses }) => {
   const [week, setWeek] = useState(new Date().getDate() - new Date().getDay());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
   const [lessonDaysForWeek, SetLessonDaysForWeek] = useState([]);
   const [lessonDaysForMonth, SetLessonDaysForMonth] = useState([]);
   const [lessonDaysForYear, SetLessonDaysForYear] = useState([]);
+
+  const panelStyles = () => {
+    return {
+      top: isMultipleCourses ? '184px' : '142px',
+    };
+  };
 
   const MONTHS = [
     'Січень',
@@ -401,7 +407,7 @@ export const Attendance = ({ user }) => {
   };
 
   return (
-    <AttendanceBox>
+    <AttendanceBox style={{ ...panelStyles() }}>
       <AttendanceHeading>
         <AttendanceIcon />
         Відвідуваність
