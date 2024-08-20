@@ -376,10 +376,12 @@ export const UserAdminPanel = () => {
   const initialUserValues = {
     name: '',
     mail: '',
+    zoomMail: '',
     password: '',
     crmId: '',
     contactId: '',
     pupilId: '',
+    marathonNumber: '',
     age: '',
     adult: true,
     lang: '',
@@ -396,6 +398,7 @@ export const UserAdminPanel = () => {
         "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"
       ),
     mail: yup.string().required("Пошта - обов'язкове поле!"),
+    zoomMail: yup.string(),
     password: yup.string().required("Пароль - обов'язкове поле!"),
     crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
     contactId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
@@ -405,6 +408,10 @@ export const UserAdminPanel = () => {
       .max(7, 'Не більше 7 цифр')
       .matches(/^\d{1,7}$/, 'Лише цифри')
       .required("Обов'язкове поле, дивитись на платформі"),
+    marathonNumber: yup
+      .string()
+      .max(1, 'Не більше 1 цифри')
+      .matches(/[12]/, 'Лише цифри 1 або 2'),
     age: yup
       .string()
       .required(
@@ -433,12 +440,14 @@ export const UserAdminPanel = () => {
     setIsLoading(isLoading => (isLoading = true));
     values.name = values.name.trim().trimStart();
     values.mail = values.mail.toLowerCase().trim().trimStart();
+    values.zoomMail = values.zoomMail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.crmId = values.crmId ? +values.crmId.trim().trimStart() : undefined;
     values.contactId = values.contactId
       ? +values.contactId.trim().trimStart()
       : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
+    values.marathonNumber = values.marathonNumber.trim().trimStart();
     values.age = values.age.trim().trimStart();
     values.adult = +values.age >= 18 ? true : false;
     values.lang = values.lang.toLowerCase().trim().trimStart();
@@ -585,6 +594,14 @@ export const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="mail" />
               </Label>
               <Label>
+                <AdminInput
+                  type="email"
+                  name="zoomMail"
+                  placeholder="Електронна пошта (Zoom)"
+                />
+                <AdminInputNote component="p" name="zoomMail" />
+              </Label>
+              <Label>
                 <AdminInput type="text" name="password" placeholder="Пароль" />
                 <AdminInputNote component="p" name="password" />
               </Label>
@@ -611,6 +628,14 @@ export const UserAdminPanel = () => {
                   placeholder="ID учня на платформі"
                 />
                 <AdminInputNote component="p" name="pupilId" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="marathonNumber"
+                  placeholder="№ марафону на платформі"
+                />
+                <AdminInputNote component="p" name="marathonNumber" />
               </Label>
               <Label>
                 <AdminInput type="text" name="age" placeholder="Вік" />
@@ -660,8 +685,10 @@ export const UserAdminPanel = () => {
                 <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Пошта (логін)</UserHeadCell>
+                <UserHeadCell>Zoom-пошта</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
+                <UserHeadCell>Номер марафону</UserHeadCell>
                 <UserHeadCell>Юзера створено</UserHeadCell>
                 <UserHeadCell>
                   <Filterable>
@@ -843,8 +870,10 @@ export const UserAdminPanel = () => {
                   </UserCell>
                   <UserCell>{user.name}</UserCell>
                   <UserCell>{user.mail}</UserCell>
+                  <UserCell>{user.zoomMail}</UserCell>
                   <UserCell>{user.password}</UserCell>
                   <UserCell>{user.pupilId}</UserCell>
+                  <UserCell>{user.marathonNumber}</UserCell>
                   <UserCell>
                     {new Date(user.createdAt).toLocaleDateString('uk-UA')}
                   </UserCell>
