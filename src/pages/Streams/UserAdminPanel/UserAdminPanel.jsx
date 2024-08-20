@@ -133,7 +133,7 @@ export const UserAdminPanel = () => {
     return () => {
       window.removeEventListener('keydown', onEscapeClose);
     };
-  }, [isUserAdmin, isLoading, isEditFormOpen]);
+  }, [isUserAdmin, isEditFormOpen]);
 
   const initialLoginValues = {
     login: '',

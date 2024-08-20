@@ -102,23 +102,31 @@ const MyAP = () => {
 
     const setIframeLinks = async () => {
       const LINKS = {
-        en: `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=621674`,
+        en1: `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=621674`,
+        en2: `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=847031`,
         pl: `https://online.ap.education/MarathonClass/?marathonId=41057&pupilId=${user.pupilId}&marathonLessonId=629354`,
         de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=629357`,
-        enkids: `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673`,
+        enkids1: `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673`,
+        enkids2: `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=847034`,
       };
 
       const marathonLink =
-        language === 'en' && user.knowledge === 'a1'
-          ? 'ena1'
-          : language === 'en' && user.knowledge === 'a2'
-          ? 'ena2'
+        language === 'en' && user.marathonNumber === '1'
+          ? 'en1'
+          : language === 'en' && user.marathonNumber === '2'
+          ? 'en2'
+          : language === 'en' && !user.marathonNumber
+          ? 'en2'
           : language === 'pl'
           ? 'pl'
           : language === 'de'
           ? 'de'
-          : language === 'enkids'
-          ? 'kids'
+          : language === 'enkids' && user.marathonNumber === '1'
+          ? 'enkids1'
+          : language === 'enkids' && user.marathonNumber === '2'
+          ? 'enkids2'
+          : language === 'enkids' && !user.marathonNumber
+          ? 'enkids2'
           : '';
 
       const FREE_LINKS = {
@@ -129,7 +137,7 @@ const MyAP = () => {
         de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=854256`,
       };
 
-      setPlatformLink(link => (link = LINKS[language]));
+      setPlatformLink(link => (link = LINKS[marathonLink]));
       setMarathonLink(link => (link = FREE_LINKS[marathonLink]));
     };
 
