@@ -24,7 +24,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
     zoomMail: userToEdit.zoomMail || '',
     password: userToEdit.password,
     pupilId: userToEdit.pupilId,
-    marathonNumber: userToEdit.marathonNumber,
+    marathonNumber: userToEdit.marathonNumber || '',
     adult: userToEdit.adult,
     age: userToEdit.age,
     lang: userToEdit.lang,
