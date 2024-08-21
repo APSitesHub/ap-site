@@ -41,6 +41,8 @@ export const UsersEditForm = styled(Form)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 400px;
 
   background-color: white;
   padding: 24px;

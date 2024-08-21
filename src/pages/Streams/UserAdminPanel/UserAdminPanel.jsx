@@ -427,6 +427,7 @@ export const UserAdminPanel = () => {
         "Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"
       ),
     package: yup.string().optional(),
+    // .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     knowledge: yup
       .string()
       .optional()

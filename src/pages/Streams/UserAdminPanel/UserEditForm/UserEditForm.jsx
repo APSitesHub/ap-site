@@ -70,6 +70,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
         "Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"
       ),
     package: yup.string().optional(),
+    // .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     knowledge: yup
       .string()
       .optional()
@@ -116,10 +117,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
         : values.knowledge.toLowerCase().trim().trimStart();
     values.manager = values.manager.toLowerCase().trim().trimStart();
     try {
-      const response = await axios.put(
-        `/users/${userToEdit._id}`,
-        values
-      );
+      const response = await axios.put(`/users/${userToEdit._id}`, values);
       console.log(response);
       resetForm();
       alert('Юзера відредаговано');
@@ -159,11 +157,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
             <AdminInputNote component="p" name="mail" />
           </Label>
           <Label>
-            <AdminInput
-              type="email"
-              name="zoomMail"
-              placeholder="Zoom-пошта"
-            />
+            <AdminInput type="email" name="zoomMail" placeholder="Zoom-пошта" />
             <AdminInputNote component="p" name="zoomMail" />
           </Label>
           <Label>

@@ -176,6 +176,11 @@ const StreamA0SpeakingClub = lazy(() =>
     /* webpackChunkName: "Speaking Club A0 page" */ '../pages/Trials/StreamA0SpeakingClub'
   )
 );
+const StreamA02SpeakingClub = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Club A0_2 page" */ '../pages/Trials/StreamA0_2SpeakingClub'
+  )
+);
 const StreamA1SpeakingClub = lazy(() =>
   import(
     /* webpackChunkName: "Speaking Club A1 page" */ '../pages/Trials/StreamA1SpeakingClub'
@@ -244,6 +249,11 @@ const StreamC1KidsSpeakingClub = lazy(() =>
 const StreamDeutschA0Sprechclub = lazy(() =>
   import(
     /* webpackChunkName: "Deutsch Sprechclub A0 page" */ '../pages/Trials/StreamDeutschA0Sprechclub'
+  )
+);
+const StreamDeutschA02Sprechclub = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Sprechclub A0_2 page" */ '../pages/Trials/StreamDeutschA0_2Sprechclub'
   )
 );
 const StreamDeutschA1Sprechclub = lazy(() =>
@@ -544,6 +554,7 @@ export const App = () => {
             <Route path="a0sc" element={<StreamA0SpeakingClub />} />
             <Route path="a0-chat" element={<WindowedChat />} />
             <Route path="a0_2" element={<StreamA02 />} />
+            <Route path="a0_2sc" element={<StreamA02SpeakingClub />} />
             <Route path="a0_2-chat" element={<WindowedChat />} />
             <Route path="a1" element={<StreamA1 />} />
             <Route path="a1sc" element={<StreamA1SpeakingClub />} />
@@ -568,6 +579,7 @@ export const App = () => {
             <Route path="dea0sc" element={<StreamDeutschA0Sprechclub />} />
             <Route path="deutscha0-chat" element={<WindowedChat />} />
             <Route path="deutscha0_2" element={<StreamDeutschA02 />} />
+            <Route path="dea0_2sc" element={<StreamDeutschA02Sprechclub />} />
             <Route path="deutscha0_2-chat" element={<WindowedChat />} />
             <Route path="deutsch" element={<StreamDeutsch />} />
             <Route path="dea1sc" element={<StreamDeutschA1Sprechclub />} />

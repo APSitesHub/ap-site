@@ -3,7 +3,6 @@ import axios from 'axios';
 import { StreamsBackgroundWrapper } from 'components/BackgroundWrapper/BackgroundWrappers';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
-import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
 import { Support } from 'components/Stream/Support/Support';
 import { nanoid } from 'nanoid';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -40,7 +39,7 @@ import {
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-const StreamB1SpeakingClub = () => {
+const StreamA02SpeakingClub = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -134,7 +133,7 @@ const StreamB1SpeakingClub = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'B1 Speaking Club | AP Education';
+    document.title = 'A0 Speaking Club | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
     checkLogin();
@@ -288,7 +287,7 @@ const StreamB1SpeakingClub = () => {
               !links.trials_de.includes('youtube') &&
               !links.trials_de.includes('youtu.be')
                 ? window.location.replace(
-                    'https://us06web.zoom.us/j/86935498295?pwd=EFay8w7uyKiJx6AoOG4j4fypurXiML.1#success'
+                    'https://us06web.zoom.us/j/86858602689?pwd=6kwFpwwq5g0gEbS1gQoTZQKm1ifkYw.1#success'
                   )
                 : null}
               {height > width && (
@@ -324,14 +323,6 @@ const StreamB1SpeakingClub = () => {
                   )}
                 </ChatBox>
               )}
-
-              <Kahoots
-                sectionWidth={width}
-                sectionHeight={height}
-                isKahootOpen={isKahootOpen}
-                isChatOpen={isChatOpen}
-                isOpenedLast={isOpenedLast}
-              />
 
               <Support
                 sectionWidth={width}
@@ -382,4 +373,4 @@ const StreamB1SpeakingClub = () => {
   );
 };
 
-export default StreamB1SpeakingClub;
+export default StreamA02SpeakingClub;

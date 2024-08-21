@@ -142,7 +142,7 @@ const MyAP = () => {
     };
 
     setIframeLinks();
-  }, [language, languageIndex, user.pupilId, user.knowledge]);
+  }, [language, languageIndex, user.pupilId, user.marathonNumber]);
 
   const setAuthToken = token => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

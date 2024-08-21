@@ -27,6 +27,7 @@ import {
   ScheduleList,
 } from './TimeTableAdminPanel.styled';
 import { TimeTableEditForm } from './TimeTableEditForm/TimeTableEditForm';
+import { TimeTableCourseLevelEditForm } from './TimeTableCourseLevelEditForm/TimeTableCourseLevelEditForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -40,8 +41,11 @@ export const TimeTableAdminPanel = () => {
   const [lessonToEdit, setLessonToEdit] = useState({});
   const [scheduleToEdit, setScheduleToEdit] = useState('');
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+  const [isEditCourseLevelFormOpen, setIsEditCourseLevelFormOpen] =
+    useState(false);
   const [langValue, setLangValue] = useState('');
   const [levelValue, setLevelValue] = useState('');
+  const [courseValue, setCourseValue] = useState('');
   const [dayValue, setDayValue] = useState('');
   const [typeValue, setTypeValue] = useState('');
   const [packageValue, setPackageValue] = useState('');
@@ -87,7 +91,7 @@ export const TimeTableAdminPanel = () => {
     return () => {
       window.removeEventListener('keydown', onEscapeClose);
     };
-  }, [isUserAdmin, isLoading, isEditFormOpen]);
+  }, [isUserAdmin, isLoading, isEditFormOpen, isEditCourseLevelFormOpen]);
 
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
@@ -119,6 +123,7 @@ export const TimeTableAdminPanel = () => {
   const initialTimetableValues = {
     lang: '',
     level: '',
+    course: '',
     day: '',
     type: '',
     package: '',
@@ -130,6 +135,7 @@ export const TimeTableAdminPanel = () => {
   const timetableSchema = yup.object().shape({
     lang: yup.string(),
     level: yup.string(),
+    course: yup.string(),
     day: yup.string(),
     type: yup.string(),
     package: yup.string(),
@@ -142,6 +148,7 @@ export const TimeTableAdminPanel = () => {
     values = {
       lang: langValue,
       level: levelValue,
+      course: courseValue,
       schedule: [
         {
           day: dayValue,
@@ -157,7 +164,10 @@ export const TimeTableAdminPanel = () => {
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.post('/timetable', values);
+      const response = await axios.post(
+        '/timetable',
+        values
+      );
       console.log(response);
       resetForm();
       alert('Урок додано');
@@ -173,6 +183,10 @@ export const TimeTableAdminPanel = () => {
 
   const closeEditForm = e => {
     setIsEditFormOpen(false);
+  };
+
+  const closeCourseLevelEditForm = e => {
+    setIsEditCourseLevelFormOpen(false);
   };
 
   const languageOptions = [
@@ -226,6 +240,96 @@ export const TimeTableAdminPanel = () => {
     {
       label: 'C1',
       value: 'c1',
+    },
+  ];
+
+  const courseEnglishOptions = [
+    {
+      label: '11',
+      value: '11',
+    },
+    {
+      label: '12',
+      value: '12',
+    },
+    {
+      label: '13',
+      value: '13',
+    },
+    {
+      label: '24',
+      value: '24',
+    },
+    {
+      label: '25',
+      value: '25',
+    },
+    {
+      label: '31',
+      value: '31',
+    },
+    {
+      label: '32',
+      value: '32',
+    },
+    {
+      label: '43',
+      value: '43',
+    },
+    {
+      label: '44',
+      value: '44',
+    },
+    {
+      label: '51',
+      value: '51',
+    },
+    {
+      label: '52',
+      value: '52',
+    },
+  ];
+
+  const courseOptions = [
+    {
+      label: '11',
+      value: '11',
+    },
+    {
+      label: '12',
+      value: '12',
+    },
+    {
+      label: '23',
+      value: '23',
+    },
+    {
+      label: '24',
+      value: '24',
+    },
+    {
+      label: '31',
+      value: '31',
+    },
+    {
+      label: '32',
+      value: '32',
+    },
+    {
+      label: '43',
+      value: '43',
+    },
+    {
+      label: '44',
+      value: '44',
+    },
+    {
+      label: '51',
+      value: '51',
+    },
+    {
+      label: '52',
+      value: '52',
     },
   ];
 
@@ -357,6 +461,12 @@ export const TimeTableAdminPanel = () => {
     }
   };
 
+  const closeEditCourseLevelFormOnClick = e => {
+    if (e.target.id === 'close-on-click') {
+      setIsEditCourseLevelFormOpen(false);
+    }
+  };
+
   const handleEdit = async (id, scheduleId) => {
     setIsEditFormOpen(true);
     setLessonToEdit(
@@ -369,15 +479,25 @@ export const TimeTableAdminPanel = () => {
     );
   };
 
+  const handleCourseLevelEdit = async id => {
+    setIsEditCourseLevelFormOpen(true);
+    setLessonToEdit(
+      lessonToEdit => (lessonToEdit = lessons.find(lesson => lesson._id === id))
+    );
+  };
+
   const handleDelete = async (parentId, scheduleId) => {
     setIsLoading(isLoading => (isLoading = true));
     console.log(parentId);
 
     try {
-      const response = await axios.patch(`/timetable/schedule/${parentId}`, {
-        _id: parentId,
-        scheduleId,
-      });
+      const response = await axios.patch(
+        `/timetable/schedule/${parentId}`,
+        {
+          _id: parentId,
+          scheduleId,
+        }
+      );
       console.log(response);
       alert('Урок видалено');
     } catch (error) {
@@ -461,6 +581,25 @@ export const TimeTableAdminPanel = () => {
                 }}
               />
               <FormSelect
+                options={
+                  langValue === 'en' || langValue === 'enkids'
+                    ? courseEnglishOptions
+                    : courseOptions
+                }
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    border: 'none',
+                    borderRadius: '0px',
+                  }),
+                }}
+                placeholder="Потік"
+                name="course"
+                onChange={course => {
+                  setCourseValue(course.value);
+                }}
+              />
+              <FormSelect
                 options={daysOptions}
                 styles={{
                   control: (baseStyles, state) => ({
@@ -535,8 +674,14 @@ export const TimeTableAdminPanel = () => {
               .map(timetable => (
                 <ScheduleItem key={timetable._id}>
                   <ScheduleHeading>
-                    {timetable.lang} {timetable.level}
+                    {timetable.lang} {timetable.level} {timetable.course}
+                    <UserEditButton
+                      onClick={() => handleCourseLevelEdit(timetable._id)}
+                    >
+                      Edit
+                    </UserEditButton>
                   </ScheduleHeading>
+
                   <ScheduleInfo>
                     {timetable.schedule
                       .sort((a, b) => a.day - b.day)
@@ -587,12 +732,27 @@ export const TimeTableAdminPanel = () => {
               lessonToEdit={lessonToEdit}
               scheduleToEdit={scheduleToEdit}
               languageOptions={languageOptions}
+              courseOptions={courseOptions}
+              courseEnglishOptions={courseEnglishOptions}
               levelOptions={levelOptions}
               levelOptionsWithBeginners={levelOptionsWithBeginners}
               daysOptions={daysOptions}
               typeOptions={typeOptions}
               packageOptions={packageOptions}
               closeEditForm={closeEditForm}
+            />
+          </Backdrop>
+        )}
+        {isEditCourseLevelFormOpen && (
+          <Backdrop onClick={closeEditCourseLevelFormOnClick} id="close-on-click">
+            <TimeTableCourseLevelEditForm
+              lessonToEdit={lessonToEdit}
+              languageOptions={languageOptions}
+              courseOptions={courseOptions}
+              courseEnglishOptions={courseEnglishOptions}
+              levelOptions={levelOptions}
+              levelOptionsWithBeginners={levelOptionsWithBeginners}
+              closeCourseLevelEditForm={closeCourseLevelEditForm}
             />
           </Backdrop>
         )}
