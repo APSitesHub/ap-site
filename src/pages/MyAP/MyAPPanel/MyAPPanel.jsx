@@ -42,8 +42,8 @@ export const MyAPPanel = ({
   const [isCalendarShown, setIsCalendarShown] = useState(false);
   const [isTimetableShown, setIsTimetableShown] = useState(false);
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
-  const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
-    useState(true);
+  // const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
+  //   useState(false);
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
   // const [isMarathonBtnClicked, setIsMarathonBtnClicked] = useState(false);
 
@@ -52,8 +52,31 @@ export const MyAPPanel = ({
     setIsButtonBoxShown(isShown => !isShown);
   };
 
-  const flatPoints = Object.values(points).flatMap(user => user);
-  const flatMonthlyPoints = Object.values(montlyPoints).flatMap(user => user);
+  const pointsByLang = Object.keys(points)
+    .filter(
+      key =>
+        key.includes(language) &&
+        key.length === (language + user.knowledge).length
+    )
+    .reduce((obj, key) => {
+      obj[key] = points[key];
+      return obj;
+    }, {});
+
+  const monthlyPointsByLang = Object.keys(montlyPoints)
+    .filter(
+      key =>
+        key.includes(language) &&
+        key.length === (language + user.knowledge).length
+    )
+    .reduce((obj, key) => {
+      obj[key] = montlyPoints[key];
+      return obj;
+    }, {});
+  const flatPoints = Object.values(pointsByLang).flatMap(user => user);
+  const flatMonthlyPoints = Object.values(monthlyPointsByLang).flatMap(
+    user => user
+  );
 
   const hideBackdrop = () => {
     setIsBackdropShown(false);
@@ -124,8 +147,8 @@ export const MyAPPanel = ({
   };
 
   const toggleTooltip = e => {
-    !isDisclaimerTimeoutActive &&
-      e.currentTarget.classList.toggle('tooltip-open');
+    // !isDisclaimerTimeoutActive &&
+    e.currentTarget.classList.toggle('tooltip-open');
   };
 
   const panelStyles = () => {
@@ -134,35 +157,35 @@ export const MyAPPanel = ({
     };
   };
 
-  const toggleTooltipTimeout = () => {
-    const resetBtnEl = document.querySelector('#reset-btn');
+  // const toggleTooltipTimeout = () => {
+  //   const resetBtnEl = document.querySelector('#reset-btn');
 
-    if (isDisclaimerTimeoutActive) {
-      setTimeout(() => {
-        resetBtnEl.classList.add('tooltip-open');
-      }, 10000);
+  //   if (isDisclaimerTimeoutActive) {
+  //     setTimeout(() => {
+  //       resetBtnEl.classList.add('tooltip-open');
+  //     }, 10000);
 
-      setTimeout(() => {
-        resetBtnEl.classList.remove('tooltip-open');
-        setIsDisclaimerTimeoutActive(false);
-      }, 20000);
-    }
-  };
+  //     setTimeout(() => {
+  //       resetBtnEl.classList.remove('tooltip-open');
+  //       setIsDisclaimerTimeoutActive(false);
+  //     }, 20000);
+  //   }
+  // };
 
-  const toggleLangTooltipTimeout = () => {
-    const resetBtnEl = document.querySelector('#toggle-btn');
+  // const toggleLangTooltipTimeout = () => {
+  //   const resetBtnEl = document.querySelector('#toggle-btn');
 
-    if (isDisclaimerTimeoutActive) {
-      setTimeout(() => {
-        resetBtnEl.classList.add('tooltip-open');
-      }, 10000);
+  //   if (isDisclaimerTimeoutActive) {
+  //     setTimeout(() => {
+  //       resetBtnEl.classList.add('tooltip-open');
+  //     }, 10000);
 
-      setTimeout(() => {
-        resetBtnEl.classList.remove('tooltip-open');
-        setIsDisclaimerTimeoutActive(false);
-      }, 20000);
-    }
-  };
+  //     setTimeout(() => {
+  //       resetBtnEl.classList.remove('tooltip-open');
+  //       setIsDisclaimerTimeoutActive(false);
+  //     }, 20000);
+  //   }
+  // };
 
   // const toggleMarathonButtonTimeout = () => {
   //   if (!isMarathonBtnClicked) {
@@ -178,8 +201,8 @@ export const MyAPPanel = ({
         hideBackdrop();
       }
     };
-    toggleTooltipTimeout();
-    toggleLangTooltipTimeout();
+    // toggleTooltipTimeout();
+    // toggleLangTooltipTimeout();
     // toggleMarathonButtonTimeout();
 
     window.addEventListener('keydown', onEscapeClose);
@@ -240,6 +263,8 @@ export const MyAPPanel = ({
           {isMultipleCourses && (
             <APPanelToggleBtn
               id="toggle-btn"
+              onMouseEnter={e => toggleTooltip(e)}
+              onMouseOut={e => toggleTooltip(e)}
               onClick={() => {
                 console.log(link);
                 setLanguage(
@@ -260,18 +285,43 @@ export const MyAPPanel = ({
             </APPanelToggleBtn>
           )}
         </IframeResetLinkButton>
-        <APPanelBtn onClick={toggleSearch}>
-          <SearchBtnIcon className={isLessonFinderShown && 'active'} />
+        <APPanelBtn
+          onClick={toggleSearch}
+          onMouseEnter={e => toggleTooltip(e)}
+          onMouseOut={e => toggleTooltip(e)}
+        >
+          <SearchBtnIcon
+            id="search-btn"
+            className={isLessonFinderShown && 'active'}
+          />
         </APPanelBtn>
-        <APPanelBtn onClick={toggleRating}>
-          <CupBtnIcon className={isRatingShown && 'active'} />
+        <APPanelBtn
+          onClick={toggleRating}
+          onMouseEnter={e => toggleTooltip(e)}
+          onMouseOut={e => toggleTooltip(e)}
+        >
+          <CupBtnIcon id="rating-btn" className={isRatingShown && 'active'} />
         </APPanelBtn>
-        <APPanelBtn onClick={toggleCalendar}>
-          <CalendarBtnIcon className={isCalendarShown && 'active'} />
+        <APPanelBtn
+          onClick={toggleCalendar}
+          onMouseEnter={e => toggleTooltip(e)}
+          onMouseOut={e => toggleTooltip(e)}
+        >
+          <CalendarBtnIcon
+            id="calendar-btn"
+            className={isCalendarShown && 'active'}
+          />
         </APPanelBtn>
         {user.package !== 'online' && (
-          <APPanelBtn onClick={toggleTimetable}>
-            <TimetableBtnIcon className={isTimetableShown && 'active'} />
+          <APPanelBtn
+            onClick={toggleTimetable}
+            onMouseEnter={e => toggleTooltip(e)}
+            onMouseOut={e => toggleTooltip(e)}
+          >
+            <TimetableBtnIcon
+              className={isTimetableShown && 'active'}
+              id="timetable-btn"
+            />
           </APPanelBtn>
         )}
         {/* <APPanelInstructionsPanel>

@@ -13,10 +13,10 @@ import {
   LoginForm,
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import { MyPlatform } from './My Platform/MyPlatform';
 import { MyAPPanel } from './MyAPPanel/MyAPPanel';
-import { useLocation } from 'react-router-dom';
 
 const MyAP = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);

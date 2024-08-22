@@ -34,7 +34,7 @@ export const Points = ({
           .filter(student => `${student.course}` === user.course)
           .sort((a, b) => b.points - a.points)
       : flatPoints
-          .filter(student => `${student.course}` === user.course)
+          .filter(student => `${student.course}`[0] === user.course[0])
           .sort((a, b) => b.points - a.points);
 
   const userPlace = pointsSorted.findIndex(leader => leader.mail === user.mail);

@@ -47,7 +47,7 @@ export const APPanel = styled.div`
   gap: 6px;
 
   background-color: #fff;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
   transition: transform var(--animation-global);
 
   @media screen and (min-width: 768px) {
@@ -72,12 +72,66 @@ export const APPanelBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   background-color: transparent;
   border: none;
 
   color: #bebecc;
   transition: color var(--animation-global);
+
+  &::before > svg {
+    pointer-events: none;
+
+    position: absolute;
+    top: 50%;
+    right: 75%;
+    z-index: 7;
+
+    width: max-content;
+    max-width: calc(75vw);
+    font-size: 10px;
+    line-height: 1.2;
+
+    padding: 4px 6px;
+    border: 0.5px solid #bebecc;
+    background: #fff;
+    color: #000;
+
+    transform: translateY(-50%) scale(0, 0);
+    transform-origin: right;
+    transition: transform var(--animation-global);
+  }
+
+  & > #search-btn ::before {
+    content: 'Пошук';
+  }
+  &::before > #rating-btn {
+    content: 'Рейтинг';
+  }
+  &::before > #calendar-btn {
+    content: 'Відвідуваність';
+  }
+  &::before > #timetable-btn {
+    content: 'Розклад';
+  }
+
+  &.tooltip-open::before > #search-btn {
+    transform: translateY(-50%) scale(1, 1);
+    transition: transform var(--animation-global);
+  }
+  &.tooltip-open::before > #rating-btn {
+    transform: translateY(-50%) scale(1, 1);
+    transition: transform var(--animation-global);
+  }
+  &.tooltip-open::before> #calendar-btn {
+    transform: translateY(-50%) scale(1, 1);
+    transition: transform var(--animation-global);
+  }
+  &.tooltip-open::before > #timetable-btn {
+    transform: translateY(-50%) scale(1, 1);
+    transition: transform var(--animation-global);
+  }
 
   /* &:hover svg {
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.16));
@@ -144,6 +198,7 @@ export const SearchBtnIcon = styled(SearchIcon)`
   height: 25px;
   width: 25px;
   user-select: none;
+  pointer-events: none;
 
   @media screen and (min-width: 768px) {
     height: 30px;
@@ -168,6 +223,7 @@ export const CupBtnIcon = styled(CupIcon)`
   height: 25px;
   width: 25px;
   user-select: none;
+  pointer-events: none;
 
   @media screen and (min-width: 768px) {
     height: 30px;
@@ -183,6 +239,7 @@ export const CalendarBtnIcon = styled(AttendanceIcon)`
   height: 25px;
   width: 25px;
   user-select: none;
+  pointer-events: none;
 
   @media screen and (min-width: 768px) {
     height: 30px;
@@ -198,6 +255,7 @@ export const TimetableBtnIcon = styled(CalendarIcon)`
   height: 25px;
   width: 25px;
   user-select: none;
+  pointer-events: none;
 
   @media screen and (min-width: 768px) {
     height: 30px;
@@ -229,7 +287,7 @@ export const PanelHideSwitch = styled.div`
   top: 180px;
   right: 0;
 
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
 
   z-index: 10;
 
@@ -287,7 +345,11 @@ export const IframeResetLinkButton = styled(APPanel)`
   transform: translateX(-50%);
 
   z-index: 5;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+
+  &.multiple {
+    top: -76px;
+  }
 
   height: auto;
 
@@ -296,7 +358,7 @@ export const IframeResetLinkButton = styled(APPanel)`
     padding: 15px;
 
     &.multiple {
-      top: -108px;
+      top: -112px;
     }
   }
 
@@ -398,7 +460,7 @@ export const APPanelMarathonBtn = styled.button`
   height: 32px;
   width: 132px;
 
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
   background: linear-gradient(322deg, #0f645b -5.61%, #09c6cc 93.88%);
   border: none;
