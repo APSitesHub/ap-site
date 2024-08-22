@@ -3,7 +3,6 @@ import ViberHRRedirect from 'pages/HR/ViberHRRedirect/ViberHRRedirect';
 import { LeadFormPage } from 'pages/LeadFormPage/LeadFormPage';
 import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
-import { AdminPanel } from 'pages/Streams/AdminPanel/AdminPanel';
 import { CollectionsAdminPanel } from 'pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel';
 import { StreamDeutschA0 } from 'pages/Streams/Deutsch A0/StreamDeutschA0';
 import { StreamDeutschA2 } from 'pages/Streams/Deutsch A2/StreamDeutschA2';
@@ -297,7 +296,16 @@ const StreamTrialPolski = lazy(() =>
     /* webpackChunkName: "Polska trials page" */ '../pages/Trials/StreamTrialPolski'
   )
 );
-
+const AdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Links Admin Panel page" */ '../pages/Streams/AdminPanel/AdminPanel'
+  )
+);
+const SpeakingAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Admin Panel page" */ '../pages/Streams/AdminPanel/SpeakingAdminPanel'
+  )
+);
 const English = lazy(() =>
   import(
     /* webpackChunkName: "English courses page" */ '../pages/English/English'
@@ -614,6 +622,7 @@ export const App = () => {
             <Route path="test-chat" element={<WindowedChat />} />
             {/* <Route path="test1" element={<StreamTest />} /> */}
             <Route path="stream-admin-panel" element={<AdminPanel />} />
+            <Route path="speaking-admin-panel" element={<SpeakingAdminPanel />} />
             <Route path="kahoot-admin-panel" element={<KahootAdminPanel />} />
             <Route
               path="host-kahoot-admin-panel"

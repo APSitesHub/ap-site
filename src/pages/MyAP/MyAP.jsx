@@ -129,6 +129,8 @@ const MyAP = () => {
           ? 'enkids2'
           : '';
 
+          console.log(LINKS[marathonLink]);
+
       const FREE_LINKS = {
         kids: `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=854264`,
         ena1: `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=854277`,

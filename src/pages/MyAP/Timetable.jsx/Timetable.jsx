@@ -16,8 +16,12 @@ import {
 } from './Timetable.styled';
 
 export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
-  const personalTimetable = timetable.find(
-    timeline => timeline.lang === language && timeline.course === user.course
+  const personalTimetable = timetable.find(timeline =>
+    language === 'enkids'
+      ? timeline.lang === language &&
+        timeline.course === user.course &&
+        timeline.level === user.knowledge
+      : timeline.lang === language && timeline.course === user.course
   );
 
   const getLink = () => {
