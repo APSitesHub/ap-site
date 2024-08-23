@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.b4ec7403.js",
+    "main.js": "/ap-site/static/js/main.d00e798c.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -28,15 +28,8 @@
     "Deutsch Free Streams A1 Kids page.js": "/ap-site/static/js/Deutsch Free Streams A1 Kids page.a3dfbc23.chunk.js",
     "Polski Free Streams A1 Kids page.js": "/ap-site/static/js/Polski Free Streams A1 Kids page.d93e5ece.chunk.js",
     "Teacher layout.js": "/ap-site/static/js/Teacher layout.543220e2.chunk.js",
-    "Speaking Club redirect page.js": "/ap-site/static/js/Speaking Club redirect page.a66100a5.chunk.js",
-    "Speaking Club A0 Kids page.js": "/ap-site/static/js/Speaking Club A0 Kids page.655b8a86.chunk.js",
-    "Speaking Club A1 Kids page.js": "/ap-site/static/js/Speaking Club A1 Kids page.d32e8c52.chunk.js",
-    "Speaking Club A2 Kids page.js": "/ap-site/static/js/Speaking Club A2 Kids page.9226f3b7.chunk.js",
-    "Speaking Club B1 Kids Beginner page.js": "/ap-site/static/js/Speaking Club B1 Kids Beginner page.7da6e6ab.chunk.js",
-    "Speaking Club B2 Kids Beginner page.js": "/ap-site/static/js/Speaking Club B2 Kids Beginner page.8ce3e1d8.chunk.js",
-    "Speaking Club B1 Kids page.js": "/ap-site/static/js/Speaking Club B1 Kids page.e19b5c6c.chunk.js",
-    "Speaking Club B2 Kids page.js": "/ap-site/static/js/Speaking Club B2 Kids page.534caa1b.chunk.js",
-    "Speaking Club C1 Kids page.js": "/ap-site/static/js/Speaking Club C1 Kids page.a15361b0.chunk.js",
+    "Speaking Club redirect page.js": "/ap-site/static/js/Speaking Club redirect page.e8440a44.chunk.js",
+    "Speaking Club A0 Kids page.js": "/ap-site/static/js/Speaking Club A0 Kids page.26e03015.chunk.js",
     "Links Admin Panel page.js": "/ap-site/static/js/Links Admin Panel page.1085cc34.chunk.js",
     "Speaking Admin Panel page.js": "/ap-site/static/js/Speaking Admin Panel page.63db9d1d.chunk.js",
     "English courses page.css": "/ap-site/static/css/English courses page.e8ee1c85.chunk.css",
@@ -229,7 +222,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.b4ec7403.js.map": "/ap-site/static/js/main.b4ec7403.js.map",
+    "main.d00e798c.js.map": "/ap-site/static/js/main.d00e798c.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a6bc0777.chunk.js.map": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -256,15 +249,8 @@
     "Deutsch Free Streams A1 Kids page.a3dfbc23.chunk.js.map": "/ap-site/static/js/Deutsch Free Streams A1 Kids page.a3dfbc23.chunk.js.map",
     "Polski Free Streams A1 Kids page.d93e5ece.chunk.js.map": "/ap-site/static/js/Polski Free Streams A1 Kids page.d93e5ece.chunk.js.map",
     "Teacher layout.543220e2.chunk.js.map": "/ap-site/static/js/Teacher layout.543220e2.chunk.js.map",
-    "Speaking Club redirect page.a66100a5.chunk.js.map": "/ap-site/static/js/Speaking Club redirect page.a66100a5.chunk.js.map",
-    "Speaking Club A0 Kids page.655b8a86.chunk.js.map": "/ap-site/static/js/Speaking Club A0 Kids page.655b8a86.chunk.js.map",
-    "Speaking Club A1 Kids page.d32e8c52.chunk.js.map": "/ap-site/static/js/Speaking Club A1 Kids page.d32e8c52.chunk.js.map",
-    "Speaking Club A2 Kids page.9226f3b7.chunk.js.map": "/ap-site/static/js/Speaking Club A2 Kids page.9226f3b7.chunk.js.map",
-    "Speaking Club B1 Kids Beginner page.7da6e6ab.chunk.js.map": "/ap-site/static/js/Speaking Club B1 Kids Beginner page.7da6e6ab.chunk.js.map",
-    "Speaking Club B2 Kids Beginner page.8ce3e1d8.chunk.js.map": "/ap-site/static/js/Speaking Club B2 Kids Beginner page.8ce3e1d8.chunk.js.map",
-    "Speaking Club B1 Kids page.e19b5c6c.chunk.js.map": "/ap-site/static/js/Speaking Club B1 Kids page.e19b5c6c.chunk.js.map",
-    "Speaking Club B2 Kids page.534caa1b.chunk.js.map": "/ap-site/static/js/Speaking Club B2 Kids page.534caa1b.chunk.js.map",
-    "Speaking Club C1 Kids page.a15361b0.chunk.js.map": "/ap-site/static/js/Speaking Club C1 Kids page.a15361b0.chunk.js.map",
+    "Speaking Club redirect page.e8440a44.chunk.js.map": "/ap-site/static/js/Speaking Club redirect page.e8440a44.chunk.js.map",
+    "Speaking Club A0 Kids page.26e03015.chunk.js.map": "/ap-site/static/js/Speaking Club A0 Kids page.26e03015.chunk.js.map",
     "Links Admin Panel page.1085cc34.chunk.js.map": "/ap-site/static/js/Links Admin Panel page.1085cc34.chunk.js.map",
     "Speaking Admin Panel page.63db9d1d.chunk.js.map": "/ap-site/static/js/Speaking Admin Panel page.63db9d1d.chunk.js.map",
     "English courses page.e8ee1c85.chunk.css.map": "/ap-site/static/css/English courses page.e8ee1c85.chunk.css.map",
@@ -327,6 +313,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.b4ec7403.js"
+    "static/js/main.d00e798c.js"
   ]
 }
