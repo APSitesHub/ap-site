@@ -154,7 +154,7 @@ const StreamSpeakingClub = lazy(() =>
 );
 const StreamSpeakingClubKids = lazy(() =>
   import(
-    /* webpackChunkName: "Speaking Club A0 Kids page" */ '../pages/Speakings/StreamSpeakingClubKids'
+    /* webpackChunkName: "Speaking Club Kids redirect page" */ '../pages/Speakings/StreamSpeakingClubKids'
   )
 );
 const AdminPanel = lazy(() =>

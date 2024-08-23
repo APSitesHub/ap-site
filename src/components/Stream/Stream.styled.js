@@ -510,6 +510,8 @@ export const StreamPlaceHolder = styled.div`
 export const StreamPlaceHolderText = styled.p`
   text-align: center;
   font-size: 32px;
+  max-width: 720px;
+  line-height: 1.2;
 `;
 
 export const LoginFormText = styled.p`
