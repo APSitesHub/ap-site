@@ -17,15 +17,11 @@ const StreamSpeakingClubKids = () => {
   const [redirectLink, setRedirectLink] = useState('');
   const location = useLocation().pathname;
 
-  const page = location.replace('/streams/', '').replace('sc', '');
-  const link = page.includes('dea1')
-    ? page.replace('dea1', 'deutsch')
-    : page.includes('de')
-    ? page.replace('de', 'deutsch')
-    : page.includes('pla1')
-    ? page.replace('pla1', 'polski')
-    : page.includes('pl')
-    ? page.replace('pl', 'polski')
+  const page = location.replace('/streams-kids/', '').replace('sc', '')+'kids';
+  const link = page.includes('b1beginnerkids')
+    ? 'b1kidsbeginner'
+    : page.includes('b2beginnerkids')
+    ? 'b2kidsbeginner'
     : page;
 
   useLayoutEffect(() => {
