@@ -9,6 +9,8 @@ import {
   AdminInput,
   AdminInputNote,
   AdminPanelSection,
+  LinksFieldGroup,
+  LinksFieldGroupTitle,
   LinksForm,
   LoginForm,
 } from './AdminPanel.styled';
@@ -18,7 +20,7 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const AdminPanel = () => {
+const AdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
 
@@ -90,10 +92,6 @@ export const AdminPanel = () => {
     polskia2: '',
     polskib1: '',
     polskifree: '',
-    trials: '',
-    trials_kids: '',
-    trials_de: '',
-    trials_pl: '',
     a0kids: '',
     a1kids: '',
     a2kids: '',
@@ -108,7 +106,6 @@ export const AdminPanel = () => {
     dekidsfree: '',
     plkidsfree: '',
     test: '',
-    trendets: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -134,10 +131,6 @@ export const AdminPanel = () => {
     polskia2: yup.string().optional(),
     polskib1: yup.string().optional(),
     polskifree: yup.string().optional(),
-    trials: yup.string().optional(),
-    trials_kids: yup.string().optional(),
-    trials_de: yup.string().optional(),
-    trials_pl: yup.string().optional(),
     a0kids: yup.string().optional(),
     a1kids: yup.string().optional(),
     a2kids: yup.string().optional(),
@@ -151,8 +144,6 @@ export const AdminPanel = () => {
     a1kidsfree: yup.string().optional(),
     dekidsfree: yup.string().optional(),
     plkidsfree: yup.string().optional(),
-    test: yup.string().optional(),
-    trendets: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -205,290 +196,270 @@ export const AdminPanel = () => {
             validationSchema={linksSchema}
           >
             <LinksForm>
-              <Label>
-                <AdminInput type="text" name="a0" placeholder="A0 link" />
-                <AdminInputNote component="p" name="a0" />
-              </Label>
-              <Label>
-                <AdminInput type="text" name="a0_2" placeholder="A0_2 link" />
-                <AdminInputNote component="p" name="a0_2" />
-              </Label>
-              <Label>
-                <AdminInput type="text" name="a1" placeholder="A1 link" />
-                <AdminInputNote component="p" name="a1" />
-              </Label>
-              <Label>
-                <AdminInput type="text" name="a2" placeholder="A2 link" />
-                <AdminInputNote component="p" name="a2" />
-              </Label>
-              <Label>
-                <AdminInput type="text" name="b1" placeholder="B1 link" />
-                <AdminInputNote component="p" name="b1" />
-              </Label>
-              <Label>
-                <AdminInput type="text" name="b2" placeholder="B2 link" />
-                <AdminInputNote component="p" name="b2" />
-              </Label>
-              <Label>
-                <AdminInput type="text" name="c1" placeholder="C1 link" />
-                <AdminInputNote component="p" name="c1" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="a1free"
-                  placeholder="A1 free link"
-                />
-                <AdminInputNote component="p" name="a1free" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="a2free"
-                  placeholder="A2 free link"
-                />
-                <AdminInputNote component="p" name="a2free" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="deutscha0"
-                  placeholder="Deutsch A0 link"
-                />
-                <AdminInputNote component="p" name="deutscha0" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="deutscha0_2"
-                  placeholder="Deutsch A0_2 link"
-                />
-                <AdminInputNote component="p" name="deutscha0_2" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="deutsch"
-                  placeholder="Deutsch A1 link"
-                />
-                <AdminInputNote component="p" name="deutsch" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="deutscha2"
-                  placeholder="Deutsch A2 link"
-                />
-                <AdminInputNote component="p" name="deutscha2" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="deutschb1"
-                  placeholder="Deutsch B1 link"
-                />
-                <AdminInputNote component="p" name="deutschb1" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="deutschfree"
-                  placeholder="Deutsch A1 free link"
-                />
-                <AdminInputNote component="p" name="deutschfree" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="deutscha2free"
-                  placeholder="Deutsch A2 free link"
-                />
-                <AdminInputNote component="p" name="deutscha2free" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="polskia0"
-                  placeholder="Polski A0 link"
-                />
-                <AdminInputNote component="p" name="polskia0" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="polskia0_2"
-                  placeholder="Polski A0_2 link"
-                />
-                <AdminInputNote component="p" name="polskia0_2" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="polski"
-                  placeholder="Polski A1 link"
-                />
-                <AdminInputNote component="p" name="polski" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="polskia2"
-                  placeholder="Polski A2 link"
-                />
-                <AdminInputNote component="p" name="polskia2" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="polskib1"
-                  placeholder="Polski B1 link"
-                />
-                <AdminInputNote component="p" name="polskib1" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="polskifree"
-                  placeholder="Polski A1 free link"
-                />
-                <AdminInputNote component="p" name="polskifree" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="trials"
-                  placeholder="Trials English link"
-                />
-                <AdminInputNote component="p" name="trials" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="trials_kids"
-                  placeholder="Trials Kids link"
-                />
-                <AdminInputNote component="p" name="trials_kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="trials_de"
-                  placeholder="Trials Deutsch link"
-                />
-                <AdminInputNote component="p" name="trials_de" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="trials_pl"
-                  placeholder="Trials Polski link"
-                />
-                <AdminInputNote component="p" name="trials_pl" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="a0kids"
-                  placeholder="A0 Kids link"
-                />
-                <AdminInputNote component="p" name="a0kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="a1kids"
-                  placeholder="A1 Kids link"
-                />
-                <AdminInputNote component="p" name="a1kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="a2kids"
-                  placeholder="A2 Kids link"
-                />
-                <AdminInputNote component="p" name="a2kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="b1kids"
-                  placeholder="B1 Kids link"
-                />
-                <AdminInputNote component="p" name="b1kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="b2kids"
-                  placeholder="B2 Kids link"
-                />
-                <AdminInputNote component="p" name="b2kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="c1kids"
-                  placeholder="C1 Kids link"
-                />
-                <AdminInputNote component="p" name="c1kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="b1kidsbeginner"
-                  placeholder="B1 Beginner Kids link"
-                />
-                <AdminInputNote component="p" name="b1kidsbeginner" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="b2kidsbeginner"
-                  placeholder="B2 Beginner Kids link"
-                />
-                <AdminInputNote component="p" name="b2kidsbeginner" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="a1kidsfree"
-                  placeholder="A1 Kids free link"
-                />
-                <AdminInputNote component="p" name="a1kidsfree" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="dea1kids"
-                  placeholder="A1 Kids Deutsch link"
-                />
-                <AdminInputNote component="p" name="dea1kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="pla1kids"
-                  placeholder="A1 Kids Polski link"
-                />
-                <AdminInputNote component="p" name="pla1kids" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="dekidsfree"
-                  placeholder="A1 Kids Deutsch free link"
-                />
-                <AdminInputNote component="p" name="dekidsfree" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="plkidsfree"
-                  placeholder="A1 Kids Polski free link"
-                />
-                <AdminInputNote component="p" name="plkidsfree" />
-              </Label>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>English, дорослі</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="a0" placeholder="A0 link" />
+                  <AdminInputNote component="p" name="a0" />
+                </Label>
+                <Label>
+                  <AdminInput type="text" name="a0_2" placeholder="A0_2 link" />
+                  <AdminInputNote component="p" name="a0_2" />
+                </Label>
+                <Label>
+                  <AdminInput type="text" name="a1" placeholder="A1 link" />
+                  <AdminInputNote component="p" name="a1" />
+                </Label>
+                <Label>
+                  <AdminInput type="text" name="a2" placeholder="A2 link" />
+                  <AdminInputNote component="p" name="a2" />
+                </Label>
+                <Label>
+                  <AdminInput type="text" name="b1" placeholder="B1 link" />
+                  <AdminInputNote component="p" name="b1" />
+                </Label>
+                <Label>
+                  <AdminInput type="text" name="b2" placeholder="B2 link" />
+                  <AdminInputNote component="p" name="b2" />
+                </Label>
+                <Label>
+                  <AdminInput type="text" name="c1" placeholder="C1 link" />
+                  <AdminInputNote component="p" name="c1" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="a1free"
+                    placeholder="A1 free link"
+                  />
+                  <AdminInputNote component="p" name="a1free" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="a2free"
+                    placeholder="A2 free link"
+                  />
+                  <AdminInputNote component="p" name="a2free" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>Deutsch</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutscha0"
+                    placeholder="Deutsch A0 link"
+                  />
+                  <AdminInputNote component="p" name="deutscha0" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutscha0_2"
+                    placeholder="Deutsch A0_2 link"
+                  />
+                  <AdminInputNote component="p" name="deutscha0_2" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutsch"
+                    placeholder="Deutsch A1 link"
+                  />
+                  <AdminInputNote component="p" name="deutsch" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutscha2"
+                    placeholder="Deutsch A2 link"
+                  />
+                  <AdminInputNote component="p" name="deutscha2" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutschb1"
+                    placeholder="Deutsch B1 link"
+                  />
+                  <AdminInputNote component="p" name="deutschb1" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutschfree"
+                    placeholder="Deutsch A1 free link"
+                  />
+                  <AdminInputNote component="p" name="deutschfree" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutscha2free"
+                    placeholder="Deutsch A2 free link"
+                  />
+                  <AdminInputNote component="p" name="deutscha2free" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>Polski</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskia0"
+                    placeholder="Polski A0 link"
+                  />
+                  <AdminInputNote component="p" name="polskia0" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskia0_2"
+                    placeholder="Polski A0_2 link"
+                  />
+                  <AdminInputNote component="p" name="polskia0_2" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polski"
+                    placeholder="Polski A1 link"
+                  />
+                  <AdminInputNote component="p" name="polski" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskia2"
+                    placeholder="Polski A2 link"
+                  />
+                  <AdminInputNote component="p" name="polskia2" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskib1"
+                    placeholder="Polski B1 link"
+                  />
+                  <AdminInputNote component="p" name="polskib1" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskifree"
+                    placeholder="Polski A1 free link"
+                  />
+                  <AdminInputNote component="p" name="polskifree" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>Діти</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="a0kids"
+                    placeholder="A0 Kids link"
+                  />
+                  <AdminInputNote component="p" name="a0kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="a1kids"
+                    placeholder="A1 Kids link"
+                  />
+                  <AdminInputNote component="p" name="a1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="a2kids"
+                    placeholder="A2 Kids link"
+                  />
+                  <AdminInputNote component="p" name="a2kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="b1kids"
+                    placeholder="B1 Kids link"
+                  />
+                  <AdminInputNote component="p" name="b1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="b2kids"
+                    placeholder="B2 Kids link"
+                  />
+                  <AdminInputNote component="p" name="b2kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="c1kids"
+                    placeholder="C1 Kids link"
+                  />
+                  <AdminInputNote component="p" name="c1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="b1kidsbeginner"
+                    placeholder="B1 Beginner Kids link"
+                  />
+                  <AdminInputNote component="p" name="b1kidsbeginner" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="b2kidsbeginner"
+                    placeholder="B2 Beginner Kids link"
+                  />
+                  <AdminInputNote component="p" name="b2kidsbeginner" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="a1kidsfree"
+                    placeholder="A1 Kids free link"
+                  />
+                  <AdminInputNote component="p" name="a1kidsfree" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="dea1kids"
+                    placeholder="A1 Kids Deutsch link"
+                  />
+                  <AdminInputNote component="p" name="dea1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="pla1kids"
+                    placeholder="A1 Kids Polski link"
+                  />
+                  <AdminInputNote component="p" name="pla1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="dekidsfree"
+                    placeholder="A1 Kids Deutsch free link"
+                  />
+                  <AdminInputNote component="p" name="dekidsfree" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="plkidsfree"
+                    placeholder="A1 Kids Polski free link"
+                  />
+                  <AdminInputNote component="p" name="plkidsfree" />
+                </Label>
+              </LinksFieldGroup>
               <Label>
                 <AdminInput
                   type="text"
@@ -496,14 +467,6 @@ export const AdminPanel = () => {
                   placeholder="Test link, do not change"
                 />
                 <AdminInputNote component="p" name="test" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="trendets"
-                  placeholder="Trendets Kids Link"
-                />
-                <AdminInputNote component="p" name="trendets" />
               </Label>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
             </LinksForm>
@@ -514,3 +477,5 @@ export const AdminPanel = () => {
     </>
   );
 };
+
+export default AdminPanel;

@@ -23,11 +23,23 @@ export const LoginForm = styled(Form)`
 `;
 
 export const LinksForm = styled(Form)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+`;
+
+export const LinksFieldGroup = styled.div`
   margin: 0 auto;
 
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 15px;
+`;
+
+export const LinksFieldGroupTitle = styled.h2`
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
 `;
 
 export const AdminFormBtn = styled(FormBtn)`

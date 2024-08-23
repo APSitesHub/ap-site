@@ -26,12 +26,13 @@ export const LinksForm = styled(Form)`
   margin: 0 auto;
 
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 35px;
 `;
 
 export const AdminFormBtn = styled(FormBtn)`
   margin: 0 auto;
+  max-width: 400px;
 `;
 
 export const AdminInput = styled(Input)`
