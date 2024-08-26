@@ -37,6 +37,7 @@ export const AdminFormBtn = styled(FormBtn)`
 
 export const AdminInput = styled(Input)`
   border: 2px solid var(--main-color);
+  max-width: 400px;
 `;
 
 export const AdminInputNote = styled(InputNote)`

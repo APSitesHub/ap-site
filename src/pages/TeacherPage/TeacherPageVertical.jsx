@@ -1,7 +1,4 @@
 import useSize from '@react-hook/size';
-import axios from 'axios';
-import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { PlatformVertical } from './Platform/PlatformVertical';
@@ -12,9 +9,12 @@ import {
   PlatformLogo,
   TeacherButtonBoxHideSwitchVertical,
   TeacherButtonBoxVertical,
+  ViewerBtn,
+  ViewerLogo,
   WhiteBoardBtn,
   WhiteBoardLogo,
 } from './TeacherPage.styled';
+import { ViewerVertical } from './Viewer/ViewerVertical';
 import { WhiteBoardVertical } from './WhiteBoard/WhiteBoardVertical';
 
 const TeacherPageVertical = () => {
@@ -24,9 +24,7 @@ const TeacherPageVertical = () => {
 
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line
-  const [collection, setCollection] = useState({});
+  
   // eslint-disable-next-line
   const [width, height] = useSize(document.body);
   const location = useLocation().pathname.split('/teacher/')[1];
@@ -65,20 +63,8 @@ const TeacherPageVertical = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()} | AP Education`;
-
-    const getCollectionsRequest = async () => {
-      try {
-        setIsLoading(isLoading => (isLoading = true));
-        setCollection((await axios.get('/collections')).data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(isLoading => (isLoading = false));
-      }
-    };
-    getCollectionsRequest();
   }, [page]);
-  // eslint-disable-next-line
+
   const toggleViewer = () => {
     !isOpenedLast
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)
@@ -113,9 +99,9 @@ const TeacherPageVertical = () => {
   return (
     <>
       <TeacherButtonBoxVertical className={!isButtonBoxOpen ? 'hidden' : ''}>
-        {/* <ViewerBtn onClick={toggleViewer}>
+        <ViewerBtn onClick={toggleViewer}>
           <ViewerLogo />
-        </ViewerBtn> */}
+        </ViewerBtn>
 
         <WhiteBoardBtn onClick={toggleWhiteBoard}>
           <WhiteBoardLogo />
@@ -131,15 +117,11 @@ const TeacherPageVertical = () => {
       >
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
       </TeacherButtonBoxHideSwitchVertical>
-      {/* {collection.length && (
-        <Viewer
-          page={page}
-          collection={collection}
-          sectionWidth={width}
-          isViewerOpen={isViewerOpen}
-          isOpenedLast={isOpenedLast}
-        />
-      )} */}
+      <ViewerVertical
+        page={page}
+        isViewerOpen={isViewerOpen}
+        isOpenedLast={isOpenedLast}
+      />
       <WhiteBoardVertical
         page={page}
         sectionWidth={width}
@@ -151,11 +133,6 @@ const TeacherPageVertical = () => {
         isPlatformOpen={isPlatformOpen}
         isOpenedLast={isOpenedLast}
       />
-      {isLoading && (
-        <LoaderWrapper>
-          <Loader />
-        </LoaderWrapper>
-      )}
     </>
   );
 };

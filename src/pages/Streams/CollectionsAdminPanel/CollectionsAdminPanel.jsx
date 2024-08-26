@@ -106,6 +106,7 @@ export const CollectionsAdminPanel = () => {
     a1kidsfree: '',
     dekidsfree: '',
     plkidsfree: '',
+    record: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -144,6 +145,7 @@ export const CollectionsAdminPanel = () => {
     a1kidsfree: yup.string().optional(),
     dekidsfree: yup.string().optional(),
     plkidsfree: yup.string().optional(),
+    record: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -496,6 +498,14 @@ export const CollectionsAdminPanel = () => {
                   <AdminInputNote component="p" name="plkidsfree" />
                 </Label>
               </LinksFieldGroup>
+              <Label>
+                  <AdminInput
+                    type="text"
+                    name="record"
+                    placeholder="Record page collection"
+                  />
+                  <AdminInputNote component="p" name="record" />
+                </Label>
               <AdminFormBtn type="submit">Замінити колекції</AdminFormBtn>
             </LinksForm>
           </Formik>

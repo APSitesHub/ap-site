@@ -461,6 +461,7 @@ export const App = () => {
             <Route path="polskifree-chat" element={<WindowedChat />} />
             <Route path="test" element={<StreamTest />} />
             <Route path="test-chat" element={<WindowedChat />} />
+            <Route path="record-chat" element={<WindowedChat />} />
             {/* <Route path="test1" element={<StreamTest />} /> */}
             <Route path="stream-admin-panel" element={<AdminPanel />} />
             <Route path="speaking-admin-panel" element={<SpeakingAdminPanel />} />
