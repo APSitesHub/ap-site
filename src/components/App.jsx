@@ -19,10 +19,7 @@ import { StreamPolskiA2 } from 'pages/Streams/Polski A2/StreamPolskiA2';
 import { StreamPolskiB1 } from 'pages/Streams/Polski B1/StreamPolskiB1';
 import { StreamPolski } from 'pages/Streams/Polski/StreamPolski';
 import { StreamPolskiFree } from 'pages/Streams/Polski/StreamPolskiFree';
-import { RatingsAdminPanel } from 'pages/Streams/RatingsAdminPanel/RatingsAdminPanel';
 import { StreamTest } from 'pages/Streams/Test/StreamTest';
-import { TimeTableAdminPanel } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel';
-import { UserAdminPanel } from 'pages/Streams/UserAdminPanel/UserAdminPanel';
 import { KidsA0 } from 'pages/StreamsKids/KidsA0/KidsA0';
 import { KidsA1 } from 'pages/StreamsKids/KidsA1/KidsA1';
 import { KidsA1Free } from 'pages/StreamsKids/KidsA1/KidsA1Free';
@@ -160,6 +157,26 @@ const StreamSpeakingClubKids = lazy(() =>
 const AdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Links Admin Panel page" */ '../pages/Streams/AdminPanel/AdminPanel'
+  )
+);
+const UserAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "User Admin Panel page" */ '../pages/Streams/UserAdminPanel/UserAdminPanel'
+  )
+);
+const UserJsonPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'
+  )
+);
+const RatingsAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Ratings Admin Panel page" */ '../pages/Streams/RatingsAdminPanel/RatingsAdminPanel'
+  )
+);
+const TimeTableAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "TimeTable Admin Panel page" */ '../pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel'
   )
 );
 const SpeakingAdminPanel = lazy(() =>
@@ -471,6 +488,7 @@ export const App = () => {
               element={<HostKahootAdminPanel />}
             />
             <Route path="user-admin-panel" element={<UserAdminPanel />} />
+            <Route path="user-json-panel" element={<UserJsonPanel />} />
             <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} />
             <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} />
             <Route

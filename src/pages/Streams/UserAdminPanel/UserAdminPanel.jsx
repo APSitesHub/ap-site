@@ -33,7 +33,7 @@ const setAuthToken = token => {
 };
 const DAYS_SET = [1, 3, 7, 14, 30];
 
-export const UserAdminPanel = () => {
+const UserAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [users, setUsers] = useState([]);
@@ -959,3 +959,5 @@ export const UserAdminPanel = () => {
     </>
   );
 };
+
+export default UserAdminPanel;
