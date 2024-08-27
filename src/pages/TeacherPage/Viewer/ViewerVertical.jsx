@@ -17,7 +17,7 @@ export const ViewerVertical = ({ isViewerOpen, isOpenedLast, page }) => {
   const supportBoxStylesHandler = () => {
     return {
       zIndex: isOpenedLast === 'viewer' ? '4' : '1',
-      height: isFullScreen ? '100%' : '40%',
+      height: isFullScreen && '100%',
     };
   };
 

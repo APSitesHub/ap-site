@@ -84,6 +84,7 @@ const AdminPanel = () => {
     deutsch: '',
     deutscha2: '',
     deutschb1: '',
+    deutschb2: '',
     deutschfree: '',
     deutscha2free: '',
     polskia0: '',
@@ -91,6 +92,7 @@ const AdminPanel = () => {
     polski: '',
     polskia2: '',
     polskib1: '',
+    polskib2: '',
     polskifree: '',
     a0kids: '',
     a1kids: '',
@@ -123,6 +125,7 @@ const AdminPanel = () => {
     deutsch: yup.string().optional(),
     deutscha2: yup.string().optional(),
     deutschb1: yup.string().optional(),
+    deutschb2: yup.string().optional(),
     deutschfree: yup.string().optional(),
     deutscha2free: yup.string().optional(),
     polskia0: yup.string().optional(),
@@ -130,6 +133,7 @@ const AdminPanel = () => {
     polski: yup.string().optional(),
     polskia2: yup.string().optional(),
     polskib1: yup.string().optional(),
+    polskib2: yup.string().optional(),
     polskifree: yup.string().optional(),
     a0kids: yup.string().optional(),
     a1kids: yup.string().optional(),
@@ -288,6 +292,14 @@ const AdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
+                    name="deutschb2"
+                    placeholder="Deutsch B2 link"
+                  />
+                  <AdminInputNote component="p" name="deutschb2" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
                     name="deutschfree"
                     placeholder="Deutsch A1 free link"
                   />
@@ -343,6 +355,14 @@ const AdminPanel = () => {
                     placeholder="Polski B1 link"
                   />
                   <AdminInputNote component="p" name="polskib1" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskib2"
+                    placeholder="Polski B2 link"
+                  />
+                  <AdminInputNote component="p" name="polskib2" />
                 </Label>
                 <Label>
                   <AdminInput

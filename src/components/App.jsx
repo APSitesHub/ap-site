@@ -38,6 +38,8 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
+import { StreamDeutschB2 } from 'pages/Streams/Deutsch B2/StreamDeutschB2';
+import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
 
 const NewDesign = lazy(() =>
   import(
@@ -456,6 +458,9 @@ export const App = () => {
             <Route path="deutschb1" element={<StreamDeutschB1 />} />
             <Route path="deb1sc" element={<StreamSpeakingClub />} />
             <Route path="deutschb1-chat" element={<WindowedChat />} />
+            <Route path="deutschb2" element={<StreamDeutschB2 />} />
+            <Route path="deb2sc" element={<StreamSpeakingClub />} />
+            <Route path="deutschb2-chat" element={<WindowedChat />} />
             <Route path="deutschfree" element={<StreamDeutschFree />} />
             <Route path="deutschfree-chat" element={<WindowedChat />} />
             <Route path="deutscha2free" element={<StreamDeutschA2Free />} />
@@ -474,6 +479,9 @@ export const App = () => {
             <Route path="polskib1" element={<StreamPolskiB1 />} />
             <Route path="plb1sc" element={<StreamSpeakingClub />} />
             <Route path="polskib1-chat" element={<WindowedChat />} />
+            <Route path="polskib2" element={<StreamPolskiB2 />} />
+            <Route path="plb2sc" element={<StreamSpeakingClub />} />
+            <Route path="polskib2-chat" element={<WindowedChat />} />
             <Route path="polskifree" element={<StreamPolskiFree />} />
             <Route path="polskifree-chat" element={<WindowedChat />} />
             <Route path="test" element={<StreamTest />} />
@@ -584,6 +592,7 @@ export const App = () => {
             <Route path="deutsch-a1" element={<TeacherPage />} />
             <Route path="deutsch-a2" element={<TeacherPage />} />
             <Route path="deutsch-b1" element={<TeacherPage />} />
+            <Route path="deutsch-b2" element={<TeacherPage />} />
             <Route path="deutsch-a1free" element={<TeacherPage />} />
             <Route path="deutsch-a2free" element={<TeacherPage />} />
             <Route path="dea1kids" element={<TeacherPage />} />
@@ -594,6 +603,7 @@ export const App = () => {
             <Route path="polski-a1free" element={<TeacherPage />} />
             <Route path="polski-a2" element={<TeacherPage />} />
             <Route path="polski-b1" element={<TeacherPage />} />
+            <Route path="polski-b2" element={<TeacherPage />} />
             <Route path="pla1kids" element={<TeacherPage />} />
             <Route path="plkidsfree" element={<TeacherPage />} />
             <Route path="record" element={<TeacherPageVertical />} />

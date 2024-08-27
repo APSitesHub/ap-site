@@ -82,11 +82,13 @@ const SpeakingAdminPanel = () => {
     deutsch: '',
     deutscha2: '',
     deutschb1: '',
+    deutschb2: '',
     polskia0: '',
     polskia0_2: '',
     polski: '',
     polskia2: '',
     polskib1: '',
+    polskib2: '',
     a0kids: '',
     a1kids: '',
     a2kids: '',
@@ -112,11 +114,13 @@ const SpeakingAdminPanel = () => {
     deutsch: yup.string().optional(),
     deutscha2: yup.string().optional(),
     deutschb1: yup.string().optional(),
+    deutschb2: yup.string().optional(),
     polskia0: yup.string().optional(),
     polskia0_2: yup.string().optional(),
     polski: yup.string().optional(),
     polskia2: yup.string().optional(),
     polskib1: yup.string().optional(),
+    polskib2: yup.string().optional(),
     a0kids: yup.string().optional(),
     a1kids: yup.string().optional(),
     a2kids: yup.string().optional(),
@@ -252,6 +256,14 @@ const SpeakingAdminPanel = () => {
                   />
                   <AdminInputNote component="p" name="deutschb1" />
                 </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutschb2"
+                    placeholder="Deutsch B2 speaking link"
+                  />
+                  <AdminInputNote component="p" name="deutschb2" />
+                </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>Polski</LinksFieldGroupTitle>
@@ -294,6 +306,14 @@ const SpeakingAdminPanel = () => {
                     placeholder="Polski B1 speaking link"
                   />
                   <AdminInputNote component="p" name="polskib1" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskib2"
+                    placeholder="Polski B2 speaking link"
+                  />
+                  <AdminInputNote component="p" name="polskib2" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
