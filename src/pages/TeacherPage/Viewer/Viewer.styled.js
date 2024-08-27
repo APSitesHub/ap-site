@@ -1,3 +1,4 @@
+import { KahootBtn } from 'components/Stream/Stream.styled';
 import styled from 'styled-components';
 
 export const ViewerBox = styled.div`
@@ -32,7 +33,6 @@ export const ViewerBoxVertical = styled.div`
   scrollbar-width: thin;
   scrollbar-gutter: stable;
 
-  background-color: white;
   position: absolute;
   border-radius: 20px;
   bottom: 0;
@@ -40,13 +40,29 @@ export const ViewerBoxVertical = styled.div`
 
   font-family: var(--streams-font-family);
 
-  transition: transform var(--animation-global);
+  transition: transform var(--animation-global), height var(--animation-global);
 
- &.hidden {
+  &.hidden {
     transform: translateY(100%);
   }
 
   &.shown {
     transform: translateY(0);
+  }
+`;
+
+export const ViewerFullScreenBtn = styled(KahootBtn)`
+  position: absolute;
+  top: 48px;
+  right: 36px;
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  cursor: pointer;
+  box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.5);
+  transition: none;
+
+  &.fullscreen-on {
+    top: calc(60% + 48px);
   }
 `;

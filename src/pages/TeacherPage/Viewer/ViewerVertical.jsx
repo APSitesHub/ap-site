@@ -3,18 +3,13 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
 import {
   KahootExitFullScreenIcon,
-  KahootFullScreenBtn,
-  KahootFullScreenIcon,
+  KahootFullScreenIcon
 } from 'components/Stream/Kahoots/Kahoots.styled';
 import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
-import { ViewerBoxVertical } from './Viewer.styled';
+import { ViewerBoxVertical, ViewerFullScreenBtn } from './Viewer.styled';
 
-export const ViewerVertical = ({
-  isViewerOpen,
-  isOpenedLast,
-  page,
-}) => {
+export const ViewerVertical = ({ isViewerOpen, isOpenedLast, page }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [collection, setCollection] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +17,7 @@ export const ViewerVertical = ({
   const supportBoxStylesHandler = () => {
     return {
       zIndex: isOpenedLast === 'viewer' ? '4' : '1',
+      height: isFullScreen ? '100%' : '40%',
     };
   };
 
@@ -58,14 +54,16 @@ export const ViewerVertical = ({
         style={{ ...supportBoxStylesHandler() }}
         onTransitionEnd={collectionRefresher}
       >
-        <KahootFullScreenBtn onClick={toggleFullScreen}>
+        <ViewerFullScreenBtn onClick={toggleFullScreen} className={isFullScreen && 'fullscreen-on'}>
           {isFullScreen ? (
             <KahootExitFullScreenIcon />
           ) : (
             <KahootFullScreenIcon />
           )}
-        </KahootFullScreenBtn>
-        {collection && collection.length && collection.map(coll => parse(coll[page]))}
+        </ViewerFullScreenBtn>
+        {collection &&
+          collection.length &&
+          collection.map(coll => parse(coll[page]))}
       </ViewerBoxVertical>
       {isLoading && (
         <LoaderWrapper>
