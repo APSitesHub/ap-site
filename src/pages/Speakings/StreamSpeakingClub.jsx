@@ -15,6 +15,7 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const StreamSpeakingClub = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [redirectLink, setRedirectLink] = useState('');
+  const [user, setUser] = useState({});
   const location = useLocation().pathname;
 
   const page = location.replace('/streams/', '').replace('sc', '');
@@ -33,6 +34,27 @@ const StreamSpeakingClub = () => {
       try {
         setIsLoading(isLoading => (isLoading = true));
         setRedirectLink((await axios.get('/speakings')).data[link]);
+        const currentUser = await axios.post('/users/refresh', {
+          mail: localStorage.getItem('mail'),
+        });
+        console.log(currentUser.data.user);
+        setUser(
+          user =>
+            (user = {
+              _id: currentUser.data.user._id,
+              name: currentUser.data.user.name,
+              mail: currentUser.data.user.mail,
+              zoomMail: currentUser.data.user.zoomMail,
+              age: currentUser.data.user.age,
+              lang: currentUser.data.user.lang,
+              course: currentUser.data.user.course,
+              crmId: currentUser.data.user.crmId,
+              contactId: currentUser.data.user.contactId,
+              successRate: currentUser.data.user.successRate,
+              temperament: currentUser.data.user.temperament,
+              feedback: currentUser.data.user.feedback,
+            })
+        );
       } catch (error) {
         console.log(error);
       } finally {
@@ -40,6 +62,11 @@ const StreamSpeakingClub = () => {
       }
     };
     getLinksRequest();
+
+    const sendUserInfo = async () => {
+      console.log('sent');
+    };
+    sendUserInfo();
   }, [link]);
 
   useEffect(() => {
