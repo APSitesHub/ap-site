@@ -30,7 +30,7 @@ export const PlatformBox = styled.div`
     z-index: 4;
     top: 100%;
     transform: scale(1.7);
-  transform-origin: 0 0;
+    transform-origin: 0 0;
   }
 
   & > iframe.active {
@@ -50,7 +50,7 @@ export const PlatformBoxVertical = styled.div`
   background-color: white;
   position: absolute;
   border-radius: 20px;
-  bottom: 0;
+  bottom: 60px;
   left: 0;
 
   font-family: var(--streams-font-family);
@@ -58,7 +58,7 @@ export const PlatformBoxVertical = styled.div`
   transition: transform var(--animation-global);
 
   &.hidden {
-    transform: translateY(100%);
+    transform: translateY(calc(100% + 60px));
   }
 
   &.shown {
@@ -69,7 +69,8 @@ export const PlatformBoxVertical = styled.div`
     position: absolute;
     z-index: 4;
     top: 100%;
-  transform-origin: 0 0;
+    transform-origin: 0 0;
+    transform: scale(1.7);
   }
 
   & > iframe.active {

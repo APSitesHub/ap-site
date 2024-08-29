@@ -18,8 +18,8 @@ export const PlatformVertical = ({ isPlatformOpen, isOpenedLast }) => {
           id="platform-window"
           title="platform-pin"
           src="https://online.ap.education/school/"
-          width="100%"
-          height="100%"
+          width="58.82%"
+          height="58.82%"
         ></iframe>
       </PlatformBoxVertical>
     </>

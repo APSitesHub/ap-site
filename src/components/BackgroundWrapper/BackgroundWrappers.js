@@ -124,3 +124,65 @@ export const StreamsBackgroundWrapper = styled.div`
     }
   }
 `;
+
+export const LinkTreeBackgroundWrapper = styled.div`
+  padding: 30px;
+  font-family: var(--streams-font-family);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-position: center top 0px;
+  background-image: image-set(
+    url(${mobile1xBGWebp}) type('image/webp'),
+    url(${mobile1xBGPng}) type('image/png')
+  );
+  background-size: auto 50%;
+  background-repeat: no-repeat;
+
+  @media (min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+    background-image: image-set(
+      url(${mobile2xBGWebp}) type('image/webp'),
+      url(${mobile2xBGPng}) type('image/png')
+    );
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 40px;
+    background-position: center top 0px;
+    background-image: image-set(
+      url(${tablet1xBGWebp}) type('image/webp'),
+      url(${tablet1xBGPng}) type('image/png')
+    );
+    background-size: auto 50%;
+
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: image-set(
+        url(${tablet2xBGWebp}) type('image/webp'),
+        url(${tablet2xBGPng}) type('image/png')
+      );
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    padding: 50px;
+    background-position: center top 0;
+    background-image: image-set(
+      url(${desktop1xBGWebp}) type('image/webp'),
+      url(${desktop1xBGPng}) type('image/png')
+    );
+    background-size: auto 50%;
+
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: image-set(
+        url(${desktop2xBGWebp}) type('image/webp'),
+        url(${desktop2xBGPng}) type('image/png')
+      );
+    }
+  }
+`;

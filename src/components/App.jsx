@@ -112,6 +112,9 @@ const StreamPolskiA02 = lazy(() =>
     /* webpackChunkName: "Streams Polski A0_2 page" */ '../pages/Streams/Polski A0/StreamPolskiA02'
   )
 );
+const RecordLinkTree = lazy(() =>
+  import(/* webpackChunkName: "Record Link Tree page" */ '../pages/RecordLinkTree/RecordLinkTree')
+);
 const Service = lazy(() =>
   import(/* webpackChunkName: "Service page" */ '../pages/Service/Service')
 );
@@ -554,6 +557,7 @@ export const App = () => {
             <Route path="pla1free" element={<KidsPlA1Free />} />
             <Route path="pla1free-chat" element={<WindowedChat />} />
           </Route>
+          <Route path="record" element={<RecordLinkTree />} />
           <Route path="service" element={<Service />}>
             <Route path="viber" element={<ViberRedirect />} />
             <Route path="tg" element={<TelegramRedirect />} />

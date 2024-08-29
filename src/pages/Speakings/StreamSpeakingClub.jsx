@@ -15,6 +15,7 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const StreamSpeakingClub = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [redirectLink, setRedirectLink] = useState('');
+  // eslint-disable-next-line
   const [user, setUser] = useState({});
   const location = useLocation().pathname;
 
