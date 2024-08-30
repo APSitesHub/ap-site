@@ -32,7 +32,7 @@ export const TeacherButtonBox = styled.div`
 export const TeacherButtonBoxVertical = styled.div`
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(calc(-50% - 60px));
   right: 25px;
   z-index: 100;
   display: flex;
@@ -42,7 +42,7 @@ export const TeacherButtonBoxVertical = styled.div`
   transition: transform var(--animation-global);
 
   &.hidden {
-    transform: translate(200px, -50%);
+    transform: translate(200px, calc(-50% - 60px));
   }
 `;
 
@@ -71,7 +71,7 @@ export const TeacherButtonBoxHideSwitch = styled.div`
 export const TeacherButtonBoxHideSwitchVertical = styled.div`
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(calc(-50% - 60px));
   right: 0;
 
   filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.09));
