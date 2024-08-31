@@ -26,7 +26,7 @@ export const ViewerBox = styled.div`
 `;
 
 export const ViewerBoxVertical = styled.div`
-  height: 40%;
+  height: calc(40% + 60px);
   width: 100%;
 
   scrollbar-width: thin;
@@ -73,7 +73,7 @@ export const ViewerFullScreenBtn = styled.button`
   &.fullscreen-on {
     top: calc(60% + 48px);
   }
-  
+
   &:focus,
   &:hover,
   &:active {
