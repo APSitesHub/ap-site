@@ -42,7 +42,7 @@ const StreamSpeakingClub = () => {
         setUser(
           user =>
             (user = {
-              _id: currentUser.data.user._id,
+              _id: currentUser.data.user.id,
               name: currentUser.data.user.name,
               mail: currentUser.data.user.mail,
               zoomMail: currentUser.data.user.zoomMail,
@@ -53,6 +53,8 @@ const StreamSpeakingClub = () => {
               contactId: currentUser.data.user.contactId,
               successRate: currentUser.data.user.successRate,
               temperament: currentUser.data.user.temperament,
+              visited: currentUser.data.user.visited, 
+              visitedTime: currentUser.data.user.visitedTime,
               feedback: currentUser.data.user.feedback,
             })
         );
@@ -63,16 +65,18 @@ const StreamSpeakingClub = () => {
       }
     };
     getLinksRequest();
-
-    const sendUserInfo = async () => {
-      console.log('sent');
-    };
-    sendUserInfo();
   }, [link]);
 
   useEffect(() => {
     document.title = `Практичне заняття | AP Education`;
-  }, [redirectLink]);
+
+    const sendUserInfo = async () => {
+      console.log(user);
+      // const res = await axios.post('/speakingusers', user)
+      // res && console.log('sent');
+    };
+    sendUserInfo();
+  }, [user, redirectLink]);
 
   return (
     <>
@@ -90,7 +94,7 @@ const StreamSpeakingClub = () => {
               заняття в Zoom
             </StreamPlaceHolderText>
           </StreamPlaceHolder>
-          {redirectLink && window.location.replace(redirectLink)}
+          {/* {redirectLink && window.location.replace(redirectLink)} */}
         </StreamsBackgroundWrapper>
       </StreamSection>
     </>
