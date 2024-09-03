@@ -15,8 +15,8 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const StreamSpeakingClub = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [redirectLink, setRedirectLink] = useState('');
-  // eslint-disable-next-line
   const [user, setUser] = useState({});
+  const [isApproved, setIsApproved] = useState(false);
   const location = useLocation().pathname;
 
   const page = location.replace('/streams/', '').replace('sc', '');
@@ -42,7 +42,7 @@ const StreamSpeakingClub = () => {
         setUser(
           user =>
             (user = {
-              _id: currentUser.data.user.id,
+              userId: currentUser.data.user.id,
               name: currentUser.data.user.name,
               mail: currentUser.data.user.mail,
               zoomMail: currentUser.data.user.zoomMail,
@@ -53,7 +53,7 @@ const StreamSpeakingClub = () => {
               contactId: currentUser.data.user.contactId,
               successRate: currentUser.data.user.successRate,
               temperament: currentUser.data.user.temperament,
-              visited: currentUser.data.user.visited, 
+              visited: currentUser.data.user.visited,
               visitedTime: currentUser.data.user.visitedTime,
               feedback: currentUser.data.user.feedback,
             })
@@ -71,12 +71,26 @@ const StreamSpeakingClub = () => {
     document.title = `Практичне заняття | AP Education`;
 
     const sendUserInfo = async () => {
-      console.log(user);
-      // const res = await axios.post('/speakingusers', user)
-      // res && console.log('sent');
+      try {
+        console.log(user.userId);
+        const existingUser = await axios.get(
+          `/speakingusers/${user.userId}`
+        );
+        console.log('existingUser', existingUser);
+        console.log(user);
+
+        const res = !existingUser.data
+          ? await axios.post('/speakingusers/new', user)
+          : await axios.put(`/speakingusers/${user.userId}`, user)
+
+        res && setIsApproved(true);
+      } catch (error) {
+        console.log(error);
+      }
     };
+
     sendUserInfo();
-  }, [user, redirectLink]);
+  }, [user]);
 
   return (
     <>
@@ -94,7 +108,7 @@ const StreamSpeakingClub = () => {
               заняття в Zoom
             </StreamPlaceHolderText>
           </StreamPlaceHolder>
-          {/* {redirectLink && window.location.replace(redirectLink)} */}
+          {redirectLink && isApproved && window.location.replace(redirectLink)}
         </StreamsBackgroundWrapper>
       </StreamSection>
     </>

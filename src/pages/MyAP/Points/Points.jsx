@@ -37,7 +37,7 @@ export const Points = ({
           .filter(student => `${student.course}`[0] === user.course[0])
           .sort((a, b) => b.points - a.points);
 
-  const userPlace = pointsSorted.findIndex(leader => leader.mail === user.mail);
+  const userPlace = pointsSorted.findIndex(leader => leader.mail.toLowerCase() === user.mail.toLowerCase());
 
   const calculatePointerPosition = i => {
     setPosition(position => (position = `${i * 100}%`));
@@ -84,7 +84,7 @@ export const Points = ({
       </PointsTableHead>
       <PointsUser>
         <PointsUserData>
-          {pointsSorted.findIndex(leader => leader.mail === user.mail) + 1}
+          {pointsSorted.findIndex(leader => leader.mail.toLowerCase() === user.mail.toLowerCase()) + 1}
         </PointsUserData>
         <PointsUserDataWide>{user.name}</PointsUserDataWide>
         <PointsUserData>{pointsSorted[userPlace].points}</PointsUserData>

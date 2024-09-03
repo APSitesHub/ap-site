@@ -30,10 +30,12 @@ export const TimetableBox = styled.div`
 
   @media screen and (min-height: 480px) {
     top: 60px;
+    height: 400px;
   }
 
   @media screen and (min-height: 640px) {
     top: 142px;
+    height: auto;
     overflow-y: hidden;
   }
 `;
