@@ -40,6 +40,7 @@ import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { StreamDeutschB2 } from 'pages/Streams/Deutsch B2/StreamDeutschB2';
 import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
+import TeacherPageSpeaking from 'pages/TeacherPage/TeacherPageSpeaking';
 
 const NewDesign = lazy(() =>
   import(
@@ -571,6 +572,7 @@ export const App = () => {
             <Route path="viber" element={<ViberHRRedirect />} />
             <Route path="tg" element={<TelegramHRRedirect />} />
           </Route>
+          <Route path="a0sc" element={<TeacherPageSpeaking />} />
           <Route path="teacher" element={<Teacher />} noindex={true}>
             <Route path="a0" element={<TeacherPage />} />
             <Route path="a0_2" element={<TeacherPage />} />
