@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import {
   UserCell,
@@ -10,12 +11,19 @@ import {
 } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { TeacherPageSpeakingEditForm } from './TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm';
 
 const TeacherPageSpeaking = () => {
-  const location = useLocation().pathname;
+  const location = useLocation().pathname.split('/speakings/')[1];
   const [isLoading, setIsLoading] = useState(false);
-  const [isUserAdmin, setIsUserAdmin] = useState(true);
   const [users, setUsers] = useState([]);
+  const [course, setCourse] = useState('');
+  const [studentToEdit, setStudentToEdit] = useState({});
+  const [isEditStudentFormOpen, setIsEditStudentFormOpen] = useState(false);
+
+  const closeStudentEditForm = e => {
+    setIsEditStudentFormOpen(false);
+  };
 
   const changeDateFormat = dateString => {
     if (dateString) {
@@ -63,22 +71,67 @@ const TeacherPageSpeaking = () => {
         return location;
     }
   };
+
+  const getLanguageFromLocation = location => {
+    if (location.includes('de') || location.includes('deutsch')) {
+      return 'de';
+    } else if (location.includes('pl') || location.includes('polski')) {
+      return 'pl';
+    } else {
+      return 'en';
+    }
+  };
   const page = getLocation(location);
-  console.log(page);
+  const lang = getLanguageFromLocation(location);
+
+  const closeEditStudentFormOnClick = e => {
+    if (e.target.id === 'close-on-click') {
+      setIsEditStudentFormOpen(false);
+    }
+  };
+
+  const handleStudentEdit = async id => {
+    setStudentToEdit(
+      studentToEdit =>
+        (studentToEdit = users.find(student => student.userId === id))
+    );
+    setIsEditStudentFormOpen(true);
+  };
 
   useEffect(() => {
     document.title = `Speaking Teacher ${page.toLocaleUpperCase()} | AP Education`;
-
     const getSpeakingUsersRequest = async () => {
       try {
         setIsLoading(isLoading => (isLoading = true));
+        setCourse(
+          (await axios.get('/timetable')).data.filter(
+            timetable =>
+              page.includes(timetable.level) && lang === timetable.lang
+          )[0].course
+        );
         setUsers(
           (
             await axios.get('/speakingusers/admin', {
-              params: { isAdmin: isUserAdmin },
+              params: { isAdmin: true },
             })
-          ).data.filter(user => user)
+          ).data.filter(
+            user =>
+              (new Date(
+                changeDateFormat(user.visited[user.visited.length - 1])
+              ).getDate() ===
+                new Date().getDate() - 1 ||
+                new Date(
+                  changeDateFormat(user.visited[user.visited.length - 1])
+                ).getDate() ===
+                  new Date().getDate() - 2 ||
+                new Date(
+                  changeDateFormat(user.visited[user.visited.length - 1])
+                ).getDate() === new Date().getDate()) &&
+              (lang === user.lang || lang === user.lang.split('/')[0]) &&
+              course === user.course
+          )
         );
+        console.log('eff');
       } catch (error) {
         console.log(error);
       } finally {
@@ -86,7 +139,7 @@ const TeacherPageSpeaking = () => {
       }
     };
     getSpeakingUsersRequest();
-  }, [isUserAdmin, page]);
+  }, [course, page, lang]);
 
   return (
     <>
@@ -143,7 +196,9 @@ const TeacherPageSpeaking = () => {
               <UserCell>{user.feedback}</UserCell>
               <UserCell>
                 {user.name === 'Dev Acc' ? null : (
-                  <UserEditButton>
+                  <UserEditButton
+                    onClick={() => handleStudentEdit(user.userId)}
+                  >
                     Edit
                   </UserEditButton>
                 )}
@@ -152,7 +207,14 @@ const TeacherPageSpeaking = () => {
           ))}
         </tbody>
       </UserDBTable>
-
+      {isEditStudentFormOpen && (
+        <Backdrop onClick={closeEditStudentFormOnClick} id="close-on-click">
+          <TeacherPageSpeakingEditForm
+            studentToEdit={studentToEdit}
+            closeCourseLevelEditForm={closeStudentEditForm}
+          />
+        </Backdrop>
+      )}
       {isLoading && <Loader />}
     </>
   );

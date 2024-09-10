@@ -40,7 +40,6 @@ import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { StreamDeutschB2 } from 'pages/Streams/Deutsch B2/StreamDeutschB2';
 import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
-import TeacherPageSpeaking from 'pages/TeacherPage/TeacherPageSpeaking';
 
 const NewDesign = lazy(() =>
   import(
@@ -114,7 +113,9 @@ const StreamPolskiA02 = lazy(() =>
   )
 );
 const RecordLinkTree = lazy(() =>
-  import(/* webpackChunkName: "Record Link Tree page" */ '../pages/RecordLinkTree/RecordLinkTree')
+  import(
+    /* webpackChunkName: "Record Link Tree page" */ '../pages/RecordLinkTree/RecordLinkTree'
+  )
 );
 const Service = lazy(() =>
   import(/* webpackChunkName: "Service page" */ '../pages/Service/Service')
@@ -211,6 +212,11 @@ const TeacherPage = lazy(() =>
 const TeacherPageVertical = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPageVertical'
+  )
+);
+const TeacherPageSpeaking = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking'
   )
 );
 const MyAP = lazy(() =>
@@ -493,7 +499,10 @@ export const App = () => {
             <Route path="record-chat" element={<WindowedChat />} />
             {/* <Route path="test1" element={<StreamTest />} /> */}
             <Route path="stream-admin-panel" element={<AdminPanel />} />
-            <Route path="speaking-admin-panel" element={<SpeakingAdminPanel />} />
+            <Route
+              path="speaking-admin-panel"
+              element={<SpeakingAdminPanel />}
+            />
             <Route path="kahoot-admin-panel" element={<KahootAdminPanel />} />
             <Route
               path="host-kahoot-admin-panel"
@@ -536,16 +545,10 @@ export const App = () => {
             <Route path="c1sc" element={<StreamSpeakingClubKids />} />
             <Route path="c1-chat" element={<WindowedChat />} />
             <Route path="b1beginner" element={<KidsB1Beginner />} />
-            <Route
-              path="b1beginnersc"
-              element={<StreamSpeakingClubKids />}
-            />
+            <Route path="b1beginnersc" element={<StreamSpeakingClubKids />} />
             <Route path="b1beginner-chat" element={<WindowedChat />} />
             <Route path="b2beginner" element={<KidsB2Beginner />} />
-            <Route
-              path="b2beginnersc"
-              element={<StreamSpeakingClubKids />}
-            />
+            <Route path="b2beginnersc" element={<StreamSpeakingClubKids />} />
             <Route path="b2beginner-chat" element={<WindowedChat />} />
             <Route path="dea1" element={<KidsDeA1 />} />
             <Route path="dea1-chat" element={<WindowedChat />} />
@@ -572,7 +575,27 @@ export const App = () => {
             <Route path="viber" element={<ViberHRRedirect />} />
             <Route path="tg" element={<TelegramHRRedirect />} />
           </Route>
-          <Route path="a0sc" element={<TeacherPageSpeaking />} />
+          <Route path="speakings" element={<Streams />} noindex={true}>
+            <Route path="a0sc" element={<TeacherPageSpeaking />} />
+            <Route path="a0_2sc" element={<TeacherPageSpeaking />} />
+            <Route path="a1sc" element={<TeacherPageSpeaking />} />
+            <Route path="a2sc" element={<TeacherPageSpeaking />} />
+            <Route path="b1sc" element={<TeacherPageSpeaking />} />
+            <Route path="b2sc" element={<TeacherPageSpeaking />} />
+            <Route path="c1sc" element={<TeacherPageSpeaking />} />
+            <Route path="dea0sc" element={<TeacherPageSpeaking />} />
+            <Route path="dea0_2sc" element={<TeacherPageSpeaking />} />
+            <Route path="dea1sc" element={<TeacherPageSpeaking />} />
+            <Route path="dea2sc" element={<TeacherPageSpeaking />} />
+            <Route path="deb1sc" element={<TeacherPageSpeaking />} />
+            <Route path="deb2sc" element={<TeacherPageSpeaking />} />
+            <Route path="pla0sc" element={<TeacherPageSpeaking />} />
+            <Route path="pla0_2sc" element={<TeacherPageSpeaking />} />
+            <Route path="pla1sc" element={<TeacherPageSpeaking />} />
+            <Route path="pla2sc" element={<TeacherPageSpeaking />} />
+            <Route path="plb1sc" element={<TeacherPageSpeaking />} />
+            <Route path="plb2sc" element={<TeacherPageSpeaking />} />
+          </Route>
           <Route path="teacher" element={<Teacher />} noindex={true}>
             <Route path="a0" element={<TeacherPage />} />
             <Route path="a0_2" element={<TeacherPage />} />

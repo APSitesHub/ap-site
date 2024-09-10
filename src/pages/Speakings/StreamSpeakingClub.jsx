@@ -38,7 +38,7 @@ const StreamSpeakingClub = () => {
         const currentUser = await axios.post('/users/refresh', {
           mail: localStorage.getItem('mail'),
         });
-        console.log(currentUser.data.user);
+        console.log(41, currentUser.data.user);
         setUser(
           user =>
             (user = {
