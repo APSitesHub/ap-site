@@ -1,11 +1,16 @@
 import axios from 'axios';
+import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
-import { useState } from 'react';
-import * as yup from 'yup';
+import {
+  AdminFormBtn,
+  AdminInputNote,
+} from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel.styled';
 import { UsersEditForm } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
-import { AdminFormBtn } from 'pages/Streams/AdminPanel/AdminPanel.styled';
+import { useState } from 'react';
+import * as yup from 'yup';
+import { StudentTextArea } from '../TeacherPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -14,8 +19,12 @@ export const TeacherPageSpeakingEditForm = ({
   closeCourseLevelEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [temperamentValue, setTemperamentValue] = useState(studentToEdit.temperament || '');
-  const [successRateValue, setSuccessRateValue] = useState(studentToEdit.successRate || '');
+  const [temperamentValue, setTemperamentValue] = useState(
+    studentToEdit.temperament || ''
+  );
+  const [successRateValue, setSuccessRateValue] = useState(
+    studentToEdit.successRate || ''
+  );
 
   console.log(studentToEdit);
 
@@ -105,7 +114,6 @@ export const TeacherPageSpeakingEditForm = ({
             defaultValue={successRateOptions.find(
               option => option.value === studentToEdit.lang
             )}
-            isDisabled
             onChange={successRate => {
               setSuccessRateValue(successRate.value);
             }}
@@ -128,7 +136,16 @@ export const TeacherPageSpeakingEditForm = ({
               setTemperamentValue(temperament.value);
             }}
           />
-          <AdminFormBtn type="submit">Змінити юзера</AdminFormBtn>
+          <Label>
+            <StudentTextArea
+              type="text"
+              name="feedback"
+              component="textarea"
+              placeholder="Фідбек"
+            />
+            <AdminInputNote component="p" name="feedback" />
+          </Label>
+          <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
         </UsersEditForm>
       </Formik>
       {isLoading && <Loader />}

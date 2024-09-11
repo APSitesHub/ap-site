@@ -114,22 +114,27 @@ const TeacherPageSpeaking = () => {
             await axios.get('/speakingusers/admin', {
               params: { isAdmin: true },
             })
-          ).data.filter(
-            user =>
-              (new Date(
-                changeDateFormat(user.visited[user.visited.length - 1])
-              ).getDate() ===
-                new Date().getDate() - 1 ||
-                new Date(
+          ).data
+            .filter(
+              user =>
+                (new Date(
                   changeDateFormat(user.visited[user.visited.length - 1])
                 ).getDate() ===
-                  new Date().getDate() - 2 ||
-                new Date(
-                  changeDateFormat(user.visited[user.visited.length - 1])
-                ).getDate() === new Date().getDate()) &&
-              (lang === user.lang || lang === user.lang.split('/')[0]) &&
-              course === user.course
-          )
+                  new Date().getDate() - 1 ||
+                  new Date(
+                    changeDateFormat(user.visited[user.visited.length - 1])
+                  ).getDate() ===
+                    new Date().getDate() - 2 ||
+                  new Date(
+                    changeDateFormat(user.visited[user.visited.length - 1])
+                  ).getDate() === new Date().getDate()) &&
+                (lang === user.lang || lang === user.lang.split('/')[0]) &&
+                course === user.course
+            )
+            .sort((a, b) => 
+              changeDateFormat(b.visitedTime[b.visitedTime.length - 1]) -
+                changeDateFormat(a.visitedTime[a.visitedTime.length - 1])
+            )
         );
         console.log('eff');
       } catch (error) {
@@ -150,7 +155,6 @@ const TeacherPageSpeaking = () => {
             <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
             <UserHeadCell>Ім'я</UserHeadCell>
             <UserHeadCell>Відвідини</UserHeadCell>
-            <UserHeadCell>Відвідини з часом</UserHeadCell>
             <UserHeadCell>Мова</UserHeadCell>
             <UserHeadCell>Потік</UserHeadCell>
             <UserHeadCell>Темперамент</UserHeadCell>
@@ -179,7 +183,6 @@ const TeacherPageSpeaking = () => {
                 </a>
               </UserCell>
               <UserCell>{user.name}</UserCell>
-              <UserCell>{user.visited[user.visited.length - 1]}</UserCell>
               <UserCell>
                 {!user.visitedTime[user.visitedTime.length - 1]
                   ? ''

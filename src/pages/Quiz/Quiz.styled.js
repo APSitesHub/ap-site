@@ -1,3 +1,4 @@
+import { FormBtn, Input } from 'components/LeadForm/LeadForm.styled';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ReactComponent as TelegramIcon } from '../../img/quiz/telegram.svg';
@@ -7,7 +8,6 @@ import { ReactComponent as StarIcon } from '../../img/svg/heroStar.svg';
 import { ReactComponent as LogoIcon } from '../../img/svg/logoNew.svg';
 import { ReactComponent as ArrowLeft } from '../../img/svg/month-switch-left.svg';
 import { ReactComponent as ArrowRight } from '../../img/svg/month-switch-right.svg';
-import { FormBtn, Input } from 'components/LeadForm/LeadForm.styled';
 
 export const QuizBox = styled.div`
   position: relative;
@@ -100,6 +100,20 @@ export const Title = styled.h1`
   white-space: pre-line;
 `;
 
+export const TitleNoEngage = styled.h1`
+  text-align: center;
+  font-size: 20px;
+  line-height: 1.2;
+
+  margin: 0 auto;
+  margin-bottom: 8px;
+  white-space: pre-line;
+
+  @media screen and (min-width: 390px) {
+    font-size: 22px;
+  }
+`;
+
 export const Question = styled.h2`
   text-align: center;
   font-size: 30px;
@@ -127,6 +141,32 @@ export const Description = styled.p`
   line-height: 1.3;
 
   margin-bottom: 20px;
+`;
+
+export const DescriptionTitleUpper = styled.p`
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.3;
+
+  margin-top: 20px;
+  margin-bottom: 10px;
+
+  @media screen and (min-height: 720px) {
+    margin-top: 30px;
+  }
+`;
+
+export const DescriptionTitleLower = styled.p`
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.3;
+
+  margin-top: 40px;
+  margin-bottom: 10px;
+
+  @media screen and (min-height: 720px) {
+    margin-top: 60px;
+  }
 `;
 
 export const DescriptionLevel = styled(Description)`
@@ -159,6 +199,11 @@ export const QuizStart = styled.button`
 `;
 
 export const HiEmoji = styled.img`
+  display: block;
+  margin: 0 auto;
+`;
+
+export const LoveEmoji = styled.img`
   display: block;
   margin: 0 auto;
 `;
@@ -282,6 +327,16 @@ export const BackgroungStarSmall = styled(StarIcon)`
   height: 32px;
 `;
 
+export const BackgroungStarSmallNoEngage = styled(StarIcon)`
+  position: absolute;
+  left: 3px;
+  top: 179px;
+
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+`;
+
 export const BackgroungStarLarge = styled(StarIcon)`
   position: absolute;
   right: -15px;
@@ -290,6 +345,20 @@ export const BackgroungStarLarge = styled(StarIcon)`
   flex-shrink: 0;
   width: 72px;
   height: 72px;
+`;
+
+export const BackgroungStarLargeNoEngage = styled(StarIcon)`
+  position: absolute;
+  right: -15px;
+  bottom: 6px;
+
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+
+  @media screen and (min-height: 720px) {
+    bottom: 56px;
+  }
 `;
 
 export const Pagination = styled.div`

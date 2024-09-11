@@ -61,8 +61,8 @@ export const QuizQuestionLevelOneRequest = ({
   quizValues.current.tag = tag;
   quizValues.current.mail =
     mailRandomId.length < 6
-      ? `marathon-ap0${mailRandomId}@ap.edu`
-      : `marathon-ap${mailRandomId}@ap.edu`;
+      ? `quiz-ap0${mailRandomId}@ap.edu`
+      : `quiz-ap${mailRandomId}@ap.edu`;
   quizValues.current.password =
     passwordRandom.length < 6 ? '0' + passwordRandom : passwordRandom;
 

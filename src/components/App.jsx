@@ -1,6 +1,5 @@
 import TelegramHRRedirect from 'pages/HR/TelegramHRRedirect/TelegramHRRedirect';
 import ViberHRRedirect from 'pages/HR/ViberHRRedirect/ViberHRRedirect';
-import { LeadFormPage } from 'pages/LeadFormPage/LeadFormPage';
 import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
 import { CollectionsAdminPanel } from 'pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel';
@@ -219,6 +218,11 @@ const TeacherPageSpeaking = lazy(() =>
     /* webpackChunkName: "Speaking Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking'
   )
 );
+const LeadFormPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Lead Form Page" */ '../pages/LeadFormPage/LeadFormPage'
+  )
+);
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
 );
@@ -336,9 +340,15 @@ const QuizOneRequest = lazy(() =>
   )
 );
 
-const QuizOneRequestGoogle = lazy(() =>
+// const QuizOneRequestGoogle = lazy(() =>
+//   import(
+//     /* webpackChunkName: "Sales quiz page for one request via Google ads" */ '../pages/Quiz/QuizOneRequestGoogle'
+//   )
+// );
+
+const QuizOneRequestGoogleNoEngage = lazy(() =>
   import(
-    /* webpackChunkName: "Sales quiz page for one request via Google ads" */ '../pages/Quiz/QuizOneRequestGoogle'
+    /* webpackChunkName: "Sales quiz page for one request via Google ads without engagement page" */ '../pages/Quiz/QuizOneRequestGoogleNoEngage'
   )
 );
 
@@ -647,7 +657,7 @@ export const App = () => {
           <Route path="quiz-one" element={<QuizOneRequest utms={utms} />} />
           <Route
             path="quiz-google"
-            element={<QuizOneRequestGoogle utms={utms} />}
+            element={<QuizOneRequestGoogleNoEngage utms={utms} />}
           />
           <Route path="quiz-code" element={<QuizAuth utms={utms} />} />
           <Route path="quiz-en" element={<QuizEn utms={utms} />} />
@@ -713,6 +723,31 @@ export const App = () => {
           />
           <Route
             path="form-e"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-f"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-g"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-h"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-i"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-j"
             element={<LeadFormPage utms={utms} />}
             noindex={true}
           />

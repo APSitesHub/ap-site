@@ -8,6 +8,7 @@ import { ReactComponent as BoxSwitchLeft } from '../../img/svg/btnbox-switch-lef
 import { ReactComponent as BoxSwitchRight } from '../../img/svg/btnbox-switch-right.svg';
 
 import { ChatBtn, StreamSection } from 'components/Stream/Stream.styled';
+import { AdminTextArea } from 'pages/Streams/RatingsAdminPanel/RatingsAdminPanel.styled';
 
 export const TeacherPageSection = styled(StreamSection)`
   background-color: #4ec82d;
@@ -179,4 +180,12 @@ export const PlatformLogo = styled(PlatformIcon)`
   z-index: 5;
   width: 48px;
   height: 48px;
+`;
+
+export const StudentTextArea = styled(AdminTextArea)`
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  padding: 10px;
+  background-color: white;
 `;

@@ -44,7 +44,7 @@ import {
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const LeadFormPage = ({ utms }) => {
+const LeadFormPage = ({ utms }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation().pathname;
@@ -54,14 +54,24 @@ export const LeadFormPage = ({ utms }) => {
       case '/form':
         return '';
       case '/form-a':
-        return 'korysnosti.2';
+        return 'UA-tg1';
       case '/form-b':
-        return 'digitalization';
+        return 'UA-tg2';
       case '/form-c':
-        return 'travinska';
+        return 'UA-tg3';
       case '/form-d':
-        return 'eng_for_ukr';
+        return 'UA-tg4';
       case '/form-e':
+        return 'yanovych';
+      case '/form-f':
+        return 'korysnosti.2';
+      case '/form-g':
+        return 'digitalization';
+      case '/form-h':
+        return 'travinska';
+      case '/form-i':
+        return 'eng_for_ukr';
+      case '/form-j':
         return 'yanovych';
       default:
         break;
@@ -264,3 +274,5 @@ export const LeadFormPage = ({ utms }) => {
     </>
   );
 };
+
+export default LeadFormPage;
