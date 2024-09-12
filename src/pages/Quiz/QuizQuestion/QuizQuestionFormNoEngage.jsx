@@ -191,7 +191,9 @@ export const QuizQuestionFormNoEngage = ({
               <HiddenInput type="text" name="quantity" />
               <HiddenInput type="text" name="difficulties" />
               <HiddenInput type="text" name="interests" />
-              <QuizEnd type="submit">ЗАРЕЄСТРУВАТИСЬ</QuizEnd>
+              <QuizEnd type="submit" data-gtm="quizformsubmit">
+                ЗАРЕЄСТРУВАТИСЬ
+              </QuizEnd>
               {isLoading && <Loader />}
             </PageForm>
           </Formik>
