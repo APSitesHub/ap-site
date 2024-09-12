@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.079b0b30.js",
+    "main.js": "/ap-site/static/js/main.13e2e1aa.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -45,7 +45,7 @@
     "Deutsch courses page.js": "/ap-site/static/js/Deutsch courses page.2da39c28.chunk.js",
     "Teacher Page.js": "/ap-site/static/js/Teacher Page.58234976.chunk.js",
     "Speaking Teacher Page.js": "/ap-site/static/js/Speaking Teacher Page.23b0136d.chunk.js",
-    "Lead Form Page.js": "/ap-site/static/js/Lead Form Page.8966a7d7.chunk.js",
+    "Lead Form Page.js": "/ap-site/static/js/Lead Form Page.0dc6af15.chunk.js",
     "My AP Page.js": "/ap-site/static/js/My AP Page.0eee2fea.chunk.js",
     "Marathon redirect page to Viber chatbot.js": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js",
     "Marathon redirect page to Telegram chatbot.js": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js",
@@ -70,7 +70,7 @@
     "Marathon quiz page.js": "/ap-site/static/js/Marathon quiz page.42c1638e.chunk.js",
     "Marathon quiz page for new Auth.js": "/ap-site/static/js/Marathon quiz page for new Auth.94746325.chunk.js",
     "Sales quiz page for one request.js": "/ap-site/static/js/Sales quiz page for one request.0ceb3f86.chunk.js",
-    "Sales quiz page for one request via Google ads without engagement page.js": "/ap-site/static/js/Sales quiz page for one request via Google ads without engagement page.bd038e87.chunk.js",
+    "Sales quiz page for one request via Google ads without engagement page.js": "/ap-site/static/js/Sales quiz page for one request via Google ads without engagement page.f8dc5849.chunk.js",
     "Sales english quiz page.js": "/ap-site/static/js/Sales english quiz page.446a7c4b.chunk.js",
     "Sales deutsch quiz page.js": "/ap-site/static/js/Sales deutsch quiz page.a1647375.chunk.js",
     "Sales polish quiz page.js": "/ap-site/static/js/Sales polish quiz page.3c4b5d61.chunk.js",
@@ -105,6 +105,7 @@
     "static/media/pumbIcon.svg": "/ap-site/static/media/pumbIcon.6b802b12158b711daf8481d62e64fa42.svg",
     "static/media/logoNewWhite.svg": "/ap-site/static/media/logoNewWhite.d420f9a07895edb0c0604d054e97b8bd.svg",
     "static/media/books.png": "/ap-site/static/media/books.10f4251cf8c7983d3594.png",
+    "static/media/love.png": "/ap-site/static/media/love.00ea59ec79ec8a95868d.png",
     "static/media/desktop-bg@2x.png": "/ap-site/static/media/desktop-bg@2x.5dec6146f202bedd5700.png",
     "static/media/host-kahoot-panel.png": "/ap-site/static/media/host-kahoot-panel.baad972a96e3ffb88ce6.png",
     "static/media/thank-you-person.webp": "/ap-site/static/media/thank-you-person.8ea27357815fd9203011.webp",
@@ -116,7 +117,6 @@
     "static/media/monoPawWhite.svg": "/ap-site/static/media/monoPawWhite.a0a9a0d5f8d45e35dd5b19faac2664af.svg",
     "static/media/invertedLogo.svg": "/ap-site/static/media/invertedLogo.af551277e0a22f7c3a5b28c32549db12.svg",
     "static/media/desktop-bg@2x.webp": "/ap-site/static/media/desktop-bg@2x.e84f089eedec873d289a.webp",
-    "static/media/love.png": "/ap-site/static/media/love.694a318ef041e01385b3.png",
     "static/media/desktop-bg@1x.png": "/ap-site/static/media/desktop-bg@1x.545cbcb3619b357b046a.png",
     "static/media/logoNew.svg": "/ap-site/static/media/logoNew.34d687445e4d5ec25bb361c2d7fa1a1a.svg",
     "static/media/logo-clean.svg": "/ap-site/static/media/logo-clean.98f9201fe9debc36c52660463957a2db.svg",
@@ -237,7 +237,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.079b0b30.js.map": "/ap-site/static/js/main.079b0b30.js.map",
+    "main.13e2e1aa.js.map": "/ap-site/static/js/main.13e2e1aa.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a6bc0777.chunk.js.map": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -281,7 +281,7 @@
     "Deutsch courses page.2da39c28.chunk.js.map": "/ap-site/static/js/Deutsch courses page.2da39c28.chunk.js.map",
     "Teacher Page.58234976.chunk.js.map": "/ap-site/static/js/Teacher Page.58234976.chunk.js.map",
     "Speaking Teacher Page.23b0136d.chunk.js.map": "/ap-site/static/js/Speaking Teacher Page.23b0136d.chunk.js.map",
-    "Lead Form Page.8966a7d7.chunk.js.map": "/ap-site/static/js/Lead Form Page.8966a7d7.chunk.js.map",
+    "Lead Form Page.0dc6af15.chunk.js.map": "/ap-site/static/js/Lead Form Page.0dc6af15.chunk.js.map",
     "My AP Page.0eee2fea.chunk.js.map": "/ap-site/static/js/My AP Page.0eee2fea.chunk.js.map",
     "Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map",
     "Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map",
@@ -306,7 +306,7 @@
     "Marathon quiz page.42c1638e.chunk.js.map": "/ap-site/static/js/Marathon quiz page.42c1638e.chunk.js.map",
     "Marathon quiz page for new Auth.94746325.chunk.js.map": "/ap-site/static/js/Marathon quiz page for new Auth.94746325.chunk.js.map",
     "Sales quiz page for one request.0ceb3f86.chunk.js.map": "/ap-site/static/js/Sales quiz page for one request.0ceb3f86.chunk.js.map",
-    "Sales quiz page for one request via Google ads without engagement page.bd038e87.chunk.js.map": "/ap-site/static/js/Sales quiz page for one request via Google ads without engagement page.bd038e87.chunk.js.map",
+    "Sales quiz page for one request via Google ads without engagement page.f8dc5849.chunk.js.map": "/ap-site/static/js/Sales quiz page for one request via Google ads without engagement page.f8dc5849.chunk.js.map",
     "Sales english quiz page.446a7c4b.chunk.js.map": "/ap-site/static/js/Sales english quiz page.446a7c4b.chunk.js.map",
     "Sales deutsch quiz page.a1647375.chunk.js.map": "/ap-site/static/js/Sales deutsch quiz page.a1647375.chunk.js.map",
     "Sales polish quiz page.3c4b5d61.chunk.js.map": "/ap-site/static/js/Sales polish quiz page.3c4b5d61.chunk.js.map",
@@ -337,6 +337,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.079b0b30.js"
+    "static/js/main.13e2e1aa.js"
   ]
 }
