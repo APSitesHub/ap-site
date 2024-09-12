@@ -7,8 +7,20 @@ import {
 } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
+import {
+  FacebookBtn,
+  InstagramBtn,
+  SocialLogoLink,
+  SocialsLinkWrapper,
+  SocialsText,
+  TextBubble,
+  TextBubbleText,
+  TikTokBtn,
+  YouTubeBtn,
+} from 'pages/ThankYouPage/ThankYouPage.styled';
 import { useState } from 'react';
 import * as yup from 'yup';
+import loveImg from '../../../img/quiz/love.png';
 import {
   FormBottomStar,
   PageForm,
@@ -16,11 +28,12 @@ import {
 import {
   BackgroundFilterBottom,
   BackgroundFilterTop,
-  BackgroungStarLarge,
-  BackgroungStarSmall,
+  BackgroungStarLargeNoEngage,
+  BackgroungStarSmallNoEngage,
   CurrentPage,
   Description,
   Logo,
+  LoveEmoji,
   NextPageBtn,
   PageCounter,
   Pagination,
@@ -28,11 +41,13 @@ import {
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
+  QuizEnd,
   QuizInput,
-  QuizStart,
+  QuizSocialArrow,
+  QuizSocialsBox,
+  QuizTextBubbleWrapper,
   Title,
 } from '../Quiz.styled';
-import { FacebookBtn, InstagramBtn, SocialArrow, SocialLogoLink, SocialsBox, SocialsLinkWrapper, SocialsText, TextBubble, TextBubbleText, TextBubbleWrapper, TikTokBtn, YouTubeBtn } from 'pages/ThankYouPage/ThankYouPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -176,12 +191,12 @@ export const QuizQuestionFormNoEngage = ({
               <HiddenInput type="text" name="quantity" />
               <HiddenInput type="text" name="difficulties" />
               <HiddenInput type="text" name="interests" />
-              <QuizStart type="submit">Зареєструватись</QuizStart>
+              <QuizEnd type="submit">ЗАРЕЄСТРУВАТИСЬ</QuizEnd>
               {isLoading && <Loader />}
             </PageForm>
           </Formik>
           <BackgroundFilterTop /> <BackgroundFilterBottom />
-          <BackgroungStarSmall /> <BackgroungStarLarge />
+          <BackgroungStarSmallNoEngage /> <BackgroungStarLargeNoEngage />
           <Pagination>
             <PreviousPageBtn
               className={activeSlide - 1 < 1 && 'disabled'}
@@ -212,51 +227,54 @@ export const QuizQuestionFormNoEngage = ({
               : quizValues.current.lang === 'pl'
               ? 'польської'
               : 'іноземної'}{' '}
-            мови. 
+            мови.
             <br />
             <br />
             Скоро вам зателефонує менеджер для уточнення деталей.
           </Description>
-          <SocialsBox>
-          <TextBubbleWrapper>
-            <TextBubbleText>P.S. підписуйтесь на наші соцмережі</TextBubbleText>
-            <TextBubble />
-          </TextBubbleWrapper>
-          <SocialArrow />
-          <SocialsText>А також підписуйтеся на нас у соцмережах:</SocialsText>
-          <SocialsLinkWrapper>
-            <SocialLogoLink
-              href="https://www.instagram.com/ap.education/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <InstagramBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.facebook.com/ap.edu.centre/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FacebookBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.tiktok.com/@ap_education"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <TikTokBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.youtube.com/channel/UC3XSGAVLhPXXlMN5-Gebtvw"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <YouTubeBtn />
-            </SocialLogoLink>
-          </SocialsLinkWrapper>
-        </SocialsBox>
+          <LoveEmoji src={loveImg} alt="Hi emoji" width="80" />
+          <QuizSocialsBox>
+            <QuizTextBubbleWrapper>
+              <TextBubbleText>
+                P.S.: підписуйтесь на наші соцмережі!
+              </TextBubbleText>
+              <TextBubble />
+            </QuizTextBubbleWrapper>
+            <QuizSocialArrow />
+            <SocialsText>А також підписуйтеся на нас у соцмережах:</SocialsText>
+            <SocialsLinkWrapper>
+              <SocialLogoLink
+                href="https://www.instagram.com/ap.education/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <InstagramBtn />
+              </SocialLogoLink>
+              <SocialLogoLink
+                href="https://www.facebook.com/ap.edu.centre/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FacebookBtn />
+              </SocialLogoLink>
+              <SocialLogoLink
+                href="https://www.tiktok.com/@ap_education"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TikTokBtn />
+              </SocialLogoLink>
+              <SocialLogoLink
+                href="https://www.youtube.com/channel/UC3XSGAVLhPXXlMN5-Gebtvw"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <YouTubeBtn />
+              </SocialLogoLink>
+            </SocialsLinkWrapper>
+          </QuizSocialsBox>
           <BackgroundFilterTop /> <BackgroundFilterBottom />
-          <BackgroungStarSmall /> <BackgroungStarLarge />
+          <BackgroungStarSmallNoEngage /> <BackgroungStarLargeNoEngage />
         </QuizBox>
       )}
     </>

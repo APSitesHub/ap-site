@@ -33,27 +33,27 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
     console.log(user.knowledge);
     console.log(user.package === undefined ? 'vippro' : user.package);
     return language === 'en'
-      ? baseStreamUrl + user.knowledge
+      ? baseStreamUrl + personalTimetable.level
       : language === 'enkids'
-      ? baseKidsStreamUrl + user.knowledge
-      : language === 'de' && user.knowledge !== 'a1'
-      ? baseStreamUrl + 'deutsch' + user.knowledge
-      : language === 'de' && user.knowledge === 'a1'
+      ? baseKidsStreamUrl + personalTimetable.level
+      : language === 'de' && personalTimetable.level !== 'a1'
+      ? baseStreamUrl + 'deutsch' + personalTimetable.level
+      : language === 'de' && personalTimetable.level === 'a1'
       ? baseStreamUrl + 'deutsch'
-      : language === 'pl' && user.knowledge !== 'a1'
-      ? baseStreamUrl + 'polski' + user.knowledge
-      : language === 'pl' && user.knowledge === 'a1'
-      ? baseStreamUrl + 'polski' + user.knowledge
+      : language === 'pl' && personalTimetable.level !== 'a1'
+      ? baseStreamUrl + 'polski' + personalTimetable.level
+      : language === 'pl' && personalTimetable.level === 'a1'
+      ? baseStreamUrl + 'polski' + personalTimetable.level
       : baseStreamUrl;
   };
   const getSpeakingLink = () => {
     const baseStreamUrl = 'https://ap.education/streams/';
     const baseKidsStreamUrl = 'https://ap.education/streams-kids/';
     return language === 'en'
-      ? baseStreamUrl + user.knowledge + 'sc'
+      ? baseStreamUrl + personalTimetable.level + 'sc'
       : language === 'enkids'
-      ? baseKidsStreamUrl + user.knowledge + 'sc'
-      : baseStreamUrl + language + user.knowledge + 'sc';
+      ? baseKidsStreamUrl + personalTimetable.level + 'sc'
+      : baseStreamUrl + language + personalTimetable.level + 'sc';
   };
 
   const panelStyles = () => {

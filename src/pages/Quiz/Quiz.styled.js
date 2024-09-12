@@ -8,6 +8,11 @@ import { ReactComponent as StarIcon } from '../../img/svg/heroStar.svg';
 import { ReactComponent as LogoIcon } from '../../img/svg/logoNew.svg';
 import { ReactComponent as ArrowLeft } from '../../img/svg/month-switch-left.svg';
 import { ReactComponent as ArrowRight } from '../../img/svg/month-switch-right.svg';
+import {
+  SocialArrow,
+  SocialsBox,
+  TextBubbleWrapper,
+} from 'pages/ThankYouPage/ThankYouPage.styled';
 
 export const QuizBox = styled.div`
   position: relative;
@@ -140,7 +145,15 @@ export const Description = styled.p`
   font-size: 16px;
   line-height: 1.3;
 
+  max-width: 375px;
+  margin: 0 auto;
   margin-bottom: 20px;
+
+  font-family: var(--new-font-family);
+
+  @media screen and (min-width: 768px) {
+    max-width: 538px;
+  }
 `;
 
 export const DescriptionTitleUpper = styled.p`
@@ -198,14 +211,76 @@ export const QuizStart = styled.button`
   margin-bottom: 36px;
 `;
 
+export const QuizEnd = styled.button`
+  width: 100%;
+  display: flex;
+  padding: 20px 60px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+
+  color: var(--secondary-color);
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+
+  border-radius: 50px;
+  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #0f645b;
+  margin-bottom: 36px;
+`;
+
 export const HiEmoji = styled.img`
   display: block;
   margin: 0 auto;
 `;
 
+export const QuizSocialsBox = styled(SocialsBox)``;
+
+export const QuizTextBubbleWrapper = styled(TextBubbleWrapper)`
+  bottom: 280px;
+
+  @media screen and (min-width: 420px) {
+    bottom: calc(280px + 6vh);
+  }
+
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+`;
+
+export const QuizSocialArrow = styled(SocialArrow)`
+  width: 56px;
+  height: 200px;
+
+  @media screen and (min-width: 420px) {
+    bottom: calc(77px + 2vh);
+  }
+
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+`;
+
 export const LoveEmoji = styled.img`
   display: block;
-  margin: 0 auto;
+  position: absolute;
+
+  left: 50%;
+  bottom: 250px;
+
+  transform: translateX(-50%);
+
+  @media screen and (min-width: 420px) {
+    bottom: calc(250px + 6vh);
+  }
+
+  @media screen and (min-width: 768px) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 export const BookEmoji = styled.img`
@@ -335,6 +410,9 @@ export const BackgroungStarSmallNoEngage = styled(StarIcon)`
   flex-shrink: 0;
   width: 32px;
   height: 32px;
+
+  pointer-events: none;
+  z-index: -1;
 `;
 
 export const BackgroungStarLarge = styled(StarIcon)`
@@ -355,6 +433,9 @@ export const BackgroungStarLargeNoEngage = styled(StarIcon)`
   flex-shrink: 0;
   width: 72px;
   height: 72px;
+
+  pointer-events: none;
+  z-index: -1;
 
   @media screen and (min-height: 720px) {
     bottom: 56px;

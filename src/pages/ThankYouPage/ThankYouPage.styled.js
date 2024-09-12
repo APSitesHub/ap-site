@@ -540,7 +540,7 @@ export const ThankYouArrow = styled(ThankYouArrowIcon)`
 
 export const SocialArrow = styled(ThankYouArrowLongIcon)`
   position: absolute;
-  bottom: calc(77px);
+  bottom: 77px;
   right: -48.5px;
 
   width: 67px;
@@ -566,7 +566,7 @@ export const SocialArrow = styled(ThankYouArrowLongIcon)`
 export const TextBubbleWrapper = styled.div`
   position: absolute;
   right: -38px;
-  bottom: calc(325.5px);
+  bottom: 325.5px;
 
   width: 148px;
   height: 45px;
