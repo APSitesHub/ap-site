@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.dada3de6.js",
+    "main.js": "/ap-site/static/js/main.079b0b30.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -46,7 +46,7 @@
     "Teacher Page.js": "/ap-site/static/js/Teacher Page.58234976.chunk.js",
     "Speaking Teacher Page.js": "/ap-site/static/js/Speaking Teacher Page.23b0136d.chunk.js",
     "Lead Form Page.js": "/ap-site/static/js/Lead Form Page.8966a7d7.chunk.js",
-    "My AP Page.js": "/ap-site/static/js/My AP Page.b316c771.chunk.js",
+    "My AP Page.js": "/ap-site/static/js/My AP Page.0eee2fea.chunk.js",
     "Marathon redirect page to Viber chatbot.js": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js",
     "Marathon redirect page to Telegram chatbot.js": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js",
     "Marathon redirect page to WhatsApp chat.js": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.a46805db.chunk.js",
@@ -69,8 +69,8 @@
     "Post-quiz gifts page with sms-code auth.js": "/ap-site/static/js/Post-quiz gifts page with sms-code auth.b1619669.chunk.js",
     "Marathon quiz page.js": "/ap-site/static/js/Marathon quiz page.42c1638e.chunk.js",
     "Marathon quiz page for new Auth.js": "/ap-site/static/js/Marathon quiz page for new Auth.94746325.chunk.js",
-    "Sales quiz page for one request.js": "/ap-site/static/js/Sales quiz page for one request.61e1c8b6.chunk.js",
-    "Sales quiz page for one request via Google ads without engagement page.js": "/ap-site/static/js/Sales quiz page for one request via Google ads without engagement page.67d7a920.chunk.js",
+    "Sales quiz page for one request.js": "/ap-site/static/js/Sales quiz page for one request.0ceb3f86.chunk.js",
+    "Sales quiz page for one request via Google ads without engagement page.js": "/ap-site/static/js/Sales quiz page for one request via Google ads without engagement page.bd038e87.chunk.js",
     "Sales english quiz page.js": "/ap-site/static/js/Sales english quiz page.446a7c4b.chunk.js",
     "Sales deutsch quiz page.js": "/ap-site/static/js/Sales deutsch quiz page.a1647375.chunk.js",
     "Sales polish quiz page.js": "/ap-site/static/js/Sales polish quiz page.3c4b5d61.chunk.js",
@@ -97,7 +97,7 @@
     "static/js/5090.348638cd.chunk.js": "/ap-site/static/js/5090.348638cd.chunk.js",
     "static/js/9577.52539312.chunk.js": "/ap-site/static/js/9577.52539312.chunk.js",
     "static/js/6337.b2b44b78.chunk.js": "/ap-site/static/js/6337.b2b44b78.chunk.js",
-    "static/js/4857.c148855b.chunk.js": "/ap-site/static/js/4857.c148855b.chunk.js",
+    "static/js/3054.2683f5c3.chunk.js": "/ap-site/static/js/3054.2683f5c3.chunk.js",
     "static/media/thank-you.png": "/ap-site/static/media/thank-you.26b42b0974f823b6458a.png",
     "static/media/thank-you.webp": "/ap-site/static/media/thank-you.c788cd78534af7f11775.webp",
     "static/media/hat.png": "/ap-site/static/media/hat.4688d43cbf0bbd00fe5a.png",
@@ -116,6 +116,7 @@
     "static/media/monoPawWhite.svg": "/ap-site/static/media/monoPawWhite.a0a9a0d5f8d45e35dd5b19faac2664af.svg",
     "static/media/invertedLogo.svg": "/ap-site/static/media/invertedLogo.af551277e0a22f7c3a5b28c32549db12.svg",
     "static/media/desktop-bg@2x.webp": "/ap-site/static/media/desktop-bg@2x.e84f089eedec873d289a.webp",
+    "static/media/love.png": "/ap-site/static/media/love.694a318ef041e01385b3.png",
     "static/media/desktop-bg@1x.png": "/ap-site/static/media/desktop-bg@1x.545cbcb3619b357b046a.png",
     "static/media/logoNew.svg": "/ap-site/static/media/logoNew.34d687445e4d5ec25bb361c2d7fa1a1a.svg",
     "static/media/logo-clean.svg": "/ap-site/static/media/logo-clean.98f9201fe9debc36c52660463957a2db.svg",
@@ -236,7 +237,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.dada3de6.js.map": "/ap-site/static/js/main.dada3de6.js.map",
+    "main.079b0b30.js.map": "/ap-site/static/js/main.079b0b30.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a6bc0777.chunk.js.map": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -281,7 +282,7 @@
     "Teacher Page.58234976.chunk.js.map": "/ap-site/static/js/Teacher Page.58234976.chunk.js.map",
     "Speaking Teacher Page.23b0136d.chunk.js.map": "/ap-site/static/js/Speaking Teacher Page.23b0136d.chunk.js.map",
     "Lead Form Page.8966a7d7.chunk.js.map": "/ap-site/static/js/Lead Form Page.8966a7d7.chunk.js.map",
-    "My AP Page.b316c771.chunk.js.map": "/ap-site/static/js/My AP Page.b316c771.chunk.js.map",
+    "My AP Page.0eee2fea.chunk.js.map": "/ap-site/static/js/My AP Page.0eee2fea.chunk.js.map",
     "Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map",
     "Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map",
     "Marathon redirect page to WhatsApp chat.a46805db.chunk.js.map": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.a46805db.chunk.js.map",
@@ -304,8 +305,8 @@
     "Post-quiz gifts page with sms-code auth.b1619669.chunk.js.map": "/ap-site/static/js/Post-quiz gifts page with sms-code auth.b1619669.chunk.js.map",
     "Marathon quiz page.42c1638e.chunk.js.map": "/ap-site/static/js/Marathon quiz page.42c1638e.chunk.js.map",
     "Marathon quiz page for new Auth.94746325.chunk.js.map": "/ap-site/static/js/Marathon quiz page for new Auth.94746325.chunk.js.map",
-    "Sales quiz page for one request.61e1c8b6.chunk.js.map": "/ap-site/static/js/Sales quiz page for one request.61e1c8b6.chunk.js.map",
-    "Sales quiz page for one request via Google ads without engagement page.67d7a920.chunk.js.map": "/ap-site/static/js/Sales quiz page for one request via Google ads without engagement page.67d7a920.chunk.js.map",
+    "Sales quiz page for one request.0ceb3f86.chunk.js.map": "/ap-site/static/js/Sales quiz page for one request.0ceb3f86.chunk.js.map",
+    "Sales quiz page for one request via Google ads without engagement page.bd038e87.chunk.js.map": "/ap-site/static/js/Sales quiz page for one request via Google ads without engagement page.bd038e87.chunk.js.map",
     "Sales english quiz page.446a7c4b.chunk.js.map": "/ap-site/static/js/Sales english quiz page.446a7c4b.chunk.js.map",
     "Sales deutsch quiz page.a1647375.chunk.js.map": "/ap-site/static/js/Sales deutsch quiz page.a1647375.chunk.js.map",
     "Sales polish quiz page.3c4b5d61.chunk.js.map": "/ap-site/static/js/Sales polish quiz page.3c4b5d61.chunk.js.map",
@@ -332,10 +333,10 @@
     "5090.348638cd.chunk.js.map": "/ap-site/static/js/5090.348638cd.chunk.js.map",
     "9577.52539312.chunk.js.map": "/ap-site/static/js/9577.52539312.chunk.js.map",
     "6337.b2b44b78.chunk.js.map": "/ap-site/static/js/6337.b2b44b78.chunk.js.map",
-    "4857.c148855b.chunk.js.map": "/ap-site/static/js/4857.c148855b.chunk.js.map"
+    "3054.2683f5c3.chunk.js.map": "/ap-site/static/js/3054.2683f5c3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.dada3de6.js"
+    "static/js/main.079b0b30.js"
   ]
 }
