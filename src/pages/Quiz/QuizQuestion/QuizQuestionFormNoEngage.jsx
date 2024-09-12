@@ -218,7 +218,7 @@ export const QuizQuestionFormNoEngage = ({
         <QuizBox>
           <Logo />
           <Title>Вітаємо!</Title>
-          <Description>
+          <Description data-gtm="quizformsubmit">
             Ви успішно зареєструвались на перший безкоштовний урок з{' '}
             {quizValues.current.lang === 'en'
               ? 'англійської'
@@ -232,7 +232,7 @@ export const QuizQuestionFormNoEngage = ({
             <br />
             Скоро вам зателефонує менеджер для уточнення деталей.
           </Description>
-          <LoveEmoji src={loveImg} alt="Hi emoji" width="80" />
+          <LoveEmoji src={loveImg} alt="Love emoji" width="80" />
           <QuizSocialsBox>
             <QuizTextBubbleWrapper>
               <TextBubbleText>
@@ -258,7 +258,7 @@ export const QuizQuestionFormNoEngage = ({
                 <FacebookBtn />
               </SocialLogoLink>
               <SocialLogoLink
-                href="https://www.tiktok.com/@ap_education"
+                href="https://www.tiktok.com/@ap.education.center"
                 target="_blank"
                 rel="noopener noreferrer"
               >

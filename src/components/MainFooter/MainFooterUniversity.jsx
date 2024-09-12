@@ -67,7 +67,10 @@ export const MainFooterUniversity = ({ toggleModal }) => {
               </FooterLogoLink>
               <LeadWrapperNew>
                 <LeadDescNew>... якщо залишились запитання </LeadDescNew>
-                <FooterLeadBtnNew onClick={toggleModal} data-pagename="university">
+                <FooterLeadBtnNew
+                  onClick={toggleModal}
+                  data-pagename="university"
+                >
                   ЗАЛИШИТИ ЗАЯВКУ
                 </FooterLeadBtnNew>
               </LeadWrapperNew>
@@ -137,7 +140,7 @@ export const MainFooterUniversity = ({ toggleModal }) => {
                   <InstagramBtnNew />
                 </SocialLogoLink>
                 <SocialLogoLink
-                  href="https://www.tiktok.com/@ap_education"
+                  href="https://www.tiktok.com/@ap.education.center"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

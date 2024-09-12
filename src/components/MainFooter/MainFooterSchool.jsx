@@ -67,7 +67,7 @@ export const MainFooterSchool = ({ toggleModal }) => {
               </FooterLogoLink>
               <LeadWrapperNew>
                 <LeadDescNew>... якщо залишились запитання </LeadDescNew>
-                <FooterLeadBtnNew data-pagename="school" onClick={toggleModal} >
+                <FooterLeadBtnNew data-pagename="school" onClick={toggleModal}>
                   ЗАЛИШИТИ ЗАЯВКУ
                 </FooterLeadBtnNew>
               </LeadWrapperNew>
@@ -137,7 +137,7 @@ export const MainFooterSchool = ({ toggleModal }) => {
                   <InstagramBtnNew />
                 </SocialLogoLink>
                 <SocialLogoLink
-                  href="https://www.tiktok.com/@ap_education"
+                  href="https://www.tiktok.com/@ap.education.center"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -255,7 +255,7 @@ const LeadFormPage = ({ utms }) => {
               <FacebookBtn />
             </SocialLogoLink>
             <SocialLogoLink
-              href="https://www.tiktok.com/@ap_education"
+              href="https://www.tiktok.com/@ap.education.center"
               target="_blank"
               rel="noopener noreferrer"
             >
