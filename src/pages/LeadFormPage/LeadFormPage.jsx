@@ -172,7 +172,7 @@ const LeadFormPage = ({ utms }) => {
       <ThankYouSection>
         <PageFormWrapper>
           <PageFormHeading>
-            Залишіть заявку та отримайте -10% знижки на наші послуги!
+            Залишіть заявку та отримайте -30% знижки на наші послуги!
           </PageFormHeading>
           <Formik
             initialValues={initialValues}
