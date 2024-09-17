@@ -26,8 +26,6 @@ export const TeacherPageSpeakingEditForm = ({
     studentToEdit.successRate || ''
   );
 
-  console.log(studentToEdit);
-
   const successRateOptions = [
     {
       label: 'Сильний',
@@ -66,20 +64,23 @@ export const TeacherPageSpeakingEditForm = ({
     feedback: yup.string(),
   });
 
-  const handleEditTimetableSubmit = async values => {
-    values = {
-      temperament: temperamentValue,
-      successRate: successRateValue,
-    };
+  const handleEditStudentSubmit = async values => {
+    values.temperament = temperamentValue;
+    values.successRate = successRateValue;
+    const scValues = {...values, crmId: studentToEdit.crmId}
 
-    console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
       const response = await axios.patch(
-        `/timetable/course/${studentToEdit._id}`,
-        values
+        `/speakingusers/${studentToEdit.userId}`,
+        scValues 
+      );
+      const userResponse = await axios.patch(
+        `/users/sc/${studentToEdit.userId}`,
+        values 
       );
       console.log(response);
+      console.log(userResponse);
       closeCourseLevelEditForm();
       alert('Відредаговано');
     } catch (error) {
@@ -96,7 +97,7 @@ export const TeacherPageSpeakingEditForm = ({
     <>
       <Formik
         initialValues={initialEditStudentValues}
-        onSubmit={handleEditTimetableSubmit}
+        onSubmit={handleEditStudentSubmit}
         validationSchema={studentSchema}
       >
         <UsersEditForm>
@@ -112,7 +113,7 @@ export const TeacherPageSpeakingEditForm = ({
             placeholder="Успішність"
             name="successRate"
             defaultValue={successRateOptions.find(
-              option => option.value === studentToEdit.lang
+              option => option.value === studentToEdit.successRate
             )}
             onChange={successRate => {
               setSuccessRateValue(successRate.value);

@@ -107,7 +107,7 @@ const TeacherPageSpeaking = () => {
           (await axios.get('/timetable')).data.filter(
             timetable =>
               page.includes(timetable.level) && lang === timetable.lang
-          )[0].course
+          )[0].course && "12"
         );
         setUsers(
           (
@@ -144,7 +144,7 @@ const TeacherPageSpeaking = () => {
       }
     };
     getSpeakingUsersRequest();
-  }, [course, page, lang]);
+  }, [isEditStudentFormOpen, course, page, lang]);
 
   return (
     <>
