@@ -193,3 +193,28 @@ export const UserPlace = styled(LeaderPlace)`
 `;
 
 export const CupIcon = styled(CupBtnIcon)``;
+
+export const PointsPlaceHolder = styled.div`
+  display: flex;
+  padding: 20px 0;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const PointsPlaceHolderText = styled.p`
+  font-size: 20px;
+  color: #525266;
+  text-align: center;
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+`;
+
+export const EyesEmoji = styled.img`
+  display: block;
+  pointer-events: none;
+  margin-bottom: 20px;
+`;

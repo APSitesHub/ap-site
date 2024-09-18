@@ -352,6 +352,12 @@ const QuizOneRequestGoogleNoEngage = lazy(() =>
   )
 );
 
+const QuizOneRequestDiscountNoEngage = lazy(() =>
+  import(
+    /* webpackChunkName: "Sales quiz page for one request via discount mail without engagement page" */ '../pages/Quiz/QuizOneRequestGoogleNoEngage'
+  )
+);
+
 const QuizEn = lazy(() =>
   import(
     /* webpackChunkName: "Sales english quiz page" */ '../pages/Quiz/QuizEn'
@@ -658,6 +664,18 @@ export const App = () => {
           <Route
             path="quiz-google"
             element={<QuizOneRequestGoogleNoEngage utms={utms} />}
+          />
+          <Route
+            path="quiz-d11p"
+            element={<QuizOneRequestDiscountNoEngage utms={utms} />}
+          />
+          <Route
+            path="quiz-d20p"
+            element={<QuizOneRequestDiscountNoEngage utms={utms} />}
+          />
+          <Route
+            path="quiz-d30p"
+            element={<QuizOneRequestDiscountNoEngage utms={utms} />}
           />
           <Route path="quiz-code" element={<QuizAuth utms={utms} />} />
           <Route path="quiz-en" element={<QuizEn utms={utms} />} />

@@ -1,7 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import beginner from '../../../img/quiz/beginner.png';
 import middle from '../../../img/quiz/middle.png';
-import present from '../../../img/quiz/present.png';
 import senior from '../../../img/quiz/senior.png';
 import zero from '../../../img/quiz/zero.png';
 import {
@@ -9,22 +8,19 @@ import {
   BackgroundFilterTopRight,
   BackgroungStarSmall,
   CurrentPage,
-  DescriptionHighlight,
-  DescriptionLevel,
   Emoji,
   Logo,
   NextPageBtn,
   PageCounter,
   Pagination,
-  PresentEmoji,
   PreviousPageBtn,
-  QuestionLevel,
+  Question,
   QuizArrowLeft,
   QuizArrowRight,
   QuizBox,
   QuizButton,
   QuizButtonBox,
-  QuizButtonContent,
+  QuizButtonContent
 } from '../Quiz.styled';
 
 export const QuizQuestionLevelOneRequest = ({
@@ -44,10 +40,22 @@ export const QuizQuestionLevelOneRequest = ({
         return 'quiz-one';
       case '/quiz-one/':
         return 'quiz-one';
-        case '/quiz-google':
-          return 'quiz-google';
-        case '/quiz-google/':
-          return 'quiz-google';
+      case '/quiz-google':
+        return 'quiz-google';
+      case '/quiz-google/':
+        return 'quiz-google';
+      case '/quiz-d11p':
+        return '-11%';
+      case '/quiz-d11p/':
+        return '-11%';
+      case '/quiz-d20p':
+        return '-20%';
+      case '/quiz-d20p/':
+        return '-20%';
+      case '/quiz-d30p':
+        return '-30%';
+      case '/quiz-d30p/':
+        return '-30%';
       default:
         break;
     }
@@ -75,15 +83,9 @@ export const QuizQuestionLevelOneRequest = ({
     <>
       <QuizBox>
         <Logo />
-        <QuestionLevel>
+        <Question>
           {isChild ? 'Вкажіть рівень дитини' : 'Вкажіть ваш рівень'}
-        </QuestionLevel>
-        <DescriptionLevel>
-          Оберіть рівень та отримайте гарантовані{' '}
-          <DescriptionHighlight>подарунки</DescriptionHighlight> в кінці
-          опитування
-          <PresentEmoji src={present} alt="Present emoji" width="30" />
-        </DescriptionLevel>
+        </Question>
 
         <QuizButtonBox>
           <QuizButton

@@ -79,7 +79,12 @@ export const LessonFinder = ({
                 const lessonLevelNumber =
                   lesson.level +
                   ' ' +
-                  lesson.lesson.replace('Lesson', '').trim().trimStart();
+                  lesson.lesson
+                    .replace('Lesson', '')
+                    .replace('Lekcja', '')
+                    .replace('Unterricht', '')
+                    .trim()
+                    .trimStart();
                 return (
                   (lesson.keysEn
                     .toLowerCase()
@@ -225,7 +230,11 @@ export const LessonFinder = ({
                 <LessonBoxItem key={lesson._id}>
                   <LessonTopBox>
                     <LessonValuesLogo>
-                      {lesson.level + lesson.lesson.replace('Lesson', ' -')}
+                      {lesson.level +
+                        lesson.lesson
+                          .replace('Lesson', ' -')
+                          .replace('Lekcja', ' -')
+                          .replace('Unterricht', ' -')}
                     </LessonValuesLogo>
                     <LessonTextValuesBox>
                       <LessonValueName>
