@@ -21,6 +21,15 @@ import {
   TimetableWebinarsHead,
 } from './Timetable.styled';
 
+// const PACKAGEARRAY = [
+//   'online',
+//   'simple',
+//   'student',
+//   'basic',
+//   'standart',
+//   'pro',
+// ];
+
 export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
   const personalTimetable = timetable.find(timeline =>
     language === 'enkids'
@@ -46,10 +55,14 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
       ? baseStreamUrl + 'deutsch' + personalTimetable?.level
       : language === 'de' && personalTimetable?.level === 'a1'
       ? baseStreamUrl + 'deutsch'
+      : language === 'dekids'
+      ? baseKidsStreamUrl + 'de' + personalTimetable?.level
       : language === 'pl' && personalTimetable?.level !== 'a1'
       ? baseStreamUrl + 'polski' + personalTimetable?.level
       : language === 'pl' && personalTimetable?.level === 'a1'
       ? baseStreamUrl + 'polski' + personalTimetable?.level
+      : language === 'plkids'
+      ? baseKidsStreamUrl + 'pl' + personalTimetable?.level
       : baseStreamUrl;
   };
   const getSpeakingLink = () => {
@@ -61,6 +74,15 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
       ? baseKidsStreamUrl + personalTimetable?.level + 'sc'
       : baseStreamUrl + language + personalTimetable?.level + 'sc';
   };
+  // const getIndividualLink = () => {
+  //   const baseStreamUrl = 'https://n1313568.alteg.io';
+  //   const baseKidsStreamUrl = 'https://n1313568.alteg.io/';
+  //   return language === 'en'
+  //     ? baseStreamUrl + personalTimetable?.level + 'sc'
+  //     : language === 'enkids'
+  //     ? baseKidsStreamUrl + personalTimetable?.level + 'sc'
+  //     : baseStreamUrl + language + personalTimetable?.level + 'sc';
+  // };
 
   const panelStyles = () => {
     return {
@@ -82,7 +104,9 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
       {!personalTimetable ? (
         <PointsPlaceHolder>
           <EyesEmoji src={eyesImg} alt="Eyes emoji" width="80" />
-          <PointsPlaceHolderText>Здається, у вас ще немає розкладу!</PointsPlaceHolderText>
+          <PointsPlaceHolderText>
+            Здається, у вас ще немає розкладу!
+          </PointsPlaceHolderText>
           <PointsPlaceHolderText>
             Але він з'явиться, коли у вас розпочнуться заняття!
           </PointsPlaceHolderText>
@@ -189,6 +213,16 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
               </tbody>
             </TimetableTable>
           </TimetableSpeakings>
+          {/* {user.package !== 'simple' && user.package !== 'student' && (
+            <TimetableSpeakings>
+              <TimetableWebinarsHead>
+                <TimetableLessonType>Індивідуальні заняття</TimetableLessonType>
+                <TimetableLessonLink href={speakingLink} target="_blank">
+                  <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
+                </TimetableLessonLink>
+              </TimetableWebinarsHead>
+            </TimetableSpeakings>
+          )} */}
         </TimetableBody>
       )}
     </TimetableBox>

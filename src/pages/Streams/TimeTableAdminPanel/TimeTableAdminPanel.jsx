@@ -370,15 +370,31 @@ const TimeTableAdminPanel = () => {
 
   const levelOptionsForDeKids = [
     {
+      label: 'A0',
+      value: 'a0',
+    },
+    {
       label: 'A1',
       value: 'a1',
+    },
+    {
+      label: 'A2',
+      value: 'a2',
     },
   ];
 
   const levelOptionsForPlKids = [
     {
+      label: 'A0',
+      value: 'a0',
+    },
+    {
       label: 'A1',
       value: 'a1',
+    },
+    {
+      label: 'A2',
+      value: 'a2',
     },
   ];
 
@@ -430,6 +446,10 @@ const TimeTableAdminPanel = () => {
 
   const packageOptions = [
     {
+      label: 'Simple',
+      value: 'simple',
+    },
+    {
       label: 'Student',
       value: 'student',
     },
@@ -444,10 +464,6 @@ const TimeTableAdminPanel = () => {
     {
       label: 'Pro',
       value: 'pro',
-    },
-    {
-      label: 'VIP Pro',
-      value: 'vip',
     },
     {
       label: 'Online Курс',

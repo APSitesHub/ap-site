@@ -108,6 +108,8 @@ const MyAP = () => {
         de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=629357`,
         enkids1: `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673`,
         enkids2: `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=847034`,
+        dekids: `https://online.ap.education/MarathonClass/?marathonId=65423&pupilId=${user.pupilId}&marathonLessonId=968639`,
+        plkids: `https://online.ap.education/MarathonClass/?marathonId=64039&pupilId=${user.pupilId}&marathonLessonId=952360`,
       };
 
       const marathonLink =
@@ -121,6 +123,10 @@ const MyAP = () => {
           ? 'pl'
           : language === 'de'
           ? 'de'
+          : language === 'plkids'
+          ? 'plkids'
+          : language === 'dekids'
+          ? 'dekids'
           : language === 'enkids' && user.marathonNumber === '1'
           ? 'enkids1'
           : language === 'enkids' && user.marathonNumber === '2'
