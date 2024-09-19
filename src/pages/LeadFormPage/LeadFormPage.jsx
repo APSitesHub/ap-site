@@ -55,11 +55,19 @@ const LeadFormPage = ({ utms }) => {
         return '';
       case '/form-a':
         return 'deutschland';
+      case '/form-a/':
+        return 'deutschland';
       case '/form-b':
+        return 'polskakawa';
+      case '/form-b/':
         return 'polskakawa';
       case '/form-c':
         return 'ukrdiaspora';
+      case '/form-c/':
+        return 'ukrdiaspora';
       case '/form-d':
+        return 'dostupna';
+      case '/form-d/':
         return 'dostupna';
       case '/form-e':
         return 'yanovych';
