@@ -17,6 +17,11 @@ import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import { MyPlatform } from './My Platform/MyPlatform';
 import { MyAPPanel } from './MyAPPanel/MyAPPanel';
+import {
+  ChatButtonHideSwitch,
+  PanelHideLeftSwitch,
+  PanelHideRightSwitch,
+} from './MyAPPanel/MyAPPanel.styled';
 
 const MyAP = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -38,9 +43,29 @@ const MyAP = () => {
   const location = useLocation();
   // const linkToSet = `https://online.ap.education/student/lessons`;
 
+  const [isChatButtonShown, setIsChatButtonShown] = useState(
+    localStorage.getItem('ischatboxshown')
+  );
+
+  const toggleChatButton = () => {
+    const storageValue = localStorage.getItem('ischatboxshown');
+    console.log(storageValue);
+
+    setIsChatButtonShown(isShown => !isShown);
+    localStorage.setItem('ischatboxshown', !storageValue);
+    console.log(localStorage.getItem('ischatboxshown'));
+  };
+
   useEffect(() => {
     document.title = 'My AP | AP Education';
-    console.log('effect');
+
+    const button = document.querySelector('.amo-button-holder');
+    if (button && isChatButtonShown) {
+      button.style.translate = '400px';
+      button.style.transition = 'ease 250ms';
+    } else if (button && !isChatButtonShown) {
+      button.style.translate = '';
+    }
 
     const refreshToken = async () => {
       console.log('token refresher');
@@ -135,7 +160,7 @@ const MyAP = () => {
           ? 'enkids2'
           : '';
 
-          console.log(LINKS[marathonLink]);
+      console.log(LINKS[marathonLink]);
 
       const FREE_LINKS = {
         kids: `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=854264`,
@@ -150,7 +175,13 @@ const MyAP = () => {
     };
 
     setIframeLinks();
-  }, [language, languageIndex, user.pupilId, user.marathonNumber]);
+  }, [
+    language,
+    languageIndex,
+    isChatButtonShown,
+    user.pupilId,
+    user.marathonNumber,
+  ]);
 
   const setAuthToken = token => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -252,6 +283,13 @@ const MyAP = () => {
             />
           )}
           <MyPlatform platformLink={platformLink} />
+          <ChatButtonHideSwitch id="no-transform" onClick={toggleChatButton}>
+            {isChatButtonShown ? (
+              <PanelHideRightSwitch />
+            ) : (
+              <PanelHideLeftSwitch />
+            )}
+          </ChatButtonHideSwitch>
         </>
       )}
     </StreamSection>

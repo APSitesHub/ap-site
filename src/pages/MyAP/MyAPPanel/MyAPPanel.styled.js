@@ -124,7 +124,7 @@ export const APPanelBtn = styled.button`
     transform: translateY(-50%) scale(1, 1);
     transition: transform var(--animation-global);
   }
-  &.tooltip-open::before> #calendar-btn {
+  &.tooltip-open::before > #calendar-btn {
     transform: translateY(-50%) scale(1, 1);
     transition: transform var(--animation-global);
   }
@@ -308,6 +308,37 @@ export const PanelHideSwitch = styled.div`
 
   @media screen and (min-width: 768px) {
     top: 213px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 42px;
+  }
+`;
+
+export const ChatButtonHideSwitch = styled.div`
+  position: fixed;
+  bottom: 60px;
+  right: 0;
+
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+
+  z-index: 10;
+
+  width: 10px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;
+
+  border-radius: 4px;
+
+  &:hover * {
+    stroke: var(--accent-color);
+  }
+
+  @media screen and (min-width: 768px) {
     transform: translateY(-50%);
     width: 12px;
     height: 42px;
