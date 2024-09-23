@@ -5,12 +5,15 @@ import {
   UserCell,
   UserDBCaption,
   UserDBRow,
-  UserDBTable,
   UserEditButton,
   UserHeadCell,
 } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import {
+  TeacherSpeakingDBSection,
+  TeacherSpeakingDBTable,
+} from './TeacherPage.styled';
 import { TeacherPageSpeakingEditForm } from './TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm';
 
 const TeacherPageSpeaking = () => {
@@ -107,7 +110,7 @@ const TeacherPageSpeaking = () => {
           (await axios.get('/timetable')).data.filter(
             timetable =>
               page.includes(timetable.level) && lang === timetable.lang
-          )[0].course && "12"
+          )[0].course && '12'
         );
         setUsers(
           (
@@ -131,8 +134,9 @@ const TeacherPageSpeaking = () => {
                 (lang === user.lang || lang === user.lang.split('/')[0]) &&
                 course === user.course
             )
-            .sort((a, b) => 
-              changeDateFormat(b.visitedTime[b.visitedTime.length - 1]) -
+            .sort(
+              (a, b) =>
+                changeDateFormat(b.visitedTime[b.visitedTime.length - 1]) -
                 changeDateFormat(a.visitedTime[a.visitedTime.length - 1])
             )
         );
@@ -147,8 +151,8 @@ const TeacherPageSpeaking = () => {
   }, [isEditStudentFormOpen, course, page, lang]);
 
   return (
-    <>
-      <UserDBTable>
+    <TeacherSpeakingDBSection>
+      <TeacherSpeakingDBTable>
         <UserDBCaption>Список юзерів, що відвідали заняття</UserDBCaption>
         <thead>
           <UserDBRow>
@@ -209,7 +213,7 @@ const TeacherPageSpeaking = () => {
             </UserDBRow>
           ))}
         </tbody>
-      </UserDBTable>
+      </TeacherSpeakingDBTable>
       {isEditStudentFormOpen && (
         <Backdrop onClick={closeEditStudentFormOnClick} id="close-on-click">
           <TeacherPageSpeakingEditForm
@@ -219,7 +223,7 @@ const TeacherPageSpeaking = () => {
         </Backdrop>
       )}
       {isLoading && <Loader />}
-    </>
+    </TeacherSpeakingDBSection>
   );
 };
 

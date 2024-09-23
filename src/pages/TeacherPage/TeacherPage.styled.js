@@ -9,9 +9,19 @@ import { ReactComponent as BoxSwitchRight } from '../../img/svg/btnbox-switch-ri
 
 import { ChatBtn, StreamSection } from 'components/Stream/Stream.styled';
 import { AdminTextArea } from 'pages/Streams/RatingsAdminPanel/RatingsAdminPanel.styled';
+import { UserDBTable } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
 
 export const TeacherPageSection = styled(StreamSection)`
   background-color: #4ec82d;
+`;
+
+export const TeacherSpeakingDBSection = styled.section`
+  padding: 30px;
+`;
+
+export const TeacherSpeakingDBTable = styled(UserDBTable)`
+  max-width: 95vw;
+  min-height: auto;
 `;
 
 export const TeacherButtonBox = styled.div`

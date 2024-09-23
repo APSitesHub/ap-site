@@ -67,7 +67,17 @@ export const LessonsAdminPanel = () => {
       try {
         if (isUserAdmin) {
           const response = await axios.get('/lessons/');
-          setLessons(lessons => (lessons = [...response.data]));
+          console.log(response.data);
+
+          setLessons(
+            lessons =>
+              (lessons = [...response.data].sort(
+                (a, b) =>
+                  a.marathonId.localeCompare(b.marathonId) ||
+                  a.lang.localeCompare(b.lang) ||
+                  a.level.localeCompare(b.level)
+              ))
+          );
           persistentLessons.current = [...response.data];
           setMarathons(
             marathons =>

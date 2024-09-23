@@ -1,10 +1,11 @@
+import { useRef } from 'react';
+import eyesImg from '../../../img/quiz/eyes.png';
 import { CalendarIcon } from '../Attendance/Attendance.styled';
 import {
   EyesEmoji,
   PointsPlaceHolder,
   PointsPlaceHolderText,
 } from '../Points/Points.styled';
-import eyesImg from '../../../img/quiz/eyes.png';
 import {
   TimetableBody,
   TimetableBox,
@@ -31,8 +32,9 @@ import {
 // ];
 
 export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
+  const userPackage = useRef(user.package === undefined ? 'pro' : user.package);
   const personalTimetable = timetable.find(timeline =>
-    language === 'enkids'
+    language === 'enkids' && user.knowledge.includes('beginner')
       ? timeline.lang === language &&
         timeline.course === user.course &&
         timeline.level === user.knowledge
@@ -46,7 +48,9 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
     console.log(language);
     console.log(user.adult === undefined ? true : user.adult);
     console.log(user.knowledge);
-    console.log(user.package === undefined ? 'vippro' : user.package);
+    console.log(user.package === undefined ? 'student' : user.package);
+    console.log(userPackage.current);
+
     return language === 'en'
       ? baseStreamUrl + personalTimetable?.level
       : language === 'enkids'
@@ -74,15 +78,27 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
       ? baseKidsStreamUrl + personalTimetable?.level + 'sc'
       : baseStreamUrl + language + personalTimetable?.level + 'sc';
   };
-  // const getIndividualLink = () => {
-  //   const baseStreamUrl = 'https://n1313568.alteg.io';
-  //   const baseKidsStreamUrl = 'https://n1313568.alteg.io/';
-  //   return language === 'en'
-  //     ? baseStreamUrl + personalTimetable?.level + 'sc'
-  //     : language === 'enkids'
-  //     ? baseKidsStreamUrl + personalTimetable?.level + 'sc'
-  //     : baseStreamUrl + language + personalTimetable?.level + 'sc';
-  // };
+  const getIndividualLink = () => {
+    const enUrl = 'https://n1313568.alteg.io';
+    const enKidsUrl = 'https://n1313571.alteg.io/';
+    const deUrl = 'https://n1313569.alteg.io';
+    const deKidsUrl = 'https://n1313572.alteg.io/';
+    const plUrl = 'https://n1313570.alteg.io';
+    const plKidsUrl = 'https://n1313573.alteg.io/';
+    return language === 'en'
+      ? enUrl
+      : language === 'enkids'
+      ? enKidsUrl
+      : language === 'de'
+      ? deUrl
+      : language === 'dekids'
+      ? deKidsUrl
+      : language === 'pl'
+      ? plUrl
+      : language === 'plkids'
+      ? plKidsUrl
+      : enUrl;
+  };
 
   const panelStyles = () => {
     return {
@@ -91,6 +107,8 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
   };
 
   const link = getLink();
+  const indLink = getIndividualLink();
+  console.log(indLink);
   const speakingLink = getSpeakingLink();
 
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
@@ -213,11 +231,11 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
               </tbody>
             </TimetableTable>
           </TimetableSpeakings>
-          {/* {user.package !== 'simple' && user.package !== 'student' && (
+          {/* {userPackage.current !== 'simple' && userPackage.current !== 'student' && (
             <TimetableSpeakings>
               <TimetableWebinarsHead>
                 <TimetableLessonType>Індивідуальні заняття</TimetableLessonType>
-                <TimetableLessonLink href={speakingLink} target="_blank">
+                <TimetableLessonLink href={indLink} target="_blank">
                   <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
                 </TimetableLessonLink>
               </TimetableWebinarsHead>

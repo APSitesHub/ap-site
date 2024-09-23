@@ -449,7 +449,7 @@ export const YouTubeBtn = styled(YouTubeIcon)`
 export const HeroTopStar = styled(HeroStarIcon)`
   position: absolute;
   left: 11.7%;
-  top: 469px;
+  top: 60%;
 
   width: 32px;
   height: 32px;
@@ -601,4 +601,18 @@ export const TextBubbleText = styled.p`
   top: calc(50% - 2px);
   transform: translateY(-50%);
   z-index: 5;
+`;
+
+export const LeadFormAddText = styled.p`
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 12px;
+
+  @media screen and (min-width: 1280px) {
+    font-size: 18px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    font-size: 20px;
+  }
 `;

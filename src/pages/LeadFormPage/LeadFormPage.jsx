@@ -19,6 +19,7 @@ import {
   FacebookBtn,
   HeroTopStar,
   InstagramBtn,
+  LeadFormAddText,
   SocialArrow,
   SocialLogoLink,
   SocialsBox,
@@ -180,8 +181,11 @@ const LeadFormPage = ({ utms }) => {
       <ThankYouSection>
         <PageFormWrapper>
           <PageFormHeading>
-            Залишіть заявку та отримайте -30% знижки на наші послуги!
+            Залишіть заявку зараз та отримайте -15% знижки на наші послуги!
           </PageFormHeading>
+          <LeadFormAddText>
+            P.S.: Зустрінемось на пробному занятті 😉
+          </LeadFormAddText>
           <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
