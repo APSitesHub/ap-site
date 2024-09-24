@@ -110,7 +110,7 @@ const TeacherPageSpeaking = () => {
           (await axios.get('/timetable')).data.filter(
             timetable =>
               page.includes(timetable.level) && lang === timetable.lang
-          )[0].course && '12'
+          )[0].course
         );
         setUsers(
           (
@@ -156,6 +156,7 @@ const TeacherPageSpeaking = () => {
         <UserDBCaption>Список юзерів, що відвідали заняття</UserDBCaption>
         <thead>
           <UserDBRow>
+            <UserHeadCell>№</UserHeadCell>
             <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
             <UserHeadCell>Ім'я</UserHeadCell>
             <UserHeadCell>Відвідини</UserHeadCell>
@@ -168,8 +169,9 @@ const TeacherPageSpeaking = () => {
           </UserDBRow>
         </thead>
         <tbody>
-          {users.map(user => (
+          {users.map((user, i) => (
             <UserDBRow key={user._id}>
+              <UserCell>{i + 1}</UserCell>
               <UserCell>
                 <a
                   href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
@@ -198,8 +200,20 @@ const TeacherPageSpeaking = () => {
               </UserCell>
               <UserCell>{user.lang}</UserCell>
               <UserCell>{user.course}</UserCell>
-              <UserCell>{user.temperament}</UserCell>
-              <UserCell>{user.successRate}</UserCell>
+              <UserCell>
+                {user.temperament === 'extro'
+                  ? 'Екстраверт'
+                  : user.temperament === 'intro'
+                  ? 'Інтроверт'
+                  : ''}
+              </UserCell>
+              <UserCell>{user.successRate === 'good'
+                  ? 'Сильний'
+                  : user.successRate === 'mid'
+                  ? 'Середній'
+                  : user.successRate === 'bad'
+                  ? 'Слабкий'
+                  : ''}</UserCell>
               <UserCell>{user.feedback}</UserCell>
               <UserCell>
                 {user.name === 'Dev Acc' ? null : (
