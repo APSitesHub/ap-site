@@ -33,9 +33,9 @@ export const StreamNav = () => {
             <StreamNavItem>
               <StreamNavLink to={'/streams/b2'}>B2</StreamNavLink>
             </StreamNavItem>
-            <StreamNavItem>
+            {/* <StreamNavItem>
               <StreamNavLink to={'/streams/c1'}>C1</StreamNavLink>
-            </StreamNavItem>
+            </StreamNavItem> */}
             <StreamNavItem>
               <StreamNavLink to={'/streams/deutsch'}>DE A1</StreamNavLink>
             </StreamNavItem>
@@ -46,6 +46,9 @@ export const StreamNav = () => {
               <StreamNavLink to={'/streams/deutschb1'}>DE B1</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
+              <StreamNavLink to={'/streams/deutschb2'}>DE B2</StreamNavLink>
+            </StreamNavItem>
+            <StreamNavItem>
               <StreamNavLink to={'/streams/polski'}>PL A1</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
@@ -53,6 +56,9 @@ export const StreamNav = () => {
             </StreamNavItem>
             <StreamNavItem>
               <StreamNavLink to={'/streams/polskib1'}>PL B1</StreamNavLink>
+            </StreamNavItem>
+            <StreamNavItem>
+              <StreamNavLink to={'/streams/polskib2'}>PL B2</StreamNavLink>
             </StreamNavItem>
           </StreamNavList>
         </StreamNavigation>
