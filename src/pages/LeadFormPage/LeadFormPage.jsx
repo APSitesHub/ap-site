@@ -75,7 +75,9 @@ const LeadFormPage = ({ utms }) => {
       case '/form-e/':
         return 'ukrnim';
       case '/form-f':
-        return 'korysnosti.2';
+        return 'b2b';
+      case '/form-f/':
+        return 'b2b';
       case '/form-g':
         return 'digitalization';
       case '/form-h':
