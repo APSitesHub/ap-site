@@ -91,7 +91,9 @@ const LeadFormPage = ({ utms }) => {
       case '/form-i/':
         return 'antisurzhyk';
       case '/form-j':
-        return 'yanovych';
+        return 'englishforukr';
+      case '/form-j/':
+        return 'englishforukr';
       default:
         break;
     }
