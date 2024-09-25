@@ -79,7 +79,9 @@ const LeadFormPage = ({ utms }) => {
       case '/form-f/':
         return 'b2b';
       case '/form-g':
-        return 'digitalization';
+        return 'polanddiaspora';
+      case '/form-g/':
+        return 'polanddiaspora';
       case '/form-h':
         return 'travinska';
       case '/form-i':
