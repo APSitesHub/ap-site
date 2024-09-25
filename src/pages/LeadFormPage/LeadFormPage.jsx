@@ -83,9 +83,13 @@ const LeadFormPage = ({ utms }) => {
       case '/form-g/':
         return 'polanddiaspora';
       case '/form-h':
-        return 'travinska';
+        return '5sliv';
+      case '/form-h/':
+        return '5sliv';
       case '/form-i':
-        return 'eng_for_ukr';
+        return 'antisurzhyk';
+      case '/form-i/':
+        return 'antisurzhyk';
       case '/form-j':
         return 'yanovych';
       default:
