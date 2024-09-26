@@ -94,6 +94,22 @@ const LeadFormPage = ({ utms }) => {
         return 'englishforukr';
       case '/form-j/':
         return 'englishforukr';
+      case '/form-k':
+        return '5eng';
+      case '/form-k/':
+        return '5eng';
+      case '/form-l':
+        return 'expert';
+      case '/form-l/':
+        return 'expert';
+      case '/form-m':
+        return '5de';
+      case '/form-m/':
+        return '5de';
+      case '/form-n':
+        return 'englishgalya';
+      case '/form-n/':
+        return 'englishgalya';
       default:
         break;
     }
