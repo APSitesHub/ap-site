@@ -110,6 +110,10 @@ const LeadFormPage = ({ utms }) => {
         return 'englishgalya';
       case '/form-n/':
         return 'englishgalya';
+      case '/form-o':
+        return 'deleh';
+      case '/form-o/':
+        return 'deleh';
       default:
         break;
     }

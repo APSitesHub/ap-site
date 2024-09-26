@@ -789,6 +789,11 @@ export const App = () => {
             element={<LeadFormPage utms={utms} />}
             noindex={true}
           />
+          <Route
+            path="form-o"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
         </Routes>
       </Suspense>
     </>
