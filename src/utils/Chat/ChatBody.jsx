@@ -37,6 +37,8 @@ export const ChatBody = ({ socket, messages, isChatOpen }) => {
     ? '/streams/deutsch'
     : location.pathname.includes('b1beginner')
     ? '/streams-kids/a2'
+    : location.pathname.includes('b2beginner')
+    ? '/streams-kids/a2'
     : location.pathname.includes('streams-kids/a2')
     ? '/streams-kids/b1beginner'
     : location.pathname;
@@ -135,6 +137,9 @@ export const ChatBody = ({ socket, messages, isChatOpen }) => {
         )}
         {messages.map(message =>
           message.roomLocation === room ||
+          message.roomLocation.includes('kids/a2') ||
+          message.roomLocation.includes('b1beginner') ||
+          message.roomLocation.includes('b2beginner') ||
           message.roomLocation === location.pathname.split('-chat')[0] ? (
             message.username === localStorage.getItem('userName') &&
             message.userID === localStorage.getItem('userID') ? (

@@ -101,7 +101,7 @@ export const KidsB1Beginner = () => {
             },
           }
         );
-        const addedMessages = await axios.get(
+        const a2Messages = await axios.get(
           `https://ap-chat-server.onrender.com/messages/room`,
           {
             params: {
@@ -109,7 +109,16 @@ export const KidsB1Beginner = () => {
             },
           }
         );
-        const allMessages = [...dbMessages.data, ...addedMessages.data]
+        const b2BeginnerMessages = await axios.get(
+          `https://ap-chat-server.onrender.com/messages/room`,
+          {
+            params: {
+              room: '/streams-kids/b2beginner',
+            },
+          }
+        );
+        
+        const allMessages = [...dbMessages.data, ...a2Messages.data, ...b2BeginnerMessages.data];
         const todayMessages = allMessages.filter(
           message =>
             new Date(message.createdAt).getDate() === new Date().getDate()

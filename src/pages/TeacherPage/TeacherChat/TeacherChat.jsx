@@ -117,9 +117,18 @@ export const TeacherChat = ({ page }) => {
             },
           }
         );
-        let addedMessages = {}
+        let b1BeginnerMessages = {};
+        let b2BeginnerMessages = {};
         if (room === '/streams-kids/a2') {
-          addedMessages = await axios.get(
+          b1BeginnerMessages = await axios.get(
+            `https://ap-chat-server.onrender.com/messages/room`,
+            {
+              params: {
+                room: '/streams-kids/b1beginner',
+              },
+            }
+          );
+          b2BeginnerMessages = await axios.get(
             `https://ap-chat-server.onrender.com/messages/room`,
             {
               params: {
@@ -128,8 +137,13 @@ export const TeacherChat = ({ page }) => {
             }
           );
         }
-        
-        const allMessages = addedMessages.data?.length ? [...dbMessages.data, ...addedMessages.data] : [...dbMessages.data]
+        const addedMessages = [
+          ...b1BeginnerMessages.data,
+          ...b2BeginnerMessages.data,
+        ];
+        const allMessages = addedMessages.length
+          ? [...dbMessages.data, ...addedMessages]
+          : [...dbMessages.data];
         const todayMessages = allMessages.filter(
           message =>
             new Date(message.createdAt).getDate() === new Date().getDate()
