@@ -117,11 +117,23 @@ export const TeacherChat = ({ page }) => {
             },
           }
         );
-        const todayMessages = dbMessages.data.filter(
+        let addedMessages = {}
+        if (room === '/streams-kids/a2') {
+          addedMessages = await axios.get(
+            `https://ap-chat-server.onrender.com/messages/room`,
+            {
+              params: {
+                room: '/streams-kids/b1beginner',
+              },
+            }
+          );
+        }
+        
+        const allMessages = addedMessages.data?.length ? [...dbMessages.data, ...addedMessages.data] : [...dbMessages.data]
+        const todayMessages = allMessages.filter(
           message =>
             new Date(message.createdAt).getDate() === new Date().getDate()
         );
-        console.log(todayMessages);
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
         console.log(error);

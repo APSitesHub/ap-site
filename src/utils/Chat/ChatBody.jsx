@@ -35,6 +35,10 @@ export const ChatBody = ({ socket, messages, isChatOpen }) => {
     ? '/streams/a1'
     : location.pathname.includes('pilot')
     ? '/streams/deutsch'
+    : location.pathname.includes('b1beginner')
+    ? '/streams-kids/a2'
+    : location.pathname.includes('streams-kids/a2')
+    ? '/streams-kids/b1beginner'
     : location.pathname;
 
   const calculateHeights = () => {
