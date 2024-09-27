@@ -130,15 +130,15 @@ const TeacherPageSpeaking = () => {
                     new Date().getDate() - 2 ||
                   new Date(
                     changeDateFormat(user.visited[user.visited.length - 1])
+                  ).getDate() ===
+                    new Date().getDate() - 3 ||
+                  new Date(
+                    changeDateFormat(user.visited[user.visited.length - 1])
                   ).getDate() === new Date().getDate()) &&
                 (lang === user.lang || lang === user.lang.split('/')[0]) &&
                 course === user.course
             )
-            .sort(
-              (a, b) =>
-                changeDateFormat(b.visitedTime[b.visitedTime.length - 1]) -
-                changeDateFormat(a.visitedTime[a.visitedTime.length - 1])
-            )
+            .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
         );
         console.log('eff');
       } catch (error) {
@@ -159,13 +159,13 @@ const TeacherPageSpeaking = () => {
             <UserHeadCell>№</UserHeadCell>
             <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
             <UserHeadCell>Ім'я</UserHeadCell>
+            <UserHeadCell>Edit</UserHeadCell>
             <UserHeadCell>Відвідини</UserHeadCell>
             <UserHeadCell>Мова</UserHeadCell>
             <UserHeadCell>Потік</UserHeadCell>
             <UserHeadCell>Темперамент</UserHeadCell>
             <UserHeadCell>Успішність</UserHeadCell>
             <UserHeadCell>Фідбек</UserHeadCell>
-            <UserHeadCell>Edit</UserHeadCell>
           </UserDBRow>
         </thead>
         <tbody>
@@ -190,6 +190,15 @@ const TeacherPageSpeaking = () => {
               </UserCell>
               <UserCell>{user.name}</UserCell>
               <UserCell>
+                {user.name === 'Dev Acc' ? null : (
+                  <UserEditButton
+                    onClick={() => handleStudentEdit(user.userId)}
+                  >
+                    Edit
+                  </UserEditButton>
+                )}
+              </UserCell>
+              <UserCell>
                 {!user.visitedTime[user.visitedTime.length - 1]
                   ? ''
                   : user.visitedTime[user.visitedTime.length - 1].match('^202')
@@ -207,23 +216,16 @@ const TeacherPageSpeaking = () => {
                   ? 'Інтроверт'
                   : ''}
               </UserCell>
-              <UserCell>{user.successRate === 'good'
+              <UserCell>
+                {user.successRate === 'good'
                   ? 'Сильний'
                   : user.successRate === 'mid'
                   ? 'Середній'
                   : user.successRate === 'bad'
                   ? 'Слабкий'
-                  : ''}</UserCell>
-              <UserCell>{user.feedback}</UserCell>
-              <UserCell>
-                {user.name === 'Dev Acc' ? null : (
-                  <UserEditButton
-                    onClick={() => handleStudentEdit(user.userId)}
-                  >
-                    Edit
-                  </UserEditButton>
-                )}
+                  : ''}
               </UserCell>
+              <UserCell>{user.feedback}</UserCell>
             </UserDBRow>
           ))}
         </tbody>
