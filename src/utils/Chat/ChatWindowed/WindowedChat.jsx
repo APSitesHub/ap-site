@@ -35,8 +35,8 @@ export const WindowedChat = () => {
             },
           }
         );
-        let b1BeginnerMessages = {}
-        let b2BeginnerMessages = {}
+        let b1BeginnerMessages = {};
+        let b2BeginnerMessages = {};
         if (room === '/streams-kids/a2') {
           b1BeginnerMessages = await axios.get(
             `https://ap-chat-server.onrender.com/messages/room`,
@@ -55,8 +55,13 @@ export const WindowedChat = () => {
             }
           );
         }
-        const addedMessages = [...b1BeginnerMessages.data, ...b2BeginnerMessages.data]
-        const allMessages = addedMessages.length ? [...dbMessages.data, ...addedMessages] : [...dbMessages.data]
+        const addedMessages =
+          b1BeginnerMessages?.data?.length && b2BeginnerMessages?.data?.length
+            ? [...b1BeginnerMessages.data, ...b2BeginnerMessages.data]
+            : [];
+        const allMessages = addedMessages.length
+          ? [...dbMessages.data, ...addedMessages]
+          : [...dbMessages.data];
         const todayMessages = allMessages.filter(
           message =>
             new Date(message.createdAt).getDate() === new Date().getDate()
@@ -73,7 +78,10 @@ export const WindowedChat = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat-server.onrender.com/messages', data);
+          await axios.post(
+            'https://ap-chat-server.onrender.com/messages',
+            data
+          );
         } catch (error) {
           console.log(error);
         }
@@ -113,7 +121,9 @@ export const WindowedChat = () => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
+          await axios.delete(
+            `https://ap-chat-server.onrender.com/messages/${id}`
+          );
         } catch (error) {
           console.log(error);
         }
@@ -136,9 +146,12 @@ export const WindowedChat = () => {
         console.log(userID);
         console.log(userIP);
         try {
-          await axios.patch(`https://ap-chat-server.onrender.com/users/${userID}`, {
-            isBanned: true,
-          });
+          await axios.patch(
+            `https://ap-chat-server.onrender.com/users/${userID}`,
+            {
+              isBanned: true,
+            }
+          );
         } catch (error) {
           console.log(error);
         }

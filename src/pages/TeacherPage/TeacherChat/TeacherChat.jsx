@@ -137,10 +137,10 @@ export const TeacherChat = ({ page }) => {
             }
           );
         }
-        const addedMessages = [
-          ...b1BeginnerMessages.data,
-          ...b2BeginnerMessages.data,
-        ];
+        const addedMessages =
+          b1BeginnerMessages?.data?.length && b2BeginnerMessages?.data?.length
+            ? [...b1BeginnerMessages.data, ...b2BeginnerMessages.data]
+            : [];
         const allMessages = addedMessages.length
           ? [...dbMessages.data, ...addedMessages]
           : [...dbMessages.data];
