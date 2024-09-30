@@ -149,6 +149,7 @@ export const UserCell = styled.td`
 export const UserCellLeft = styled(UserCell)`
   text-align: start;
   padding-left: 8px;
+  max-width: 50vw;
 `;
 
 export const UserEditButton = styled.button`

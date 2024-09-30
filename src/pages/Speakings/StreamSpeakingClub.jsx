@@ -3,12 +3,15 @@ import { StreamsBackgroundWrapper } from 'components/BackgroundWrapper/Backgroun
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
 import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   StreamPlaceHolder,
   StreamPlaceHolderText,
+  StreamRefreshPageLink,
+  StreamRefreshQuestion,
+  StreamRefreshText,
   StreamSection,
 } from '../../components/Stream/Stream.styled';
-import { useLocation } from 'react-router-dom';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -73,15 +76,13 @@ const StreamSpeakingClub = () => {
     const sendUserInfo = async () => {
       try {
         console.log(user.userId);
-        const existingUser = await axios.get(
-          `/speakingusers/${user.userId}`
-        );
+        const existingUser = await axios.get(`/speakingusers/${user.userId}`);
         console.log('existingUser', existingUser);
         console.log(user);
 
         const res = !existingUser.data
           ? await axios.post('/speakingusers/new', user)
-          : await axios.put(`/speakingusers/${user.userId}`, user)
+          : await axios.put(`/speakingusers/${user.userId}`, user);
 
         res && setIsApproved(true);
       } catch (error) {
@@ -107,6 +108,14 @@ const StreamSpeakingClub = () => {
               Будь ласка, зачекайте, незабаром вас переадресує на практичне
               заняття в Zoom
             </StreamPlaceHolderText>
+            <StreamRefreshText>
+              <StreamRefreshQuestion>
+                Очікуєте занадто довго?
+              </StreamRefreshQuestion>
+              <StreamRefreshPageLink onClick={() => window.location.reload()}>
+                Натисність сюди, щоб оновити сторінку
+              </StreamRefreshPageLink>
+            </StreamRefreshText>
           </StreamPlaceHolder>
           {redirectLink && isApproved && window.location.replace(redirectLink)}
         </StreamsBackgroundWrapper>

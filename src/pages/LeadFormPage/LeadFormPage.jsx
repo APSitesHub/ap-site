@@ -50,6 +50,17 @@ const LeadFormPage = ({ utms }) => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
 
+  // console.log(location);
+
+  // const query = useLocation().search;
+  // console.log(query);
+
+  // console.log(location.includes('tg-') && !query.includes('tg_only'));
+
+  // location.includes('tg-') && !query.includes('tg_only')
+  //   ? window.location.replace('https://ap.education/form')
+  //   : null;
+
   const getTag = location => {
     switch (location) {
       case '/form':
@@ -114,6 +125,46 @@ const LeadFormPage = ({ utms }) => {
         return 'deleh';
       case '/form-o/':
         return 'deleh';
+      case '/form-tg1':
+        return 'tg1';
+      case '/form-tg1/':
+        return 'tg1';
+      case '/form-tg2':
+        return 'tg2';
+      case '/form-tg2/':
+        return 'tg2';
+      case '/form-tg3':
+        return 'tg3';
+      case '/form-tg3/':
+        return 'tg3';
+      case '/form-tg4':
+        return 'tg4';
+      case '/form-tg4/':
+        return 'tg4';
+      case '/form-tg5':
+        return 'tg5';
+      case '/form-tg5/':
+        return 'tg5';
+      case '/form-tg6':
+        return 'tg6';
+      case '/form-tg6/':
+        return 'tg6';
+      case '/form-tg7':
+        return 'tg7';
+      case '/form-tg7/':
+        return 'tg7';
+      case '/form-tg8':
+        return 'tg8';
+      case '/form-tg8/':
+        return 'tg8';
+      case '/form-tg9':
+        return 'tg9';
+      case '/form-tg9/':
+        return 'tg9';
+      case '/form-tg10':
+        return 'tg10';
+      case '/form-tg10/':
+        return 'tg10';
       default:
         break;
     }

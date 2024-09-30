@@ -24,6 +24,7 @@ const TeacherPageSpeaking = () => {
   const [course, setCourse] = useState('');
   const [studentToEdit, setStudentToEdit] = useState({});
   const [isEditStudentFormOpen, setIsEditStudentFormOpen] = useState(false);
+  const linksRegex = /\b(?:https?|ftp):\/\/\S+\b/g;
 
   const closeStudentEditForm = e => {
     setIsEditStudentFormOpen(false);
@@ -114,20 +115,11 @@ const TeacherPageSpeaking = () => {
           )[0].course
         );
         setUsers(
-          (await axios.get('/speakingusers/admin')).data
-            .filter(
-              user =>
-                (new Date(
-                  changeDateFormat(user.visited[user.visited.length - 1])
-                ).getDate() ===
-                  new Date().getDate() - 2 ||
-                  new Date(
-                    changeDateFormat(user.visited[user.visited.length - 1])
-                  ).getDate() === new Date().getDate()) &&
-                (lang === user.lang || lang === user.lang.split('/')[0]) &&
-                course === user.course
-            )
-            .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
+          (
+            await axios.get('/speakingusers/admin', {
+              params: { course: course },
+            })
+          ).data
         );
         console.log('eff');
       } catch (error) {
@@ -142,7 +134,7 @@ const TeacherPageSpeaking = () => {
   return (
     <TeacherSpeakingDBSection>
       <TeacherSpeakingDBTable>
-        <UserDBCaption>Список юзерів, що відвідали заняття</UserDBCaption>
+        <UserDBCaption>Список студентів, що відвідали заняття</UserDBCaption>
         <thead>
           <UserDBRow>
             <UserHeadCell>№</UserHeadCell>
@@ -158,58 +150,89 @@ const TeacherPageSpeaking = () => {
           </UserDBRow>
         </thead>
         <tbody>
-          {users.map((user, i) => (
-            <UserDBRow key={user._id}>
-              <UserCell>{i + 1}</UserCell>
-              <UserCell>
-                <a
-                  href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {user.crmId}
-                </a>
-              </UserCell>
-              <UserCellLeft>{user.name}</UserCellLeft>
-              <UserCell>
-                {user.name === 'Dev Acc' ? null : (
-                  <UserEditButton
-                    onClick={() => handleStudentEdit(user.userId)}
+          {users
+            .filter(
+              user =>
+                (new Date(
+                  changeDateFormat(user.visited[user.visited.length - 1])
+                ).getDate() ===
+                  new Date().getDate() - 2 ||
+                  new Date(
+                    changeDateFormat(user.visited[user.visited.length - 1])
+                  ).getDate() === new Date().getDate()) &&
+                (lang === user.lang || lang === user.lang.split('/')[0]) &&
+                course === user.course
+            )
+            .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
+            .map((user, i) => (
+              <UserDBRow key={user._id}>
+                <UserCell>{i + 1}</UserCell>
+                <UserCell>
+                  <a
+                    href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
+                    target="_blank"
+                    rel="noreferrer"
                   >
-                    Edit
-                  </UserEditButton>
-                )}
-              </UserCell>
-              <UserCell>
-                {!user.visitedTime[user.visitedTime.length - 1]
-                  ? ''
-                  : user.visitedTime[user.visitedTime.length - 1].match('^202')
-                  ? new Date(
-                      user.visitedTime[user.visitedTime.length - 1]
-                    ).toLocaleString('uk-UA')
-                  : ''}
-              </UserCell>
-              <UserCell>{user.lang}</UserCell>
-              <UserCell>{user.course}</UserCell>
-              <UserCell>
-                {user.temperament === 'extro'
-                  ? 'Екстраверт'
-                  : user.temperament === 'intro'
-                  ? 'Інтроверт'
-                  : ''}
-              </UserCell>
-              <UserCell>
-                {user.successRate === 'good'
-                  ? 'Сильний'
-                  : user.successRate === 'mid'
-                  ? 'Середній'
-                  : user.successRate === 'bad'
-                  ? 'Слабкий'
-                  : ''}
-              </UserCell>
-              <UserCellLeft>{user.feedback}</UserCellLeft>
-            </UserDBRow>
-          ))}
+                    {user.crmId}
+                  </a>
+                </UserCell>
+                <UserCellLeft>{user.name}</UserCellLeft>
+                <UserCell>
+                  {user.name === 'Dev Acc' ? null : (
+                    <UserEditButton
+                      onClick={() => handleStudentEdit(user.userId)}
+                    >
+                      Edit
+                    </UserEditButton>
+                  )}
+                </UserCell>
+                <UserCell>
+                  {!user.visitedTime[user.visitedTime.length - 1]
+                    ? ''
+                    : user.visitedTime[user.visitedTime.length - 1].match(
+                        '^202'
+                      )
+                    ? new Date(
+                        user.visitedTime[user.visitedTime.length - 1]
+                      ).toLocaleString('uk-UA')
+                    : ''}
+                </UserCell>
+                <UserCell>{user.lang}</UserCell>
+                <UserCell>{user.course}</UserCell>
+                <UserCell>
+                  {user.temperament === 'extro'
+                    ? 'Екстраверт'
+                    : user.temperament === 'intro'
+                    ? 'Інтроверт'
+                    : ''}
+                </UserCell>
+                <UserCell>
+                  {user.successRate === 'good'
+                    ? 'Сильний'
+                    : user.successRate === 'mid'
+                    ? 'Середній'
+                    : user.successRate === 'bad'
+                    ? 'Слабкий'
+                    : ''}
+                </UserCell>
+                <UserCellLeft
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      typeof user.feedback === 'string'
+                        ? user.feedback.replace(
+                            linksRegex,
+                            match =>
+                              `<a href="${match}" target="_blank">${
+                                match.length > 50
+                                  ? match.slice(0, 50) + '...'
+                                  : match
+                              }</a>`
+                          )
+                        : '',
+                  }}
+                ></UserCellLeft>
+              </UserDBRow>
+            ))}
         </tbody>
       </TeacherSpeakingDBTable>
       {isEditStudentFormOpen && (

@@ -512,6 +512,29 @@ export const StreamPlaceHolderText = styled.p`
   font-size: 32px;
   max-width: 720px;
   line-height: 1.2;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+`;
+
+export const StreamRefreshText = styled(StreamPlaceHolderText)`
+  font-size: 22px;
+`;
+
+export const StreamRefreshQuestion = styled.span`
+  display: block;
+  margin-bottom: 6px;
+`;
+
+export const StreamRefreshPageLink = styled.a`
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--main-color);
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
 `;
 
 export const LoginFormText = styled.p`
