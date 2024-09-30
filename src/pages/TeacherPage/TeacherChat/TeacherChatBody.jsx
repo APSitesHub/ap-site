@@ -83,64 +83,68 @@ export const TeacherChatBody = ({ messages, socket, room }) => {
         onScroll={calculateHeights}
       >
         {messages.map(message =>
-          message.username === localStorage.getItem('userName') &&
-          message.userID === localStorage.getItem('userID') ? (
-            <ChatMessageWrapper key={message.id}>
-              <ChatMessageYou className="sender__name">
-                Ви ({message.username})
-              </ChatMessageYou>
-              <ChatWindowedMessageYouCloud>
-                <ChatWindowedDeleteYourMessage
-                  onClick={() => deleteMessage(message)}
-                  id={message._id}
-                />
-                <ChatWindowedPinnedMessageIcon
-                  className={message.isPinned ? 'pinned' : ''}
-                  onClick={() => pinMessage(message)}
-                  id={message.id}
-                />
-                <ChatWindowedMessageText
-                  dangerouslySetInnerHTML={{
-                    __html: message.text.replace(
-                      linksRegex,
-                      match => `<a href="${match}" target="_blank">${match}</a>`
-                    ),
-                  }}
-                ></ChatWindowedMessageText>
-                {/* <ChatMessageTime>
-                    {new Date(message.createdAt).toLocaleTimeString('uk-UA')}
-                  </ChatMessageTime> */}
-              </ChatWindowedMessageYouCloud>
-            </ChatMessageWrapper>
-          ) : (
-            <ChatMessageWrapper key={message.id}>
-              <ChatMessageUsername>
-                <ChatUsernameBox>
-                  {message.username}
-                  <ChatWindowedBanUser
-                    onClick={() => banUser(message.userID, message.userIP)}
+          message.roomLocation === room ? (
+            message.username === localStorage.getItem('userName') &&
+            message.userID === localStorage.getItem('userID') ? (
+              <ChatMessageWrapper key={message.id}>
+                <ChatMessageYou className="sender__name">
+                  Ви ({message.username})
+                </ChatMessageYou>
+                <ChatWindowedMessageYouCloud>
+                  <ChatWindowedDeleteYourMessage
+                    onClick={() => deleteMessage(message)}
+                    id={message._id}
                   />
-                </ChatUsernameBox>
-              </ChatMessageUsername>
-              <ChatWindowedMessageUserCloud className="message__recipient">
-                <ChatWindowedDeleteMessage
-                  onClick={() => deleteMessage(message)}
-                  id={message._id}
-                />
-                <ChatWindowedMessageText
-                  dangerouslySetInnerHTML={{
-                    __html: message.text.replace(
-                      linksRegex,
-                      match => `<a href="${match}" target="_blank">${match}</a>`
-                    ),
-                  }}
-                ></ChatWindowedMessageText>
-                {/* <ChatMessageTime>
+                  <ChatWindowedPinnedMessageIcon
+                    className={message.isPinned ? 'pinned' : ''}
+                    onClick={() => pinMessage(message)}
+                    id={message.id}
+                  />
+                  <ChatWindowedMessageText
+                    dangerouslySetInnerHTML={{
+                      __html: message.text.replace(
+                        linksRegex,
+                        match =>
+                          `<a href="${match}" target="_blank">${match}</a>`
+                      ),
+                    }}
+                  ></ChatWindowedMessageText>
+                  {/* <ChatMessageTime>
                     {new Date(message.createdAt).toLocaleTimeString('uk-UA')}
                   </ChatMessageTime> */}
-              </ChatWindowedMessageUserCloud>
-            </ChatMessageWrapper>
-          )
+                </ChatWindowedMessageYouCloud>
+              </ChatMessageWrapper>
+            ) : (
+              <ChatMessageWrapper key={message.id}>
+                <ChatMessageUsername>
+                  <ChatUsernameBox>
+                    {message.username}
+                    <ChatWindowedBanUser
+                      onClick={() => banUser(message.userID, message.userIP)}
+                    />
+                  </ChatUsernameBox>
+                </ChatMessageUsername>
+                <ChatWindowedMessageUserCloud className="message__recipient">
+                  <ChatWindowedDeleteMessage
+                    onClick={() => deleteMessage(message)}
+                    id={message._id}
+                  />
+                  <ChatWindowedMessageText
+                    dangerouslySetInnerHTML={{
+                      __html: message.text.replace(
+                        linksRegex,
+                        match =>
+                          `<a href="${match}" target="_blank">${match}</a>`
+                      ),
+                    }}
+                  ></ChatWindowedMessageText>
+                  {/* <ChatMessageTime>
+                    {new Date(message.createdAt).toLocaleTimeString('uk-UA')}
+                  </ChatMessageTime> */}
+                </ChatWindowedMessageUserCloud>
+              </ChatMessageWrapper>
+            )
+          ) : null
         )}
       </ChatWindowedMessagesBox>
       {!scroll && (

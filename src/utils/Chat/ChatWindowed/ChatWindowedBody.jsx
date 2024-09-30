@@ -97,6 +97,7 @@ export const ChatWindowedBody = ({ messages, socket, room }) => {
         onScroll={calculateHeights}
       >
         {messages.map(message =>
+          message.roomLocation === room ? (
             message.username === localStorage.getItem('userName') &&
             message.userID === localStorage.getItem('userID') ? (
               <ChatMessageWrapper key={message.id}>
@@ -157,6 +158,7 @@ export const ChatWindowedBody = ({ messages, socket, room }) => {
                 </ChatWindowedMessageUserCloud>
               </ChatMessageWrapper>
             )
+          ) : null
         )}
       </ChatWindowedMessagesBox>
       {!scroll && (

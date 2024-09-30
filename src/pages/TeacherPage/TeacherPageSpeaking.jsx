@@ -3,6 +3,7 @@ import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import {
   UserCell,
+  UserCellLeft,
   UserDBCaption,
   UserDBRow,
   UserEditButton,
@@ -113,25 +114,13 @@ const TeacherPageSpeaking = () => {
           )[0].course
         );
         setUsers(
-          (
-            await axios.get('/speakingusers/admin', {
-              params: { isAdmin: true },
-            })
-          ).data
+          (await axios.get('/speakingusers/admin')).data
             .filter(
               user =>
                 (new Date(
                   changeDateFormat(user.visited[user.visited.length - 1])
                 ).getDate() ===
-                  new Date().getDate() - 1 ||
-                  new Date(
-                    changeDateFormat(user.visited[user.visited.length - 1])
-                  ).getDate() ===
-                    new Date().getDate() - 2 ||
-                  new Date(
-                    changeDateFormat(user.visited[user.visited.length - 1])
-                  ).getDate() ===
-                    new Date().getDate() - 3 ||
+                  new Date().getDate() - 2 ||
                   new Date(
                     changeDateFormat(user.visited[user.visited.length - 1])
                   ).getDate() === new Date().getDate()) &&
@@ -157,7 +146,7 @@ const TeacherPageSpeaking = () => {
         <thead>
           <UserDBRow>
             <UserHeadCell>№</UserHeadCell>
-            <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
+            <UserHeadCell>CRM</UserHeadCell>
             <UserHeadCell>Ім'я</UserHeadCell>
             <UserHeadCell>Edit</UserHeadCell>
             <UserHeadCell>Відвідини</UserHeadCell>
@@ -179,16 +168,9 @@ const TeacherPageSpeaking = () => {
                   rel="noreferrer"
                 >
                   {user.crmId}
-                </a>{' '}
-                <a
-                  href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {user.contactId}
                 </a>
               </UserCell>
-              <UserCell>{user.name}</UserCell>
+              <UserCellLeft>{user.name}</UserCellLeft>
               <UserCell>
                 {user.name === 'Dev Acc' ? null : (
                   <UserEditButton
@@ -225,7 +207,7 @@ const TeacherPageSpeaking = () => {
                   ? 'Слабкий'
                   : ''}
               </UserCell>
-              <UserCell>{user.feedback}</UserCell>
+              <UserCellLeft>{user.feedback}</UserCellLeft>
             </UserDBRow>
           ))}
         </tbody>

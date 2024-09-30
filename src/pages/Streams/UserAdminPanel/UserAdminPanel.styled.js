@@ -146,6 +146,11 @@ export const UserCell = styled.td`
   }
 `;
 
+export const UserCellLeft = styled(UserCell)`
+  text-align: start;
+  padding-left: 8px;
+`;
+
 export const UserEditButton = styled.button`
   background-color: transparent;
   border: 1px solid var(--accent-color);
