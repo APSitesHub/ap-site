@@ -49,122 +49,99 @@ const LeadFormPage = ({ utms }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation().pathname;
+  const query = useLocation().search;
 
-  // console.log(location);
-
-  // const query = useLocation().search;
-  // console.log(query);
-
-  // console.log(location.includes('tg-') && !query.includes('tg_only'));
-
-  // location.includes('tg-') && !query.includes('tg_only')
-  //   ? window.location.replace('https://ap.education/form')
-  //   : null;
+  const replace = () =>
+    location.includes('form-mova') && !query.includes('tg_only')
+      ? window.location.replace('https://ap.education/form')
+      : null;
+  replace();
 
   const getTag = location => {
     switch (location) {
       case '/form':
         return '';
       case '/form-a':
-        return 'deutschland';
       case '/form-a/':
         return 'deutschland';
       case '/form-b':
-        return 'polskakawa';
       case '/form-b/':
         return 'polskakawa';
       case '/form-c':
-        return 'ukrdiaspora';
       case '/form-c/':
         return 'ukrdiaspora';
       case '/form-d':
-        return 'dostupna';
       case '/form-d/':
         return 'dostupna';
       case '/form-e':
-        return 'ukrnim';
       case '/form-e/':
         return 'ukrnim';
       case '/form-f':
-        return 'b2b';
       case '/form-f/':
         return 'b2b';
       case '/form-g':
-        return 'polanddiaspora';
       case '/form-g/':
         return 'polanddiaspora';
       case '/form-h':
-        return '5sliv';
       case '/form-h/':
         return '5sliv';
       case '/form-i':
-        return 'antisurzhyk';
       case '/form-i/':
         return 'antisurzhyk';
       case '/form-j':
-        return 'englishforukr';
       case '/form-j/':
         return 'englishforukr';
       case '/form-k':
-        return '5eng';
       case '/form-k/':
         return '5eng';
       case '/form-l':
-        return 'expert';
       case '/form-l/':
         return 'expert';
       case '/form-m':
-        return '5de';
       case '/form-m/':
         return '5de';
       case '/form-n':
-        return 'englishgalya';
       case '/form-n/':
         return 'englishgalya';
       case '/form-o':
-        return 'deleh';
       case '/form-o/':
         return 'deleh';
       case '/form-tg1':
-        return 'tg1';
       case '/form-tg1/':
         return 'tg1';
       case '/form-tg2':
-        return 'tg2';
       case '/form-tg2/':
         return 'tg2';
       case '/form-tg3':
-        return 'tg3';
       case '/form-tg3/':
         return 'tg3';
       case '/form-tg4':
-        return 'tg4';
       case '/form-tg4/':
         return 'tg4';
       case '/form-tg5':
-        return 'tg5';
       case '/form-tg5/':
         return 'tg5';
       case '/form-tg6':
-        return 'tg6';
       case '/form-tg6/':
         return 'tg6';
       case '/form-tg7':
-        return 'tg7';
       case '/form-tg7/':
         return 'tg7';
       case '/form-tg8':
-        return 'tg8';
       case '/form-tg8/':
         return 'tg8';
       case '/form-tg9':
-        return 'tg9';
       case '/form-tg9/':
         return 'tg9';
       case '/form-tg10':
-        return 'tg10';
       case '/form-tg10/':
         return 'tg10';
+      case '/form-mova1':
+      case '/form-mova1/':
+        return 'mova1';
+      case '/form-mova2':
+      case '/form-mova2/':
+        return 'mova2';
       default:
         break;
     }

@@ -114,13 +114,10 @@ const TeacherPageSpeaking = () => {
               page.includes(timetable.level) && lang === timetable.lang
           )[0].course
         );
-        setUsers(
-          (
-            await axios.get('/speakingusers/admin', {
-              params: { course: course },
-            })
-          ).data
-        );
+        const usersToSet = await axios.get('/speakingusers', {
+          params: { course },
+        });
+        setUsers(users => (users = [...usersToSet.data]));
         console.log('eff');
       } catch (error) {
         console.log(error);
@@ -153,13 +150,11 @@ const TeacherPageSpeaking = () => {
           {users
             .filter(
               user =>
-                (new Date(
-                  changeDateFormat(user.visited[user.visited.length - 1])
-                ).getDate() ===
-                  new Date().getDate() - 2 ||
+                new Date() -
                   new Date(
                     changeDateFormat(user.visited[user.visited.length - 1])
-                  ).getDate() === new Date().getDate()) &&
+                  ) <=
+                  3 * 86400000 &&
                 (lang === user.lang || lang === user.lang.split('/')[0]) &&
                 course === user.course
             )
@@ -235,6 +230,7 @@ const TeacherPageSpeaking = () => {
             ))}
         </tbody>
       </TeacherSpeakingDBTable>
+
       {isEditStudentFormOpen && (
         <Backdrop onClick={closeEditStudentFormOnClick} id="close-on-click">
           <TeacherPageSpeakingEditForm
