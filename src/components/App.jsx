@@ -854,6 +854,36 @@ export const App = () => {
             element={<LeadFormPage utms={utms} />}
             noindex={true}
           />
+          <Route
+            path="form-mova3"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova4"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova5"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova6"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova7"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova8"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
         </Routes>
       </Suspense>
     </>

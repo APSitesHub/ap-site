@@ -142,6 +142,24 @@ const LeadFormPage = ({ utms }) => {
       case '/form-mova2':
       case '/form-mova2/':
         return 'mova2';
+      case '/form-mova3':
+      case '/form-mova3/':
+        return 'mova3';
+      case '/form-mova4':
+      case '/form-mova4/':
+        return 'mova4';
+      case '/form-mova5':
+      case '/form-mova5/':
+        return 'mova5';
+      case '/form-mova6':
+      case '/form-mova6/':
+        return 'mova6';
+      case '/form-mova7':
+      case '/form-mova7/':
+        return 'mova7';
+      case '/form-mova8':
+      case '/form-mova8/':
+        return 'mova8';
       default:
         break;
     }
