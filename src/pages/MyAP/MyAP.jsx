@@ -44,16 +44,12 @@ const MyAP = () => {
   // const linkToSet = `https://online.ap.education/student/lessons`;
 
   const [isChatButtonShown, setIsChatButtonShown] = useState(
-    localStorage.getItem('ischatboxshown')
+    localStorage.getItem('ischatboxshown') === 'true' ? true : false
   );
 
   const toggleChatButton = () => {
-    const storageValue = localStorage.getItem('ischatboxshown');
-    console.log(storageValue);
-
     setIsChatButtonShown(isShown => !isShown);
-    localStorage.setItem('ischatboxshown', !storageValue);
-    console.log(localStorage.getItem('ischatboxshown'));
+    localStorage.setItem('ischatboxshown', !isChatButtonShown);
   };
 
   useEffect(() => {
