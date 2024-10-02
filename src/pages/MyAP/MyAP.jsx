@@ -56,11 +56,11 @@ const MyAP = () => {
     document.title = 'My AP | AP Education';
 
     const button = document.querySelector('.amo-button-holder');
-    if (button && isChatButtonShown) {
-      button.style.translate = '400px';
+    if (button && !isChatButtonShown) {
+      button.style.transform = 'translate(400px)';
       button.style.transition = 'ease 250ms';
-    } else if (button && !isChatButtonShown) {
-      button.style.translate = '';
+    } else if (button && isChatButtonShown) {
+      button.style.transform = '';
     }
 
     const refreshToken = async () => {
