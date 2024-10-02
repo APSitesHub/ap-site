@@ -137,9 +137,12 @@ export const ChatBody = ({ socket, messages, isChatOpen }) => {
         )}
         {messages.map(message =>
           message.roomLocation === room ||
-          message.roomLocation.includes('kids/a2') ||
-          message.roomLocation.includes('b1beginner') ||
-          message.roomLocation.includes('b2beginner') ||
+          (message.roomLocation.includes('kids/a2') &&
+            room === 'stream-kids/a2') ||
+          (message.roomLocation.includes('b1beginner') &&
+            room === 'stream-kids/a2') ||
+          (message.roomLocation.includes('b2beginner') &&
+            room === 'stream-kids/a2') ||
           message.roomLocation === location.pathname.split('-chat')[0] ? (
             message.username === localStorage.getItem('userName') &&
             message.userID === localStorage.getItem('userID') ? (
