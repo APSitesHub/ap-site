@@ -160,6 +160,9 @@ const LeadFormPage = ({ utms }) => {
       case '/form-mova8':
       case '/form-mova8/':
         return 'mova8';
+      case '/form-ov':
+      case '/form-ov/':
+        return 'oz.vyshnia';
       default:
         break;
     }
@@ -259,7 +262,9 @@ const LeadFormPage = ({ utms }) => {
       <ThankYouSection>
         <PageFormWrapper>
           <PageFormHeading>
-            Залишіть заявку зараз та отримайте -15% знижки на наші послуги!
+            {!location.includes('form-ov')
+              ? 'Залишіть заявку зараз та отримайте -15% знижки на наші послуги!'
+              : 'Залишіть заявку і ми з вами сконтактуємо!'}
           </PageFormHeading>
           <LeadFormAddText>
             P.S.: Зустрінемось на пробному занятті 😉

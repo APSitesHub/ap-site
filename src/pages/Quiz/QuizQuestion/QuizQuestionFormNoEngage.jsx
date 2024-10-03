@@ -221,7 +221,7 @@ export const QuizQuestionFormNoEngage = ({
           <Logo />
           <Title>Вітаємо!</Title>
           <Description data-gtm="quizformsubmit">
-            Ви успішно зареєструвались на перший безкоштовний урок з{' '}
+            Ви успішно зареєструвались на перший урок з{' '}
             {quizValues.current.lang === 'en'
               ? 'англійської'
               : quizValues.current.lang === 'de'

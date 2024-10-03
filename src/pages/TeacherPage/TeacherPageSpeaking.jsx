@@ -34,7 +34,7 @@ const TeacherPageSpeaking = () => {
     if (dateString) {
       const dateArray = dateString.split('.');
       return dateArray.length > 2
-        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('.'))
+        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
         : Date.parse(dateString);
     }
     return;
