@@ -19,6 +19,8 @@ const StreamSpeakingClub = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [redirectLink, setRedirectLink] = useState('');
   const [user, setUser] = useState({});
+  const [course, setCourse] = useState('');
+  const [level, setLevel] = useState('');
   const [isApproved, setIsApproved] = useState(false);
   const location = useLocation().pathname;
 
@@ -70,15 +72,39 @@ const StreamSpeakingClub = () => {
     getLinksRequest();
   }, [link]);
 
+  const getLanguageFromLocation = location => {
+    if (location.includes('de') || location.includes('deutsch')) {
+      return 'de';
+    } else if (location.includes('pl') || location.includes('polski')) {
+      return 'pl';
+    } else {
+      return 'en';
+    }
+  };
+  const lang = getLanguageFromLocation(location);
+
   useEffect(() => {
     document.title = `Практичне заняття | AP Education`;
 
     const sendUserInfo = async () => {
       try {
+        setCourse(
+          (await axios.get('/timetable')).data.filter(
+            timetable =>
+              page.includes(timetable.level) && lang === timetable.lang
+          )[0].course
+        );
+        setLevel(
+          (await axios.get('/timetable')).data.filter(
+            timetable =>
+              lang === timetable.lang && user.course === timetable.course
+          )[0].level
+        );
+
         console.log(user.userId);
         const existingUser = await axios.get(`/speakingusers/${user.userId}`);
         console.log('existingUser', existingUser);
-        console.log(user);
+        console.log(103, user);
 
         const res = !existingUser.data
           ? await axios.post('/speakingusers/new', user)
@@ -91,7 +117,7 @@ const StreamSpeakingClub = () => {
     };
 
     sendUserInfo();
-  }, [user]);
+  }, [user, page, lang]);
 
   return (
     <>
@@ -102,22 +128,53 @@ const StreamSpeakingClub = () => {
               <Loader />
             </LoaderWrapper>
           )}
-          <StreamPlaceHolder>
-            <StreamPlaceHolderText>
-              Привіт! <br />
-              Будь ласка, зачекайте, незабаром вас переадресує на практичне
-              заняття в Zoom
-            </StreamPlaceHolderText>
-            <StreamRefreshText>
-              <StreamRefreshQuestion>
-                Очікуєте занадто довго?
-              </StreamRefreshQuestion>
-              <StreamRefreshPageLink onClick={() => window.location.reload()}>
-                Натисність сюди, щоб оновити сторінку
-              </StreamRefreshPageLink>
-            </StreamRefreshText>
-          </StreamPlaceHolder>
-          {redirectLink && isApproved && window.location.replace(redirectLink)}
+          {course === user.course ? (
+            <StreamPlaceHolder>
+              <StreamPlaceHolderText>
+                Привіт! <br />
+                Будь ласка, зачекайте, незабаром вас переадресує на практичне
+                заняття в Zoom
+              </StreamPlaceHolderText>
+              <StreamRefreshText>
+                <StreamRefreshQuestion>
+                  Очікуєте занадто довго?
+                </StreamRefreshQuestion>
+                <StreamRefreshPageLink onClick={() => window.location.reload()}>
+                  Натисніть сюди, щоб оновити сторінку
+                </StreamRefreshPageLink>
+              </StreamRefreshText>
+            </StreamPlaceHolder>
+          ) : (
+            <StreamPlaceHolder>
+              <StreamPlaceHolderText>
+                Хммм... <br />
+                Здається, ви намагаєтесь під'єднатися до практичного заняття не
+                свого рівня!
+              </StreamPlaceHolderText>
+              <StreamRefreshText>
+                <StreamRefreshQuestion>
+                  Впевнені, що не помилились? <br /> Зв'яжіться з вашим
+                  менеджером або
+                </StreamRefreshQuestion>
+                <StreamRefreshPageLink
+                  onClick={() =>
+                    window.location.replace(
+                      'https://www.ap.education/streams/' +
+                        (lang !== 'en' ? lang : '') +
+                        level +
+                        'sc'
+                    )
+                  }
+                >
+                  може, це ваше практичне заняття?
+                </StreamRefreshPageLink>
+              </StreamRefreshText>
+            </StreamPlaceHolder>
+          )}
+          {course === user.course &&
+            redirectLink &&
+            isApproved &&
+            window.location.replace(redirectLink)}
         </StreamsBackgroundWrapper>
       </StreamSection>
     </>
