@@ -295,23 +295,27 @@ export const MyAPPanel = ({
             className={isLessonFinderShown && 'active'}
           />
         </APPanelBtn>
-        <APPanelBtn
-          onClick={toggleRating}
-          onMouseEnter={e => toggleTooltip(e)}
-          onMouseOut={e => toggleTooltip(e)}
-        >
-          <CupBtnIcon id="rating-btn" className={isRatingShown && 'active'} />
-        </APPanelBtn>
-        <APPanelBtn
-          onClick={toggleCalendar}
-          onMouseEnter={e => toggleTooltip(e)}
-          onMouseOut={e => toggleTooltip(e)}
-        >
-          <CalendarBtnIcon
-            id="calendar-btn"
-            className={isCalendarShown && 'active'}
-          />
-        </APPanelBtn>
+        {user.package !== 'online' && (
+          <APPanelBtn
+            onClick={toggleRating}
+            onMouseEnter={e => toggleTooltip(e)}
+            onMouseOut={e => toggleTooltip(e)}
+          >
+            <CupBtnIcon id="rating-btn" className={isRatingShown && 'active'} />
+          </APPanelBtn>
+        )}
+        {user.package !== 'online' && (
+          <APPanelBtn
+            onClick={toggleCalendar}
+            onMouseEnter={e => toggleTooltip(e)}
+            onMouseOut={e => toggleTooltip(e)}
+          >
+            <CalendarBtnIcon
+              id="calendar-btn"
+              className={isCalendarShown && 'active'}
+            />
+          </APPanelBtn>
+        )}
         {user.package !== 'online' && (
           <APPanelBtn
             onClick={toggleTimetable}
