@@ -154,7 +154,7 @@ const TeacherPageSpeaking = () => {
                   new Date(
                     changeDateFormat(user.visited[user.visited.length - 1])
                   ) <=
-                  3 * 86400000 &&
+                  4 * 86400000 &&
                 (lang === user.lang || lang === user.lang.split('/')[0]) &&
                 course === user.course
             )
