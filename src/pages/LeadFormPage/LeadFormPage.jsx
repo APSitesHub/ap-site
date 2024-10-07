@@ -175,6 +175,12 @@ const LeadFormPage = ({ utms }) => {
       case '/form-mix4':
       case '/form-mix4/':
         return 'mix4';
+      case '/form-nuts':
+      case '/form-nuts/':
+        return 'nuts';
+      case '/form-friend':
+      case '/form-friend/':
+        return 'friend';
       default:
         break;
     }

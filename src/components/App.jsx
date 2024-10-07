@@ -800,6 +800,16 @@ export const App = () => {
             noindex={true}
           />
           <Route
+            path="form-nuts"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-friend"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
             path="form-tg1"
             element={<LeadFormPage utms={utms} />}
             noindex={true}
