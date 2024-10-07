@@ -163,6 +163,18 @@ const LeadFormPage = ({ utms }) => {
       case '/form-ov':
       case '/form-ov/':
         return 'oz.vyshnia';
+      case '/form-mix1':
+      case '/form-mix1/':
+        return 'mix1';
+      case '/form-mix2':
+      case '/form-mix2/':
+        return 'mix2';
+      case '/form-mix3':
+      case '/form-mix3/':
+        return 'mix3';
+      case '/form-mix4':
+      case '/form-mix4/':
+        return 'mix4';
       default:
         break;
     }

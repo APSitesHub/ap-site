@@ -889,6 +889,26 @@ export const App = () => {
             element={<LeadFormPage utms={utms} />}
             noindex={true}
           />
+          <Route
+            path="form-mix1"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mix2"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mix3"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mix4"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
         </Routes>
       </Suspense>
     </>
