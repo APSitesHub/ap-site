@@ -64,7 +64,7 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
       : language === 'pl' && personalTimetable?.level !== 'a1'
       ? baseStreamUrl + 'polski' + personalTimetable?.level
       : language === 'pl' && personalTimetable?.level === 'a1'
-      ? baseStreamUrl + 'polski' + personalTimetable?.level
+      ? baseStreamUrl + 'polski'
       : language === 'plkids'
       ? baseKidsStreamUrl + 'pl' + personalTimetable?.level
       : baseStreamUrl;

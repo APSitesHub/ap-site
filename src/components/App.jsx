@@ -223,6 +223,11 @@ const LeadFormPage = lazy(() =>
     /* webpackChunkName: "Lead Form Page" */ '../pages/LeadFormPage/LeadFormPage'
   )
 );
+const AmbassadorFormPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Ambassador Form Page" */ '../pages/AmbassadorFormPage/AmbassadorFormPage'
+  )
+);
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
 );
@@ -717,6 +722,11 @@ export const App = () => {
           <Route
             path="form"
             element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="amb-form"
+            element={<AmbassadorFormPage utms={utms} />}
             noindex={true}
           />
           <Route
