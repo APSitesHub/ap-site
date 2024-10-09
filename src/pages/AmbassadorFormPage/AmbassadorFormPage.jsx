@@ -1,11 +1,9 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
 import {
-  FormBtn,
   HiddenInput,
-  InputNote,
+  InputNote
 } from 'components/LeadForm/LeadForm.styled';
-import { HeaderWrapper, LogoNew, LogoRoute } from 'components/Menu/Menu.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel.styled';
@@ -14,11 +12,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { components } from 'react-select';
 import * as yup from 'yup';
 import {
-  ThankYouHeader,
-  ThankYouSection,
-} from '../ThankYouPage/ThankYouPage.styled';
-import {
   FormLabel,
+  FormSection,
   Input,
   InputName,
   LinkTreeFormBtn,
@@ -202,14 +197,7 @@ const AmbassadorFormPage = ({ utms }) => {
 
   return (
     <>
-      <ThankYouHeader>
-        <HeaderWrapper>
-          <LogoRoute to="/">
-            <LogoNew />
-          </LogoRoute>
-        </HeaderWrapper>
-      </ThankYouHeader>
-      <ThankYouSection>
+      <FormSection>
         <PageFormWrapper>
           <PageFormHeading>
             Залишіть заявку зараз та станьте амбасадором AP Education!
@@ -377,7 +365,7 @@ const AmbassadorFormPage = ({ utms }) => {
             </PageForm>
           </Formik>
         </PageFormWrapper>
-      </ThankYouSection>
+      </FormSection>
     </>
   );
 };

@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import { ReactComponent as ThankYouArrowIcon } from '../../img/svg/ty-arrow.svg';
 import { ReactComponent as HeroStarIcon } from '../../img/svg/heroStar.svg';
 import { FormBtn, Label } from 'components/LeadForm/LeadForm.styled';
+import { ThankYouSection } from 'pages/ThankYouPage/ThankYouPage.styled';
+
+export const FormSection = styled(ThankYouSection)`
+  padding: 64px 20px 52px 20px;
+`;
 
 export const PageForm = styled(Form)`
   overflow-x: hidden;
