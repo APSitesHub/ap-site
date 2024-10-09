@@ -218,6 +218,11 @@ const TeacherPageSpeaking = lazy(() =>
     /* webpackChunkName: "Speaking Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking'
   )
 );
+const FormsLinkTree = lazy(() =>
+  import(
+    /* webpackChunkName: "Forms Linktree Page" */ '../pages/FormsLinkTree/FormsLinkTree'
+  )
+);
 const LeadFormPage = lazy(() =>
   import(
     /* webpackChunkName: "Lead Form Page" */ '../pages/LeadFormPage/LeadFormPage'
@@ -226,6 +231,11 @@ const LeadFormPage = lazy(() =>
 const AmbassadorFormPage = lazy(() =>
   import(
     /* webpackChunkName: "Ambassador Form Page" */ '../pages/AmbassadorFormPage/AmbassadorFormPage'
+  )
+);
+const TeacherFormPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Form Page" */ '../pages/TeacherFormPage/TeacherFormPage'
   )
 );
 const MyAP = lazy(() =>
@@ -719,9 +729,15 @@ export const App = () => {
           <Route path="gifts-direct" noindex={true}>
             <Route path=":userId" element={<GiftsDirect />} />
           </Route>
+          <Route path="forms-tree" element={<FormsLinkTree />} noindex={true} />
           <Route
             path="form"
             element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="teacher-form"
+            element={<TeacherFormPage utms={utms} />}
             noindex={true}
           />
           <Route

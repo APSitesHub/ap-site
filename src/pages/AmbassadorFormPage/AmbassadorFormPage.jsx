@@ -3,9 +3,7 @@ import axios from 'axios';
 import {
   FormBtn,
   HiddenInput,
-  Input,
   InputNote,
-  Label,
 } from 'components/LeadForm/LeadForm.styled';
 import { HeaderWrapper, LogoNew, LogoRoute } from 'components/Menu/Menu.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
@@ -13,32 +11,19 @@ import { Formik } from 'formik';
 import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel.styled';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { components } from 'react-select';
 import * as yup from 'yup';
-import thankYouPersonPNG from '../../img/bg/thank-you-person.png';
-import thankYouPersonWebp from '../../img/bg/thank-you-person.webp';
 import {
-  FacebookBtn,
-  HeroTopStar,
-  InstagramBtn,
-  SocialArrow,
-  SocialLogoLink,
-  SocialsBox,
-  SocialsLinkWrapper,
-  SocialsText,
-  TextBubble,
-  TextBubbleText,
-  TextBubbleWrapper,
   ThankYouHeader,
   ThankYouSection,
-  TikTokBtn,
-  YouTubeBtn,
 } from '../ThankYouPage/ThankYouPage.styled';
 import {
+  FormLabel,
+  Input,
+  InputName,
+  LinkTreeFormBtn,
   PageForm,
-  PageFormBottomStar,
   PageFormHeading,
-  PageFormImage,
-  PageFormPicture,
   PageFormWrapper,
 } from './AmbassadorFormPage.styled';
 
@@ -65,19 +50,6 @@ const AmbassadorFormPage = ({ utms }) => {
       : null;
   replace();
 
-  const getTag = location => {
-    switch (location) {
-      case '/form':
-        return '';
-      default:
-        break;
-    }
-  };
-
-  const tag = getTag(location);
-
-  console.log(tag);
-
   useEffect(() => {
     document.title = 'Форма амбасадора | AP Education';
   }, []);
@@ -85,7 +57,9 @@ const AmbassadorFormPage = ({ utms }) => {
   const initialValues = {
     name: '',
     phone: '',
+    tgusername: '',
     tag: '',
+    specialty: '',
     utm_content: '',
     utm_medium: '',
     utm_campaign: '',
@@ -100,34 +74,34 @@ const AmbassadorFormPage = ({ utms }) => {
 
   const langOptions = [
     {
-      label: 'Англійська',
+      label: 'Англійська мова',
       value: 'en',
     },
     {
-      label: 'Німецька',
+      label: 'Німецька мова',
       value: 'de',
     },
     {
-      label: 'Польська',
+      label: 'Польська мова',
       value: 'pl',
     },
   ];
 
   const courseOptions = [
     {
-      label: '1',
+      label: '1 курс',
       value: '1',
     },
     {
-      label: '2',
+      label: '2 курс',
       value: '2',
     },
     {
-      label: '3',
+      label: '3 курс',
       value: '3',
     },
     {
-      label: '4',
+      label: '4 курс',
       value: '4',
     },
   ];
@@ -192,7 +166,7 @@ const AmbassadorFormPage = ({ utms }) => {
   });
 
   const handleSubmit = async (values, { resetForm }) => {
-    values.tag = tag;
+    values.tag = 'Університетські ходіння';
     values.utm_content = utms.utm_content;
     values.utm_medium = utms.utm_medium;
     values.utm_campaign = utms.utm_campaign;
@@ -204,6 +178,7 @@ const AmbassadorFormPage = ({ utms }) => {
     values.gclid = utms.gclid;
     values.fbclid = utms.fbclid;
     setIsLoading(isLoading => (isLoading = true));
+    console.log(values);
 
     try {
       const response = await axios.post('/leads', values);
@@ -215,6 +190,14 @@ const AmbassadorFormPage = ({ utms }) => {
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
+  };
+
+  const DropdownIndicator = props => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <img src="https://ap.education/static/video/test/arrow-down.svg" alt="" width='24' height='22'/>
+      </components.DropdownIndicator>
+    );
   };
 
   return (
@@ -237,100 +220,147 @@ const AmbassadorFormPage = ({ utms }) => {
             validationSchema={leadSchema}
           >
             <PageForm>
-              <Label>
-                <Input
-                  type="text"
-                  name="name"
-                  placeholder="Ім'я та прізвище*"
-                />
+              <FormLabel>
+                <InputName>Ім'я та прізвище*</InputName>
+                <Input type="text" name="name" placeholder="" />
                 <InputNote component="p" name="name" />
-              </Label>
-              <Label>
-                <Input type="tel" name="phone" placeholder="Телефон*" />
+              </FormLabel>
+              <FormLabel>
+                <InputName>Телефон*</InputName>
+                <Input type="tel" name="phone" placeholder="" />
                 <InputNote component="p" name="phone" />
-              </Label>
-              <Label>
-                <Input
-                  type="text"
-                  name="tg-username"
-                  placeholder="Нікнейм у Телеграм"
+              </FormLabel>
+              <FormLabel>
+                <InputName>Нікнейм у Телеграм*</InputName>
+                <Input type="text" name="tgusername" placeholder="" />
+                <InputNote component="p" name="tgusername" />
+              </FormLabel>
+              <FormLabel>
+                <InputName>На якому курсі навчаєшся?*</InputName>
+                <FormSelect
+                  options={courseOptions}
+                  components={{ DropdownIndicator }}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: 'none',
+                      borderColor: 'transparent',
+                      boxShadow: 'none',
+                    }),
+                    container: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: '50px',
+                      backgroundColor: 'white',
+                      padding: '8px 12px',
+                    }),
+                    indicatorSeparator: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '0',
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      backgroundColor: '#F8F8F8',
+                      left: '0'
+                    }),
+                    option: (baseStyles, state) => ({
+                      ...baseStyles,
+                      display: 'block',
+                      padding: '20px 30px'
+                    }),
+                  }}
+                  placeholder=""
+                  name="course"
+                  onChange={course => {
+                    setCourse(course.value);
+                  }}
                 />
-                <InputNote component="p" name="tg-username" />
-              </Label>
-              <FormSelect
-                options={courseOptions}
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderColor: 'transparent',
-                    boxShadow: 'none',
-                  }),
-                  container: (baseStyles, state) => ({
-                    ...baseStyles,
-                    borderRadius: '50px',
-                    backgroundColor: 'white',
-                    padding: '8px 32px',
-                  }),
-                }}
-                placeholder="Курс навчання*"
-                name="course"
-                onChange={course => {
-                  setCourse(course.value);
-                }}
-              />
-              <Label>
-                <Input
-                  type="tel"
-                  name="specialty"
-                  placeholder="Спеціальність*"
-                />
+              </FormLabel>
+              <FormLabel>
+                <InputName>На якій спеціальності?*</InputName>
+                <Input type="text" name="specialty" placeholder="" />
                 <InputNote component="p" name="specialty" />
-              </Label>
-              <FormSelect
-                options={langOptions}
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderColor: 'transparent',
-                    backgroundColor: 'white',
-                    boxShadow: 'none',
-                  }),
-                  container: (baseStyles, state) => ({
-                    ...baseStyles,
-                    borderRadius: '50px',
-                    padding: '8px 32px',
-                  }),
-                }}
-                placeholder="Яку мову знаєш?*"
-                name="lang"
-                onChange={lang => {
-                  setLang(lang.value);
-                }}
-              />
-              <FormSelect
-                options={levelOptions}
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderColor: 'transparent',
-                    backgroundColor: 'white',
-                    boxShadow: 'none',
-                  }),
-                  container: (baseStyles, state) => ({
-                    ...baseStyles,
-                    borderRadius: '50px',
-                    padding: '8px 32px',
-                  }),
-                }}
-                placeholder="На який рівень?*"
-                name="course"
-                onChange={level => {
-                  setLevel(level.value);
-                }}
-              />
+              </FormLabel>
+              <FormLabel>
+                <InputName>Яку мову знаєш?*</InputName>
+                <FormSelect
+                  options={langOptions}
+                  components={{ DropdownIndicator }}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: 'none',
+                      borderColor: 'transparent',
+                      boxShadow: 'none',
+                    }),
+                    container: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: '50px',
+                      backgroundColor: 'white',
+                      padding: '8px 12px',
+                    }),
+                    indicatorSeparator: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '0',
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      backgroundColor: '#F8F8F8',
+                      left: '0'
+                    }),
+                    option: (baseStyles, state) => ({
+                      ...baseStyles,
+                      display: 'block',
+                      padding: '20px 30px'
+                    }),
+                  }}
+                  placeholder=""
+                  name="lang"
+                  onChange={lang => {
+                    setLang(lang.value);
+                  }}
+                />
+              </FormLabel>
+              <FormLabel>
+                <InputName>На який рівень?*</InputName>
+                <FormSelect
+                  options={levelOptions}
+                  components={{ DropdownIndicator }}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: 'none',
+                      borderColor: 'transparent',
+                      boxShadow: 'none',
+                    }),
+                    container: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: '50px',
+                      backgroundColor: 'white',
+                      padding: '8px 12px',
+                    }),
+                    indicatorSeparator: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '0',
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      backgroundColor: '#F8F8F8',
+                      left: '0',
+                      translateY: '2px' 
+                    }),
+                    option: (baseStyles, state) => ({
+                      ...baseStyles,
+                      display: 'block',
+                      padding: '20px 30px'
+                    }),
+                  }}
+                  placeholder=""
+                  name="course"
+                  onChange={level => {
+                    setLevel(level.value);
+                  }}
+                />
+              </FormLabel>
               <HiddenInput type="text" name="tag" />
               <HiddenInput type="text" name="utm_content" />
               <HiddenInput type="text" name="utm_medium" />
@@ -342,70 +372,11 @@ const AmbassadorFormPage = ({ utms }) => {
               <HiddenInput type="text" name="gclientid" />
               <HiddenInput type="text" name="gclid" />
               <HiddenInput type="text" name="fbclid" />
-              <FormBtn type="submit">Надіслати</FormBtn>
+              <LinkTreeFormBtn type="submit">Надіслати</LinkTreeFormBtn>
               {isLoading && <Loader />}
             </PageForm>
           </Formik>
         </PageFormWrapper>
-
-        <HeroTopStar />
-        <PageFormBottomStar />
-
-        <PageFormPicture>
-          <source
-            media="(max-width:767px)"
-            srcSet={`${thankYouPersonWebp}`}
-            type="image/webp"
-          />
-          <source
-            media="(max-width:767px)"
-            srcSet={`${thankYouPersonPNG}`}
-            type="image/png"
-          />
-          <PageFormImage
-            src={thankYouPersonPNG}
-            alt="Thank you page person image"
-          />
-        </PageFormPicture>
-
-        <SocialsBox>
-          <TextBubbleWrapper>
-            <TextBubbleText>P.S. підписуйтесь на наші соцмережі</TextBubbleText>
-            <TextBubble />
-          </TextBubbleWrapper>
-          <SocialArrow />
-          <SocialsText>А також підписуйтеся на нас у соцмережах:</SocialsText>
-          <SocialsLinkWrapper>
-            <SocialLogoLink
-              href="https://www.instagram.com/ap.education/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <InstagramBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.facebook.com/ap.edu.centre/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FacebookBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.tiktok.com/@ap.education.center"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <TikTokBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.youtube.com/channel/UC3XSGAVLhPXXlMN5-Gebtvw"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <YouTubeBtn />
-            </SocialLogoLink>
-          </SocialsLinkWrapper>
-        </SocialsBox>
       </ThankYouSection>
     </>
   );

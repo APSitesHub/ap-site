@@ -1,8 +1,7 @@
-import { Field, Form } from 'formik';
+import { Form } from 'formik';
 import styled from 'styled-components';
 import { ReactComponent as ThankYouArrowIcon } from '../../img/svg/ty-arrow.svg';
 import { ReactComponent as HeroStarIcon } from '../../img/svg/heroStar.svg';
-import { FormBtn, Label } from 'components/LeadForm/LeadForm.styled';
 
 export const PageForm = styled(Form)`
   overflow-x: hidden;
@@ -26,13 +25,17 @@ export const PageForm = styled(Form)`
 `;
 
 export const PageFormHeading = styled.h1`
-  font-size: 28px;
+  font-size: 30px;
   text-align: center;
 
   margin-bottom: 14px;
 
   @media screen and (min-width: 1280px) {
     font-size: 35px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    font-size: 40px;
   }
 `;
 
@@ -152,48 +155,4 @@ export const FormBottomStar = styled(HeroStarIcon)`
     width: 157px;
     height: 157px;
   }
-`;
-
-export const FormLabel = styled(Label)`
-  align-items: flex-start;
-`;
-
-export const Input = styled(Field)`
-  width: 100%;
-  height: 58px;
-  padding: 22px 20px;
-  font-size: 14px;
-  border: 2px solid var(--main-color);
-  border-radius: 50px;
-  line-height: 1;
-
-  @media screen and (min-width: 768px) {
-    height: 59px;
-    padding: 20px 20px;
-    font-size: 19px;
-  }
-
-  &:hover,
-  &:focus {
-    background-color: var(--secondary-burnt-color);
-    outline: transparent;
-  }
-
-  &:-webkit-autofill {
-    &,
-    &:hover,
-    &:focus {
-      -webkit-box-shadow: 0 0 0px 1000px var(--accent-semi-transparent-color)
-        inset;
-    }
-  }
-`;
-
-export const InputName = styled.p`
-  font-size: 12px;
-  opacity: 0.6;
-`;
-
-export const LinkTreeFormBtn = styled(FormBtn)`
-  margin-top: 19px;
 `;
