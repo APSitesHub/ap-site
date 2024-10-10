@@ -41,8 +41,11 @@ const FormsLinkTree = () => {
           <LinkBtn to={'/teacher-form'}>
             <LinkBtnText>Стати викладачем</LinkBtnText>
           </LinkBtn>
-          <LinkBtn to={'https://youtu.be/IAQGab-Fsvc?si=ibGN4-MeD2woLHT9'}>
+          <LinkBtn to={'https://drive.google.com/file/d/1qZyCBPJr_36bIlGIhj7InGY9uRc7prVT/view'}>
             <LinkBtnText>Подивитись промо-відео</LinkBtnText>
+          </LinkBtn>
+          <LinkBtn to={'https://res.cloudinary.com/dc1nv7ign/image/upload/v1728555164/teachers_wanted_wrvhry.png'}>
+            <LinkBtnText>Хочу заробити кошти</LinkBtnText>
           </LinkBtn>
         </LinkBtnsContainer>
         <SocialsLinkWrapperRecord>
