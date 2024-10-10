@@ -97,7 +97,11 @@ const StreamSpeakingClub = () => {
         setLevel(
           (await axios.get('/timetable')).data.filter(
             timetable =>
-              lang === timetable.lang && user.course === timetable.course
+              lang === timetable.lang &&
+              (user.course === timetable.course ||
+                user.course
+                  ?.split('/')
+                  .some(singleCourse => singleCourse === timetable.course))
           )[0].level
         );
 
@@ -128,7 +132,10 @@ const StreamSpeakingClub = () => {
               <Loader />
             </LoaderWrapper>
           )}
-          {course === user.course ? (
+          {course === user.course ||
+          user.course
+            ?.split('/')
+            .some(singleCourse => singleCourse === course) ? (
             <StreamPlaceHolder>
               <StreamPlaceHolderText>
                 Привіт! <br />
@@ -171,7 +178,10 @@ const StreamSpeakingClub = () => {
               </StreamRefreshText>
             </StreamPlaceHolder>
           )}
-          {course === user.course &&
+          {(course === user.course ||
+            user.course
+              ?.split('/')
+              .some(singleCourse => singleCourse === course)) &&
             redirectLink &&
             isApproved &&
             window.location.replace(redirectLink)}
