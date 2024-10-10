@@ -1,133 +1,77 @@
-import useSize from '@react-hook/size';
 import axios from 'axios';
-import {
-  FormBtn,
-  HiddenInput,
-  Input,
-  InputNote,
-  Label,
-} from 'components/LeadForm/LeadForm.styled';
-import { HeaderWrapper, LogoNew, LogoRoute } from 'components/Menu/Menu.styled';
+import { HiddenInput, InputNote } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel.styled';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { components } from 'react-select';
 import * as yup from 'yup';
-import thankYouPersonPNG from '../../img/bg/thank-you-person.png';
-import thankYouPersonWebp from '../../img/bg/thank-you-person.webp';
 import {
-  FacebookBtn,
-  HeroTopStar,
-  InstagramBtn,
-  SocialArrow,
-  SocialLogoLink,
-  SocialsBox,
-  SocialsLinkWrapper,
-  SocialsText,
-  TextBubble,
-  TextBubbleText,
-  TextBubbleWrapper,
-  ThankYouHeader,
-  ThankYouSection,
-  TikTokBtn,
-  YouTubeBtn,
-} from '../ThankYouPage/ThankYouPage.styled';
-import {
+  FormLabel,
+  FormSection,
+  Input,
+  InputName,
+  LinkTreeFormBtn,
   PageForm,
-  PageFormBottomStar,
   PageFormHeading,
-  PageFormImage,
-  PageFormPicture,
   PageFormWrapper,
-} from './TeacherFormPage.styled';
+} from '../AmbassadorFormPage/AmbassadorFormPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const TeacherFormPage = ({ utms }) => {
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line
   const [course, setCourse] = useState('');
-  // eslint-disable-next-line
   const [lang, setLang] = useState('');
-  // eslint-disable-next-line
   const [level, setLevel] = useState('');
   const navigate = useNavigate();
-  const location = useLocation().pathname;
-  const query = useLocation().search;
-
-  // eslint-disable-next-line
-  const [width, _] = useSize(document.body);
-
-  const replace = () =>
-    location.includes('form-mova') && !query.includes('tg_only')
-      ? window.location.replace('https://ap.education/form')
-      : null;
-  replace();
-
-  const getTag = location => {
-    switch (location) {
-      case '/form':
-        return '';
-      default:
-        break;
-    }
-  };
-
-  const tag = getTag(location);
-
-  console.log(tag);
 
   useEffect(() => {
-    document.title = 'Форма амбасадора | AP Education';
+    document.title = 'Форма кандидата | AP Education';
   }, []);
 
   const initialValues = {
     name: '',
     phone: '',
+    tgusername: '',
     tag: '',
-    utm_content: '',
-    utm_medium: '',
-    utm_campaign: '',
-    utm_source: '',
-    utm_term: '',
-    utm_referrer: '',
-    referrer: '',
-    gclientid: '',
-    gclid: '',
-    fbclid: '',
+    course: '',
+    specialty: '',
+    lang: '',
+    level: '',
   };
 
   const langOptions = [
     {
-      label: 'Англійська',
+      label: 'Англійська мова',
       value: 'en',
     },
     {
-      label: 'Німецька',
+      label: 'Німецька мова',
       value: 'de',
     },
     {
-      label: 'Польська',
+      label: 'Польська мова',
       value: 'pl',
     },
   ];
 
   const courseOptions = [
     {
-      label: '1',
+      label: '1 курс',
       value: '1',
     },
     {
-      label: '2',
+      label: '2 курс',
       value: '2',
     },
     {
-      label: '3',
+      label: '3 курс',
       value: '3',
     },
     {
-      label: '4',
+      label: '4 курс',
       value: '4',
     },
   ];
@@ -177,38 +121,26 @@ const TeacherFormPage = ({ utms }) => {
         'Будь ласка, введіть валідний номер телефону!'
       )
       .min(10, 'Номер телефону має складатися не менше ніж з 10 символів!')
-      .max(15, 'Номер телефону має складатися не більше ніж з 15 символів!'),
+      .max(18, 'Номер телефону має складатися не більше ніж з 18 символів!'),
+    tgusername: yup.string().optional(),
     tag: yup.string().optional(),
-    utm_content: yup.string().optional(),
-    utm_medium: yup.string().optional(),
-    utm_campaign: yup.string().optional(),
-    utm_source: yup.string().optional(),
-    utm_term: yup.string().optional(),
-    utm_referrer: yup.string().optional(),
-    referrer: yup.string().optional(),
-    gclientid: yup.string().optional(),
-    gclid: yup.string().optional(),
-    fbclid: yup.string().optional(),
+    course: yup.string().optional(),
+    specialty: yup.string().required('Будь ласка, вкажіть свою спеціальність!'),
+    lang: yup.string().optional(),
+    level: yup.string().optional(),
   });
 
-  const handleSubmit = async (values, { resetForm }) => {
-    values.tag = tag;
-    values.utm_content = utms.utm_content;
-    values.utm_medium = utms.utm_medium;
-    values.utm_campaign = utms.utm_campaign;
-    values.utm_source = utms.utm_source;
-    values.utm_term = utms.utm_term;
-    values.utm_referrer = utms.utm_referrer;
-    values.referrer = utms.referrer;
-    values.gclientid = utms.gclientid;
-    values.gclid = utms.gclid;
-    values.fbclid = utms.fbclid;
+  const handleSubmit = async values => {
+    values.tag = 'Університетські ходіння';
+    values.course = course;
+    values.lang = lang;
+    values.level = level;
     setIsLoading(isLoading => (isLoading = true));
+    console.log(values);
 
     try {
-      const response = await axios.post('/leads', values);
+      const response = await axios.post('/uni-leads/cand', values);
       console.log(response);
-      resetForm();
       navigate('/thankyou');
     } catch (error) {
       console.error(error);
@@ -217,19 +149,26 @@ const TeacherFormPage = ({ utms }) => {
     }
   };
 
+  const DropdownIndicator = props => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <img
+          src="https://ap.education/static/video/test/arrow-down.svg"
+          alt=""
+          width="24"
+          height="22"
+        />
+      </components.DropdownIndicator>
+    );
+  };
+
   return (
     <>
-      <ThankYouHeader>
-        <HeaderWrapper>
-          <LogoRoute to="/">
-            <LogoNew />
-          </LogoRoute>
-        </HeaderWrapper>
-      </ThankYouHeader>
-      <ThankYouSection>
+      <FormSection>
         <PageFormWrapper>
           <PageFormHeading>
-            Залишіть заявку зараз та станьте амбасадором AP Education!
+            Залишіть заявку зараз та приєднуйтесь до нашої команди викладачів
+            вже сьогодні!
           </PageFormHeading>
           <Formik
             initialValues={initialValues}
@@ -237,176 +176,154 @@ const TeacherFormPage = ({ utms }) => {
             validationSchema={leadSchema}
           >
             <PageForm>
-              <Label>
-                <Input
-                  type="text"
-                  name="name"
-                  placeholder="Ім'я та прізвище*"
-                />
+              <FormLabel>
+                <InputName>Ім'я та прізвище*</InputName>
+                <Input type="text" name="name" placeholder="" />
                 <InputNote component="p" name="name" />
-              </Label>
-              <Label>
-                <Input type="tel" name="phone" placeholder="Телефон*" />
+              </FormLabel>
+              <FormLabel>
+                <InputName>Телефон*</InputName>
+                <Input type="tel" name="phone" placeholder="" />
                 <InputNote component="p" name="phone" />
-              </Label>
-              <Label>
-                <Input
-                  type="text"
-                  name="tg-username"
-                  placeholder="Нікнейм у Телеграм"
+              </FormLabel>
+              <FormLabel>
+                <InputName>Нікнейм у Телеграм*</InputName>
+                <Input type="text" name="tgusername" placeholder="" />
+                <InputNote component="p" name="tgusername" />
+              </FormLabel>
+              <FormLabel>
+                <InputName>На якому курсі навчаєтесь?*</InputName>
+                <FormSelect
+                  options={courseOptions}
+                  components={{ DropdownIndicator }}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: 'none',
+                      borderColor: 'transparent',
+                      boxShadow: 'none',
+                    }),
+                    container: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: '50px',
+                      backgroundColor: 'white',
+                      padding: '8px 12px',
+                    }),
+                    indicatorSeparator: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '0',
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      backgroundColor: '#F8F8F8',
+                      left: '0',
+                    }),
+                    option: (baseStyles, state) => ({
+                      ...baseStyles,
+                      display: 'block',
+                      padding: '20px 30px',
+                    }),
+                  }}
+                  placeholder=""
+                  name="course"
+                  onChange={course => {
+                    setCourse(course.value);
+                  }}
                 />
-                <InputNote component="p" name="tg-username" />
-              </Label>
-              <FormSelect
-                options={courseOptions}
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderColor: 'transparent',
-                    boxShadow: 'none',
-                  }),
-                  container: (baseStyles, state) => ({
-                    ...baseStyles,
-                    borderRadius: '50px',
-                    backgroundColor: 'white',
-                    padding: '8px 32px',
-                  }),
-                }}
-                placeholder="Курс навчання*"
-                name="course"
-                onChange={course => {
-                  setCourse(course.value);
-                }}
-              />
-              <Label>
-                <Input
-                  type="tel"
-                  name="specialty"
-                  placeholder="Спеціальність*"
-                />
+              </FormLabel>
+              <FormLabel>
+                <InputName>На якій спеціальності?*</InputName>
+                <Input type="text" name="specialty" placeholder="" />
                 <InputNote component="p" name="specialty" />
-              </Label>
-              <FormSelect
-                options={langOptions}
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderColor: 'transparent',
-                    backgroundColor: 'white',
-                    boxShadow: 'none',
-                  }),
-                  container: (baseStyles, state) => ({
-                    ...baseStyles,
-                    borderRadius: '50px',
-                    padding: '8px 32px',
-                  }),
-                }}
-                placeholder="Яку мову знаєш?*"
-                name="lang"
-                onChange={lang => {
-                  setLang(lang.value);
-                }}
-              />
-              <FormSelect
-                options={levelOptions}
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderColor: 'transparent',
-                    backgroundColor: 'white',
-                    boxShadow: 'none',
-                  }),
-                  container: (baseStyles, state) => ({
-                    ...baseStyles,
-                    borderRadius: '50px',
-                    padding: '8px 32px',
-                  }),
-                }}
-                placeholder="На який рівень?*"
-                name="course"
-                onChange={level => {
-                  setLevel(level.value);
-                }}
-              />
+              </FormLabel>
+              <FormLabel>
+                <InputName>Яку мову знаєте?*</InputName>
+                <FormSelect
+                  options={langOptions}
+                  components={{ DropdownIndicator }}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: 'none',
+                      borderColor: 'transparent',
+                      boxShadow: 'none',
+                    }),
+                    container: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: '50px',
+                      backgroundColor: 'white',
+                      padding: '8px 12px',
+                    }),
+                    indicatorSeparator: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '0',
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      backgroundColor: '#F8F8F8',
+                      left: '0',
+                    }),
+                    option: (baseStyles, state) => ({
+                      ...baseStyles,
+                      display: 'block',
+                      padding: '20px 30px',
+                    }),
+                  }}
+                  placeholder=""
+                  name="lang"
+                  onChange={lang => {
+                    setLang(lang.value);
+                  }}
+                />
+              </FormLabel>
+              <FormLabel>
+                <InputName>На який рівень?*</InputName>
+                <FormSelect
+                  options={levelOptions}
+                  components={{ DropdownIndicator }}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: 'none',
+                      borderColor: 'transparent',
+                      boxShadow: 'none',
+                    }),
+                    container: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderRadius: '50px',
+                      backgroundColor: 'white',
+                      padding: '8px 12px',
+                    }),
+                    indicatorSeparator: (baseStyles, state) => ({
+                      ...baseStyles,
+                      width: '0',
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      backgroundColor: '#F8F8F8',
+                      left: '0',
+                      translateY: '2px',
+                    }),
+                    option: (baseStyles, state) => ({
+                      ...baseStyles,
+                      display: 'block',
+                      padding: '20px 30px',
+                    }),
+                  }}
+                  placeholder=""
+                  name="course"
+                  onChange={level => {
+                    setLevel(level.value);
+                  }}
+                />
+              </FormLabel>
               <HiddenInput type="text" name="tag" />
-              <HiddenInput type="text" name="utm_content" />
-              <HiddenInput type="text" name="utm_medium" />
-              <HiddenInput type="text" name="utm_campaign" />
-              <HiddenInput type="text" name="utm_source" />
-              <HiddenInput type="text" name="utm_term" />
-              <HiddenInput type="text" name="utm_referrer" />
-              <HiddenInput type="text" name="referrer" />
-              <HiddenInput type="text" name="gclientid" />
-              <HiddenInput type="text" name="gclid" />
-              <HiddenInput type="text" name="fbclid" />
-              <FormBtn type="submit">Надіслати</FormBtn>
+              <LinkTreeFormBtn type="submit">Надіслати</LinkTreeFormBtn>
               {isLoading && <Loader />}
             </PageForm>
           </Formik>
         </PageFormWrapper>
-
-        <HeroTopStar />
-        <PageFormBottomStar />
-
-        <PageFormPicture>
-          <source
-            media="(max-width:767px)"
-            srcSet={`${thankYouPersonWebp}`}
-            type="image/webp"
-          />
-          <source
-            media="(max-width:767px)"
-            srcSet={`${thankYouPersonPNG}`}
-            type="image/png"
-          />
-          <PageFormImage
-            src={thankYouPersonPNG}
-            alt="Thank you page person image"
-          />
-        </PageFormPicture>
-
-        <SocialsBox>
-          <TextBubbleWrapper>
-            <TextBubbleText>P.S. підписуйтесь на наші соцмережі</TextBubbleText>
-            <TextBubble />
-          </TextBubbleWrapper>
-          <SocialArrow />
-          <SocialsText>А також підписуйтеся на нас у соцмережах:</SocialsText>
-          <SocialsLinkWrapper>
-            <SocialLogoLink
-              href="https://www.instagram.com/ap.education/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <InstagramBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.facebook.com/ap.edu.centre/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FacebookBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.tiktok.com/@ap.education.center"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <TikTokBtn />
-            </SocialLogoLink>
-            <SocialLogoLink
-              href="https://www.youtube.com/channel/UC3XSGAVLhPXXlMN5-Gebtvw"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <YouTubeBtn />
-            </SocialLogoLink>
-          </SocialsLinkWrapper>
-        </SocialsBox>
-      </ThankYouSection>
+      </FormSection>
     </>
   );
 };

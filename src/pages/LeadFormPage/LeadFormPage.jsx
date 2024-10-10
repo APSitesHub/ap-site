@@ -181,6 +181,9 @@ const LeadFormPage = ({ utms }) => {
       case '/form-friend':
       case '/form-friend/':
         return 'friend';
+      case '/form-uni':
+      case '/form-uni/':
+        return 'Університетські ходіння';
       default:
         break;
     }

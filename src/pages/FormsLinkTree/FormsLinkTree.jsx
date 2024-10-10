@@ -1,22 +1,22 @@
 import { SocialLogoLink } from 'components/MainFooter/MainFooter.styled';
 import {
-    BackgroundFilterBottom,
-    BackgroundFilterTop
+  BackgroundFilterBottom,
+  BackgroundFilterTop,
 } from 'pages/Quiz/Quiz.styled';
 import {
-    FacebookBtnNew,
-    InstagramBtnNew,
-    SocialsLinkWrapperRecord,
-    TikTokBtnNew,
-    YouTubeBtnNew,
+  FacebookBtnNew,
+  InstagramBtnNew,
+  SocialsLinkWrapperRecord,
+  TikTokBtnNew,
+  YouTubeBtnNew,
 } from 'pages/RecordLinkTree/RecordLinkTree.styled';
 import {
-    FormLinkTreeBackgroundWrapper,
-    LinkBtn,
-    LinkBtnsContainer,
-    LinkBtnText,
-    Subtitle,
-    Title,
+  FormLinkTreeBackgroundWrapper,
+  LinkBtn,
+  LinkBtnsContainer,
+  LinkBtnText,
+  Subtitle,
+  Title,
 } from './FormsLinkTree.styled';
 
 const FormsLinkTree = () => {
@@ -27,12 +27,12 @@ const FormsLinkTree = () => {
         <BackgroundFilterBottom />
         <Title>
           Раді вітати в <br />
-          AP Education! 
+          AP Education!
         </Title>
         <Subtitle>Обирай напрям та залишай свою заявку!</Subtitle>
 
         <LinkBtnsContainer>
-          <LinkBtn to={'/form'}>
+          <LinkBtn to={'/form-uni'}>
             <LinkBtnText> Розпочати навчання </LinkBtnText>
           </LinkBtn>
           <LinkBtn to={'/amb-form'}>
@@ -75,7 +75,6 @@ const FormsLinkTree = () => {
             <TikTokBtnNew />
           </SocialLogoLink>
         </SocialsLinkWrapperRecord>
-        
       </FormLinkTreeBackgroundWrapper>
     </>
   );

@@ -7,6 +7,11 @@ import { ThankYouSection } from 'pages/ThankYouPage/ThankYouPage.styled';
 
 export const FormSection = styled(ThankYouSection)`
   padding: 64px 20px 52px 20px;
+  overflow: auto;
+
+  @media screen and (min-width: 1280px) {
+    min-height: 100vh;
+  }
 `;
 
 export const PageForm = styled(Form)`
@@ -45,27 +50,6 @@ export const PageFormWrapper = styled.div`
   position: relative;
   max-width: 375px;
   margin: 0 auto;
-
-  @media screen and (min-width: 768px) {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 60px;
-
-    max-width: 400px;
-  }
-
-  @media screen and (min-width: 1280px) {
-    left: 120px;
-
-    max-width: 538px;
-  }
-
-  @media screen and (min-width: 1440px) {
-    left: 260px;
-
-    max-width: 631px;
-  }
 `;
 
 export const PageFormPicture = styled.picture`

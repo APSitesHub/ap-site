@@ -1,14 +1,10 @@
-import useSize from '@react-hook/size';
 import axios from 'axios';
-import {
-  HiddenInput,
-  InputNote
-} from 'components/LeadForm/LeadForm.styled';
+import { HiddenInput, InputNote } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel.styled';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { components } from 'react-select';
 import * as yup from 'yup';
 import {
@@ -26,24 +22,10 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const AmbassadorFormPage = ({ utms }) => {
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line
   const [course, setCourse] = useState('');
-  // eslint-disable-next-line
   const [lang, setLang] = useState('');
-  // eslint-disable-next-line
   const [level, setLevel] = useState('');
   const navigate = useNavigate();
-  const location = useLocation().pathname;
-  const query = useLocation().search;
-
-  // eslint-disable-next-line
-  const [width, _] = useSize(document.body);
-
-  const replace = () =>
-    location.includes('form-mova') && !query.includes('tg_only')
-      ? window.location.replace('https://ap.education/form')
-      : null;
-  replace();
 
   useEffect(() => {
     document.title = 'Форма амбасадора | AP Education';
@@ -54,17 +36,10 @@ const AmbassadorFormPage = ({ utms }) => {
     phone: '',
     tgusername: '',
     tag: '',
+    course: '',
     specialty: '',
-    utm_content: '',
-    utm_medium: '',
-    utm_campaign: '',
-    utm_source: '',
-    utm_term: '',
-    utm_referrer: '',
-    referrer: '',
-    gclientid: '',
-    gclid: '',
-    fbclid: '',
+    lang: '',
+    level: '',
   };
 
   const langOptions = [
@@ -146,39 +121,26 @@ const AmbassadorFormPage = ({ utms }) => {
         'Будь ласка, введіть валідний номер телефону!'
       )
       .min(10, 'Номер телефону має складатися не менше ніж з 10 символів!')
-      .max(15, 'Номер телефону має складатися не більше ніж з 15 символів!'),
+      .max(18, 'Номер телефону має складатися не більше ніж з 18 символів!'),
+    tgusername: yup.string().optional(),
     tag: yup.string().optional(),
-    utm_content: yup.string().optional(),
-    utm_medium: yup.string().optional(),
-    utm_campaign: yup.string().optional(),
-    utm_source: yup.string().optional(),
-    utm_term: yup.string().optional(),
-    utm_referrer: yup.string().optional(),
-    referrer: yup.string().optional(),
-    gclientid: yup.string().optional(),
-    gclid: yup.string().optional(),
-    fbclid: yup.string().optional(),
+    course: yup.string().optional(),
+    specialty: yup.string().required('Будь ласка, вкажіть свою спеціальність!'),
+    lang: yup.string().optional(),
+    level: yup.string().optional(),
   });
 
-  const handleSubmit = async (values, { resetForm }) => {
+  const handleSubmit = async values => {
     values.tag = 'Університетські ходіння';
-    values.utm_content = utms.utm_content;
-    values.utm_medium = utms.utm_medium;
-    values.utm_campaign = utms.utm_campaign;
-    values.utm_source = utms.utm_source;
-    values.utm_term = utms.utm_term;
-    values.utm_referrer = utms.utm_referrer;
-    values.referrer = utms.referrer;
-    values.gclientid = utms.gclientid;
-    values.gclid = utms.gclid;
-    values.fbclid = utms.fbclid;
+    values.course = course;
+    values.lang = lang;
+    values.level = level;
     setIsLoading(isLoading => (isLoading = true));
     console.log(values);
 
     try {
-      const response = await axios.post('/leads', values);
+      const response = await axios.post('/uni-leads/amb', values);
       console.log(response);
-      resetForm();
       navigate('/thankyou');
     } catch (error) {
       console.error(error);
@@ -190,7 +152,12 @@ const AmbassadorFormPage = ({ utms }) => {
   const DropdownIndicator = props => {
     return (
       <components.DropdownIndicator {...props}>
-        <img src="https://ap.education/static/video/test/arrow-down.svg" alt="" width='24' height='22'/>
+        <img
+          src="https://ap.education/static/video/test/arrow-down.svg"
+          alt=""
+          width="24"
+          height="22"
+        />
       </components.DropdownIndicator>
     );
   };
@@ -224,7 +191,7 @@ const AmbassadorFormPage = ({ utms }) => {
                 <InputNote component="p" name="tgusername" />
               </FormLabel>
               <FormLabel>
-                <InputName>На якому курсі навчаєшся?*</InputName>
+                <InputName>На якому курсі навчаєтесь?*</InputName>
                 <FormSelect
                   options={courseOptions}
                   components={{ DropdownIndicator }}
@@ -248,12 +215,12 @@ const AmbassadorFormPage = ({ utms }) => {
                     menu: (baseStyles, state) => ({
                       ...baseStyles,
                       backgroundColor: '#F8F8F8',
-                      left: '0'
+                      left: '0',
                     }),
                     option: (baseStyles, state) => ({
                       ...baseStyles,
                       display: 'block',
-                      padding: '20px 30px'
+                      padding: '20px 30px',
                     }),
                   }}
                   placeholder=""
@@ -269,7 +236,7 @@ const AmbassadorFormPage = ({ utms }) => {
                 <InputNote component="p" name="specialty" />
               </FormLabel>
               <FormLabel>
-                <InputName>Яку мову знаєш?*</InputName>
+                <InputName>Яку мову знаєте?*</InputName>
                 <FormSelect
                   options={langOptions}
                   components={{ DropdownIndicator }}
@@ -293,12 +260,12 @@ const AmbassadorFormPage = ({ utms }) => {
                     menu: (baseStyles, state) => ({
                       ...baseStyles,
                       backgroundColor: '#F8F8F8',
-                      left: '0'
+                      left: '0',
                     }),
                     option: (baseStyles, state) => ({
                       ...baseStyles,
                       display: 'block',
-                      padding: '20px 30px'
+                      padding: '20px 30px',
                     }),
                   }}
                   placeholder=""
@@ -334,12 +301,12 @@ const AmbassadorFormPage = ({ utms }) => {
                       ...baseStyles,
                       backgroundColor: '#F8F8F8',
                       left: '0',
-                      translateY: '2px' 
+                      translateY: '2px',
                     }),
                     option: (baseStyles, state) => ({
                       ...baseStyles,
                       display: 'block',
-                      padding: '20px 30px'
+                      padding: '20px 30px',
                     }),
                   }}
                   placeholder=""
@@ -350,16 +317,6 @@ const AmbassadorFormPage = ({ utms }) => {
                 />
               </FormLabel>
               <HiddenInput type="text" name="tag" />
-              <HiddenInput type="text" name="utm_content" />
-              <HiddenInput type="text" name="utm_medium" />
-              <HiddenInput type="text" name="utm_campaign" />
-              <HiddenInput type="text" name="utm_source" />
-              <HiddenInput type="text" name="utm_term" />
-              <HiddenInput type="text" name="utm_referrer" />
-              <HiddenInput type="text" name="referrer" />
-              <HiddenInput type="text" name="gclientid" />
-              <HiddenInput type="text" name="gclid" />
-              <HiddenInput type="text" name="fbclid" />
               <LinkTreeFormBtn type="submit">Надіслати</LinkTreeFormBtn>
               {isLoading && <Loader />}
             </PageForm>
