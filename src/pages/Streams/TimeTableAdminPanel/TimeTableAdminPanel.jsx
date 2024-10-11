@@ -514,12 +514,12 @@ const TimeTableAdminPanel = () => {
 
   const packageOptions = [
     {
-      label: 'Simple',
-      value: 'simple',
+      label: 'Easy',
+      value: 'easy',
     },
     {
-      label: 'Student',
-      value: 'student',
+      label: 'Easy',
+      value: 'easy+',
     },
     {
       label: 'Basic',
