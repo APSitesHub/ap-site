@@ -249,16 +249,84 @@ const TimeTableAdminPanel = () => {
       value: '11',
     },
     {
+      label: '11 PRE',
+      value: '11pre',
+    },
+    {
+      label: '11 BEG',
+      value: '11beg',
+    },
+    {
+      label: '11 MID',
+      value: '11mid',
+    },
+    {
+      label: '11 HIGH',
+      value: '11high',
+    },
+    {
       label: '12',
       value: '12',
+    },
+    {
+      label: '12 PRE',
+      value: '12pre',
+    },
+    {
+      label: '12 BEG',
+      value: '12beg',
+    },
+    {
+      label: '12 MID',
+      value: '12mid',
+    },
+    {
+      label: '12 HIGH',
+      value: '12high',
     },
     {
       label: '13',
       value: '13',
     },
     {
+      label: '23',
+      value: '23',
+    },
+    {
+      label: '23 PRE',
+      value: '23pre',
+    },
+    {
+      label: '23 BEG',
+      value: '23beg',
+    },
+    {
+      label: '23 MID',
+      value: '23mid',
+    },
+    {
+      label: '23 HIGH',
+      value: '23high',
+    },
+    {
       label: '24',
       value: '24',
+    },
+    {
+      label: '24 PRE',
+      value: '24pre',
+    },
+    {
+      label: '24 BEG',
+      value: '24beg',
+    },
+    {
+      label: '24 MID',
+      value: '24mid',
+    },
+    {
+      label: '24 HIGH',
+      value: '24high',
     },
     {
       label: '25',
