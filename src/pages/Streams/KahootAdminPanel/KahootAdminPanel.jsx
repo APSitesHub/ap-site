@@ -42,6 +42,14 @@ import {
   KahootLvlBtnBox,
   LoginForm,
 } from './KahootAdminPanel.styled';
+import { KidsBEGKahootForm } from './KidsBEGKahootForm';
+import { KidsHIGHKahootForm } from './KidsHIGHKahootForm';
+import { KidsMIDKahootForm } from './KidsMIDKahootForm';
+import { KidsPREKahootForm } from './KidsPREKahootForm';
+import { NMTEnKahootForm } from './NMTEnKahootForm';
+import { NMTHistoryKahootForm } from './NMTHistoryKahootForm';
+import { NMTMathKahootForm } from './NMTMathKahootForm';
+import { NMTUkrKahootForm } from './NMTUkrKahootForm';
 import { PolskiA02KahootForm } from './PolskiA02KahootForm';
 import { PolskiA0KahootForm } from './PolskiA0KahootForm';
 import { PolskiA2KahootForm } from './PolskiA2KahootForm';
@@ -51,6 +59,7 @@ import { PolskiFreeKahootForm } from './PolskiFreeKahootForm';
 import { PolskiKahootForm } from './PolskiKahootForm';
 import { PolskiKidsFreeKahootForm } from './PolskiKidsFreeKahootForm';
 import { PolskiKidsKahootForm } from './PolskiKidsKahootForm';
+import { PreschoolEdKahootForm } from './PreschoolEdKahootForm';
 import { TestKahootForm } from './TestKahootForm';
 import { TrendetsKahootForm } from './TrendetsKahootForm';
 import { TrialsDeKahootForm } from './TrialsDeKahootForm';
@@ -256,6 +265,33 @@ export const KahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('plkidsfree')}>
               Pl Kids Free
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('preschool')}>
+              Дошкільна освіта
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('kidspre')}>
+              Kids PRE
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('kidsbeg')}>
+              Kids BEG
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('kidsmid')}>
+              Kids MID
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('kidshigh')}>
+              Kids HIGH
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('nmt_ukr')}>
+              НМТ Укр
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('nmt_en')}>
+              НМТ Англ
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('nmt_math')}>
+              НМТ Математика
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('nmt_history')}>
+              НМТ Історія
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('test')}>
               Test
             </KahootLvlBtn>
@@ -375,6 +411,33 @@ export const KahootAdminPanel = () => {
           )}
           {levels.includes('plkidsfree') && (
             <PolskiKidsFreeKahootForm destination={destination} />
+          )}
+          {levels.includes('preschool') && (
+            <PreschoolEdKahootForm destination={destination} />
+          )}
+          {levels.includes('kidspre') && (
+            <KidsPREKahootForm destination={destination} />
+          )}
+          {levels.includes('kidsbeg') && (
+            <KidsBEGKahootForm destination={destination} />
+          )}
+          {levels.includes('kidsmid') && (
+            <KidsMIDKahootForm destination={destination} />
+          )}
+          {levels.includes('kidshigh') && (
+            <KidsHIGHKahootForm destination={destination} />
+          )}
+          {levels.includes('nmt_ukr') && (
+            <NMTUkrKahootForm destination={destination} />
+          )}
+          {levels.includes('nmt_en') && (
+            <NMTEnKahootForm destination={destination} />
+          )}
+          {levels.includes('nmt_math') && (
+            <NMTMathKahootForm destination={destination} />
+          )}
+          {levels.includes('nmt_history') && (
+            <NMTHistoryKahootForm destination={destination} />
           )}
           {levels.includes('test') && (
             <TestKahootForm destination={destination} />

@@ -147,6 +147,51 @@ const KidsPlA1Free = lazy(() =>
     /* webpackChunkName: "Polski Free Streams A1 Kids page" */ '../pages/StreamsKids/KidsPlA1/KidsPlA1Free'
   )
 );
+const KidsPRE = lazy(() =>
+  import(
+    /* webpackChunkName: "English Kids PRE page" */ '../pages/StreamsKids/KidsPRE/KidsPRE'
+  )
+);
+const KidsBEG = lazy(() =>
+  import(
+    /* webpackChunkName: "English Kids BEG page" */ '../pages/StreamsKids/KidsBEG/KidsBEG'
+  )
+);
+const KidsMID = lazy(() =>
+  import(
+    /* webpackChunkName: "English Kids MID page" */ '../pages/StreamsKids/KidsMID/KidsMID'
+  )
+);
+const KidsHIGH = lazy(() =>
+  import(
+    /* webpackChunkName: "English Kids HIGH page" */ '../pages/StreamsKids/KidsHIGH/KidsHIGH'
+  )
+);
+const Preschool = lazy(() =>
+  import(
+    /* webpackChunkName: "Preschool Education page" */ '../pages/StreamsKids/Preschool/Preschool'
+  )
+);
+const NMTUkr = lazy(() =>
+  import(
+    /* webpackChunkName: "NMTUkr Education page" */ '../pages/Streams/NMTUkr/NMTUkr'
+  )
+);
+const NMTEn = lazy(() =>
+  import(
+    /* webpackChunkName: "NMTEn Education page" */ '../pages/Streams/NMTEn/NMTEn'
+  )
+);
+const NMTMath = lazy(() =>
+  import(
+    /* webpackChunkName: "NMTMath Education page" */ '../pages/Streams/NMTMath/NMTMath'
+  )
+);
+const NMTHistory = lazy(() =>
+  import(
+    /* webpackChunkName: "NMTHistory Education page" */ '../pages/Streams/NMTHistory/NMTHistory'
+  )
+);
 const Teacher = lazy(() =>
   import(/* webpackChunkName: "Teacher layout" */ '../pages/Teacher/Teacher')
 );
@@ -525,6 +570,18 @@ export const App = () => {
             <Route path="polskib2-chat" element={<WindowedChat />} />
             <Route path="polskifree" element={<StreamPolskiFree />} />
             <Route path="polskifree-chat" element={<WindowedChat />} />
+            <Route path="nmt_ukr" element={<NMTUkr />} />
+            <Route path="nmt_ukrsc" element={<StreamSpeakingClub />} />
+            <Route path="nmt_ukr-chat" element={<WindowedChat />} />
+            <Route path="nmt_en" element={<NMTEn />} />
+            <Route path="nmt_ensc" element={<StreamSpeakingClub />} />
+            <Route path="nmt_en-chat" element={<WindowedChat />} />
+            <Route path="nmt_math" element={<NMTMath />} />
+            <Route path="nmt_mathsc" element={<StreamSpeakingClub />} />
+            <Route path="nmt_math-chat" element={<WindowedChat />} />
+            <Route path="nmt_history" element={<NMTHistory />} />
+            <Route path="nmt_historysc" element={<StreamSpeakingClub />} />
+            <Route path="nmt_history-chat" element={<WindowedChat />} />
             <Route path="test" element={<StreamTest />} />
             <Route path="test-chat" element={<WindowedChat />} />
             <Route path="record-chat" element={<WindowedChat />} />
@@ -557,6 +614,21 @@ export const App = () => {
             />
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>
+            <Route path="preschool" element={<Preschool />} />
+            <Route path="preschoolsc" element={<StreamSpeakingClubKids />} />
+            <Route path="preschool-chat" element={<WindowedChat />} />
+            <Route path="pre" element={<KidsPRE />} />
+            <Route path="presc" element={<StreamSpeakingClubKids />} />
+            <Route path="pre-chat" element={<WindowedChat />} />
+            <Route path="beg" element={<KidsBEG />} />
+            <Route path="begsc" element={<StreamSpeakingClubKids />} />
+            <Route path="beg-chat" element={<WindowedChat />} />
+            <Route path="mid" element={<KidsMID />} />
+            <Route path="midsc" element={<StreamSpeakingClubKids />} />
+            <Route path="mid-chat" element={<WindowedChat />} />
+            <Route path="high" element={<KidsHIGH />} />
+            <Route path="highsc" element={<StreamSpeakingClubKids />} />
+            <Route path="high-chat" element={<WindowedChat />} />
             <Route path="a0" element={<KidsA0 />} />
             <Route path="a0sc" element={<StreamSpeakingClubKids />} />
             <Route path="a0-chat" element={<WindowedChat />} />
@@ -635,6 +707,15 @@ export const App = () => {
             <Route path="b1" element={<TeacherPage />} />
             <Route path="b2" element={<TeacherPage />} />
             <Route path="c1" element={<TeacherPage />} />
+            <Route path="kidspre" element={<TeacherPage />} />
+            <Route path="kidsbeg" element={<TeacherPage />} />
+            <Route path="kidsmid" element={<TeacherPage />} />
+            <Route path="kidshigh" element={<TeacherPage />} />
+            <Route path="preschool" element={<TeacherPage />} />
+            <Route path="nmt_ukr" element={<TeacherPage />} />
+            <Route path="nmt_en" element={<TeacherPage />} />
+            <Route path="nmt_math" element={<TeacherPage />} />
+            <Route path="nmt_history" element={<TeacherPage />} />
             <Route path="a1free" element={<TeacherPage />} />
             <Route path="a2free" element={<TeacherPage />} />
             <Route path="a0kids" element={<TeacherPage />} />

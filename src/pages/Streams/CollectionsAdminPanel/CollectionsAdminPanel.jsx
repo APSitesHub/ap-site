@@ -109,6 +109,15 @@ export const CollectionsAdminPanel = () => {
     dekidsfree: '',
     plkidsfree: '',
     record: '',
+    kidspre: '',
+    kidsbeg: '',
+    kidsmid: '',
+    kidshigh: '',
+    preschool: '',
+    nmt_ukr: '',
+    nmt_en: '',
+    nmt_math: '',
+    nmt_history: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -150,6 +159,15 @@ export const CollectionsAdminPanel = () => {
     dekidsfree: yup.string().optional(),
     plkidsfree: yup.string().optional(),
     record: yup.string().optional(),
+    kidspre: yup.string().optional(),
+    kidsbeg: yup.string().optional(),
+    kidsmid: yup.string().optional(),
+    kidshigh: yup.string().optional(),
+    preschool: yup.string().optional(),
+    nmt_ukr: yup.string().optional(),
+    nmt_en: yup.string().optional(),
+    nmt_math: yup.string().optional(),
+    nmt_history: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -416,6 +434,46 @@ export const CollectionsAdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
+                    name="kidspre"
+                    placeholder="English PRE collection"
+                  />
+                  <AdminInputNote component="p" name="kidspre" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="kidsbeg"
+                    placeholder="English BEG collection"
+                  />
+                  <AdminInputNote component="p" name="kidsbeg" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="kidsmid"
+                    placeholder="English MID collection"
+                  />
+                  <AdminInputNote component="p" name="kidsmid" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="kidshigh"
+                    placeholder="English HIGH collection"
+                  />
+                  <AdminInputNote component="p" name="kidshigh" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="preschool"
+                    placeholder="Preschool Education collection"
+                  />
+                  <AdminInputNote component="p" name="preschool" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
                     name="a0kids"
                     placeholder="A0 Kids collection"
                   />
@@ -518,14 +576,49 @@ export const CollectionsAdminPanel = () => {
                   <AdminInputNote component="p" name="plkidsfree" />
                 </Label>
               </LinksFieldGroup>
-              <Label>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>НМТ</LinksFieldGroupTitle>
+                <Label>
                   <AdminInput
                     type="text"
-                    name="record"
-                    placeholder="Record page collection"
+                    name="nmt_ukr"
+                    placeholder="NMT Ukrainian collection"
                   />
-                  <AdminInputNote component="p" name="record" />
+                  <AdminInputNote component="p" name="nmt_ukr" />
                 </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="nmt_en"
+                    placeholder="NMT English collection"
+                  />
+                  <AdminInputNote component="p" name="nmt_en" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="nmt_math"
+                    placeholder="NMT Math collection"
+                  />
+                  <AdminInputNote component="p" name="nmt_math" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="nmt_history"
+                    placeholder="NMT History of Ukraine collection"
+                  />
+                  <AdminInputNote component="p" name="nmt_history" />
+                </Label>
+              </LinksFieldGroup>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="record"
+                  placeholder="Record page collection"
+                />
+                <AdminInputNote component="p" name="record" />
+              </Label>
               <AdminFormBtn type="submit">Замінити колекції</AdminFormBtn>
             </LinksForm>
           </Formik>

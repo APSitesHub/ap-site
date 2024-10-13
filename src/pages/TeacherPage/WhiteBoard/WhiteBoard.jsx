@@ -59,6 +59,15 @@ export const WhiteBoard = ({
     trials_kids: 'http://go.limnu.com/pine-brisk',
     trials_pl: 'http://go.limnu.com/cherry-arcane',
     trials_de: 'http://go.limnu.com/blimp-numb',
+    kidspre: 'http://go.limnu.com/gazania-creative',
+    kidsbeg: 'http://go.limnu.com/gazania-creative',
+    kidsmid: 'http://go.limnu.com/bus-plain',
+    kidshigh: 'http://go.limnu.com/asparagus-nervous',
+    preschool: 'http://go.limnu.com/lamp-minute',
+    nmt_ukr: 'http://go.limnu.com/epimedium-conical',
+    nmt_en: 'http://go.limnu.com/honda-future',
+    nmt_math: 'http://go.limnu.com/coneflower-frozen',
+    nmt_history: 'http://go.limnu.com/honda-nasal',
   };
 
   const supportBoxStylesHandler = () => {

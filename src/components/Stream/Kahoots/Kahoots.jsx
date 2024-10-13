@@ -100,6 +100,13 @@ export const Kahoots = ({
     (location.pathname.includes('streams-kids') &&
       location.pathname.includes('free'))
       ? trialsSwitch(location.pathname.match(/\/([^/]+)\/?$/)[1])
+      : location.pathname.includes('preschool')
+      ? location.pathname.match(/\/([^/]+)\/?$/)[1]
+      : location.pathname.includes('pre') ||
+        location.pathname.includes('beg') ||
+        location.pathname.includes('mid') ||
+        location.pathname.includes('high')
+      ? 'kids' + location.pathname.match(/\/([^/]+)\/?$/)[1]
       : location.pathname.includes('streams-kids')
       ? location.pathname.match(/\/([^/]+)\/?$/)[1] + 'kids'
       : location.pathname.includes('trial') ||
@@ -107,6 +114,8 @@ export const Kahoots = ({
         location.pathname.includes('test1')
       ? trialsSwitch(location.pathname.match(/\/([^/]+)\/?$/)[1])
       : location.pathname.match(/\/([^/]+)\/?$/)[1];
+
+  console.log(111, page);
 
   const kahootWidth = isFullScreen ? sectionWidth : (sectionWidth / 10) * 4;
 

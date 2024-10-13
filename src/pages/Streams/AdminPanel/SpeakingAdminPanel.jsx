@@ -99,6 +99,15 @@ const SpeakingAdminPanel = () => {
     b2kidsbeginner: '',
     dea1kids: '',
     pla1kids: '',
+    kidspre: '',
+    kidsbeg: '',
+    kidsmid: '',
+    kidshigh: '',
+    preschool: '',
+    nmt_ukr: '',
+    nmt_en: '',
+    nmt_math: '',
+    nmt_history: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -131,6 +140,15 @@ const SpeakingAdminPanel = () => {
     b2kidsbeginner: yup.string().optional(),
     dea1kids: yup.string().optional(),
     pla1kids: yup.string().optional(),
+    kidspre: yup.string().optional(),
+    kidsbeg: yup.string().optional(),
+    kidsmid: yup.string().optional(),
+    kidshigh: yup.string().optional(),
+    preschool: yup.string().optional(),
+    nmt_ukr: yup.string().optional(),
+    nmt_en: yup.string().optional(),
+    nmt_math: yup.string().optional(),
+    nmt_history: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -186,31 +204,59 @@ const SpeakingAdminPanel = () => {
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>English, дорослі</LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput type="text" name="a0" placeholder="A0 speaking link" />
+                  <AdminInput
+                    type="text"
+                    name="a0"
+                    placeholder="A0 speaking link"
+                  />
                   <AdminInputNote component="p" name="a0" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="a0_2" placeholder="A0_2 speaking link" />
+                  <AdminInput
+                    type="text"
+                    name="a0_2"
+                    placeholder="A0_2 speaking link"
+                  />
                   <AdminInputNote component="p" name="a0_2" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="a1" placeholder="A1 speaking link" />
+                  <AdminInput
+                    type="text"
+                    name="a1"
+                    placeholder="A1 speaking link"
+                  />
                   <AdminInputNote component="p" name="a1" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="a2" placeholder="A2 speaking link" />
+                  <AdminInput
+                    type="text"
+                    name="a2"
+                    placeholder="A2 speaking link"
+                  />
                   <AdminInputNote component="p" name="a2" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="b1" placeholder="B1 speaking link" />
+                  <AdminInput
+                    type="text"
+                    name="b1"
+                    placeholder="B1 speaking link"
+                  />
                   <AdminInputNote component="p" name="b1" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="b2" placeholder="B2 speaking link" />
+                  <AdminInput
+                    type="text"
+                    name="b2"
+                    placeholder="B2 speaking link"
+                  />
                   <AdminInputNote component="p" name="b2" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="c1" placeholder="C1 speaking link" />
+                  <AdminInput
+                    type="text"
+                    name="c1"
+                    placeholder="C1 speaking link"
+                  />
                   <AdminInputNote component="p" name="c1" />
                 </Label>
               </LinksFieldGroup>
@@ -321,6 +367,46 @@ const SpeakingAdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
+                    name="kidspre"
+                    placeholder="English PRE speaking link"
+                  />
+                  <AdminInputNote component="p" name="kidspre" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="kidsbeg"
+                    placeholder="English BEG speaking link"
+                  />
+                  <AdminInputNote component="p" name="kidsbeg" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="kidsmid"
+                    placeholder="English MID speaking link"
+                  />
+                  <AdminInputNote component="p" name="kidsmid" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="kidshigh"
+                    placeholder="English HIGH speaking link"
+                  />
+                  <AdminInputNote component="p" name="kidshigh" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="preschool"
+                    placeholder="Preschool Education speaking link"
+                  />
+                  <AdminInputNote component="p" name="preschool" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
                     name="a0kids"
                     placeholder="A0 Kids speaking link"
                   />
@@ -397,6 +483,41 @@ const SpeakingAdminPanel = () => {
                     placeholder="A1 Kids Polski speaking link"
                   />
                   <AdminInputNote component="p" name="pla1kids" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>НМТ</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="nmt_ukr"
+                    placeholder="NMT Ukrainian speaking link"
+                  />
+                  <AdminInputNote component="p" name="nmt_ukr" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="nmt_en"
+                    placeholder="NMT English speaking link"
+                  />
+                  <AdminInputNote component="p" name="nmt_en" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="nmt_math"
+                    placeholder="NMT Math speaking link"
+                  />
+                  <AdminInputNote component="p" name="nmt_math" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="nmt_history"
+                    placeholder="NMT History of Ukraine speaking link"
+                  />
+                  <AdminInputNote component="p" name="nmt_history" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

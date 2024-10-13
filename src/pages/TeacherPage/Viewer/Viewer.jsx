@@ -1,23 +1,24 @@
+import axios from 'axios';
+import { Loader } from 'components/SharedLayout/Loaders/Loader';
+import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
 import {
   KahootExitFullScreenIcon,
   KahootFullScreenBtn,
   KahootFullScreenIcon,
 } from 'components/Stream/Kahoots/Kahoots.styled';
 import parse from 'html-react-parser';
+import { useEffect, useState } from 'react';
 import { ViewerBox } from './Viewer.styled';
-import { useState } from 'react';
 
-export const Viewer = ({
-  isViewerOpen,
-  isOpenedLast,
-  sectionWidth,
-  collection,
-  page,
-}) => {
+export const Viewer = ({ isViewerOpen, isOpenedLast, sectionWidth, page }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [collection, setCollection] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   console.log(collection);
   console.log(page);
-  collection.map(coll => console.log((coll[page])))
+  collection &&
+    collection.length &&
+    collection.map(coll => console.log(coll[page]));
 
   const supportBoxStylesHandler = () => {
     return {
@@ -26,8 +27,30 @@ export const Viewer = ({
     };
   };
 
+  useEffect(() => {
+    document.title = `Teacher ${page.toLocaleUpperCase()} | AP Education`;
+
+    const getCollectionsRequest = async () => {
+      try {
+        setIsLoading(isLoading => (isLoading = true));
+        setCollection((await axios.get('/collections')).data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(isLoading => (isLoading = false));
+      }
+    };
+    getCollectionsRequest();
+  }, [page]);
+
   const toggleFullScreen = () => {
     setIsFullScreen(isFullScreen => (isFullScreen = !isFullScreen));
+  };
+
+  const collectionRefresher = async e => {
+    if (e.target === e.currentTarget) {
+      setCollection((await axios.get('/collections')).data);
+    }
   };
 
   return (
@@ -35,6 +58,7 @@ export const Viewer = ({
       <ViewerBox
         className={isViewerOpen ? 'shown' : 'hidden'}
         style={{ ...supportBoxStylesHandler() }}
+        onTransitionEnd={collectionRefresher}
       >
         <KahootFullScreenBtn onClick={toggleFullScreen}>
           {isFullScreen ? (
@@ -43,61 +67,15 @@ export const Viewer = ({
             <KahootFullScreenIcon />
           )}
         </KahootFullScreenBtn>
-        {collection.map(coll => parse(coll[page]))}
-        {/* <iframe
-          src="https://sketchfab.com/playlists/embed?collection=50a0ac28542842fba993aea82915bfa1&autostart=0"
-          title="CARS 3D MODELS"
-          frameborder="0"
-          allowfullscreen
-          mozallowfullscreen="true"
-          webkitallowfullscreen="true"
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          xr-spatial-tracking
-          execution-while-out-of-viewport
-          execution-while-not-rendered
-          web-share
-          width="100%"
-          height="100%"
-        ></iframe> */}
-        {/* <iframe
-          id="platform-window"
-          title="platform-pin"
-          src="https://online.ap.education/school/"
-          width="100%"
-          height="100%"
-        ></iframe> */}
-        {/* <iframe
-          title="Black Pig"
-          width="100%"
-          height="100%"
-          frameborder="0"
-          allowfullscreen
-          mozallowfullscreen="true"
-          webkitallowfullscreen="true"
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          xr-spatial-tracking
-          execution-while-out-of-viewport
-          execution-while-not-rendered
-          web-share
-          src="https://sketchfab.com/models/4fc11b4aede6413d896f5a18a8f7be1e/embed"
-        >
-          {' '}
-        </iframe> */}
-        {/* <iframe
-        
-          src="https://sketchfab.com/playlists/embed?collection=b19c00a349844cba916832e24f4e9812&autostart=0"
-          title="Realistic Food 3D Models"
-          frameborder="0"
-          allowfullscreen
-          mozallowfullscreen="true"
-          webkitallowfullscreen="true"
-          allow="autoplay; fullscreen; xr-spatial-tracking"
-          xr-spatial-tracking
-          execution-while-out-of-viewport
-          execution-while-not-rendered
-          web-share
-        ></iframe> */}
+        {collection &&
+          collection.length &&
+          collection.map(coll => parse(coll[page]))}
       </ViewerBox>
+      {isLoading && (
+        <LoaderWrapper>
+          <Loader />
+        </LoaderWrapper>
+      )}
     </>
   );
 };

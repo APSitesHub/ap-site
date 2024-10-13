@@ -1,7 +1,4 @@
 import useSize from '@react-hook/size';
-import axios from 'axios';
-import { Loader } from 'components/SharedLayout/Loaders/Loader';
-import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
 import { KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -30,9 +27,6 @@ const TeacherPage = () => {
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [collection, setCollection] = useState({});
-  // eslint-disable-next-line
   const [width, height] = useSize(document.body);
   const location = useLocation().pathname.split('/teacher/')[1];
 
@@ -52,8 +46,8 @@ const TeacherPage = () => {
         return 'deutscha2free';
       case 'deutsch-b1':
         return 'deutschb1';
-        case 'deutsch-b2':
-          return 'deutschb2';
+      case 'deutsch-b2':
+        return 'deutschb2';
       case 'polski-a0':
         return 'polskia0';
       case 'polski-a0_2':
@@ -66,8 +60,8 @@ const TeacherPage = () => {
         return 'polskia2';
       case 'polski-b1':
         return 'polskib1';
-        case 'polski-b2':
-          return 'polskib2';
+      case 'polski-b2':
+        return 'polskib2';
       default:
         return location;
     }
@@ -76,18 +70,6 @@ const TeacherPage = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()} | AP Education`;
-
-    const getCollectionsRequest = async () => {
-      try {
-        setIsLoading(isLoading => (isLoading = true));
-        setCollection((await axios.get('/collections')).data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(isLoading => (isLoading = false));
-      }
-    };
-    getCollectionsRequest();
   }, [page]);
 
   const toggleViewer = () => {
@@ -152,15 +134,14 @@ const TeacherPage = () => {
       <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
       </TeacherButtonBoxHideSwitch>
-      {collection.length && (
-        <Viewer
-          page={page}
-          collection={collection}
-          sectionWidth={width}
-          isViewerOpen={isViewerOpen}
-          isOpenedLast={isOpenedLast}
-        />
-      )}
+
+      <Viewer
+        page={page}
+        sectionWidth={width}
+        isViewerOpen={isViewerOpen}
+        isOpenedLast={isOpenedLast}
+      />
+
       <WhiteBoard
         page={page}
         sectionWidth={width}
@@ -181,11 +162,6 @@ const TeacherPage = () => {
         isOpenedLast={isOpenedLast}
       />
       <TeacherChat page={page} />
-      {isLoading && (
-        <LoaderWrapper>
-          <Loader />
-        </LoaderWrapper>
-      )}
     </>
   );
 };
