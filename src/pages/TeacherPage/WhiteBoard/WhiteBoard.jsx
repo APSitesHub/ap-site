@@ -31,6 +31,7 @@ export const WhiteBoard = ({
     b2kids: 'http://go.limnu.com/rattlesnake-naughty',
     c1kids: 'http://go.limnu.com/rattlesnake-naughty',
     a1kidsfree: 'http://go.limnu.com/cyclamen-depressed',
+    dea0kids: 'http://go.limnu.com/dogwood-long',
     dea1kids: 'http://go.limnu.com/bellflower-hot',
     dekidsfree: 'http://go.limnu.com/hyssop-dried',
     pla1kids: 'http://go.limnu.com/duscle-bumpy',

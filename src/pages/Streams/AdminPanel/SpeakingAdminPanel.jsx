@@ -471,6 +471,14 @@ const SpeakingAdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
+                    name="dea0kids"
+                    placeholder="A0 Kids Deutsch speaking link"
+                  />
+                  <AdminInputNote component="p" name="dea0kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
                     name="dea1kids"
                     placeholder="A1 Kids Deutsch speaking link"
                   />

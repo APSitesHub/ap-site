@@ -6,6 +6,9 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import {
   StreamPlaceHolder,
   StreamPlaceHolderText,
+  StreamRefreshPageLink,
+  StreamRefreshQuestion,
+  StreamRefreshText,
   StreamSection,
 } from '../../components/Stream/Stream.styled';
 import { useLocation } from 'react-router-dom';
@@ -17,12 +20,21 @@ const StreamSpeakingClubKids = () => {
   const [redirectLink, setRedirectLink] = useState('');
   const location = useLocation().pathname;
 
-  const page = location.replace('/streams-kids/', '').replace('sc', '')+'kids';
+  const page = location.includes('preschool')
+    ? location.replace('/streams-kids/', '').slice(0, -2)
+    : location.includes('pre') ||
+      location.includes('beg') ||
+      location.includes('mid') ||
+      location.includes('high')
+    ? 'kids' + location.replace('/streams-kids/', '').replace('sc', '')
+    : location.replace('/streams-kids/', '').replace('sc', '') + 'kids';
   const link = page.includes('b1beginnerkids')
     ? 'b1kidsbeginner'
     : page.includes('b2beginnerkids')
     ? 'b2kidsbeginner'
     : page;
+
+  console.log(page);
 
   useLayoutEffect(() => {
     const getLinksRequest = async () => {
@@ -57,6 +69,14 @@ const StreamSpeakingClubKids = () => {
               Будь ласка, зачекайте, незабаром вас переадресує на практичне
               заняття в Zoom
             </StreamPlaceHolderText>
+            <StreamRefreshText>
+              <StreamRefreshQuestion>
+                Очікуєте занадто довго?
+              </StreamRefreshQuestion>
+              <StreamRefreshPageLink onClick={() => window.location.reload()}>
+                Натисніть сюди, щоб оновити сторінку
+              </StreamRefreshPageLink>
+            </StreamRefreshText>
           </StreamPlaceHolder>
           {redirectLink && window.location.replace(redirectLink)}
         </StreamsBackgroundWrapper>

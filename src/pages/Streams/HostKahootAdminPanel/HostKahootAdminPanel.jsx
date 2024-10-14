@@ -66,6 +66,7 @@ import { TrialsEngKahootForm } from '../KahootAdminPanel/TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from '../KahootAdminPanel/TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from '../KahootAdminPanel/TrialsPlKahootForm';
 import { HostAdminPanelSection } from './HostKahootAdminPanel.styled';
+import { DeutschKidsA0KahootForm } from '../KahootAdminPanel/DeutschKidsA0KahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -253,11 +254,14 @@ export const HostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('b2kidsbeginner')}>
               B2 Kids Beginner
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('dea0kids')}>
+              De A0 Kids
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('dea1kids')}>
-              De Kids
+              De A1 Kids
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pla1kids')}>
-              Pl Kids
+              Pl A1 Kids
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('dekidsfree')}>
               De Kids Free
@@ -396,6 +400,9 @@ export const HostKahootAdminPanel = () => {
           )}
           {levels.includes('b2kidsbeginner') && (
             <B2KidsBeginnerKahootForm destination={destination} />
+          )}
+          {levels.includes('dea0kids') && (
+            <DeutschKidsA0KahootForm destination={destination} />
           )}
           {levels.includes('dea1kids') && (
             <DeutschKidsKahootForm destination={destination} />

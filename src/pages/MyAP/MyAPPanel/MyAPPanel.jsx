@@ -304,7 +304,7 @@ export const MyAPPanel = ({
             <CupBtnIcon id="rating-btn" className={isRatingShown && 'active'} />
           </APPanelBtn>
         )}
-        {user.package !== 'online' && (
+        {user.package !== 'online' && user.name === 'Dev Acc' && (
           <APPanelBtn
             onClick={toggleCalendar}
             onMouseEnter={e => toggleTooltip(e)}

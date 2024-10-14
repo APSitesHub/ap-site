@@ -546,6 +546,14 @@ export const CollectionsAdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
+                    name="dea0kids"
+                    placeholder="A0 Kids Deutsch collection"
+                  />
+                  <AdminInputNote component="p" name="dea0kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
                     name="dea1kids"
                     placeholder="A1 Kids Deutsch collection"
                   />
