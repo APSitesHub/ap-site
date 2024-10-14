@@ -129,7 +129,7 @@ const StreamsKids = lazy(() =>
 );
 const KidsDeA0 = lazy(() =>
   import(
-    /* webpackChunkName: "Deutsch Streams A0 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1'
+    /* webpackChunkName: "Deutsch Streams A0 Kids page" */ '../pages/StreamsKids/KidsDeA0/KidsDeA0'
   )
 );
 const KidsDeA1 = lazy(() =>
