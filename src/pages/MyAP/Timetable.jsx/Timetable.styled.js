@@ -190,7 +190,7 @@ export const TimetableHead = styled.th`
 
 export const TimetableDaysItem = styled.tr`
   height: 36px;
-  clip-path: xywh(0 0 100% 100% round 7px);
+  /* clip-path: xywh(0 0 100% 100% round 7px); */
 `;
 
 export const TimetableDaysCell = styled.td`
