@@ -114,10 +114,20 @@ const TeacherPageSpeaking = () => {
               page.includes(timetable.level) && lang === timetable.lang
           )[0].course
         );
-        const usersToSet = await axios.get('/speakingusers', {
-          params: { course },
-        });
-        setUsers(users => (users = [...usersToSet.data]));
+        const usersToSet = await axios.get('/speakingusers');
+
+        setUsers(
+          users =>
+            (users = [
+              ...usersToSet.data.filter(
+                user =>
+                  user.course === course ||
+                  user.course
+                    .split('/')
+                    .some(usersCourse => usersCourse === course)
+              ),
+            ])
+        );
         console.log('eff');
       } catch (error) {
         console.log(error);
@@ -155,8 +165,12 @@ const TeacherPageSpeaking = () => {
                     changeDateFormat(user.visited[user.visited.length - 1])
                   ) <=
                   4 * 86400000 &&
-                (lang === user.lang || lang === user.lang.split('/')[0]) &&
-                course === user.course
+                (lang === user.lang ||
+                  user.lang.split('/').some(userLang => lang === userLang)) &&
+                (course === user.course ||
+                  user.course
+                    .split('/')
+                    .some(userCourse => course === userCourse))
             )
             .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
             .map((user, i) => (
