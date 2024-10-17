@@ -199,3 +199,9 @@ export const StudentTextArea = styled(AdminTextArea)`
   padding: 10px;
   background-color: white;
 `;
+
+export const EditFormHeader = styled.h2`
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+`;

@@ -10,7 +10,7 @@ import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPane
 import { UsersEditForm } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
 import { useState } from 'react';
 import * as yup from 'yup';
-import { StudentTextArea } from '../TeacherPage.styled';
+import { EditFormHeader, StudentTextArea } from '../TeacherPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -56,12 +56,14 @@ export const TeacherPageSpeakingEditForm = ({
     temperament: studentToEdit.temperament || '',
     successRate: studentToEdit.successRate || '',
     feedback: '',
+    teacher: localStorage.getItem('teacherName'),
   };
 
   const studentSchema = yup.object().shape({
     temperament: yup.string(),
     successRate: yup.string(),
     feedback: yup.string(),
+    // teacher: yup.string(),
   });
 
   const handleEditStudentSubmit = async values => {
@@ -101,6 +103,10 @@ export const TeacherPageSpeakingEditForm = ({
         validationSchema={studentSchema}
       >
         <UsersEditForm>
+          <EditFormHeader>
+            {studentToEdit.name +
+              (studentToEdit.age ? ', ' + studentToEdit.age + 'р.' : '')}
+          </EditFormHeader>
           <FormSelect
             options={successRateOptions}
             styles={{
