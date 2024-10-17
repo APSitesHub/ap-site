@@ -55,7 +55,7 @@ export const TeacherPageSpeakingEditForm = ({
   const initialEditStudentValues = {
     temperament: studentToEdit.temperament || '',
     successRate: studentToEdit.successRate || '',
-    feedback: studentToEdit.feedback || '',
+    feedback: '',
   };
 
   const studentSchema = yup.object().shape({
@@ -67,17 +67,17 @@ export const TeacherPageSpeakingEditForm = ({
   const handleEditStudentSubmit = async values => {
     values.temperament = temperamentValue;
     values.successRate = successRateValue;
-    const scValues = {...values, crmId: studentToEdit.crmId}
+    const scValues = { ...values, crmId: studentToEdit.crmId };
 
     setIsLoading(isLoading => (isLoading = true));
     try {
       const response = await axios.patch(
         `/speakingusers/${studentToEdit.userId}`,
-        scValues 
+        scValues
       );
       const userResponse = await axios.patch(
         `/users/sc/${studentToEdit.userId}`,
-        values 
+        values
       );
       console.log(response);
       console.log(userResponse);

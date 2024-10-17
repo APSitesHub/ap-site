@@ -187,6 +187,33 @@ const LeadFormPage = ({ utms }) => {
       case '/form-uni':
       case '/form-uni/':
         return 'Університетські ходіння';
+      case '/form-engpls':
+      case '/form-engpls/':
+        return 'engpls';
+      case '/form-qeng':
+      case '/form-qeng/':
+        return 'qeng';
+      case '/form-london':
+      case '/form-london/':
+        return 'london';
+      case '/form-adm1':
+      case '/form-adm1/':
+        return 'adm1';
+      case '/form-adm2':
+      case '/form-adm2/':
+        return 'adm2';
+      case '/form-adm3':
+      case '/form-adm3/':
+        return 'adm3';
+      case '/form-adm4':
+      case '/form-adm4/':
+        return 'adm4';
+      case '/form-speak':
+      case '/form-speak/':
+        return 'speak';
+      case '/form-trrudtg':
+      case '/form-trrudtg/':
+        return 'trrudtg';
       default:
         break;
     }

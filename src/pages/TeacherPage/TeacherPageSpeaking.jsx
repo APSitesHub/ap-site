@@ -227,8 +227,9 @@ const TeacherPageSpeaking = () => {
                 <UserCellLeft
                   dangerouslySetInnerHTML={{
                     __html:
-                      typeof user.feedback === 'string'
-                        ? user.feedback.replace(
+                      typeof user.feedback[user.feedback.length - 1] ===
+                      'string'
+                        ? user.feedback[user.feedback.length - 1].replace(
                             linksRegex,
                             match =>
                               `<a href="${match}" target="_blank">${
