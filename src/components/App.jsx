@@ -278,6 +278,11 @@ const LeadFormPage = lazy(() =>
     /* webpackChunkName: "Lead Form Page" */ '../pages/LeadFormPage/LeadFormPage'
   )
 );
+const UniversalLeadFormPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Universal Lead Form Page" */ '../pages/LeadFormPage/UniversalLeadFormPage'
+  )
+);
 const AmbassadorFormPage = lazy(() =>
   import(
     /* webpackChunkName: "Ambassador Form Page" */ '../pages/AmbassadorFormPage/AmbassadorFormPage'
@@ -822,6 +827,11 @@ export const App = () => {
             <Route path=":userId" element={<GiftsDirect />} />
           </Route>
           <Route path="forms-tree" element={<FormsLinkTree />} noindex={true} />
+          <Route
+            path="un-form"
+            element={<UniversalLeadFormPage utms={utms} />}
+            noindex={true}
+          />
           <Route
             path="form"
             element={<LeadFormPage utms={utms} />}
