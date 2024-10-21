@@ -33,6 +33,7 @@ const UserAdminPanel = () => {
   const [teachers, setTeachers] = useState([]);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [teacherToEdit, setTeacherToEdit] = useState({});
+  const [isTimeToUpdate, setIsTimeToUpdate] = useState(false);
 
   useEffect(() => {
     document.title = 'Teacher Admin Panel | AP Education';
@@ -51,7 +52,7 @@ const UserAdminPanel = () => {
     };
     refreshToken();
 
-    const getUsers = async () => {
+    const getTeachers = async () => {
       try {
         if (isUserAdmin) {
           const response = await axios.get('/teachers/');
@@ -61,7 +62,7 @@ const UserAdminPanel = () => {
         console.error(error);
       }
     };
-    getUsers();
+    getTeachers();
 
     const onEscapeClose = event => {
       if (event.code === 'Escape' && isEditFormOpen) {
@@ -74,7 +75,7 @@ const UserAdminPanel = () => {
     return () => {
       window.removeEventListener('keydown', onEscapeClose);
     };
-  }, [isUserAdmin, isEditFormOpen, teachers]);
+  }, [isUserAdmin, isEditFormOpen, isTimeToUpdate]);
 
   const initialLoginValues = {
     login: '',
@@ -123,7 +124,7 @@ const UserAdminPanel = () => {
     password: yup.string().required("Пароль - обов'язкове поле!"),
   });
 
-  const handleUserSubmit = async (values, { resetForm }) => {
+  const handleTeacherSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
     values.name = values.name.trim().trimStart();
     values.login = values.login.toLowerCase().trim().trimStart();
@@ -133,6 +134,7 @@ const UserAdminPanel = () => {
       console.log(response);
       resetForm();
       alert('Юзера додано');
+      setIsTimeToUpdate(isTime => !isTime);
     } catch (error) {
       console.error(error);
       alert(
@@ -163,18 +165,31 @@ const UserAdminPanel = () => {
 
   const handleDelete = async id => {
     setIsLoading(isLoading => (isLoading = true));
+    const isSure = window.confirm(
+      `Точно видалити ${teachers.find(teacher => teacher._id === id).name}?`
+    );
+    console.log(isSure);
 
-    try {
-      const response = await axios.delete(`/teachers/${id}`);
-      console.log(response);
-      alert('Тічера видалено');
-    } catch (error) {
-      console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
-    } finally {
+    if (!isSure) {
       setIsLoading(isLoading => (isLoading = false));
+      return;
+    } else {
+      try {
+        const response = await axios.delete(`/teachers/${id}`);
+        console.log(response);
+        alert('Тічера видалено');
+        setTeachers(
+          teachers =>
+            (teachers = [...teachers.filter(teacher => teacher._id !== id)])
+        );
+      } catch (error) {
+        console.error(error);
+        alert(
+          'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
+        );
+      } finally {
+        setIsLoading(isLoading => (isLoading = false));
+      }
     }
   };
 
@@ -208,7 +223,7 @@ const UserAdminPanel = () => {
         {isUserAdmin && (
           <Formik
             initialValues={initialTeacherValues}
-            onSubmit={handleUserSubmit}
+            onSubmit={handleTeacherSubmit}
             validationSchema={teachersSchema}
           >
             <UsersForm>
@@ -234,7 +249,9 @@ const UserAdminPanel = () => {
         )}
         {isUserAdmin && teachers.length && (
           <UserDBTable>
-            <UserDBCaption>Список юзерів з доступом до уроків</UserDBCaption>
+            <UserDBCaption>
+              Список акаунтів тічерів з доступом до табличок відгуків
+            </UserDBCaption>
             <thead>
               <UserDBRow>
                 <UserHeadCell>Ім'я</UserHeadCell>
