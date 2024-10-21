@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.9f28faf5.js",
+    "main.js": "/ap-site/static/js/main.ac36bd82.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -43,7 +43,7 @@
     "Speaking Club Kids redirect page.js": "/ap-site/static/js/Speaking Club Kids redirect page.39bc2c95.chunk.js",
     "Links Admin Panel page.js": "/ap-site/static/js/Links Admin Panel page.b6125249.chunk.js",
     "User Admin Panel page.js": "/ap-site/static/js/User Admin Panel page.e8a96ccc.chunk.js",
-    "Teacher Admin Panel page.js": "/ap-site/static/js/Teacher Admin Panel page.20de05f1.chunk.js",
+    "Teacher Admin Panel page.js": "/ap-site/static/js/Teacher Admin Panel page.b26b03f9.chunk.js",
     "User Json Panel page.js": "/ap-site/static/js/User Json Panel page.c773c947.chunk.js",
     "Ratings Admin Panel page.js": "/ap-site/static/js/Ratings Admin Panel page.a7c7e4e8.chunk.js",
     "TimeTable Admin Panel page.js": "/ap-site/static/js/TimeTable Admin Panel page.38cdbe32.chunk.js",
@@ -254,7 +254,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.9f28faf5.js.map": "/ap-site/static/js/main.9f28faf5.js.map",
+    "main.ac36bd82.js.map": "/ap-site/static/js/main.ac36bd82.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a6bc0777.chunk.js.map": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -296,7 +296,7 @@
     "Speaking Club Kids redirect page.39bc2c95.chunk.js.map": "/ap-site/static/js/Speaking Club Kids redirect page.39bc2c95.chunk.js.map",
     "Links Admin Panel page.b6125249.chunk.js.map": "/ap-site/static/js/Links Admin Panel page.b6125249.chunk.js.map",
     "User Admin Panel page.e8a96ccc.chunk.js.map": "/ap-site/static/js/User Admin Panel page.e8a96ccc.chunk.js.map",
-    "Teacher Admin Panel page.20de05f1.chunk.js.map": "/ap-site/static/js/Teacher Admin Panel page.20de05f1.chunk.js.map",
+    "Teacher Admin Panel page.b26b03f9.chunk.js.map": "/ap-site/static/js/Teacher Admin Panel page.b26b03f9.chunk.js.map",
     "User Json Panel page.c773c947.chunk.js.map": "/ap-site/static/js/User Json Panel page.c773c947.chunk.js.map",
     "Ratings Admin Panel page.a7c7e4e8.chunk.js.map": "/ap-site/static/js/Ratings Admin Panel page.a7c7e4e8.chunk.js.map",
     "TimeTable Admin Panel page.38cdbe32.chunk.js.map": "/ap-site/static/js/TimeTable Admin Panel page.38cdbe32.chunk.js.map",
@@ -370,6 +370,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.9f28faf5.js"
+    "static/js/main.ac36bd82.js"
   ]
 }
