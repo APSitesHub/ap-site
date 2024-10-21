@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.8af8fda2.js",
+    "main.js": "/ap-site/static/js/main.4415b17a.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -40,7 +40,7 @@
     "NMTMath Education page.js": "/ap-site/static/js/NMTMath Education page.ac48bfae.chunk.js",
     "NMTHistory Education page.js": "/ap-site/static/js/NMTHistory Education page.0bb3a796.chunk.js",
     "Teacher layout.js": "/ap-site/static/js/Teacher layout.543220e2.chunk.js",
-    "Speaking Club redirect page.js": "/ap-site/static/js/Speaking Club redirect page.d34dfab4.chunk.js",
+    "Speaking Club redirect page.js": "/ap-site/static/js/Speaking Club redirect page.412a8ef5.chunk.js",
     "Speaking Club Kids redirect page.js": "/ap-site/static/js/Speaking Club Kids redirect page.39bc2c95.chunk.js",
     "Links Admin Panel page.js": "/ap-site/static/js/Links Admin Panel page.b6125249.chunk.js",
     "User Admin Panel page.js": "/ap-site/static/js/User Admin Panel page.d3ef0a0f.chunk.js",
@@ -62,7 +62,7 @@
     "Universal Lead Form Page.js": "/ap-site/static/js/Universal Lead Form Page.7a5db3f1.chunk.js",
     "Ambassador Form Page.js": "/ap-site/static/js/Ambassador Form Page.4404089c.chunk.js",
     "Teacher Form Page.js": "/ap-site/static/js/Teacher Form Page.9411e339.chunk.js",
-    "My AP Page.js": "/ap-site/static/js/My AP Page.c4a2cb37.chunk.js",
+    "My AP Page.js": "/ap-site/static/js/My AP Page.67533723.chunk.js",
     "Marathon redirect page to Viber chatbot.js": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js",
     "Marathon redirect page to Telegram chatbot.js": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js",
     "Marathon redirect page to WhatsApp chat.js": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.a46805db.chunk.js",
@@ -255,7 +255,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.8af8fda2.js.map": "/ap-site/static/js/main.8af8fda2.js.map",
+    "main.4415b17a.js.map": "/ap-site/static/js/main.4415b17a.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a6bc0777.chunk.js.map": "/ap-site/static/js/New Design Homepage.a6bc0777.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -294,7 +294,7 @@
     "NMTMath Education page.ac48bfae.chunk.js.map": "/ap-site/static/js/NMTMath Education page.ac48bfae.chunk.js.map",
     "NMTHistory Education page.0bb3a796.chunk.js.map": "/ap-site/static/js/NMTHistory Education page.0bb3a796.chunk.js.map",
     "Teacher layout.543220e2.chunk.js.map": "/ap-site/static/js/Teacher layout.543220e2.chunk.js.map",
-    "Speaking Club redirect page.d34dfab4.chunk.js.map": "/ap-site/static/js/Speaking Club redirect page.d34dfab4.chunk.js.map",
+    "Speaking Club redirect page.412a8ef5.chunk.js.map": "/ap-site/static/js/Speaking Club redirect page.412a8ef5.chunk.js.map",
     "Speaking Club Kids redirect page.39bc2c95.chunk.js.map": "/ap-site/static/js/Speaking Club Kids redirect page.39bc2c95.chunk.js.map",
     "Links Admin Panel page.b6125249.chunk.js.map": "/ap-site/static/js/Links Admin Panel page.b6125249.chunk.js.map",
     "User Admin Panel page.d3ef0a0f.chunk.js.map": "/ap-site/static/js/User Admin Panel page.d3ef0a0f.chunk.js.map",
@@ -316,7 +316,7 @@
     "Universal Lead Form Page.7a5db3f1.chunk.js.map": "/ap-site/static/js/Universal Lead Form Page.7a5db3f1.chunk.js.map",
     "Ambassador Form Page.4404089c.chunk.js.map": "/ap-site/static/js/Ambassador Form Page.4404089c.chunk.js.map",
     "Teacher Form Page.9411e339.chunk.js.map": "/ap-site/static/js/Teacher Form Page.9411e339.chunk.js.map",
-    "My AP Page.c4a2cb37.chunk.js.map": "/ap-site/static/js/My AP Page.c4a2cb37.chunk.js.map",
+    "My AP Page.67533723.chunk.js.map": "/ap-site/static/js/My AP Page.67533723.chunk.js.map",
     "Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Viber chatbot.93fe0dbc.chunk.js.map",
     "Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.68e2cca1.chunk.js.map",
     "Marathon redirect page to WhatsApp chat.a46805db.chunk.js.map": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.a46805db.chunk.js.map",
@@ -372,6 +372,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.8af8fda2.js"
+    "static/js/main.4415b17a.js"
   ]
 }
