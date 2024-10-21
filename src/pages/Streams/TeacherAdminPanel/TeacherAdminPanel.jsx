@@ -74,7 +74,7 @@ const UserAdminPanel = () => {
     return () => {
       window.removeEventListener('keydown', onEscapeClose);
     };
-  }, [isUserAdmin, isEditFormOpen]);
+  }, [isUserAdmin, isEditFormOpen, teachers]);
 
   const initialLoginValues = {
     login: '',
@@ -99,10 +99,7 @@ const UserAdminPanel = () => {
   const handleLoginSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.post(
-        'http://localhost:5000/admins/login/teachers',
-        values
-      );
+      const response = await axios.post('/admins/login/teachers', values);
       setAuthToken(response.data.token);
       setIsUserAdmin(isAdmin => (isAdmin = true));
       localStorage.setItem('isAdmin', true);
@@ -170,7 +167,7 @@ const UserAdminPanel = () => {
     try {
       const response = await axios.delete(`/teachers/${id}`);
       console.log(response);
-      alert('Юзера видалено');
+      alert('Тічера видалено');
     } catch (error) {
       console.error(error);
       alert(
@@ -224,7 +221,7 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="name" />
               </Label>
               <Label>
-                <AdminInput type="email" name="login" placeholder="Логін" />
+                <AdminInput type="text" name="login" placeholder="Логін" />
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
@@ -250,37 +247,41 @@ const UserAdminPanel = () => {
               </UserDBRow>
             </thead>
             <tbody>
-              {teachers.map(teacher => (
-                <UserDBRow key={teacher._id}>
-                  <UserCell>{teacher.name}</UserCell>
-                  <UserCell>{teacher.login}</UserCell>
-                  <UserCell>{teacher.password}</UserCell>
-                  <UserCell>
-                    {teacher.visited[teacher.visited.length - 1]}
-                  </UserCell>
-                  <UserCell>
-                    {changeDateFormat(
-                      teacher.visitedTime[teacher.visitedTime.length - 1]
-                    ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
-                  </UserCell>
-                  <UserCell>
-                    {teacher.name === 'Dev Acc' ? null : (
-                      <UserEditButton onClick={() => handleEdit(teacher._id)}>
-                        Edit
-                      </UserEditButton>
-                    )}
-                  </UserCell>
-                  <UserCell>
-                    {teacher.name === 'Dev Acc' ? null : (
-                      <UserDeleteButton
-                        onClick={() => handleDelete(teacher._id)}
-                      >
-                        Del
-                      </UserDeleteButton>
-                    )}
-                  </UserCell>
-                </UserDBRow>
-              ))}
+              {teachers
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(teacher => (
+                  <UserDBRow key={teacher._id}>
+                    <UserCell>{teacher.name}</UserCell>
+                    <UserCell>{teacher.login}</UserCell>
+                    <UserCell>{teacher.password}</UserCell>
+                    <UserCell>
+                      {teacher.visited[teacher.visited.length - 1]}
+                    </UserCell>
+                    <UserCell>
+                      {teacher.visitedTime.length
+                        ? changeDateFormat(
+                            teacher.visitedTime[teacher.visitedTime.length - 1]
+                          ).toLocaleString('uk-UA', { timeZone: '+06:00' })
+                        : ''}
+                    </UserCell>
+                    <UserCell>
+                      {teacher.name === 'Dev Acc' ? null : (
+                        <UserEditButton onClick={() => handleEdit(teacher._id)}>
+                          Edit
+                        </UserEditButton>
+                      )}
+                    </UserCell>
+                    <UserCell>
+                      {teacher.name === 'Dev Acc' ? null : (
+                        <UserDeleteButton
+                          onClick={() => handleDelete(teacher._id)}
+                        >
+                          Del
+                        </UserDeleteButton>
+                      )}
+                    </UserCell>
+                  </UserDBRow>
+                ))}
             </tbody>
           </UserDBTable>
         )}

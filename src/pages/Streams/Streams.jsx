@@ -201,6 +201,7 @@ const Streams = () => {
       <StreamsBackgroundWrapper>
         {!isUserLogged &&
         !location.pathname.includes('admin-panel') &&
+        !location.pathname.includes('teamlead-panel') &&
         !location.pathname.includes('-chat') &&
         !location.pathname.includes('free') ? (
           <Formik
