@@ -220,6 +220,11 @@ const UserAdminPanel = lazy(() =>
     /* webpackChunkName: "User Admin Panel page" */ '../pages/Streams/UserAdminPanel/UserAdminPanel'
   )
 );
+const TeacherAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Admin Panel page" */ '../pages/Streams/TeacherAdminPanel/TeacherAdminPanel'
+  )
+);
 const UserJsonPanel = lazy(() =>
   import(
     /* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'
@@ -424,7 +429,7 @@ const QuizOneRequestGoogleNoEngage = lazy(() =>
 
 const QuizOneRequestDiscountNoEngage = lazy(() =>
   import(
-    /* webpackChunkName: "Sales quiz page for one request via discount mail without engagement page" */ '../pages/Quiz/QuizOneRequestGoogleNoEngage'
+    /* webpackChunkName: "Sales quiz page for one request via discount mail without engagement page" */ '../pages/Quiz/QuizOneRequestDiscountNoEngage'
   )
 );
 
@@ -607,6 +612,10 @@ export const App = () => {
               element={<HostKahootAdminPanel />}
             />
             <Route path="user-admin-panel" element={<UserAdminPanel />} />
+            <Route
+              path="teacher-teamlead-panel"
+              element={<TeacherAdminPanel />}
+            />
             <Route path="user-json-panel" element={<UserJsonPanel />} />
             <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} />
             <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} />

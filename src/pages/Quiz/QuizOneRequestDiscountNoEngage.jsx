@@ -17,7 +17,7 @@ const QuizOneRequestDiscountNoEngage = ({ utms }) => {
 
   const beginQuiz = () => {
     setActiveSlide(1);
-    quizValues.current = { pipeline_id: 6453287 };
+    quizValues.current = { pipeline_id: 7891256 };
     quizValues.current.utm_content = utms.utm_content;
     quizValues.current.utm_medium = utms.utm_medium;
     quizValues.current.utm_campaign = utms.utm_campaign;
