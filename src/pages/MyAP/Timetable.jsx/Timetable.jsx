@@ -42,8 +42,8 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
   );
 
   const getLink = () => {
-    const baseStreamUrl = 'https://ap.education/streams/';
-    const baseKidsStreamUrl = 'https://ap.education/streams-kids/';
+    const baseStreamUrl = 'https://academy.ap.education/streams/';
+    const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';
     console.log(user.lang);
     console.log(language);
     console.log(user.adult === undefined ? true : user.adult);
@@ -70,8 +70,8 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
       : baseStreamUrl;
   };
   const getSpeakingLink = () => {
-    const baseStreamUrl = 'https://ap.education/streams/';
-    const baseKidsStreamUrl = 'https://ap.education/streams-kids/';
+    const baseStreamUrl = 'https://academy.ap.education/streams/';
+    const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';
     return language === 'en'
       ? baseStreamUrl + personalTimetable?.level + 'sc'
       : language === 'enkids'

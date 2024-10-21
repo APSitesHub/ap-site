@@ -166,7 +166,7 @@ const StreamSpeakingClub = () => {
                 <StreamRefreshPageLink
                   onClick={() =>
                     window.location.replace(
-                      'https://www.ap.education/streams/' +
+                      'https://www.academy.ap.education/streams/' +
                         (lang !== 'en' ? lang : '') +
                         level +
                         'sc'
