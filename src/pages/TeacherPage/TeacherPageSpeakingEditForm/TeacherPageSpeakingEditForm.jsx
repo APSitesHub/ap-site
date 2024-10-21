@@ -15,6 +15,7 @@ import { EditFormHeader, StudentTextArea } from '../TeacherPage.styled';
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const TeacherPageSpeakingEditForm = ({
+  currentUser,
   studentToEdit,
   closeCourseLevelEditForm,
 }) => {
@@ -56,19 +57,20 @@ export const TeacherPageSpeakingEditForm = ({
     temperament: studentToEdit.temperament || '',
     successRate: studentToEdit.successRate || '',
     feedback: '',
-    teacher: localStorage.getItem('teacherName'),
   };
 
   const studentSchema = yup.object().shape({
     temperament: yup.string(),
     successRate: yup.string(),
     feedback: yup.string(),
-    // teacher: yup.string(),
   });
 
   const handleEditStudentSubmit = async values => {
     values.temperament = temperamentValue;
     values.successRate = successRateValue;
+    values.feedback = `${currentUser.name},
+${new Date().toLocaleString('uk-UA', { timeZone: '+03:00' })}:
+${values.feedback}`;
     const scValues = { ...values, crmId: studentToEdit.crmId };
 
     setIsLoading(isLoading => (isLoading = true));

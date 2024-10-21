@@ -615,7 +615,7 @@ export const LessonsAdminPanel = () => {
           </UserDBTable>
         )}
         {isEditFormOpen && (
-          <Backdrop onClick={closeEditFormOnClick} id="close-on-click">
+          <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
             <LessonEditForm
               lessonToEdit={lessonToEdit}
               closeEditForm={closeEditForm}

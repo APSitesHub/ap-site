@@ -164,10 +164,7 @@ const TimeTableAdminPanel = () => {
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.post(
-        '/timetable',
-        values
-      );
+      const response = await axios.post('/timetable', values);
       console.log(response);
       resetForm();
       alert('Урок додано');
@@ -575,13 +572,10 @@ const TimeTableAdminPanel = () => {
     console.log(parentId);
 
     try {
-      const response = await axios.patch(
-        `/timetable/schedule/${parentId}`,
-        {
-          _id: parentId,
-          scheduleId,
-        }
-      );
+      const response = await axios.patch(`/timetable/schedule/${parentId}`, {
+        _id: parentId,
+        scheduleId,
+      });
       console.log(response);
       alert('Урок видалено');
     } catch (error) {
@@ -811,7 +805,7 @@ const TimeTableAdminPanel = () => {
               ))}
         </ScheduleList>
         {isEditFormOpen && (
-          <Backdrop onClick={closeEditFormOnClick} id="close-on-click">
+          <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
             <TimeTableEditForm
               lessonToEdit={lessonToEdit}
               scheduleToEdit={scheduleToEdit}
@@ -828,7 +822,10 @@ const TimeTableAdminPanel = () => {
           </Backdrop>
         )}
         {isEditCourseLevelFormOpen && (
-          <Backdrop onClick={closeEditCourseLevelFormOnClick} id="close-on-click">
+          <Backdrop
+            onClick={closeEditCourseLevelFormOnClick}
+            id="close-on-click"
+          >
             <TimeTableCourseLevelEditForm
               lessonToEdit={lessonToEdit}
               languageOptions={languageOptions}
@@ -846,4 +843,4 @@ const TimeTableAdminPanel = () => {
   );
 };
 
-export default TimeTableAdminPanel
+export default TimeTableAdminPanel;

@@ -37,30 +37,24 @@ const Speakings = () => {
   };
 
   const initialLoginValues = {
-    mail: '',
+    login: '',
     password: '',
   };
 
   const loginSchema = yup.object().shape({
-    mail: yup
-      .string()
-      .required('Вкажіть пошту, за якою ви зареєстровані на нашій платформі!'),
-    password: yup
-      .string()
-      .required(
-        'Введіть пароль, який ви використовуєте для входу на нашу платформу!'
-      ),
+    login: yup.string().required('Вкажіть логін!'),
+    password: yup.string().required('Введіть пароль!'),
   });
 
   const handleLoginSubmit = async (values, { resetForm }) => {
-    values.mail = values.mail.toLowerCase().trim().trimStart();
+    values.login = values.login.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     try {
-      const response = await axios.post('/users/login', values);
+      const response = await axios.post('/teachers/login', values);
       setAuthToken(response.data.token);
       setIsUserLogged(isLogged => (isLogged = true));
-      setCurrentUser(currentUser => (currentUser = response.data.user));
-      localStorage.setItem('teacherMail', values.mail);
+      setCurrentUser(currentUser => (currentUser = response.data.teacher));
+      localStorage.setItem('teacherLogin', values.login);
       resetForm();
     } catch (error) {
       console.error(error);
@@ -74,14 +68,11 @@ const Speakings = () => {
       console.log('token refresher');
       try {
         setIsLoading(true);
-        const res = await axios.post(
-          'https://ap-server-8qi1.onrender.com/users/refresh',
-          { mail: localStorage.getItem('mail') }
-        );
+        const res = await axios.post('/teachers/refresh', {
+          login: localStorage.getItem('teacherLogin'),
+        });
+        setCurrentUser(currentUser => (currentUser = res.data.teacher));
         setIsUserLogged(isLogged => (isLogged = true));
-
-        localStorage.setItem('teacherName', res.data.user.name);
-        console.log(res);
       } catch (error) {
         console.log(error);
       } finally {
@@ -104,13 +95,12 @@ const Speakings = () => {
               <LoginLogo />
               <StreamAuthText>
                 <StreamAuthTextHello>Привіт!</StreamAuthTextHello>
-                Ця сторінка недоступна для неавторизованих користувачів. Але,
-                якщо ви маєте доступ до нашої платформи, то й до цієї сторінки
-                теж. Введіть дані, які ви використовуєте для входу на платформу.
+                Це сторінка для викладачів. <br />
+                Якщо ви викладач, введіть ваші логін та пароль.
               </StreamAuthText>
               <Label>
-                <LoginInput type="text" name="mail" placeholder="Login" />
-                <LoginInputNote component="p" name="mail" type="email" />
+                <LoginInput type="text" name="login" placeholder="Login" />
+                <LoginInputNote component="p" name="login" />
               </Label>
               <Label>
                 <LoginInput
@@ -124,7 +114,7 @@ const Speakings = () => {
             </LoginForm>
           </Formik>
         ) : (
-          <Outlet context={[isLoading, currentUser]} />
+          <Outlet context={[currentUser]} />
         )}
 
         {isLoading && (

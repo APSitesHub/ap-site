@@ -411,7 +411,7 @@ export const TeacherLessonsAdminPanel = () => {
           </UserDBTable>
         )}
         {isEditFormOpen && (
-          <Backdrop onClick={closeEditFormOnClick} id="close-on-click">
+          <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
             <Formik
               initialValues={initialAnswerValues}
               onSubmit={handleAnswerSubmit}

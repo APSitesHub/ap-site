@@ -20,7 +20,7 @@ import {
   QuizBox,
   QuizButton,
   QuizButtonBox,
-  QuizButtonContent
+  QuizButtonContent,
 } from '../Quiz.styled';
 
 export const QuizQuestionLevelOneRequest = ({
@@ -40,9 +40,9 @@ export const QuizQuestionLevelOneRequest = ({
         return 'quiz-one';
       case '/quiz-one/':
         return 'quiz-one';
-      case '/quiz-google':
+      case '/quiz-g':
         return 'quiz-google';
-      case '/quiz-google/':
+      case '/quiz-g/':
         return 'quiz-google';
       case '/quiz-d11p':
         return '-11%';

@@ -16,6 +16,7 @@ import {
   TeacherSpeakingDBTable,
 } from './TeacherPage.styled';
 import { TeacherPageSpeakingEditForm } from './TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm';
+import { useOutletContext } from 'react-router-dom';
 
 const TeacherPageSpeaking = () => {
   const location = useLocation().pathname.split('/speakings/')[1];
@@ -25,6 +26,7 @@ const TeacherPageSpeaking = () => {
   const [studentToEdit, setStudentToEdit] = useState({});
   const [isEditStudentFormOpen, setIsEditStudentFormOpen] = useState(false);
   const linksRegex = /\b(?:https?|ftp):\/\/\S+\b/g;
+  const [currentUser] = useOutletContext();
 
   const closeStudentEditForm = e => {
     setIsEditStudentFormOpen(false);
@@ -247,8 +249,9 @@ const TeacherPageSpeaking = () => {
       </TeacherSpeakingDBTable>
 
       {isEditStudentFormOpen && (
-        <Backdrop onClick={closeEditStudentFormOnClick} id="close-on-click">
+        <Backdrop onMouseDown={closeEditStudentFormOnClick} id="close-on-click">
           <TeacherPageSpeakingEditForm
+            currentUser={currentUser}
             studentToEdit={studentToEdit}
             closeCourseLevelEditForm={closeStudentEditForm}
           />

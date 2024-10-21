@@ -947,7 +947,7 @@ const UserAdminPanel = () => {
           </UserDBTable>
         )}
         {isEditFormOpen && (
-          <Backdrop onClick={closeEditFormOnClick} id="close-on-click">
+          <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
             <UserEditForm
               userToEdit={userToEdit}
               closeEditForm={closeEditForm}

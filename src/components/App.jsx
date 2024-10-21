@@ -56,6 +56,11 @@ const University = lazy(() =>
 const Streams = lazy(() =>
   import(/* webpackChunkName: "Streams page" */ '../pages/Streams/Streams')
 );
+const Speakings = lazy(() =>
+  import(
+    /* webpackChunkName: "Speakings teacher page" */ '../pages/Streams/Speakings'
+  )
+);
 const StreamA0 = lazy(() =>
   import(
     /* webpackChunkName: "Streams A0 page" */ '../pages/Streams/A0/StreamA0'
@@ -702,7 +707,7 @@ export const App = () => {
             <Route path="viber" element={<ViberHRRedirect />} />
             <Route path="tg" element={<TelegramHRRedirect />} />
           </Route>
-          <Route path="speakings" element={<Streams />} noindex={true}>
+          <Route path="speakings" element={<Speakings />} noindex={true}>
             <Route path="a0sc" element={<TeacherPageSpeaking />} />
             <Route path="a0_2sc" element={<TeacherPageSpeaking />} />
             <Route path="a1sc" element={<TeacherPageSpeaking />} />
@@ -783,7 +788,7 @@ export const App = () => {
           <Route path="quiz" element={<Quiz utms={utms} />} />
           <Route path="quiz-one" element={<QuizOneRequest utms={utms} />} />
           <Route
-            path="quiz-google"
+            path="quiz-g"
             element={<QuizOneRequestGoogleNoEngage utms={utms} />}
           />
           <Route

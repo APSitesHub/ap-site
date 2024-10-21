@@ -20,7 +20,7 @@ import {
   UserHeadCell,
   UsersForm,
 } from './TeacherAdminPanel.styled';
-import { UserEditForm } from './TeacherEditForm/TeacherEditForm';
+import { TeacherEditForm } from './TeacherEditForm/TeacherEditForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -165,12 +165,11 @@ const UserAdminPanel = () => {
 
   const handleDelete = async id => {
     setIsLoading(isLoading => (isLoading = true));
-    const isSure = window.confirm(
+    const areYouSure = window.confirm(
       `Точно видалити ${teachers.find(teacher => teacher._id === id).name}?`
     );
-    console.log(isSure);
 
-    if (!isSure) {
+    if (!areYouSure) {
       setIsLoading(isLoading => (isLoading = false));
       return;
     } else {
@@ -276,9 +275,13 @@ const UserAdminPanel = () => {
                     </UserCell>
                     <UserCell>
                       {teacher.visitedTime.length
-                        ? changeDateFormat(
-                            teacher.visitedTime[teacher.visitedTime.length - 1]
-                          ).toLocaleString('uk-UA', { timeZone: '+06:00' })
+                        ? new Date(
+                            changeDateFormat(
+                              teacher.visitedTime[
+                                teacher.visitedTime.length - 1
+                              ]
+                            )
+                          ).toLocaleString('uk-UA', { timeZone: '+03:00' })
                         : ''}
                     </UserCell>
                     <UserCell>
@@ -303,8 +306,8 @@ const UserAdminPanel = () => {
           </UserDBTable>
         )}
         {isEditFormOpen && (
-          <Backdrop onClick={closeEditFormOnClick} id="close-on-click">
-            <UserEditForm
+          <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
+            <TeacherEditForm
               teacherToEdit={teacherToEdit}
               closeEditForm={closeEditForm}
             />
