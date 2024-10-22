@@ -97,6 +97,18 @@ const TeacherPageSpeaking = () => {
     }
   };
 
+  const updateFeedback = (id, values) => {
+    const userToUpdate = users.find(user => user._id === id);
+    userToUpdate.successRate = values.successRate;
+    userToUpdate.temperament = values.temperament;
+    userToUpdate.feedback[0] = values.feedback;
+
+    setUsers(
+      users =>
+        (users = [...users.filter(user => user._id !== id), userToUpdate])
+    );
+  };
+
   const handleStudentEdit = async id => {
     setStudentToEdit(
       studentToEdit =>
@@ -138,7 +150,7 @@ const TeacherPageSpeaking = () => {
       }
     };
     getSpeakingUsersRequest();
-  }, [isEditStudentFormOpen, course, page, lang]);
+  }, [course, page, lang]);
 
   return (
     <TeacherSpeakingDBSection>
@@ -253,6 +265,7 @@ const TeacherPageSpeaking = () => {
           <TeacherPageSpeakingEditForm
             currentUser={currentUser}
             studentToEdit={studentToEdit}
+            updateFeedback={updateFeedback}
             closeCourseLevelEditForm={closeStudentEditForm}
           />
         </Backdrop>

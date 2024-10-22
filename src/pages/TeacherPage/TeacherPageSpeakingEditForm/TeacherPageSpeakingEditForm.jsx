@@ -17,6 +17,7 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 export const TeacherPageSpeakingEditForm = ({
   currentUser,
   studentToEdit,
+  updateFeedback,
   closeCourseLevelEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -87,6 +88,7 @@ ${values.feedback}`;
       console.log(userResponse);
       closeCourseLevelEditForm();
       alert('Відредаговано');
+      updateFeedback(studentToEdit._id, values);
     } catch (error) {
       console.error(error);
       alert(

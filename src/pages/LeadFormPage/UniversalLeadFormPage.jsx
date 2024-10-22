@@ -139,7 +139,9 @@ const UniversalLeadFormPage = ({ utms }) => {
       <ThankYouSection>
         <PageFormWrapper>
           <PageFormHeading>
-            Залишіть заявку зараз та отримайте -15% знижки на наші послуги!
+            {utms.utm_source === 'apstarshak'
+              ? 'Залишіть заявку та отримайте -15% знижки за промокодом «APStarshak»!'
+              : 'Залишіть заявку зараз та отримайте -15% знижки на наші послуги!'}
           </PageFormHeading>
           <LeadFormAddText>
             P.S.: Зустрінемось на пробному занятті 😉
