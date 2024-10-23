@@ -13,7 +13,7 @@ import {
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const UserEditForm = ({ userToEdit, closeEditForm }) => {
+export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const initialUserValues = {
@@ -121,6 +121,7 @@ export const UserEditForm = ({ userToEdit, closeEditForm }) => {
       console.log(response);
       resetForm();
       alert('Юзера відредаговано');
+      updateUser(userToEdit._id, values);
       closeEditForm();
     } catch (error) {
       console.error(error);

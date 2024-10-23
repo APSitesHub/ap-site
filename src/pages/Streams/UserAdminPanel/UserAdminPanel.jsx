@@ -78,7 +78,7 @@ const UserAdminPanel = () => {
             params: { isAdmin: isUserAdmin },
           });
           setUsers(users => (users = [...response.data.reverse()]));
-          persistentUsers.current = [...response.data];
+          persistentUsers.current = [...response.data.reverse()];
           setManagers(
             managers =>
               (managers = [
@@ -123,7 +123,7 @@ const UserAdminPanel = () => {
     getUsers();
 
     const onEscapeClose = event => {
-      if (event.code === 'Escape' && isEditFormOpen) {
+      if (event.code === 'Escape') {
         closeEditForm();
       }
     };
@@ -133,7 +133,7 @@ const UserAdminPanel = () => {
     return () => {
       window.removeEventListener('keydown', onEscapeClose);
     };
-  }, [isUserAdmin, isEditFormOpen]);
+  }, [isUserAdmin]);
 
   const initialLoginValues = {
     login: '',
@@ -457,7 +457,8 @@ const UserAdminPanel = () => {
     values.manager = values.manager.toLowerCase().trim().trimStart();
     try {
       const response = await axios.post('/users/new', values);
-      console.log(response);
+      console.log(response.data);
+      setUsers(users => [response.data, ...users]);
       resetForm();
       alert('Юзера додано');
     } catch (error) {
@@ -487,6 +488,34 @@ const UserAdminPanel = () => {
     }
   };
 
+  const updateUser = (id, values) => {
+    const userToUpdate = users.find(user => user._id === id);
+    userToUpdate.name = values.name;
+    userToUpdate.mail = values.mail;
+    userToUpdate.zoomMail = values.zoomMail;
+    userToUpdate.password = values.password;
+    userToUpdate.pupilId = values.pupilId;
+    userToUpdate.marathonNumber = values.marathonNumber;
+    userToUpdate.crmId = values.crmId;
+    userToUpdate.contactId = values.contactId;
+    userToUpdate.age = values.age;
+    userToUpdate.adult = values.adult;
+    userToUpdate.lang = values.lang;
+    userToUpdate.package = values.package;
+    userToUpdate.course = values.course;
+    userToUpdate.knowledge = values.knowledge;
+    userToUpdate.manager = values.manager;
+
+    console.log(userToUpdate);
+
+    setUsers(
+      users =>
+        (users = users.map((user, i) =>
+          i === users.findIndex(user => user._id === id) ? userToUpdate : user
+        ))
+    );
+  };
+
   const toggleDaysSinceLastVisitPicker = () => {
     setIsDaysPickerOpen(isOpen => !isOpen);
   };
@@ -514,6 +543,7 @@ const UserAdminPanel = () => {
       const response = await axios.delete(`/users/${id}`);
       console.log(response);
       alert('Юзера видалено');
+      setUsers(users => (users = [...users.filter(user => user._id !== id)]));
     } catch (error) {
       console.error(error);
       alert(
@@ -950,6 +980,7 @@ const UserAdminPanel = () => {
           <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
             <UserEditForm
               userToEdit={userToEdit}
+              updateUser={updateUser}
               closeEditForm={closeEditForm}
             />
           </Backdrop>
