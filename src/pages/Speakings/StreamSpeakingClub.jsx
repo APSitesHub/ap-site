@@ -114,7 +114,7 @@ const StreamSpeakingClub = () => {
           ? await axios.post('/speakingusers/new', user)
           : await axios.put(`/speakingusers/${user.userId}`, user);
 
-        res && setIsApproved(true);
+        res.data._id && setIsApproved(true);
       } catch (error) {
         console.log(error);
       }
@@ -184,8 +184,8 @@ const StreamSpeakingClub = () => {
               .some(singleCourse => singleCourse === course)) &&
             redirectLink &&
             isApproved) ||
-            user.name === 'Dev Acc' ||
-            user.name === 'Тічер') &&
+            (user.name === 'Dev Acc' && isApproved) ||
+            (user.name === 'Тічер' && isApproved)) &&
             window.location.replace(redirectLink)}
         </StreamsBackgroundWrapper>
       </StreamSection>
