@@ -43,6 +43,7 @@ const UserAdminPanel = () => {
       try {
         if (localStorage.getItem('isAdmin')) {
           const res = await axios.post('admins/refresh/teachers/', {});
+          setAuthToken(res.data.newToken);
           console.log(res);
           setIsUserAdmin(isAdmin => (isAdmin = true));
         }

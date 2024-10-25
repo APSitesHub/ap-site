@@ -62,7 +62,7 @@ const UserAdminPanel = () => {
       try {
         if (localStorage.getItem('isAdmin')) {
           const res = await axios.post('admins/refresh/users/', {});
-          console.log(res);
+          setAuthToken(res.data.newToken);
           setIsUserAdmin(isAdmin => (isAdmin = true));
         }
       } catch (error) {
@@ -74,9 +74,7 @@ const UserAdminPanel = () => {
     const getUsers = async () => {
       try {
         if (isUserAdmin) {
-          const response = await axios.get('/users/admin/', {
-            params: { isAdmin: isUserAdmin },
-          });
+          const response = await axios.get('/users/admin/');
           setUsers(users => (users = [...response.data.reverse()]));
           persistentUsers.current = [...response.data.reverse()];
           setManagers(

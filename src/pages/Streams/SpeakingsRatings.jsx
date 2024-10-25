@@ -22,7 +22,7 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-const Speakings = () => {
+const SpeakingsRatings = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -131,4 +131,4 @@ const Speakings = () => {
   );
 };
 
-export default Speakings;
+export default SpeakingsRatings;
