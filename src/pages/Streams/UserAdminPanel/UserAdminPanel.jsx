@@ -538,19 +538,27 @@ const UserAdminPanel = () => {
 
   const handleDelete = async id => {
     setIsLoading(isLoading => (isLoading = true));
+    const areYouSure = window.confirm(
+      `Точно видалити ${users.find(user => user._id === id).name}?`
+    );
 
-    try {
-      const response = await axios.delete(`/users/${id}`);
-      console.log(response);
-      alert('Юзера видалено');
-      setUsers(users => (users = [...users.filter(user => user._id !== id)]));
-    } catch (error) {
-      console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
-    } finally {
+    if (!areYouSure) {
       setIsLoading(isLoading => (isLoading = false));
+      return;
+    } else {
+      try {
+        const response = await axios.delete(`/users/${id}`);
+        console.log(response);
+        alert('Юзера видалено');
+        setUsers(users => (users = [...users.filter(user => user._id !== id)]));
+      } catch (error) {
+        console.error(error);
+        alert(
+          'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
+        );
+      } finally {
+        setIsLoading(isLoading => (isLoading = false));
+      }
     }
   };
 
