@@ -249,47 +249,47 @@ const TeacherPageSpeaking = () => {
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.grammar === '3'
+                  {user.grammar === 3
                     ? 'Дуже добре'
-                    : user.grammar === '2'
+                    : user.grammar === 2
                     ? 'Добре'
-                    : user.grammar === '1'
+                    : user.grammar === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.lexis === '3'
+                  {user.lexis === 3
                     ? 'Дуже добре'
-                    : user.lexis === '2'
+                    : user.lexis === 2
                     ? 'Добре'
-                    : user.lexis === '1'
+                    : user.lexis === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.speaking === '3'
+                  {user.speaking === 3
                     ? 'Дуже добре'
-                    : user.speaking === '2'
+                    : user.speaking === 2
                     ? 'Добре'
-                    : user.speaking === '1'
+                    : user.speaking === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.listening === '3'
+                  {user.listening === 3
                     ? 'Дуже добре'
-                    : user.listening === '2'
+                    : user.listening === 2
                     ? 'Добре'
-                    : user.listening === '1'
+                    : user.listening === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.activity === '3'
+                  {user.activity === 3
                     ? 'Дуже добре'
-                    : user.activity === '2'
+                    : user.activity === 2
                     ? 'Добре'
-                    : user.activity === '1'
+                    : user.activity === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
