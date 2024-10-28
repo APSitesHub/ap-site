@@ -101,6 +101,11 @@ const TeacherPageSpeaking = () => {
     const userToUpdate = users.find(user => user._id === id);
     userToUpdate.successRate = values.successRate;
     userToUpdate.temperament = values.temperament;
+    userToUpdate.grammar = values.grammar;
+    userToUpdate.lexis = values.lexis;
+    userToUpdate.speaking = values.speaking;
+    userToUpdate.listening = values.listening;
+    userToUpdate.activity = values.activity;
     userToUpdate.feedback[0] = values.feedback;
 
     setUsers(
@@ -167,6 +172,11 @@ const TeacherPageSpeaking = () => {
             <UserHeadCell>Потік</UserHeadCell>
             <UserHeadCell>Темперамент</UserHeadCell>
             <UserHeadCell>Успішність</UserHeadCell>
+            <UserHeadCell>Граматика</UserHeadCell>
+            <UserHeadCell>Лексика</UserHeadCell>
+            <UserHeadCell>Говоріння</UserHeadCell>
+            <UserHeadCell>Слухання</UserHeadCell>
+            <UserHeadCell>Активність</UserHeadCell>
             <UserHeadCell>Фідбек</UserHeadCell>
           </UserDBRow>
         </thead>
@@ -236,6 +246,51 @@ const TeacherPageSpeaking = () => {
                     ? 'Середній'
                     : user.successRate === 'bad'
                     ? 'Слабкий'
+                    : ''}
+                </UserCell>
+                <UserCell>
+                  {user.grammar === '3'
+                    ? 'Дуже добре'
+                    : user.grammar === '2'
+                    ? 'Добре'
+                    : user.grammar === '1'
+                    ? 'Потребує покращення'
+                    : ''}
+                </UserCell>
+                <UserCell>
+                  {user.lexis === '3'
+                    ? 'Дуже добре'
+                    : user.lexis === '2'
+                    ? 'Добре'
+                    : user.lexis === '1'
+                    ? 'Потребує покращення'
+                    : ''}
+                </UserCell>
+                <UserCell>
+                  {user.speaking === '3'
+                    ? 'Дуже добре'
+                    : user.speaking === '2'
+                    ? 'Добре'
+                    : user.speaking === '1'
+                    ? 'Потребує покращення'
+                    : ''}
+                </UserCell>
+                <UserCell>
+                  {user.listening === '3'
+                    ? 'Дуже добре'
+                    : user.listening === '2'
+                    ? 'Добре'
+                    : user.listening === '1'
+                    ? 'Потребує покращення'
+                    : ''}
+                </UserCell>
+                <UserCell>
+                  {user.activity === '3'
+                    ? 'Дуже добре'
+                    : user.activity === '2'
+                    ? 'Добре'
+                    : user.activity === '1'
+                    ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCellLeft

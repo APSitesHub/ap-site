@@ -21,7 +21,7 @@ export const StreamNavKids = () => {
             {/* <StreamNavItem>
               <StreamNavLink to={'/streams-kids/a0'}>A0</StreamNavLink>
             </StreamNavItem> */}
-            <StreamNavItem>
+            {/* <StreamNavItem>
               <StreamNavLink to={'/streams-kids/beg'}>EN BEG</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
@@ -29,10 +29,7 @@ export const StreamNavKids = () => {
             </StreamNavItem>
             <StreamNavItem>
               <StreamNavLink to={'/streams-kids/high'}>EN HIGH</StreamNavLink>
-            </StreamNavItem>
-            <StreamNavItem>
-              <StreamNavLink to={'/streams-kids/dea0'}>DE A0</StreamNavLink>
-            </StreamNavItem>
+            </StreamNavItem> */}
             <StreamNavItem>
               <StreamNavLink to={'/streams-kids/a1'}>A1</StreamNavLink>
             </StreamNavItem>
