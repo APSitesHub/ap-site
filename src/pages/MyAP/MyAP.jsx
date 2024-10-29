@@ -70,7 +70,8 @@ const MyAP = () => {
           mail: localStorage.getItem('mail'),
         });
         setIsUserLogged(isLogged => (isLogged = true));
-        console.log(res);
+        // console.log(73, res.data.user.platformToken);
+        // document.cookie = `Auth-Token=${res.data.user.platformToken}`;
         setUser(user => (user = { ...res.data.user }));
         const lang = res.data.user.lang.split('/');
         if (lang.length > 1 && !language) {

@@ -6,11 +6,18 @@ import {
   AdminFormBtn,
   AdminInputNote,
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
-import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel.styled';
-import { UsersEditForm } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
 import { useState } from 'react';
 import * as yup from 'yup';
 import { EditFormHeader, StudentTextArea } from '../TeacherPage.styled';
+import {
+  LabelText,
+  SpeakingLabel,
+  SpeakingSelect,
+  StyledDatePicker,
+  UserSpeakingEditForm,
+} from './TeacherPageSpeakingEditForm.styled';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -21,18 +28,15 @@ export const TeacherPageSpeakingEditForm = ({
   closeCourseLevelEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
   const [temperamentValue, setTemperamentValue] = useState(
     studentToEdit.temperament || ''
   );
   const [successRateValue, setSuccessRateValue] = useState(
     studentToEdit.successRate || ''
   );
-  const [grammarValue, setGrammarValue] = useState(
-    studentToEdit.grammar || ''
-  );
-  const [lexisValue, setLexisValue] = useState(
-    studentToEdit.lexis || ''
-  );
+  const [grammarValue, setGrammarValue] = useState(studentToEdit.grammar || '');
+  const [lexisValue, setLexisValue] = useState(studentToEdit.lexis || '');
   const [speakingValue, setSpeakingValue] = useState(
     studentToEdit.speaking || ''
   );
@@ -167,6 +171,8 @@ export const TeacherPageSpeakingEditForm = ({
   });
 
   const handleEditStudentSubmit = async values => {
+    console.log(values);
+
     values.temperament = temperamentValue;
     values.successRate = successRateValue;
     values.grammar = grammarValue;
@@ -211,137 +217,210 @@ ${values.feedback}`;
         onSubmit={handleEditStudentSubmit}
         validationSchema={studentSchema}
       >
-        <UsersEditForm>
-          <EditFormHeader>
+        <UserSpeakingEditForm>
+          <EditFormHeader id="focus">
             {studentToEdit.name +
               (studentToEdit.age ? ', ' + studentToEdit.age + 'р.' : '')}
           </EditFormHeader>
-          <FormSelect
-            options={successRateOptions}
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                border: 'none',
-                borderRadius: '0px',
-              }),
-            }}
-            placeholder="Успішність"
-            name="successRate"
-            defaultValue={successRateOptions.find(
-              option => option.value === studentToEdit.successRate
-            )}
-            onChange={successRate => {
-              setSuccessRateValue(successRate.value);
-            }}
-          />
-          <FormSelect
-            options={temperamentOptions}
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                border: 'none',
-                borderRadius: '0px',
-              }),
-            }}
-            placeholder="Темперамент"
-            name="temperament"
-            defaultValue={temperamentOptions.find(
-              option => option.value === studentToEdit.temperament
-            )}
-            onChange={temperament => {
-              setTemperamentValue(temperament.value);
-            }}
-          />
-          <FormSelect
-            options={grammarOptions}
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                border: 'none',
-                borderRadius: '0px',
-              }),
-            }}
-            placeholder="Граматика"
-            name="grammar"
-            defaultValue={grammarOptions.find(
-              option => option.value === studentToEdit.grammar
-            )}
-            onChange={grammar => {
-              setGrammarValue(grammar.value);
-            }}
-          />
-          <FormSelect
-            options={lexisOptions}
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                border: 'none',
-                borderRadius: '0px',
-              }),
-            }}
-            placeholder="Лексика"
-            name="lexis"
-            defaultValue={lexisOptions.find(
-              option => option.value === studentToEdit.lexis
-            )}
-            onChange={lexis => {
-              setLexisValue(lexis.value);
-            }}
-          />
-          <FormSelect
-            options={speakingOptions}
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                border: 'none',
-                borderRadius: '0px',
-              }),
-            }}
-            placeholder="Говоріння/вимова"
-            name="speaking"
-            defaultValue={speakingOptions.find(
-              option => option.value === studentToEdit.speaking
-            )}
-            onChange={speaking => {
-              setSpeakingValue(speaking.value);
-            }}
-          />
-          <FormSelect
-            options={listeningOptions}
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                border: 'none',
-                borderRadius: '0px',
-              }),
-            }}
-            placeholder="Слухання"
-            name="listening"
-            defaultValue={listeningOptions.find(
-              option => option.value === studentToEdit.listening
-            )}
-            onChange={listening => {
-              setListeningValue(listening.value);
-            }}
-          />
-          <FormSelect
-            options={activityOptions}
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                border: 'none',
-                borderRadius: '0px',
-              }),
-            }}
-            placeholder="Активність на уроці"
-            name="activity"
-            defaultValue={activityOptions.find(
-              option => option.value === studentToEdit.activity
-            )}
-            onChange={activity => {
-              setActivityValue(activity.value);
-            }}
-          />
+          <SpeakingLabel>
+            <LabelText>Оберіть дату заняття</LabelText>
+            <StyledDatePicker
+              selected={startDate}
+              dateFormat="dd.MM.yyyy"
+              onChange={date => setStartDate(date)}
+              calendarStartDay={1}
+              shouldCloseOnSelect={true}
+            />
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {successRateValue && <LabelText>Успішність</LabelText>}
+            <SpeakingSelect
+              options={successRateOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '0px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px'
+                }),
+              }}
+              placeholder="Успішність"
+              name="successRate"
+              defaultValue={successRateOptions.find(
+                option => option.value === studentToEdit.successRate
+              )}
+              onChange={successRate => {
+                setSuccessRateValue(successRate.value);
+              }}
+            />
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {temperamentValue && <LabelText>Темперамент</LabelText>}
+            <SpeakingSelect
+              options={temperamentOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '0px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px'
+                }),
+              }}
+              placeholder="Темперамент"
+              name="temperament"
+              defaultValue={temperamentOptions.find(
+                option => option.value === studentToEdit.temperament
+              )}
+              onChange={temperament => {
+                setTemperamentValue(temperament.value);
+              }}
+            />
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {grammarValue && <LabelText>Граматика</LabelText>}
+            <SpeakingSelect
+              options={grammarOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '0px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px'
+                }),
+              }}
+              placeholder="Граматика"
+              name="grammar"
+              defaultValue={grammarOptions.find(
+                option => option.value === studentToEdit.grammar
+              )}
+              onChange={grammar => {
+                setGrammarValue(grammar.value);
+              }}
+            />
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {lexisValue && <LabelText>Лексика</LabelText>}
+            <SpeakingSelect
+              options={lexisOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '0px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px'
+                }),
+              }}
+              placeholder="Лексика"
+              name="lexis"
+              defaultValue={lexisOptions.find(
+                option => option.value === studentToEdit.lexis
+              )}
+              onChange={lexis => {
+                setLexisValue(lexis.value);
+              }}
+            />
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {speakingValue && <LabelText>Говоріння/вимова</LabelText>}
+            <SpeakingSelect
+              options={speakingOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '0px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px'
+                }),
+              }}
+              placeholder="Говоріння/вимова"
+              name="speaking"
+              defaultValue={speakingOptions.find(
+                option => option.value === studentToEdit.speaking
+              )}
+              onChange={speaking => {
+                setSpeakingValue(speaking.value);
+              }}
+            />
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {listeningValue && <LabelText>Слухання</LabelText>}
+            <SpeakingSelect
+              options={listeningOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '0px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px'
+                }),
+              }}
+              placeholder="Слухання"
+              name="listening"
+              defaultValue={listeningOptions.find(
+                option => option.value === studentToEdit.listening
+              )}
+              onChange={listening => {
+                setListeningValue(listening.value);
+              }}
+            />
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {activityValue && <LabelText>Активність</LabelText>}
+            <SpeakingSelect
+              options={activityOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '0px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px'
+                }),
+              }}
+              placeholder="Активність на уроці"
+              name="activity"
+              defaultValue={activityOptions.find(
+                option => option.value === studentToEdit.activity
+              )}
+              onChange={activity => {
+                setActivityValue(activity.value);
+              }}
+            />
+          </SpeakingLabel>
           <Label>
             <StudentTextArea
               type="text"
@@ -352,7 +431,7 @@ ${values.feedback}`;
             <AdminInputNote component="p" name="feedback" />
           </Label>
           <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
-        </UsersEditForm>
+        </UserSpeakingEditForm>
       </Formik>
       {isLoading && <Loader />}
     </>

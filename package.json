@@ -1,6 +1,6 @@
 {
   "name": "ap-education",
-  "version": "1.0.30c",
+  "version": "1.0.30d",
   "private": true,
   "homepage": "https://apsiteshub.github.io/ap-site/",
   "dependencies": {
@@ -24,6 +24,7 @@
     "nanoid": "^5.0.4",
     "react": "^18.1.0",
     "react-cookie-consent": "^8.0.1",
+    "react-datepicker": "^7.5.0",
     "react-dom": "^18.1.0",
     "react-fast-marquee": "^1.6.0",
     "react-hook-theme": "^1.2.6",

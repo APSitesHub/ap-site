@@ -195,9 +195,14 @@ export const PlatformLogo = styled(PlatformIcon)`
 export const StudentTextArea = styled(AdminTextArea)`
   width: 100%;
   height: 100%;
-  min-height: 280px;
+  min-height: 200px;
   padding: 10px;
   background-color: white;
+  font-size: 16px;
+
+  @media screen and (min-height: 960px) {
+    min-height: 280px;
+  }
 `;
 
 export const EditFormHeader = styled.h2`
