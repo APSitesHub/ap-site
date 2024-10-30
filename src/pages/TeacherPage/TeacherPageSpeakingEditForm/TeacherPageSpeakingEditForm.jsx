@@ -2,15 +2,14 @@ import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
-import {
-  AdminFormBtn,
-  AdminInputNote,
-} from 'pages/Streams/AdminPanel/AdminPanel.styled';
+import { AdminInputNote } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useState } from 'react';
 import * as yup from 'yup';
 import { EditFormHeader, StudentTextArea } from '../TeacherPage.styled';
 import {
+  LabelDatePickerText,
   LabelText,
+  SpeakingFormBtn,
   SpeakingLabel,
   SpeakingSelect,
   StyledDatePicker,
@@ -44,7 +43,7 @@ export const TeacherPageSpeakingEditForm = ({
     studentToEdit.listening || ''
   );
   const [activityValue, setActivityValue] = useState(
-    studentToEdit.Activity || ''
+    studentToEdit.activity || ''
   );
 
   const successRateOptions = [
@@ -180,8 +179,14 @@ export const TeacherPageSpeakingEditForm = ({
     values.speaking = speakingValue;
     values.listening = listeningValue;
     values.activity = activityValue;
-    values.feedback = `${currentUser.name},
-${new Date().toLocaleString('uk-UA', { timeZone: '+03:00' })}:
+    values.feedback = `${
+      currentUser.name
+    } залишає відгук за заняття ${startDate.getDate()}.${
+      startDate.getMonth() + 1 < 10
+        ? '0' + (startDate.getMonth() + 1)
+        : startDate.getMonth() + 1
+    }.${startDate.getFullYear()}:
+${new Date().toLocaleString('uk-UA', { timeZone: '+02:00' })}:
 ${values.feedback}`;
     const scValues = { ...values, crmId: studentToEdit.crmId };
 
@@ -223,15 +228,16 @@ ${values.feedback}`;
               (studentToEdit.age ? ', ' + studentToEdit.age + 'р.' : '')}
           </EditFormHeader>
           <SpeakingLabel>
-            <LabelText>Оберіть дату заняття</LabelText>
-            <StyledDatePicker
-              selected={startDate}
-              dateFormat="dd.MM.yyyy"
-              onChange={date => setStartDate(date)}
-              calendarStartDay={1}
-              shouldCloseOnSelect={true}
-            />
+            <LabelDatePickerText>Оберіть дату заняття</LabelDatePickerText>
           </SpeakingLabel>
+          <StyledDatePicker
+            selected={startDate}
+            dateFormat="dd.MM.yyyy"
+            onChange={date => setStartDate(date)}
+            calendarStartDay={1}
+            shouldCloseOnSelect={true}
+          />
+
           <SpeakingLabel>
             {successRateValue && <LabelText>Успішність</LabelText>}
             <SpeakingSelect
@@ -241,12 +247,17 @@ ${values.feedback}`;
                   ...baseStyles,
                   border: 'none',
                   borderRadius: '0px',
+                  minHeight: '34px',
                 }),
                 menu: (baseStyles, state) => ({
                   ...baseStyles,
                   position: 'absolute',
                   zIndex: '2',
-                  top: '36px'
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
                 }),
               }}
               placeholder="Успішність"
@@ -268,12 +279,17 @@ ${values.feedback}`;
                   ...baseStyles,
                   border: 'none',
                   borderRadius: '0px',
+                  minHeight: '34px',
                 }),
                 menu: (baseStyles, state) => ({
                   ...baseStyles,
                   position: 'absolute',
                   zIndex: '2',
-                  top: '36px'
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
                 }),
               }}
               placeholder="Темперамент"
@@ -295,12 +311,17 @@ ${values.feedback}`;
                   ...baseStyles,
                   border: 'none',
                   borderRadius: '0px',
+                  minHeight: '34px',
                 }),
                 menu: (baseStyles, state) => ({
                   ...baseStyles,
                   position: 'absolute',
                   zIndex: '2',
-                  top: '36px'
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
                 }),
               }}
               placeholder="Граматика"
@@ -322,12 +343,17 @@ ${values.feedback}`;
                   ...baseStyles,
                   border: 'none',
                   borderRadius: '0px',
+                  minHeight: '34px',
                 }),
                 menu: (baseStyles, state) => ({
                   ...baseStyles,
                   position: 'absolute',
                   zIndex: '2',
-                  top: '36px'
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
                 }),
               }}
               placeholder="Лексика"
@@ -349,12 +375,17 @@ ${values.feedback}`;
                   ...baseStyles,
                   border: 'none',
                   borderRadius: '0px',
+                  minHeight: '34px',
                 }),
                 menu: (baseStyles, state) => ({
                   ...baseStyles,
                   position: 'absolute',
                   zIndex: '2',
-                  top: '36px'
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
                 }),
               }}
               placeholder="Говоріння/вимова"
@@ -376,12 +407,17 @@ ${values.feedback}`;
                   ...baseStyles,
                   border: 'none',
                   borderRadius: '0px',
+                  minHeight: '34px',
                 }),
                 menu: (baseStyles, state) => ({
                   ...baseStyles,
                   position: 'absolute',
                   zIndex: '2',
-                  top: '36px'
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
                 }),
               }}
               placeholder="Слухання"
@@ -403,12 +439,17 @@ ${values.feedback}`;
                   ...baseStyles,
                   border: 'none',
                   borderRadius: '0px',
+                  minHeight: '34px',
                 }),
                 menu: (baseStyles, state) => ({
                   ...baseStyles,
                   position: 'absolute',
                   zIndex: '2',
-                  top: '36px'
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
                 }),
               }}
               placeholder="Активність на уроці"
@@ -430,7 +471,7 @@ ${values.feedback}`;
             />
             <AdminInputNote component="p" name="feedback" />
           </Label>
-          <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
+          <SpeakingFormBtn type="submit">Підтвердити зміни</SpeakingFormBtn>
         </UserSpeakingEditForm>
       </Formik>
       {isLoading && <Loader />}

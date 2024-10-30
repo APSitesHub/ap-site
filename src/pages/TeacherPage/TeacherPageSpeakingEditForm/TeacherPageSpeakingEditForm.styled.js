@@ -1,3 +1,4 @@
+import { FormBtn } from 'components/LeadForm/LeadForm.styled';
 import { Form } from 'formik';
 import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel.styled';
 import DatePicker from 'react-datepicker';
@@ -20,7 +21,7 @@ export const UserSpeakingEditForm = styled(Form)`
   gap: 6px;
 
   & .react-datepicker__tab-loop {
-    margin-top: -4px;
+    margin-top: -6px;
   }
 
   & .react-datepicker-popper {
@@ -41,6 +42,9 @@ export const UserSpeakingEditForm = styled(Form)`
   }
 
   @media screen and (min-height: 960px) {
+    & .react-datepicker__tab-loop {
+      margin-top: -9px;
+    }
   }
 `;
 
@@ -58,9 +62,8 @@ export const SpeakingLabel = styled.label`
 
 export const StyledDatePicker = styled(DatePicker)`
   width: 100%;
-  max-height: 42px;
+  max-height: 38px;
   padding: 10px;
-  font-size: 12px;
   border: 2px solid var(--main-color);
 
   @media screen and (min-width: 960px) {
@@ -87,15 +90,40 @@ export const LabelText = styled.span`
 
   @media screen and (min-height: 960px) {
     top: -8px;
+    font-size: 12px;
+    padding: 2px;
+  }
+`;
+
+export const LabelDatePickerText = styled(LabelText)`
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  z-index: 1;
+  background-color: white;
+
+  font-size: 10px;
+  display: block;
+  padding: 1px;
+
+  @media screen and (min-height: 960px) {
+    top: 1px;
     padding: 2px;
     font-size: 12px;
   }
 `;
 
 export const SpeakingSelect = styled(FormSelect)`
-  font-size: 12px;
+  font-size: 16px;
+`;
 
-  @media screen and (min-width: 960px) {
-    font-size: 16px;
+export const SpeakingFormBtn = styled(FormBtn)`
+  margin: 0 auto;
+  padding: 12px;
+  height: auto;
+
+  @media screen and (min-width: 768px) {
+    padding: 16px;
+    letter-spacing: 0.6px;
   }
 `;

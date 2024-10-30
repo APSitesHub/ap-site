@@ -10,13 +10,12 @@ import {
   UserHeadCell,
 } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useOutletContext } from 'react-router-dom';
 import {
   TeacherSpeakingDBSection,
   TeacherSpeakingDBTable,
 } from './TeacherPage.styled';
 import { TeacherPageSpeakingEditForm } from './TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm';
-import { useOutletContext } from 'react-router-dom';
 
 const TeacherPageSpeaking = () => {
   const location = useLocation().pathname.split('/speakings/')[1];
@@ -211,13 +210,13 @@ const TeacherPageSpeaking = () => {
                 </UserCell>
                 <UserCellLeft>{user.name}</UserCellLeft>
                 <UserCell>
-                  {user.name === 'Dev Acc' ? null : (
+                  {/* {user.name === 'Dev Acc' ? null : ( */}
                     <UserEditButton
                       onClick={() => handleStudentEdit(user.userId)}
                     >
                       Edit
                     </UserEditButton>
-                  )}
+                  {/* )} */}
                 </UserCell>
                 <UserCell>
                   {!user.visitedTime[user.visitedTime.length - 1]
