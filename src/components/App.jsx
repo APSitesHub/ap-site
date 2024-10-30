@@ -250,6 +250,11 @@ const SpeakingAdminPanel = lazy(() =>
     /* webpackChunkName: "Speaking Admin Panel page" */ '../pages/Streams/AdminPanel/SpeakingAdminPanel'
   )
 );
+const SpeakingsRatings = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Rating Admin page" */ '../pages/Streams/SpeakingsRatings'
+  )
+);
 const English = lazy(() =>
   import(
     /* webpackChunkName: "English courses page" */ '../pages/English/English'
@@ -727,6 +732,7 @@ export const App = () => {
             <Route path="pla2sc" element={<TeacherPageSpeaking />} />
             <Route path="plb1sc" element={<TeacherPageSpeaking />} />
             <Route path="plb2sc" element={<TeacherPageSpeaking />} />
+            <Route path="ratings" element={<SpeakingsRatings />} />
           </Route>
           <Route path="teacher" element={<Teacher />} noindex={true}>
             <Route path="a0" element={<TeacherPage />} />

@@ -210,13 +210,13 @@ const TeacherPageSpeaking = () => {
                 </UserCell>
                 <UserCellLeft>{user.name}</UserCellLeft>
                 <UserCell>
-                  {/* {user.name === 'Dev Acc' ? null : ( */}
+                  {user.name === 'Dev Acc' ? null : (
                     <UserEditButton
                       onClick={() => handleStudentEdit(user.userId)}
                     >
                       Edit
                     </UserEditButton>
-                  {/* )} */}
+                  )}
                 </UserCell>
                 <UserCell>
                   {!user.visitedTime[user.visitedTime.length - 1]
