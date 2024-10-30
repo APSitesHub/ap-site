@@ -242,6 +242,10 @@ const TimeTableAdminPanel = () => {
 
   const courseEnglishOptions = [
     {
+      label: '10 (Спікінги)',
+      value: '10',
+    },
+    {
       label: '11',
       value: '11',
     },
@@ -515,7 +519,7 @@ const TimeTableAdminPanel = () => {
       value: 'easy',
     },
     {
-      label: 'Easy',
+      label: 'Easy+',
       value: 'easy+',
     },
     {
@@ -533,6 +537,10 @@ const TimeTableAdminPanel = () => {
     {
       label: 'Online Курс',
       value: 'online',
+    },
+    {
+      label: 'Додаткові мовні практики',
+      value: 'sc',
     },
   ];
 

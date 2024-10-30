@@ -26,10 +26,10 @@ export const StreamNavKids = () => {
             </StreamNavItem>
             <StreamNavItem>
               <StreamNavLink to={'/streams-kids/mid'}>EN MID</StreamNavLink>
-            </StreamNavItem>
+            </StreamNavItem>*/}
             <StreamNavItem>
               <StreamNavLink to={'/streams-kids/high'}>EN HIGH</StreamNavLink>
-            </StreamNavItem> */}
+            </StreamNavItem>
             <StreamNavItem>
               <StreamNavLink to={'/streams-kids/a1'}>A1</StreamNavLink>
             </StreamNavItem>
@@ -40,6 +40,9 @@ export const StreamNavKids = () => {
               <StreamNavLink to={'/streams-kids/b1'}>B1</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
+              <StreamNavLink to={'/streams-kids/b2'}>B2</StreamNavLink>
+            </StreamNavItem>
+            {/* <StreamNavItem>
               <StreamNavLink to={'/streams-kids/b1beginner'}>
                 B1 Beginner
               </StreamNavLink>
@@ -48,16 +51,16 @@ export const StreamNavKids = () => {
               <StreamNavLink to={'/streams-kids/b2beginner'}>
                 B2 Beginner
               </StreamNavLink>
-            </StreamNavItem>
+            </StreamNavItem> */}
             <StreamNavItem>
               <StreamNavLink to={'/streams-kids/dea0'}>DE A0</StreamNavLink>
             </StreamNavItem>
-            <StreamNavItem>
+            {/* <StreamNavItem>
               <StreamNavLink to={'/streams-kids/dea1'}>DE A1</StreamNavLink>
             </StreamNavItem>
             <StreamNavItem>
               <StreamNavLink to={'/streams-kids/pla1'}>PL A1</StreamNavLink>
-            </StreamNavItem>
+            </StreamNavItem> */}
           </StreamNavList>
         </StreamNavigation>
       </StreamNavigationBox>
