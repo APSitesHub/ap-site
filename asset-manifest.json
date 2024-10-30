@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.2996f3c5.js",
+    "main.js": "/ap-site/static/js/main.29e747b9.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.f70ce5f3.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -49,6 +49,7 @@
     "Ratings Admin Panel page.js": "/ap-site/static/js/Ratings Admin Panel page.f686e1d9.chunk.js",
     "TimeTable Admin Panel page.js": "/ap-site/static/js/TimeTable Admin Panel page.1c5c7001.chunk.js",
     "Speaking Admin Panel page.js": "/ap-site/static/js/Speaking Admin Panel page.5e2b3413.chunk.js",
+    "Speaking Rating Admin page.js": "/ap-site/static/js/Speaking Rating Admin page.ad3c3fa9.chunk.js",
     "English courses page.css": "/ap-site/static/css/English courses page.e8ee1c85.chunk.css",
     "English courses page.js": "/ap-site/static/js/English courses page.afd10d7d.chunk.js",
     "Polski courses page.css": "/ap-site/static/css/Polski courses page.e8ee1c85.chunk.css",
@@ -56,7 +57,7 @@
     "Deutsch courses page.css": "/ap-site/static/css/Deutsch courses page.e8ee1c85.chunk.css",
     "Deutsch courses page.js": "/ap-site/static/js/Deutsch courses page.ae08a8a5.chunk.js",
     "Teacher Page.js": "/ap-site/static/js/Teacher Page.2952f110.chunk.js",
-    "Speaking Teacher Page.js": "/ap-site/static/js/Speaking Teacher Page.d0de7501.chunk.js",
+    "Speaking Teacher Page.js": "/ap-site/static/js/Speaking Teacher Page.2812c4fd.chunk.js",
     "Forms Linktree Page.js": "/ap-site/static/js/Forms Linktree Page.cab1fa4b.chunk.js",
     "Lead Form Page.js": "/ap-site/static/js/Lead Form Page.d0dbe372.chunk.js",
     "Universal Lead Form Page.js": "/ap-site/static/js/Universal Lead Form Page.52f5d01b.chunk.js",
@@ -257,7 +258,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.2996f3c5.js.map": "/ap-site/static/js/main.2996f3c5.js.map",
+    "main.29e747b9.js.map": "/ap-site/static/js/main.29e747b9.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.f70ce5f3.chunk.js.map": "/ap-site/static/js/New Design Homepage.f70ce5f3.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -305,6 +306,7 @@
     "Ratings Admin Panel page.f686e1d9.chunk.js.map": "/ap-site/static/js/Ratings Admin Panel page.f686e1d9.chunk.js.map",
     "TimeTable Admin Panel page.1c5c7001.chunk.js.map": "/ap-site/static/js/TimeTable Admin Panel page.1c5c7001.chunk.js.map",
     "Speaking Admin Panel page.5e2b3413.chunk.js.map": "/ap-site/static/js/Speaking Admin Panel page.5e2b3413.chunk.js.map",
+    "Speaking Rating Admin page.ad3c3fa9.chunk.js.map": "/ap-site/static/js/Speaking Rating Admin page.ad3c3fa9.chunk.js.map",
     "English courses page.e8ee1c85.chunk.css.map": "/ap-site/static/css/English courses page.e8ee1c85.chunk.css.map",
     "English courses page.afd10d7d.chunk.js.map": "/ap-site/static/js/English courses page.afd10d7d.chunk.js.map",
     "Polski courses page.e8ee1c85.chunk.css.map": "/ap-site/static/css/Polski courses page.e8ee1c85.chunk.css.map",
@@ -312,7 +314,7 @@
     "Deutsch courses page.e8ee1c85.chunk.css.map": "/ap-site/static/css/Deutsch courses page.e8ee1c85.chunk.css.map",
     "Deutsch courses page.ae08a8a5.chunk.js.map": "/ap-site/static/js/Deutsch courses page.ae08a8a5.chunk.js.map",
     "Teacher Page.2952f110.chunk.js.map": "/ap-site/static/js/Teacher Page.2952f110.chunk.js.map",
-    "Speaking Teacher Page.d0de7501.chunk.js.map": "/ap-site/static/js/Speaking Teacher Page.d0de7501.chunk.js.map",
+    "Speaking Teacher Page.2812c4fd.chunk.js.map": "/ap-site/static/js/Speaking Teacher Page.2812c4fd.chunk.js.map",
     "Forms Linktree Page.cab1fa4b.chunk.js.map": "/ap-site/static/js/Forms Linktree Page.cab1fa4b.chunk.js.map",
     "Lead Form Page.d0dbe372.chunk.js.map": "/ap-site/static/js/Lead Form Page.d0dbe372.chunk.js.map",
     "Universal Lead Form Page.52f5d01b.chunk.js.map": "/ap-site/static/js/Universal Lead Form Page.52f5d01b.chunk.js.map",
@@ -376,6 +378,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.2996f3c5.js"
+    "static/js/main.29e747b9.js"
   ]
 }
