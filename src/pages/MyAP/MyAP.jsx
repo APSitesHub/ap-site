@@ -70,8 +70,7 @@ const MyAP = () => {
           mail: localStorage.getItem('mail'),
         });
         setIsUserLogged(isLogged => (isLogged = true));
-        // console.log(73, res.data.user.platformToken);
-        // document.cookie = `Auth-Token=${res.data.user.platformToken}`;
+        console.log(73, res.data.user.platformToken);
         setUser(user => (user = { ...res.data.user }));
         const lang = res.data.user.lang.split('/');
         if (lang.length > 1 && !language) {
@@ -124,14 +123,46 @@ const MyAP = () => {
 
     const setIframeLinks = async () => {
       const LINKS = {
-        en1: `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=621674`,
-        en2: `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=847031`,
-        pl: `https://online.ap.education/MarathonClass/?marathonId=41057&pupilId=${user.pupilId}&marathonLessonId=629354`,
-        de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=629357`,
-        enkids1: `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673`,
-        enkids2: `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=847034`,
-        dekids: `https://online.ap.education/MarathonClass/?marathonId=65423&pupilId=${user.pupilId}&marathonLessonId=968639`,
-        plkids: `https://online.ap.education/MarathonClass/?marathonId=64039&pupilId=${user.pupilId}&marathonLessonId=952360`,
+        en1: `https://online.ap.education/Account/LoginByToken?token=${
+          user.platformToken
+        }&redirectUrl=${encodeURIComponent(
+          `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=621674`
+        )}`,
+        en2: `https://online.ap.education/Account/LoginByToken?token=${
+          user.platformToken
+        }&redirectUrl=${encodeURIComponent(
+          `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=847031`
+        )}`,
+        pl: `https://online.ap.education/Account/LoginByToken?token=${
+          user.platformToken
+        }&redirectUrl=${encodeURIComponent(
+          `https://online.ap.education/MarathonClass/?marathonId=41057&pupilId=${user.pupilId}&marathonLessonId=629354`
+        )}`,
+        de: `https://online.ap.education/Account/LoginByToken?token=${
+          user.platformToken
+        }&redirectUrl=${encodeURIComponent(
+          `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=629357`
+        )}`,
+        enkids1: `https://online.ap.education/Account/LoginByToken?token=${
+          user.platformToken
+        }&redirectUrl=${encodeURIComponent(
+          `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673`
+        )}`,
+        enkids2: `https://online.ap.education/Account/LoginByToken?token=${
+          user.platformToken
+        }&redirectUrl=${encodeURIComponent(
+          `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=847034`
+        )}`,
+        dekids: `https://online.ap.education/Account/LoginByToken?token=${
+          user.platformToken
+        }&redirectUrl=${encodeURIComponent(
+          `https://online.ap.education/MarathonClass/?marathonId=65423&pupilId=${user.pupilId}&marathonLessonId=968639`
+        )}`,
+        plkids: `https://online.ap.education/Account/LoginByToken?token=${
+          user.platformToken
+        }&redirectUrl=${encodeURIComponent(
+          `https://online.ap.education/MarathonClass/?marathonId=64039&pupilId=${user.pupilId}&marathonLessonId=952360`
+        )}`,
       };
 
       const marathonLink =
@@ -178,6 +209,7 @@ const MyAP = () => {
     isChatButtonShown,
     user.pupilId,
     user.marathonNumber,
+    user.platformToken,
   ]);
 
   const setAuthToken = token => {
