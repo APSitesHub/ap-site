@@ -1,8 +1,8 @@
 {
   "name": "ap-education",
-  "version": "1.0.31d",
+  "version": "1.0.31d.1",
   "private": true,
-  "homepage": "https://apsiteshub.github.io/ap-site/",
+  "homepage": "https://www.academy.ap.education/",
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",

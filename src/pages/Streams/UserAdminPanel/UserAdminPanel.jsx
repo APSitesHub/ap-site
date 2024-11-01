@@ -417,7 +417,7 @@ const UserAdminPanel = () => {
       ),
     lang: yup
       .string()
-      .optional()
+      .required("Мова - обов'язкове поле")
       .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     course: yup
       .string()
