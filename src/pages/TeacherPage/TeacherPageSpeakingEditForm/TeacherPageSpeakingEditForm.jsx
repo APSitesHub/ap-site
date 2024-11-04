@@ -24,7 +24,7 @@ export const TeacherPageSpeakingEditForm = ({
   currentUser,
   studentToEdit,
   updateFeedback,
-  closeCourseLevelEditForm,
+  closeStudentEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
@@ -202,7 +202,7 @@ ${values.feedback}`;
       );
       console.log(response);
       console.log(userResponse);
-      closeCourseLevelEditForm();
+      closeStudentEditForm();
       alert('Відредаговано');
       updateFeedback(studentToEdit._id, values);
     } catch (error) {

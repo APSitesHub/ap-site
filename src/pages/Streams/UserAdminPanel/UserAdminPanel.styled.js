@@ -158,6 +158,12 @@ export const UserEditButton = styled.button`
   border-radius: 5px;
 `;
 
+export const UserChartButton = styled.button`
+  background-color: transparent;
+  border: 1px solid var(--main-color);
+  border-radius: 5px;
+`;
+
 export const UserDeleteButton = styled.button`
   background-color: transparent;
   border: 1px solid var(--main-color);

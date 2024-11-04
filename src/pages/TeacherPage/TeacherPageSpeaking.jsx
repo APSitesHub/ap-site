@@ -4,6 +4,7 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import {
   UserCell,
   UserCellLeft,
+  UserChartButton,
   UserDBCaption,
   UserDBRow,
   UserEditButton,
@@ -16,6 +17,7 @@ import {
   TeacherSpeakingDBTable,
 } from './TeacherPage.styled';
 import { TeacherPageSpeakingEditForm } from './TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm';
+import { StudentChart } from './StudentChart/StudentChart';
 
 const TeacherPageSpeaking = () => {
   const location = useLocation().pathname.split('/speakings/')[1];
@@ -23,12 +25,18 @@ const TeacherPageSpeaking = () => {
   const [users, setUsers] = useState([]);
   const [course, setCourse] = useState('');
   const [studentToEdit, setStudentToEdit] = useState({});
+  const [currentStudentChart, setCurrentStudentChart] = useState({});
   const [isEditStudentFormOpen, setIsEditStudentFormOpen] = useState(false);
+  const [isStudentChartOpen, setIsStudentChartOpen] = useState(false);
   const linksRegex = /\b(?:https?|ftp):\/\/\S+\b/g;
   const [currentUser] = useOutletContext();
 
   const closeStudentEditForm = e => {
     setIsEditStudentFormOpen(false);
+  };
+
+  const closeStudentChart = e => {
+    setIsStudentChartOpen(false);
   };
 
   const changeDateFormat = dateString => {
@@ -96,6 +104,12 @@ const TeacherPageSpeaking = () => {
     }
   };
 
+  const closeStudentChartOnClick = e => {
+    if (e.target.id === 'close-chart-on-click') {
+      setIsStudentChartOpen(false);
+    }
+  };
+
   const updateFeedback = (id, values) => {
     const userToUpdate = users.find(user => user._id === id);
     userToUpdate.successRate = values.successRate;
@@ -119,6 +133,14 @@ const TeacherPageSpeaking = () => {
         (studentToEdit = users.find(student => student.userId === id))
     );
     setIsEditStudentFormOpen(true);
+  };
+
+  const handleStudentChart = async id => {
+    setCurrentStudentChart(
+      currentStudentChart =>
+        (currentStudentChart = users.find(student => student.userId === id))
+    );
+    setIsStudentChartOpen(true);
   };
 
   useEffect(() => {
@@ -166,6 +188,7 @@ const TeacherPageSpeaking = () => {
             <UserHeadCell>CRM</UserHeadCell>
             <UserHeadCell>Ім'я</UserHeadCell>
             <UserHeadCell>Edit</UserHeadCell>
+            <UserHeadCell>Chart</UserHeadCell>
             <UserHeadCell>Відвідини</UserHeadCell>
             <UserHeadCell>Мова</UserHeadCell>
             <UserHeadCell>Потік</UserHeadCell>
@@ -217,6 +240,13 @@ const TeacherPageSpeaking = () => {
                       Edit
                     </UserEditButton>
                   )}
+                </UserCell>
+                <UserCell>
+                  <UserChartButton
+                    onClick={() => handleStudentChart(user.userId)}
+                  >
+                    Chart
+                  </UserChartButton>
                 </UserCell>
                 <UserCell>
                   {!user.visitedTime[user.visitedTime.length - 1]
@@ -320,7 +350,16 @@ const TeacherPageSpeaking = () => {
             currentUser={currentUser}
             studentToEdit={studentToEdit}
             updateFeedback={updateFeedback}
-            closeCourseLevelEditForm={closeStudentEditForm}
+            closeStudentEditForm={closeStudentEditForm}
+          />
+        </Backdrop>
+      )}
+
+      {isStudentChartOpen && (
+        <Backdrop onMouseDown={closeStudentChartOnClick} id="close-chart-on-click">
+          <StudentChart
+            currentStudentChart={currentStudentChart}
+            closeCourseLevelEditForm={closeStudentChart}
           />
         </Backdrop>
       )}
