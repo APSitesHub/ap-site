@@ -55,7 +55,12 @@ export const PageFormUniversity = ({ utms }) => {
         'Будь ласка, введіть валідний номер телефону!'
       )
       .min(10, 'Номер телефону має складатися не менше ніж з 10 символів!')
-      .max(15, 'Номер телефону має складатися не більше ніж з 15 символів!'),
+      .max(18, 'Номер телефону має складатися не більше ніж з 18 символів!'),
+    time: yup
+      .string()
+      .required(
+        'Будь ласка, вкажіть бажаний день та час, коли ми можемо вам зателефонувати!'
+      ),
     utm_content: yup.string().optional(),
     utm_medium: yup.string().optional(),
     utm_campaign: yup.string().optional(),
@@ -113,6 +118,7 @@ export const PageFormUniversity = ({ utms }) => {
               type="text"
               name="name"
               placeholder="Ім'я"
+              autocomplete="off"
             />
             <InputNote component="p" name="name" />
           </PageFormLabel>
@@ -121,8 +127,18 @@ export const PageFormUniversity = ({ utms }) => {
               type="tel"
               name="phone"
               placeholder="Телефон"
+              autocomplete="off"
             />
             <InputNote component="p" name="phone" />
+          </PageFormLabel>
+          <PageFormLabel>
+            <PageFormInputUniversity
+              type="text"
+              name="time"
+              placeholder="Коли вам зателефонувати?"
+              autocomplete="off"
+            />
+            <InputNote component="p" name="time" />
           </PageFormLabel>
           <HiddenInput type="text" name="utm_content" />
           <HiddenInput type="text" name="utm_medium" />

@@ -44,3 +44,16 @@ export const StudentChartArea = styled.div`
     }
   }
 `;
+
+export const GradientBg = styled.div`
+  position: absolute;
+  top: calc(50% + 23px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.15;
+
+  width: 313px;
+  height: 313px;
+  background: radial-gradient(red 0% 23%, yellow 24% 46%, green 47% 100%);
+`;

@@ -261,7 +261,12 @@ const LeadFormPage = ({ utms }) => {
         'Будь ласка, введіть валідний номер телефону!'
       )
       .min(10, 'Номер телефону має складатися не менше ніж з 10 символів!')
-      .max(15, 'Номер телефону має складатися не більше ніж з 15 символів!'),
+      .max(18, 'Номер телефону має складатися не більше ніж з 18 символів!'),
+    time: yup
+      .string()
+      .required(
+        'Будь ласка, вкажіть бажаний день та час, коли ми можемо вам зателефонувати!'
+      ),
     tag: yup.string().optional(),
     utm_content: yup.string().optional(),
     utm_medium: yup.string().optional(),
@@ -333,12 +338,27 @@ const LeadFormPage = ({ utms }) => {
                     type="text"
                     name="name"
                     placeholder="Ім'я та прізвище*"
+                    autocomplete="off"
                   />
                   <InputNote component="p" name="name" />
                 </Label>
                 <Label>
-                  <Input type="tel" name="phone" placeholder="Телефон*" />
+                  <Input
+                    type="tel"
+                    name="phone"
+                    placeholder="Телефон*"
+                    autocomplete="off"
+                  />
                   <InputNote component="p" name="phone" />
+                </Label>
+                <Label>
+                  <Input
+                    type="text"
+                    name="time"
+                    placeholder="Коли вам зателефонувати?*"
+                    autocomplete="off"
+                  />
+                  <InputNote component="p" name="time" />
                 </Label>
               </FormInputBox>
               <HiddenInput type="text" name="tag" />

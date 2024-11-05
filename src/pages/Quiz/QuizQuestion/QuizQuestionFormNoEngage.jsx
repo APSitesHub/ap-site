@@ -94,7 +94,12 @@ export const QuizQuestionFormNoEngage = ({
         'Будь ласка, введіть валідний номер телефону!'
       )
       .min(10, 'Номер телефону має складатися не менше ніж з 10 символів!')
-      .max(15, 'Номер телефону має складатися не більше ніж з 15 символів!'),
+      .max(18, 'Номер телефону має складатися не більше ніж з 18 символів!'),
+    time: yup
+      .string()
+      .required(
+        'Будь ласка, вкажіть бажаний день та час, коли ми можемо вам зателефонувати!'
+      ),
     mail: yup.string().required(),
     password: yup.string().required(),
     tag: yup.string().required(),
@@ -138,7 +143,7 @@ export const QuizQuestionFormNoEngage = ({
     };
 
     try {
-      const response = await axios.post('/leads/quiz-one/', values);
+      const response = await axios.post('http://localhost:5000/leads/quiz-one/', values);
       console.log(response);
       quizValues.current.leadPage = response.data.engPage;
       quizValues.current.crmId = response.data.crmId;
@@ -175,12 +180,31 @@ export const QuizQuestionFormNoEngage = ({
               <FormBottomStar />
               <FormInputBox>
                 <Label>
-                  <QuizInput type="text" name="name" placeholder="Ім'я*" />
+                  <QuizInput
+                    type="text"
+                    name="name"
+                    placeholder="Ім'я*"
+                    autocomplete="off"
+                  />
                   <InputNote component="p" name="name" />
                 </Label>
                 <Label>
-                  <QuizInput type="tel" name="phone" placeholder="Телефон*" />
+                  <QuizInput
+                    type="tel"
+                    name="phone"
+                    placeholder="Телефон*"
+                    autocomplete="off"
+                  />
                   <InputNote component="p" name="phone" />
+                </Label>
+                <Label>
+                  <QuizInput
+                    type="text"
+                    name="time"
+                    placeholder="Коли вам зателефонувати?*"
+                    autocomplete="off"
+                  />
+                  <InputNote component="p" name="time" />
                 </Label>
               </FormInputBox>
               <HiddenInput type="text" name="tag" />

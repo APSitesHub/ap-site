@@ -1,7 +1,7 @@
 import { ResponsiveRadar } from '@nivo/radar';
 import axios from 'axios';
 import { EditFormHeader } from '../TeacherPage.styled';
-import { StudentChartArea } from './StudentChart.styled';
+import { GradientBg, StudentChartArea } from './StudentChart.styled';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -9,7 +9,6 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const StudentChart = ({
   currentStudentChart,
-  closeCourseLevelEditForm,
 }) => {
   const data = [
     {
@@ -43,12 +42,11 @@ export const StudentChart = ({
       borderColor={{ from: 'color' }}
       gridLevels={3}
       gridLabelOffset={16}
-      enableDotLabel={true}
-      dotLabelYOffset={18}
-      dotSize={4}
+      dotSize={5}
       dotColor={{ theme: 'background' }}
-      dotBorderWidth={2}
-      colors={{ scheme: 'accent' }}
+      dotBorderWidth={3}
+      colors={{ scheme: 'dark2' }}
+      fillOpacity={0.15}
       blendMode="multiply"
       motionConfig="wobbly"
     />
@@ -61,12 +59,12 @@ export const StudentChart = ({
           {currentStudentChart.name +
             (currentStudentChart.age &&
             currentStudentChart.age !== 'N/A' &&
-            currentStudentChart.age !== '0'
-            &&
+            currentStudentChart.age !== '0' &&
             currentStudentChart.age !== '-'
               ? ', ' + currentStudentChart.age + 'р.'
               : '')}
         </EditFormHeader>
+        <GradientBg id="chartbg" />
         <MyResponsiveRadar data={data}></MyResponsiveRadar>
       </StudentChartArea>
     </>
