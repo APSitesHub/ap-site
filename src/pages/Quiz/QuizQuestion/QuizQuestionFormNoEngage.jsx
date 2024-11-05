@@ -143,7 +143,7 @@ export const QuizQuestionFormNoEngage = ({
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/leads/quiz-one/', values);
+      const response = await axios.post('/leads/quiz-one/', values);
       console.log(response);
       quizValues.current.leadPage = response.data.engPage;
       quizValues.current.crmId = response.data.crmId;
