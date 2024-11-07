@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { ReactComponent as ViewerIcon } from '../../img/svg/viewerIcon.svg';
 import { ReactComponent as WhiteBoardIcon } from '../../img/svg/whiteBoardIcon.svg';
 import { ReactComponent as PlatformIcon } from '../../img/svg/myap/logo-short.svg';
+import { ReactComponent as Cow } from '../../img/svg/cow.svg';
+import { ReactComponent as Pig } from '../../img/svg/pig.svg';
 import { ReactComponent as BoxSwitchUp } from '../../img/svg/btnbox-switch-up.svg';
 import { ReactComponent as BoxSwitchDown } from '../../img/svg/btnbox-switch-down.svg';
 import { ReactComponent as BoxSwitchLeft } from '../../img/svg/btnbox-switch-left.svg';
@@ -38,6 +40,11 @@ export const TeacherButtonBox = styled.div`
   &.hidden {
     transform: translateX(200px);
   }
+`;
+
+export const TeacherFarmButtonBox = styled(TeacherButtonBox)`
+  gap: 10px;
+  bottom: 60px;
 `;
 
 export const TeacherButtonBoxVertical = styled.div`
@@ -77,6 +84,12 @@ export const TeacherButtonBoxHideSwitch = styled.div`
 
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
+`;
+
+export const TeacherFarmButtonBoxHideSwitch = styled(
+  TeacherButtonBoxHideSwitch
+)`
+  bottom: 210px;
 `;
 
 export const TeacherButtonBoxHideSwitchVertical = styled.div`
@@ -155,6 +168,30 @@ export const KeyboardBox = styled.div`
 
   &.shown {
     transform: translateY(0);
+  }
+`;
+
+export const FarmBtn = styled(ChatBtn)``;
+
+export const CowLogo = styled(Cow)`
+  width: 25px;
+  height: 25px;
+  z-index: 5;
+
+  @media screen and (min-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+export const PigLogo = styled(Pig)`
+  width: 25px;
+  height: 25px;
+  z-index: 5;
+
+  @media screen and (min-width: 768px) {
+    width: 40px;
+    height: 40px;
   }
 `;
 
