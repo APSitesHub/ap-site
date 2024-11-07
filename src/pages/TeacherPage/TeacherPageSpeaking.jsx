@@ -87,6 +87,15 @@ const TeacherPageSpeaking = () => {
   };
 
   const getLanguageFromLocation = location => {
+    if (location.includes('kids')) {
+      if (location.includes('de') || location.includes('deutsch')) {
+        return 'dekids';
+      } else if (location.includes('pl') || location.includes('polski')) {
+        return 'plkids';
+      } else {
+        return 'enkids';
+      }
+    }
     if (location.includes('de') || location.includes('deutsch')) {
       return 'de';
     } else if (location.includes('pl') || location.includes('polski')) {
@@ -356,7 +365,10 @@ const TeacherPageSpeaking = () => {
       )}
 
       {isStudentChartOpen && (
-        <Backdrop onMouseDown={closeStudentChartOnClick} id="close-chart-on-click">
+        <Backdrop
+          onMouseDown={closeStudentChartOnClick}
+          id="close-chart-on-click"
+        >
           <StudentChart
             currentStudentChart={currentStudentChart}
             closeCourseLevelEditForm={closeStudentChart}

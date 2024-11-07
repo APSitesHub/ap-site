@@ -737,6 +737,25 @@ export const App = () => {
             <Route path="pla2sc" element={<TeacherPageSpeaking />} />
             <Route path="plb1sc" element={<TeacherPageSpeaking />} />
             <Route path="plb2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-a0sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-a0_2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-a1sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-a2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-b1sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-b2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-c1sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-dea0sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-dea0_2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-dea1sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-dea2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-deb1sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-deb2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-pla0sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-pla0_2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-pla1sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-pla2sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-plb1sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-plb2sc" element={<TeacherPageSpeaking />} />
             <Route path="ratings" element={<SpeakingsRatings />} />
           </Route>
           <Route path="teacher" element={<Teacher />} noindex={true}>

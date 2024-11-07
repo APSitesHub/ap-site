@@ -18,6 +18,10 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const StreamSpeakingClubKids = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [redirectLink, setRedirectLink] = useState('');
+  const [user, setUser] = useState({});
+  const [course, setCourse] = useState('');
+  const [level, setLevel] = useState('');
+  const [isApproved, setIsApproved] = useState(false);
   const location = useLocation().pathname;
 
   const page = location.includes('preschool')
@@ -34,13 +38,36 @@ const StreamSpeakingClubKids = () => {
     ? 'b2kidsbeginner'
     : page;
 
-  console.log(page);
+  console.log(page, course, level);
 
   useLayoutEffect(() => {
     const getLinksRequest = async () => {
       try {
         setIsLoading(isLoading => (isLoading = true));
         setRedirectLink((await axios.get('/speakings')).data[link]);
+        const currentUser = await axios.post('/users/refresh', {
+          mail: localStorage.getItem('mail'),
+        });
+        console.log(51, currentUser.data.user);
+        setUser(
+          user =>
+            (user = {
+              userId: currentUser.data.user.id,
+              name: currentUser.data.user.name,
+              mail: currentUser.data.user.mail,
+              zoomMail: currentUser.data.user.zoomMail,
+              age: currentUser.data.user.age,
+              lang: currentUser.data.user.lang,
+              course: currentUser.data.user.course,
+              crmId: currentUser.data.user.crmId,
+              contactId: currentUser.data.user.contactId,
+              successRate: currentUser.data.user.successRate,
+              temperament: currentUser.data.user.temperament,
+              visited: currentUser.data.user.visited,
+              visitedTime: currentUser.data.user.visitedTime,
+              feedback: currentUser.data.user.feedback,
+            })
+        );
       } catch (error) {
         console.log(error);
       } finally {
@@ -50,9 +77,55 @@ const StreamSpeakingClubKids = () => {
     getLinksRequest();
   }, [link]);
 
+  const getLanguageFromLocation = location => {
+    if (location.includes('de') || location.includes('deutsch')) {
+      return 'dekids';
+    } else if (location.includes('pl') || location.includes('polski')) {
+      return 'plkids';
+    } else {
+      return 'enkids';
+    }
+  };
+  const lang = getLanguageFromLocation(location);
+
   useEffect(() => {
     document.title = `Практичне заняття | AP Education`;
-  }, [redirectLink]);
+    const sendUserInfo = async () => {
+      try {
+        setCourse(
+          (await axios.get('/timetable')).data.filter(
+            timetable =>
+              page.includes(timetable.level) && lang === timetable.lang
+          )[0].course
+        );
+        setLevel(
+          (await axios.get('/timetable')).data.filter(
+            timetable =>
+              lang === timetable.lang &&
+              (user.course === timetable.course ||
+                user.course
+                  ?.split('/')
+                  .some(singleCourse => singleCourse === timetable.course))
+          )[0].level
+        );
+
+        console.log(user.userId);
+        const existingUser = await axios.get(`/speakingusers/${user.userId}`);
+        console.log('existingUser', existingUser);
+        console.log(103, user);
+
+        const res = !existingUser.data
+          ? await axios.post('/speakingusers/new', user)
+          : await axios.put(`/speakingusers/${user.userId}`, user);
+
+        res.data._id && setIsApproved(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    sendUserInfo();
+  }, [user, page, lang]);
 
   return (
     <>
@@ -78,7 +151,7 @@ const StreamSpeakingClubKids = () => {
               </StreamRefreshPageLink>
             </StreamRefreshText>
           </StreamPlaceHolder>
-          {redirectLink && window.location.replace(redirectLink)}
+          {redirectLink && isApproved && window.location.replace(redirectLink)}
         </StreamsBackgroundWrapper>
       </StreamSection>
     </>
