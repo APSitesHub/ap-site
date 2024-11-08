@@ -23,14 +23,14 @@ const UserJsonPanel = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    document.title = 'User Admin Panel | AP Education';
+    document.title = 'User JSON Panel | AP Education';
 
     const refreshToken = async () => {
       console.log('token refresher');
       try {
         if (localStorage.getItem('isAdmin')) {
           const res = await axios.post('admins/refresh/users/', {});
-          console.log(res);
+          setAuthToken(res.data.newToken);
           setIsUserAdmin(isAdmin => (isAdmin = true));
         }
       } catch (error) {
@@ -43,9 +43,7 @@ const UserJsonPanel = () => {
       setIsLoading(isLoading => (isLoading = true));
       try {
         if (isUserAdmin) {
-          const response = await axios.get('/users/admin/', {
-            params: { isAdmin: isUserAdmin },
-          });
+          const response = await axios.get('/users/admin');
           const userInfo = response.data.map(
             ({
               _id,
