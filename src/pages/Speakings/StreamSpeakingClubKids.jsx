@@ -92,12 +92,17 @@ const StreamSpeakingClubKids = () => {
     document.title = `Практичне заняття | AP Education`;
     const sendUserInfo = async () => {
       try {
-        setCourse(
-          (await axios.get('/timetable')).data.filter(
-            timetable =>
-              page.includes(timetable.level) && lang === timetable.lang
-          )[0].course
-        );
+        setCourse(async course => {
+          course = page.includes('high')
+            ? (await axios.get('/timetable')).data.filter(
+                timetable =>
+                  timetable.course.includes('high') && lang === timetable.lang
+              )[0].course
+            : (await axios.get('/timetable')).data.filter(
+                timetable =>
+                  page.includes(timetable.level) && lang === timetable.lang
+              )[0].course;
+        });
         setLevel(
           (await axios.get('/timetable')).data.filter(
             timetable =>

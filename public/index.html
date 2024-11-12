@@ -58,7 +58,7 @@
       href="https://fonts.macpaw.com/css?family=FixelDisplay:500;400;700"
     />
     <title>AP Education Center</title>
-    <script>
+    <!-- <script>
       if (window.location.pathname.includes('/my-ap')) {
         (function (a, m, o, c, r, m) {
           a[m] = {
@@ -82,7 +82,33 @@
           d.head && d.head.appendChild(s);
         })(window, 0, 'crmPlugin', 0, 0, 'crm_plugin');
       }
+    </script> -->
+    <script>
+      if (window.location.pathname.includes('/my-ap')) {
+        (function (a, m, o, c, r, m) {
+          a[m] = {
+            id: '1027489',
+            hash: '3518e4b06cf5229e46b21ab52ca75c11d970b3f50625a9b2c9234708fa0963ef',
+            locale: 'en',
+            setMeta: function (p) {
+              this.params = (this.params || []).concat([p]);
+            },
+          };
+          a[o] =
+            a[o] ||
+            function () {
+              (a[o].q = a[o].q || []).push(arguments);
+            };
+          var d = a.document,
+            s = d.createElement('script');
+          s.async = true;
+          s.id = m + '_script';
+          s.src = 'https://gso.kommo.com/js/button.js';
+          d.head && d.head.appendChild(s);
+        })(window, 0, 'crmPlugin', 0, 0, 'crm_plugin');
+      }
     </script>
+
     <!-- Salesbot Trigger -->
     <script type="text/javascript">
       if (window.location.pathname.includes('/gifts')) {
