@@ -38,7 +38,7 @@ const StreamSpeakingClubKids = () => {
     ? 'b2kidsbeginner'
     : page;
 
-  console.log(page, course, level);
+  console.log(41, page, course, level);
 
   useLayoutEffect(() => {
     const getLinksRequest = async () => {
@@ -103,16 +103,17 @@ const StreamSpeakingClubKids = () => {
                   page.includes(timetable.level) && lang === timetable.lang
               )[0].course;
         });
-        setLevel(
-          (await axios.get('/timetable')).data.filter(
+
+        setLevel(async level => {
+          level = (await axios.get('/timetable')).data.filter(
             timetable =>
               lang === timetable.lang &&
               (user.course === timetable.course ||
                 user.course
                   ?.split('/')
                   .some(singleCourse => singleCourse === timetable.course))
-          )[0].level
-        );
+          )[0].level;
+        });
 
         console.log(user.userId);
         const existingUser = await axios.get(`/speakingusers/${user.userId}`);

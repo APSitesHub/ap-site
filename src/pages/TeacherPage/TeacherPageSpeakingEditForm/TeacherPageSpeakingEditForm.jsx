@@ -52,10 +52,6 @@ export const TeacherPageSpeakingEditForm = ({
       value: 'good',
     },
     {
-      label: 'Середній',
-      value: 'mid',
-    },
-    {
       label: 'Слабкий',
       value: 'bad',
     },
