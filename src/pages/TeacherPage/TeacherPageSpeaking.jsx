@@ -344,7 +344,7 @@ const TeacherPageSpeaking = () => {
                                   ? match.slice(0, 50) + '...'
                                   : match
                               }</a>`
-                          )
+                          ).split(' ').slice(1).join(' ')
                         : '',
                   }}
                 ></UserCellLeft>
