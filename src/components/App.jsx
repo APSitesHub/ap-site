@@ -316,6 +316,13 @@ const TeacherFormPage = lazy(() =>
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
 );
+
+const HRCalc = lazy(() =>
+  import(
+    /* webpackChunkName: "HR Salary Calculator Page" */ '../pages/HR/HRCalc/HRCalc'
+  )
+);
+
 const ViberMarathonRedirect = lazy(() =>
   import(
     /* webpackChunkName: "Marathon redirect page to Viber chatbot" */ '../pages/Service/ViberRedirect/ViberMarathonRedirect'
@@ -716,6 +723,7 @@ export const App = () => {
           <Route path="hr" element={<HR />}>
             <Route path="viber" element={<ViberHRRedirect />} />
             <Route path="tg" element={<TelegramHRRedirect />} />
+            <Route path="calc" element={<HRCalc />} />
           </Route>
           <Route path="speakings" element={<Speakings />} noindex={true}>
             <Route path="a0sc" element={<TeacherPageSpeaking />} />
