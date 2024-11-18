@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.6d1787a4.js",
+    "main.js": "/ap-site/static/js/main.1db083c6.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -65,10 +65,11 @@
     "Ambassador Form Page.js": "/ap-site/static/js/Ambassador Form Page.3eaa6389.chunk.js",
     "Teacher Form Page.js": "/ap-site/static/js/Teacher Form Page.5e6d6247.chunk.js",
     "My AP Page.js": "/ap-site/static/js/My AP Page.61f95599.chunk.js",
+    "HR Salary Calculator Page.js": "/ap-site/static/js/HR Salary Calculator Page.123ebc40.chunk.js",
     "Marathon redirect page to Viber chatbot.js": "/ap-site/static/js/Marathon redirect page to Viber chatbot.2255821e.chunk.js",
     "Marathon redirect page to Telegram chatbot.js": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.e392772a.chunk.js",
     "Marathon redirect page to WhatsApp chat.js": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.1b831271.chunk.js",
-    "Post-quiz gifts page.js": "/ap-site/static/js/Post-quiz gifts page.31e5c78c.chunk.js",
+    "Post-quiz gifts page.js": "/ap-site/static/js/Post-quiz gifts page.59bdcd1e.chunk.js",
     "Post-quiz gifts EN A0 page.js": "/ap-site/static/js/Post-quiz gifts EN A0 page.9dcabba2.chunk.js",
     "Post-quiz gifts EN A1 page.js": "/ap-site/static/js/Post-quiz gifts EN A1 page.357254b4.chunk.js",
     "Post-quiz gifts EN A2 page.js": "/ap-site/static/js/Post-quiz gifts EN A2 page.65108bda.chunk.js",
@@ -262,7 +263,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.6d1787a4.js.map": "/ap-site/static/js/main.6d1787a4.js.map",
+    "main.1db083c6.js.map": "/ap-site/static/js/main.1db083c6.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -326,10 +327,11 @@
     "Ambassador Form Page.3eaa6389.chunk.js.map": "/ap-site/static/js/Ambassador Form Page.3eaa6389.chunk.js.map",
     "Teacher Form Page.5e6d6247.chunk.js.map": "/ap-site/static/js/Teacher Form Page.5e6d6247.chunk.js.map",
     "My AP Page.61f95599.chunk.js.map": "/ap-site/static/js/My AP Page.61f95599.chunk.js.map",
+    "HR Salary Calculator Page.123ebc40.chunk.js.map": "/ap-site/static/js/HR Salary Calculator Page.123ebc40.chunk.js.map",
     "Marathon redirect page to Viber chatbot.2255821e.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Viber chatbot.2255821e.chunk.js.map",
     "Marathon redirect page to Telegram chatbot.e392772a.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.e392772a.chunk.js.map",
     "Marathon redirect page to WhatsApp chat.1b831271.chunk.js.map": "/ap-site/static/js/Marathon redirect page to WhatsApp chat.1b831271.chunk.js.map",
-    "Post-quiz gifts page.31e5c78c.chunk.js.map": "/ap-site/static/js/Post-quiz gifts page.31e5c78c.chunk.js.map",
+    "Post-quiz gifts page.59bdcd1e.chunk.js.map": "/ap-site/static/js/Post-quiz gifts page.59bdcd1e.chunk.js.map",
     "Post-quiz gifts EN A0 page.9dcabba2.chunk.js.map": "/ap-site/static/js/Post-quiz gifts EN A0 page.9dcabba2.chunk.js.map",
     "Post-quiz gifts EN A1 page.357254b4.chunk.js.map": "/ap-site/static/js/Post-quiz gifts EN A1 page.357254b4.chunk.js.map",
     "Post-quiz gifts EN A2 page.65108bda.chunk.js.map": "/ap-site/static/js/Post-quiz gifts EN A2 page.65108bda.chunk.js.map",
@@ -384,6 +386,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.6d1787a4.js"
+    "static/js/main.1db083c6.js"
   ]
 }
