@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkap_education=self.webpackChunkap_education||[]).push([[9044],{17297:(a,e,c)=>{c.r(e),c.d(e,{default:()=>u});c(72791);var s=c(80184);const u=()=>(0,s.jsx)("h1",{children:"HRCalc"})}}]);
-//# sourceMappingURL=HR Salary Calculator Page.123ebc40.chunk.js.map
