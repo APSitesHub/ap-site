@@ -65,7 +65,7 @@ const HRCalc = () => {
           webinarsHours * webinarsPriceByLang(lang) +
           additionalHours * 150)
     );
-  }, [individualHours, webinarsHours, lang]);
+  }, [additionalHours, individualHours, webinarsHours, lang]);
 
   return (
     <CalcBox>
