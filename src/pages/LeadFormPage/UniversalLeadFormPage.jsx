@@ -7,41 +7,39 @@ import {
   InputNote,
   Label,
 } from 'components/LeadForm/LeadForm.styled';
-import { HeaderWrapper, LogoNew, LogoRoute } from 'components/Menu/Menu.styled';
+import { LogoRoute } from 'components/Menu/Menu.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import thankYouPersonPNG from '../../img/bg/thank-you-person.png';
-import thankYouPersonWebp from '../../img/bg/thank-you-person.webp';
 import {
   FacebookBtn,
-  HeroTopStar,
   InstagramBtn,
-  LeadFormAddText,
-  SocialArrow,
   SocialLogoLink,
-  SocialsBox,
   SocialsLinkWrapper,
-  SocialsText,
-  TextBubble,
-  TextBubbleText,
-  TextBubbleWrapper,
-  ThankYouHeader,
-  ThankYouSection,
   TikTokBtn,
   YouTubeBtn,
 } from '../ThankYouPage/ThankYouPage.styled';
 import {
-  FormBottomStar,
+  ContactPhone,
+  ContactPhoneNumber,
+  FormBackground,
+  HeaderWrapper,
+  LeadFormAddTextNew,
+  Logo,
+  LogoMobile,
   PageForm,
-  PageFormBottomStar,
   PageFormHeading,
-  PageFormImage,
-  PageFormPicture,
   PageFormWrapper,
-} from './LeadFormPage.styled';
+  PhoneNumber,
+  SocialsBoxNew,
+  SocialsBoxNewMobile,
+  SocialsTextNew,
+  ThankYouHeaderNew,
+  ThankYouSectionNew,
+} from './UniversalLeadFormPage.styled';
+import { BackgroundFilterBottom, BackgroundFilterBottomLeft, BackgroundFilterTop, BackgroundFilterTopRight } from 'pages/Quiz/Quiz.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -133,104 +131,126 @@ const UniversalLeadFormPage = ({ utms }) => {
   };
 
   return (
-    <>
-      <ThankYouHeader>
+    <FormBackground>
+      <ThankYouHeaderNew>
         <HeaderWrapper>
           <LogoRoute to="/">
-            <LogoNew />
+            <LogoMobile />
+            <Logo />
           </LogoRoute>
+          <PhoneNumber href="tel:+380936707129">
+            <ContactPhone />
+            <ContactPhoneNumber>+38 (093) 670 71 29</ContactPhoneNumber>
+          </PhoneNumber>
         </HeaderWrapper>
-      </ThankYouHeader>
-      <ThankYouSection>
+      </ThankYouHeaderNew>
+      <ThankYouSectionNew>
         <PageFormWrapper>
           <PageFormHeading>
             {utms.utm_source === 'apstarshak'
               ? 'Залишіть заявку та отримайте -15% знижки за промокодом «APStarshak»!'
-              : "Залишіть заявку і ми з вами сконтактуємо!"}
+              : 'Залишіть заявку і наш менеджер зв’яжеться з вами найближчим часом!'}
           </PageFormHeading>
-          <LeadFormAddText>
-            P.S.: Зустрінемось на пробному занятті 😉
-          </LeadFormAddText>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={handleSubmit}
-            validationSchema={leadSchema}
-          >
-            <PageForm>
-              <FormBottomStar />
-              <FormInputBox>
-                <Label>
-                  <Input
-                    type="text"
-                    name="name"
-                    placeholder="Ім'я та прізвище*"
-                    autocomplete="off"
-                  />
-                  <InputNote component="p" name="name" />
-                </Label>
-                <Label>
-                  <Input
-                    type="tel"
-                    name="phone"
-                    placeholder="Телефон*"
-                    autocomplete="off"
-                  />
-                  <InputNote component="p" name="phone" />
-                </Label>
-                <Label>
-                  <Input
-                    type="text"
-                    name="time"
-                    placeholder="Коли вам зателефонувати?*"
-                    autocomplete="off"
-                  />
-                  <InputNote component="p" name="time" />
-                </Label>
-              </FormInputBox>
-              <HiddenInput type="text" name="tag" />
-              <HiddenInput type="text" name="utm_content" />
-              <HiddenInput type="text" name="utm_medium" />
-              <HiddenInput type="text" name="utm_campaign" />
-              <HiddenInput type="text" name="utm_source" />
-              <HiddenInput type="text" name="utm_term" />
-              <HiddenInput type="text" name="utm_referrer" />
-              <HiddenInput type="text" name="referrer" />
-              <HiddenInput type="text" name="gclientid" />
-              <HiddenInput type="text" name="gclid" />
-              <HiddenInput type="text" name="fbclid" />
-              <FormBtn type="submit">Надіслати</FormBtn>
-              {isLoading && <Loader />}
-            </PageForm>
-          </Formik>
+          <LeadFormAddTextNew>
+            P. S. Побачимось на пробному занятті 😉
+          </LeadFormAddTextNew>
+          <SocialsBoxNew>
+            <SocialsTextNew>
+              А також підписуйтеся на нас у соцмережах:
+            </SocialsTextNew>
+            <SocialsLinkWrapper>
+              <SocialLogoLink
+                href="https://www.instagram.com/ap.education/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <InstagramBtn />
+              </SocialLogoLink>
+              <SocialLogoLink
+                href="https://www.facebook.com/ap.edu.centre/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FacebookBtn />
+              </SocialLogoLink>
+              <SocialLogoLink
+                href="https://www.tiktok.com/@ap.education.center"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <TikTokBtn />
+              </SocialLogoLink>
+              <SocialLogoLink
+                href="https://www.linkedin.com/company/ap-education-center/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <YouTubeBtn />
+              </SocialLogoLink>
+              <SocialLogoLink
+                href="https://www.youtube.com/channel/UC3XSGAVLhPXXlMN5-Gebtvw"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <YouTubeBtn />
+              </SocialLogoLink>
+            </SocialsLinkWrapper>
+          </SocialsBoxNew>
         </PageFormWrapper>
-
-        <HeroTopStar />
-        <PageFormBottomStar />
-
-        <PageFormPicture>
-          <source
-            media="(max-width:767px)"
-            srcSet={`${thankYouPersonWebp}`}
-            type="image/webp"
-          />
-          <source
-            media="(max-width:767px)"
-            srcSet={`${thankYouPersonPNG}`}
-            type="image/png"
-          />
-          <PageFormImage
-            src={thankYouPersonPNG}
-            alt="Thank you page person image"
-          />
-        </PageFormPicture>
-
-        <SocialsBox>
-          <TextBubbleWrapper>
-            <TextBubbleText>P.S. підписуйтесь на наші соцмережі</TextBubbleText>
-            <TextBubble />
-          </TextBubbleWrapper>
-          <SocialArrow />
-          <SocialsText>А також підписуйтеся на нас у соцмережах:</SocialsText>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={leadSchema}
+        >
+          <PageForm>
+            <FormInputBox>
+              <Label>
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Ім'я та прізвище*"
+                  autocomplete="off"
+                />
+                <InputNote component="p" name="name" />
+              </Label>
+              <Label>
+                <Input
+                  type="tel"
+                  name="phone"
+                  placeholder="Телефон*"
+                  autocomplete="off"
+                />
+                <InputNote component="p" name="phone" />
+              </Label>
+              <Label>
+                <Input
+                  type="text"
+                  name="time"
+                  placeholder="Коли вам зателефонувати?*"
+                  autocomplete="off"
+                />
+                <InputNote component="p" name="time" />
+              </Label>
+            </FormInputBox>
+            <HiddenInput type="text" name="tag" />
+            <HiddenInput type="text" name="utm_content" />
+            <HiddenInput type="text" name="utm_medium" />
+            <HiddenInput type="text" name="utm_campaign" />
+            <HiddenInput type="text" name="utm_source" />
+            <HiddenInput type="text" name="utm_term" />
+            <HiddenInput type="text" name="utm_referrer" />
+            <HiddenInput type="text" name="referrer" />
+            <HiddenInput type="text" name="gclientid" />
+            <HiddenInput type="text" name="gclid" />
+            <HiddenInput type="text" name="fbclid" />
+            <FormBtn type="submit">Надіслати</FormBtn>
+            {isLoading && <Loader />}
+          </PageForm>
+        </Formik>
+        <SocialsBoxNewMobile>
+          <SocialsTextNew>
+            А також підписуйтеся на нас у соцмережах:
+          </SocialsTextNew>
           <SocialsLinkWrapper>
             <SocialLogoLink
               href="https://www.instagram.com/ap.education/"
@@ -254,6 +274,13 @@ const UniversalLeadFormPage = ({ utms }) => {
               <TikTokBtn />
             </SocialLogoLink>
             <SocialLogoLink
+              href="https://www.linkedin.com/company/ap-education-center/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <YouTubeBtn />
+            </SocialLogoLink>
+            <SocialLogoLink
               href="https://www.youtube.com/channel/UC3XSGAVLhPXXlMN5-Gebtvw"
               target="_blank"
               rel="noopener noreferrer"
@@ -261,9 +288,12 @@ const UniversalLeadFormPage = ({ utms }) => {
               <YouTubeBtn />
             </SocialLogoLink>
           </SocialsLinkWrapper>
-        </SocialsBox>
-      </ThankYouSection>
-    </>
+        </SocialsBoxNewMobile>
+        <BackgroundFilterTop /> <BackgroundFilterBottom />
+        <BackgroundFilterTopRight />
+        <BackgroundFilterBottomLeft />
+      </ThankYouSectionNew>
+    </FormBackground>
   );
 };
 
