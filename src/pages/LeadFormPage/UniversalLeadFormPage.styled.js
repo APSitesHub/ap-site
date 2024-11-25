@@ -9,15 +9,18 @@ import { ReactComponent as PhoneIcon } from '../../img/svg/call.svg';
 import { ReactComponent as HeroStarIcon } from '../../img/svg/heroStar.svg';
 import { ReactComponent as LogoWhite } from '../../img/svg/logoWhite.svg';
 import { ReactComponent as LogoWhiteMobile } from '../../img/svg/logoWhiteMobile.svg';
-import { ReactComponent as FacebookIcon } from '../../img/svg/social-links/facebook-outline.svg';
-import { ReactComponent as InstagramIcon } from '../../img/svg/social-links/instagram-outline.svg';
-import { ReactComponent as TikTokIcon } from '../../img/svg/social-links/tiktok-outline.svg';
-import { ReactComponent as YouTubeIcon } from '../../img/svg/social-links/youtube-outline.svg';
+import { ReactComponent as FacebookIcon } from '../../img/svg/social-links/facebook_new.svg';
+import { ReactComponent as InstagramIcon } from '../../img/svg/social-links/instagram_new.svg';
+import { ReactComponent as TikTokIcon } from '../../img/svg/social-links/tiktok_new.svg';
+import { ReactComponent as YouTubeIcon } from '../../img/svg/social-links/youtube_new.svg';
+import { ReactComponent as LinkedInIcon } from '../../img/svg/social-links/linkedin_new.svg';
 import { ReactComponent as TextBubbleIcon } from '../../img/svg/text-bubble.svg';
 import { ReactComponent as ThankYouArrowLongIcon } from '../../img/svg/ty-arrow-long.svg';
 import { ReactComponent as ThankYouArrowIcon } from '../../img/svg/ty-arrow.svg';
 
 export const PageForm = styled(Form)`
+  position: relative;
+  z-index: 1;
   background-color: white;
   padding: 32px 15px;
   border-radius: 16px;
@@ -30,21 +33,33 @@ export const PageForm = styled(Form)`
   font-family: var(--new-font-family);
 
   @media screen and (min-width: 768px) {
-    max-width: 538px;
+    max-width: 480px;
   }
 
   @media screen and (min-width: 1280px) {
-    max-width: 630px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    max-width: 538px;
+    padding: 60px 40px;
+  }
+
+  @media screen and (min-width: 1920px) {
+    max-width: 634px;
+    padding: 60px 50px;
   }
 `;
 
 export const PageFormHeading = styled.h1`
+  position: relative;
+  z-index: 1;
   color: var(--secondary-color);
   font-size: 29px;
   text-align: center;
   margin-bottom: 16px;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1280px) {
     text-align: start;
     font-size: 40px;
   }
@@ -58,26 +73,30 @@ export const PageFormWrapper = styled.div`
   position: relative;
   max-width: 375px;
   margin: 0 auto;
+  height: 100%;
 
   @media screen and (min-width: 768px) {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 60px;
-
-    max-width: 400px;
+    max-width: 480px;
   }
 
   @media screen and (min-width: 1280px) {
-    left: 120px;
+    width: 100%;
+    max-width: none;
+  }
+`;
 
+export const UnFormTextContent = styled.div`
+  @media screen and (min-width: 1280px) {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     max-width: 538px;
   }
 
-  @media screen and (min-width: 1440px) {
-    left: 260px;
-
-    max-width: 631px;
+  @media screen and (min-width: 1920px) {
+    max-width: 805px;
   }
 `;
 
@@ -96,79 +115,6 @@ export const PageFormPicture = styled.picture`
 
   @media screen and (min-width: 1280px) {
     display: none;
-  }
-`;
-
-export const PageFormImage = styled.img`
-  width: 100%;
-  height: 100%;
-  max-width: 480px;
-  margin: 0 auto;
-  margin-bottom: 60px;
-
-  @media screen and (max-width: 359px) {
-    margin-bottom: 120px;
-  }
-
-  @media screen and (min-width: 768px) {
-    margin-bottom: 0;
-  }
-
-  @media screen and (min-width: 960px) {
-    max-width: 540px;
-  }
-
-  @media screen and (min-width: 1024px) {
-    max-width: 640px;
-  }
-`;
-
-export const PageFormArrow = styled(ThankYouArrowIcon)`
-  position: absolute;
-  right: -10px;
-  bottom: 185px;
-
-  width: 23px;
-  height: 81px;
-  transform: rotate(-10deg);
-
-  @media screen and (min-width: 768px) {
-    display: none;
-  }
-`;
-
-export const PageFormBottomStar = styled(HeroStarIcon)`
-  position: absolute;
-  bottom: 198px;
-  right: -36px;
-
-  width: 72px;
-  height: 72px;
-
-  @media screen and (min-width: 1280px) {
-    display: none;
-  }
-`;
-
-export const FormBottomStar = styled(HeroStarIcon)`
-  @media screen and (max-width: 1279px) {
-    display: none;
-  }
-
-  position: absolute;
-  left: -65px;
-  bottom: -94px;
-
-  width: 100px;
-  height: 100px;
-  opacity: 0.1;
-
-  @media screen and (min-width: 1440px) {
-    left: -109px;
-    bottom: -132px;
-
-    width: 157px;
-    height: 157px;
   }
 `;
 
@@ -323,22 +269,20 @@ export const PhoneNumber = styled.a`
 export const ThankYouSectionNew = styled.section`
   position: relative;
   overflow: hidden;
-
+  height: 100vh;
   padding: 116px 20px 50px 20px;
 
   font-family: var(--new-font-family);
 
-  @media screen and (min-width: 768px) {
-    min-height: 100vh;
+  @media screen and (min-width: 1280px) {
+    padding: 86px 73px;
   }
 
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 1920px) {
     padding-top: 60px;
     padding-left: 120px;
     padding-bottom: 70px;
-    padding-right: 0;
-
-    height: 100vh;
+    padding-right: 120px;
   }
 `;
 
@@ -589,13 +533,15 @@ export const LinkBtn = styled(Link)`
 `;
 
 export const SocialsBoxNewMobile = styled.div`
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 21px;
   margin-top: 40px;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1280px) {
     display: none;
   }
 `;
@@ -603,10 +549,11 @@ export const SocialsBoxNewMobile = styled.div`
 export const SocialsBoxNew = styled.div`
   display: none;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1280px) {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 24px;
   }
 `;
@@ -678,24 +625,42 @@ export const SocialsLinkWrapper = styled.div`
 `;
 
 export const SocialLogoLink = styled.a`
-  width: 55px;
-  height: 55px;
+  position: relative;
+  overflow: hidden;
+  width: 45px;
+  height: 45px;
 
   border-radius: 50%;
-  background-color: var(--main-color);
+  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   @media screen and (min-width: 1280px) {
-    width: 44px;
-    height: 44px;
+    width: 70px;
+    height: 70px;
   }
 
-  @media screen and (min-width: 1440px) {
-    width: 50px;
-    height: 50px;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: opacity 350ms linear;
+
+    background: linear-gradient(322deg, #09c6cc 22.22%, #0f645b 100%), #0f645b;
+  }
+
+  &:hover,
+  &:focus {
+    &::before {
+      opacity: 1;
+    }
   }
 `;
 
@@ -722,11 +687,9 @@ export const ContactPhoneNumber = styled.span`
 `;
 
 const socialBtnStyles =
-  'color: #fff; width: 35px; height: 35px; transition: color var(--animation-global), transform var(--animation-global), filter var(--animation-global); ';
+  'color: #fff; width: 24px; height: 24px; transition: color var(--animation-global), transform var(--animation-global), filter var(--animation-global); ';
 
-const socialBtnStylesHD = 'width: 24px; height: 24px;';
-
-const socialBtnStylesFullHD = 'width: 30px; height: 30px;';
+const socialBtnStylesHD = 'width: 35px; height: 35px;';
 
 const socialBtnStylesOnHover =
   'color: var(--accent-color);  transform: scale(1.2);  filter: drop-shadow(0px 0px 0.5px #00000054);';
@@ -736,10 +699,6 @@ export const InstagramBtn = styled(InstagramIcon)`
 
   @media screen and (min-width: 1280px) {
     ${socialBtnStylesHD}
-  }
-
-  @media screen and (min-width: 1440px) {
-    ${socialBtnStylesFullHD}
   }
 
   ${SocialLogoLink}:hover & {
@@ -754,10 +713,6 @@ export const FacebookBtn = styled(FacebookIcon)`
     ${socialBtnStylesHD}
   }
 
-  @media screen and (min-width: 1440px) {
-    ${socialBtnStylesFullHD}
-  }
-
   ${SocialLogoLink}:hover & {
     ${socialBtnStylesOnHover}
   }
@@ -768,10 +723,6 @@ export const TikTokBtn = styled(TikTokIcon)`
 
   @media screen and (min-width: 1280px) {
     ${socialBtnStylesHD}
-  }
-
-  @media screen and (min-width: 1440px) {
-    ${socialBtnStylesFullHD}
   }
 
   ${SocialLogoLink}:hover & {
@@ -786,8 +737,16 @@ export const YouTubeBtn = styled(YouTubeIcon)`
     ${socialBtnStylesHD}
   }
 
-  @media screen and (min-width: 1440px) {
-    ${socialBtnStylesFullHD}
+  ${SocialLogoLink}:hover & {
+    ${socialBtnStylesOnHover}
+  }
+`;
+
+export const LinkedInBtn = styled(LinkedInIcon)`
+  ${socialBtnStyles}
+
+  @media screen and (min-width: 1280px) {
+    ${socialBtnStylesHD}
   }
 
   ${SocialLogoLink}:hover & {
@@ -967,10 +926,12 @@ export const LeadFormAddText = styled.p`
 `;
 
 export const LeadFormAddTextNew = styled(LeadFormAddText)`
+  position: relative;
+  z-index: 1;
   color: var(--secondary-color);
   margin-bottom: 32px;
 
-  @media screen and (min-width: 1366px) {
+  @media screen and (min-width: 1280px) {
     text-align: start;
     font-size: 24px;
     margin-bottom: 100px;
@@ -979,4 +940,109 @@ export const LeadFormAddTextNew = styled(LeadFormAddText)`
   @media screen and (min-width: 1920px) {
     font-size: 32px;
   }
+`;
+
+export const BackgroundFilterTopLeft = styled.div`
+  position: absolute;
+  top: 0;
+  left: -602px;
+
+  width: 602px;
+  height: 602px;
+  flex-shrink: 0;
+  rotate: 90deg;
+
+  border-radius: 50%;
+  background-color: #0f645b;
+  filter: drop-shadow(-25px -95px 85px #0f645b);
+
+  @media screen and (min-width: 1280px) {
+    width: 1407px;
+    height: 1407px;
+
+    left: -1407px;
+
+    filter: drop-shadow(-25px -374px 285px #0f645b);
+  }
+`;
+
+export const BackgroundFilterTopRight = styled(BackgroundFilterTopLeft)`
+  left: unset;
+  right: -602px;
+  filter: drop-shadow(-125px 95px 85px #0f645b);
+
+  @media screen and (min-width: 1280px) {
+    width: 1318px;
+    height: 1318px;
+
+    right: -1318px;
+
+    filter: drop-shadow(-225px 145px 285px #0f645b);
+  }
+`;
+
+export const BackgroundFilterBottom = styled(BackgroundFilterTopLeft)`
+  top: unset;
+  right: unset;
+  bottom: -602px;
+  left: 33%;
+  filter: drop-shadow(-125px 95px 115px #0f645b);
+
+  @media screen and (min-width: 1280px) {
+    display: none;
+  }
+`;
+
+export const FormBtn = styled.button`
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  border-radius: 50px;
+  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #0f645b;
+  border: none;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  outline: transparent;
+
+  @media screen and (min-width: 768px) {
+    font-size: 20px;
+    letter-spacing: 0.6px;
+    height: 70px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: opacity 350ms linear;
+
+    background: linear-gradient(322deg, #09c6cc 22.22%, #0f645b 100%), #0f645b;
+  }
+
+  &:hover,
+  &:focus {
+    &::before {
+      opacity: 1;
+    }
+  }
+`;
+
+export const FormBtnText = styled.span`
+  position: relative;
+  z-index: 1;
 `;

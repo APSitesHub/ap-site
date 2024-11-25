@@ -1,5 +1,6 @@
 import { FormBtn } from 'components/LeadForm/LeadForm.styled';
 import { Form } from 'formik';
+import { AdminInputNote } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { FormSelect } from 'pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel.styled';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
@@ -126,4 +127,8 @@ export const SpeakingFormBtn = styled(FormBtn)`
     padding: 16px;
     letter-spacing: 0.6px;
   }
+`;
+
+export const StudentTextAreaNote = styled(AdminInputNote)`
+  color: red;
 `;

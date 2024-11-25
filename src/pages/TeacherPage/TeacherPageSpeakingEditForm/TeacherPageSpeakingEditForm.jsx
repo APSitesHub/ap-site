@@ -2,7 +2,6 @@ import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
-import { AdminInputNote } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useState } from 'react';
 import * as yup from 'yup';
 import { EditFormHeader, StudentTextArea } from '../TeacherPage.styled';
@@ -12,6 +11,7 @@ import {
   SpeakingFormBtn,
   SpeakingLabel,
   SpeakingSelect,
+  StudentTextAreaNote,
   StyledDatePicker,
   UserSpeakingEditForm,
 } from './TeacherPageSpeakingEditForm.styled';
@@ -162,7 +162,7 @@ export const TeacherPageSpeakingEditForm = ({
     speaking: yup.number(),
     listening: yup.number(),
     activity: yup.number(),
-    feedback: yup.string(),
+    feedback: yup.string().required("Фідбек - обов'язкове поле, без нього ніяк"),
   });
 
   const handleEditStudentSubmit = async values => {
@@ -465,7 +465,7 @@ ${values.feedback}`;
               component="textarea"
               placeholder="Фідбек"
             />
-            <AdminInputNote component="p" name="feedback" />
+            <StudentTextAreaNote component="p" name="feedback" />
           </Label>
           <SpeakingFormBtn type="submit">Підтвердити зміни</SpeakingFormBtn>
         </UserSpeakingEditForm>
