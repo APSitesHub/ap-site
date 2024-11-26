@@ -2,7 +2,6 @@ import axios from 'axios';
 import {
   FormInputBox,
   HiddenInput,
-  Input,
   InputNote,
   Label,
 } from 'components/LeadForm/LeadForm.styled';
@@ -18,41 +17,49 @@ import {
   BackgroundFilterTopRight,
   ContactPhone,
   ContactPhoneNumber,
+  FacebookBtn,
   FormBackground,
+  FormBtn,
+  FormBtnText,
   HeaderWrapper,
+  Input,
+  InstagramBtn,
   LeadFormAddTextNew,
+  LinkedInBtn,
   Logo,
   LogoMobile,
   PageForm,
   PageFormHeading,
   PageFormWrapper,
   PhoneNumber,
+  SocialLogoLink,
   SocialsBoxNew,
   SocialsBoxNewMobile,
+  SocialsLinkWrapper,
   SocialsTextNew,
   ThankYouHeaderNew,
   ThankYouSectionNew,
-  UnFormTextContent,
-  FacebookBtn,
-  InstagramBtn,
-  SocialLogoLink,
-  SocialsLinkWrapper,
   TikTokBtn,
+  UnFormTextContent,
   YouTubeBtn,
-  LinkedInBtn,
-  FormBtn,
-  FormBtnText,
 } from './UniversalLeadFormPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const UniversalLeadFormPage = ({ utms }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Форма консультації | AP Education';
+
+    window.addEventListener('scroll', scrollHandler);
   }, []);
+
+  const scrollHandler = () => {
+    setScrollPosition(1);
+  };
 
   const initialValues = {
     name: '',
@@ -135,7 +142,7 @@ const UniversalLeadFormPage = ({ utms }) => {
 
   return (
     <FormBackground>
-      <ThankYouHeaderNew>
+      <ThankYouHeaderNew className={scrollPosition > 0 && 'scrolled'}>
         <HeaderWrapper>
           <LogoRoute to="/">
             <LogoMobile />

@@ -1,95 +1,100 @@
-import { HeaderWrapper, LogoNew, LogoRoute } from 'components/Menu/Menu.styled';
-import { useEffect } from 'react';
-import thankYouPersonPNG from '../../img/bg/thank-you-person.png';
-import thankYouPersonWebp from '../../img/bg/thank-you-person.webp';
+import { LogoRoute } from 'components/Menu/Menu.styled';
 import {
-  ButtonBox,
+  ContactPhone,
+  ContactPhoneNumber,
   FacebookBtn,
-  HeroBottomStar,
-  HeroTopStar,
+  FormBtnText,
+  HeaderWrapper,
   InstagramBtn,
-  LinkBtn,
-  MainLinkBtn,
-  SocialArrow,
+  LeadFormAddTextNew,
+  LinkedInBtn,
+  Logo,
+  LogoMobile,
+  PageFormHeading,
+  PhoneNumber,
   SocialLogoLink,
-  SocialsBox,
   SocialsLinkWrapper,
-  SocialsText,
-  TextBubble,
-  TextBubbleText,
-  TextBubbleWrapper,
-  ThankYouArrow,
-  ThankYouDesc,
-  ThankYouHeader,
-  ThankYouHeading,
-  ThankYouImage,
-  ThankYouPicture,
-  ThankYouSection,
-  ThankYouTextWrapper,
+  SocialsTextNew,
+  ThankYouHeaderNew,
+  ThankYouSectionNew,
   TikTokBtn,
   YouTubeBtn,
+} from 'pages/LeadFormPage/UniversalLeadFormPage.styled';
+import { useEffect, useState } from 'react';
+import {
+  ButtonBox,
+  MainLinkBtn,
+  SchoolLinkBtn,
+  SocialsBox,
+  ThankYouBackground,
+  ThankYouBackgroundVideo,
+  ThankYouTextWrapper,
+  UniversityLinkBtn,
 } from './ThankYouPage.styled';
 
 export const ThankYouPage = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+
   useEffect(() => {
     document.title = 'Дякуємо! | AP Education';
 
-    // setTimeout(() => {
-    //   window.location.replace('https://button.kommo.com/cdcxml/rmxldvtz');
-    // }, 3000);
+    window.addEventListener('scroll', scrollHandler);
   }, []);
 
+  const scrollHandler = () => {
+    setScrollPosition(1);
+  };
+
   return (
-    <>
-      <ThankYouHeader>
+    <ThankYouBackground>
+      <ThankYouHeaderNew className={scrollPosition > 0 && 'scrolled'}>
         <HeaderWrapper>
           <LogoRoute to="/">
-            <LogoNew />
+            <LogoMobile />
+            <Logo />
           </LogoRoute>
+          <PhoneNumber href="tel:+380936707129">
+            <ContactPhone />
+            <ContactPhoneNumber>+38 (093) 670 71 29</ContactPhoneNumber>
+          </PhoneNumber>
         </HeaderWrapper>
-      </ThankYouHeader>
-      <ThankYouSection>
+      </ThankYouHeaderNew>
+      <ThankYouBackgroundVideo
+        playsInline
+        loop
+        autoPlay
+        muted
+        src="https://ap.education/static/video/trailers/LogoEducationSolo.mp4"
+        title="AP Education"
+      ></ThankYouBackgroundVideo>
+      <ThankYouSectionNew>
         <ThankYouTextWrapper>
-          <ThankYouArrow />
-          <ThankYouHeading data-gtm="thankyou">
+          <PageFormHeading data-gtm="thankyou">
             Дякуємо, що заповнили форму!
-          </ThankYouHeading>
-          <ThankYouDesc>
-            Ви можете повернутися на головну, щоб переглянути наші інші напрямки
-            роботи!
-          </ThankYouDesc>
+          </PageFormHeading>
+          <LeadFormAddTextNew>
+            Ви можете повернутися на головну, а також переглянути наші інші
+            напрямки роботи!
+          </LeadFormAddTextNew>
 
           <ButtonBox>
-            <MainLinkBtn to={'/'}>Головна</MainLinkBtn>
-            <LinkBtn to={'/school'}>AP SCHOOL</LinkBtn>
-            <LinkBtn to={'/university'}>AP UNIVERSITY</LinkBtn>
+            <MainLinkBtn href="https://ap.education/" target="_blank">
+              <FormBtnText>Головна</FormBtnText>
+            </MainLinkBtn>
+            <SchoolLinkBtn href="https://ap.education/school/" target="_blank">
+              <FormBtnText>AP SCHOOL</FormBtnText>
+            </SchoolLinkBtn>
+            <UniversityLinkBtn
+              href="https://ap.education/university/"
+              target="_blank"
+            >
+              <FormBtnText>AP UNIVERSITY</FormBtnText>
+            </UniversityLinkBtn>
           </ButtonBox>
         </ThankYouTextWrapper>
-        <HeroTopStar />
-        <HeroBottomStar />
-        <ThankYouPicture>
-          <source
-            media="(max-width:767px)"
-            srcSet={`${thankYouPersonWebp}`}
-            type="image/webp"
-          />
-          <source
-            media="(max-width:767px)"
-            srcSet={`${thankYouPersonPNG}`}
-            type="image/png"
-          />
-          <ThankYouImage
-            src={thankYouPersonPNG}
-            alt="Thank you page person image"
-          />
-        </ThankYouPicture>
+
         <SocialsBox>
-          <TextBubbleWrapper>
-            <TextBubbleText>P.S. підписуйтесь на наші соцмережі</TextBubbleText>
-            <TextBubble />
-          </TextBubbleWrapper>
-          <SocialArrow />
-          <SocialsText>А також підписуйтеся на нас у соцмережах:</SocialsText>
+          <SocialsTextNew>Підписуйтеся на нас у соцмережах:</SocialsTextNew>
           <SocialsLinkWrapper>
             <SocialLogoLink
               href="https://www.instagram.com/ap.education/"
@@ -113,6 +118,13 @@ export const ThankYouPage = () => {
               <TikTokBtn />
             </SocialLogoLink>
             <SocialLogoLink
+              href="https://www.linkedin.com/company/ap-education-center/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <LinkedInBtn />
+            </SocialLogoLink>
+            <SocialLogoLink
               href="https://www.youtube.com/channel/UC3XSGAVLhPXXlMN5-Gebtvw"
               target="_blank"
               rel="noopener noreferrer"
@@ -121,7 +133,7 @@ export const ThankYouPage = () => {
             </SocialLogoLink>
           </SocialsLinkWrapper>
         </SocialsBox>
-      </ThankYouSection>
-    </>
+      </ThankYouSectionNew>
+    </ThankYouBackground>
   );
 };

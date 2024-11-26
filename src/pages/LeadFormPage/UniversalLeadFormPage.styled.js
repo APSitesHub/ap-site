@@ -1,4 +1,4 @@
-import { Form } from 'formik';
+import { Field, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import thankYouPersonPNG from '../../img/bg/thank-you-person.png';
@@ -195,6 +195,15 @@ export const ThankYouHeaderNew = styled.header`
     padding: 0 120px;
   }
 
+  &.scrolled {
+    background: linear-gradient(
+      323deg,
+      #0f645bee 0%,
+      #000000ee 47%,
+      #0f645bee 100%
+    );
+  }
+
   &.hidden {
     transform: translateY(-90px);
   }
@@ -269,13 +278,14 @@ export const PhoneNumber = styled.a`
 export const ThankYouSectionNew = styled.section`
   position: relative;
   overflow: hidden;
-  height: 100vh;
+  min-height: 100vh;
   padding: 116px 20px 50px 20px;
 
   font-family: var(--new-font-family);
 
   @media screen and (min-width: 1280px) {
     padding: 86px 73px;
+    height: 100vh;
   }
 
   @media screen and (min-width: 1920px) {
@@ -687,7 +697,7 @@ export const ContactPhoneNumber = styled.span`
 `;
 
 const socialBtnStyles =
-  'color: #fff; width: 24px; height: 24px; transition: color var(--animation-global), transform var(--animation-global), filter var(--animation-global); ';
+  'color: #fff; width: 24px; height: 24px; transition: color var(--animation-global), transform var(--animation-global), filter var(--animation-global); position: relative; z-index: 2;';
 
 const socialBtnStylesHD = 'width: 35px; height: 35px;';
 
@@ -1045,4 +1055,38 @@ export const FormBtn = styled.button`
 export const FormBtnText = styled.span`
   position: relative;
   z-index: 1;
+`;
+
+export const Input = styled(Field)`
+  width: 100%;
+  height: 50px;
+  padding: 18px 20px;
+  font-size: 14px;
+  border: 2px solid var(--main-color);
+  border-radius: 50px;
+  line-height: 1;
+
+  @media screen and (min-width: 768px) {
+    height: 59px;
+    padding: 20px 40px;
+    font-size: 16px;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: var(--secondary-burnt-color);
+    outline: transparent;
+  }
+
+  &:-webkit-autofill {
+    &,
+    &:hover,
+    &:focus {
+      -webkit-box-shadow: 0 0 0px 1000px var(--accent-semi-transparent-color)
+        inset;
+    }
+  }
+
+  &::placeholder {
+  }
 `;

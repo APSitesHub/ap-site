@@ -1,17 +1,35 @@
 import styled from 'styled-components';
-import blurEllipsePNG from '../../img/bg/thank-you.png';
 import thankYouPersonPNG from '../../img/bg/thank-you-person.png';
-import blurEllipseWebp from '../../img/bg/thank-you.webp';
 import thankYouPersonWebp from '../../img/bg/thank-you-person.webp';
-import { Link } from 'react-router-dom';
+import blurEllipsePNG from '../../img/bg/thank-you.png';
+import blurEllipseWebp from '../../img/bg/thank-you.webp';
+import { ReactComponent as HeroStarIcon } from '../../img/svg/heroStar.svg';
 import { ReactComponent as FacebookIcon } from '../../img/svg/social-links/facebook-outline.svg';
 import { ReactComponent as InstagramIcon } from '../../img/svg/social-links/instagram-outline.svg';
 import { ReactComponent as TikTokIcon } from '../../img/svg/social-links/tiktok-outline.svg';
 import { ReactComponent as YouTubeIcon } from '../../img/svg/social-links/youtube-outline.svg';
 import { ReactComponent as TextBubbleIcon } from '../../img/svg/text-bubble.svg';
-import { ReactComponent as ThankYouArrowIcon } from '../../img/svg/ty-arrow.svg';
 import { ReactComponent as ThankYouArrowLongIcon } from '../../img/svg/ty-arrow-long.svg';
-import { ReactComponent as HeroStarIcon } from '../../img/svg/heroStar.svg';
+import { ReactComponent as ThankYouArrowIcon } from '../../img/svg/ty-arrow.svg';
+
+export const ThankYouBackground = styled.div`
+  position: relative;
+  background-color: #00000080;
+  min-height: 100vh;
+  font-family: var(--new-font-family);
+`;
+
+export const ThankYouBackgroundVideo = styled.video`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+`;
 
 export const ThankYouHeader = styled.header`
   position: fixed;
@@ -170,8 +188,8 @@ export const ThankYouTextWrapper = styled.div`
   @media screen and (min-width: 768px) {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    left: 60px;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     max-width: 400px;
   }
@@ -181,12 +199,7 @@ export const ThankYouTextWrapper = styled.div`
     top: 30%;
     left: 120px;
     transform: unset;
-
-    max-width: 643px;
-  }
-
-  @media screen and (min-width: 1920px) {
-    max-width: 805px;
+    max-width: none;
   }
 `;
 
@@ -232,6 +245,7 @@ export const ButtonBox = styled.div`
 
   @media screen and (min-width: 1280px) {
     flex-direction: row;
+    justify-content: left;
     gap: 8px;
   }
 
@@ -240,7 +254,9 @@ export const ButtonBox = styled.div`
   }
 `;
 
-export const MainLinkBtn = styled(Link)`
+export const MainLinkBtn = styled.a`
+  position: relative;
+
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
@@ -248,10 +264,13 @@ export const MainLinkBtn = styled(Link)`
 
   width: 100%;
   max-width: 360px;
+  flex-shrink: 0;
 
   padding: 20px 60px;
-  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #0f645b;
+
+  border: 1px solid var(--secondary-color);
   border-radius: 50px;
+  overflow: hidden;
   font-family: var(--new-font-family);
   color: var(--secondary-color);
   font-size: 16px;
@@ -259,43 +278,53 @@ export const MainLinkBtn = styled(Link)`
   line-height: 1;
   letter-spacing: 0.48px;
 
+  transition: border var(--animation-global);
+
   @media screen and (min-width: 1280px) {
-    width: auto;
+    width: 270px;
   }
 
   @media screen and (min-width: 1920px) {
     flex-direction: row;
     font-size: 20px;
     letter-spacing: 0.6px;
+    width: 290px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: opacity 350ms linear;
+
+    background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%),
+      #0f645b;
+  }
+
+  &:hover,
+  &:focus {
+    border: 1px solid transparent;
+
+    &::before {
+      opacity: 1;
+    }
   }
 `;
 
-export const LinkBtn = styled(Link)`
-  text-transform: uppercase;
-  text-decoration: none;
-  text-align: center;
-  color: #000;
-
-  width: 100%;
-  max-width: 360px;
-
-  font-size: 16px;
-  font-weight: 700;
-
-  padding: 20px 45px;
-  border-radius: 50px;
-  line-height: 1;
-  letter-spacing: 0.48px;
-  border: 2px var(--main-color) solid;
-
-  @media screen and (min-width: 1280px) {
-    width: auto;
+export const SchoolLinkBtn = styled(MainLinkBtn)`
+  &::before {
+    background: linear-gradient(321.77deg, indigo 3.2%, #924dff 93.86%);
   }
+`;
 
-  @media screen and (min-width: 1920px) {
-    padding: 20px 60px;
-    font-size: 20px;
-    letter-spacing: 0.6px;
+export const UniversityLinkBtn = styled(MainLinkBtn)`
+  &::before {
+    background: linear-gradient(321.96deg, #002395 -5.61%, #352ce8 93.88%);
   }
 `;
 
