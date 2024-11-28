@@ -66,6 +66,7 @@ export const ThankYouPage = () => {
         muted
         src="https://ap.education/static/video/trailers/LogoEducationSolo.mp4"
         title="AP Education"
+        poster="https://ap.education/static/video/trailers/poster.jpg"
       ></ThankYouBackgroundVideo>
       <ThankYouSectionNew>
         <ThankYouTextWrapper>

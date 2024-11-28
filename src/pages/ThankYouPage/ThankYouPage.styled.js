@@ -29,6 +29,7 @@ export const ThankYouBackgroundVideo = styled.video`
   height: 100%;
 
   object-fit: cover;
+  background-image: url('https://ap.education/static/video/trailers/poster.jpg');
 `;
 
 export const ThankYouHeader = styled.header`
