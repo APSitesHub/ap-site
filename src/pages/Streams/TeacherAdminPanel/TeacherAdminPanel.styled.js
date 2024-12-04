@@ -196,3 +196,9 @@ export const FilterPickerButton = styled.button`
   width: 100%;
   text-transform: capitalize;
 `;
+
+export const Feedback = styled.p`
+  font-size: 10px;
+  margin-bottom: 3px;
+  text-align: start;
+`;

@@ -336,15 +336,19 @@ const TeacherPageSpeaking = () => {
                     __html:
                       typeof user.feedback[user.feedback.length - 1] ===
                       'string'
-                        ? user.feedback[user.feedback.length - 1].replace(
-                            linksRegex,
-                            match =>
-                              `<a href="${match}" target="_blank">${
-                                match.length > 50
-                                  ? match.slice(0, 50) + '...'
-                                  : match
-                              }</a>`
-                          ).split(' ').slice(1).join(' ')
+                        ? user.feedback[user.feedback.length - 1]
+                            .replace(
+                              linksRegex,
+                              match =>
+                                `<a href="${match}" target="_blank">${
+                                  match.length > 50
+                                    ? match.slice(0, 50) + '...'
+                                    : match
+                                }</a>`
+                            )
+                            .split(' ')
+                            .slice(1)
+                            .join(' ')
                         : '',
                   }}
                 ></UserCellLeft>

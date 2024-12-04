@@ -230,6 +230,11 @@ const TeacherAdminPanel = lazy(() =>
     /* webpackChunkName: "Teacher Admin Panel page" */ '../pages/Streams/TeacherAdminPanel/TeacherAdminPanel'
   )
 );
+const TeacherControlPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Control page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPage'
+  )
+);
 const UserJsonPanel = lazy(() =>
   import(
     /* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'
@@ -638,6 +643,7 @@ export const App = () => {
               path="teacher-teamlead-panel"
               element={<TeacherAdminPanel />}
             />
+            <Route path="tcp" element={<TeacherControlPage />} />
             <Route path="user-json-panel" element={<UserJsonPanel />} />
             <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} />
             <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} />
