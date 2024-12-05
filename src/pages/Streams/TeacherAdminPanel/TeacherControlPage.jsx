@@ -84,15 +84,15 @@ const TeacherControlPage = () => {
 
   const regex = /\d{1,}\.\d{2}\.\d{4}/;
 
-  const changeDateFormat = dateString => {
-    if (dateString) {
-      const dateArray = dateString.split('.');
-      return dateArray.length > 2
-        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
-        : Date.parse(dateString);
-    }
-    return;
-  };
+  // const changeDateFormat = dateString => {
+  //   if (dateString) {
+  //     const dateArray = dateString.split('.');
+  //     return dateArray.length > 2
+  //       ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
+  //       : Date.parse(dateString);
+  //   }
+  //   return;
+  // };
 
   const handleLoginSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));

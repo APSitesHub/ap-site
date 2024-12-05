@@ -14,7 +14,6 @@ import {
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { MyPlatform } from './My Platform/MyPlatform';
 import { TestPlatform } from './My Platform/TestPlatform';
 
 const ConferenceTest = () => {
