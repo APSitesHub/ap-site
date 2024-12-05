@@ -321,7 +321,11 @@ const TeacherFormPage = lazy(() =>
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
 );
-
+const ConferenceTest = lazy(() =>
+  import(
+    /* webpackChunkName: "AP Conference Test Page" */ '../pages/MyAP/ConferenceTest'
+  )
+);
 const HRCalc = lazy(() =>
   import(
     /* webpackChunkName: "HR Salary Calculator Page" */ '../pages/HR/HRCalc/HRCalc'
@@ -544,6 +548,7 @@ export const App = () => {
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
           <Route path="my-ap" element={<MyAP />} noindex={true} />
+          <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
             <Route path="a0" element={<StreamA0 />} />

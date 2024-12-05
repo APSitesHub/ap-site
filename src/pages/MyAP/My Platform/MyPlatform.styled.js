@@ -1,3 +1,4 @@
+import { Logo } from 'pages/Quiz/Quiz.styled';
 import styled from 'styled-components';
 
 export const MyPlatformBox = styled.div`
@@ -21,4 +22,29 @@ export const MyPlatformBox = styled.div`
   &.shown {
     transform: translateX(0);
   }
+`;
+
+export const TestPlatformSpoiler = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: calc(100% - 17.5px);
+  height: 64px;
+  z-index: 5;
+
+  background-color: white;
+`;
+
+export const TestLogo = styled(Logo)`
+  display: block;
+  flex-shrink: 0;
+  width: 173px;
+  height: 34px;
+
+  margin: 0 auto;
 `;
