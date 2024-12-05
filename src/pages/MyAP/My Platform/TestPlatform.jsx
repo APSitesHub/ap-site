@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
+  BackgroundVideo,
+  MyAPBackground,
   MyPlatformBox,
   TestLogo,
   TestPlatformSpoiler,
@@ -22,8 +24,24 @@ export const TestPlatform = ({ platformLink }) => {
     setIframeSRC();
   }, [platformLink, location]);
 
+  const removeVideo = () => {
+    setTimeout(() => {
+      document.querySelector('[title="AP Education"]').remove();
+    }, 15000);
+  };
+
+  removeVideo();
+
   return (
-    <>
+    <MyAPBackground>
+      <BackgroundVideo
+        playsInline
+        loop
+        autoPlay
+        muted
+        src="https://www.ap.education/assets/video/Logo_Green.mp4"
+        title="AP Education"
+      />
       <TestPlatformSpoiler>
         <TestLogo />
       </TestPlatformSpoiler>
@@ -37,6 +55,6 @@ export const TestPlatform = ({ platformLink }) => {
           allow="microphone *"
         ></iframe>
       </MyPlatformBox>
-    </>
+    </MyAPBackground>
   );
 };

@@ -48,3 +48,18 @@ export const TestLogo = styled(Logo)`
 
   margin: 0 auto;
 `;
+
+export const MyAPBackground = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+export const BackgroundVideo = styled.video`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  object-fit: cover;
+
+  width: 100%;
+  height: calc(100% - 64px);
+`;
