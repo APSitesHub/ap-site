@@ -15,7 +15,7 @@ import {
   UserCell,
   UserDBCaption,
   UserDBRow,
-  UserHeadCell
+  UserHeadCell,
 } from './TeacherAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -34,6 +34,7 @@ const TeacherControlPage = () => {
 
     const refreshToken = async () => {
       console.log('token refresher');
+      setIsLoading(isLoading => (isLoading = true));
       try {
         if (localStorage.getItem('isAdmin')) {
           const res = await axios.post('admins/refresh/teachers/', {});
@@ -43,11 +44,14 @@ const TeacherControlPage = () => {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(isLoading => (isLoading = false));
       }
     };
     refreshToken();
 
     const getTeachers = async () => {
+      setIsLoading(isLoading => (isLoading = true));
       try {
         if (isUserAdmin) {
           const response = await axios.get('/teachers/');
@@ -55,11 +59,14 @@ const TeacherControlPage = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(isLoading => (isLoading = false));
       }
     };
     getTeachers();
 
     const getReviews = async () => {
+      setIsLoading(isLoading => (isLoading = true));
       try {
         if (isUserAdmin) {
           const response = await axios.get('/speakingusers/admin');
@@ -67,6 +74,8 @@ const TeacherControlPage = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(isLoading => (isLoading = false));
       }
     };
     getReviews();
@@ -198,7 +207,7 @@ const TeacherControlPage = () => {
                             ))
                         )}
                     </UserCell>
-                    <UserCell  key={`Відгук ${i} ${teacher._id}`}>
+                    <UserCell key={`Відгук ${i} ${teacher._id}`}>
                       {reviews
                         .filter(user =>
                           user.feedback.some(
