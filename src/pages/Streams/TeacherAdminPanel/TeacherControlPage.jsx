@@ -153,8 +153,6 @@ const TeacherControlPage = () => {
             <thead>
               <UserDBRow>
                 <UserHeadCell>Тічер</UserHeadCell>
-                <UserHeadCell>Студент</UserHeadCell>
-                <UserHeadCell>Дата відгуків</UserHeadCell>
                 <UserHeadCell>Відгуки</UserHeadCell>
               </UserDBRow>
             </thead>
@@ -162,50 +160,9 @@ const TeacherControlPage = () => {
               {teachers
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((teacher, i) => (
-                  <UserDBRow >
-                    <UserCell key={"Тічер" + teacher._id}>{teacher.name}</UserCell>
-                    <UserCell key={"Студент" + teacher._id}>
-                      {reviews
-                        .filter(user =>
-                          user.feedback.some(
-                            review =>
-                              review.includes(teacher.name) ||
-                              review.includes(
-                                teacher.name.split(' ').reverse().join(' ')
-                              )
-                          )
-                        )
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map(user => (
-                          <Feedback>{user.name}</Feedback>
-                        ))}
-                    </UserCell>
-                    <UserCell key={`Дата ${i} ${teacher._id}`}>
-                      {reviews
-                        .filter(user =>
-                          user.feedback.some(
-                            review =>
-                              review.includes(teacher.name) ||
-                              review.includes(
-                                teacher.name.split(' ').reverse().join(' ')
-                              )
-                          )
-                        )
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map(user => user.feedback)
-                        .map(review =>
-                          review
-                            .filter(
-                              text =>
-                                text.includes(teacher.name) ||
-                                text.includes(
-                                  teacher.name.split(' ').reverse().join(' ')
-                                )
-                            )
-                            .map(text => (
-                              <Feedback>{text.match(regex)}</Feedback>
-                            ))
-                        )}
+                  <UserDBRow>
+                    <UserCell key={'Тічер' + teacher._id}>
+                      {teacher.name}
                     </UserCell>
                     <UserCell key={`Відгук ${i} ${teacher._id}`}>
                       {reviews
@@ -235,14 +192,14 @@ const TeacherControlPage = () => {
                         )
                         .flatMap(user =>
                           user.feedback.map(
-                            feedback => `(${user.name}) ${feedback}`
+                            feedback => `для ${user.name}) ${feedback}`
                           )
                         )
                         .map(text => (
                           <Feedback>
                             {text.length > 200
-                              ? text.slice(0, 200) + '...'
-                              : text}
+                              ? `(Відгук від ${text.match(regex)} ${text.slice(0, 200)}...`
+                              : `(Відгук від ${text.match(regex)} ${text}`}
                           </Feedback>
                         ))}
                     </UserCell>
