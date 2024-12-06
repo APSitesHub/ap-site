@@ -11,11 +11,11 @@ import {
   AdminPanelSection,
   Feedback,
   LoginForm,
+  TeacherTable,
   UserCell,
   UserDBCaption,
   UserDBRow,
-  UserDBTable,
-  UserHeadCell,
+  UserHeadCell
 } from './TeacherAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -63,7 +63,7 @@ const TeacherControlPage = () => {
       try {
         if (isUserAdmin) {
           const response = await axios.get('/speakingusers/admin');
-          setReviews(teachers => (teachers = [...response.data]));
+          setReviews(reviews => (reviews = [...response.data]));
         }
       } catch (error) {
         console.error(error);
@@ -137,7 +137,7 @@ const TeacherControlPage = () => {
         )}
 
         {isUserAdmin && teachers.length && (
-          <UserDBTable>
+          <TeacherTable>
             <UserDBCaption>
               Список акаунтів тічерів з доступом до табличок відгуків
             </UserDBCaption>
@@ -152,10 +152,10 @@ const TeacherControlPage = () => {
             <tbody>
               {teachers
                 .sort((a, b) => a.name.localeCompare(b.name))
-                .map(teacher => (
-                  <UserDBRow key={teacher._id}>
-                    <UserCell>{teacher.name}</UserCell>
-                    <UserCell>
+                .map((teacher, i) => (
+                  <UserDBRow >
+                    <UserCell key={"Тічер" + teacher._id}>{teacher.name}</UserCell>
+                    <UserCell key={"Студент" + teacher._id}>
                       {reviews
                         .filter(user =>
                           user.feedback.some(
@@ -166,11 +166,12 @@ const TeacherControlPage = () => {
                               )
                           )
                         )
+                        .sort((a, b) => a.name.localeCompare(b.name))
                         .map(user => (
                           <Feedback>{user.name}</Feedback>
                         ))}
                     </UserCell>
-                    <UserCell>
+                    <UserCell key={`Дата ${i} ${teacher._id}`}>
                       {reviews
                         .filter(user =>
                           user.feedback.some(
@@ -181,6 +182,7 @@ const TeacherControlPage = () => {
                               )
                           )
                         )
+                        .sort((a, b) => a.name.localeCompare(b.name))
                         .map(user => user.feedback)
                         .map(review =>
                           review
@@ -191,13 +193,12 @@ const TeacherControlPage = () => {
                                   teacher.name.split(' ').reverse().join(' ')
                                 )
                             )
-
                             .map(text => (
                               <Feedback>{text.match(regex)}</Feedback>
                             ))
                         )}
                     </UserCell>
-                    <UserCell>
+                    <UserCell  key={`Відгук ${i} ${teacher._id}`}>
                       {reviews
                         .filter(user =>
                           user.feedback.some(
@@ -208,34 +209,38 @@ const TeacherControlPage = () => {
                               )
                           )
                         )
-                        .map(user => user.feedback)
-                        .map(review =>
-                          review
-                            .filter(
-                              text =>
-                                text.includes(teacher.name) ||
-                                text.includes(
-                                  teacher.name.split(' ').reverse().join(' ')
-                                )
-                            )
-                            .sort(
-                              (a, b) =>
-                                new Date(a.match(regex)) -
-                                new Date(b.match(regex))
-                            )
-                            .map(text => (
-                              <Feedback>
-                                {text.length > 200
-                                  ? text.slice(0, 200) + '...'
-                                  : text}
-                              </Feedback>
-                            ))
-                        )}
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map(
+                          user =>
+                            (user = {
+                              _id: user._id,
+                              name: user.name,
+                              feedback: user.feedback.filter(
+                                text =>
+                                  text.includes(teacher.name) ||
+                                  text.includes(
+                                    teacher.name.split(' ').reverse().join(' ')
+                                  )
+                              ),
+                            })
+                        )
+                        .flatMap(user =>
+                          user.feedback.map(
+                            feedback => `(${user.name}) ${feedback}`
+                          )
+                        )
+                        .map(text => (
+                          <Feedback>
+                            {text.length > 200
+                              ? text.slice(0, 200) + '...'
+                              : text}
+                          </Feedback>
+                        ))}
                     </UserCell>
                   </UserDBRow>
                 ))}
             </tbody>
-          </UserDBTable>
+          </TeacherTable>
         )}
 
         {isLoading && <Loader />}

@@ -202,3 +202,7 @@ export const Feedback = styled.p`
   margin-bottom: 3px;
   text-align: start;
 `;
+
+export const TeacherTable = styled(UserDBTable)`
+  max-width: 80vw;
+`;
