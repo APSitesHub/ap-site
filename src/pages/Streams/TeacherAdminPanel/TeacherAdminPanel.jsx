@@ -117,12 +117,14 @@ const UserAdminPanel = () => {
     name: '',
     login: '',
     password: '',
+    lang: '',
   };
 
   const teachersSchema = yup.object().shape({
     name: yup.string().required("Ім'я - обов'язкове поле"),
     login: yup.string().required("Логін - обов'язкове поле!"),
     password: yup.string().required("Пароль - обов'язкове поле!"),
+    lang: yup.string().required("Мова - обов'язкове поле!"),
   });
 
   const handleTeacherSubmit = async (values, { resetForm }) => {
@@ -130,11 +132,12 @@ const UserAdminPanel = () => {
     values.name = values.name.trim().trimStart();
     values.login = values.login.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
+    values.lang = values.lang.toLowerCase().trim().trimStart();
     try {
       const response = await axios.post('/teachers/new', values);
       console.log(response);
       resetForm();
-      alert('Юзера додано');
+      alert('Тічера додано');
       setIsTimeToUpdate(isTime => !isTime);
     } catch (error) {
       console.error(error);
@@ -243,6 +246,10 @@ const UserAdminPanel = () => {
                 <AdminInput type="text" name="password" placeholder="Пароль" />
                 <AdminInputNote component="p" name="password" />
               </Label>
+              <Label>
+                <AdminInput type="text" name="lang" placeholder="Мова" />
+                <AdminInputNote component="p" name="lang" />
+              </Label>
               <AdminFormBtn type="submit">Додати тічера</AdminFormBtn>
             </UsersForm>
           </Formik>
@@ -257,6 +264,7 @@ const UserAdminPanel = () => {
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Логін</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
+                <UserHeadCell>Мова</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
                 <UserHeadCell>Відвідини з часом</UserHeadCell>
                 <UserHeadCell>Edit</UserHeadCell>
@@ -271,6 +279,7 @@ const UserAdminPanel = () => {
                     <UserCell>{teacher.name}</UserCell>
                     <UserCell>{teacher.login}</UserCell>
                     <UserCell>{teacher.password}</UserCell>
+                    <UserCell>{teacher.lang}</UserCell>
                     <UserCell>
                       {teacher.visited[teacher.visited.length - 1]}
                     </UserCell>

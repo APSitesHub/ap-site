@@ -21,12 +21,14 @@ export const TeacherEditForm = ({ teacherToEdit, closeEditForm }) => {
     name: teacherToEdit.name,
     login: teacherToEdit.login,
     password: teacherToEdit.password,
+    lang: teacherToEdit.lang,
   };
 
   const teachersSchema = yup.object().shape({
     name: yup.string().required("Ім'я - обов'язкове поле"),
     login: yup.string().required("Логін - обов'язкове поле!"),
     password: yup.string().required("Пароль - обов'язкове поле!"),
+    lang: yup.string().required("Мова - обов'язкове поле!"),
   });
 
   const handleTeacherSubmit = async (values, { resetForm }) => {
@@ -34,7 +36,7 @@ export const TeacherEditForm = ({ teacherToEdit, closeEditForm }) => {
     values.name = values.name.trim().trimStart();
     values.login = values.login.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
-
+    values.lang = values.lang.toLowerCase().trim().trimStart();
     try {
       const response = await axios.put(
         `/teachers/${teacherToEdit._id}`,
@@ -78,6 +80,10 @@ export const TeacherEditForm = ({ teacherToEdit, closeEditForm }) => {
           <Label>
             <AdminInput type="text" name="password" placeholder="Пароль" />
             <AdminInputNote component="p" name="password" />
+          </Label>
+          <Label>
+            <AdminInput type="text" name="lang" placeholder="Мова" />
+            <AdminInputNote component="p" name="lang" />
           </Label>
           <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
         </UsersEditForm>
