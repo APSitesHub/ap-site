@@ -235,6 +235,21 @@ const TeacherControlPage = lazy(() =>
     /* webpackChunkName: "Teacher Control page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPage'
   )
 );
+const TeacherControlPageEn = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Control English page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPageEn'
+  )
+);
+const TeacherControlPageDe = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Control Deutsch page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPageDe'
+  )
+);
+const TeacherControlPagePl = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Control Polski page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPagePl'
+  )
+);
 const UserJsonPanel = lazy(() =>
   import(
     /* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'
@@ -654,6 +669,9 @@ export const App = () => {
               element={<TeacherAdminPanel />}
             />
             <Route path="tcp" element={<TeacherControlPage />} />
+            <Route path="tcp-en" element={<TeacherControlPageEn />} />
+            <Route path="tcp-de" element={<TeacherControlPageDe />} />
+            <Route path="tcp-pl" element={<TeacherControlPagePl />} />
             <Route path="user-json-panel" element={<UserJsonPanel />} />
             <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} />
             <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} />
