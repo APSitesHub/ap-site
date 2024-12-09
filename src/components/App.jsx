@@ -235,21 +235,6 @@ const TeacherControlPage = lazy(() =>
     /* webpackChunkName: "Teacher Control page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPage'
   )
 );
-const TeacherControlPageEn = lazy(() =>
-  import(
-    /* webpackChunkName: "Teacher Control English page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPageEn'
-  )
-);
-const TeacherControlPageDe = lazy(() =>
-  import(
-    /* webpackChunkName: "Teacher Control Deutsch page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPageDe'
-  )
-);
-const TeacherControlPagePl = lazy(() =>
-  import(
-    /* webpackChunkName: "Teacher Control Polski page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPagePl'
-  )
-);
 const UserJsonPanel = lazy(() =>
   import(
     /* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'
@@ -306,6 +291,11 @@ const TeacherPageVertical = lazy(() =>
 const TeacherPageSpeaking = lazy(() =>
   import(
     /* webpackChunkName: "Speaking Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking'
+  )
+);
+const TeacherPageSpeaking13 = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Course 13 Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking13'
   )
 );
 const FormsLinkTree = lazy(() =>
@@ -664,9 +654,6 @@ export const App = () => {
               element={<TeacherAdminPanel />}
             />
             <Route path="tcp" element={<TeacherControlPage />} />
-            <Route path="tcp-en" element={<TeacherControlPageEn />} />
-            <Route path="tcp-de" element={<TeacherControlPageDe />} />
-            <Route path="tcp-pl" element={<TeacherControlPagePl />} />
             <Route path="user-json-panel" element={<UserJsonPanel />} />
             <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} />
             <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} />
@@ -761,6 +748,7 @@ export const App = () => {
             <Route path="a2sc" element={<TeacherPageSpeaking />} />
             <Route path="b1sc" element={<TeacherPageSpeaking />} />
             <Route path="b2sc" element={<TeacherPageSpeaking />} />
+            <Route path="13" element={<TeacherPageSpeaking13 />} />
             <Route path="c1sc" element={<TeacherPageSpeaking />} />
             <Route path="dea0sc" element={<TeacherPageSpeaking />} />
             <Route path="dea0_2sc" element={<TeacherPageSpeaking />} />

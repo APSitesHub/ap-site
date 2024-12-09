@@ -56,31 +56,31 @@ const ConferenceTest = () => {
           ? `https://online.ap.education/Account/LoginByToken?token=${
               user.platformToken
             }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=979506`
+              `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=1143131`
             )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=979506`,
+          : `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=1143131`,
         en2: user.platformToken
           ? `https://online.ap.education/Account/LoginByToken?token=${
               user.platformToken
             }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=977478`
+              `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=1143132`
             )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=977478`,
+          : `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=1143132`,
 
         enkids1: user.platformToken
           ? `https://online.ap.education/Account/LoginByToken?token=${
               user.platformToken
             }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=1033495`
+              `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=1143134`
             )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=1033495`,
+          : `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=1143134`,
         enkids2: user.platformToken
           ? `https://online.ap.education/Account/LoginByToken?token=${
               user.platformToken
             }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=1033500`
+              `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=1143133`
             )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=1033500`,
+          : `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=1143133`,
       };
 
       const marathonLink =
