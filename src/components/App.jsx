@@ -787,6 +787,7 @@ export const App = () => {
             <Route path="kids-b1sc" element={<TeacherPageSpeaking />} />
             <Route path="kids-b2sc" element={<TeacherPageSpeaking />} />
             <Route path="kids-c1sc" element={<TeacherPageSpeaking />} />
+            <Route path="kids-c1schigh" element={<TeacherPageSpeaking />} />
             <Route path="kids-dea0sc" element={<TeacherPageSpeaking />} />
             <Route path="kids-dea0_2sc" element={<TeacherPageSpeaking />} />
             <Route path="kids-dea1sc" element={<TeacherPageSpeaking />} />

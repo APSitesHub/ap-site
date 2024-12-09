@@ -55,8 +55,9 @@ export const MyAPPanel = ({
   const pointsByLang = Object.keys(points)
     .filter(
       key =>
-        key.includes(language) &&
-        key.length === (language + user.knowledge).length
+        (key.includes(language) &&
+          key.length === (language + user.knowledge).length) ||
+        (key.includes(language) && key.includes('done'))
     )
     .reduce((obj, key) => {
       obj[key] = points[key];
@@ -66,8 +67,9 @@ export const MyAPPanel = ({
   const monthlyPointsByLang = Object.keys(montlyPoints)
     .filter(
       key =>
-        key.includes(language) &&
-        key.length === (language + user.knowledge).length
+        (key.includes(language) &&
+          key.length === (language + user.knowledge).length) ||
+        (key.includes(language) && key.includes('done'))
     )
     .reduce((obj, key) => {
       obj[key] = montlyPoints[key];

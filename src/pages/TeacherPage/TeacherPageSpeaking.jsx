@@ -157,12 +157,14 @@ const TeacherPageSpeaking = () => {
     const getSpeakingUsersRequest = async () => {
       try {
         setIsLoading(isLoading => (isLoading = true));
-        setCourse(
-          (await axios.get('/timetable')).data.filter(
-            timetable =>
-              page.includes(timetable.level) && lang === timetable.lang
-          )[0].course
-        );
+        page === 'kids-c1sc'
+          ? setCourse('13')
+          : setCourse(
+              (await axios.get('/timetable')).data.filter(
+                timetable =>
+                  page.includes(timetable.level) && lang === timetable.lang
+              )[0].course
+            );
         const usersToSet = await axios.get('/speakingusers');
 
         setUsers(
