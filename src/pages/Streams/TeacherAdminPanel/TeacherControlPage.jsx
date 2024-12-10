@@ -2,6 +2,10 @@ import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
+import {
+  LabelText,
+  SpeakingLabel,
+} from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
@@ -9,13 +13,16 @@ import {
   AdminInput,
   AdminInputNote,
   AdminPanelSection,
+  DateInputBox,
+  DateInputLabel,
+  DateInputSelect,
   Feedback,
   LoginForm,
   TeacherTable,
   UserCell,
   UserDBCaption,
   UserDBRow,
-  UserHeadCell,
+  UserHeadCell
 } from './TeacherAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -28,6 +35,70 @@ const TeacherControlPage = () => {
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [teachers, setTeachers] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [monthFilter, setMonthFilter] = useState({});
+  const [yearFilter, setYearFilter] = useState({});
+
+  const yearOptions = [
+    {
+      label: '2024',
+      value: '2024',
+    },
+    {
+      label: '2025',
+      value: '2025',
+    },
+  ];
+
+  const monthOptions = [
+    {
+      label: 'Січень',
+      value: '1',
+    },
+    {
+      label: 'Лютий',
+      value: '2',
+    },
+    {
+      label: 'Березень',
+      value: '3',
+    },
+    {
+      label: 'Квітень',
+      value: '4',
+    },
+    {
+      label: 'Травень',
+      value: '5',
+    },
+    {
+      label: 'Червень',
+      value: '6',
+    },
+    {
+      label: 'Липень',
+      value: '7',
+    },
+    {
+      label: 'Серпень',
+      value: '8',
+    },
+    {
+      label: 'Вересень',
+      value: '9',
+    },
+    {
+      label: 'Жовтень',
+      value: '10',
+    },
+    {
+      label: 'Листопад',
+      value: '11',
+    },
+    {
+      label: 'Грудень',
+      value: '12',
+    },
+  ];
 
   useEffect(() => {
     document.title = 'Teacher Admin Panel | AP Education';
@@ -144,12 +215,78 @@ const TeacherControlPage = () => {
             </LoginForm>
           </Formik>
         )}
+        <DateInputBox>
+          <DateInputLabel>
+            {monthFilter.value && <LabelText>Місяць</LabelText>}
+            <DateInputSelect
+              options={monthOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '50px',
+                  minHeight: '34px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
+                }),
+              }}
+              placeholder="Місяць"
+              name="month"
+              onChange={month => {
+                setMonthFilter(month);
+              }}
+            />
+          </DateInputLabel>
+          <SpeakingLabel>            
+            {yearFilter.value && <LabelText>Рік</LabelText>}
+            <DateInputSelect
+              options={yearOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '50px',
+                  minHeight: '34px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
+                }),
+              }}
+              placeholder="Рік"
+              name="year"
+              onChange={year => {
+                setYearFilter(year);
+              }}
+              defaultValue={yearOptions.find(
+                option => +option.value === new Date().getFullYear()
+              )}
+            />
+          </SpeakingLabel>
+        </DateInputBox>
 
         {isUserAdmin && teachers.length && (
           <TeacherTable>
             <UserDBCaption>
-              Список акаунтів тічерів з доступом до табличок відгуків
+              {monthFilter.value
+                ? `Список тічерів та їх відгуків (загальний, за ${monthFilter.label} ${yearFilter.label} року)`
+                : 'Список тічерів та їх відгуків (загальний)'}
             </UserDBCaption>
+
             <thead>
               <UserDBRow>
                 <UserHeadCell>Тічер</UserHeadCell>
@@ -183,10 +320,10 @@ const TeacherControlPage = () => {
                               name: user.name,
                               feedback: user.feedback.filter(
                                 text =>
-                                  text.includes(teacher.name) ||
+                                  (text.includes(teacher.name) ||
                                   text.includes(
                                     teacher.name.split(' ').reverse().join(' ')
-                                  )
+                                  )) && (text.includes(`${monthFilter}.${yearFilter}`))
                               ),
                             })
                         )
@@ -198,7 +335,10 @@ const TeacherControlPage = () => {
                         .map(text => (
                           <Feedback>
                             {text.length > 200
-                              ? `(Відгук від ${text.match(regex)} ${text.slice(0, 200)}...`
+                              ? `(Відгук від ${text.match(regex)} ${text.slice(
+                                  0,
+                                  200
+                                )}...`
                               : `(Відгук від ${text.match(regex)} ${text}`}
                           </Feedback>
                         ))}

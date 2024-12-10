@@ -2,20 +2,31 @@ import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
+import { EditFormHeader } from 'pages/TeacherPage/TeacherPage.styled';
+import {
+  LabelText,
+  SpeakingLabel,
+} from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
 import { useState } from 'react';
 import * as yup from 'yup';
 import {
   AdminFormBtn,
   AdminInput,
   AdminInputNote,
-  UsersEditForm,
+  TeacherLangSelect,
+  UsersEditForm
 } from '../TeacherAdminPanel.styled';
-import { EditFormHeader } from 'pages/TeacherPage/TeacherPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const TeacherEditForm = ({ teacherToEdit, closeEditForm }) => {
+export const TeacherEditForm = ({
+  teacherToEdit,
+  closeEditForm,
+  langOptions,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [langValue, setLangValue] = useState(teacherToEdit.lang);
+  console.log(teacherToEdit);
 
   const initialTeacherValues = {
     name: teacherToEdit.name,
@@ -36,7 +47,7 @@ export const TeacherEditForm = ({ teacherToEdit, closeEditForm }) => {
     values.name = values.name.trim().trimStart();
     values.login = values.login.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
-    values.lang = values.lang.toLowerCase().trim().trimStart();
+    values.lang = langValue.toLowerCase().trim().trimStart();
     try {
       const response = await axios.put(
         `/teachers/${teacherToEdit._id}`,
@@ -81,10 +92,38 @@ export const TeacherEditForm = ({ teacherToEdit, closeEditForm }) => {
             <AdminInput type="text" name="password" placeholder="Пароль" />
             <AdminInputNote component="p" name="password" />
           </Label>
-          <Label>
-            <AdminInput type="text" name="lang" placeholder="Мова" />
-            <AdminInputNote component="p" name="lang" />
-          </Label>
+          <SpeakingLabel>
+            {langValue && langValue.value && <LabelText>Мова</LabelText>}
+            <TeacherLangSelect
+              options={langOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '50px',
+                  minHeight: '34px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
+                }),
+              }}
+              placeholder="Мова"
+              name="lang"
+              onChange={lang => {
+                setLangValue(lang.value);
+              }}
+              defaultValue={langOptions.find(
+                option => option.value === teacherToEdit.lang
+              )}
+            />
+          </SpeakingLabel>
           <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
         </UsersEditForm>
       </Formik>

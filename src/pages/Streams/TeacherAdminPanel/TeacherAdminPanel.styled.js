@@ -1,7 +1,8 @@
 import { FormBtn, Input, InputNote } from 'components/LeadForm/LeadForm.styled';
 import { Form } from 'formik';
-import { ReactComponent as FilterIcon } from '../../../img/svg/filter.svg';
+import { SpeakingSelect } from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
 import styled from 'styled-components';
+import { ReactComponent as FilterIcon } from '../../../img/svg/filter.svg';
 
 export const AdminPanelSection = styled.section`
   height: max-content;
@@ -104,7 +105,7 @@ export const UserDBTable = styled.table`
 
 export const UserDBCaption = styled.caption`
   caption-side: top;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
 `;
 
 export const UserDBItemValue = styled.span`
@@ -205,4 +206,46 @@ export const Feedback = styled.p`
 
 export const TeacherTable = styled(UserDBTable)`
   max-width: 80vw;
+`;
+
+export const TeacherLangSelect = styled(SpeakingSelect)`
+  border-radius: 50px;
+`;
+
+export const ErrorNote = styled.p`
+  color: var(--main-color);
+  text-align: center;
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  position: static;
+  max-width: 240px;
+
+  @media screen and (min-width: 768px) {
+    max-width: 360px;
+  }
+`;
+
+export const DateInputBox = styled.div`
+  position: absolute;
+  top: 60px;
+  left: 50%;
+
+  display: flex;
+  gap: 16px;
+
+  transform: translateX(-50%);
+`;
+
+export const DateInputLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  position: relative;
+`;
+
+export const DateInputSelect = styled(SpeakingSelect)`
+  width: 280px;
+  border-radius: 50px;
 `;

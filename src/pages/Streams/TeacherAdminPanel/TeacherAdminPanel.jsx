@@ -3,14 +3,20 @@ import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
-import { useEffect, useState } from 'react';
+import {
+  LabelText,
+  SpeakingLabel,
+} from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
+import { useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
 import {
   AdminFormBtn,
   AdminInput,
   AdminInputNote,
   AdminPanelSection,
+  ErrorNote,
   LoginForm,
+  TeacherLangSelect,
   UserCell,
   UserDBCaption,
   UserDBRow,
@@ -34,6 +40,32 @@ const UserAdminPanel = () => {
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [teacherToEdit, setTeacherToEdit] = useState({});
   const [isTimeToUpdate, setIsTimeToUpdate] = useState(false);
+  const [langValue, setLangValue] = useState(null);
+  const [isLangEmpty, setIsLangEmpty] = useState(false);
+  const selectInputRef = useRef();
+
+  const langOptions = [
+    {
+      label: 'Англійська',
+      value: 'en',
+    },
+    {
+      label: 'Німецька',
+      value: 'de',
+    },
+    {
+      label: 'Польська',
+      value: 'pl',
+    },
+    {
+      label: 'Англійська + Німецька',
+      value: 'en de',
+    },
+    {
+      label: 'Англійська + Польська',
+      value: 'en pl',
+    },
+  ];
 
   useEffect(() => {
     document.title = 'Teacher Admin Panel | AP Education';
@@ -124,21 +156,34 @@ const UserAdminPanel = () => {
     name: yup.string().required("Ім'я - обов'язкове поле"),
     login: yup.string().required("Логін - обов'язкове поле!"),
     password: yup.string().required("Пароль - обов'язкове поле!"),
-    lang: yup.string().required("Мова - обов'язкове поле!"),
   });
 
+  const onClear = () => {
+    selectInputRef.current.clearValue();
+  };
+
   const handleTeacherSubmit = async (values, { resetForm }) => {
-    setIsLoading(isLoading => (isLoading = true));
     values.name = values.name.trim().trimStart();
     values.login = values.login.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
-    values.lang = values.lang.toLowerCase().trim().trimStart();
+    values.lang = langValue.value.toLowerCase().trim().trimStart();
+
+    if (!langValue.value) {
+      setIsLangEmpty(true);
+      return;
+    } else {
+      setIsLangEmpty(false);
+    }
+
     try {
       const response = await axios.post('/teachers/new', values);
+      setIsLoading(isLoading => (isLoading = true));
       console.log(response);
       resetForm();
       alert('Тічера додано');
       setIsTimeToUpdate(isTime => !isTime);
+      onClear();
+      setLangValue(value => (value = null));
     } catch (error) {
       console.error(error);
       alert(
@@ -246,10 +291,45 @@ const UserAdminPanel = () => {
                 <AdminInput type="text" name="password" placeholder="Пароль" />
                 <AdminInputNote component="p" name="password" />
               </Label>
-              <Label>
-                <AdminInput type="text" name="lang" placeholder="Мова" />
-                <AdminInputNote component="p" name="lang" />
-              </Label>
+              <SpeakingLabel>
+                {langValue && langValue.value && <LabelText>Мова</LabelText>}
+                <TeacherLangSelect
+                  ref={selectInputRef}
+                  options={langOptions}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: 'none',
+                      borderRadius: '50px',
+                      minHeight: '34px',
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      position: 'absolute',
+                      zIndex: '2',
+                      top: '36px',
+                    }),
+                    dropdownIndicator: (baseStyles, state) => ({
+                      ...baseStyles,
+                      padding: '7px',
+                    }),
+                  }}
+                  placeholder="Мова"
+                  name="lang"
+                  onBlur={() => {
+                    !langValue
+                      ? setIsLangEmpty(empty => (empty = true))
+                      : setIsLangEmpty(empty => (empty = false));
+                  }}
+                  onChange={lang => {
+                    setLangValue(lang);
+                    lang?.value && setIsLangEmpty(empty => (empty = false));
+                  }}
+                />
+                {isLangEmpty && (
+                  <ErrorNote> Мова - обов'язкове поле!</ErrorNote>
+                )}
+              </SpeakingLabel>
               <AdminFormBtn type="submit">Додати тічера</AdminFormBtn>
             </UsersForm>
           </Formik>
@@ -320,6 +400,7 @@ const UserAdminPanel = () => {
             <TeacherEditForm
               teacherToEdit={teacherToEdit}
               closeEditForm={closeEditForm}
+              langOptions={langOptions}
             />
           </Backdrop>
         )}
