@@ -4,7 +4,11 @@ import {
   LeftFormBackgroundStar,
   RightFormBackgroundStar,
 } from 'components/LeadForm/LeadForm.styled';
-import { LoginFormText, StreamSection } from 'components/Stream/Stream.styled';
+import {
+  LoginErrorNote,
+  LoginFormText,
+  StreamSection,
+} from 'components/Stream/Stream.styled';
 import { Formik } from 'formik';
 import {
   AdminFormBtn,
@@ -46,6 +50,7 @@ const MyAP = () => {
   const [isChatButtonShown, setIsChatButtonShown] = useState(
     localStorage.getItem('ischatboxshown') === 'true' ? true : false
   );
+  const [isUserInfoIncorrect, setIsUserInfoIncorrect] = useState(false);
 
   const toggleChatButton = () => {
     setIsChatButtonShown(isShown => !isShown);
@@ -264,8 +269,10 @@ const MyAP = () => {
         setIsMultipleCourses(true);
       }
       localStorage.setItem('mail', values.mail);
+      setIsUserInfoIncorrect(false);
       resetForm();
     } catch (error) {
+      error.response.status === 401 && setIsUserInfoIncorrect(true);
       console.error(error);
     }
   };
@@ -294,7 +301,12 @@ const MyAP = () => {
               Введіть дані, які ви використовуєте для входу на платформу.
             </LoginFormText>
             <Label>
-              <AdminInput type="text" name="mail" placeholder="Login" />
+              <AdminInput
+                type="text"
+                name="mail"
+                placeholder="Login"
+                onBlur={() => setIsUserInfoIncorrect(false)}
+              />
               <AdminInputNote component="p" name="mail" type="email" />
             </Label>
             <Label>
@@ -302,10 +314,16 @@ const MyAP = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
+                onBlur={() => setIsUserInfoIncorrect(false)}
               />
               <AdminInputNote component="p" name="password" />
             </Label>
             <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+            <LoginErrorNote
+              style={isUserInfoIncorrect ? { opacity: '1' } : { opacity: '0' }}
+            >
+              Логін або пароль введено неправильно!
+            </LoginErrorNote>
           </LoginForm>
         </Formik>
       ) : (

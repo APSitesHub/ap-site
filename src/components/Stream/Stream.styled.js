@@ -616,3 +616,12 @@ export const LoginInputNote = styled(InputNote)`
     font-size: 20px;
   }
 `;
+
+export const LoginErrorNote = styled.p`
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: red;
+
+  transition: opacity var(--animation-global);
+`;
