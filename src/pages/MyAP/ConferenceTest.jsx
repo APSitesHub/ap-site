@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { TestPlatform } from './My Platform/TestPlatform';
+import { toZonedTime } from 'date-fns-tz';
 
 const ConferenceTest = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -23,6 +24,10 @@ const ConferenceTest = () => {
   const [platformLink, setPlatformLink] = useState(
     `https://online.ap.education/`
   );
+  const [isBefore13, setIsBefore13] = useState(true); // Стейт для перевірки часу
+  const [isTestStarted, setIsTestStarted] = useState(false); // Стейт для того, щоб відобразити TestPlatform
+  const [testEnded, setTestEnded] = useState(false); // Стейт для завершення тесту
+  const [startTime, setStartTime] = useState(null); // Час початку тесту
 
   axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -87,16 +92,16 @@ const ConferenceTest = () => {
         language === 'en' && user.marathonNumber === '1'
           ? 'en1'
           : language === 'en' && user.marathonNumber === '2'
-          ? 'en2'
-          : language === 'en' && !user.marathonNumber
-          ? 'en2'
-          : language === 'enkids' && user.marathonNumber === '1'
-          ? 'enkids1'
-          : language === 'enkids' && user.marathonNumber === '2'
-          ? 'enkids2'
-          : language === 'enkids' && !user.marathonNumber
-          ? 'enkids2'
-          : '';
+            ? 'en2'
+            : language === 'en' && !user.marathonNumber
+              ? 'en2'
+              : language === 'enkids' && user.marathonNumber === '1'
+                ? 'enkids1'
+                : language === 'enkids' && user.marathonNumber === '2'
+                  ? 'enkids2'
+                  : language === 'enkids' && !user.marathonNumber
+                    ? 'enkids2'
+                    : '';
 
       console.log(LINKS[marathonLink]);
 
@@ -104,6 +109,17 @@ const ConferenceTest = () => {
     };
 
     setIframeLinks();
+
+    // Перевірка часу в Києві
+    const checkTime = () => {
+      const kyivTime = new Date();
+      const kyivTimeInZone = toZonedTime(kyivTime, 'Europe/Kiev'); // Отримуємо час в Києві
+      const hour = kyivTimeInZone.getHours(); // Отримуємо години
+      if (hour >= 14) {
+        setIsBefore13(false); // Якщо більше або рівно 13:00
+      }
+    };
+    checkTime();
   }, [language, user.pupilId, user.marathonNumber, user.platformToken]);
 
   const setAuthToken = token => {
@@ -147,6 +163,29 @@ const ConferenceTest = () => {
     }
   };
 
+  // Функція для початку тесту
+  const startTest = () => {
+    const currentTime = new Date().toISOString(); // Поточний час з мілісекундами
+    localStorage.setItem('testStartTime', currentTime); // Зберігаємо час початку тесту
+    setStartTime(currentTime); // Оновлюємо стейт
+    setIsTestStarted(true); // Відображаємо TestPlatform
+
+    // Встановлюємо таймер на 40 хвилин
+    setTimeout(
+      () => {
+        setTestEnded(true); // Встановлюємо, що тест завершено
+      },
+      1 * 60 * 1000
+    ); // 40 хвилин в мілісекундах
+  };
+
+  // Функція для виходу
+  const handleExit = () => {
+    localStorage.removeItem('testStartTime');
+    setTestEnded(false);
+    setIsTestStarted(false);
+  };
+
   return (
     <StreamSection>
       {!isUserLogged ? (
@@ -159,11 +198,7 @@ const ConferenceTest = () => {
             <LeftFormBackgroundStar />
             <RightFormBackgroundStar />
             <LoginFormText>
-              Привіт!
-              <br />
-              Ця сторінка недоступна для неавторизованих користувачів. Але якщо
-              ви маєте доступ до нашої платформи, то й до цієї сторінки теж.
-              Введіть дані, які ви використовуєте для входу на платформу.
+              Привіт! Введіть дані для входу на платформу.
             </LoginFormText>
             <Label>
               <AdminInput type="text" name="mail" placeholder="Login" />
@@ -181,10 +216,121 @@ const ConferenceTest = () => {
           </LoginForm>
         </Formik>
       ) : (
+        // Заглушка та кнопка для початку тесту
+        !isTestStarted && (
+          <div style={overlayStyle}>
+            {isBefore13 ? (
+              <div style={messageStyle}>
+                Тест готується до тебе так як ти готувався до нього. Ще трохи
+                часу, щоб переконатися, що ти все знаєш) Скоро почнемо!
+              </div>
+            ) : (
+              <button onClick={startTest} style={buttonStyle}>
+                Розпочати тест
+              </button>
+            )}
+          </div>
+        )
+      )}
+
+      {isTestStarted && !testEnded && (
         <TestPlatform platformLink={platformLink} />
+      )}
+
+      {/* Показуємо повідомлення про завершення тесту та пароль для виходу */}
+      {testEnded && (
+        <div style={overlayStyle}>
+          <div>
+            <div style={meassgeWrapperStyle}>
+              <div style={messageStyle}>Тест завершено</div>
+              <div style={messageOuttStyle}>
+                <p>Пароль для виходу</p>
+                <p style={messagePasswordStyle}>
+                  <b>quitconf2024</b>
+                </p>
+              </div>
+            </div>
+            <div style={arrowWrapperStyle}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                width="32"
+                height="32"
+                style={arrowStyle}
+              >
+                <path
+                  d="M30 15v13.59L1.71.29.29 1.71 28.59 30H16v2h15a1 1 0 0 0 1-1V15z"
+                  data-name="8-Arrow Down"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
       )}
     </StreamSection>
   );
 };
 
+const overlayStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 1000,
+};
+
+const messageStyle = {
+  color: 'white',
+  fontSize: '20px',
+  marginBottom: '20px',
+  margintLeft: '10px',
+  margintRight: '10px',
+  maxWidth: '375px',
+  textAlign: 'center',
+};
+
+const messageOuttStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  color: 'white',
+  fontSize: '20px',
+  marginBottom: '20px',
+};
+
+const messagePasswordStyle = {
+  fontSize: '40px',
+};
+
+const meassgeWrapperStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '4px',
+  textAlign: 'center',
+};
+
+const buttonStyle = {
+  padding: '10px 20px',
+  backgroundColor: '#4CAF50',
+  color: 'white',
+  border: 'none',
+  cursor: 'pointer',
+};
+
+const arrowWrapperStyle = {
+  position: 'absolute',
+  bottom: '20px',
+  right: '20px',
+  cursor: 'pointer',
+  zIndex: 9999,
+};
+
+const arrowStyle = {
+  fill: 'white',
+  fontWeight: 'bold', // Щоб зробити стрілку "жирною"
+};
 export default ConferenceTest;
