@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.27147a72.js",
+    "main.js": "/ap-site/static/js/main.9820ea8e.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -71,7 +71,7 @@
     "Ambassador Form Page.js": "/ap-site/static/js/Ambassador Form Page.510c226b.chunk.js",
     "Teacher Form Page.js": "/ap-site/static/js/Teacher Form Page.ebe70243.chunk.js",
     "My AP Page.js": "/ap-site/static/js/My AP Page.a4313e26.chunk.js",
-    "AP Conference Test Page.js": "/ap-site/static/js/AP Conference Test Page.0c3ea073.chunk.js",
+    "AP Conference Test Page.js": "/ap-site/static/js/AP Conference Test Page.9e2e5f39.chunk.js",
     "HR Salary Calculator Page.js": "/ap-site/static/js/HR Salary Calculator Page.b722d229.chunk.js",
     "Marathon redirect page to Viber chatbot.js": "/ap-site/static/js/Marathon redirect page to Viber chatbot.2255821e.chunk.js",
     "Marathon redirect page to Telegram chatbot.js": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.e392772a.chunk.js",
@@ -104,6 +104,7 @@
     "static/js/4286.ddd15f4d.chunk.js": "/ap-site/static/js/4286.ddd15f4d.chunk.js",
     "static/css/4198.290471c5.chunk.css": "/ap-site/static/css/4198.290471c5.chunk.css",
     "static/js/4198.d46e324a.chunk.js": "/ap-site/static/js/4198.d46e324a.chunk.js",
+    "static/js/737.f1c34ac9.chunk.js": "/ap-site/static/js/737.f1c34ac9.chunk.js",
     "static/js/207.078159db.chunk.js": "/ap-site/static/js/207.078159db.chunk.js",
     "static/js/5090.0425aed2.chunk.js": "/ap-site/static/js/5090.0425aed2.chunk.js",
     "static/js/9577.ffd05290.chunk.js": "/ap-site/static/js/9577.ffd05290.chunk.js",
@@ -260,7 +261,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.27147a72.js.map": "/ap-site/static/js/main.27147a72.js.map",
+    "main.9820ea8e.js.map": "/ap-site/static/js/main.9820ea8e.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -330,7 +331,7 @@
     "Ambassador Form Page.510c226b.chunk.js.map": "/ap-site/static/js/Ambassador Form Page.510c226b.chunk.js.map",
     "Teacher Form Page.ebe70243.chunk.js.map": "/ap-site/static/js/Teacher Form Page.ebe70243.chunk.js.map",
     "My AP Page.a4313e26.chunk.js.map": "/ap-site/static/js/My AP Page.a4313e26.chunk.js.map",
-    "AP Conference Test Page.0c3ea073.chunk.js.map": "/ap-site/static/js/AP Conference Test Page.0c3ea073.chunk.js.map",
+    "AP Conference Test Page.9e2e5f39.chunk.js.map": "/ap-site/static/js/AP Conference Test Page.9e2e5f39.chunk.js.map",
     "HR Salary Calculator Page.b722d229.chunk.js.map": "/ap-site/static/js/HR Salary Calculator Page.b722d229.chunk.js.map",
     "Marathon redirect page to Viber chatbot.2255821e.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Viber chatbot.2255821e.chunk.js.map",
     "Marathon redirect page to Telegram chatbot.e392772a.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Telegram chatbot.e392772a.chunk.js.map",
@@ -363,6 +364,7 @@
     "4286.ddd15f4d.chunk.js.map": "/ap-site/static/js/4286.ddd15f4d.chunk.js.map",
     "4198.290471c5.chunk.css.map": "/ap-site/static/css/4198.290471c5.chunk.css.map",
     "4198.d46e324a.chunk.js.map": "/ap-site/static/js/4198.d46e324a.chunk.js.map",
+    "737.f1c34ac9.chunk.js.map": "/ap-site/static/js/737.f1c34ac9.chunk.js.map",
     "207.078159db.chunk.js.map": "/ap-site/static/js/207.078159db.chunk.js.map",
     "5090.0425aed2.chunk.js.map": "/ap-site/static/js/5090.0425aed2.chunk.js.map",
     "9577.ffd05290.chunk.js.map": "/ap-site/static/js/9577.ffd05290.chunk.js.map",
@@ -374,6 +376,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.27147a72.js"
+    "static/js/main.9820ea8e.js"
   ]
 }
