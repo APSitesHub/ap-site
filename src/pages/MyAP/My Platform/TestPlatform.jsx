@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { toZonedTime } from 'date-fns-tz';
+import { differenceInSeconds } from 'date-fns';
 import {
   BackgroundVideo,
   MyAPBackground,
@@ -8,12 +10,12 @@ import {
   TestPlatformSpoiler,
 } from './MyPlatform.styled';
 
-export const TestPlatform = ({ platformLink }) => {
+export const TestPlatform = ({ platformLink, handleExit }) => {
   const [src, setSrc] = useState('https://online.ap.education/school/');
   const location = useLocation().search.slice(1);
 
   // Стейт для таймера
-  const [timeLeft, setTimeLeft] = useState(40 * 60); // 40 хвилин у секундах
+  const [timeLeft, setTimeLeft] = useState(0); // Початкове значення час в секундах
 
   useEffect(() => {
     const setIframeSRC = () => {
@@ -28,28 +30,33 @@ export const TestPlatform = ({ platformLink }) => {
   }, [platformLink, location]);
 
   useEffect(() => {
-    // Функція для зменшення часу
+    const targetDate = new Date('2024-12-13T18:02:00+02:00'); // Цільова дата 16:30 13.12.2024
+    const updateTimeLeft = () => {
+      const kyivTime = new Date();
+      const kyivTimeInZone = toZonedTime(kyivTime, 'Europe/Kiev'); // Поточний час в Києві
+      const timeDifferenceInSeconds = differenceInSeconds(
+        targetDate,
+        kyivTimeInZone
+      ); // Різниця в секундах
+
+      setTimeLeft(timeDifferenceInSeconds);
+
+      // Якщо таймер досяг нуля, викликаємо функцію handleExit
+      if (timeDifferenceInSeconds <= 0) {
+        handleExit();
+      }
+    };
+
+    updateTimeLeft(); // Оновлюємо час при першому рендері
+
+    // Оновлюємо час кожну секунду
     const timer = setInterval(() => {
-      setTimeLeft(prevTime => {
-        if (prevTime <= 0) {
-          clearInterval(timer); // Зупиняємо таймер, коли час вичерпано
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000); // Відлік кожну секунду
+      updateTimeLeft();
+    }, 1000);
 
     // Очищаємо таймер при розмонтажуванні компоненти
     return () => clearInterval(timer);
-  }, []);
-
-  const removeVideo = () => {
-    setTimeout(() => {
-      document.querySelector('[title="AP Education"]').remove();
-    }, 15000);
-  };
-
-  removeVideo();
+  }, [handleExit]); // Залежність від handleExit, щоб пересвідчитись, що функція не змінюється
 
   // Функція для форматування часу в хвилини і секунди
   const formatTime = time => {

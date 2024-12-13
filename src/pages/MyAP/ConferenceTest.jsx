@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { TestPlatform } from './My Platform/TestPlatform';
 import { toZonedTime } from 'date-fns-tz';
+import { differenceInSeconds } from 'date-fns';
 
 const ConferenceTest = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -25,6 +26,7 @@ const ConferenceTest = () => {
     `https://online.ap.education/`
   );
   const [isBefore13, setIsBefore13] = useState(true); // Стейт для перевірки часу
+  const [isAter14, setIsAter14] = useState(false);
   const [isTestStarted, setIsTestStarted] = useState(false); // Стейт для того, щоб відобразити TestPlatform
   const [testEnded, setTestEnded] = useState(false); // Стейт для завершення тесту
   const [startTime, setStartTime] = useState(null); // Час початку тесту
@@ -113,13 +115,30 @@ const ConferenceTest = () => {
     // Перевірка часу в Києві
     const checkTime = () => {
       const kyivTime = new Date();
-      const kyivTimeInZone = toZonedTime(kyivTime, 'Europe/Kiev'); // Отримуємо час в Києві
-      const hour = kyivTimeInZone.getHours(); // Отримуємо години
-      if (hour >= 14) {
-        setIsBefore13(false); // Якщо більше або рівно 13:00
+      const kyivTimeInZone = toZonedTime(kyivTime, 'Europe/Kiev');
+      const targetDate = new Date('2024-12-13T18:00:00+02:00');
+      const endDate = new Date('2024-12-13T18:02:00+02:00');
+
+      const timeDifferenceInSecondsStart = differenceInSeconds(
+        targetDate,
+        kyivTimeInZone
+      );
+      const timeDifferenceInSecondsEnd = differenceInSeconds(
+        endDate,
+        kyivTimeInZone
+      );
+
+      if (timeDifferenceInSecondsStart < 0) {
+        setIsBefore13(false);
+      }
+      if (timeDifferenceInSecondsEnd <= 0) {
+        setIsAter14(true);
       }
     };
-    checkTime();
+    const timer = setInterval(() => {
+      checkTime();
+    }, 1000);
+    return () => clearInterval(timer);
   }, [language, user.pupilId, user.marathonNumber, user.platformToken]);
 
   const setAuthToken = token => {
@@ -168,21 +187,13 @@ const ConferenceTest = () => {
     const currentTime = new Date().toISOString(); // Поточний час з мілісекундами
     localStorage.setItem('testStartTime', currentTime); // Зберігаємо час початку тесту
     setStartTime(currentTime); // Оновлюємо стейт
-    setIsTestStarted(true); // Відображаємо TestPlatform
-
-    // Встановлюємо таймер на 40 хвилин
-    setTimeout(
-      () => {
-        setTestEnded(true); // Встановлюємо, що тест завершено
-      },
-      1 * 60 * 1000
-    ); // 40 хвилин в мілісекундах
+    setIsTestStarted(true); // Відображаємо TestPlatform// 40 хвилин в мілісекундах
   };
 
   // Функція для виходу
   const handleExit = () => {
     localStorage.removeItem('testStartTime');
-    setTestEnded(false);
+    setTestEnded(true);
     setIsTestStarted(false);
   };
 
@@ -217,12 +228,16 @@ const ConferenceTest = () => {
         </Formik>
       ) : (
         // Заглушка та кнопка для початку тесту
-        !isTestStarted && (
+        !isTestStarted &&
+        !isAter14 &&
+        !testEnded && (
           <div style={overlayStyle}>
             {isBefore13 ? (
               <div style={messageStyle}>
-                Тест готується до тебе так як ти готувався до нього. Ще трохи
-                часу, щоб переконатися, що ти все знаєш) Скоро почнемо!
+                <p>
+                  Тест готується до тебе так як ти готувався до нього. Ще трохи
+                  часу, щоб переконатися, що ти все знаєш) Скоро почнемо!
+                </p>
               </div>
             ) : (
               <button onClick={startTest} style={buttonStyle}>
@@ -234,11 +249,11 @@ const ConferenceTest = () => {
       )}
 
       {isTestStarted && !testEnded && (
-        <TestPlatform platformLink={platformLink} />
+        <TestPlatform platformLink={platformLink} handleExit={handleExit} />
       )}
 
       {/* Показуємо повідомлення про завершення тесту та пароль для виходу */}
-      {testEnded && (
+      {(testEnded || isAter14) && (
         <div style={overlayStyle}>
           <div>
             <div style={meassgeWrapperStyle}>
