@@ -29,7 +29,7 @@ export const TestPlatform = ({ platformLink, handleExit }) => {
   }, [platformLink, location]);
 
   useEffect(() => {
-    const targetDate = new Date('2024-12-13T18:02:00+02:00'); // Цільова дата 16:30 13.12.2024
+    const targetDate = new Date('2024-12-14T14:15:00+02:00'); // Цільова дата 16:30 13.12.2024
     const updateTimeLeft = () => {
       const kyivTime = new Date();
       const kyivTimeInZone = toZonedTime(kyivTime, 'Europe/Kiev'); // Поточний час в Києві
@@ -67,7 +67,7 @@ export const TestPlatform = ({ platformLink, handleExit }) => {
   return (
     <MyAPBackground>
       <TestPlatformSpoiler>
-        <div>Time Left: {formatTime(timeLeft)}</div> {/* Відображаємо таймер */}
+        <div style={{marginLeft: "20px", fontWeight: "700"}}>Time Left: {formatTime(timeLeft)}</div> {/* Відображаємо таймер */}
         <TestLogo />
       </TestPlatformSpoiler>
       <MyPlatformBox>

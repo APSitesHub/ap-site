@@ -33,6 +33,7 @@ const ConferenceTest = () => {
   const [isAter14, setIsAter14] = useState(false);
   const [isTestStarted, setIsTestStarted] = useState(false); // Стейт для того, щоб відобразити TestPlatform
   const [testEnded, setTestEnded] = useState(false); // Стейт для завершення тесту
+  // eslint-disable-next-line
   const [startTime, setStartTime] = useState(null); // Час початку тесту
   const [isUserInfoIncorrect, setIsUserInfoIncorrect] = useState(false);
 
@@ -121,8 +122,8 @@ const ConferenceTest = () => {
     const checkTime = () => {
       const kyivTime = new Date();
       const kyivTimeInZone = toZonedTime(kyivTime, 'Europe/Kiev');
-      const targetDate = new Date('2024-12-13T18:00:00+02:00');
-      const endDate = new Date('2024-12-13T18:02:00+02:00');
+      const targetDate = new Date('2024-12-14T13:29:30+02:00');
+      const endDate = new Date('2024-12-14T14:15:00+02:00');
 
       const timeDifferenceInSecondsStart = differenceInSeconds(
         targetDate,
@@ -253,7 +254,7 @@ const ConferenceTest = () => {
             {isBefore13 ? (
               <div style={messageStyle}>
                 <p>
-                  Тест готується до тебе так як ти готувався до нього. Ще трохи
+                  Тест готується до тебе, так як ти готувався до нього. Ще трохи
                   часу, щоб переконатися, що ти все знаєш) Скоро почнемо!
                 </p>
               </div>
