@@ -14,6 +14,7 @@ import { A1KidsKahootForm } from './A1KidsKahootForm';
 import { A2FreeKahootForm } from './A2FreeKahootForm';
 import { A2KahootForm } from './A2KahootForm';
 import { A2KidsKahootForm } from './A2KidsKahootForm';
+import { APConferenceKahootForm } from './APConferenceKahootForm';
 import { B1KahootForm } from './B1KahootForm';
 import { B1KidsBeginnerKahootForm } from './B1KidsBeginnerKahootForm';
 import { B1KidsKahootForm } from './B1KidsKahootForm';
@@ -30,6 +31,7 @@ import { DeutschB1KahootForm } from './DeutschB1KahootForm';
 import { DeutschB2KahootForm } from './DeutschB2KahootForm';
 import { DeutschFreeKahootForm } from './DeutschFreeKahootForm';
 import { DeutschKahootForm } from './DeutschKahootForm';
+import { DeutschKidsA0KahootForm } from './DeutschKidsA0KahootForm';
 import { DeutschKidsFreeKahootForm } from './DeutschKidsFreeKahootForm';
 import { DeutschKidsKahootForm } from './DeutschKidsKahootForm';
 import {
@@ -66,7 +68,6 @@ import { TrialsDeKahootForm } from './TrialsDeKahootForm';
 import { TrialsEngKahootForm } from './TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from './TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from './TrialsPlKahootForm';
-import { DeutschKidsA0KahootForm } from './DeutschKidsA0KahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -302,6 +303,9 @@ export const KahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('trendets')}>
               Trendets
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('apconf')}>
+              AP Conference
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -451,6 +455,9 @@ export const KahootAdminPanel = () => {
           )}
           {levels.includes('trendets') && (
             <TrendetsKahootForm destination={destination} />
+          )}
+          {levels.includes('apconf') && (
+            <APConferenceKahootForm destination={destination} />
           )}
         </KahootFormBox>
         {isLoading && <Loader />}

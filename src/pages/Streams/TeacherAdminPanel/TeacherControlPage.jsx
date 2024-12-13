@@ -101,7 +101,7 @@ const TeacherControlPage = () => {
   ];
 
   useEffect(() => {
-    document.title = 'Teacher Admin Panel | AP Education';
+    document.title = 'Teacher Control Page | AP Education';
 
     const refreshToken = async () => {
       console.log('token refresher');

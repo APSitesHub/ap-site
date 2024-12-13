@@ -8,6 +8,7 @@ import { useLayoutEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import * as yup from 'yup';
 import {
+  LoginErrorNote,
   LoginInput,
   LoginInputNote,
   LoginLogo,
@@ -26,6 +27,7 @@ const Speakings = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isUserLogged, setIsUserLogged] = useState(false);
+  const [isUserInfoIncorrect, setIsUserInfoIncorrect] = useState(false);
 
   const wakeupRequest = async () => {
     try {
@@ -55,8 +57,10 @@ const Speakings = () => {
       setIsUserLogged(isLogged => (isLogged = true));
       setCurrentUser(currentUser => (currentUser = response.data.teacher));
       localStorage.setItem('teacherLogin', values.login);
+      setIsUserInfoIncorrect(false);
       resetForm();
     } catch (error) {
+      error.response.status === 401 && setIsUserInfoIncorrect(true);
       console.error(error);
     }
   };
@@ -103,7 +107,12 @@ const Speakings = () => {
                 Якщо ви викладач, введіть ваші логін та пароль.
               </StreamAuthText>
               <Label>
-                <LoginInput type="text" name="login" placeholder="Login" />
+                <LoginInput
+                  type="text"
+                  name="login"
+                  placeholder="Login"
+                  onBlur={() => setIsUserInfoIncorrect(false)}
+                />
                 <LoginInputNote component="p" name="login" />
               </Label>
               <Label>
@@ -111,10 +120,18 @@ const Speakings = () => {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  onBlur={() => setIsUserInfoIncorrect(false)}
                 />
                 <LoginInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+              <LoginErrorNote
+                style={
+                  isUserInfoIncorrect ? { opacity: '1' } : { opacity: '0' }
+                }
+              >
+                Логін або пароль введено неправильно!
+              </LoginErrorNote>
             </LoginForm>
           </Formik>
         ) : (

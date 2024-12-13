@@ -202,6 +202,11 @@ const NMTHistory = lazy(() =>
     /* webpackChunkName: "NMTHistory Education page" */ '../pages/Streams/NMTHistory/NMTHistory'
   )
 );
+const APConf = lazy(() =>
+  import(
+    /* webpackChunkName: "AP Conference Education page" */ '../pages/Streams/APConf/APConf'
+  )
+);
 const Teacher = lazy(() =>
   import(/* webpackChunkName: "Teacher layout" */ '../pages/Teacher/Teacher')
 );
@@ -370,86 +375,6 @@ const WhatsAppRedirect = lazy(() =>
   )
 );
 
-const Gifts = lazy(() =>
-  import(/* webpackChunkName: "Post-quiz gifts page" */ '../pages/Gifts/Gifts')
-);
-const GiftsEnA0 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts EN A0 page" */ '../pages/Gifts/GiftsEnA0'
-  )
-);
-const GiftsEnA1 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts EN A1 page" */ '../pages/Gifts/GiftsEnA1'
-  )
-);
-const GiftsEnA2 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts EN A2 page" */ '../pages/Gifts/GiftsEnA2'
-  )
-);
-const GiftsEnB1 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts EN B1 page" */ '../pages/Gifts/GiftsEnB1'
-  )
-);
-const GiftsEnKidsA0 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts EN Kids A0 page" */ '../pages/Gifts/GiftsEnKidsA0'
-  )
-);
-const GiftsEnKidsA1 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts EN Kids A1 page" */ '../pages/Gifts/GiftsEnKidsA1'
-  )
-);
-const GiftsEnKidsA2 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts EN Kids A2 page" */ '../pages/Gifts/GiftsEnKidsA2'
-  )
-);
-const GiftsDeA0 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts DE A0 page" */ '../pages/Gifts/GiftsDeA0'
-  )
-);
-const GiftsDeA1 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts DE A1 page" */ '../pages/Gifts/GiftsDeA1'
-  )
-);
-const GiftsDeA2 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts DE A2 page" */ '../pages/Gifts/GiftsDeA2'
-  )
-);
-const GiftsPlA0 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts PL A0 page" */ '../pages/Gifts/GiftsPlA0'
-  )
-);
-const GiftsPlA1 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts PL A1 page" */ '../pages/Gifts/GiftsPlA1'
-  )
-);
-const GiftsPlA2 = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts PL A2 page" */ '../pages/Gifts/GiftsPlA2'
-  )
-);
-const GiftsDirect = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts from Instagram direct" */ '../pages/Gifts/GiftsDirect'
-  )
-);
-
-const GiftsAuth = lazy(() =>
-  import(
-    /* webpackChunkName: "Post-quiz gifts page with sms-code auth" */ '../pages/Gifts/GiftsAuth'
-  )
-);
-
 const Quiz = lazy(() =>
   import(/* webpackChunkName: "Marathon quiz page" */ '../pages/Quiz/Quiz')
 );
@@ -551,20 +476,11 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<SharedLayout utms={utms} />}>
             <Route index element={<NewDesign utms={utms} />} />
-            {/* <Route path="new" element={<NewDesign utms={utms} />} /> */}
-            {/* <Route path="clone" element={<Clone utms={utms} />} /> */}
-            {/* <Route path="reviews" element={<AllReviews />} /> */}
             <Route path="english" element={<English utms={utms} />} />
             <Route path="deutsch" element={<Deutsch utms={utms} />} />
             <Route path="polski" element={<Polski utms={utms} />} />
             <Route path="school" element={<School utms={utms} />} />
             <Route path="university" element={<University utms={utms} />} />
-            {/* <Route path="english" element={<English utms={utms} />} />
-          
-          <Route path="education" element={<Education utms={utms} />} />
-          <Route path="examination" element={<Examination utms={utms} />} />
-          <Route path="translation" element={<Translation utms={utms} />} />
-          <Route path="career" element={<Career utms={utms} />} /> */}
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
           <Route path="my-ap" element={<MyAP />} noindex={true} />
@@ -652,7 +568,8 @@ export const App = () => {
             <Route path="test" element={<StreamTest />} />
             <Route path="test-chat" element={<WindowedChat />} />
             <Route path="record-chat" element={<WindowedChat />} />
-            {/* <Route path="test1" element={<StreamTest />} /> */}
+            <Route path="apconf" element={<APConf />} />
+            <Route path="apconf-chat" element={<WindowedChat />} />
             <Route path="stream-admin-panel" element={<AdminPanel />} />
             <Route
               path="speaking-admin-panel"
@@ -852,6 +769,7 @@ export const App = () => {
             <Route path="pla1kids" element={<TeacherPage />} />
             <Route path="plkidsfree" element={<TeacherPage />} />
             <Route path="record" element={<TeacherPageVertical />} />
+            <Route path="apconf" element={<TeacherPage />} />
             <Route path="test" element={<TeacherPage />} />
             <Route path="trials" element={<TeacherTrialPage />} />
             <Route path="trials-kids" element={<TeacherTrialPage />} />
@@ -882,38 +800,6 @@ export const App = () => {
           <Route path="quiz-en-code" element={<QuizEnAuth utms={utms} />} />
           <Route path="quiz-de" element={<QuizDe utms={utms} />} />
           <Route path="quiz-pl" element={<QuizPl utms={utms} />} />
-          <Route path="gifts" element={<Gifts />} noindex={true} />
-          <Route path="gifts-en-a0" element={<GiftsEnA0 />} noindex={true} />
-          <Route path="gifts-en-a1" element={<GiftsEnA1 />} noindex={true} />
-          <Route path="gifts-en-a2" element={<GiftsEnA2 />} noindex={true} />
-          <Route path="gifts-en-b1" element={<GiftsEnB1 />} noindex={true} />
-          <Route
-            path="gifts-enkids-a0"
-            element={<GiftsEnKidsA0 />}
-            noindex={true}
-          />
-          <Route
-            path="gifts-enkids-a1"
-            element={<GiftsEnKidsA1 />}
-            noindex={true}
-          />
-          <Route
-            path="gifts-enkids-a2"
-            element={<GiftsEnKidsA2 />}
-            noindex={true}
-          />
-          <Route path="gifts-de-a0" element={<GiftsDeA0 />} noindex={true} />
-          <Route path="gifts-de-a1" element={<GiftsDeA1 />} noindex={true} />
-          <Route path="gifts-de-a2" element={<GiftsDeA2 />} noindex={true} />
-          <Route path="gifts-pl-a0" element={<GiftsPlA0 />} noindex={true} />
-          <Route path="gifts-pl-a1" element={<GiftsPlA1 />} noindex={true} />
-          <Route path="gifts-pl-a2" element={<GiftsPlA2 />} noindex={true} />
-          <Route path="gifts-a" noindex={true}>
-            <Route path=":userId" element={<GiftsAuth />} />
-          </Route>
-          <Route path="gifts-direct" noindex={true}>
-            <Route path=":userId" element={<GiftsDirect />} />
-          </Route>
           <Route path="forms-tree" element={<FormsLinkTree />} noindex={true} />
           <Route
             path="un-form"

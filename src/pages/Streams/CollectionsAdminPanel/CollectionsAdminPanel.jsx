@@ -118,6 +118,7 @@ export const CollectionsAdminPanel = () => {
     nmt_en: '',
     nmt_math: '',
     nmt_history: '',
+    apconf: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -168,6 +169,7 @@ export const CollectionsAdminPanel = () => {
     nmt_en: yup.string().optional(),
     nmt_math: yup.string().optional(),
     nmt_history: yup.string().optional(),
+    apconf: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -626,6 +628,14 @@ export const CollectionsAdminPanel = () => {
                   placeholder="Record page collection"
                 />
                 <AdminInputNote component="p" name="record" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="apconf"
+                  placeholder="AP Conference page collection"
+                />
+                <AdminInputNote component="p" name="apconf" />
               </Label>
               <AdminFormBtn type="submit">Замінити колекції</AdminFormBtn>
             </LinksForm>

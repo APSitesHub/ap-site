@@ -14,6 +14,7 @@ import { A1KidsKahootForm } from '../KahootAdminPanel/A1KidsKahootForm';
 import { A2FreeKahootForm } from '../KahootAdminPanel/A2FreeKahootForm';
 import { A2KahootForm } from '../KahootAdminPanel/A2KahootForm';
 import { A2KidsKahootForm } from '../KahootAdminPanel/A2KidsKahootForm';
+import { APConferenceKahootForm } from '../KahootAdminPanel/APConferenceKahootForm';
 import { B1KahootForm } from '../KahootAdminPanel/B1KahootForm';
 import { B1KidsBeginnerKahootForm } from '../KahootAdminPanel/B1KidsBeginnerKahootForm';
 import { B1KidsKahootForm } from '../KahootAdminPanel/B1KidsKahootForm';
@@ -30,6 +31,7 @@ import { DeutschB1KahootForm } from '../KahootAdminPanel/DeutschB1KahootForm';
 import { DeutschB2KahootForm } from '../KahootAdminPanel/DeutschB2KahootForm';
 import { DeutschFreeKahootForm } from '../KahootAdminPanel/DeutschFreeKahootForm';
 import { DeutschKahootForm } from '../KahootAdminPanel/DeutschKahootForm';
+import { DeutschKidsA0KahootForm } from '../KahootAdminPanel/DeutschKidsA0KahootForm';
 import { DeutschKidsFreeKahootForm } from '../KahootAdminPanel/DeutschKidsFreeKahootForm';
 import { DeutschKidsKahootForm } from '../KahootAdminPanel/DeutschKidsKahootForm';
 import {
@@ -66,7 +68,6 @@ import { TrialsEngKahootForm } from '../KahootAdminPanel/TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from '../KahootAdminPanel/TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from '../KahootAdminPanel/TrialsPlKahootForm';
 import { HostAdminPanelSection } from './HostKahootAdminPanel.styled';
-import { DeutschKidsA0KahootForm } from '../KahootAdminPanel/DeutschKidsA0KahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -302,6 +303,9 @@ export const HostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('trendets')}>
               Trendets
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('apconf')}>
+              AP Conference
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -451,6 +455,9 @@ export const HostKahootAdminPanel = () => {
           )}
           {levels.includes('trendets') && (
             <TrendetsKahootForm destination={destination} />
+          )}
+          {levels.includes('apconf') && (
+            <APConferenceKahootForm destination={destination} />
           )}
         </KahootFormBox>
         {isLoading && <Loader />}

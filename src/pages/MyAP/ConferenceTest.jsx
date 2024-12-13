@@ -4,7 +4,11 @@ import {
   LeftFormBackgroundStar,
   RightFormBackgroundStar,
 } from 'components/LeadForm/LeadForm.styled';
-import { LoginFormText, StreamSection } from 'components/Stream/Stream.styled';
+import {
+  LoginErrorNote,
+  LoginFormText,
+  StreamSection,
+} from 'components/Stream/Stream.styled';
 import { Formik } from 'formik';
 import {
   AdminFormBtn,
@@ -30,6 +34,7 @@ const ConferenceTest = () => {
   const [isTestStarted, setIsTestStarted] = useState(false); // Стейт для того, щоб відобразити TestPlatform
   const [testEnded, setTestEnded] = useState(false); // Стейт для завершення тесту
   const [startTime, setStartTime] = useState(null); // Час початку тесту
+  const [isUserInfoIncorrect, setIsUserInfoIncorrect] = useState(false);
 
   axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -63,31 +68,31 @@ const ConferenceTest = () => {
           ? `https://online.ap.education/Account/LoginByToken?token=${
               user.platformToken
             }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=1143131`
+              `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=1157251`
             )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=1143131`,
+          : `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=1157251`,
         en2: user.platformToken
           ? `https://online.ap.education/Account/LoginByToken?token=${
               user.platformToken
             }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=1143132`
+              `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=1157255`
             )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=1143132`,
+          : `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=1157255`,
 
         enkids1: user.platformToken
           ? `https://online.ap.education/Account/LoginByToken?token=${
               user.platformToken
             }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=1143134`
+              `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=1157234`
             )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=1143134`,
+          : `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=1157234`,
         enkids2: user.platformToken
           ? `https://online.ap.education/Account/LoginByToken?token=${
               user.platformToken
             }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=1143133`
+              `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=1157243`
             )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=1143133`,
+          : `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=1157243`,
       };
 
       const marathonLink =
@@ -176,8 +181,10 @@ const ConferenceTest = () => {
         setLanguage(lang[0]);
       }
       localStorage.setItem('mail', values.mail);
+      setIsUserInfoIncorrect(false);
       resetForm();
     } catch (error) {
+      error.response.status === 401 && setIsUserInfoIncorrect(true);
       console.error(error);
     }
   };
@@ -212,7 +219,12 @@ const ConferenceTest = () => {
               Привіт! Введіть дані для входу на платформу.
             </LoginFormText>
             <Label>
-              <AdminInput type="text" name="mail" placeholder="Login" />
+              <AdminInput
+                type="text"
+                name="mail"
+                placeholder="Login"
+                onBlur={() => setIsUserInfoIncorrect(false)}
+              />
               <AdminInputNote component="p" name="mail" type="email" />
             </Label>
             <Label>
@@ -220,10 +232,16 @@ const ConferenceTest = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
+                onBlur={() => setIsUserInfoIncorrect(false)}
               />
               <AdminInputNote component="p" name="password" />
             </Label>
             <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+            <LoginErrorNote
+              style={isUserInfoIncorrect ? { opacity: '1' } : { opacity: '0' }}
+            >
+              Логін або пароль введено неправильно!
+            </LoginErrorNote>
           </LoginForm>
         </Formik>
       ) : (

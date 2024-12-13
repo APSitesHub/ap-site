@@ -117,6 +117,7 @@ const AdminPanel = () => {
     nmt_math: '',
     nmt_history: '',
     test: '',
+    apconf: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -166,6 +167,7 @@ const AdminPanel = () => {
     nmt_en: yup.string().optional(),
     nmt_math: yup.string().optional(),
     nmt_history: yup.string().optional(),
+    apconf: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -588,6 +590,14 @@ const AdminPanel = () => {
                   placeholder="Test link, do not change"
                 />
                 <AdminInputNote component="p" name="test" />
+              </Label>
+              <Label>
+                <AdminInput
+                  type="text"
+                  name="apconf"
+                  placeholder="AP Conference link"
+                />
+                <AdminInputNote component="p" name="apconf" />
               </Label>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
             </LinksForm>

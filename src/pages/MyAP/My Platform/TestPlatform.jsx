@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { toZonedTime } from 'date-fns-tz';
 import { differenceInSeconds } from 'date-fns';
 import {
-  BackgroundVideo,
   MyAPBackground,
   MyPlatformBox,
   TestLogo,
@@ -67,14 +66,6 @@ export const TestPlatform = ({ platformLink, handleExit }) => {
 
   return (
     <MyAPBackground>
-      <BackgroundVideo
-        playsInline
-        loop
-        autoPlay
-        muted
-        src="https://www.ap.education/assets/video/Logo_Green.mp4"
-        title="AP Education"
-      />
       <TestPlatformSpoiler>
         <div>Time Left: {formatTime(timeLeft)}</div> {/* Відображаємо таймер */}
         <TestLogo />
