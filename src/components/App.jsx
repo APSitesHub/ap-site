@@ -777,8 +777,6 @@ export const App = () => {
             <Route path="trials-de" element={<TeacherTrialPage />} />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
-          <Route path="quiz" element={<Quiz utms={utms} />} />
-          <Route path="quiz-one" element={<QuizOneRequest utms={utms} />} />
           <Route
             path="quiz-g"
             element={<QuizOneRequestGoogleNoEngage utms={utms} />}
@@ -795,11 +793,6 @@ export const App = () => {
             path="quiz-d30p"
             element={<QuizOneRequestDiscountNoEngage utms={utms} />}
           />
-          <Route path="quiz-code" element={<QuizAuth utms={utms} />} />
-          <Route path="quiz-en" element={<QuizEn utms={utms} />} />
-          <Route path="quiz-en-code" element={<QuizEnAuth utms={utms} />} />
-          <Route path="quiz-de" element={<QuizDe utms={utms} />} />
-          <Route path="quiz-pl" element={<QuizPl utms={utms} />} />
           <Route path="forms-tree" element={<FormsLinkTree />} noindex={true} />
           <Route
             path="un-form"
