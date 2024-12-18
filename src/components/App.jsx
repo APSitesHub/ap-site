@@ -230,6 +230,11 @@ const UserAdminPanel = lazy(() =>
     /* webpackChunkName: "User Admin Panel page" */ '../pages/Streams/UserAdminPanel/UserAdminPanel'
   )
 );
+const C1SpeakingPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel'
+  )
+);
 const TeacherAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Admin Panel page" */ '../pages/Streams/TeacherAdminPanel/TeacherAdminPanel'
@@ -375,28 +380,6 @@ const WhatsAppRedirect = lazy(() =>
   )
 );
 
-const Quiz = lazy(() =>
-  import(/* webpackChunkName: "Marathon quiz page" */ '../pages/Quiz/Quiz')
-);
-
-const QuizAuth = lazy(() =>
-  import(
-    /* webpackChunkName: "Marathon quiz page for new Auth" */ '../pages/Quiz/QuizAuth'
-  )
-);
-
-const QuizOneRequest = lazy(() =>
-  import(
-    /* webpackChunkName: "Sales quiz page for one request" */ '../pages/Quiz/QuizOneRequest'
-  )
-);
-
-// const QuizOneRequestGoogle = lazy(() =>
-//   import(
-//     /* webpackChunkName: "Sales quiz page for one request via Google ads" */ '../pages/Quiz/QuizOneRequestGoogle'
-//   )
-// );
-
 const QuizOneRequestGoogleNoEngage = lazy(() =>
   import(
     /* webpackChunkName: "Sales quiz page for one request via Google ads without engagement page" */ '../pages/Quiz/QuizOneRequestGoogleNoEngage'
@@ -406,30 +389,6 @@ const QuizOneRequestGoogleNoEngage = lazy(() =>
 const QuizOneRequestDiscountNoEngage = lazy(() =>
   import(
     /* webpackChunkName: "Sales quiz page for one request via discount mail without engagement page" */ '../pages/Quiz/QuizOneRequestDiscountNoEngage'
-  )
-);
-
-const QuizEn = lazy(() =>
-  import(
-    /* webpackChunkName: "Sales english quiz page" */ '../pages/Quiz/QuizEn'
-  )
-);
-
-const QuizDe = lazy(() =>
-  import(
-    /* webpackChunkName: "Sales deutsch quiz page" */ '../pages/Quiz/QuizDe'
-  )
-);
-
-const QuizPl = lazy(() =>
-  import(
-    /* webpackChunkName: "Sales polish quiz page" */ '../pages/Quiz/QuizPl'
-  )
-);
-
-const QuizEnAuth = lazy(() =>
-  import(
-    /* webpackChunkName: "Sales english quiz page for new Auth" */ '../pages/Quiz/QuizEnAuth'
   )
 );
 
@@ -581,6 +540,7 @@ export const App = () => {
               element={<HostKahootAdminPanel />}
             />
             <Route path="user-admin-panel" element={<UserAdminPanel />} />
+            <Route path="c1-speaking-panel" element={<C1SpeakingPanel />} />
             <Route
               path="teacher-teamlead-panel"
               element={<TeacherAdminPanel />}
