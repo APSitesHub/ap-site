@@ -207,6 +207,8 @@ const Streams = () => {
         !location.pathname.includes('admin-panel') &&
         !location.pathname.includes('teamlead-panel') &&
         !location.pathname.includes('-chat') &&
+        !location.pathname.includes('tcp') &&
+        !location.pathname.includes('speaking-panel') &&
         !location.pathname.includes('free') ? (
           <Formik
             initialValues={initialLoginValues}

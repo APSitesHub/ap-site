@@ -230,6 +230,11 @@ const UserAdminPanel = lazy(() =>
     /* webpackChunkName: "User Admin Panel page" */ '../pages/Streams/UserAdminPanel/UserAdminPanel'
   )
 );
+const UniUserAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Polish University Users Admin Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAdminPanel'
+  )
+);
 const C1SpeakingPanel = lazy(() =>
   import(
     /* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel'
@@ -540,6 +545,7 @@ export const App = () => {
               element={<HostKahootAdminPanel />}
             />
             <Route path="user-admin-panel" element={<UserAdminPanel />} />
+            <Route path="pl-user-admin-panel" element={<UniUserAdminPanel />} />
             <Route path="c1-speaking-panel" element={<C1SpeakingPanel />} />
             <Route
               path="teacher-teamlead-panel"
