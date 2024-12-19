@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.e9516a02.js",
+    "main.js": "/ap-site/static/js/main.6ff76341.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
     "School page.js": "/ap-site/static/js/School page.bc883d21.chunk.js",
     "University page.css": "/ap-site/static/css/University page.e8ee1c85.chunk.css",
     "University page.js": "/ap-site/static/js/University page.475943ba.chunk.js",
-    "Streams page.js": "/ap-site/static/js/Streams page.86df8415.chunk.js",
+    "Streams page.js": "/ap-site/static/js/Streams page.33ee2c23.chunk.js",
     "Speakings teacher page.js": "/ap-site/static/js/Speakings teacher page.336403c7.chunk.js",
     "Streams A0 page.js": "/ap-site/static/js/Streams A0 page.c9ab44b3.chunk.js",
     "Streams A0_2 page.js": "/ap-site/static/js/Streams A0_2 page.96a5e065.chunk.js",
@@ -45,6 +45,7 @@
     "Speaking Club Kids redirect page.js": "/ap-site/static/js/Speaking Club Kids redirect page.fcd10bc0.chunk.js",
     "Links Admin Panel page.js": "/ap-site/static/js/Links Admin Panel page.b07297ab.chunk.js",
     "User Admin Panel page.js": "/ap-site/static/js/User Admin Panel page.08e12f3d.chunk.js",
+    "Polish University Users Admin Panel page.js": "/ap-site/static/js/Polish University Users Admin Panel page.435dd7af.chunk.js",
     "C1 Speaking Control Panel page.js": "/ap-site/static/js/C1 Speaking Control Panel page.54b72dee.chunk.js",
     "Teacher Admin Panel page.js": "/ap-site/static/js/Teacher Admin Panel page.575e1f9b.chunk.js",
     "Teacher Control page.js": "/ap-site/static/js/Teacher Control page.24f7d51f.chunk.js",
@@ -251,14 +252,14 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.e9516a02.js.map": "/ap-site/static/js/main.e9516a02.js.map",
+    "main.6ff76341.js.map": "/ap-site/static/js/main.6ff76341.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
     "School page.bc883d21.chunk.js.map": "/ap-site/static/js/School page.bc883d21.chunk.js.map",
     "University page.e8ee1c85.chunk.css.map": "/ap-site/static/css/University page.e8ee1c85.chunk.css.map",
     "University page.475943ba.chunk.js.map": "/ap-site/static/js/University page.475943ba.chunk.js.map",
-    "Streams page.86df8415.chunk.js.map": "/ap-site/static/js/Streams page.86df8415.chunk.js.map",
+    "Streams page.33ee2c23.chunk.js.map": "/ap-site/static/js/Streams page.33ee2c23.chunk.js.map",
     "Speakings teacher page.336403c7.chunk.js.map": "/ap-site/static/js/Speakings teacher page.336403c7.chunk.js.map",
     "Streams A0 page.c9ab44b3.chunk.js.map": "/ap-site/static/js/Streams A0 page.c9ab44b3.chunk.js.map",
     "Streams A0_2 page.96a5e065.chunk.js.map": "/ap-site/static/js/Streams A0_2 page.96a5e065.chunk.js.map",
@@ -295,6 +296,7 @@
     "Speaking Club Kids redirect page.fcd10bc0.chunk.js.map": "/ap-site/static/js/Speaking Club Kids redirect page.fcd10bc0.chunk.js.map",
     "Links Admin Panel page.b07297ab.chunk.js.map": "/ap-site/static/js/Links Admin Panel page.b07297ab.chunk.js.map",
     "User Admin Panel page.08e12f3d.chunk.js.map": "/ap-site/static/js/User Admin Panel page.08e12f3d.chunk.js.map",
+    "Polish University Users Admin Panel page.435dd7af.chunk.js.map": "/ap-site/static/js/Polish University Users Admin Panel page.435dd7af.chunk.js.map",
     "C1 Speaking Control Panel page.54b72dee.chunk.js.map": "/ap-site/static/js/C1 Speaking Control Panel page.54b72dee.chunk.js.map",
     "Teacher Admin Panel page.575e1f9b.chunk.js.map": "/ap-site/static/js/Teacher Admin Panel page.575e1f9b.chunk.js.map",
     "Teacher Control page.24f7d51f.chunk.js.map": "/ap-site/static/js/Teacher Control page.24f7d51f.chunk.js.map",
@@ -358,6 +360,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.e9516a02.js"
+    "static/js/main.6ff76341.js"
   ]
 }
