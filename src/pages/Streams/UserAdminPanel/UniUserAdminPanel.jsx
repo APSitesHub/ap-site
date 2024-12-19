@@ -22,7 +22,7 @@ import {
 } from './UserAdminPanel.styled';
 import { UserEditForm } from './UserEditForm/UserEditForm';
 import { LabelText, SpeakingLabel } from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
-import { TeacherLangSelect } from '../TeacherAdminPanel/TeacherAdminPanel.styled';
+import { ErrorNote, TeacherLangSelect } from '../TeacherAdminPanel/TeacherAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -191,6 +191,7 @@ const UserAdminPanel = () => {
       console.log(response.data);
       setUsers(users => [response.data, ...users]);
       resetForm();
+      onClear();
       alert('Юзера додано');
     } catch (error) {
       console.error(error);
@@ -378,17 +379,17 @@ const UserAdminPanel = () => {
                   placeholder="Мова"
                   name="lang"
                   onBlur={() => {
-                    !langValue
-                      ? setIsLangEmpty(empty => (empty = true))
-                      : setIsLangEmpty(empty => (empty = false));
+                    !uniValue
+                      ? setIsUniEmpty(empty => (empty = true))
+                      : setIsUniEmpty(empty => (empty = false));
                   }}
                   onChange={uni => {
                     setUniValue(uni);
-                    uni?.value && setIsLangEmpty(empty => (empty = false));
+                    uni?.value && setIsUniEmpty(empty => (empty = false));
                   }}
                 />
-                {isLangEmpty && (
-                  <ErrorNote> Мова - обов'язкове поле!</ErrorNote>
+                {isUniEmpty && (
+                  <ErrorNote> Університет - обов'язкове поле!</ErrorNote>
                 )}
               </SpeakingLabel>
               <Label>
