@@ -11,6 +11,7 @@ import {
   SpeakingFormBtn,
   SpeakingLabel,
   SpeakingSelect,
+  StudentDateInputNote,
   StudentTextAreaNote,
   StyledDatePicker,
   UserSpeakingEditForm,
@@ -27,7 +28,8 @@ export const TeacherPageSpeakingEditForm = ({
   closeStudentEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(undefined);
+  const [isDateWrong, setIsDateWrong] = useState(false);
   const [temperamentValue, setTemperamentValue] = useState(
     studentToEdit.temperament || ''
   );
@@ -162,11 +164,19 @@ export const TeacherPageSpeakingEditForm = ({
     speaking: yup.number(),
     listening: yup.number(),
     activity: yup.number(),
-    feedback: yup.string().required("Фідбек - обов'язкове поле, без нього ніяк"),
+    feedback: yup
+      .string()
+      .required("Фідбек - обов'язкове поле, без нього ніяк"),
   });
 
   const handleEditStudentSubmit = async values => {
     console.log(values);
+    console.log(startDate);
+
+    if (!startDate) {
+      setIsDateWrong(true);
+      return;
+    }
 
     values.temperament = temperamentValue;
     values.successRate = successRateValue;
@@ -227,13 +237,20 @@ ${values.feedback}`;
             <LabelDatePickerText>Оберіть дату заняття</LabelDatePickerText>
           </SpeakingLabel>
           <StyledDatePicker
+            className={isDateWrong ? 'error' : undefined}
             selected={startDate}
             dateFormat="dd.MM.yyyy"
-            onChange={date => setStartDate(date)}
+            onChange={date => {
+              setStartDate(date);
+              date && setIsDateWrong(false);
+            }}
             calendarStartDay={1}
             shouldCloseOnSelect={true}
+            maxDate={(new Date())}
           />
-
+          {isDateWrong && (
+            <StudentDateInputNote> А дату? </StudentDateInputNote>
+          )}
           <SpeakingLabel>
             {successRateValue && <LabelText>Успішність</LabelText>}
             <SpeakingSelect

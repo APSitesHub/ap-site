@@ -71,6 +71,10 @@ export const StyledDatePicker = styled(DatePicker)`
     font-size: 16px;
   }
 
+  &.error {
+    border: 4px solid red;
+  }
+
   &:hover,
   &:focus {
     background-color: var(--secondary-burnt-color);
@@ -127,6 +131,12 @@ export const SpeakingFormBtn = styled(FormBtn)`
     padding: 16px;
     letter-spacing: 0.6px;
   }
+`;
+
+export const StudentDateInputNote = styled.p`
+  text-align: center;
+  font-size: 14px;
+  color: red;
 `;
 
 export const StudentTextAreaNote = styled(AdminInputNote)`
