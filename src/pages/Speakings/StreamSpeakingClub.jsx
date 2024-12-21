@@ -132,6 +132,15 @@ const StreamSpeakingClub = () => {
               <Loader />
             </LoaderWrapper>
           )}
+          {(redirectLink === undefined || redirectLink[0] < 10) &&
+            !isLoading && (
+              <StreamPlaceHolder>
+                <StreamPlaceHolderText>
+                  Привіт! <br />
+                  AP Education Center на канікулах до 06.01. Гарних свят!
+                </StreamPlaceHolderText>
+              </StreamPlaceHolder>
+            )}
           {course === user.course ||
           user.course
             ?.split('/')
@@ -183,9 +192,12 @@ const StreamSpeakingClub = () => {
               ?.split('/')
               .some(singleCourse => singleCourse === course)) &&
             redirectLink &&
+            redirectLink !== '1' &&
             isApproved) ||
             (user.name === 'Dev Acc' && isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&
+            redirectLink !== undefined &&
+            redirectLink !== '1' &&
             window.location.replace(redirectLink)}
         </StreamsBackgroundWrapper>
       </StreamSection>

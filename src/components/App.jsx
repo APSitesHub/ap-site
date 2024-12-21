@@ -494,6 +494,7 @@ export const App = () => {
             <Route path="deutschb2" element={<StreamDeutschB2 />} />
             <Route path="deb2sc" element={<StreamSpeakingClub />} />
             <Route path="deutschb2-chat" element={<WindowedChat />} />
+            <Route path="dec1sc" element={<StreamSpeakingClub />} />
             <Route path="deutschfree" element={<StreamDeutschFree />} />
             <Route path="deutschfree-chat" element={<WindowedChat />} />
             <Route path="deutscha2free" element={<StreamDeutschA2Free />} />
@@ -515,6 +516,7 @@ export const App = () => {
             <Route path="polskib2" element={<StreamPolskiB2 />} />
             <Route path="plb2sc" element={<StreamSpeakingClub />} />
             <Route path="polskib2-chat" element={<WindowedChat />} />
+            <Route path="plc1sc" element={<StreamSpeakingClub />} />
             <Route path="polskifree" element={<StreamPolskiFree />} />
             <Route path="polskifree-chat" element={<WindowedChat />} />
             <Route path="nmt_ukr" element={<NMTUkr />} />
@@ -657,12 +659,14 @@ export const App = () => {
             <Route path="dea2sc" element={<TeacherPageSpeaking />} />
             <Route path="deb1sc" element={<TeacherPageSpeaking />} />
             <Route path="deb2sc" element={<TeacherPageSpeaking />} />
+            <Route path="dec1sc" element={<TeacherPageSpeaking />} />
             <Route path="pla0sc" element={<TeacherPageSpeaking />} />
             <Route path="pla0_2sc" element={<TeacherPageSpeaking />} />
             <Route path="pla1sc" element={<TeacherPageSpeaking />} />
             <Route path="pla2sc" element={<TeacherPageSpeaking />} />
             <Route path="plb1sc" element={<TeacherPageSpeaking />} />
             <Route path="plb2sc" element={<TeacherPageSpeaking />} />
+            <Route path="plc1sc" element={<TeacherPageSpeaking />} />
             <Route path="kids-a0sc" element={<TeacherPageSpeaking />} />
             <Route path="kids-a0_2sc" element={<TeacherPageSpeaking />} />
             <Route path="kids-a1sc" element={<TeacherPageSpeaking />} />
@@ -741,6 +745,9 @@ export const App = () => {
             <Route path="trials-kids" element={<TeacherTrialPage />} />
             <Route path="trials-pl" element={<TeacherTrialPage />} />
             <Route path="trials-de" element={<TeacherTrialPage />} />
+            <Route path="pedagogium" element={<TeacherPage />} />
+            <Route path="wstijo" element={<TeacherPage />} />
+            <Route path="wsbmir" element={<TeacherPage />} />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route

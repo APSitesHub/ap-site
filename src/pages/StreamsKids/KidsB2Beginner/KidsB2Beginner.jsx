@@ -117,8 +117,12 @@ export const KidsB2Beginner = () => {
             },
           }
         );
-        
-        const allMessages = [...dbMessages.data, ...b1BeginnerMessages.data, ...a2Messages.data];
+
+        const allMessages = [
+          ...dbMessages.data,
+          ...b1BeginnerMessages.data,
+          ...a2Messages.data,
+        ];
         const todayMessages = allMessages.filter(
           message =>
             new Date(message.createdAt).getDate() === new Date().getDate()
@@ -207,9 +211,8 @@ export const KidsB2Beginner = () => {
       !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Поки що трансляції тут немає! <br />
-            Перевірте, чи правильно ви вказали адресу сторінки або спробуйте
-            пізніше.
+            Привіт! <br />
+            AP Education Center на канікулах до 06.01. Гарних свят!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (

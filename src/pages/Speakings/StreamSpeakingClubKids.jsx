@@ -142,22 +142,73 @@ const StreamSpeakingClubKids = () => {
               <Loader />
             </LoaderWrapper>
           )}
-          <StreamPlaceHolder>
-            <StreamPlaceHolderText>
-              Привіт! <br />
-              Будь ласка, зачекайте, незабаром вас переадресує на практичне
-              заняття в Zoom
-            </StreamPlaceHolderText>
-            <StreamRefreshText>
-              <StreamRefreshQuestion>
-                Очікуєте занадто довго?
-              </StreamRefreshQuestion>
-              <StreamRefreshPageLink onClick={() => window.location.reload()}>
-                Натисніть сюди, щоб оновити сторінку
-              </StreamRefreshPageLink>
-            </StreamRefreshText>
-          </StreamPlaceHolder>
-          {redirectLink && isApproved && window.location.replace(redirectLink)}
+          {(redirectLink === undefined || redirectLink[0] < 10) &&
+            !isLoading && (
+              <StreamPlaceHolder>
+                <StreamPlaceHolderText>
+                  Привіт! <br />
+                  AP Education Center на канікулах до 06.01. Гарних свят!
+                </StreamPlaceHolderText>
+              </StreamPlaceHolder>
+            )}
+          {course === user.course ||
+          user.course
+            ?.split('/')
+            .some(singleCourse => singleCourse === course) ? (
+            <StreamPlaceHolder>
+              <StreamPlaceHolderText>
+                Привіт! <br />
+                Будь ласка, зачекайте, незабаром вас переадресує на практичне
+                заняття в Zoom
+              </StreamPlaceHolderText>
+              <StreamRefreshText>
+                <StreamRefreshQuestion>
+                  Очікуєте занадто довго?
+                </StreamRefreshQuestion>
+                <StreamRefreshPageLink onClick={() => window.location.reload()}>
+                  Натисніть сюди, щоб оновити сторінку
+                </StreamRefreshPageLink>
+              </StreamRefreshText>
+            </StreamPlaceHolder>
+          ) : (
+            <StreamPlaceHolder>
+              <StreamPlaceHolderText>
+                Хммм... <br />
+                Здається, ви намагаєтесь під'єднатися до практичного заняття не
+                свого рівня!
+              </StreamPlaceHolderText>
+              <StreamRefreshText>
+                <StreamRefreshQuestion>
+                  Впевнені, що не помилились? <br /> Зв'яжіться з вашим
+                  менеджером або
+                </StreamRefreshQuestion>
+                <StreamRefreshPageLink
+                  onClick={() =>
+                    window.location.replace(
+                      'https://www.academy.ap.education/streams-kids/' +
+                        (lang !== 'en' ? lang : '') +
+                        level +
+                        'sc'
+                    )
+                  }
+                >
+                  може, це ваше практичне заняття?
+                </StreamRefreshPageLink>
+              </StreamRefreshText>
+            </StreamPlaceHolder>
+          )}
+          {(((course === user.course ||
+            user.course
+              ?.split('/')
+              .some(singleCourse => singleCourse === course)) &&
+            redirectLink &&
+            redirectLink !== undefined &&
+            redirectLink !== '1' &&
+            isApproved) ||
+            (user.name === 'Dev Acc' && isApproved) ||
+            (user.name === 'Тічер' && isApproved)) &&
+            redirectLink !== '1' &&
+            window.location.replace(redirectLink)}
         </StreamsBackgroundWrapper>
       </StreamSection>
     </>

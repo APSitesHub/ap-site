@@ -210,7 +210,9 @@ const C1SpeakingPanel = () => {
 
         {isUserAdmin && users && (
           <TeacherTable>
-            <UserDBCaption>Список юзерів з доступом до уроків</UserDBCaption>
+            <UserDBCaption>
+              Юзери з додатково придбаними спікінгами
+            </UserDBCaption>
             <thead>
               <UserDBRow>
                 <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
@@ -226,6 +228,7 @@ const C1SpeakingPanel = () => {
                 <UserHeadCell>Знання</UserHeadCell>
                 <UserHeadCell>Пакет послуг</UserHeadCell>
                 <UserHeadCell>Менеджер</UserHeadCell>
+                <UserHeadCell>Edit</UserHeadCell>
                 <UserHeadCell>Delete</UserHeadCell>
               </UserDBRow>
             </thead>

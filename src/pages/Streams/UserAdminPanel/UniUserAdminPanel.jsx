@@ -3,8 +3,16 @@ import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
+import {
+  LabelText,
+  SpeakingLabel,
+} from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
 import { useEffect, useRef, useState } from 'react';
 import * as yup from 'yup';
+import {
+  ErrorNote,
+  TeacherLangSelect,
+} from '../TeacherAdminPanel/TeacherAdminPanel.styled';
 import {
   AdminFormBtn,
   AdminInput,
@@ -20,9 +28,7 @@ import {
   UserHeadCell,
   UsersForm,
 } from './UserAdminPanel.styled';
-import { UserEditForm } from './UserEditForm/UserEditForm';
-import { LabelText, SpeakingLabel } from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
-import { ErrorNote, TeacherLangSelect } from '../TeacherAdminPanel/TeacherAdminPanel.styled';
+import { UniUserEditForm } from './UserEditForm/UniUserEditForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -43,17 +49,17 @@ const UserAdminPanel = () => {
 
   const uniOptions = [
     {
-      label: 'Pedagogium',
-      value: 72421,
+      label: 'Pedagogium (Wyższa Szkoła Nauk Społecznych)',
+      value: '72421',
     },
     {
-      label: 'WYŻSZA SZKOŁA TURYSTYKI I JĘZYKÓW OBCYCH W WARSZAWE',
-      value: 78737,
+      label: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
+      value: '78737',
     },
-    {
-      label: 'Вища школа бізнесу медіа і реклами',
-      value: 'pl',
-    },
+    // {
+    //   label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+    //   value: '',
+    // },
   ];
 
   useEffect(() => {
@@ -164,14 +170,14 @@ const UserAdminPanel = () => {
       .max(7, 'Не більше 7 цифр')
       .matches(/^\d{1,7}$/, 'Лише цифри')
       .required("Обов'язкове поле, дивитись на платформі"),
-    marathonId: yup
-      .string()
-      .min(4, 'Не менше 4 цифр')
-      .max(7, 'Не більше 7 цифр')
-      .matches(/^\d{1,7}$/, 'Лише цифри'),
-    university: yup
-      .string()
-      .required("Менеджер - обов'язкове поле, введіть прізвище"),
+    // marathonId: yup
+    //   .string()
+    //   .min(4, 'Не менше 4 цифр')
+    //   .max(7, 'Не більше 7 цифр')
+    //   .matches(/^\d{1,7}$/, 'Лише цифри'),
+    // university: yup
+    //   .string()
+    //   .required("Назва університету - обов'язкове поле, введіть її"),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
@@ -184,8 +190,8 @@ const UserAdminPanel = () => {
       ? +values.contactId.trim().trimStart()
       : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
-    values.marathonId = values.marathonId.trim().trimStart();
-    values.university = values.university.toLowerCase().trim().trimStart();
+    values.marathonId = uniValue.value;
+    values.university = uniValue.label;
     try {
       const response = await axios.post('/uniusers/new', values);
       console.log(response.data);
@@ -252,7 +258,7 @@ const UserAdminPanel = () => {
       return;
     } else {
       try {
-        const response = await axios.delete(`/users/${id}`);
+        const response = await axios.delete(`/uniusers/${id}`);
         console.log(response);
         alert('Юзера видалено');
         setUsers(users => (users = [...users.filter(user => user._id !== id)]));
@@ -345,16 +351,10 @@ const UserAdminPanel = () => {
                 />
                 <AdminInputNote component="p" name="pupilId" />
               </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="marathonId"
-                  placeholder="ID марафону, до якого приєднаний студент"
-                />
-                <AdminInputNote component="p" name="marathonId" />
-              </Label>
               <SpeakingLabel>
-                {uniValue && uniValue.value && <LabelText>Університет</LabelText>}
+                {uniValue && uniValue.value && (
+                  <LabelText>Університет</LabelText>
+                )}
                 <TeacherLangSelect
                   ref={selectInputRef}
                   options={uniOptions}
@@ -376,8 +376,8 @@ const UserAdminPanel = () => {
                       padding: '7px',
                     }),
                   }}
-                  placeholder="Мова"
-                  name="lang"
+                  placeholder="Університет"
+                  name="uni"
                   onBlur={() => {
                     !uniValue
                       ? setIsUniEmpty(empty => (empty = true))
@@ -392,14 +392,6 @@ const UserAdminPanel = () => {
                   <ErrorNote> Університет - обов'язкове поле!</ErrorNote>
                 )}
               </SpeakingLabel>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="university"
-                  placeholder="Назва університету"
-                />
-                <AdminInputNote component="p" name="university" />
-              </Label>
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
             </UsersForm>
           </Formik>
@@ -413,11 +405,11 @@ const UserAdminPanel = () => {
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Пошта (логін)</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
+                <UserHeadCell>Університет</UserHeadCell>
+                <UserHeadCell>ID на платформі</UserHeadCell>
+                <UserHeadCell>ID марафону</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
                 <UserHeadCell>Відвідини з часом</UserHeadCell>
-                <UserHeadCell>Університет</UserHeadCell>
-                <UserHeadCell>ID марафону</UserHeadCell>
-                <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Edit</UserHeadCell>
                 <UserHeadCell>Delete</UserHeadCell>
               </UserDBRow>
@@ -444,6 +436,7 @@ const UserAdminPanel = () => {
                   <UserCell>{user.name}</UserCell>
                   <UserCell>{user.mail}</UserCell>
                   <UserCell>{user.password}</UserCell>
+                  <UserCell className="last-name">{user.university}</UserCell>
                   <UserCell>{user.pupilId}</UserCell>
                   <UserCell>{user.marathonId}</UserCell>
                   <UserCell
@@ -476,13 +469,13 @@ const UserAdminPanel = () => {
                           )
                         ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
                   </UserCell>
-                  <UserCell className="last-name">{user.university}</UserCell>
+
                   <UserCell>
-                    {user.name === 'Dev Acc' ? null : (
-                      <UserEditButton onClick={() => handleEdit(user._id)}>
-                        Edit
-                      </UserEditButton>
-                    )}
+                    {/* {user.name === 'Dev Acc' ? null : ( */}
+                    <UserEditButton onClick={() => handleEdit(user._id)}>
+                      Edit
+                    </UserEditButton>
+                    {/* )} */}
                   </UserCell>
                   <UserCell>
                     {user.name === 'Dev Acc' ? null : (
@@ -498,10 +491,11 @@ const UserAdminPanel = () => {
         )}
         {isEditFormOpen && (
           <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
-            <UserEditForm
+            <UniUserEditForm
               userToEdit={userToEdit}
               updateUser={updateUser}
               closeEditForm={closeEditForm}
+              uniOptions={uniOptions}
             />
           </Backdrop>
         )}

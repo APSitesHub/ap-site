@@ -361,6 +361,10 @@ const TimeTableAdminPanel = () => {
 
   const courseOptions = [
     {
+      label: '10 (Спікінги)',
+      value: '10',
+    },
+    {
       label: '11',
       value: '11',
     },

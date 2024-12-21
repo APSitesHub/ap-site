@@ -189,9 +189,8 @@ const StreamPolskiA02 = () => {
       !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Поки що трансляції тут немає! <br />
-            Перевірте, чи правильно ви вказали адресу сторінки або спробуйте
-            пізніше.
+            Привіт! <br />
+            AP Education Center на канікулах до 06.01. Гарних свят!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
@@ -346,4 +345,4 @@ const StreamPolskiA02 = () => {
   );
 };
 
-export default StreamPolskiA02
+export default StreamPolskiA02;

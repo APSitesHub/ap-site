@@ -119,6 +119,9 @@ export const CollectionsAdminPanel = () => {
     nmt_math: '',
     nmt_history: '',
     apconf: '',
+    pedagogium: '',
+    wstijo: '',
+    wsbmir: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -170,6 +173,9 @@ export const CollectionsAdminPanel = () => {
     nmt_math: yup.string().optional(),
     nmt_history: yup.string().optional(),
     apconf: yup.string().optional(),
+    pedagogium: yup.string().optional(),
+    wstijo: yup.string().optional(),
+    wsbmir: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -619,6 +625,33 @@ export const CollectionsAdminPanel = () => {
                     placeholder="NMT History of Ukraine collection"
                   />
                   <AdminInputNote component="p" name="nmt_history" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>Універи</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="pedagogium"
+                    placeholder="Pedagogium collection (Wyższa Szkoła Nauk Społecznych)"
+                  />
+                  <AdminInputNote component="p" name="pedagogium" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wstijo"
+                    placeholder="WSTIJO collection (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)"
+                  />
+                  <AdminInputNote component="p" name="wstijo" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wsbmir"
+                    placeholder="WSBMIR collection (Wyższa Szkoła Biznesu, Mediów i Reklamy)"
+                  />
+                  <AdminInputNote component="p" name="wsbmir" />
                 </Label>
               </LinksFieldGroup>
               <Label>

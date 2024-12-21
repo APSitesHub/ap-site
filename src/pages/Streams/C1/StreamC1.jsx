@@ -188,9 +188,8 @@ const StreamC1 = () => {
       {(links.c1 === undefined || links.c1[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Поки що трансляції тут немає! <br />
-            Перевірте, чи правильно ви вказали адресу сторінки або спробуйте
-            пізніше.
+            Привіт! <br />
+            AP Education Center на канікулах до 06.01. Гарних свят!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (

@@ -17,7 +17,7 @@ import {
   StreamPlaceHolder,
   StreamPlaceHolderText,
   StreamSection,
-  VideoBox
+  VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
 const ApConf = () => {
@@ -62,7 +62,7 @@ const ApConf = () => {
   //     ? setIsOpenedLast(isOpenedLast => 'support')
   //     : setIsOpenedLast(isOpenedLast => '');
   // };
-  
+
   // const handleSupportClick = data_id => {
   //   setAnimationID(id => (id = data_id));
   //   if (!isAnimated) {
@@ -174,9 +174,8 @@ const ApConf = () => {
       {(links.nmt_ukr === undefined || links.nmt_ukr[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Поки що трансляції тут немає! <br />
-            Перевірте, чи правильно ви вказали адресу сторінки або спробуйте
-            пізніше.
+            Привіт! <br />
+            AP Education Center на канікулах до 06.01. Гарних свят!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : (

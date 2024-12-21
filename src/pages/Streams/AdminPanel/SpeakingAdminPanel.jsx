@@ -83,12 +83,14 @@ const SpeakingAdminPanel = () => {
     deutscha2: '',
     deutschb1: '',
     deutschb2: '',
+    deutschc1: '',
     polskia0: '',
     polskia0_2: '',
     polski: '',
     polskia2: '',
     polskib1: '',
     polskib2: '',
+    polskic1: '',
     a0kids: '',
     a1kids: '',
     a2kids: '',
@@ -124,12 +126,14 @@ const SpeakingAdminPanel = () => {
     deutscha2: yup.string().optional(),
     deutschb1: yup.string().optional(),
     deutschb2: yup.string().optional(),
+    deutschc1: yup.string().optional(),
     polskia0: yup.string().optional(),
     polskia0_2: yup.string().optional(),
     polski: yup.string().optional(),
     polskia2: yup.string().optional(),
     polskib1: yup.string().optional(),
     polskib2: yup.string().optional(),
+    polskic1: yup.string().optional(),
     a0kids: yup.string().optional(),
     a1kids: yup.string().optional(),
     a2kids: yup.string().optional(),
@@ -310,6 +314,14 @@ const SpeakingAdminPanel = () => {
                   />
                   <AdminInputNote component="p" name="deutschb2" />
                 </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutschc1"
+                    placeholder="Deutsch C1 speaking link"
+                  />
+                  <AdminInputNote component="p" name="deutschc1" />
+                </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>Polski</LinksFieldGroupTitle>
@@ -360,6 +372,14 @@ const SpeakingAdminPanel = () => {
                     placeholder="Polski B2 speaking link"
                   />
                   <AdminInputNote component="p" name="polskib2" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskic1"
+                    placeholder="Polski C1 speaking link"
+                  />
+                  <AdminInputNote component="p" name="polskic1" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>

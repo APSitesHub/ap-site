@@ -117,7 +117,10 @@ export const StreamDeutschA0 = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post('https://ap-chat-server.onrender.com/messages', data);
+          await axios.post(
+            'https://ap-chat-server.onrender.com/messages',
+            data
+          );
         } catch (error) {
           console.log(error);
         }
@@ -147,7 +150,9 @@ export const StreamDeutschA0 = () => {
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
+          await axios.delete(
+            `https://ap-chat-server.onrender.com/messages/${id}`
+          );
         } catch (error) {
           console.log(error);
         }
@@ -184,9 +189,8 @@ export const StreamDeutschA0 = () => {
       !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Поки що трансляції тут немає! <br />
-            Перевірте, чи правильно ви вказали адресу сторінки або спробуйте
-            пізніше.
+            Привіт! <br />
+            AP Education Center на канікулах до 06.01. Гарних свят!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (

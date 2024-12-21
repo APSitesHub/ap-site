@@ -101,7 +101,7 @@ export const KidsA2 = () => {
             },
           }
         );
-        
+
         const b1BeginnerMessages = await axios.get(
           `https://ap-chat-server.onrender.com/messages/room`,
           {
@@ -118,8 +118,12 @@ export const KidsA2 = () => {
             },
           }
         );
-        
-        const allMessages = [...dbMessages.data, ...b1BeginnerMessages.data, ...b2BeginnerMessages.data];
+
+        const allMessages = [
+          ...dbMessages.data,
+          ...b1BeginnerMessages.data,
+          ...b2BeginnerMessages.data,
+        ];
         const todayMessages = allMessages.filter(
           message =>
             new Date(message.createdAt).getDate() === new Date().getDate()
@@ -207,9 +211,8 @@ export const KidsA2 = () => {
       {(links.a2kids === undefined || links.a2kids[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Поки що трансляції тут немає! <br />
-            Перевірте, чи правильно ви вказали адресу сторінки або спробуйте
-            пізніше.
+            Привіт! <br />
+            AP Education Center на канікулах до 06.01. Гарних свят!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (

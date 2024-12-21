@@ -118,6 +118,9 @@ const AdminPanel = () => {
     nmt_history: '',
     test: '',
     apconf: '',
+    pedagogium: '',
+    wstijo: '',
+    wsbmir: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -168,6 +171,9 @@ const AdminPanel = () => {
     nmt_math: yup.string().optional(),
     nmt_history: yup.string().optional(),
     apconf: yup.string().optional(),
+    pedagogium: yup.string().optional(),
+    wstijo: yup.string().optional(),
+    wsbmir: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -581,6 +587,33 @@ const AdminPanel = () => {
                     placeholder="NMT History of Ukraine link"
                   />
                   <AdminInputNote component="p" name="nmt_history" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>Універи</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="pedagogium"
+                    placeholder="Pedagogium (Wyższa Szkoła Nauk Społecznych)"
+                  />
+                  <AdminInputNote component="p" name="pedagogium" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wstijo"
+                    placeholder="WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)"
+                  />
+                  <AdminInputNote component="p" name="wstijo" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wsbmir"
+                    placeholder="WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)"
+                  />
+                  <AdminInputNote component="p" name="wsbmir" />
                 </Label>
               </LinksFieldGroup>
               <Label>

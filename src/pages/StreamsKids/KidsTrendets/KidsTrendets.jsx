@@ -22,7 +22,7 @@ import {
   SupportMarkerLeft,
   SupportMarkerRight,
   SupportPointer,
-  VideoBox
+  VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
 export const KidsTrendets = () => {
@@ -45,7 +45,7 @@ export const KidsTrendets = () => {
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
-     isSupportOpen
+    isSupportOpen
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -58,7 +58,7 @@ export const KidsTrendets = () => {
   const toggleSupport = () => {
     setIsSupportOpen(isSupportOpen => !isSupportOpen);
     setAnimationID('');
-    isKahootOpen 
+    isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'support')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -181,12 +181,12 @@ export const KidsTrendets = () => {
 
   return (
     <>
-      {(links.trendets === undefined || links.trendets[0] < 10) && !isLoading ? (
+      {(links.trendets === undefined || links.trendets[0] < 10) &&
+      !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Поки що трансляції тут немає! <br />
-            Перевірте, чи правильно ви вказали адресу сторінки або спробуйте
-            пізніше.
+            Привіт! <br />
+            AP Education Center на канікулах до 06.01. Гарних свят!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
@@ -266,7 +266,7 @@ export const KidsTrendets = () => {
               >
                 <KahootLogo />
               </KahootBtn>
-{/* 
+              {/* 
               <ChatBtn
                 onClick={toggleChat}
                 className={
