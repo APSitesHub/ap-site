@@ -21,25 +21,25 @@ import {
   WarningText,
 } from './KahootAdminPanel.styled';
 
-export const WSBMIRKahootForm = ({ destination }) => {
+export const WSBMIRLogisticsKahootForm = ({ destination }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
 
   const initialLinksValues = {
-    wsbmir_1: '',
-    wsbmir_2: '',
-    wsbmir_3: '',
-    wsbmir_4: '',
-    wsbmir_5: '',
+    wsbmir_logistics_1: '',
+    wsbmir_logistics_2: '',
+    wsbmir_logistics_3: '',
+    wsbmir_logistics_4: '',
+    wsbmir_logistics_5: '',
     replace: true,
   };
 
   const linksSchema = yup.object().shape({
-    wsbmir_1: yup.string().optional(),
-    wsbmir_2: yup.string().optional(),
-    wsbmir_3: yup.string().optional(),
-    wsbmir_4: yup.string().optional(),
-    wsbmir_5: yup.string().optional(),
+    wsbmir_logistics_1: yup.string().optional(),
+    wsbmir_logistics_2: yup.string().optional(),
+    wsbmir_logistics_3: yup.string().optional(),
+    wsbmir_logistics_4: yup.string().optional(),
+    wsbmir_logistics_5: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
@@ -84,16 +84,16 @@ export const WSBMIRKahootForm = ({ destination }) => {
       );
 
     if (!emptyValues || confirmation) {
-      const wsbmirlinks = { wsbmir: { links: {} } };
+      const wsbmir_logisticslinks = { wsbmir_logistics: { links: {} } };
       for (const [key, value] of Object.entries(values)) {
         if (value && key !== 'replace') {
-          wsbmirlinks.wsbmir.links[key] = value;
+          wsbmir_logisticslinks.wsbmir_logistics.links[key] = value;
         } else {
-          wsbmirlinks.wsbmir.replace = value;
+          wsbmir_logisticslinks.wsbmir_logistics.replace = value;
         }
       }
       try {
-        const response = await axios.patch(destination, wsbmirlinks);
+        const response = await axios.patch(destination, wsbmir_logisticslinks);
         console.log(response);
         resetForm();
         alert('Лінки замінилися, молодець');
@@ -122,41 +122,41 @@ export const WSBMIRKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wsbmir_1"
+                name="wsbmir_logistics_1"
                 autoComplete="off"
-                placeholder="Перший кахут для WSBMIR"
+                placeholder="Перший кахут для WSBMIR Logistics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wsbmir_2"
+                name="wsbmir_logistics_2"
                 autoComplete="off"
-                placeholder="Другий кахут для WSBMIR"
+                placeholder="Другий кахут для WSBMIR Logistics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wsbmir_3"
+                name="wsbmir_logistics_3"
                 autoComplete="off"
-                placeholder="Третій кахут для WSBMIR"
+                placeholder="Третій кахут для WSBMIR Logistics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wsbmir_4"
+                name="wsbmir_logistics_4"
                 autoComplete="off"
-                placeholder="Четвертий кахут для WSBMIR"
+                placeholder="Четвертий кахут для WSBMIR Logistics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wsbmir_5"
+                name="wsbmir_logistics_5"
                 autoComplete="off"
-                placeholder="П'ятий кахут для WSBMIR"
+                placeholder="П'ятий кахут для WSBMIR Logistics"
               />
             </Label>
             <LabelCheckBox>

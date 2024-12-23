@@ -21,25 +21,25 @@ import {
   WarningText,
 } from './KahootAdminPanel.styled';
 
-export const PedagogiumKahootForm = ({ destination }) => {
+export const PedagogiumLogisticsKahootForm = ({ destination }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
 
   const initialLinksValues = {
-    pedagogium_1: '',
-    pedagogium_2: '',
-    pedagogium_3: '',
-    pedagogium_4: '',
-    pedagogium_5: '',
+    pedagogium_logistics_1: '',
+    pedagogium_logistics_2: '',
+    pedagogium_logistics_3: '',
+    pedagogium_logistics_4: '',
+    pedagogium_logistics_5: '',
     replace: true,
   };
 
   const linksSchema = yup.object().shape({
-    pedagogium_1: yup.string().optional(),
-    pedagogium_2: yup.string().optional(),
-    pedagogium_3: yup.string().optional(),
-    pedagogium_4: yup.string().optional(),
-    pedagogium_5: yup.string().optional(),
+    pedagogium_logistics_1: yup.string().optional(),
+    pedagogium_logistics_2: yup.string().optional(),
+    pedagogium_logistics_3: yup.string().optional(),
+    pedagogium_logistics_4: yup.string().optional(),
+    pedagogium_logistics_5: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
@@ -84,16 +84,16 @@ export const PedagogiumKahootForm = ({ destination }) => {
       );
 
     if (!emptyValues || confirmation) {
-      const pedagogiumlinks = { pedagogium: { links: {} } };
+      const pedagogium_logisticslinks = { pedagogium_logistics: { links: {} } };
       for (const [key, value] of Object.entries(values)) {
         if (value && key !== 'replace') {
-          pedagogiumlinks.pedagogium.links[key] = value;
+          pedagogium_logisticslinks.pedagogium_logistics.links[key] = value;
         } else {
-          pedagogiumlinks.pedagogium.replace = value;
+          pedagogium_logisticslinks.pedagogium_logistics.replace = value;
         }
       }
       try {
-        const response = await axios.patch(destination, pedagogiumlinks);
+        const response = await axios.patch(destination, pedagogium_logisticslinks);
         console.log(response);
         resetForm();
         alert('Лінки замінилися, молодець');
@@ -122,41 +122,41 @@ export const PedagogiumKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="pedagogium_1"
+                name="pedagogium_logistics_1"
                 autoComplete="off"
-                placeholder="Перший кахут для Pedagogium"
+                placeholder="Перший кахут для Pedagogium Logistics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="pedagogium_2"
+                name="pedagogium_logistics_2"
                 autoComplete="off"
-                placeholder="Другий кахут для Pedagogium"
+                placeholder="Другий кахут для Pedagogium Logistics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="pedagogium_3"
+                name="pedagogium_logistics_3"
                 autoComplete="off"
-                placeholder="Третій кахут для Pedagogium"
+                placeholder="Третій кахут для Pedagogium Logistics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="pedagogium_4"
+                name="pedagogium_logistics_4"
                 autoComplete="off"
-                placeholder="Четвертий кахут для Pedagogium"
+                placeholder="Четвертий кахут для Pedagogium Logistics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="pedagogium_5"
+                name="pedagogium_logistics_5"
                 autoComplete="off"
-                placeholder="П'ятий кахут для Pedagogium"
+                placeholder="П'ятий кахут для Pedagogium Logistics"
               />
             </Label>
             <LabelCheckBox>

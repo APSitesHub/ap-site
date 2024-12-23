@@ -21,25 +21,25 @@ import {
   WarningText,
 } from './KahootAdminPanel.styled';
 
-export const WSTIJOKahootForm = ({ destination }) => {
+export const WSTIJOLogisticsKahootForm = ({ destination }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
 
   const initialLinksValues = {
-    wstjio_1: '',
-    wstjio_2: '',
-    wstjio_3: '',
-    wstjio_4: '',
-    wstjio_5: '',
+    wstjio_logistics_1: '',
+    wstjio_logistics_2: '',
+    wstjio_logistics_3: '',
+    wstjio_logistics_4: '',
+    wstjio_logistics_5: '',
     replace: true,
   };
 
   const linksSchema = yup.object().shape({
-    wstjio_1: yup.string().optional(),
-    wstjio_2: yup.string().optional(),
-    wstjio_3: yup.string().optional(),
-    wstjio_4: yup.string().optional(),
-    wstjio_5: yup.string().optional(),
+    wstjio_logistics_1: yup.string().optional(),
+    wstjio_logistics_2: yup.string().optional(),
+    wstjio_logistics_3: yup.string().optional(),
+    wstjio_logistics_4: yup.string().optional(),
+    wstjio_logistics_5: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
@@ -84,16 +84,16 @@ export const WSTIJOKahootForm = ({ destination }) => {
       );
 
     if (!emptyValues || confirmation) {
-      const wstjiolinks = { wstjio: { links: {} } };
+      const wstjio_logisticslinks = { wstjio_logistics: { links: {} } };
       for (const [key, value] of Object.entries(values)) {
         if (value && key !== 'replace') {
-          wstjiolinks.wstjio.links[key] = value;
+          wstjio_logisticslinks.wstjio_logistics.links[key] = value;
         } else {
-          wstjiolinks.wstjio.replace = value;
+          wstjio_logisticslinks.wstjio_logistics.replace = value;
         }
       }
       try {
-        const response = await axios.patch(destination, wstjiolinks);
+        const response = await axios.patch(destination, wstjio_logisticslinks);
         console.log(response);
         resetForm();
         alert('Лінки замінилися, молодець');
@@ -122,41 +122,41 @@ export const WSTIJOKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_1"
+                name="wstjio_logistics_1"
                 autoComplete="off"
-                placeholder="Перший кахут для WSTIJO"
+                placeholder="Перший кахут для WSTIJO Logisitics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_2"
+                name="wstjio_logistics_2"
                 autoComplete="off"
-                placeholder="Другий кахут для WSTIJO"
+                placeholder="Другий кахут для WSTIJO Logisitics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_3"
+                name="wstjio_logistics_3"
                 autoComplete="off"
-                placeholder="Третій кахут для WSTIJO"
+                placeholder="Третій кахут для WSTIJO Logisitics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_4"
+                name="wstjio_logistics_4"
                 autoComplete="off"
-                placeholder="Четвертий кахут для WSTIJO"
+                placeholder="Четвертий кахут для WSTIJO Logisitics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_5"
+                name="wstjio_logistics_5"
                 autoComplete="off"
-                placeholder="П'ятий кахут для WSTIJO"
+                placeholder="П'ятий кахут для WSTIJO Logisitics"
               />
             </Label>
             <LabelCheckBox>

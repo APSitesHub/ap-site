@@ -68,9 +68,6 @@ import { TrialsDeKahootForm } from './TrialsDeKahootForm';
 import { TrialsEngKahootForm } from './TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from './TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from './TrialsPlKahootForm';
-import { PedagogiumKahootForm } from './PedagogiumKahootForm';
-import { WSTIJOKahootForm } from './WSTIJOKahootForm';
-import { WSBMIRKahootForm } from './WSBMIRKahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -309,15 +306,6 @@ export const KahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('apconf')}>
               AP Conference
             </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('pedagogium')}>
-              Pedagogium
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wstijo')}>
-              WSTIJO
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wsbmir')}>
-              WSBMIR
-            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -470,15 +458,6 @@ export const KahootAdminPanel = () => {
           )}
           {levels.includes('apconf') && (
             <APConferenceKahootForm destination={destination} />
-          )}
-          {levels.includes('pedagogium') && (
-            <PedagogiumKahootForm destination={destination} />
-          )}
-          {levels.includes('wstijo') && (
-            <WSTIJOKahootForm destination={destination} />
-          )}
-          {levels.includes('wsbmir') && (
-            <WSBMIRKahootForm destination={destination} />
           )}
         </KahootFormBox>
         {isLoading && <Loader />}

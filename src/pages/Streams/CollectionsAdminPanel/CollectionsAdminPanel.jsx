@@ -119,9 +119,6 @@ export const CollectionsAdminPanel = () => {
     nmt_math: '',
     nmt_history: '',
     apconf: '',
-    pedagogium: '',
-    wstijo: '',
-    wsbmir: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -173,9 +170,6 @@ export const CollectionsAdminPanel = () => {
     nmt_math: yup.string().optional(),
     nmt_history: yup.string().optional(),
     apconf: yup.string().optional(),
-    pedagogium: yup.string().optional(),
-    wstijo: yup.string().optional(),
-    wsbmir: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {

@@ -225,6 +225,26 @@ const AdminPanel = lazy(() =>
     /* webpackChunkName: "Links Admin Panel page" */ '../pages/Streams/AdminPanel/AdminPanel'
   )
 );
+const UniAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Pl University Links Admin Panel page" */ '../pages/Streams/AdminPanel/UniAdminPanel'
+  )
+);
+const UniCollectionsAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Pl University Collections Admin Panel page" */ '../pages/Streams/CollectionsAdminPanel/UniCollectionsAdminPanel'
+  )
+);
+const UniKahootAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Pl University Kahoots Admin Panel page" */ '../pages/Streams/KahootAdminPanel/UniKahootAdminPanel'
+  )
+);
+const UniHostKahootAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Pl University Host Kahoots Admin Panel page" */ '../pages/Streams/HostKahootAdminPanel/UniHostKahootAdminPanel'
+  )
+);
 const UserAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "User Admin Panel page" */ '../pages/Streams/UserAdminPanel/UserAdminPanel'
@@ -278,6 +298,11 @@ const RatingsAdminPanel = lazy(() =>
 const TimeTableAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "TimeTable Admin Panel page" */ '../pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel'
+  )
+);
+const UniTimeTableAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Pl University TimeTable Admin Panel page" */ '../pages/Streams/TimeTableAdminPanel/UniTimeTableAdminPanel'
   )
 );
 const SpeakingAdminPanel = lazy(() =>
@@ -537,14 +562,23 @@ export const App = () => {
             <Route path="apconf" element={<APConf />} />
             <Route path="apconf-chat" element={<WindowedChat />} />
             <Route path="stream-admin-panel" element={<AdminPanel />} />
+            <Route path="uni-stream-admin-panel" element={<UniAdminPanel />} />
             <Route
               path="speaking-admin-panel"
               element={<SpeakingAdminPanel />}
             />
             <Route path="kahoot-admin-panel" element={<KahootAdminPanel />} />
             <Route
-              path="host-kahoot-admin-panel"
+              path="uni-kahoot-admin-panel"
               element={<HostKahootAdminPanel />}
+            />
+            <Route
+              path="host-kahoot-admin-panel"
+              element={<UniKahootAdminPanel />}
+            />
+            <Route
+              path="uni-host-kahoot-admin-panel"
+              element={<UniHostKahootAdminPanel />}
             />
             <Route path="user-admin-panel" element={<UserAdminPanel />} />
             <Route path="pl-user-admin-panel" element={<UniUserAdminPanel />} />
@@ -565,12 +599,20 @@ export const App = () => {
               element={<TimeTableAdminPanel />}
             />
             <Route
+              path="uni-timetable-admin-panel"
+              element={<UniTimeTableAdminPanel />}
+            />
+            <Route
               path="teacher-admin-panel"
               element={<TeacherLessonsAdminPanel />}
             />
             <Route
               path="collection-admin-panel"
               element={<CollectionsAdminPanel />}
+            />
+            <Route
+              path="uni-collection-admin-panel"
+              element={<UniCollectionsAdminPanel />}
             />
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>
