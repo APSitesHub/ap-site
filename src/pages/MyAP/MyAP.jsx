@@ -26,6 +26,8 @@ import {
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
 } from './MyAPPanel/MyAPPanel.styled';
+import { Helmet } from 'react-helmet';
+
 
 const MyAP = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -284,6 +286,13 @@ const MyAP = () => {
 
   return (
     <StreamSection>
+      <Helmet>
+        <script
+          type="text/javascript"
+          src="https://w811429.alteg.io/widgetJS"
+          charset="UTF-8"
+        ></script>
+      </Helmet>
       {!isUserLogged ? (
         <Formik
           initialValues={initialLoginValues}

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import eyesImg from '../../../img/quiz/eyes.png';
 import { CalendarIcon } from '../Attendance/Attendance.styled';
 import {
@@ -7,6 +7,8 @@ import {
   PointsPlaceHolderText,
 } from '../Points/Points.styled';
 import {
+  ButtonOption,
+  ButtonOptionsGroup,
   TimetableBody,
   TimetableBox,
   TimetableDaysCell,
@@ -21,6 +23,7 @@ import {
   TimetableWebinars,
   TimetableWebinarsHead,
 } from './Timetable.styled';
+import { BookingModal } from '../BookingModal/BookingModal';
 
 // const PACKAGEARRAY = [
 //   'online',
@@ -32,6 +35,9 @@ import {
 // ];
 
 export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const openBookingModal = () => setIsBookingModalOpen(true);
+  const closeBookingModal = () => setIsBookingModalOpen(false);
   const userPackage = useRef(user.package === undefined ? 'pro' : user.package);
   const personalTimetable = timetable.find(timeline =>
     language === 'enkids' && user.knowledge.includes('beginner')
@@ -54,20 +60,20 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
     return language === 'en'
       ? baseStreamUrl + personalTimetable?.level
       : language === 'enkids'
-      ? baseKidsStreamUrl + personalTimetable?.level
-      : language === 'de' && personalTimetable?.level !== 'a1'
-      ? baseStreamUrl + 'deutsch' + personalTimetable?.level
-      : language === 'de' && personalTimetable?.level === 'a1'
-      ? baseStreamUrl + 'deutsch'
-      : language === 'dekids'
-      ? baseKidsStreamUrl + 'de' + personalTimetable?.level
-      : language === 'pl' && personalTimetable?.level !== 'a1'
-      ? baseStreamUrl + 'polski' + personalTimetable?.level
-      : language === 'pl' && personalTimetable?.level === 'a1'
-      ? baseStreamUrl + 'polski'
-      : language === 'plkids'
-      ? baseKidsStreamUrl + 'pl' + personalTimetable?.level
-      : baseStreamUrl;
+        ? baseKidsStreamUrl + personalTimetable?.level
+        : language === 'de' && personalTimetable?.level !== 'a1'
+          ? baseStreamUrl + 'deutsch' + personalTimetable?.level
+          : language === 'de' && personalTimetable?.level === 'a1'
+            ? baseStreamUrl + 'deutsch'
+            : language === 'dekids'
+              ? baseKidsStreamUrl + 'de' + personalTimetable?.level
+              : language === 'pl' && personalTimetable?.level !== 'a1'
+                ? baseStreamUrl + 'polski' + personalTimetable?.level
+                : language === 'pl' && personalTimetable?.level === 'a1'
+                  ? baseStreamUrl + 'polski'
+                  : language === 'plkids'
+                    ? baseKidsStreamUrl + 'pl' + personalTimetable?.level
+                    : baseStreamUrl;
   };
   const getSpeakingLink = () => {
     const baseStreamUrl = 'https://academy.ap.education/streams/';
@@ -75,8 +81,8 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
     return language === 'en'
       ? baseStreamUrl + personalTimetable?.level + 'sc'
       : language === 'enkids'
-      ? baseKidsStreamUrl + personalTimetable?.level + 'sc'
-      : baseStreamUrl + language + personalTimetable?.level + 'sc';
+        ? baseKidsStreamUrl + personalTimetable?.level + 'sc'
+        : baseStreamUrl + language + personalTimetable?.level + 'sc';
   };
   const getIndividualLink = () => {
     const enUrl = 'https://n1313568.alteg.io';
@@ -88,16 +94,16 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
     return language === 'en'
       ? enUrl
       : language === 'enkids'
-      ? enKidsUrl
-      : language === 'de'
-      ? deUrl
-      : language === 'dekids'
-      ? deKidsUrl
-      : language === 'pl'
-      ? plUrl
-      : language === 'plkids'
-      ? plKidsUrl
-      : enUrl;
+        ? enKidsUrl
+        : language === 'de'
+          ? deUrl
+          : language === 'dekids'
+            ? deKidsUrl
+            : language === 'pl'
+              ? plUrl
+              : language === 'plkids'
+                ? plKidsUrl
+                : enUrl;
   };
 
   const panelStyles = () => {
@@ -114,6 +120,7 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
   return (
+    <>
     <TimetableBox style={{ ...panelStyles() }}>
       <TimetableHeading>
         <CalendarIcon />
@@ -231,6 +238,59 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
               </tbody>
             </TimetableTable>
           </TimetableSpeakings>
+          <TimetableSpeakings>
+            <TimetableWebinarsHead>
+              <TimetableLessonType>Індивідуальні заняття</TimetableLessonType>
+              <TimetableLessonLink href={speakingLink} target="_blank">
+                <TimetableLessonLinkText>3/4</TimetableLessonLinkText>
+              </TimetableLessonLink>
+            </TimetableWebinarsHead>
+            <TimetableTable>
+              <thead>
+              <tr>
+                <TimetableHead className="day">День</TimetableHead>
+                <TimetableHead className="time">Час</TimetableHead>
+                <TimetableHead className="lessonNumber">
+                  № уроку
+                </TimetableHead>
+                <TimetableHead className="teacher">Викладач</TimetableHead>
+              </tr>
+              </thead>
+              <tbody>
+              {personalTimetable.schedule
+                .filter(lesson => lesson.type === 'speaking').slice(0, 1)
+                .sort((a, b) => a.day - b.day)
+                .map((lesson, i) => (
+                  <TimetableDaysItem
+                    key={i}
+                    style={
+                      lesson.day === new Date().getDay()
+                        ? { backgroundColor: '#F9C838' }
+                        : {}
+                    }
+                  >
+                    <TimetableDaysCell className="day">
+                      {DAYS[lesson.day - 1]}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="time">
+                      {lesson.time}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="lessonNumber">
+                      {lesson.lessonNumber}
+                    </TimetableDaysCell>
+                    <TimetableDaysCell className="teacher">
+                      {lesson.teacher}
+                    </TimetableDaysCell>
+                  </TimetableDaysItem>
+                ))}
+              </tbody>
+            </TimetableTable>
+            <ButtonOptionsGroup>
+              <ButtonOption onClick={openBookingModal}>AAA</ButtonOption>
+              <ButtonOption>BBB</ButtonOption>
+              <ButtonOption>CCC</ButtonOption>
+            </ButtonOptionsGroup>
+          </TimetableSpeakings>
           {/* {userPackage.current !== 'simple' && userPackage.current !== 'student' && (
             <TimetableSpeakings>
               <TimetableWebinarsHead>
@@ -244,5 +304,7 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
         </TimetableBody>
       )}
     </TimetableBox>
-  );
+  {isBookingModalOpen && <BookingModal onClose={closeBookingModal} user={user}/>}
+</>
+);
 };

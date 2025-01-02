@@ -196,3 +196,10 @@ export const TimetableDaysItem = styled.tr`
 export const TimetableDaysCell = styled.td`
   border: none;
 `;
+
+export const ButtonOptionsGroup = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
+export const ButtonOption = styled.button``
