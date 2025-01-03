@@ -621,33 +621,6 @@ export const CollectionsAdminPanel = () => {
                   <AdminInputNote component="p" name="nmt_history" />
                 </Label>
               </LinksFieldGroup>
-              <LinksFieldGroup>
-                <LinksFieldGroupTitle>Універи</LinksFieldGroupTitle>
-                <Label>
-                  <AdminInput
-                    type="text"
-                    name="pedagogium"
-                    placeholder="Pedagogium collection (Wyższa Szkoła Nauk Społecznych)"
-                  />
-                  <AdminInputNote component="p" name="pedagogium" />
-                </Label>
-                <Label>
-                  <AdminInput
-                    type="text"
-                    name="wstijo"
-                    placeholder="WSTIJO collection (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)"
-                  />
-                  <AdminInputNote component="p" name="wstijo" />
-                </Label>
-                <Label>
-                  <AdminInput
-                    type="text"
-                    name="wsbmir"
-                    placeholder="WSBMIR collection (Wyższa Szkoła Biznesu, Mediów i Reklamy)"
-                  />
-                  <AdminInputNote component="p" name="wsbmir" />
-                </Label>
-              </LinksFieldGroup>
               <Label>
                 <AdminInput
                   type="text"

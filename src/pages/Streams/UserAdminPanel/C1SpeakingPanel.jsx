@@ -32,6 +32,7 @@ const C1SpeakingPanel = () => {
   const [users, setUsers] = useState([]);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState({});
+  const [date, setDate] = useState('06.01.2025');
 
   useEffect(() => {
     document.title = 'User Admin Panel | AP Education';
@@ -211,7 +212,16 @@ const C1SpeakingPanel = () => {
         {isUserAdmin && users && (
           <TeacherTable>
             <UserDBCaption>
-              Юзери з додатково придбаними спікінгами
+              Юзери з додатково придбаними спікінгами від{' '}
+              <button
+                onClick={() =>
+                  setDate(date =>
+                    date === '06.01.2025' ? '05.11.2024' : '06.01.2025'
+                  )
+                }
+              >
+                {date}
+              </button>
             </UserDBCaption>
             <thead>
               <UserDBRow>
@@ -221,8 +231,8 @@ const C1SpeakingPanel = () => {
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Номер марафону</UserHeadCell>
-                <UserHeadCell>Відвідини після 05.11</UserHeadCell>
-                <UserHeadCell>Візитів після 05.11</UserHeadCell>
+                <UserHeadCell>{`Відвідини після ${date}`}</UserHeadCell>
+                <UserHeadCell>{`Кількість візитів після ${date}`}</UserHeadCell>
                 <UserHeadCell>Мова</UserHeadCell>
                 <UserHeadCell>Потік</UserHeadCell>
                 <UserHeadCell>Знання</UserHeadCell>
@@ -260,8 +270,7 @@ const C1SpeakingPanel = () => {
                     style={
                       user.visited.filter(
                         visit =>
-                          changeDateFormat(visit) >=
-                          changeDateFormat('05.11.2024')
+                          changeDateFormat(visit) >= changeDateFormat(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,
@@ -273,8 +282,7 @@ const C1SpeakingPanel = () => {
                     {user.visited
                       .filter(
                         visit =>
-                          changeDateFormat(visit) >=
-                          changeDateFormat('05.11.2024')
+                          changeDateFormat(visit) >= changeDateFormat(date)
                       )
                       .map(visit => (
                         <p>{visit}</p>
@@ -285,8 +293,7 @@ const C1SpeakingPanel = () => {
                     style={
                       user.visited.filter(
                         visit =>
-                          changeDateFormat(visit) >=
-                          changeDateFormat('05.11.2024')
+                          changeDateFormat(visit) >= changeDateFormat(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,
@@ -298,8 +305,7 @@ const C1SpeakingPanel = () => {
                     {
                       user.visited.filter(
                         visit =>
-                          changeDateFormat(visit) >=
-                          changeDateFormat('05.11.2024')
+                          changeDateFormat(visit) >= changeDateFormat(date)
                       ).length
                     }
                   </UserCell>
@@ -314,8 +320,7 @@ const C1SpeakingPanel = () => {
                     style={
                       user.visited.filter(
                         visit =>
-                          changeDateFormat(visit) >=
-                          changeDateFormat('05.11.2024')
+                          changeDateFormat(visit) >= changeDateFormat(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,

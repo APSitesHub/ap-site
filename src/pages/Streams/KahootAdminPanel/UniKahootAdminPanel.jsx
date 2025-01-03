@@ -26,7 +26,7 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const UniKahootAdminPanel = () => {
+const UniKahootAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [levels, setLevels] = useState([]);
@@ -112,7 +112,9 @@ export const UniKahootAdminPanel = () => {
 
         {isUserAdmin && (
           <KahootLvlBtnBox>
-            <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_logistics')}>
+            <KahootLvlBtn
+              onClick={() => handleBtnClick('pedagogium_logistics')}
+            >
               Pedagogium Logistics
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_prep')}>
@@ -157,3 +159,5 @@ export const UniKahootAdminPanel = () => {
     </>
   );
 };
+
+export default UniKahootAdminPanel;

@@ -26,20 +26,20 @@ export const WSTIJOPrepKahootForm = ({ destination }) => {
   const [confirmation, setConfirmation] = useState(false);
 
   const initialLinksValues = {
-    wstjio_prep_1: '',
-    wstjio_prep_2: '',
-    wstjio_prep_3: '',
-    wstjio_prep_4: '',
-    wstjio_prep_5: '',
+    wstijo_prep_1: '',
+    wstijo_prep_2: '',
+    wstijo_prep_3: '',
+    wstijo_prep_4: '',
+    wstijo_prep_5: '',
     replace: true,
   };
 
   const linksSchema = yup.object().shape({
-    wstjio_prep_1: yup.string().optional(),
-    wstjio_prep_2: yup.string().optional(),
-    wstjio_prep_3: yup.string().optional(),
-    wstjio_prep_4: yup.string().optional(),
-    wstjio_prep_5: yup.string().optional(),
+    wstijo_prep_1: yup.string().optional(),
+    wstijo_prep_2: yup.string().optional(),
+    wstijo_prep_3: yup.string().optional(),
+    wstijo_prep_4: yup.string().optional(),
+    wstijo_prep_5: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
@@ -84,16 +84,16 @@ export const WSTIJOPrepKahootForm = ({ destination }) => {
       );
 
     if (!emptyValues || confirmation) {
-      const wstjio_preplinks = { wstjio_prep: { links: {} } };
+      const wstijo_preplinks = { wstijo_prep: { links: {} } };
       for (const [key, value] of Object.entries(values)) {
         if (value && key !== 'replace') {
-          wstjio_preplinks.wstjio_prep.links[key] = value;
+          wstijo_preplinks.wstijo_prep.links[key] = value;
         } else {
-          wstjio_preplinks.wstjio_prep.replace = value;
+          wstijo_preplinks.wstijo_prep.replace = value;
         }
       }
       try {
-        const response = await axios.patch(destination, wstjio_preplinks);
+        const response = await axios.patch(destination, wstijo_preplinks);
         console.log(response);
         resetForm();
         alert('Лінки замінилися, молодець');
@@ -122,7 +122,7 @@ export const WSTIJOPrepKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_prep_1"
+                name="wstijo_prep_1"
                 autoComplete="off"
                 placeholder="Перший кахут для WSTIJO Prep"
               />
@@ -130,7 +130,7 @@ export const WSTIJOPrepKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_prep_2"
+                name="wstijo_prep_2"
                 autoComplete="off"
                 placeholder="Другий кахут для WSTIJO Prep"
               />
@@ -138,7 +138,7 @@ export const WSTIJOPrepKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_prep_3"
+                name="wstijo_prep_3"
                 autoComplete="off"
                 placeholder="Третій кахут для WSTIJO Prep"
               />
@@ -146,7 +146,7 @@ export const WSTIJOPrepKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_prep_4"
+                name="wstijo_prep_4"
                 autoComplete="off"
                 placeholder="Четвертий кахут для WSTIJO Prep"
               />
@@ -154,7 +154,7 @@ export const WSTIJOPrepKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_prep_5"
+                name="wstijo_prep_5"
                 autoComplete="off"
                 placeholder="П'ятий кахут для WSTIJO Prep"
               />

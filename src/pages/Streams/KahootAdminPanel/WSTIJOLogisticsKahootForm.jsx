@@ -26,20 +26,20 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
   const [confirmation, setConfirmation] = useState(false);
 
   const initialLinksValues = {
-    wstjio_logistics_1: '',
-    wstjio_logistics_2: '',
-    wstjio_logistics_3: '',
-    wstjio_logistics_4: '',
-    wstjio_logistics_5: '',
+    wstijo_logistics_1: '',
+    wstijo_logistics_2: '',
+    wstijo_logistics_3: '',
+    wstijo_logistics_4: '',
+    wstijo_logistics_5: '',
     replace: true,
   };
 
   const linksSchema = yup.object().shape({
-    wstjio_logistics_1: yup.string().optional(),
-    wstjio_logistics_2: yup.string().optional(),
-    wstjio_logistics_3: yup.string().optional(),
-    wstjio_logistics_4: yup.string().optional(),
-    wstjio_logistics_5: yup.string().optional(),
+    wstijo_logistics_1: yup.string().optional(),
+    wstijo_logistics_2: yup.string().optional(),
+    wstijo_logistics_3: yup.string().optional(),
+    wstijo_logistics_4: yup.string().optional(),
+    wstijo_logistics_5: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
@@ -84,16 +84,16 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
       );
 
     if (!emptyValues || confirmation) {
-      const wstjio_logisticslinks = { wstjio_logistics: { links: {} } };
+      const wstijo_logisticslinks = { wstijo_logistics: { links: {} } };
       for (const [key, value] of Object.entries(values)) {
         if (value && key !== 'replace') {
-          wstjio_logisticslinks.wstjio_logistics.links[key] = value;
+          wstijo_logisticslinks.wstijo_logistics.links[key] = value;
         } else {
-          wstjio_logisticslinks.wstjio_logistics.replace = value;
+          wstijo_logisticslinks.wstijo_logistics.replace = value;
         }
       }
       try {
-        const response = await axios.patch(destination, wstjio_logisticslinks);
+        const response = await axios.patch(destination, wstijo_logisticslinks);
         console.log(response);
         resetForm();
         alert('Лінки замінилися, молодець');
@@ -122,7 +122,7 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_logistics_1"
+                name="wstijo_logistics_1"
                 autoComplete="off"
                 placeholder="Перший кахут для WSTIJO Logisitics"
               />
@@ -130,7 +130,7 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_logistics_2"
+                name="wstijo_logistics_2"
                 autoComplete="off"
                 placeholder="Другий кахут для WSTIJO Logisitics"
               />
@@ -138,7 +138,7 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_logistics_3"
+                name="wstijo_logistics_3"
                 autoComplete="off"
                 placeholder="Третій кахут для WSTIJO Logisitics"
               />
@@ -146,7 +146,7 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_logistics_4"
+                name="wstijo_logistics_4"
                 autoComplete="off"
                 placeholder="Четвертий кахут для WSTIJO Logisitics"
               />
@@ -154,7 +154,7 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wstjio_logistics_5"
+                name="wstijo_logistics_5"
                 autoComplete="off"
                 placeholder="П'ятий кахут для WSTIJO Logisitics"
               />

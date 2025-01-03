@@ -22,7 +22,7 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const UniCollectionsAdminPanel = () => {
+const UniCollectionsAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
 
@@ -218,3 +218,5 @@ export const UniCollectionsAdminPanel = () => {
     </>
   );
 };
+
+export default UniCollectionsAdminPanel;

@@ -570,11 +570,11 @@ export const App = () => {
             <Route path="kahoot-admin-panel" element={<KahootAdminPanel />} />
             <Route
               path="uni-kahoot-admin-panel"
-              element={<HostKahootAdminPanel />}
+              element={<UniKahootAdminPanel />}
             />
             <Route
               path="host-kahoot-admin-panel"
-              element={<UniKahootAdminPanel />}
+              element={<HostKahootAdminPanel />}
             />
             <Route
               path="uni-host-kahoot-admin-panel"
