@@ -92,8 +92,8 @@ const StreamSpeakingClubKids = () => {
     document.title = `Практичне заняття | AP Education`;
     const sendUserInfo = async () => {
       try {
-        setCourse(async course => {
-          course = page.includes('high')
+        setCourse(
+          page.includes('high')
             ? (await axios.get('/timetable')).data.filter(
                 timetable =>
                   timetable.course.includes('high') && lang === timetable.lang
@@ -101,19 +101,19 @@ const StreamSpeakingClubKids = () => {
             : (await axios.get('/timetable')).data.filter(
                 timetable =>
                   page.includes(timetable.level) && lang === timetable.lang
-              )[0].course;
-        });
+              )[0].course
+        );
 
-        setLevel(async level => {
-          level = (await axios.get('/timetable')).data.filter(
+        setLevel(
+          (await axios.get('/timetable')).data.filter(
             timetable =>
               lang === timetable.lang &&
               (user.course === timetable.course ||
                 user.course
                   ?.split('/')
                   .some(singleCourse => singleCourse === timetable.course))
-          )[0].level;
-        });
+          )[0].level
+        );
 
         console.log(user.userId);
         const existingUser = await axios.get(`/speakingusers/${user.userId}`);
@@ -186,7 +186,7 @@ const StreamSpeakingClubKids = () => {
                   onClick={() =>
                     window.location.replace(
                       'https://www.academy.ap.education/streams-kids/' +
-                        (lang !== 'en' ? lang : '') +
+                        (lang !== 'enkids' ? lang.replace('kids', '') : '') +
                         level +
                         'sc'
                     )

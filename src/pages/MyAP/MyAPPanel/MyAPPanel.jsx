@@ -10,6 +10,7 @@ import {
   APPanelToggleBtn,
   CalendarBtnIcon,
   CupBtnIcon,
+  FeedbackBtnIcon,
   IframeResetLinkButton,
   IframeSetLinkIcon,
   IframeToggleLinkIcon,
@@ -41,6 +42,7 @@ export const MyAPPanel = ({
   const [isRatingShown, setIsRatingShown] = useState(false);
   const [isCalendarShown, setIsCalendarShown] = useState(false);
   const [isTimetableShown, setIsTimetableShown] = useState(false);
+  const [isFeedbackShown, setIsFeedbackShown] = useState(false);
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
   // const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
   //   useState(false);
@@ -86,66 +88,107 @@ export const MyAPPanel = ({
     setIsRatingShown(false);
     setIsCalendarShown(false);
     setIsTimetableShown(false);
+    setIsFeedbackShown(false);
   };
 
   const toggleSearch = () => {
     !isBackdropShown &&
-      (!isRatingShown || !isCalendarShown || !isTimetableShown) &&
+      (!isRatingShown ||
+        !isCalendarShown ||
+        !isTimetableShown ||
+        !isFeedbackShown) &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
     isBackdropShown &&
       !isRatingShown &&
       !isCalendarShown &&
       !isTimetableShown &&
+      !isFeedbackShown &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = false));
     setIsRatingShown(false);
     setIsCalendarShown(false);
     setIsTimetableShown(false);
+    setIsFeedbackShown(false);
     setIsLessonFinderShown(isLessonFinderShown => !isLessonFinderShown);
   };
 
   const toggleRating = () => {
     !isBackdropShown &&
-      (!isLessonFinderShown || !isCalendarShown || !isTimetableShown) &&
+      (!isLessonFinderShown ||
+        !isCalendarShown ||
+        !isTimetableShown ||
+        !isFeedbackShown) &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
     isBackdropShown &&
       !isLessonFinderShown &&
       !isCalendarShown &&
       !isTimetableShown &&
+      !isFeedbackShown &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = false));
     setIsLessonFinderShown(false);
     setIsCalendarShown(false);
     setIsTimetableShown(false);
+    setIsFeedbackShown(false);
     setIsRatingShown(isRatingShown => !isRatingShown);
   };
 
   const toggleCalendar = () => {
     !isBackdropShown &&
-      (!isRatingShown || !isLessonFinderShown || !isTimetableShown) &&
+      (!isRatingShown ||
+        !isLessonFinderShown ||
+        !isTimetableShown ||
+        !isFeedbackShown) &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
     isBackdropShown &&
       !isRatingShown &&
       !isLessonFinderShown &&
       !isTimetableShown &&
+      !isFeedbackShown &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = false));
     setIsLessonFinderShown(false);
     setIsRatingShown(false);
     setIsTimetableShown(false);
+    setIsFeedbackShown(false);
     setIsCalendarShown(isCalendarShown => !isCalendarShown);
   };
 
   const toggleTimetable = () => {
     !isBackdropShown &&
-      (!isRatingShown || !isLessonFinderShown || !isCalendarShown) &&
+      (!isRatingShown ||
+        !isLessonFinderShown ||
+        !isCalendarShown ||
+        !isFeedbackShown) &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
     isBackdropShown &&
       !isRatingShown &&
       !isLessonFinderShown &&
       !isCalendarShown &&
+      !isFeedbackShown &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = false));
     setIsLessonFinderShown(false);
     setIsRatingShown(false);
     setIsCalendarShown(false);
+    setIsFeedbackShown(false);
     setIsTimetableShown(isTimetableShown => !isTimetableShown);
+  };
+
+  const toggleFeedback = () => {
+    !isBackdropShown &&
+      (!isRatingShown ||
+        !isLessonFinderShown ||
+        !isTimetableShown ||
+        !isCalendarShown) &&
+      setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
+    isBackdropShown &&
+      !isRatingShown &&
+      !isLessonFinderShown &&
+      !isTimetableShown &&
+      !isCalendarShown &&
+      setIsBackdropShown(isBackdropShown => (isBackdropShown = false));
+    setIsLessonFinderShown(false);
+    setIsRatingShown(false);
+    setIsTimetableShown(false);
+    setIsCalendarShown(false);
+    setIsFeedbackShown(isFeedbackShown => !isFeedbackShown);
   };
 
   const toggleTooltip = e => {
@@ -306,6 +349,18 @@ export const MyAPPanel = ({
             <CupBtnIcon id="rating-btn" className={isRatingShown && 'active'} />
           </APPanelBtn>
         )}
+        {user.package !== 'online' && (
+          <APPanelBtn
+            onClick={toggleFeedback}
+            onMouseEnter={e => toggleTooltip(e)}
+            onMouseOut={e => toggleTooltip(e)}
+          >
+            <FeedbackBtnIcon
+              id="feedback-btn"
+              className={isFeedbackShown && 'active'}
+            />
+          </APPanelBtn>
+        )}
         {user.package !== 'online' && user.name === 'Dev Acc' && (
           <APPanelBtn
             onClick={toggleCalendar}
@@ -357,6 +412,9 @@ export const MyAPPanel = ({
       {isCalendarShown && (
         <Attendance user={user} isMultipleCourses={isMultipleCourses} />
       )}
+      {/* {isFeedbackShown && (
+        <Attendance user={user} isMultipleCourses={isMultipleCourses} />
+      )} */}
       {isTimetableShown && (
         <Timetable
           user={user}
