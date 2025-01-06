@@ -21,6 +21,10 @@ import {
   SearchBtnIcon,
   TimetableBtnIcon,
 } from './MyAPPanel.styled';
+import { StudentChart } from 'pages/TeacherPage/StudentChart/StudentChart';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const MyAPPanel = ({
   lessons,
@@ -44,6 +48,7 @@ export const MyAPPanel = ({
   const [isTimetableShown, setIsTimetableShown] = useState(false);
   const [isFeedbackShown, setIsFeedbackShown] = useState(false);
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
+  const [currentStudentChart, setCurrentStudentChart] = useState({});
   // const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
   //   useState(false);
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
@@ -81,6 +86,8 @@ export const MyAPPanel = ({
   const flatMonthlyPoints = Object.values(monthlyPointsByLang).flatMap(
     user => user
   );
+
+  console.log(user);
 
   const hideBackdrop = () => {
     setIsBackdropShown(false);
@@ -246,6 +253,20 @@ export const MyAPPanel = ({
         hideBackdrop();
       }
     };
+
+    const getLastFeedback = async () => {
+      try {
+        const userToSet = await axios.get(`/speakingusers/${user.id}`);
+        console.log(258, userToSet);
+        setCurrentStudentChart(user => (user = userToSet.data));
+        console.log('eff');
+      } catch (error) {
+        console.log(error);
+      } finally {
+        // setIsLoading(isLoading => (isLoading = false));
+      }
+    };
+    getLastFeedback();
     // toggleTooltipTimeout();
     // toggleLangTooltipTimeout();
     // toggleMarathonButtonTimeout();
@@ -255,7 +276,7 @@ export const MyAPPanel = ({
     return () => {
       window.removeEventListener('keydown', onEscapeClose);
     };
-  });
+  }, [isBackdropShown, user.id]);
 
   return (
     <>
@@ -412,9 +433,9 @@ export const MyAPPanel = ({
       {isCalendarShown && (
         <Attendance user={user} isMultipleCourses={isMultipleCourses} />
       )}
-      {/* {isFeedbackShown && (
-        <Attendance user={user} isMultipleCourses={isMultipleCourses} />
-      )} */}
+      {isFeedbackShown && (
+        <StudentChart user={user} currentStudentChart={currentStudentChart} />
+      )}
       {isTimetableShown && (
         <Timetable
           user={user}

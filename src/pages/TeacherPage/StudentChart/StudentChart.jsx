@@ -7,9 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const StudentChart = ({
-  currentStudentChart,
-}) => {
+export const StudentChart = ({ currentStudentChart }) => {
   const data = [
     {
       area: 'Активність',
