@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.82d6c039.js",
+    "main.js": "/ap-site/static/js/main.4020d6e3.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -42,7 +42,7 @@
     "AP Conference Education page.js": "/ap-site/static/js/AP Conference Education page.2a5863ed.chunk.js",
     "Teacher layout.js": "/ap-site/static/js/Teacher layout.98b78ed5.chunk.js",
     "Speaking Club redirect page.js": "/ap-site/static/js/Speaking Club redirect page.fdc74536.chunk.js",
-    "Speaking Club Kids redirect page.js": "/ap-site/static/js/Speaking Club Kids redirect page.abdd7754.chunk.js",
+    "Speaking Club Kids redirect page.js": "/ap-site/static/js/Speaking Club Kids redirect page.90d77d93.chunk.js",
     "Links Admin Panel page.js": "/ap-site/static/js/Links Admin Panel page.b07297ab.chunk.js",
     "Pl University Links Admin Panel page.js": "/ap-site/static/js/Pl University Links Admin Panel page.32656377.chunk.js",
     "Pl University Collections Admin Panel page.js": "/ap-site/static/js/Pl University Collections Admin Panel page.935da70e.chunk.js",
@@ -77,7 +77,7 @@
     "Universal Lead Form Page.js": "/ap-site/static/js/Universal Lead Form Page.06636995.chunk.js",
     "Ambassador Form Page.js": "/ap-site/static/js/Ambassador Form Page.510c226b.chunk.js",
     "Teacher Form Page.js": "/ap-site/static/js/Teacher Form Page.ebe70243.chunk.js",
-    "My AP Page.js": "/ap-site/static/js/My AP Page.a4313e26.chunk.js",
+    "My AP Page.js": "/ap-site/static/js/My AP Page.5931a3dc.chunk.js",
     "AP Conference Test Page.js": "/ap-site/static/js/AP Conference Test Page.9e2e5f39.chunk.js",
     "HR Salary Calculator Page.js": "/ap-site/static/js/HR Salary Calculator Page.b722d229.chunk.js",
     "Marathon redirect page to Viber chatbot.js": "/ap-site/static/js/Marathon redirect page to Viber chatbot.2255821e.chunk.js",
@@ -108,7 +108,7 @@
     "static/js/5090.0425aed2.chunk.js": "/ap-site/static/js/5090.0425aed2.chunk.js",
     "static/js/6337.07c5db5b.chunk.js": "/ap-site/static/js/6337.07c5db5b.chunk.js",
     "static/js/2995.b9a16376.chunk.js": "/ap-site/static/js/2995.b9a16376.chunk.js",
-    "static/js/2846.3f394409.chunk.js": "/ap-site/static/js/2846.3f394409.chunk.js",
+    "static/js/2846.ce8e49f0.chunk.js": "/ap-site/static/js/2846.ce8e49f0.chunk.js",
     "static/js/5415.03f500a4.chunk.js": "/ap-site/static/js/5415.03f500a4.chunk.js",
     "static/js/6274.9c4361d6.chunk.js": "/ap-site/static/js/6274.9c4361d6.chunk.js",
     "static/js/3264.96bbb5fc.chunk.js": "/ap-site/static/js/3264.96bbb5fc.chunk.js",
@@ -168,6 +168,7 @@
     "static/media/reset.svg": "/ap-site/static/media/reset.8cb2261880980856d09baa07725fe4fc.svg",
     "static/media/facebook.svg": "/ap-site/static/media/facebook.c1f8cad764fca7b64ee97522a571dee7.svg",
     "static/media/instagram_new.svg": "/ap-site/static/media/instagram_new.2a87b85fdb80dc48134dded5e6951065.svg",
+    "static/media/award.svg": "/ap-site/static/media/award.d87eb891e04e035c3b9e5a56d538bd9b.svg",
     "static/media/telegram.svg": "/ap-site/static/media/telegram.526870d3dac8805ee2ecb23bf55b83bf.svg",
     "static/media/viewerIcon.svg": "/ap-site/static/media/viewerIcon.2afe58e811705d3a506bfc6e0d03ee4c.svg",
     "static/media/tiktok_new.svg": "/ap-site/static/media/tiktok_new.7ecf7abb69ad54431ad34a46799acec7.svg",
@@ -258,7 +259,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.82d6c039.js.map": "/ap-site/static/js/main.82d6c039.js.map",
+    "main.4020d6e3.js.map": "/ap-site/static/js/main.4020d6e3.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -299,7 +300,7 @@
     "AP Conference Education page.2a5863ed.chunk.js.map": "/ap-site/static/js/AP Conference Education page.2a5863ed.chunk.js.map",
     "Teacher layout.98b78ed5.chunk.js.map": "/ap-site/static/js/Teacher layout.98b78ed5.chunk.js.map",
     "Speaking Club redirect page.fdc74536.chunk.js.map": "/ap-site/static/js/Speaking Club redirect page.fdc74536.chunk.js.map",
-    "Speaking Club Kids redirect page.abdd7754.chunk.js.map": "/ap-site/static/js/Speaking Club Kids redirect page.abdd7754.chunk.js.map",
+    "Speaking Club Kids redirect page.90d77d93.chunk.js.map": "/ap-site/static/js/Speaking Club Kids redirect page.90d77d93.chunk.js.map",
     "Links Admin Panel page.b07297ab.chunk.js.map": "/ap-site/static/js/Links Admin Panel page.b07297ab.chunk.js.map",
     "Pl University Links Admin Panel page.32656377.chunk.js.map": "/ap-site/static/js/Pl University Links Admin Panel page.32656377.chunk.js.map",
     "Pl University Collections Admin Panel page.935da70e.chunk.js.map": "/ap-site/static/js/Pl University Collections Admin Panel page.935da70e.chunk.js.map",
@@ -334,7 +335,7 @@
     "Universal Lead Form Page.06636995.chunk.js.map": "/ap-site/static/js/Universal Lead Form Page.06636995.chunk.js.map",
     "Ambassador Form Page.510c226b.chunk.js.map": "/ap-site/static/js/Ambassador Form Page.510c226b.chunk.js.map",
     "Teacher Form Page.ebe70243.chunk.js.map": "/ap-site/static/js/Teacher Form Page.ebe70243.chunk.js.map",
-    "My AP Page.a4313e26.chunk.js.map": "/ap-site/static/js/My AP Page.a4313e26.chunk.js.map",
+    "My AP Page.5931a3dc.chunk.js.map": "/ap-site/static/js/My AP Page.5931a3dc.chunk.js.map",
     "AP Conference Test Page.9e2e5f39.chunk.js.map": "/ap-site/static/js/AP Conference Test Page.9e2e5f39.chunk.js.map",
     "HR Salary Calculator Page.b722d229.chunk.js.map": "/ap-site/static/js/HR Salary Calculator Page.b722d229.chunk.js.map",
     "Marathon redirect page to Viber chatbot.2255821e.chunk.js.map": "/ap-site/static/js/Marathon redirect page to Viber chatbot.2255821e.chunk.js.map",
@@ -365,13 +366,13 @@
     "5090.0425aed2.chunk.js.map": "/ap-site/static/js/5090.0425aed2.chunk.js.map",
     "6337.07c5db5b.chunk.js.map": "/ap-site/static/js/6337.07c5db5b.chunk.js.map",
     "2995.b9a16376.chunk.js.map": "/ap-site/static/js/2995.b9a16376.chunk.js.map",
-    "2846.3f394409.chunk.js.map": "/ap-site/static/js/2846.3f394409.chunk.js.map",
+    "2846.ce8e49f0.chunk.js.map": "/ap-site/static/js/2846.ce8e49f0.chunk.js.map",
     "5415.03f500a4.chunk.js.map": "/ap-site/static/js/5415.03f500a4.chunk.js.map",
     "6274.9c4361d6.chunk.js.map": "/ap-site/static/js/6274.9c4361d6.chunk.js.map",
     "3264.96bbb5fc.chunk.js.map": "/ap-site/static/js/3264.96bbb5fc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.82d6c039.js"
+    "static/js/main.4020d6e3.js"
   ]
 }
