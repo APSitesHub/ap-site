@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.057ebf47.js",
+    "main.js": "/ap-site/static/js/main.634e0d8d.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -49,7 +49,7 @@
     "Pl University Kahoots Admin Panel page.js": "/ap-site/static/js/Pl University Kahoots Admin Panel page.7fd5b601.chunk.js",
     "Pl University Host Kahoots Admin Panel page.js": "/ap-site/static/js/Pl University Host Kahoots Admin Panel page.c9871a1d.chunk.js",
     "User Admin Panel page.js": "/ap-site/static/js/User Admin Panel page.08e12f3d.chunk.js",
-    "Polish University Users Admin Panel page.js": "/ap-site/static/js/Polish University Users Admin Panel page.ae5d79e0.chunk.js",
+    "Polish University Users Admin Panel page.js": "/ap-site/static/js/Polish University Users Admin Panel page.d1c8e0d7.chunk.js",
     "C1 Speaking Control Panel page.js": "/ap-site/static/js/C1 Speaking Control Panel page.7be27e34.chunk.js",
     "Teacher Admin Panel page.js": "/ap-site/static/js/Teacher Admin Panel page.aa9bcb3c.chunk.js",
     "Teacher Control page.js": "/ap-site/static/js/Teacher Control page.6adde6dc.chunk.js",
@@ -259,7 +259,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.057ebf47.js.map": "/ap-site/static/js/main.057ebf47.js.map",
+    "main.634e0d8d.js.map": "/ap-site/static/js/main.634e0d8d.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -307,7 +307,7 @@
     "Pl University Kahoots Admin Panel page.7fd5b601.chunk.js.map": "/ap-site/static/js/Pl University Kahoots Admin Panel page.7fd5b601.chunk.js.map",
     "Pl University Host Kahoots Admin Panel page.c9871a1d.chunk.js.map": "/ap-site/static/js/Pl University Host Kahoots Admin Panel page.c9871a1d.chunk.js.map",
     "User Admin Panel page.08e12f3d.chunk.js.map": "/ap-site/static/js/User Admin Panel page.08e12f3d.chunk.js.map",
-    "Polish University Users Admin Panel page.ae5d79e0.chunk.js.map": "/ap-site/static/js/Polish University Users Admin Panel page.ae5d79e0.chunk.js.map",
+    "Polish University Users Admin Panel page.d1c8e0d7.chunk.js.map": "/ap-site/static/js/Polish University Users Admin Panel page.d1c8e0d7.chunk.js.map",
     "C1 Speaking Control Panel page.7be27e34.chunk.js.map": "/ap-site/static/js/C1 Speaking Control Panel page.7be27e34.chunk.js.map",
     "Teacher Admin Panel page.aa9bcb3c.chunk.js.map": "/ap-site/static/js/Teacher Admin Panel page.aa9bcb3c.chunk.js.map",
     "Teacher Control page.6adde6dc.chunk.js.map": "/ap-site/static/js/Teacher Control page.6adde6dc.chunk.js.map",
@@ -373,6 +373,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.057ebf47.js"
+    "static/js/main.634e0d8d.js"
   ]
 }
