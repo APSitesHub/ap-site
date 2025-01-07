@@ -26,8 +26,8 @@ import {
   ScheduleItem,
   ScheduleList,
 } from './TimeTableAdminPanel.styled';
-import { TimeTableEditForm } from './TimeTableEditForm/TimeTableEditForm';
-import { TimeTableCourseLevelEditForm } from './TimeTableCourseLevelEditForm/TimeTableCourseLevelEditForm';
+import { UniTimeTableMarathonEditForm } from './TimeTableCourseLevelEditForm/UniTimeTableMarathonEditForm';
+import { UniTimeTableEditForm } from './TimeTableEditForm/UniTimeTableEditForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -41,17 +41,13 @@ const UniTimeTableAdminPanel = () => {
   const [lessonToEdit, setLessonToEdit] = useState({});
   const [scheduleToEdit, setScheduleToEdit] = useState('');
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-  const [isEditCourseLevelFormOpen, setIsEditCourseLevelFormOpen] =
-    useState(false);
-  const [langValue, setLangValue] = useState('');
-  const [levelValue, setLevelValue] = useState('');
-  const [courseValue, setCourseValue] = useState('');
+  const [isEditMarathonFormOpen, setIsEditMarathonFormOpen] = useState(false);
+  const [uniValue, setUniValue] = useState('');
+  const [marathonValue, setMarathonValue] = useState('');
   const [dayValue, setDayValue] = useState('');
-  const [typeValue, setTypeValue] = useState('');
-  const [packageValue, setPackageValue] = useState('');
 
   useEffect(() => {
-    document.title = 'Timetable Admin Panel | AP Education';
+    document.title = 'Polish Universities Timetable Admin Panel | AP Education';
 
     const refreshToken = async () => {
       console.log('token refresher');
@@ -70,7 +66,7 @@ const UniTimeTableAdminPanel = () => {
     const getLessons = async () => {
       try {
         if (isUserAdmin) {
-          const response = await axios.get('/timetable/');
+          const response = await axios.get('/unitimetable/');
           console.log(response);
           setLessons(lessons => (lessons = [...response.data]));
         }
@@ -91,7 +87,7 @@ const UniTimeTableAdminPanel = () => {
     return () => {
       window.removeEventListener('keydown', onEscapeClose);
     };
-  }, [isUserAdmin, isLoading, isEditFormOpen, isEditCourseLevelFormOpen]);
+  }, [isUserAdmin, isLoading, isEditFormOpen, isEditMarathonFormOpen]);
 
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
@@ -121,42 +117,34 @@ const UniTimeTableAdminPanel = () => {
   };
 
   const initialTimetableValues = {
-    lang: '',
-    level: '',
-    course: '',
+    university: '',
+    marathon: '',
     day: '',
-    type: '',
-    package: '',
     time: '',
     lessonNumber: '',
-    teacher: '',
+    topic: '',
   };
 
   const timetableSchema = yup.object().shape({
-    lang: yup.string(),
-    level: yup.string(),
-    course: yup.string(),
+    university: yup.string(),
+    marathon: yup.string(),
     day: yup.string(),
-    type: yup.string(),
-    package: yup.string(),
     time: yup.string(),
     lessonNumber: yup.string(),
-    teacher: yup.string(),
+    topic: yup.string(),
   });
 
   const handleTimetableSubmit = async (values, { resetForm }) => {
     values = {
-      lang: langValue,
-      level: levelValue,
-      course: courseValue,
+      university: uniValue,
+      marathon: marathonValue,
       schedule: [
         {
           day: dayValue,
-          type: typeValue,
-          package: packageValue,
+          type: 'Webinar',
           time: values.time,
           lessonNumber: values.lessonNumber,
-          teacher: values.teacher,
+          topic: values.topic,
         },
       ],
     };
@@ -164,7 +152,7 @@ const UniTimeTableAdminPanel = () => {
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.post('/timetable', values);
+      const response = await axios.post('/unitimetable', values);
       console.log(response);
       resetForm();
       alert('Урок додано');
@@ -182,292 +170,44 @@ const UniTimeTableAdminPanel = () => {
     setIsEditFormOpen(false);
   };
 
-  const closeCourseLevelEditForm = e => {
-    setIsEditCourseLevelFormOpen(false);
+  const closeMarathonEditForm = e => {
+    setIsEditMarathonFormOpen(false);
   };
 
-  const languageOptions = [
+  const uniOptions = [
     {
-      label: 'Англійська',
-      value: 'en',
+      label: 'Pedagogium (Wyższa Szkoła Nauk Społecznych)',
+      value: 'Pedagogium (Wyższa Szkoła Nauk Społecznych)',
     },
     {
-      label: 'Англійська, діти',
-      value: 'enkids',
+      label: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
+      value: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
+    },
+    // {
+    //   label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+    //   value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+    // },
+  ];
+
+  const pedagogiumMarathonOptions = [
+    {
+      label: 'Logistics (Pedagogium)',
+      value: '72421',
     },
     {
-      label: 'Німецька',
-      value: 'de',
-    },
-    {
-      label: 'Німецька, діти',
-      value: 'dekids',
-    },
-    {
-      label: 'Польська',
-      value: 'pl',
-    },
-    {
-      label: 'Польська, діти',
-      value: 'plkids',
+      label: 'Kurs Przygotowawczy (Pedagogium)',
+      value: '79231',
     },
   ];
 
-  const levelOptions = [
+  const wstijoMarathonOptions = [
     {
-      label: 'A0',
-      value: 'a0',
+      label: 'Logistics (WSTIJO)',
+      value: '78737',
     },
     {
-      label: 'A1',
-      value: 'a1',
-    },
-    {
-      label: 'A2',
-      value: 'a2',
-    },
-    {
-      label: 'B1',
-      value: 'b1',
-    },
-    {
-      label: 'B2',
-      value: 'b2',
-    },
-    {
-      label: 'C1',
-      value: 'c1',
-    },
-  ];
-
-  const courseEnglishOptions = [
-    {
-      label: '10 (Спікінги)',
-      value: '10',
-    },
-    {
-      label: '11',
-      value: '11',
-    },
-    {
-      label: '11 PRE',
-      value: '11pre',
-    },
-    {
-      label: '11 BEG',
-      value: '11beg',
-    },
-    {
-      label: '11 MID',
-      value: '11mid',
-    },
-    {
-      label: '11 HIGH',
-      value: '11high',
-    },
-    {
-      label: '12',
-      value: '12',
-    },
-    {
-      label: '12 PRE',
-      value: '12pre',
-    },
-    {
-      label: '12 BEG',
-      value: '12beg',
-    },
-    {
-      label: '12 MID',
-      value: '12mid',
-    },
-    {
-      label: '12 HIGH',
-      value: '12high',
-    },
-    {
-      label: '13',
-      value: '13',
-    },
-    {
-      label: '23',
-      value: '23',
-    },
-    {
-      label: '23 PRE',
-      value: '23pre',
-    },
-    {
-      label: '23 BEG',
-      value: '23beg',
-    },
-    {
-      label: '23 MID',
-      value: '23mid',
-    },
-    {
-      label: '23 HIGH',
-      value: '23high',
-    },
-    {
-      label: '24',
-      value: '24',
-    },
-    {
-      label: '24 PRE',
-      value: '24pre',
-    },
-    {
-      label: '24 BEG',
-      value: '24beg',
-    },
-    {
-      label: '24 MID',
-      value: '24mid',
-    },
-    {
-      label: '24 HIGH',
-      value: '24high',
-    },
-    {
-      label: '25',
-      value: '25',
-    },
-    {
-      label: '31',
-      value: '31',
-    },
-    {
-      label: '32',
-      value: '32',
-    },
-    {
-      label: '43',
-      value: '43',
-    },
-    {
-      label: '44',
-      value: '44',
-    },
-    {
-      label: '51',
-      value: '51',
-    },
-    {
-      label: '52',
-      value: '52',
-    },
-  ];
-
-  const courseOptions = [
-    {
-      label: '10 (Спікінги)',
-      value: '10',
-    },
-    {
-      label: '11',
-      value: '11',
-    },
-    {
-      label: '12',
-      value: '12',
-    },
-    {
-      label: '23',
-      value: '23',
-    },
-    {
-      label: '24',
-      value: '24',
-    },
-    {
-      label: '31',
-      value: '31',
-    },
-    {
-      label: '32',
-      value: '32',
-    },
-    {
-      label: '43',
-      value: '43',
-    },
-    {
-      label: '44',
-      value: '44',
-    },
-    {
-      label: '51',
-      value: '51',
-    },
-    {
-      label: '52',
-      value: '52',
-    },
-  ];
-
-  const levelOptionsWithBeginners = [
-    {
-      label: 'A0',
-      value: 'a0',
-    },
-    {
-      label: 'A1',
-      value: 'a1',
-    },
-    {
-      label: 'A2',
-      value: 'a2',
-    },
-    {
-      label: 'B1',
-      value: 'b1',
-    },
-    {
-      label: 'B1 Beginner',
-      value: 'b1beginner',
-    },
-    {
-      label: 'B2',
-      value: 'b2',
-    },
-    {
-      label: 'B2 Beginner',
-      value: 'b2beginner',
-    },
-    {
-      label: 'C1',
-      value: 'c1',
-    },
-  ];
-
-  const levelOptionsForDeKids = [
-    {
-      label: 'A0',
-      value: 'a0',
-    },
-    {
-      label: 'A1',
-      value: 'a1',
-    },
-    {
-      label: 'A2',
-      value: 'a2',
-    },
-  ];
-
-  const levelOptionsForPlKids = [
-    {
-      label: 'A0',
-      value: 'a0',
-    },
-    {
-      label: 'A1',
-      value: 'a1',
-    },
-    {
-      label: 'A2',
-      value: 'a2',
+      label: 'Kurs Przygotowawczy (WSTIJO)',
+      value: '72468',
     },
   ];
 
@@ -502,61 +242,15 @@ const UniTimeTableAdminPanel = () => {
     },
   ];
 
-  const typeOptions = [
-    {
-      label: 'Вебінар',
-      value: 'webinar',
-    },
-    {
-      label: 'Вебінар, повторення',
-      value: 'webinar, repeat',
-    },
-    {
-      label: 'Мовна практика',
-      value: 'speaking',
-    },
-  ];
-
-  const packageOptions = [
-    {
-      label: 'Easy',
-      value: 'easy',
-    },
-    {
-      label: 'Easy+',
-      value: 'easy+',
-    },
-    {
-      label: 'Basic',
-      value: 'basic',
-    },
-    {
-      label: 'Standart',
-      value: 'standart',
-    },
-    {
-      label: 'Pro',
-      value: 'pro',
-    },
-    {
-      label: 'Online Курс',
-      value: 'online',
-    },
-    {
-      label: 'Додаткові мовні практики',
-      value: 'sc',
-    },
-  ];
-
   const closeEditFormOnClick = e => {
     if (e.target.id === 'close-on-click') {
       setIsEditFormOpen(false);
     }
   };
 
-  const closeEditCourseLevelFormOnClick = e => {
+  const closeEditMarathonFormOnClick = e => {
     if (e.target.id === 'close-on-click') {
-      setIsEditCourseLevelFormOpen(false);
+      isEditMarathonFormOpen(false);
     }
   };
 
@@ -572,8 +266,8 @@ const UniTimeTableAdminPanel = () => {
     );
   };
 
-  const handleCourseLevelEdit = async id => {
-    setIsEditCourseLevelFormOpen(true);
+  const handleMarathonEdit = async id => {
+    setIsEditMarathonFormOpen(true);
     setLessonToEdit(
       lessonToEdit => (lessonToEdit = lessons.find(lesson => lesson._id === id))
     );
@@ -584,7 +278,7 @@ const UniTimeTableAdminPanel = () => {
     console.log(parentId);
 
     try {
-      const response = await axios.patch(`/timetable/schedule/${parentId}`, {
+      const response = await axios.patch(`/unitimetable/schedule/${parentId}`, {
         _id: parentId,
         scheduleId,
       });
@@ -633,7 +327,7 @@ const UniTimeTableAdminPanel = () => {
           >
             <UsersForm>
               <FormSelect
-                options={languageOptions}
+                options={uniOptions}
                 styles={{
                   control: (baseStyles, state) => ({
                     ...baseStyles,
@@ -641,21 +335,18 @@ const UniTimeTableAdminPanel = () => {
                     borderRadius: '0px',
                   }),
                 }}
-                placeholder="Мова"
-                name="lang"
-                onChange={lang => {
-                  setLangValue(lang.value);
+                placeholder="Університет"
+                name="uni"
+                onChange={uni => {
+                  setUniValue(uni.value);
                 }}
               />
               <FormSelect
                 options={
-                  langValue === 'enkids'
-                    ? levelOptionsWithBeginners
-                    : langValue === 'dekids'
-                    ? levelOptionsForDeKids
-                    : langValue === 'plkids'
-                    ? levelOptionsForPlKids
-                    : levelOptions
+                  uniValue ===
+                  'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
+                    ? wstijoMarathonOptions
+                    : pedagogiumMarathonOptions
                 }
                 styles={{
                   control: (baseStyles, state) => ({
@@ -664,29 +355,10 @@ const UniTimeTableAdminPanel = () => {
                     borderRadius: '0px',
                   }),
                 }}
-                placeholder="Рівень"
-                name="level"
-                onChange={level => {
-                  setLevelValue(level.value);
-                }}
-              />
-              <FormSelect
-                options={
-                  langValue === 'en' || langValue === 'enkids'
-                    ? courseEnglishOptions
-                    : courseOptions
-                }
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderRadius: '0px',
-                  }),
-                }}
-                placeholder="Потік"
-                name="course"
-                onChange={course => {
-                  setCourseValue(course.value);
+                placeholder="Марафон"
+                name="marathon"
+                onChange={marathon => {
+                  setMarathonValue(marathon.value);
                 }}
               />
               <FormSelect
@@ -704,36 +376,6 @@ const UniTimeTableAdminPanel = () => {
                   setDayValue(day.value);
                 }}
               />
-              <FormSelect
-                options={typeOptions}
-                styles={{
-                  control: baseStyles => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderRadius: '0px',
-                  }),
-                }}
-                placeholder="Тип заняття"
-                name="type"
-                onChange={type => {
-                  setTypeValue(type.value);
-                }}
-              />
-              <FormSelect
-                options={packageOptions}
-                styles={{
-                  control: baseStyles => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderRadius: '0px',
-                  }),
-                }}
-                placeholder="Найнижчий доступний пакет"
-                name="package"
-                onChange={pack => {
-                  setPackageValue(pack.value);
-                }}
-              />
               <Label>
                 <AdminInput type="text" name="time" placeholder="Час" />
                 <AdminInputNote component="p" name="time" />
@@ -747,8 +389,8 @@ const UniTimeTableAdminPanel = () => {
                 <AdminInputNote component="p" name="lessonNumber" />
               </Label>
               <Label>
-                <AdminInput type="text" name="teacher" placeholder="Викладач" />
-                <AdminInputNote component="p" name="teacher" />
+                <AdminInput type="text" name="topic" placeholder="Тема уроку" />
+                <AdminInputNote component="p" name="topic" />
               </Label>
               <AdminFormBtn type="submit">Додати до розкладу</AdminFormBtn>
             </UsersForm>
@@ -759,14 +401,28 @@ const UniTimeTableAdminPanel = () => {
             lessons
               .sort(
                 (a, b) =>
-                  a.lang.localeCompare(b.lang) || a.level.localeCompare(b.level)
+                  a.university.localeCompare(b.university) ||
+                  a.marathon - b.marathon
               )
               .map(timetable => (
                 <ScheduleItem key={timetable._id}>
                   <ScheduleHeading>
-                    {timetable.lang} {timetable.level} {timetable.course}
+                    {timetable.university.split(' ')[0]}{' '}
+                    {timetable.university.includes('Pedagogium') &&
+                    timetable.marathon === '72421'
+                      ? `Logistics ${timetable.marathon}`
+                      : timetable.university.includes('Pedagogium') &&
+                        timetable.marathon === '79231'
+                      ? `Kurs Przygotowawczy ${timetable.marathon}`
+                      : timetable.university.includes('WSTIJO') &&
+                        timetable.marathon === '78737'
+                      ? `Logistics ${timetable.marathon}`
+                      : timetable.university.includes('WSTIJO') &&
+                        timetable.marathon === '78737'
+                      ? `Kurs Przygotowawczy ${timetable.marathon}`
+                      : ''}{' '}
                     <UserEditButton
-                      onClick={() => handleCourseLevelEdit(timetable._id)}
+                      onClick={() => handleMarathonEdit(timetable._id)}
                     >
                       Edit
                     </UserEditButton>
@@ -790,7 +446,7 @@ const UniTimeTableAdminPanel = () => {
                             {schedule.lessonNumber}
                           </ScheduleDataTimeText>
                           <ScheduleDataTimeText>
-                            {schedule.teacher}
+                            {schedule.topic}
                           </ScheduleDataTimeText>
                           <ScheduleDataTimeText>
                             {schedule.package}
@@ -818,34 +474,25 @@ const UniTimeTableAdminPanel = () => {
         </ScheduleList>
         {isEditFormOpen && (
           <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
-            <TimeTableEditForm
+            <UniTimeTableEditForm
               lessonToEdit={lessonToEdit}
               scheduleToEdit={scheduleToEdit}
-              languageOptions={languageOptions}
-              courseOptions={courseOptions}
-              courseEnglishOptions={courseEnglishOptions}
-              levelOptions={levelOptions}
-              levelOptionsWithBeginners={levelOptionsWithBeginners}
+              uniOptions={uniOptions}
+              pedagogiumMarathonOptions={pedagogiumMarathonOptions}
+              wstijoMarathonOptions={wstijoMarathonOptions}
               daysOptions={daysOptions}
-              typeOptions={typeOptions}
-              packageOptions={packageOptions}
               closeEditForm={closeEditForm}
             />
           </Backdrop>
         )}
-        {isEditCourseLevelFormOpen && (
-          <Backdrop
-            onClick={closeEditCourseLevelFormOnClick}
-            id="close-on-click"
-          >
-            <TimeTableCourseLevelEditForm
+        {isEditMarathonFormOpen && (
+          <Backdrop onClick={closeEditMarathonFormOnClick} id="close-on-click">
+            <UniTimeTableMarathonEditForm
               lessonToEdit={lessonToEdit}
-              languageOptions={languageOptions}
-              courseOptions={courseOptions}
-              courseEnglishOptions={courseEnglishOptions}
-              levelOptions={levelOptions}
-              levelOptionsWithBeginners={levelOptionsWithBeginners}
-              closeCourseLevelEditForm={closeCourseLevelEditForm}
+              uniOptions={uniOptions}
+              pedagogiumMarathonOptions={pedagogiumMarathonOptions}
+              wstijoMarathonOptions={wstijoMarathonOptions}
+              closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>
         )}

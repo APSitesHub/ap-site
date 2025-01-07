@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 export const AdminPanelSection = styled.section`
   height: max-content;
+  min-height: 100vh;
   padding: 30px 20px;
   display: flex;
   align-items: flex-start;
