@@ -26,11 +26,28 @@ export const UniUserEditForm = ({
   updateUser,
   closeEditForm,
   uniOptions,
+  pedagogiumMarathonOptions,
+  wstijoMarathonOptions,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [uniValue, setUniValue] = useState(null);
+  const [uniValue, setUniValue] = useState(
+    uniOptions.find(option => option.value === userToEdit.university)
+  );
   const [isUniEmpty, setIsUniEmpty] = useState(false);
+  const [marathonValue, setMarathonValue] = useState(
+    uniValue.value ===
+      'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
+      ? wstijoMarathonOptions.find(
+          option => option.value === userToEdit.marathonId
+        )
+      : pedagogiumMarathonOptions.find(
+          option => option.value === userToEdit.marathonId
+        )
+  );
+  const [isMarathonEmpty, setIsMarathonEmpty] = useState(false);
   const selectInputRef = useRef();
+
+  console.log(userToEdit);
 
   const initialUserValues = {
     crmId: userToEdit.crmId || '',
@@ -59,30 +76,25 @@ export const UniUserEditForm = ({
       .max(7, 'Не більше 7 цифр')
       .matches(/^\d{1,7}$/, 'Лише цифри')
       .required("Обов'язкове поле, дивитись на платформі"),
-    // marathonId: yup
-    //   .string()
-    //   .min(4, 'Не менше 4 цифр')
-    //   .max(7, 'Не більше 7 цифр')
-    //   .matches(/^\d{1,7}$/, 'Лише цифри'),
-    // university: yup
-    //   .string()
-    //   .required("Назва університету - обов'язкове поле, введіть її"),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
-    setIsLoading(isLoading => (isLoading = true));
     values.name = values.name.trim().trimStart();
     values.mail = values.mail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.pupilId = values.pupilId.trim().trimStart();
-    values.crmId = values.crmId ? +values.crmId.trim().trimStart() : undefined;
-    values.contactId = values.contactId
-      ? +values.contactId.trim().trimStart()
-      : undefined;
-    values.pupilId = values.pupilId.trim().trimStart();
-    values.marathonId = uniValue.value;
-    values.university = uniValue.label;
+    values.crmId =
+      values.crmId && typeof values.crmId === 'string'
+        ? +values.crmId.trim().trimStart()
+        : undefined;
+    values.contactId =
+      values.contactId && typeof values.crmId === 'string'
+        ? +values.contactId.trim().trimStart()
+        : undefined;
+    values.marathonId = marathonValue.value;
+    values.university = uniValue.value;
     try {
+      setIsLoading(isLoading => (isLoading = true));
       const response = await axios.put(`/uniusers/${userToEdit._id}`, values);
       console.log(response);
       resetForm();
@@ -152,6 +164,9 @@ export const UniUserEditForm = ({
             <TeacherLangSelect
               ref={selectInputRef}
               options={uniOptions}
+              defaultValue={uniOptions.find(
+                option => option.value === userToEdit.university
+              )}
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
@@ -186,6 +201,65 @@ export const UniUserEditForm = ({
               <ErrorNote> Університет - обов'язкове поле!</ErrorNote>
             )}
           </SpeakingLabel>
+          {uniValue && uniValue.value && (
+            <SpeakingLabel>
+              {marathonValue && marathonValue.value && (
+                <LabelText>Марафон</LabelText>
+              )}
+              <TeacherLangSelect
+                ref={selectInputRef}
+                options={
+                  uniValue.value ===
+                  'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
+                    ? wstijoMarathonOptions
+                    : pedagogiumMarathonOptions
+                }
+                defaultValue={
+                  uniValue.value ===
+                  'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
+                    ? wstijoMarathonOptions.find(
+                        option => option.value === userToEdit.marathonId
+                      )
+                    : pedagogiumMarathonOptions.find(
+                        option => option.value === userToEdit.marathonId
+                      )
+                }
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    border: 'none',
+                    borderRadius: '50px',
+                    minHeight: '34px',
+                  }),
+                  menu: (baseStyles, state) => ({
+                    ...baseStyles,
+                    position: 'absolute',
+                    zIndex: '2',
+                    top: '36px',
+                  }),
+                  dropdownIndicator: (baseStyles, state) => ({
+                    ...baseStyles,
+                    padding: '7px',
+                  }),
+                }}
+                placeholder="Марафон"
+                name="marathon"
+                onBlur={() => {
+                  !uniValue
+                    ? setIsMarathonEmpty(empty => (empty = true))
+                    : setIsMarathonEmpty(empty => (empty = false));
+                }}
+                onChange={marathon => {
+                  setMarathonValue(marathon);
+                  marathon?.value &&
+                    setIsMarathonEmpty(empty => (empty = false));
+                }}
+              />
+              {isMarathonEmpty && (
+                <ErrorNote> Марафон - обов'язкове поле!</ErrorNote>
+              )}
+            </SpeakingLabel>
+          )}
           <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
         </UsersEditForm>
       </Formik>

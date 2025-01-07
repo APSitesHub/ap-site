@@ -43,6 +43,8 @@ const UserAdminPanel = () => {
   const [userToEdit, setUserToEdit] = useState({});
   const [uniValue, setUniValue] = useState(null);
   const [isUniEmpty, setIsUniEmpty] = useState(false);
+  const [marathonValue, setMarathonValue] = useState(null);
+  const [isMarathonEmpty, setIsMarathonEmpty] = useState(false);
   // eslint-disable-next-line
   const [daysAfterLastLogin, setDaysAfterLastLogin] = useState(7);
   const selectInputRef = useRef();
@@ -50,16 +52,38 @@ const UserAdminPanel = () => {
   const uniOptions = [
     {
       label: 'Pedagogium (Wyższa Szkoła Nauk Społecznych)',
-      value: '72421',
+      value: 'Pedagogium (Wyższa Szkoła Nauk Społecznych)',
     },
     {
       label: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
-      value: '78737',
+      value: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
     },
     // {
     //   label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
-    //   value: '',
+    //   value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
     // },
+  ];
+
+  const pedagogiumMarathonOptions = [
+    {
+      label: 'Logistics (Pedagogium)',
+      value: '72421',
+    },
+    {
+      label: 'Kurs Przygotowawczy (Pedagogium)',
+      value: '79231',
+    },
+  ];
+
+  const wstijoMarathonOptions = [
+    {
+      label: 'Logistics (WSTIJO)',
+      value: '78737',
+    },
+    {
+      label: 'Kurs Przygotowawczy (WSTIJO)',
+      value: '72468',
+    },
   ];
 
   useEffect(() => {
@@ -190,8 +214,8 @@ const UserAdminPanel = () => {
       ? +values.contactId.trim().trimStart()
       : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
-    values.marathonId = uniValue.value;
-    values.university = uniValue.label;
+    values.marathonId = marathonValue.value;
+    values.university = uniValue.value;
     try {
       const response = await axios.post('/uniusers/new', values);
       console.log(response.data);
@@ -392,6 +416,55 @@ const UserAdminPanel = () => {
                   <ErrorNote> Університет - обов'язкове поле!</ErrorNote>
                 )}
               </SpeakingLabel>
+              {uniValue && uniValue.value && (
+                <SpeakingLabel>
+                  {marathonValue && marathonValue.value && (
+                    <LabelText>Марафон</LabelText>
+                  )}
+                  <TeacherLangSelect
+                    ref={selectInputRef}
+                    options={
+                      uniValue.value ===
+                      'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
+                        ? wstijoMarathonOptions
+                        : pedagogiumMarathonOptions
+                    }
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        border: 'none',
+                        borderRadius: '50px',
+                        minHeight: '34px',
+                      }),
+                      menu: (baseStyles, state) => ({
+                        ...baseStyles,
+                        position: 'absolute',
+                        zIndex: '2',
+                        top: '36px',
+                      }),
+                      dropdownIndicator: (baseStyles, state) => ({
+                        ...baseStyles,
+                        padding: '7px',
+                      }),
+                    }}
+                    placeholder="Марафон"
+                    name="marathon"
+                    onBlur={() => {
+                      !uniValue
+                        ? setIsMarathonEmpty(empty => (empty = true))
+                        : setIsMarathonEmpty(empty => (empty = false));
+                    }}
+                    onChange={marathon => {
+                      setMarathonValue(marathon);
+                      marathon?.value &&
+                        setIsMarathonEmpty(empty => (empty = false));
+                    }}
+                  />
+                  {isMarathonEmpty && (
+                    <ErrorNote> Марафон - обов'язкове поле!</ErrorNote>
+                  )}
+                </SpeakingLabel>
+              )}
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
             </UsersForm>
           </Formik>
@@ -496,6 +569,8 @@ const UserAdminPanel = () => {
               updateUser={updateUser}
               closeEditForm={closeEditForm}
               uniOptions={uniOptions}
+              pedagogiumMarathonOptions={pedagogiumMarathonOptions}
+              wstijoMarathonOptions={wstijoMarathonOptions}
             />
           </Backdrop>
         )}
