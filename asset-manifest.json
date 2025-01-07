@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.634e0d8d.js",
+    "main.js": "/ap-site/static/js/main.6cb7e8a7.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -58,8 +58,8 @@
     "Teacher Control Polski page.js": "/ap-site/static/js/Teacher Control Polski page.cead246e.chunk.js",
     "User Json Panel page.js": "/ap-site/static/js/User Json Panel page.a557cfc8.chunk.js",
     "Ratings Admin Panel page.js": "/ap-site/static/js/Ratings Admin Panel page.f686e1d9.chunk.js",
-    "TimeTable Admin Panel page.js": "/ap-site/static/js/TimeTable Admin Panel page.a6058817.chunk.js",
-    "Pl University TimeTable Admin Panel page.js": "/ap-site/static/js/Pl University TimeTable Admin Panel page.ccd20a70.chunk.js",
+    "TimeTable Admin Panel page.js": "/ap-site/static/js/TimeTable Admin Panel page.23481b75.chunk.js",
+    "Pl University TimeTable Admin Panel page.js": "/ap-site/static/js/Pl University TimeTable Admin Panel page.52565f8c.chunk.js",
     "Speaking Admin Panel page.js": "/ap-site/static/js/Speaking Admin Panel page.375d4c74.chunk.js",
     "Speaking Rating Admin page.js": "/ap-site/static/js/Speaking Rating Admin page.e3ba4e42.chunk.js",
     "English courses page.css": "/ap-site/static/css/English courses page.e8ee1c85.chunk.css",
@@ -259,7 +259,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.634e0d8d.js.map": "/ap-site/static/js/main.634e0d8d.js.map",
+    "main.6cb7e8a7.js.map": "/ap-site/static/js/main.6cb7e8a7.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -316,8 +316,8 @@
     "Teacher Control Polski page.cead246e.chunk.js.map": "/ap-site/static/js/Teacher Control Polski page.cead246e.chunk.js.map",
     "User Json Panel page.a557cfc8.chunk.js.map": "/ap-site/static/js/User Json Panel page.a557cfc8.chunk.js.map",
     "Ratings Admin Panel page.f686e1d9.chunk.js.map": "/ap-site/static/js/Ratings Admin Panel page.f686e1d9.chunk.js.map",
-    "TimeTable Admin Panel page.a6058817.chunk.js.map": "/ap-site/static/js/TimeTable Admin Panel page.a6058817.chunk.js.map",
-    "Pl University TimeTable Admin Panel page.ccd20a70.chunk.js.map": "/ap-site/static/js/Pl University TimeTable Admin Panel page.ccd20a70.chunk.js.map",
+    "TimeTable Admin Panel page.23481b75.chunk.js.map": "/ap-site/static/js/TimeTable Admin Panel page.23481b75.chunk.js.map",
+    "Pl University TimeTable Admin Panel page.52565f8c.chunk.js.map": "/ap-site/static/js/Pl University TimeTable Admin Panel page.52565f8c.chunk.js.map",
     "Speaking Admin Panel page.375d4c74.chunk.js.map": "/ap-site/static/js/Speaking Admin Panel page.375d4c74.chunk.js.map",
     "Speaking Rating Admin page.e3ba4e42.chunk.js.map": "/ap-site/static/js/Speaking Rating Admin page.e3ba4e42.chunk.js.map",
     "English courses page.e8ee1c85.chunk.css.map": "/ap-site/static/css/English courses page.e8ee1c85.chunk.css.map",
@@ -373,6 +373,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.634e0d8d.js"
+    "static/js/main.6cb7e8a7.js"
   ]
 }
