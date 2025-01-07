@@ -141,10 +141,12 @@ const StreamSpeakingClub = () => {
                 </StreamPlaceHolderText>
               </StreamPlaceHolder>
             )}
-          {course === user.course ||
-          user.course
-            ?.split('/')
-            .some(singleCourse => singleCourse === course) ? (
+          {(course === user.course ||
+            user.course
+              ?.split('/')
+              .some(singleCourse => singleCourse === course)) &&
+          (lang === user.lang ||
+            user.lang?.split('/').some(singleLang => singleLang === lang)) ? (
             <StreamPlaceHolder>
               <StreamPlaceHolderText>
                 Привіт! <br />
@@ -191,10 +193,13 @@ const StreamSpeakingClub = () => {
             user.course
               ?.split('/')
               .some(singleCourse => singleCourse === course)) &&
+            (lang === user.lang ||
+              user.lang?.split('/').some(singleLang => singleLang === lang)) &&
             redirectLink &&
             redirectLink !== '1' &&
             isApproved) ||
             (user.name === 'Dev Acc' && isApproved) ||
+            (user.course === '10' && user.lang === 'en' && isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&
             redirectLink !== undefined &&
             redirectLink !== '1' &&

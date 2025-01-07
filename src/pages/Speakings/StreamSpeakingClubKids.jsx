@@ -100,7 +100,9 @@ const StreamSpeakingClubKids = () => {
               )[0].course
             : (await axios.get('/timetable')).data.filter(
                 timetable =>
-                  page.includes(timetable.level) && lang === timetable.lang
+                  page.includes(timetable.level) &&
+                  lang === timetable.lang &&
+                  !timetable.course.includes('high')
               )[0].course
         );
 
@@ -187,7 +189,7 @@ const StreamSpeakingClubKids = () => {
                     window.location.replace(
                       'https://www.academy.ap.education/streams-kids/' +
                         (lang !== 'enkids' ? lang.replace('kids', '') : '') +
-                        level +
+                        (user.course.includes('high') ? 'high' : level) +
                         'sc'
                     )
                   }
@@ -206,6 +208,7 @@ const StreamSpeakingClubKids = () => {
             redirectLink !== '1' &&
             isApproved) ||
             (user.name === 'Dev Acc' && isApproved) ||
+            (user.course === '10' && user.lang === 'enkids' && isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&
             redirectLink !== '1' &&
             window.location.replace(redirectLink)}
