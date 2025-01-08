@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { MyAPStudentChart } from 'pages/TeacherPage/StudentChart/MyAPStudentChart';
 import { useEffect, useState } from 'react';
 import { Attendance } from '../Attendance/Attendance';
 import { LessonFinder } from '../LessonFinder/LessonFinder';
@@ -21,8 +23,6 @@ import {
   SearchBtnIcon,
   TimetableBtnIcon,
 } from './MyAPPanel.styled';
-import { StudentChart } from 'pages/TeacherPage/StudentChart/StudentChart';
-import axios from 'axios';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -434,7 +434,7 @@ export const MyAPPanel = ({
         <Attendance user={user} isMultipleCourses={isMultipleCourses} />
       )}
       {isFeedbackShown && (
-        <StudentChart user={user} currentStudentChart={currentStudentChart} />
+        <MyAPStudentChart currentStudentChart={currentStudentChart} />
       )}
       {isTimetableShown && (
         <Timetable
