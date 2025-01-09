@@ -193,6 +193,11 @@ export const APPanelToggleBtn = styled(APPanelResetBtn)`
   &.tooltip-open::before {
     transform: translateY(-75%) scale(1, 1);
   }
+
+  &:hover > img,
+  &:focus > img {
+    filter: drop-shadow(2px 2px 4px #bebecc);
+  }
 `;
 
 export const SearchBtnIcon = styled(SearchIcon)`
@@ -301,7 +306,7 @@ export const GuideBtnIcon = styled(GuideIcon)`
 
 export const PanelHideSwitch = styled.div`
   position: absolute;
-  top: 180px;
+  top: 197px;
   right: 0;
 
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
@@ -324,7 +329,7 @@ export const PanelHideSwitch = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    top: 213px;
+    top: 240px;
     transform: translateY(-50%);
     width: 12px;
     height: 42px;
@@ -396,7 +401,7 @@ export const IframeResetLinkButton = styled(APPanel)`
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
 
   &.multiple {
-    top: -76px;
+    top: -42px;
   }
 
   height: auto;
@@ -406,7 +411,7 @@ export const IframeResetLinkButton = styled(APPanel)`
     padding: 15px;
 
     &.multiple {
-      top: -112px;
+      top: -66px;
     }
   }
 
@@ -455,6 +460,23 @@ export const IframeToggleLinkIcon = styled(ToggleIcon)`
   pointer-events: none;
 
   transition: color var(--animation-global);
+`;
+
+export const LangIcon = styled.img`
+  height: 25px;
+  width: 25px;
+  display: block;
+
+  @media screen and (min-width: 768px) {
+    height: 30px;
+    width: 30px;
+  }
+
+  position: relative;
+  pointer-events: none;
+  filter: drop-shadow(2px 2px 4px transparent);
+
+  transition: filter var(--animation-global);
 `;
 
 export const IframeMarathonLinkPanel = styled(APPanel)`

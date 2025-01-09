@@ -20,6 +20,7 @@ export const UniTimeTableEditForm = ({
   uniOptions,
   pedagogiumMarathonOptions,
   wstijoMarathonOptions,
+  wsbmirMarathonOptions,
   daysOptions,
   closeEditForm,
 }) => {
@@ -114,6 +115,8 @@ export const UniTimeTableEditForm = ({
             options={
               uniValue.includes('WSTJIO')
                 ? wstijoMarathonOptions
+                : uniValue.includes('WSBMIR')
+                ? wsbmirMarathonOptions
                 : pedagogiumMarathonOptions
             }
             styles={{
@@ -130,6 +133,9 @@ export const UniTimeTableEditForm = ({
                 option => option.value === lessonToEdit.marathon
               ) ||
               pedagogiumMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              wsbmirMarathonOptions.find(
                 option => option.value === lessonToEdit.marathon
               )
             }

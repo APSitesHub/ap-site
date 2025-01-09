@@ -28,6 +28,7 @@ export const UniUserEditForm = ({
   uniOptions,
   pedagogiumMarathonOptions,
   wstijoMarathonOptions,
+  wsbmirMarathonOptions,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [uniValue, setUniValue] = useState(
@@ -38,6 +39,10 @@ export const UniUserEditForm = ({
     uniValue.value ===
       'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
       ? wstijoMarathonOptions.find(
+          option => option.value === userToEdit.marathonId
+        )
+      : uniValue.value === 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
+      ? wsbmirMarathonOptions.find(
           option => option.value === userToEdit.marathonId
         )
       : pedagogiumMarathonOptions.find(
@@ -212,12 +217,20 @@ export const UniUserEditForm = ({
                   uniValue.value ===
                   'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
                     ? wstijoMarathonOptions
+                    : uniValue.value ===
+                      'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
+                    ? wsbmirMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 defaultValue={
                   uniValue.value ===
                   'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
                     ? wstijoMarathonOptions.find(
+                        option => option.value === userToEdit.marathonId
+                      )
+                    : uniValue.value ===
+                      'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
+                    ? wsbmirMarathonOptions.find(
                         option => option.value === userToEdit.marathonId
                       )
                     : pedagogiumMarathonOptions.find(

@@ -58,10 +58,10 @@ const UserAdminPanel = () => {
       label: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
       value: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
     },
-    // {
-    //   label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
-    //   value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
-    // },
+    {
+      label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+      value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -83,6 +83,17 @@ const UserAdminPanel = () => {
     {
       label: 'Kurs Przygotowawczy (WSTIJO)',
       value: '72468',
+    },
+  ];
+
+  const wsbmirMarathonOptions = [
+    {
+      label: 'Logistics (WSBMiR)',
+      value: '80641',
+    },
+    {
+      label: 'Kurs Przygotowawczy (WSBMiR)',
+      value: '80640',
     },
   ];
 
@@ -427,6 +438,9 @@ const UserAdminPanel = () => {
                       uniValue.value ===
                       'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
                         ? wstijoMarathonOptions
+                        : uniValue.value ===
+                          'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
+                        ? wsbmirMarathonOptions
                         : pedagogiumMarathonOptions
                     }
                     styles={{
@@ -571,6 +585,7 @@ const UserAdminPanel = () => {
               uniOptions={uniOptions}
               pedagogiumMarathonOptions={pedagogiumMarathonOptions}
               wstijoMarathonOptions={wstijoMarathonOptions}
+              wsbmirMarathonOptions={wsbmirMarathonOptions}
             />
           </Backdrop>
         )}

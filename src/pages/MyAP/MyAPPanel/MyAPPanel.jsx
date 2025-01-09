@@ -8,14 +8,12 @@ import { Timetable } from '../Timetable.jsx/Timetable';
 import {
   APPanel,
   APPanelBtn,
-  APPanelResetBtn,
   APPanelToggleBtn,
   CalendarBtnIcon,
   CupBtnIcon,
   FeedbackBtnIcon,
   IframeResetLinkButton,
-  IframeSetLinkIcon,
-  IframeToggleLinkIcon,
+  LangIcon,
   PanelBackdrop,
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
@@ -23,6 +21,10 @@ import {
   SearchBtnIcon,
   TimetableBtnIcon,
 } from './MyAPPanel.styled';
+
+import de from '../../../img/svg/myap/langs/de.png';
+import en from '../../../img/svg/myap/langs/en.png';
+import pl from '../../../img/svg/myap/langs/pl.png';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -205,7 +207,7 @@ export const MyAPPanel = ({
 
   const panelStyles = () => {
     return {
-      top: isMultipleCourses ? '184px' : '142px',
+      top: isMultipleCourses ? '145px' : '129px',
     };
   };
 
@@ -312,8 +314,11 @@ export const MyAPPanel = ({
         className={isButtonBoxShown ? '' : 'hidden'}
         style={{ ...panelStyles() }}
       >
-        <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
-          <APPanelResetBtn
+        {isMultipleCourses && (
+          <IframeResetLinkButton
+            className={isMultipleCourses ? 'multiple' : ''}
+          >
+            {/* <APPanelResetBtn
             id="reset-btn"
             className={isMultipleCourses ? 'multiple' : ''}
             onMouseEnter={e => toggleTooltip(e)}
@@ -325,8 +330,8 @@ export const MyAPPanel = ({
             }}
           >
             <IframeSetLinkIcon />
-          </APPanelResetBtn>
-          {isMultipleCourses && (
+          </APPanelResetBtn> */}
+
             <APPanelToggleBtn
               id="toggle-btn"
               onMouseEnter={e => toggleTooltip(e)}
@@ -347,10 +352,19 @@ export const MyAPPanel = ({
                 );
               }}
             >
-              <IframeToggleLinkIcon />
+
+              <LangIcon
+                src={
+                  language.includes('de')
+                    ? de
+                    : language.includes('pl')
+                    ? pl
+                    : en
+                }
+              />
             </APPanelToggleBtn>
-          )}
-        </IframeResetLinkButton>
+          </IframeResetLinkButton>
+        )}
         <APPanelBtn
           onClick={toggleSearch}
           onMouseEnter={e => toggleTooltip(e)}

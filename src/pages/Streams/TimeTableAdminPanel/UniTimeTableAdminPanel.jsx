@@ -183,10 +183,10 @@ const UniTimeTableAdminPanel = () => {
       label: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
       value: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
     },
-    // {
-    //   label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
-    //   value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
-    // },
+    {
+      label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+      value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -208,6 +208,17 @@ const UniTimeTableAdminPanel = () => {
     {
       label: 'Kurs Przygotowawczy (WSTIJO)',
       value: '72468',
+    },
+  ];
+
+  const wsbmirMarathonOptions = [
+    {
+      label: 'Logistics (WSBMiR)',
+      value: '80641',
+    },
+    {
+      label: 'Kurs Przygotowawczy (WSBMiR)',
+      value: '80640',
     },
   ];
 
@@ -346,6 +357,9 @@ const UniTimeTableAdminPanel = () => {
                   uniValue ===
                   'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
                     ? wstijoMarathonOptions
+                    : uniValue ===
+                      'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
+                    ? wsbmirMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -418,7 +432,13 @@ const UniTimeTableAdminPanel = () => {
                         timetable.marathon === '78737'
                       ? `Logistics ${timetable.marathon}`
                       : timetable.university.includes('WSTIJO') &&
-                        timetable.marathon === '78737'
+                        timetable.marathon === '72468'
+                      ? `Kurs Przygotowawczy ${timetable.marathon}`
+                      : timetable.university.includes('WSBMIR') &&
+                        timetable.marathon === '80641'
+                      ? `Logistics ${timetable.marathon}`
+                      : timetable.university.includes('WSBMIR') &&
+                        timetable.marathon === '80640'
                       ? `Kurs Przygotowawczy ${timetable.marathon}`
                       : ''}{' '}
                     <UserEditButton
@@ -480,6 +500,7 @@ const UniTimeTableAdminPanel = () => {
               uniOptions={uniOptions}
               pedagogiumMarathonOptions={pedagogiumMarathonOptions}
               wstijoMarathonOptions={wstijoMarathonOptions}
+              wsbmirMarathonOptions={wsbmirMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
             />
@@ -492,6 +513,7 @@ const UniTimeTableAdminPanel = () => {
               uniOptions={uniOptions}
               pedagogiumMarathonOptions={pedagogiumMarathonOptions}
               wstijoMarathonOptions={wstijoMarathonOptions}
+              wsbmirMarathonOptions={wsbmirMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>
