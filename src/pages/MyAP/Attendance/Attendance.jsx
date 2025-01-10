@@ -25,7 +25,11 @@ import {
   VisitedYearBox,
 } from './Attendance.styled';
 
-export const Attendance = ({ user, isMultipleCourses }) => {
+export const Attendance = ({
+  user,
+  personalLessonsDays,
+  isMultipleCourses,
+}) => {
   const [week, setWeek] = useState(new Date().getDate() - new Date().getDay());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
@@ -54,9 +58,23 @@ export const Attendance = ({ user, isMultipleCourses }) => {
     'Грудень',
   ];
 
+  console.log(personalLessonsDays);
+
+  const DATES_TO_EXCLUDE = [
+    new Date(2025, 1, 1),
+    new Date(2025, 1, 2),
+    new Date(2025, 1, 3),
+    new Date(2025, 1, 4),
+    new Date(2025, 1, 5),
+  ];
+
+console.log(DATES_TO_EXCLUDE);
+
+
   useEffect(() => {
     const getLessonDaysForWeeks = () => {
       let date = new Date(year, month - 1, week + 1);
+      console.log(date);
 
       const sunday = date.getDate() - date.getDay();
 
@@ -70,7 +88,7 @@ export const Attendance = ({ user, isMultipleCourses }) => {
 
       while (date.getDay() <= 6 && i < 7) {
         i += 1;
-        if (date.getDay() >= 1 && date.getDay() <= 4) {
+        if (personalLessonsDays.includes(date.getDay())) {
           lessonDays.push(
             new Date(
               date.getFullYear(),
@@ -93,7 +111,7 @@ export const Attendance = ({ user, isMultipleCourses }) => {
 
       date.setDate(1);
       while (date.getMonth() + 1 === month) {
-        if (date.getDay() >= 1 && date.getDay() <= 4) {
+        if (personalLessonsDays.includes(date.getDay())) {
           lessonDays.push(
             new Date(
               date.getFullYear(),
@@ -118,7 +136,7 @@ export const Attendance = ({ user, isMultipleCourses }) => {
       date.setMonth(0);
 
       while (date.getFullYear() === year) {
-        if (date.getDay() >= 1 && date.getDay() <= 4) {
+        if (personalLessonsDays.includes(date.getDay())) {
           lessonDays.push(
             new Date(
               date.getFullYear(),
@@ -133,7 +151,7 @@ export const Attendance = ({ user, isMultipleCourses }) => {
       SetLessonDaysForYear(days => (days = lessonDays));
     };
     getLessonDaysForYears();
-  }, [week, month, year]);
+  }, [week, month, year, personalLessonsDays]);
 
   const decreaseWeek = () => {
     const newWeek = week - 7;
@@ -266,7 +284,7 @@ export const Attendance = ({ user, isMultipleCourses }) => {
 
     date.setDate(1);
     while (date.getMonth() + 1 === passedMonth) {
-      if (date.getDay() >= 1 && date.getDay() <= 4) {
+      if (personalLessonsDays.includes(date.getDay())) {
         lessonDaysForPassedMonth.push(
           new Date(
             date.getFullYear(),
@@ -334,10 +352,24 @@ export const Attendance = ({ user, isMultipleCourses }) => {
 
   const calculateWeeklyUnattended = () => {
     const lessonDays = lessonDaysForWeek;
+    let dateToSlice = new Date().getDate();
 
-    const currentDay = lessonDays.findIndex(
+    const getLessonDayIndex = () =>
+      lessonDays.findIndex(
+        lessonDay =>
+          new Date(lessonDay).getDate() === dateToSlice &&
+          new Date(lessonDay).getMonth() === new Date().getMonth()
+      );
+
+    let currentDay = getLessonDayIndex();
+    while (getLessonDayIndex() < 0 && dateToSlice >= 1) {
+      dateToSlice -= 1;
+      getLessonDayIndex();
+    }
+
+    currentDay = lessonDays.findIndex(
       lessonDay =>
-        new Date(lessonDay).getDate() === new Date().getDate() &&
+        new Date(lessonDay).getDate() === dateToSlice &&
         new Date(lessonDay).getMonth() === new Date().getMonth()
     );
 
@@ -354,9 +386,25 @@ export const Attendance = ({ user, isMultipleCourses }) => {
 
   const calculateMonthlyUnattended = () => {
     const lessonDays = lessonDaysForMonth;
-    const currentDay = lessonDays.findIndex(
+
+    let dateToSlice = new Date().getDate();
+
+    const getLessonDayIndex = () =>
+      lessonDays.findIndex(
+        lessonDay =>
+          new Date(lessonDay).getDate() === dateToSlice &&
+          new Date(lessonDay).getMonth() === new Date().getMonth()
+      );
+
+    let currentDay = getLessonDayIndex();
+    while (getLessonDayIndex() < 0 && dateToSlice >= 1) {
+      dateToSlice -= 1;
+      getLessonDayIndex();
+    }
+
+    currentDay = lessonDays.findIndex(
       lessonDay =>
-        new Date(lessonDay).getDate() === new Date().getDate() &&
+        new Date(lessonDay).getDate() === dateToSlice &&
         new Date(lessonDay).getMonth() === new Date().getMonth()
     );
 

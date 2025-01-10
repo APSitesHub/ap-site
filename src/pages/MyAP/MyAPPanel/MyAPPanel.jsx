@@ -56,6 +56,18 @@ export const MyAPPanel = ({
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
   // const [isMarathonBtnClicked, setIsMarathonBtnClicked] = useState(false);
 
+  const personalTimetable = timetable.find(timeline =>
+    language === 'enkids' && user.knowledge.includes('beginner')
+      ? timeline.lang === language &&
+        timeline.course === user.course &&
+        timeline.level === user.knowledge
+      : timeline.lang === language && timeline.course === user.course
+  );
+
+  const personalLessonsDays = personalTimetable.schedule.map(
+    lesson => lesson.day
+  );
+
   const toggleButtonBox = () => {
     hideBackdrop();
     setIsButtonBoxShown(isShown => !isShown);
@@ -352,7 +364,6 @@ export const MyAPPanel = ({
                 );
               }}
             >
-
               <LangIcon
                 src={
                   language.includes('de')
@@ -445,7 +456,11 @@ export const MyAPPanel = ({
         />
       )}
       {isCalendarShown && (
-        <Attendance user={user} isMultipleCourses={isMultipleCourses} />
+        <Attendance
+          user={user}
+          personalLessonsDays={personalLessonsDays}
+          isMultipleCourses={isMultipleCourses}
+        />
       )}
       {isFeedbackShown && (
         <MyAPStudentChart currentStudentChart={currentStudentChart} />
