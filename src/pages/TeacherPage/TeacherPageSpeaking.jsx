@@ -158,7 +158,7 @@ const TeacherPageSpeaking = () => {
       try {
         setIsLoading(isLoading => (isLoading = true));
         page === 'kids-c1sc'
-          ? setCourse('13')
+          ? setCourse('10')
           : setCourse(
               (await axios.get('/timetable')).data.filter(
                 timetable =>

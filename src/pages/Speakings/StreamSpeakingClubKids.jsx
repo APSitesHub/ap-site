@@ -199,6 +199,7 @@ const StreamSpeakingClubKids = () => {
               </StreamRefreshText>
             </StreamPlaceHolder>
           )}
+          {console.log(202, page)}
           {(((course === user.course ||
             user.course
               ?.split('/')
@@ -208,7 +209,10 @@ const StreamSpeakingClubKids = () => {
             redirectLink !== '1' &&
             isApproved) ||
             (user.name === 'Dev Acc' && isApproved) ||
-            (user.course === '10' && user.lang === 'enkids' && isApproved) ||
+            (user.course === '10' &&
+              user.lang === 'enkids' &&
+              page === 'c1sc' &&
+              isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&
             redirectLink !== '1' &&
             window.location.replace(redirectLink)}
