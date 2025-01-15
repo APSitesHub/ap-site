@@ -190,7 +190,8 @@ export const StreamPolskiB2 = () => {
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
-            AP Education Center на канікулах до 06.01. Гарних свят!
+            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви
+            перейшли за правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (

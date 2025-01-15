@@ -68,6 +68,7 @@ import { TrialsDeKahootForm } from './TrialsDeKahootForm';
 import { TrialsEngKahootForm } from './TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from './TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from './TrialsPlKahootForm';
+import { PolskiA03KahootForm } from './PolskiA03KahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -202,6 +203,9 @@ export const KahootAdminPanel = () => {
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pl-a0_2')}>
               PL A0_2
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('pl-a0_3')}>
+              PL A0_3
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pl')}>PL</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pl-a2')}>
@@ -353,6 +357,9 @@ export const KahootAdminPanel = () => {
           )}
           {levels.includes('pl-a0_2') && (
             <PolskiA02KahootForm destination={destination} />
+          )}
+          {levels.includes('pl-a0_3') && (
+            <PolskiA03KahootForm destination={destination} />
           )}
           {levels.includes('pl') && (
             <PolskiKahootForm destination={destination} />

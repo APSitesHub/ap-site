@@ -338,6 +338,11 @@ const TeacherPageFarm = lazy(() =>
     /* webpackChunkName: "Teacher Page Farm" */ '../pages/TeacherPage/TeacherPageFarm'
   )
 );
+const TeacherPageWarehouse = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouse'
+  )
+);
 const TeacherPageVertical = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPageVertical'
@@ -773,6 +778,7 @@ export const App = () => {
             <Route path="dekidsfree" element={<TeacherPage />} />
             <Route path="polski-a0" element={<TeacherPage />} />
             <Route path="polski-a0_2" element={<TeacherPageFarm />} />
+            <Route path="polski-a0_3" element={<TeacherPageWarehouse />} />
             <Route path="polski-a1" element={<TeacherPage />} />
             <Route path="polski-a1free" element={<TeacherPage />} />
             <Route path="polski-a2" element={<TeacherPage />} />

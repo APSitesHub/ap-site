@@ -89,6 +89,7 @@ const AdminPanel = () => {
     deutscha2free: '',
     polskia0: '',
     polskia0_2: '',
+    polskia0_3: '',
     polski: '',
     polskia2: '',
     polskib1: '',
@@ -140,6 +141,7 @@ const AdminPanel = () => {
     deutscha2free: yup.string().optional(),
     polskia0: yup.string().optional(),
     polskia0_2: yup.string().optional(),
+    polskia0_3: yup.string().optional(),
     polski: yup.string().optional(),
     polskia2: yup.string().optional(),
     polskib1: yup.string().optional(),
@@ -351,6 +353,14 @@ const AdminPanel = () => {
                     placeholder="Polski A0_2 link"
                   />
                   <AdminInputNote component="p" name="polskia0_2" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="polskia0_3"
+                    placeholder="Polski A0_3 link"
+                  />
+                  <AdminInputNote component="p" name="polskia0_3" />
                 </Label>
                 <Label>
                   <AdminInput

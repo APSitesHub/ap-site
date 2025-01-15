@@ -50,6 +50,7 @@ export const WhiteBoard = ({
     deutscha2free: 'https://limnu.com/d/draw.html?b=B_KdJXJLGRTiZEU4&',
     polskia0: 'https://limnu.com/d/draw.html?b=B_GM2gKaJZSjyzC2&',
     polskia0_2: 'https://limnu.com/d/draw.html?b=B_N2DD7ESSSWyJHh&',
+    polskia0_3: 'https://limnu.com/d/draw.html?b=B_N2DD7ESSSWyJHh&',
     polski: 'https://limnu.com/d/draw.html?b=B_9TsX3j3TmSHNPn&',
     polskia2: 'https://limnu.com/d/draw.html?b=B_40CRsvLLTp6Wq5&',
     polskib1: 'https://limnu.com/d/draw.html?b=B_OpIkiLsES66saB&',
