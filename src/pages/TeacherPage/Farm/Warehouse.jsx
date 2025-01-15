@@ -35,7 +35,7 @@ export const Warehouse = ({ isWarehouseOpen, isOpenedLast, sectionWidth }) => {
         <iframe
           id="warehouse"
           title="warehouse"
-          src="https://panos.highfoto.at/CARGO-PARTNER/VT_cargo-partner_bratislava.html"
+          src="https://my.matterport.com/show/?m=HWhMqLbkiCR"
         ></iframe>
       </FarmBox>
     </>
