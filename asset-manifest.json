@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.2aa62de2.js",
+    "main.js": "/ap-site/static/js/main.9b6d4d26.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -148,9 +148,9 @@
     "static/media/mobile-bg@2x.webp": "/ap-site/static/media/mobile-bg@2x.c463e5de7030972db5f0.webp",
     "static/media/instagram-outline-bold.svg": "/ap-site/static/media/instagram-outline-bold.17b35d30b218841450f891832420fa64.svg",
     "static/media/instagram-outline.svg": "/ap-site/static/media/instagram-outline.12da70e24a5ceee842b4e59cc4db6648.svg",
-    "index.html": "/ap-site/index.html",
     "static/media/chat-bg.webp": "/ap-site/static/media/chat-bg.b1a88e54d62d162fc5b8.webp",
     "static/media/tablet-bg@1x.webp": "/ap-site/static/media/tablet-bg@1x.6d8d9f08f2c3528d9894.webp",
+    "index.html": "/ap-site/index.html",
     "static/media/calendar.svg": "/ap-site/static/media/calendar.42f98972773144cbe07eedae4536c204.svg",
     "static/media/cow.svg": "/ap-site/static/media/cow.8a3d1fb4e35023194a16a37ed974398e.svg",
     "static/media/mobile-bg@1x.webp": "/ap-site/static/media/mobile-bg@1x.d451324c9741b772df84.webp",
@@ -262,7 +262,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.2aa62de2.js.map": "/ap-site/static/js/main.2aa62de2.js.map",
+    "main.9b6d4d26.js.map": "/ap-site/static/js/main.9b6d4d26.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -377,6 +377,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.2aa62de2.js"
+    "static/js/main.9b6d4d26.js"
   ]
 }
