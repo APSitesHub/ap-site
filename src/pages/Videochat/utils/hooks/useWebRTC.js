@@ -8,15 +8,12 @@ export const LOCAL_VIDEO = 'LOCAL_VIDEO';
 
 export default function useWebRTC(roomID) {
   const [clients, updateClients] = useStateWithCallback([]);
-  const [isCameraEnabled, setCameraEnabled] = useState(true);
-  const [isMicrophoneEnabled, setMicrophoneEnabled] = useState(true);
+  const [isLocalCameraEnabled, setLocalCameraEnabled] = useState(true);
+  const [isLocalMicrophoneEnabled, setLocalMicrophoneEnabled] = useState(true);
 
-  const determineRole = useCallback(peerID => {
+  const determineRole = useCallback((newClient) => {
     // TODO: implement a normal role determination
-    if (peerID === LOCAL_VIDEO) {
-      return 'admin';
-    }
-    return 'user';
+    return newClient === LOCAL_VIDEO ? 'admin' : 'user';
   }, []);
 
   const addNewClient = useCallback(
@@ -56,7 +53,20 @@ export default function useWebRTC(roomID) {
       if (videoTrack) {
         videoTrack.enabled = !videoTrack.enabled;
 
-        setCameraEnabled(videoTrack.enabled);
+        Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
+          const vt = targetObj.getSenders().find(sender => sender.track.kind === 'video');
+          vt.track.enabled = videoTrack.enabled;
+        });
+
+        setLocalCameraEnabled(videoTrack.enabled);
+        const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
+
+        if (videoTrack.enabled) {
+          localVideoElement.srcObject = localMediaStream.current;
+        } else {
+          localVideoElement.srcObject = null;
+        }
+
         socket.emit(ACTIONS.TOGGLE_CAMERA, {
           isCameraEnabled: videoTrack.enabled,
         });
@@ -72,7 +82,13 @@ export default function useWebRTC(roomID) {
 
       if (audioTrack) {
         audioTrack.enabled = !audioTrack.enabled;
-        setMicrophoneEnabled(audioTrack.enabled);
+
+        Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
+          const at = targetObj.getSenders().find(sender => sender.track.kind === 'audio');
+          at.track.enabled = audioTrack.enabled;
+        });
+
+        setLocalMicrophoneEnabled(audioTrack.enabled);
         socket.emit(ACTIONS.TOGGLE_MICRO, {
           isMicroEnabled: audioTrack.enabled,
         });
@@ -285,7 +301,7 @@ export default function useWebRTC(roomID) {
     provideMediaRef,
     toggleCamera,
     toggleMicrophone,
-    isCameraEnabled,
-    isMicrophoneEnabled,
+    isLocalCameraEnabled,
+    isLocalMicrophoneEnabled,
   };
 }

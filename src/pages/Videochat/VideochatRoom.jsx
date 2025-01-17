@@ -25,8 +25,8 @@ function VideochatRoom() {
     provideMediaRef,
     toggleCamera,
     toggleMicrophone,
-    isCameraEnabled,
-    isMicrophoneEnabled,
+    isLocalCameraEnabled,
+    isLocalMicrophoneEnabled,
   } = useWebRTC(roomID);
   const [allDevices, setAllDevices] = useState([]);
   const [videoDevices, setVideoDevices] = useState([]);
@@ -34,13 +34,6 @@ function VideochatRoom() {
   const [selectedVideoDevice, setSelectedVideoDevice] = useState(null);
   const [selectedAudioDevice, setSelectedAudioDevice] = useState(null);
   const queryParams = new URLSearchParams(location.search);
-  const userId = queryParams.get('userId');
-
-  useEffect(() => {
-    if (userId) {
-    } else {
-    }
-  }, [clients]);
 
   useEffect(() => {
     getAllDevices();
@@ -109,10 +102,10 @@ function VideochatRoom() {
                   playsInline
                   muted={clientId === LOCAL_VIDEO}
                 />
-                {!isCameraEnabled && (
+                {!isLocalCameraEnabled && (
                   <DisabledMicroIcon>Camera Disabled</DisabledMicroIcon>
                 )}
-                {!isMicrophoneEnabled && (
+                {!isLocalMicrophoneEnabled && (
                   <DisabledMicroIcon>Micro Disabled</DisabledMicroIcon>
                 )}
               </MainVideo>
