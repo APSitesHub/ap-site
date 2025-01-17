@@ -466,353 +466,355 @@ export const App = () => {
           top: '10%',
         }}
       />
-      <Suspense fallback={Loader}>
-        <Routes>
-          <Route path="/" element={<SharedLayout utms={utms} />}>
-            <Route index element={<NewDesign utms={utms} />} />
-            <Route path="english" element={<English utms={utms} />} />
-            <Route path="deutsch" element={<Deutsch utms={utms} />} />
-            <Route path="polski" element={<Polski utms={utms} />} />
-            <Route path="school" element={<School utms={utms} />} />
-            <Route path="university" element={<University utms={utms} />} />
+      <Suspense fallback={Loader} noindex={true}>
+        <Routes noindex={true}>
+          <Route path="/" element={<SharedLayout utms={utms} noindex={true} />}>
+            <Route index element={<NewDesign utms={utms} noindex={true} />} />
+            <Route path="english" element={<English utms={utms} noindex={true} />} />
+            <Route path="deutsch" element={<Deutsch utms={utms} noindex={true} />} />
+            <Route path="polski" element={<Polski utms={utms} noindex={true} />} />
+            <Route path="school" element={<School utms={utms} noindex={true} />} />
+            <Route path="university" element={<University utms={utms} noindex={true} />} />
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
-            <Route path="a0" element={<StreamA0 />} />
-            <Route path="a0sc" element={<StreamSpeakingClub />} />
-            <Route path="a0-chat" element={<WindowedChat />} />
-            <Route path="a0_2" element={<StreamA02 />} />
-            <Route path="a0_2sc" element={<StreamSpeakingClub />} />
-            <Route path="a0_2-chat" element={<WindowedChat />} />
-            <Route path="a1" element={<StreamA1 />} />
-            <Route path="a1sc" element={<StreamSpeakingClub />} />
-            <Route path="a1-chat" element={<WindowedChat />} />
-            <Route path="a2" element={<StreamA2 />} />
-            <Route path="a2sc" element={<StreamSpeakingClub />} />
-            <Route path="a2-chat" element={<WindowedChat />} />
-            <Route path="b1" element={<StreamB1 />} />
-            <Route path="b1sc" element={<StreamSpeakingClub />} />
-            <Route path="b1-chat" element={<WindowedChat />} />
-            <Route path="b2" element={<StreamB2 />} />
-            <Route path="b2sc" element={<StreamSpeakingClub />} />
-            <Route path="b2-chat" element={<WindowedChat />} />
-            <Route path="c1" element={<StreamC1 />} />
-            <Route path="c1sc" element={<StreamSpeakingClub />} />
-            <Route path="c1-chat" element={<WindowedChat />} />
-            <Route path="a1free" element={<StreamA1Free />} />
-            <Route path="a1free-chat" element={<WindowedChat />} />
-            <Route path="a2free" element={<StreamA2Free />} />
-            <Route path="a2free-chat" element={<WindowedChat />} />
-            <Route path="deutscha0" element={<StreamDeutschA0 />} />
-            <Route path="dea0sc" element={<StreamSpeakingClub />} />
-            <Route path="deutscha0-chat" element={<WindowedChat />} />
-            <Route path="deutscha0_2" element={<StreamDeutschA02 />} />
-            <Route path="dea0_2sc" element={<StreamSpeakingClub />} />
-            <Route path="deutscha0_2-chat" element={<WindowedChat />} />
-            <Route path="deutsch" element={<StreamDeutsch />} />
-            <Route path="dea1sc" element={<StreamSpeakingClub />} />
-            <Route path="deutsch-chat" element={<WindowedChat />} />
-            <Route path="deutscha2" element={<StreamDeutschA2 />} />
-            <Route path="dea2sc" element={<StreamSpeakingClub />} />
-            <Route path="deutscha2-chat" element={<WindowedChat />} />
-            <Route path="deutschb1" element={<StreamDeutschB1 />} />
-            <Route path="deb1sc" element={<StreamSpeakingClub />} />
-            <Route path="deutschb1-chat" element={<WindowedChat />} />
-            <Route path="deutschb2" element={<StreamDeutschB2 />} />
-            <Route path="deb2sc" element={<StreamSpeakingClub />} />
-            <Route path="deutschb2-chat" element={<WindowedChat />} />
-            <Route path="dec1sc" element={<StreamSpeakingClub />} />
-            <Route path="deutschfree" element={<StreamDeutschFree />} />
-            <Route path="deutschfree-chat" element={<WindowedChat />} />
-            <Route path="deutscha2free" element={<StreamDeutschA2Free />} />
-            <Route path="deutscha2free-chat" element={<WindowedChat />} />
-            <Route path="polskia0" element={<StreamPolskiA0 />} />
-            <Route path="pla0sc" element={<StreamSpeakingClub />} />
-            <Route path="polskia0-chat" element={<WindowedChat />} />
-            <Route path="polskia0_2" element={<StreamPolskiA02 />} />
-            <Route path="polskia0_2-chat" element={<WindowedChat />} />
-            <Route path="polski" element={<StreamPolski />} />
-            <Route path="pla1sc" element={<StreamSpeakingClub />} />
-            <Route path="polski-chat" element={<WindowedChat />} />
-            <Route path="polskia2" element={<StreamPolskiA2 />} />
-            <Route path="pla2sc" element={<StreamSpeakingClub />} />
-            <Route path="polskia2-chat" element={<WindowedChat />} />
-            <Route path="polskib1" element={<StreamPolskiB1 />} />
-            <Route path="plb1sc" element={<StreamSpeakingClub />} />
-            <Route path="polskib1-chat" element={<WindowedChat />} />
-            <Route path="polskib2" element={<StreamPolskiB2 />} />
-            <Route path="plb2sc" element={<StreamSpeakingClub />} />
-            <Route path="polskib2-chat" element={<WindowedChat />} />
-            <Route path="plc1sc" element={<StreamSpeakingClub />} />
-            <Route path="polskifree" element={<StreamPolskiFree />} />
-            <Route path="polskifree-chat" element={<WindowedChat />} />
-            <Route path="nmt_ukr" element={<NMTUkr />} />
-            <Route path="nmt_ukrsc" element={<StreamSpeakingClub />} />
-            <Route path="nmt_ukr-chat" element={<WindowedChat />} />
-            <Route path="nmt_en" element={<NMTEn />} />
-            <Route path="nmt_ensc" element={<StreamSpeakingClub />} />
-            <Route path="nmt_en-chat" element={<WindowedChat />} />
-            <Route path="nmt_math" element={<NMTMath />} />
-            <Route path="nmt_mathsc" element={<StreamSpeakingClub />} />
-            <Route path="nmt_math-chat" element={<WindowedChat />} />
-            <Route path="nmt_history" element={<NMTHistory />} />
-            <Route path="nmt_historysc" element={<StreamSpeakingClub />} />
-            <Route path="nmt_history-chat" element={<WindowedChat />} />
-            <Route path="test" element={<StreamTest />} />
-            <Route path="test-chat" element={<WindowedChat />} />
-            <Route path="record-chat" element={<WindowedChat />} />
-            <Route path="apconf" element={<APConf />} />
-            <Route path="apconf-chat" element={<WindowedChat />} />
-            <Route path="stream-admin-panel" element={<AdminPanel />} />
-            <Route path="uni-stream-admin-panel" element={<UniAdminPanel />} />
+            <Route path="a0" element={<StreamA0 />} noindex={true}/>
+            <Route path="a0sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="a0-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="a0_2" element={<StreamA02 />} noindex={true}/>
+            <Route path="a0_2sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="a0_2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="a1" element={<StreamA1 />} noindex={true}/>
+            <Route path="a1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="a1-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="a2" element={<StreamA2 />} noindex={true}/>
+            <Route path="a2sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="a2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="b1" element={<StreamB1 />} noindex={true}/>
+            <Route path="b1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="b1-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="b2" element={<StreamB2 />} noindex={true}/>
+            <Route path="b2sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="b2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="c1" element={<StreamC1 />} noindex={true}/>
+            <Route path="c1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="c1-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="a1free" element={<StreamA1Free />} noindex={true}/>
+            <Route path="a1free-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="a2free" element={<StreamA2Free />} noindex={true}/>
+            <Route path="a2free-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="deutscha0" element={<StreamDeutschA0 />} noindex={true}/>
+            <Route path="dea0sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="deutscha0-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="deutscha0_2" element={<StreamDeutschA02 />} noindex={true}/>
+            <Route path="dea0_2sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="deutscha0_2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="deutsch" element={<StreamDeutsch />} noindex={true}/>
+            <Route path="dea1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="deutsch-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="deutscha2" element={<StreamDeutschA2 />} noindex={true}/>
+            <Route path="dea2sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="deutscha2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="deutschb1" element={<StreamDeutschB1 />} noindex={true}/>
+            <Route path="deb1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="deutschb1-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="deutschb2" element={<StreamDeutschB2 />} noindex={true}/>
+            <Route path="deb2sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="deutschb2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="dec1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="deutschfree" element={<StreamDeutschFree />} noindex={true}/>
+            <Route path="deutschfree-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="deutscha2free" element={<StreamDeutschA2Free />} noindex={true}/>
+            <Route path="deutscha2free-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="polskia0" element={<StreamPolskiA0 />} noindex={true}/>
+            <Route path="pla0sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="polskia0-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="polskia0_2" element={<StreamPolskiA02 />} noindex={true}/>
+            <Route path="polskia0_2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="polski" element={<StreamPolski />} noindex={true}/>
+            <Route path="pla1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="polski-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="polskia2" element={<StreamPolskiA2 />} noindex={true}/>
+            <Route path="pla2sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="polskia2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="polskib1" element={<StreamPolskiB1 />} noindex={true}/>
+            <Route path="plb1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="polskib1-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="polskib2" element={<StreamPolskiB2 />} noindex={true}/>
+            <Route path="plb2sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="polskib2-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="plc1sc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="polskifree" element={<StreamPolskiFree />} noindex={true}/>
+            <Route path="polskifree-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="nmt_ukr" element={<NMTUkr />} noindex={true}/>
+            <Route path="nmt_ukrsc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="nmt_ukr-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="nmt_en" element={<NMTEn />} noindex={true}/>
+            <Route path="nmt_ensc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="nmt_en-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="nmt_math" element={<NMTMath />} noindex={true}/>
+            <Route path="nmt_mathsc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="nmt_math-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="nmt_history" element={<NMTHistory />} noindex={true}/>
+            <Route path="nmt_historysc" element={<StreamSpeakingClub />} noindex={true}/>
+            <Route path="nmt_history-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="test" element={<StreamTest />} noindex={true}/>
+            <Route path="test-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="record-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="apconf" element={<APConf />} noindex={true}/>
+            <Route path="apconf-chat" element={<WindowedChat />} noindex={true}/>
+            <Route path="stream-admin-panel" element={<AdminPanel />} noindex={true}/>
+            <Route path="uni-stream-admin-panel" element={<UniAdminPanel />} noindex={true}/>
             <Route
               path="speaking-admin-panel"
               element={<SpeakingAdminPanel />}
+              noindex={true}
             />
-            <Route path="kahoot-admin-panel" element={<KahootAdminPanel />} />
+            <Route path="kahoot-admin-panel" element={<KahootAdminPanel />} noindex={true}/>
             <Route
               path="uni-kahoot-admin-panel"
               element={<UniKahootAdminPanel />}
-            />
+              noindex={true}/>
             <Route
               path="host-kahoot-admin-panel"
               element={<HostKahootAdminPanel />}
-            />
+              noindex={true}/>
             <Route
               path="uni-host-kahoot-admin-panel"
               element={<UniHostKahootAdminPanel />}
-            />
-            <Route path="user-admin-panel" element={<UserAdminPanel />} />
-            <Route path="pl-user-admin-panel" element={<UniUserAdminPanel />} />
-            <Route path="c1-speaking-panel" element={<C1SpeakingPanel />} />
+              noindex={true}/>
+            <Route path="user-admin-panel" element={<UserAdminPanel />} noindex={true}/>
+            <Route path="pl-user-admin-panel" element={<UniUserAdminPanel />} noindex={true}/>
+            <Route path="c1-speaking-panel" element={<C1SpeakingPanel />} noindex={true}/>
             <Route
               path="teacher-teamlead-panel"
               element={<TeacherAdminPanel />}
+              noindex={true}
             />
-            <Route path="tcp" element={<TeacherControlPage />} />
-            <Route path="tcp-en" element={<TeacherControlPageEn />} />
-            <Route path="tcp-de" element={<TeacherControlPageDe />} />
-            <Route path="tcp-pl" element={<TeacherControlPagePl />} />
-            <Route path="user-json-panel" element={<UserJsonPanel />} />
-            <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} />
-            <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} />
+            <Route path="tcp" element={<TeacherControlPage />} noindex={true} />
+            <Route path="tcp-en" element={<TeacherControlPageEn />} noindex={true} />
+            <Route path="tcp-de" element={<TeacherControlPageDe />} noindex={true} />
+            <Route path="tcp-pl" element={<TeacherControlPagePl />} noindex={true} />
+            <Route path="user-json-panel" element={<UserJsonPanel />} noindex={true} />
+            <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} noindex={true} />
+            <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} noindex={true} />
             <Route
               path="timetable-admin-panel"
               element={<TimeTableAdminPanel />}
-            />
+            noindex={true}/>
             <Route
               path="uni-timetable-admin-panel"
               element={<UniTimeTableAdminPanel />}
-            />
+            noindex={true}/>
             <Route
               path="teacher-admin-panel"
               element={<TeacherLessonsAdminPanel />}
-            />
+            noindex={true}/>
             <Route
               path="collection-admin-panel"
               element={<CollectionsAdminPanel />}
-            />
+            noindex={true}/>
             <Route
               path="uni-collection-admin-panel"
               element={<UniCollectionsAdminPanel />}
-            />
+            noindex={true}/>
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>
-            <Route path="preschool" element={<Preschool />} />
-            <Route path="preschoolsc" element={<StreamSpeakingClubKids />} />
-            <Route path="preschool-chat" element={<WindowedChat />} />
-            <Route path="pre" element={<KidsPRE />} />
-            <Route path="presc" element={<StreamSpeakingClubKids />} />
-            <Route path="pre-chat" element={<WindowedChat />} />
-            <Route path="beg" element={<KidsBEG />} />
-            <Route path="begsc" element={<StreamSpeakingClubKids />} />
-            <Route path="beg-chat" element={<WindowedChat />} />
-            <Route path="mid" element={<KidsMID />} />
-            <Route path="midsc" element={<StreamSpeakingClubKids />} />
-            <Route path="mid-chat" element={<WindowedChat />} />
-            <Route path="high" element={<KidsHIGH />} />
-            <Route path="highsc" element={<StreamSpeakingClubKids />} />
-            <Route path="high-chat" element={<WindowedChat />} />
-            <Route path="a0" element={<KidsA0 />} />
-            <Route path="a0sc" element={<StreamSpeakingClubKids />} />
-            <Route path="a0-chat" element={<WindowedChat />} />
-            <Route path="a1" element={<KidsA1 />} />
-            <Route path="a1sc" element={<StreamSpeakingClubKids />} />
-            <Route path="a1-chat" element={<WindowedChat />} />
-            <Route path="a2" element={<KidsA2 />} />
-            <Route path="a2sc" element={<StreamSpeakingClubKids />} />
-            <Route path="a2-chat" element={<WindowedChat />} />
-            <Route path="b1" element={<KidsB1 />} />
-            <Route path="b1sc" element={<StreamSpeakingClubKids />} />
-            <Route path="b1-chat" element={<WindowedChat />} />
-            <Route path="b2" element={<KidsB2 />} />
-            <Route path="b2sc" element={<StreamSpeakingClubKids />} />
-            <Route path="b2-chat" element={<WindowedChat />} />
-            <Route path="c1" element={<KidsC1 />} />
-            <Route path="c1sc" element={<StreamSpeakingClubKids />} />
-            <Route path="c1-chat" element={<WindowedChat />} />
-            <Route path="b1beginner" element={<KidsB1Beginner />} />
-            <Route path="b1beginnersc" element={<StreamSpeakingClubKids />} />
-            <Route path="b1beginner-chat" element={<WindowedChat />} />
-            <Route path="b2beginner" element={<KidsB2Beginner />} />
-            <Route path="b2beginnersc" element={<StreamSpeakingClubKids />} />
-            <Route path="b2beginner-chat" element={<WindowedChat />} />
-            <Route path="dea0" element={<KidsDeA0 />} />
-            <Route path="dea0-chat" element={<WindowedChat />} />
-            <Route path="dea0sc" element={<StreamSpeakingClubKids />} />
-            <Route path="dea1" element={<KidsDeA1 />} />
-            <Route path="dea1-chat" element={<WindowedChat />} />
-            <Route path="dea1sc" element={<StreamSpeakingClubKids />} />
-            <Route path="pla1" element={<KidsPlA1 />} />
-            <Route path="pla1-chat" element={<WindowedChat />} />
-            <Route path="pla1sc" element={<StreamSpeakingClubKids />} />
-            <Route path="a1free" element={<KidsA1Free />} />
-            <Route path="a1free-chat" element={<WindowedChat />} />
-            <Route path="dea1free" element={<KidsDeA1Free />} />
-            <Route path="dea1free-chat" element={<WindowedChat />} />
-            <Route path="pla1free" element={<KidsPlA1Free />} />
-            <Route path="pla1free-chat" element={<WindowedChat />} />
+            <Route path="preschool" element={<Preschool />}  noindex={true}/>
+            <Route path="preschoolsc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="preschool-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="pre" element={<KidsPRE />}  noindex={true}/>
+            <Route path="presc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="pre-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="beg" element={<KidsBEG />}  noindex={true}/>
+            <Route path="begsc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="beg-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="mid" element={<KidsMID />}  noindex={true}/>
+            <Route path="midsc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="mid-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="high" element={<KidsHIGH />}  noindex={true}/>
+            <Route path="highsc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="high-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="a0" element={<KidsA0 />}  noindex={true}/>
+            <Route path="a0sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="a0-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="a1" element={<KidsA1 />}  noindex={true}/>
+            <Route path="a1sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="a1-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="a2" element={<KidsA2 />}  noindex={true}/>
+            <Route path="a2sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="a2-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="b1" element={<KidsB1 />}  noindex={true}/>
+            <Route path="b1sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="b1-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="b2" element={<KidsB2 />}  noindex={true}/>
+            <Route path="b2sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="b2-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="c1" element={<KidsC1 />}  noindex={true}/>
+            <Route path="c1sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="c1-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="b1beginner" element={<KidsB1Beginner />}  noindex={true}/>
+            <Route path="b1beginnersc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="b1beginner-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="b2beginner" element={<KidsB2Beginner />}  noindex={true}/>
+            <Route path="b2beginnersc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="b2beginner-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="dea0" element={<KidsDeA0 />}  noindex={true}/>
+            <Route path="dea0-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="dea0sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="dea1" element={<KidsDeA1 />}  noindex={true}/>
+            <Route path="dea1-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="dea1sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="pla1" element={<KidsPlA1 />}  noindex={true}/>
+            <Route path="pla1-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="pla1sc" element={<StreamSpeakingClubKids />}  noindex={true}/>
+            <Route path="a1free" element={<KidsA1Free />}  noindex={true}/>
+            <Route path="a1free-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="dea1free" element={<KidsDeA1Free />}  noindex={true}/>
+            <Route path="dea1free-chat" element={<WindowedChat />}  noindex={true}/>
+            <Route path="pla1free" element={<KidsPlA1Free />}  noindex={true}/>
+            <Route path="pla1free-chat" element={<WindowedChat />}  noindex={true}/>
           </Route>
-          <Route path="record" element={<RecordLinkTree />} />
-          <Route path="service" element={<Service />}>
-            <Route path="viber" element={<ViberRedirect />} />
-            <Route path="tg" element={<TelegramRedirect />} />
+          <Route path="record" element={<RecordLinkTree />}  noindex={true}/>
+          <Route path="service" element={<Service />} noindex={true}>
+            <Route path="viber" element={<ViberRedirect />}noindex={true} />
+            <Route path="tg" element={<TelegramRedirect />} noindex={true}/>
           </Route>
-          <Route path="marathon" element={<Service />}>
-            <Route path="viber" element={<ViberMarathonRedirect />} />
-            <Route path="tg" element={<TelegramMarathonRedirect />} />
-            <Route path="wa" element={<WhatsAppRedirect />} />
+          <Route path="marathon" element={<Service />} noindex={true}>
+            <Route path="viber" element={<ViberMarathonRedirect />} noindex={true}/>
+            <Route path="tg" element={<TelegramMarathonRedirect />} noindex={true}/>
+            <Route path="wa" element={<WhatsAppRedirect />} noindex={true}/>
           </Route>
-          <Route path="hr" element={<HR />}>
-            <Route path="viber" element={<ViberHRRedirect />} />
-            <Route path="tg" element={<TelegramHRRedirect />} />
-            <Route path="calc" element={<HRCalc />} />
+          <Route path="hr" element={<HR />}noindex={true}>
+            <Route path="viber" element={<ViberHRRedirect />} noindex={true}/>
+            <Route path="tg" element={<TelegramHRRedirect />} noindex={true}/>
+            <Route path="calc" element={<HRCalc />}noindex={true} />
           </Route>
           <Route path="speakings" element={<Speakings />} noindex={true}>
-            <Route path="a0sc" element={<TeacherPageSpeaking />} />
-            <Route path="a0_2sc" element={<TeacherPageSpeaking />} />
-            <Route path="a1sc" element={<TeacherPageSpeaking />} />
-            <Route path="a2sc" element={<TeacherPageSpeaking />} />
-            <Route path="b1sc" element={<TeacherPageSpeaking />} />
-            <Route path="b2sc" element={<TeacherPageSpeaking />} />
-            <Route path="13" element={<TeacherPageSpeaking13 />} />
-            <Route path="c1sc" element={<TeacherPageSpeaking />} />
-            <Route path="dea0sc" element={<TeacherPageSpeaking />} />
-            <Route path="dea0_2sc" element={<TeacherPageSpeaking />} />
-            <Route path="dea1sc" element={<TeacherPageSpeaking />} />
-            <Route path="dea2sc" element={<TeacherPageSpeaking />} />
-            <Route path="deb1sc" element={<TeacherPageSpeaking />} />
-            <Route path="deb2sc" element={<TeacherPageSpeaking />} />
-            <Route path="dec1sc" element={<TeacherPageSpeaking />} />
-            <Route path="pla0sc" element={<TeacherPageSpeaking />} />
-            <Route path="pla0_2sc" element={<TeacherPageSpeaking />} />
-            <Route path="pla1sc" element={<TeacherPageSpeaking />} />
-            <Route path="pla2sc" element={<TeacherPageSpeaking />} />
-            <Route path="plb1sc" element={<TeacherPageSpeaking />} />
-            <Route path="plb2sc" element={<TeacherPageSpeaking />} />
-            <Route path="plc1sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-a0sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-a0_2sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-a1sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-a2sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-b1sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-b2sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-c1sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-c1schigh" element={<TeacherPageSpeaking />} />
-            <Route path="kids-dea0sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-dea0_2sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-dea1sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-dea2sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-deb1sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-deb2sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-pla0sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-pla0_2sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-pla1sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-pla2sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-plb1sc" element={<TeacherPageSpeaking />} />
-            <Route path="kids-plb2sc" element={<TeacherPageSpeaking />} />
-            <Route path="ratings" element={<SpeakingsRatings />} />
+            <Route path="a0sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="a0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="a1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="a2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="b1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="b2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="13" element={<TeacherPageSpeaking13 />} noindex={true} />
+            <Route path="c1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="dea0sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="dea0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="dea1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="dea2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="deb1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="deb2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="dec1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="pla0sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="pla0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="pla1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="pla2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="plb1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="plb2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="plc1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-a0sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-a0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-a1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-a2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-b1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-b2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-c1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-c1schigh" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-dea0sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-dea0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-dea1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-dea2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-deb1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-deb2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-pla0sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-pla0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-pla1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-pla2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-plb1sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="kids-plb2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route path="ratings" element={<SpeakingsRatings />} noindex={true} />
           </Route>
           <Route path="teacher" element={<Teacher />} noindex={true}>
-            <Route path="a0" element={<TeacherPage />} />
-            <Route path="a0_2" element={<TeacherPage />} />
-            <Route path="a1" element={<TeacherPage />} />
-            <Route path="a2" element={<TeacherPage />} />
-            <Route path="b1" element={<TeacherPage />} />
-            <Route path="b2" element={<TeacherPage />} />
-            <Route path="c1" element={<TeacherPage />} />
-            <Route path="kidspre" element={<TeacherPage />} />
-            <Route path="kidsbeg" element={<TeacherPage />} />
-            <Route path="kidsmid" element={<TeacherPage />} />
-            <Route path="kidshigh" element={<TeacherPage />} />
-            <Route path="preschool" element={<TeacherPage />} />
-            <Route path="nmt_ukr" element={<TeacherPage />} />
-            <Route path="nmt_en" element={<TeacherPage />} />
-            <Route path="nmt_math" element={<TeacherPage />} />
-            <Route path="nmt_history" element={<TeacherPage />} />
-            <Route path="a1free" element={<TeacherPage />} />
-            <Route path="a2free" element={<TeacherPage />} />
-            <Route path="a0kids" element={<TeacherPage />} />
-            <Route path="a1kids" element={<TeacherPage />} />
-            <Route path="a2kids" element={<TeacherPage />} />
-            <Route path="b1kids" element={<TeacherPage />} />
-            <Route path="b2kids" element={<TeacherPage />} />
-            <Route path="c1kids" element={<TeacherPage />} />
-            <Route path="a1kidsfree" element={<TeacherPage />} />
-            <Route path="b1kidsbeginner" element={<TeacherPage />} />
-            <Route path="b2kidsbeginner" element={<TeacherPage />} />
-            <Route path="trendets" element={<TeacherPage />} />
-            <Route path="deutsch-a0" element={<TeacherPage />} />
-            <Route path="deutsch-a0_2" element={<TeacherPage />} />
-            <Route path="deutsch-a1" element={<TeacherPage />} />
-            <Route path="deutsch-a2" element={<TeacherPage />} />
-            <Route path="deutsch-b1" element={<TeacherPage />} />
-            <Route path="deutsch-b2" element={<TeacherPage />} />
-            <Route path="deutsch-a1free" element={<TeacherPage />} />
-            <Route path="deutsch-a2free" element={<TeacherPage />} />
-            <Route path="dea0kids" element={<TeacherPage />} />
-            <Route path="dea1kids" element={<TeacherPage />} />
-            <Route path="dekidsfree" element={<TeacherPage />} />
-            <Route path="polski-a0" element={<TeacherPage />} />
-            <Route path="polski-a0_2" element={<TeacherPageFarm />} />
-            <Route path="polski-a0_3" element={<TeacherPageWarehouse />} />
-            <Route path="polski-a1" element={<TeacherPage />} />
-            <Route path="polski-a1free" element={<TeacherPage />} />
-            <Route path="polski-a2" element={<TeacherPage />} />
-            <Route path="polski-b1" element={<TeacherPage />} />
-            <Route path="polski-b2" element={<TeacherPage />} />
-            <Route path="pla1kids" element={<TeacherPage />} />
-            <Route path="plkidsfree" element={<TeacherPage />} />
-            <Route path="record" element={<TeacherPageVertical />} />
-            <Route path="apconf" element={<TeacherPage />} />
-            <Route path="test" element={<TeacherPage />} />
-            <Route path="trials" element={<TeacherTrialPage />} />
-            <Route path="trials-kids" element={<TeacherTrialPage />} />
-            <Route path="trials-pl" element={<TeacherTrialPage />} />
-            <Route path="trials-de" element={<TeacherTrialPage />} />
-            <Route path="pedagogium" element={<TeacherPage />} />
-            <Route path="wstijo" element={<TeacherPage />} />
-            <Route path="wsbmir" element={<TeacherPage />} />
+            <Route path="a0" element={<TeacherPage />} noindex={true} />
+            <Route path="a0_2" element={<TeacherPage />} noindex={true} />
+            <Route path="a1" element={<TeacherPage />} noindex={true} />
+            <Route path="a2" element={<TeacherPage />} noindex={true} />
+            <Route path="b1" element={<TeacherPage />} noindex={true} />
+            <Route path="b2" element={<TeacherPage />} noindex={true} />
+            <Route path="c1" element={<TeacherPage />} noindex={true} />
+            <Route path="kidspre" element={<TeacherPage />} noindex={true} />
+            <Route path="kidsbeg" element={<TeacherPage />} noindex={true} />
+            <Route path="kidsmid" element={<TeacherPage />} noindex={true} />
+            <Route path="kidshigh" element={<TeacherPage />} noindex={true} />
+            <Route path="preschool" element={<TeacherPage />} noindex={true} />
+            <Route path="nmt_ukr" element={<TeacherPage />} noindex={true} />
+            <Route path="nmt_en" element={<TeacherPage />} noindex={true} />
+            <Route path="nmt_math" element={<TeacherPage />} noindex={true} />
+            <Route path="nmt_history" element={<TeacherPage />} noindex={true} />
+            <Route path="a1free" element={<TeacherPage />} noindex={true} />
+            <Route path="a2free" element={<TeacherPage />} noindex={true} />
+            <Route path="a0kids" element={<TeacherPage />} noindex={true} />
+            <Route path="a1kids" element={<TeacherPage />} noindex={true} />
+            <Route path="a2kids" element={<TeacherPage />} noindex={true} />
+            <Route path="b1kids" element={<TeacherPage />} noindex={true} />
+            <Route path="b2kids" element={<TeacherPage />} noindex={true} />
+            <Route path="c1kids" element={<TeacherPage />} noindex={true} />
+            <Route path="a1kidsfree" element={<TeacherPage />} noindex={true} />
+            <Route path="b1kidsbeginner" element={<TeacherPage />} noindex={true} />
+            <Route path="b2kidsbeginner" element={<TeacherPage />} noindex={true} />
+            <Route path="trendets" element={<TeacherPage />} noindex={true} />
+            <Route path="deutsch-a0" element={<TeacherPage />} noindex={true} />
+            <Route path="deutsch-a0_2" element={<TeacherPage />} noindex={true} />
+            <Route path="deutsch-a1" element={<TeacherPage />} noindex={true} />
+            <Route path="deutsch-a2" element={<TeacherPage />} noindex={true} />
+            <Route path="deutsch-b1" element={<TeacherPage />} noindex={true} />
+            <Route path="deutsch-b2" element={<TeacherPage />} noindex={true} />
+            <Route path="deutsch-a1free" element={<TeacherPage />} noindex={true} />
+            <Route path="deutsch-a2free" element={<TeacherPage />} noindex={true} />
+            <Route path="dea0kids" element={<TeacherPage />} noindex={true} />
+            <Route path="dea1kids" element={<TeacherPage />} noindex={true} />
+            <Route path="dekidsfree" element={<TeacherPage />} noindex={true} />
+            <Route path="polski-a0" element={<TeacherPage />} noindex={true} />
+            <Route path="polski-a0_2" element={<TeacherPageFarm />} noindex={true} />
+            <Route path="polski-a0_3" element={<TeacherPageWarehouse />} noindex={true} />
+            <Route path="polski-a1" element={<TeacherPage />} noindex={true} />
+            <Route path="polski-a1free" element={<TeacherPage />} noindex={true} />
+            <Route path="polski-a2" element={<TeacherPage />} noindex={true} />
+            <Route path="polski-b1" element={<TeacherPage />} noindex={true} />
+            <Route path="polski-b2" element={<TeacherPage />} noindex={true} />
+            <Route path="pla1kids" element={<TeacherPage />} noindex={true} />
+            <Route path="plkidsfree" element={<TeacherPage />} noindex={true} />
+            <Route path="record" element={<TeacherPageVertical />} noindex={true} />
+            <Route path="apconf" element={<TeacherPage />} noindex={true} />
+            <Route path="test" element={<TeacherPage />} noindex={true} />
+            <Route path="trials" element={<TeacherTrialPage />} noindex={true} />
+            <Route path="trials-kids" element={<TeacherTrialPage />} noindex={true} />
+            <Route path="trials-pl" element={<TeacherTrialPage />} noindex={true} />
+            <Route path="trials-de" element={<TeacherTrialPage />} noindex={true} />
+            <Route path="pedagogium" element={<TeacherPage />} noindex={true} />
+            <Route path="wstijo" element={<TeacherPage />} noindex={true} />
+            <Route path="wsbmir" element={<TeacherPage />} noindex={true} />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route
             path="quiz-g"
-            element={<QuizOneRequestGoogleNoEngage utms={utms} />}
+            element={<QuizOneRequestGoogleNoEngage utms={utms} noindex={true}/>}
           />
           <Route
             path="quiz-d11p"
-            element={<QuizOneRequestDiscountNoEngage utms={utms} />}
+            element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true} />}
           />
           <Route
             path="quiz-d20p"
-            element={<QuizOneRequestDiscountNoEngage utms={utms} />}
+            element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true}/>}
           />
           <Route
             path="quiz-d30p"
-            element={<QuizOneRequestDiscountNoEngage utms={utms} />}
+            element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true} />}
           />
           <Route path="forms-tree" element={<FormsLinkTree />} noindex={true} />
           <Route
