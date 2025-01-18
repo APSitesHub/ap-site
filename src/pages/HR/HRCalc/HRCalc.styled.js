@@ -16,6 +16,7 @@ export const CalcBox = styled.div`
   font-family: var(--new-font-family);
 
   overflow: hidden;
+  overflow-y: scroll;
   padding: 58px 20px;
   padding-top: 52px;
 
