@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ReactComponent as AttendanceEmpty } from '../../../img/svg/attendance-empty.svg';
 import { ReactComponent as AttendanceMinus } from '../../../img/svg/attendance-minus.svg';
 import { ReactComponent as AttendancePlus } from '../../../img/svg/attendance-plus.svg';
@@ -58,23 +58,30 @@ export const Attendance = ({
     'Грудень',
   ];
 
-  console.log(personalLessonsDays);
-
-  const DATES_TO_EXCLUDE = [
-    new Date(2025, 1, 1),
-    new Date(2025, 1, 2),
-    new Date(2025, 1, 3),
-    new Date(2025, 1, 4),
-    new Date(2025, 1, 5),
-  ];
-
-console.log(DATES_TO_EXCLUDE);
-
+  const DATES_TO_EXCLUDE = useMemo(
+    () => [
+      +new Date(2024, 11, 22),
+      +new Date(2024, 11, 23),
+      +new Date(2024, 11, 24),
+      +new Date(2024, 11, 25),
+      +new Date(2024, 11, 26),
+      +new Date(2024, 11, 27),
+      +new Date(2024, 11, 28),
+      +new Date(2024, 11, 29),
+      +new Date(2024, 11, 30),
+      +new Date(2024, 11, 31),
+      +new Date(2025, 0, 1),
+      +new Date(2025, 0, 2),
+      +new Date(2025, 0, 3),
+      +new Date(2025, 0, 4),
+      +new Date(2025, 0, 5),
+    ],
+    []
+  );
 
   useEffect(() => {
     const getLessonDaysForWeeks = () => {
       let date = new Date(year, month - 1, week + 1);
-      console.log(date);
 
       const sunday = date.getDate() - date.getDay();
 
@@ -88,7 +95,12 @@ console.log(DATES_TO_EXCLUDE);
 
       while (date.getDay() <= 6 && i < 7) {
         i += 1;
-        if (personalLessonsDays.includes(date.getDay())) {
+        if (
+          personalLessonsDays.includes(date.getDay()) &&
+          !DATES_TO_EXCLUDE.includes(
+            +new Date(date.getFullYear(), date.getMonth(), date.getDate())
+          )
+        ) {
           lessonDays.push(
             new Date(
               date.getFullYear(),
@@ -111,7 +123,12 @@ console.log(DATES_TO_EXCLUDE);
 
       date.setDate(1);
       while (date.getMonth() + 1 === month) {
-        if (personalLessonsDays.includes(date.getDay())) {
+        if (
+          personalLessonsDays.includes(date.getDay()) &&
+          !DATES_TO_EXCLUDE.includes(
+            +new Date(date.getFullYear(), date.getMonth(), date.getDate())
+          )
+        ) {
           lessonDays.push(
             new Date(
               date.getFullYear(),
@@ -136,7 +153,12 @@ console.log(DATES_TO_EXCLUDE);
       date.setMonth(0);
 
       while (date.getFullYear() === year) {
-        if (personalLessonsDays.includes(date.getDay())) {
+        if (
+          personalLessonsDays.includes(date.getDay()) &&
+          !DATES_TO_EXCLUDE.includes(
+            +new Date(date.getFullYear(), date.getMonth(), date.getDate())
+          )
+        ) {
           lessonDays.push(
             new Date(
               date.getFullYear(),
@@ -151,7 +173,7 @@ console.log(DATES_TO_EXCLUDE);
       SetLessonDaysForYear(days => (days = lessonDays));
     };
     getLessonDaysForYears();
-  }, [week, month, year, personalLessonsDays]);
+  }, [week, month, year, personalLessonsDays, DATES_TO_EXCLUDE]);
 
   const decreaseWeek = () => {
     const newWeek = week - 7;
@@ -273,6 +295,12 @@ console.log(DATES_TO_EXCLUDE);
           new Date(lessonDay).getMonth() + 1
         )}.${new Date(lessonDay).getFullYear()}`
     );
+    console.log(298, lessonDays);
+    console.log(
+      299,
+      user.visited.filter(date => (date = lessonDays.includes(date))).length
+    );
+
     return user.visited.filter(date => (date = lessonDays.includes(date)))
       .length;
   };
@@ -321,7 +349,10 @@ console.log(DATES_TO_EXCLUDE);
     let i = 0;
     while (new Date(date).getDay() <= 6 && i < 7) {
       i += 1;
-      if (new Date(date).getDay() >= 1 && new Date(date).getDay() <= 4) {
+      if (
+        new Date(date).getDay() >= 1 &&
+        personalLessonsDays.includes(date.getDay())
+      ) {
         lessonDays.push(date);
       }
       date = new Date(new Date(date).setDate(new Date(date).getDate() + 1));
@@ -336,6 +367,7 @@ console.log(DATES_TO_EXCLUDE);
       passedWeek + 1,
       3
     ).toISOString();
+
     const passedWeekLessonDays = getLessonDaysOfPassedWeek(
       firstDayOfWeekDate
     ).map(
@@ -375,7 +407,9 @@ console.log(DATES_TO_EXCLUDE);
 
     const futureDays = lessonDays.slice(0, currentDay + 1).length;
 
-    return currentDay < 0 && calculateSetWeeklyVisits(week) > 0
+    return !lessonDaysForWeek.length
+      ? 0
+      : currentDay < 0 && calculateSetWeeklyVisits(week) > 0
       ? lessonDaysForWeek.length - calculateSetWeeklyVisits(week)
       : futureDays === 0
       ? 0

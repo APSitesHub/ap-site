@@ -31,12 +31,15 @@ import {
 
 const HRCalc = () => {
   const [individualHours, setIndividualHours] = useState(0);
+  const [groupHours, setGroupHours] = useState(0);
   const [webinarsHours, setWebinarsHours] = useState(0);
   const [additionalHours, setAdditionalHours] = useState(0);
   const [individualSum, setIndividualSum] = useState(0);
+  const [groupSum, setGroupSum] = useState(0);
   const [webinarsSum, setWebinarsSum] = useState(0);
   const [additionalSum, setAdditionalSum] = useState(0);
   const [isIndividualSumActive, setIsIndividualSumActive] = useState(false);
+  const [isGroupSumActive, setIsGroupSumActive] = useState(false);
   const [isWebinarsSumActive, setIsWebinarsSumActive] = useState(false);
   const [isAdditionalSumActive, setIsAdditionalSumActive] = useState(false);
   const [totalHours, setTotalHours] = useState(0);
@@ -50,22 +53,25 @@ const HRCalc = () => {
     setLang(lang => (lang = i));
   };
 
-  const individualPriceByLang = lang => (lang === 0 ? 250 : 300);
-  const webinarsPriceByLang = lang => (lang === 0 ? 380 : 400);
+  const individualPriceByLang = lang => (lang === 0 ? 190 : 300);
+  const groupPriceByLang = lang => (lang === 0 ? 280 : 0);
+  const webinarsPriceByLang = lang => (lang === 0 ? 280 : 400);
 
   useEffect(() => {
     setIndividualSum(
       sum => (sum = individualHours * individualPriceByLang(lang))
     );
+    setGroupSum(sum => (sum = groupHours * groupPriceByLang(lang)));
     setWebinarsSum(sum => (sum = webinarsHours * webinarsPriceByLang(lang)));
     setTotalSum(
       sum =>
         (sum =
           individualHours * individualPriceByLang(lang) +
+          groupHours * groupPriceByLang(lang) +
           webinarsHours * webinarsPriceByLang(lang) +
           additionalHours * 150)
     );
-  }, [additionalHours, individualHours, webinarsHours, lang]);
+  }, [additionalHours, individualHours, groupHours, webinarsHours, lang]);
 
   return (
     <CalcBox>
@@ -87,6 +93,11 @@ const HRCalc = () => {
         <CalcLang
           onClick={() => {
             calculatePointerPosition(1);
+            setGroupHours(0);
+            setGroupSum(0);
+            setIsGroupSumActive(false);
+            setTotalHours(totalHours => totalHours - groupHours);
+            !(totalHours - groupHours) && setIsTotalActive(false);
           }}
           className={lang === 1 && 'active'}
         >
@@ -114,7 +125,10 @@ const HRCalc = () => {
                     setTotalHours(
                       hours =>
                         (hours =
-                          +e.target.value + webinarsHours + additionalHours)
+                          +e.target.value +
+                          webinarsHours +
+                          additionalHours +
+                          groupHours)
                     );
                     setTotalSum(
                       sum =>
@@ -152,6 +166,64 @@ const HRCalc = () => {
             </CalcSum>
           </CalcLabel>
         </CalcItem>
+        {lang === 0 && (
+          <CalcItem>
+            <CalcText>Групові заняття</CalcText>
+            <CalcLabel>
+              <CalcInputBox>
+                <CalcInput
+                  type="number"
+                  placeholder="1"
+                  min="0"
+                  max="100"
+                  onChange={e => {
+                    if (+e.target.value) {
+                      setGroupHours(hours => (hours = +e.target.value));
+                      setGroupSum(
+                        sum => (sum = +e.target.value * groupPriceByLang(lang))
+                      );
+                      setIsGroupSumActive(true);
+                      setTotalHours(
+                        hours =>
+                          (hours =
+                            +e.target.value +
+                            webinarsHours +
+                            additionalHours +
+                            individualHours)
+                      );
+                      setTotalSum(
+                        sum =>
+                          (sum =
+                            +e.target.value * groupPriceByLang(lang) +
+                            webinarsSum +
+                            additionalSum)
+                      );
+                      setIsTotalActive(true);
+                    } else {
+                      setGroupHours(hours => (hours = 0));
+                      setGroupSum(sum => (sum = 0));
+                      setIsGroupSumActive(false);
+                      setTotalHours(hours => (hours = hours - groupHours));
+                      setTotalSum(
+                        sum => (sum = sum - groupHours * groupPriceByLang(lang))
+                      );
+                      totalHours - groupHours === 0 && setIsTotalActive(false);
+                    }
+                  }}
+                />
+                <CalcHours className={isGroupSumActive && 'active'}>
+                  год
+                </CalcHours>
+              </CalcInputBox>
+              <CalcEquals className={isGroupSumActive && 'active'}>
+                =
+              </CalcEquals>{' '}
+              <CalcSum className={isGroupSumActive && 'active'}>
+                {groupSum ? groupSum : `${groupPriceByLang(lang)}`} грн
+              </CalcSum>
+            </CalcLabel>
+          </CalcItem>
+        )}
         <CalcItem>
           <CalcText>Вебінари</CalcText>
           <CalcLabel>
@@ -171,14 +243,18 @@ const HRCalc = () => {
                     setTotalHours(
                       hours =>
                         (hours =
-                          individualHours + +e.target.value + additionalHours)
+                          individualHours +
+                          groupHours +
+                          +e.target.value +
+                          additionalHours)
                     );
                     setTotalSum(
                       sum =>
                         (sum =
                           individualSum +
                           +e.target.value * webinarsPriceByLang(lang) +
-                          additionalSum)
+                          additionalSum +
+                          groupSum)
                     );
                     setIsTotalActive(true);
                   } else {
@@ -223,12 +299,18 @@ const HRCalc = () => {
                     setTotalHours(
                       hours =>
                         (hours =
-                          individualHours + webinarsHours + +e.target.value)
+                          individualHours +
+                          groupHours +
+                          webinarsHours +
+                          +e.target.value)
                     );
                     setTotalSum(
                       sum =>
                         (sum =
-                          individualSum + webinarsSum + +e.target.value * 150)
+                          individualSum +
+                          groupSum +
+                          webinarsSum +
+                          +e.target.value * 150)
                     );
                     setIsTotalActive(true);
                   } else {

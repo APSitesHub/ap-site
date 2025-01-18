@@ -407,7 +407,7 @@ export const MyAPPanel = ({
             />
           </APPanelBtn>
         )}
-        {user.package !== 'online' && user.name === 'Dev Acc' && (
+        {user.package !== 'online' && (
           <APPanelBtn
             onClick={toggleCalendar}
             onMouseEnter={e => toggleTooltip(e)}
