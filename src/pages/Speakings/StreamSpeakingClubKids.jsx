@@ -154,10 +154,16 @@ const StreamSpeakingClubKids = () => {
                 </StreamPlaceHolderText>
               </StreamPlaceHolder>
             )}
-          {course === user.course ||
-          user.course
-            ?.split('/')
-            .some(singleCourse => singleCourse === course) ? (
+          {((course === user.course ||
+            user.course
+              ?.split('/')
+              .some(singleCourse => singleCourse === course)) &&
+            (lang === user.lang ||
+              user.lang?.split('/').some(singleLang => singleLang === lang))) ||
+          user.name === 'Dev Acc' ||
+          user.course === '10' ||
+          user.course?.split('/').some(singleCourse => singleCourse === '10') ||
+          user.name === 'Тічер' ? (
             <StreamPlaceHolder>
               <StreamPlaceHolderText>
                 Привіт! <br />
@@ -200,7 +206,6 @@ const StreamSpeakingClubKids = () => {
               </StreamRefreshText>
             </StreamPlaceHolder>
           )}
-          {console.log(202, page)}
           {(((course === user.course ||
             user.course
               ?.split('/')
@@ -210,9 +215,10 @@ const StreamSpeakingClubKids = () => {
             redirectLink !== '1' &&
             isApproved) ||
             (user.name === 'Dev Acc' && isApproved) ||
-            (user.course === '10' &&
-              user.lang === 'enkids' &&
-              page === 'c1sc' &&
+            ((user.course === '10' ||
+              user.course
+                ?.split('/')
+                .some(singleCourse => singleCourse === '10')) &&
               isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&
             redirectLink !== '1' &&
