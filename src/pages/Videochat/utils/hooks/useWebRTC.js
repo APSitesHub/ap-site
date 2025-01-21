@@ -290,7 +290,7 @@ export default function useWebRTC(roomID) {
         });
       });
     });
-  }, []);
+  }, [updateClients]);
 
   const provideMediaRef = useCallback((id, node) => {
     peerMediaElements.current[id] = node;
