@@ -7,17 +7,6 @@ const options = {
   transports : ["websocket"]
 }
 
-console.log(window.location.hostname);
-let socket;
-
-if (window.location.hostname === 'localhost') {
-  socket = io('ws://localhost:3001', options);
-}
-else {
-  socket = io(`ws://${window.location.hostname}:3001`, options);
-
-}
-
-// const socket = io('ws://localhost:3001', options); // TODO: change ws url to correct
+const socket = io(`wss://ap-server-8qi1.onrender.com`, options);
 
 export default socket;

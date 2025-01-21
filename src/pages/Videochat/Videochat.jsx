@@ -25,7 +25,7 @@ function Videochat() {
 
   return (
     <div ref={rootNode}>
-      <h1>Available Rooms</h1>
+      <h1>Logined as {localStorage.getItem('mail')}</h1>
 
       <ul>
         {rooms.map(roomID => (
