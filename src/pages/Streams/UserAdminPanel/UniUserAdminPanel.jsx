@@ -43,8 +43,6 @@ const UserAdminPanel = () => {
   const [userToEdit, setUserToEdit] = useState({});
   const [uniValue, setUniValue] = useState(null);
   const [isUniEmpty, setIsUniEmpty] = useState(false);
-  const [marathonValue, setMarathonValue] = useState(null);
-  const [isMarathonEmpty, setIsMarathonEmpty] = useState(false);
   // eslint-disable-next-line
   const [daysAfterLastLogin, setDaysAfterLastLogin] = useState(7);
   const selectInputRef = useRef();
@@ -62,38 +60,11 @@ const UserAdminPanel = () => {
       label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
       value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
     },
-  ];
-
-  const pedagogiumMarathonOptions = [
     {
-      label: 'Logistics (Pedagogium)',
-      value: '72421',
-    },
-    {
-      label: 'Kurs Przygotowawczy (Pedagogium)',
-      value: '79231',
-    },
-  ];
-
-  const wstijoMarathonOptions = [
-    {
-      label: 'Logistics (WSTIJO)',
-      value: '78737',
-    },
-    {
-      label: 'Kurs Przygotowawczy (WSTIJO)',
-      value: '72468',
-    },
-  ];
-
-  const wsbmirMarathonOptions = [
-    {
-      label: 'Logistics (WSBMiR)',
-      value: '80641',
-    },
-    {
-      label: 'Kurs Przygotowawczy (WSBMiR)',
-      value: '80640',
+      label:
+        'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
+      value:
+        'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
     },
   ];
 
@@ -185,7 +156,6 @@ const UserAdminPanel = () => {
     crmId: '',
     contactId: '',
     pupilId: '',
-    marathonId: '',
     university: '',
   };
 
@@ -205,14 +175,6 @@ const UserAdminPanel = () => {
       .max(7, 'Не більше 7 цифр')
       .matches(/^\d{1,7}$/, 'Лише цифри')
       .required("Обов'язкове поле, дивитись на платформі"),
-    // marathonId: yup
-    //   .string()
-    //   .min(4, 'Не менше 4 цифр')
-    //   .max(7, 'Не більше 7 цифр')
-    //   .matches(/^\d{1,7}$/, 'Лише цифри'),
-    // university: yup
-    //   .string()
-    //   .required("Назва університету - обов'язкове поле, введіть її"),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
@@ -225,7 +187,6 @@ const UserAdminPanel = () => {
       ? +values.contactId.trim().trimStart()
       : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
-    values.marathonId = marathonValue.value;
     values.university = uniValue.value;
     try {
       const response = await axios.post('/uniusers/new', values);
@@ -267,7 +228,6 @@ const UserAdminPanel = () => {
     userToUpdate.mail = values.mail;
     userToUpdate.password = values.password;
     userToUpdate.pupilId = values.pupilId;
-    userToUpdate.marathonId = values.marathonId;
     userToUpdate.crmId = values.crmId;
     userToUpdate.contactId = values.contactId;
     userToUpdate.university = values.university;
@@ -427,58 +387,6 @@ const UserAdminPanel = () => {
                   <ErrorNote> Університет - обов'язкове поле!</ErrorNote>
                 )}
               </SpeakingLabel>
-              {uniValue && uniValue.value && (
-                <SpeakingLabel>
-                  {marathonValue && marathonValue.value && (
-                    <LabelText>Марафон</LabelText>
-                  )}
-                  <TeacherLangSelect
-                    ref={selectInputRef}
-                    options={
-                      uniValue.value ===
-                      'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
-                        ? wstijoMarathonOptions
-                        : uniValue.value ===
-                          'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
-                        ? wsbmirMarathonOptions
-                        : pedagogiumMarathonOptions
-                    }
-                    styles={{
-                      control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        border: 'none',
-                        borderRadius: '50px',
-                        minHeight: '34px',
-                      }),
-                      menu: (baseStyles, state) => ({
-                        ...baseStyles,
-                        position: 'absolute',
-                        zIndex: '2',
-                        top: '36px',
-                      }),
-                      dropdownIndicator: (baseStyles, state) => ({
-                        ...baseStyles,
-                        padding: '7px',
-                      }),
-                    }}
-                    placeholder="Марафон"
-                    name="marathon"
-                    onBlur={() => {
-                      !uniValue
-                        ? setIsMarathonEmpty(empty => (empty = true))
-                        : setIsMarathonEmpty(empty => (empty = false));
-                    }}
-                    onChange={marathon => {
-                      setMarathonValue(marathon);
-                      marathon?.value &&
-                        setIsMarathonEmpty(empty => (empty = false));
-                    }}
-                  />
-                  {isMarathonEmpty && (
-                    <ErrorNote> Марафон - обов'язкове поле!</ErrorNote>
-                  )}
-                </SpeakingLabel>
-              )}
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
             </UsersForm>
           </Formik>
@@ -494,7 +402,6 @@ const UserAdminPanel = () => {
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>Університет</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
-                <UserHeadCell>ID марафону</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
                 <UserHeadCell>Відвідини з часом</UserHeadCell>
                 <UserHeadCell>Edit</UserHeadCell>
@@ -525,7 +432,6 @@ const UserAdminPanel = () => {
                   <UserCell>{user.password}</UserCell>
                   <UserCell className="last-name">{user.university}</UserCell>
                   <UserCell>{user.pupilId}</UserCell>
-                  <UserCell>{user.marathonId}</UserCell>
                   <UserCell
                     className={
                       Math.floor(
@@ -583,9 +489,6 @@ const UserAdminPanel = () => {
               updateUser={updateUser}
               closeEditForm={closeEditForm}
               uniOptions={uniOptions}
-              pedagogiumMarathonOptions={pedagogiumMarathonOptions}
-              wstijoMarathonOptions={wstijoMarathonOptions}
-              wsbmirMarathonOptions={wsbmirMarathonOptions}
             />
           </Backdrop>
         )}

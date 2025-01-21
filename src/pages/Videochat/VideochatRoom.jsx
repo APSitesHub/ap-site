@@ -1,25 +1,24 @@
-import { useParams } from 'react-router';
-import { useLocation } from 'react-router-dom';
-import useWebRTC, { LOCAL_VIDEO } from './utils/hooks/useWebRTC';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import useWebRTC, { LOCAL_VIDEO } from './utils/hooks/useWebRTC';
 import {
+  ButtonsContainer,
+  ChatContainer,
+  DisabledMicroIcon,
   MainVideo,
+  MediaButton,
+  MediaButtonContainer,
+  MediaOption,
+  MediaSelector,
   PageContainer,
   UsersVideosContainer,
   UserVideo,
   VideochatContainer,
-  ChatContainer,
-  ButtonsContainer,
-  MediaButtonContainer,
-  MediaButton,
-  MediaSelector,
-  MediaOption,
-  DisabledMicroIcon,
 } from './Videochat.styled';
 
 function VideochatRoom() {
   const { id: roomID } = useParams();
-  const location = useLocation();
+  // const location = useLocation();
   const {
     clients,
     provideMediaRef,
@@ -31,9 +30,9 @@ function VideochatRoom() {
   const [allDevices, setAllDevices] = useState([]);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
-  const [selectedVideoDevice, setSelectedVideoDevice] = useState(null);
-  const [selectedAudioDevice, setSelectedAudioDevice] = useState(null);
-  const queryParams = new URLSearchParams(location.search);
+  // const [selectedVideoDevice, setSelectedVideoDevice] = useState(null);
+  // const [selectedAudioDevice, setSelectedAudioDevice] = useState(null);
+  // const queryParams = new URLSearchParams(location.search);
 
   useEffect(() => {
     getAllDevices();

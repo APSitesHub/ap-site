@@ -17,6 +17,7 @@ export const UniTimeTableMarathonEditForm = ({
   pedagogiumMarathonOptions,
   wstijoMarathonOptions,
   wsbmirMarathonOptions,
+  ewspaMarathonOptions,
   closeMarathonEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -96,6 +97,8 @@ export const UniTimeTableMarathonEditForm = ({
                 ? wstijoMarathonOptions
                 : uniValue.includes('WSBMIR')
                 ? wsbmirMarathonOptions
+                : uniValue.includes('EWSPA')
+                ? ewspaMarathonOptions
                 : pedagogiumMarathonOptions
             }
             styles={{
@@ -115,6 +118,9 @@ export const UniTimeTableMarathonEditForm = ({
                 option => option.value === lessonToEdit.marathon
               ) ||
               wsbmirMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              ewspaMarathonOptions.find(
                 option => option.value === lessonToEdit.marathon
               )
             }

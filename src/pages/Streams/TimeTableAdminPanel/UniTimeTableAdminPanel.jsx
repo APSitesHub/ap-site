@@ -187,6 +187,16 @@ const UniTimeTableAdminPanel = () => {
       label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
       value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
     },
+    {
+      label: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+      value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+    },
+    {
+      label:
+        'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
+      value:
+        'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -219,6 +229,17 @@ const UniTimeTableAdminPanel = () => {
     {
       label: 'Kurs Przygotowawczy (WSBMiR)',
       value: '80640',
+    },
+  ];
+
+  const ewspaMarathonOptions = [
+    {
+      label: 'Logistics (EWSPA)',
+      value: '81950',
+    },
+    {
+      label: 'Kurs Przygotowawczy (EWSPA)',
+      value: '81951',
     },
   ];
 
@@ -360,6 +381,9 @@ const UniTimeTableAdminPanel = () => {
                     : uniValue ===
                       'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
                     ? wsbmirMarathonOptions
+                    : uniValue ===
+                      'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)'
+                    ? ewspaMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -440,6 +464,12 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('WSBMIR') &&
                         timetable.marathon === '80640'
                       ? `Kurs Przygotowawczy ${timetable.marathon}`
+                      : timetable.university.includes('EWSPA') &&
+                        timetable.marathon === '81950'
+                      ? `Logistics ${timetable.marathon}`
+                      : timetable.university.includes('EWSPA') &&
+                        timetable.marathon === '81951'
+                      ? `Kurs Przygotowawczy ${timetable.marathon}`
                       : ''}{' '}
                     <UserEditButton
                       onClick={() => handleMarathonEdit(timetable._id)}
@@ -501,6 +531,7 @@ const UniTimeTableAdminPanel = () => {
               pedagogiumMarathonOptions={pedagogiumMarathonOptions}
               wstijoMarathonOptions={wstijoMarathonOptions}
               wsbmirMarathonOptions={wsbmirMarathonOptions}
+              ewspaMarathonOptions={ewspaMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
             />
@@ -514,6 +545,7 @@ const UniTimeTableAdminPanel = () => {
               pedagogiumMarathonOptions={pedagogiumMarathonOptions}
               wstijoMarathonOptions={wstijoMarathonOptions}
               wsbmirMarathonOptions={wsbmirMarathonOptions}
+              ewspaMarathonOptions={ewspaMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>

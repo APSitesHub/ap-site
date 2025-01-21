@@ -181,7 +181,7 @@ const UniAdminPanel = () => {
               </LinksFieldGroup>
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>
-                WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)
+                  WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)
                 </LinksFieldGroupTitle>
                 <Label>
                   <AdminInput
@@ -198,6 +198,27 @@ const UniAdminPanel = () => {
                     placeholder="WSBMIR Przygotowawczy Kurs"
                   />
                   <AdminInputNote component="p" name="wsbmir_prep" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  EWSPA (Wyższa Szkoła Biznesu, Mediów i Reklamy)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="ewspa_logistics"
+                    placeholder="EWSPA Logistics"
+                  />
+                  <AdminInputNote component="p" name="ewspa_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="ewspa_prep"
+                    placeholder="EWSPA Przygotowawczy Kurs"
+                  />
+                  <AdminInputNote component="p" name="ewspa_prep" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

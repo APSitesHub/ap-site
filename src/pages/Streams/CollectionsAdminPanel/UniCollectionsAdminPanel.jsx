@@ -209,6 +209,27 @@ const UniCollectionsAdminPanel = () => {
                   <AdminInputNote component="p" name="wsbmir_prep" />
                 </Label>
               </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  EWSPA (Wyższa Szkoła Biznesu, Mediów i Reklamy)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="ewspa_logistics"
+                    placeholder="EWSPA Logistics Collection"
+                  />
+                  <AdminInputNote component="p" name="ewspa_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="ewspa_prep"
+                    placeholder="EWSPA Przygotowawczy Kurs Collection"
+                  />
+                  <AdminInputNote component="p" name="ewspa_prep" />
+                </Label>
+              </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
             </LinksForm>
           </Formik>
