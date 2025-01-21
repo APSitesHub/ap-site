@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import eyesImg from '../../../img/quiz/eyes.png';
 import { CalendarIcon } from '../Attendance/Attendance.styled';
 import {
@@ -34,7 +34,7 @@ import { BookingModal } from '../BookingModal/BookingModal';
 //   'pro',
 // ];
 
-export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
+export const Timetable = ({ user, language, timetable, isMultipleCourses, bookingConfig }) => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const openBookingModal = () => setIsBookingModalOpen(true);
   const closeBookingModal = () => setIsBookingModalOpen(false);
@@ -118,7 +118,6 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
   const speakingLink = getSpeakingLink();
 
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
-
   return (
     <>
     <TimetableBox style={{ ...panelStyles() }}>
@@ -238,11 +237,13 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
               </tbody>
             </TimetableTable>
           </TimetableSpeakings>
-          <TimetableSpeakings>
+          {
+           Boolean(bookingConfig?.allowOnlineBooking) && (
+            <TimetableSpeakings>
             <TimetableWebinarsHead>
               <TimetableLessonType>Індивідуальні заняття</TimetableLessonType>
               <TimetableLessonLink href={speakingLink} target="_blank">
-                <TimetableLessonLinkText>3/4</TimetableLessonLinkText>
+                <TimetableLessonLinkText>{bookingConfig.onlineBookingVisitedCount}/{bookingConfig.availableOnlineBooking}</TimetableLessonLinkText>
               </TimetableLessonLink>
             </TimetableWebinarsHead>
             <TimetableTable>
@@ -285,12 +286,14 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
                 ))}
               </tbody>
             </TimetableTable>
-            <ButtonOptionsGroup>
-              <ButtonOption onClick={openBookingModal}>AAA</ButtonOption>
-              <ButtonOption>BBB</ButtonOption>
-              <ButtonOption>CCC</ButtonOption>
-            </ButtonOptionsGroup>
+              <ButtonOptionsGroup>
+                <ButtonOption onClick={openBookingModal}>Забронювати</ButtonOption>
+                <ButtonOption>Форс-Мажор</ButtonOption>
+                <ButtonOption>Перенести</ButtonOption>
+              </ButtonOptionsGroup>
           </TimetableSpeakings>
+            )
+          }
           {/* {userPackage.current !== 'simple' && userPackage.current !== 'student' && (
             <TimetableSpeakings>
               <TimetableWebinarsHead>

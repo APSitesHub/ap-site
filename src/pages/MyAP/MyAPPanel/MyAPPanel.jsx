@@ -20,6 +20,7 @@ import {
   SearchBtnIcon,
   TimetableBtnIcon,
 } from './MyAPPanel.styled';
+import axios from 'axios';
 
 export const MyAPPanel = ({
   lessons,
@@ -42,6 +43,7 @@ export const MyAPPanel = ({
   const [isCalendarShown, setIsCalendarShown] = useState(false);
   const [isTimetableShown, setIsTimetableShown] = useState(false);
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
+  const [bookingConfig, setBookingConfig] = useState(null);
   // const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
   //   useState(false);
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
@@ -159,6 +161,8 @@ export const MyAPPanel = ({
     };
   };
 
+
+
   // const toggleTooltipTimeout = () => {
   //   const resetBtnEl = document.querySelector('#reset-btn');
 
@@ -196,7 +200,23 @@ export const MyAPPanel = ({
   //     }, 15000);
   //   }
   // };
+  useEffect(() => {
+    const fetchBookingsConfig = async() => {
+        const response = await axios.get('https://5c0a-5-59-198-77.ngrok-free.app/booking/book_config', {
+          headers: {
+            'Accept': 'application/vnd.api.v2+json',
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': '1',
+            "Authorization": `Bearer ${localStorage.getItem('token')}`,
+          }
+        });;
 
+        if(response.data) {
+          setBookingConfig(response.data);
+        }
+      }
+      fetchBookingsConfig();
+  }, [])
   useEffect(() => {
     const onEscapeClose = event => {
       if (event.code === 'Escape' && isBackdropShown) {
@@ -213,6 +233,8 @@ export const MyAPPanel = ({
       window.removeEventListener('keydown', onEscapeClose);
     };
   });
+
+  console.log('bookingConfig', bookingConfig);
 
   return (
     <>
@@ -363,6 +385,7 @@ export const MyAPPanel = ({
           language={language}
           timetable={timetable}
           isMultipleCourses={isMultipleCourses}
+          bookingConfig={bookingConfig}
         />
       )}
     </>

@@ -38,13 +38,16 @@ export const BookingModal = ({ user, language }) => {
     return grouped;
   };
   const fetchAvailableDates = async (employeeId = 0) => {
-    const apiUrl = 'https://8a20-5-59-198-77.ngrok-free.app/booking/book_dates';
+    const token = localStorage.getItem('token');
+    const apiUrl = 'https://5c0a-5-59-198-77.ngrok-free.app/booking/book_dates';
     try {
       const response = await axios.get(apiUrl, {
         headers: {
           Accept: 'application/vnd.api.v2+json',
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': '1',
+          "ngrok-skip-browser-warning": true,
+          "Authorization": `Bearer ${token}`,
         },
         query: {
           staffId: employeeId,
@@ -66,13 +69,15 @@ export const BookingModal = ({ user, language }) => {
 
   useEffect(() => {
     const fetchAvailableEmployees = async () => {
-      const apiUrl = 'https://8a20-5-59-198-77.ngrok-free.app/booking/book_staff';
+      const apiUrl = 'https://5c0a-5-59-198-77.ngrok-free.app/booking/book_staff';
       try {
         const response = await axios.get(apiUrl, {
           headers: {
             Accept: 'application/vnd.api.v2+json',
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': '1',
+            "ngrok-skip-browser-warning": true,
+            "Authorization": `Bearer ${localStorage.getItem('token')}`,
           },
         });
         if (response.data.status === 'success') {
@@ -99,7 +104,7 @@ export const BookingModal = ({ user, language }) => {
     console.log(availbleDatesForEmployee);
 
     if (Array.isArray(availbleDatesForEmployee) && availbleDatesForEmployee.length) {
-      const apiUrl = 'https://8a20-5-59-198-77.ngrok-free.app/booking/book_times';
+      const apiUrl = 'https://5c0a-5-59-198-77.ngrok-free.app/booking/book_times';
       try {
         const sessionPromises = availbleDatesForEmployee.map((date) => {
           return axios.get(apiUrl, {
@@ -107,6 +112,7 @@ export const BookingModal = ({ user, language }) => {
               Accept: 'application/vnd.api.v2+json',
               'Content-Type': 'application/json',
               'ngrok-skip-browser-warning': '1',
+              "Authorization": `Bearer ${localStorage.getItem('token')}`,
             },
             params: {
               lang: language || 'ENG',
@@ -137,58 +143,6 @@ export const BookingModal = ({ user, language }) => {
       }
     }
   }
-
-    // Check if employee and available dates are present before making the fetch request
-    // const fetchSessionsForEmployees = async () => {
-    //   if (!employee?.id) {
-    //     console.log('Missing employee or available dates, skipping fetch');
-    //     return; // Skip if no employee or dates available
-    //   }
-    //
-    //
-    //   try {
-    //     const sessionPromises = availableDates.map((date) =>
-    //       axios
-    //         .get(apiUrl, {
-    //           headers: {
-    //             Accept: 'application/vnd.api.v2+json',
-    //             'Content-Type': 'application/json',
-    //             'ngrok-skip-browser-warning': '1',
-    //           },
-    //           params: {
-    //             lang: language || 'ENG',
-    //             staff_id: employee.id, // Use selected employee ID
-    //             date,
-    //           },
-    //         })
-    //         .then((response) => {
-    //           if (response.data.status === 'success') {
-    //             return response.data;
-    //           }
-    //           return null;
-    //         })
-    //         .catch((error) => {
-    //           console.error(`Error fetching sessions for date ${date}:`, error);
-    //           return null;
-    //         })
-    //     );
-    //
-    //     const sessionResults = await Promise.all(sessionPromises);
-    //     const availableSessions = sessionResults.filter((result) => result !== null);
-    //     const groupedSessions = groupSessionsByDate(
-    //       availableSessions.map((result) => result.sessions || [])
-    //     );
-    //     setSelectedDateWithSession(groupedSessions);
-    //   } catch (error) {
-    //     console.error('Error fetching sessions for employees:', error);
-    //   }
-    // };
-
-    // Fetch sessions if employee and dates are valid
-    // fetchSessionsForEmployees();
-
-
-
   const updateBooking = (bookingType) => {
     setBookings(bookingType);
     setAvailableDates([]);
@@ -201,6 +155,33 @@ export const BookingModal = ({ user, language }) => {
     setSelectedDateWithSession((prev) => prev[date] || []);
   };
 
+
+  const bookSession = async (session) => {
+    const apiUrl = 'https://5c0a-5-59-198-77.ngrok-free.app/booking/book';
+    try {
+      const response = await axios.post(apiUrl, {
+        headers: {
+          Accept: 'application/vnd.api.v2+json',
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '1',
+          "Authorization": `Bearer ${localStorage.getItem('token')}`,
+        },
+        data: {
+          lang: language || 'ENG',
+          staff_id: selectedEmployees.id,
+          date: session.date,
+          time: session.time,
+        },
+      });
+      if (response.data.status === 'success') {
+        console.log('Successfully booked session:', response.data);
+      } else {
+        console.error('Failed to book session:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error booking session:', error);
+    }
+  }
   return (
     <BookingModalContainer>
       <BookingModalContent>
@@ -211,7 +192,7 @@ export const BookingModal = ({ user, language }) => {
             <button onClick={() => updateBooking(DATE_BOOKING)}>Вибрати дату</button>
           </ModalHeader>
         </ModalHeaderContainer>
-
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', overflowY: 'auto', maxHeight: '500px' }}>
         {(bookings === EMPLOYEE_BOOKING && !Object.keys(selectedDateWithSession).length)  && (
           availableEmployees.length > 0 ? (
             availableEmployees.map((employee) => (
@@ -249,7 +230,7 @@ export const BookingModal = ({ user, language }) => {
                       {/* Iterate through each session for the given date */}
                       {sessions.map((session, sessionIndex) => (
                         <li key={sessionIndex}>
-                          <button>{session.time}</button> {/* Display the time */}
+                          <button onClick={() => bookSession(session)}>{session.time}</button> {/* Display the time */}
                         </li>
                       ))}
                     </ul>
@@ -259,6 +240,7 @@ export const BookingModal = ({ user, language }) => {
             ))}
           </ul>
         )}
+      </div>
       </BookingModalContent>
     </BookingModalContainer>
   );

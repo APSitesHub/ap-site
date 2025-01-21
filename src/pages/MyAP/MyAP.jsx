@@ -79,6 +79,7 @@ const MyAP = () => {
         setIsUserLogged(isLogged => (isLogged = true));
         console.log(73, res.data.user.platformToken);
         setUser(user => (user = { ...res.data.user }));
+        localStorage.setItem('token', res.data.newToken);
         const lang = res.data.user.lang.split('/');
         if (lang.length > 1 && !language) {
           setIsMultipleCourses(true);
@@ -270,7 +271,9 @@ const MyAP = () => {
         setLanguage(lang[0]);
         setIsMultipleCourses(true);
       }
+      console.log(273, response.data.user.token);
       localStorage.setItem('mail', values.mail);
+      localStorage.setItem('token', response.data.token);
       setIsUserInfoIncorrect(false);
       resetForm();
     } catch (error) {
