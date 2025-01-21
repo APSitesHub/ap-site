@@ -383,6 +383,16 @@ const TeacherFormPage = lazy(() =>
     /* webpackChunkName: "Teacher Form Page" */ '../pages/TeacherFormPage/TeacherFormPage'
   )
 );
+const Videochat = lazy(() =>
+  import(
+    /* webpackChunkName: "Videochat" */ '../pages/Videochat/Videochat'
+  )
+);
+const VideochatRoom = lazy(() =>
+  import(
+    /* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom'
+  )
+);
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
 );
@@ -477,6 +487,8 @@ export const App = () => {
             <Route path="university" element={<University utms={utms} noindex={true} />} />
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
+          <Route path="videochat" element={<Videochat />} />
+          <Route path="room/:id" element={<VideochatRoom />} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />

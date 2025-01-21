@@ -21,6 +21,7 @@
     "emoji-picker-react": "^4.7.12",
     "formik": "^2.4.3",
     "formik-mui": "^5.0.0-alpha.0",
+    "freeice": "^2.2.2",
     "html-react-parser": "^5.1.10",
     "modern-normalize": "^2.0.0",
     "nanoid": "^5.0.4",
