@@ -10,6 +10,10 @@ function Videochat() {
   const rootNode = useRef();
 
   useEffect(() => {
+    if (!getTeacherMail()) {
+      navigate('../teacher-login');
+    }
+
     const handleShareRooms = ({ rooms = [] } = {}) => {
       if (rootNode.current) {
         updateRooms(rooms);
@@ -23,9 +27,13 @@ function Videochat() {
     };
   }, []);
 
+  const getTeacherMail = () => {
+    return localStorage.getItem('mail')
+  }
+
   return (
     <div ref={rootNode}>
-      <h1>Logined as {localStorage.getItem('mail')}</h1>
+      <h1>Logined as {getTeacherMail()}</h1>
 
       <ul>
         {rooms.map(roomID => (

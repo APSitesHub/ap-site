@@ -1,5 +1,4 @@
 import { useParams } from 'react-router';
-import { useLocation } from 'react-router-dom';
 import useWebRTC, { LOCAL_VIDEO } from './utils/hooks/useWebRTC';
 import { useEffect, useState } from 'react';
 import {
@@ -19,37 +18,27 @@ import {
 
 function VideochatRoom() {
   const { id: roomID } = useParams();
-  const location = useLocation();
   const {
     clients,
     provideMediaRef,
+    localDevices,
     toggleCamera,
     toggleMicrophone,
+    changeCamera,
+    changeMicrophone,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   } = useWebRTC(roomID);
-  const [allDevices, setAllDevices] = useState([]);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
   const [selectedVideoDevice, setSelectedVideoDevice] = useState(null);
-  const [selectedAudioDevice, setSelectedAudioDevice] = useState(null);
-  const queryParams = new URLSearchParams(location.search);
 
   useEffect(() => {
-    getAllDevices();
-  }, []);
-
-  useEffect(() => {
-    const video = allDevices.filter(device => device.kind === 'videoinput');
-    const audio = allDevices.filter(device => device.kind === 'audioinput');
-    setVideoDevices(video);
+    const video = localDevices.filter(device => device.kind === 'videoinput');
+    const audio = localDevices.filter(device => device.kind === 'audioinput');
     setAudioDevices(audio);
-  }, [allDevices]);
-
-  const getAllDevices = async () => {
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    setAllDevices(devices);
-  };
+    setVideoDevices(video);
+  }, [localDevices]);
 
   return (
     <PageContainer>
@@ -114,7 +103,11 @@ function VideochatRoom() {
         <ButtonsContainer>
           <MediaButtonContainer>
             <MediaButton onClick={toggleMicrophone}>Micro</MediaButton>
-            <MediaSelector name="micro" id="micro">
+            <MediaSelector
+              name="micro"
+              id="micro"
+              onChange={e => changeMicrophone(e.target.value)}
+            >
               {audioDevices.map(device => (
                 <MediaOption key={device.deviceId} value={device.deviceId}>
                   {device.label}
@@ -124,7 +117,11 @@ function VideochatRoom() {
           </MediaButtonContainer>
           <MediaButtonContainer>
             <MediaButton onClick={toggleCamera}>Camera</MediaButton>
-            <MediaSelector name="camera" id="camera">
+            <MediaSelector
+              name="camera"
+              id="camera"
+              onChange={e => changeCamera(e.target.value)}
+            >
               {videoDevices.map(device => (
                 <MediaOption key={device.deviceId} value={device.deviceId}>
                   {device.label}

@@ -1,8 +1,8 @@
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-const TestLogin = () => {
+const TeacherLogin = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const navigate = useNavigate();
@@ -60,4 +60,4 @@ const TestLogin = () => {
   );
 };
 
-export default TestLogin;
+export default TeacherLogin;
