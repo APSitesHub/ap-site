@@ -359,6 +359,65 @@ const TimeTableAdminPanel = () => {
     },
   ];
 
+  const courseDeutschOptions = [
+    {
+      label: '10 (Спікінги)',
+      value: '10',
+    },
+    {
+      label: '11',
+      value: '11',
+    },
+    {
+      label: '12',
+      value: '12',
+    },
+    {
+      label: '12_1',
+      value: '12_1',
+    },
+    {
+      label: '12_2',
+      value: '12_2',
+    },
+    {
+      label: '12_3',
+      value: '12_3',
+    },
+    {
+      label: '23',
+      value: '23',
+    },
+    {
+      label: '24',
+      value: '24',
+    },
+    {
+      label: '31',
+      value: '31',
+    },
+    {
+      label: '32',
+      value: '32',
+    },
+    {
+      label: '43',
+      value: '43',
+    },
+    {
+      label: '44',
+      value: '44',
+    },
+    {
+      label: '51',
+      value: '51',
+    },
+    {
+      label: '52',
+      value: '52',
+    },
+  ];
+
   const courseOptions = [
     {
       label: '10 (Спікінги)',
@@ -434,6 +493,45 @@ const TimeTableAdminPanel = () => {
     {
       label: 'B2 Beginner',
       value: 'b2beginner',
+    },
+    {
+      label: 'C1',
+      value: 'c1',
+    },
+  ];
+
+  const levelOptionsForDe = [
+    {
+      label: 'A0',
+      value: 'a0',
+    },
+    {
+      label: 'A1',
+      value: 'a1',
+    },
+    {
+      label: 'A2',
+      value: 'a2',
+    },
+    {
+      label: 'B1',
+      value: 'b1',
+    },
+    {
+      label: 'B2',
+      value: 'b2',
+    },
+    {
+      label: 'B2_1',
+      value: 'b2_1',
+    },
+    {
+      label: 'B2_2',
+      value: 'b2_2',
+    },
+    {
+      label: 'B2_3',
+      value: 'b2_3',
     },
     {
       label: 'C1',
@@ -655,6 +753,8 @@ const TimeTableAdminPanel = () => {
                     ? levelOptionsForDeKids
                     : langValue === 'plkids'
                     ? levelOptionsForPlKids
+                    : langValue === 'de'
+                    ? levelOptionsForDe
                     : levelOptions
                 }
                 styles={{
@@ -674,6 +774,8 @@ const TimeTableAdminPanel = () => {
                 options={
                   langValue === 'en' || langValue === 'enkids'
                     ? courseEnglishOptions
+                    : langValue === 'de'
+                    ? courseDeutschOptions
                     : courseOptions
                 }
                 styles={{
@@ -824,8 +926,10 @@ const TimeTableAdminPanel = () => {
               languageOptions={languageOptions}
               courseOptions={courseOptions}
               courseEnglishOptions={courseEnglishOptions}
+              courseDeutschOptions={courseDeutschOptions}
               levelOptions={levelOptions}
               levelOptionsWithBeginners={levelOptionsWithBeginners}
+              levelOptionsForDe={levelOptionsForDe}
               daysOptions={daysOptions}
               typeOptions={typeOptions}
               packageOptions={packageOptions}
@@ -843,8 +947,10 @@ const TimeTableAdminPanel = () => {
               languageOptions={languageOptions}
               courseOptions={courseOptions}
               courseEnglishOptions={courseEnglishOptions}
+              courseDeutschOptions={courseDeutschOptions}
               levelOptions={levelOptions}
               levelOptionsWithBeginners={levelOptionsWithBeginners}
+              levelOptionsForDe={levelOptionsForDe}
               closeCourseLevelEditForm={closeCourseLevelEditForm}
             />
           </Backdrop>

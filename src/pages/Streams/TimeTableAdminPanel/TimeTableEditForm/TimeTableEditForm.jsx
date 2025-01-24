@@ -20,8 +20,10 @@ export const TimeTableEditForm = ({
   languageOptions,
   levelOptions,
   levelOptionsWithBeginners,
+  levelOptionsForDe,
   courseOptions,
   courseEnglishOptions,
+  courseDeutschOptions,
   daysOptions,
   typeOptions,
   packageOptions,
@@ -125,7 +127,11 @@ export const TimeTableEditForm = ({
           />
           <FormSelect
             options={
-              langValue !== 'enkids' ? levelOptions : levelOptionsWithBeginners
+              langValue === 'enkids'
+                ? levelOptionsWithBeginners
+                : langValue === 'de'
+                ? levelOptionsForDe
+                : levelOptions
             }
             styles={{
               control: (baseStyles, state) => ({
@@ -142,6 +148,9 @@ export const TimeTableEditForm = ({
               ) ||
               levelOptionsWithBeginners.find(
                 option => option.value === lessonToEdit.level
+              ) ||
+              levelOptionsForDe.find(
+                option => option.value === lessonToEdit.level
               )
             }
             isDisabled
@@ -153,6 +162,8 @@ export const TimeTableEditForm = ({
             options={
               langValue === 'en' || langValue === 'enkids'
                 ? courseEnglishOptions
+                : langValue === 'de'
+                ? courseDeutschOptions
                 : courseOptions
             }
             styles={{

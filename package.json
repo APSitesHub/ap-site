@@ -1,6 +1,6 @@
 {
   "name": "ap-education",
-  "version": "1.0.55",
+  "version": "1.0.55.1",
   "private": true,
   "homepage": "https://apsiteshub.github.io/ap-site/",
   "dependencies": {

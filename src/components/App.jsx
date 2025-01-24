@@ -255,6 +255,9 @@ const UniUserAdminPanel = lazy(() =>
     /* webpackChunkName: "Polish University Users Admin Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAdminPanel'
   )
 );
+const UniUserAttendancePedagogium = lazy(() => import(
+  /* webpackChunkName: "Pedagogium Attendance Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAttendancePedagogium'
+));
 const C1SpeakingPanel = lazy(() =>
   import(
     /* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel'
@@ -606,6 +609,7 @@ export const App = () => {
               noindex={true}/>
             <Route path="user-admin-panel" element={<UserAdminPanel />} noindex={true}/>
             <Route path="pl-user-admin-panel" element={<UniUserAdminPanel />} noindex={true}/>
+            <Route path="pedagogium-attendance" element={<UniUserAdminPanel />} noindex={true}/>
             <Route path="c1-speaking-panel" element={<C1SpeakingPanel />} noindex={true}/>
             <Route
               path="teacher-teamlead-panel"
