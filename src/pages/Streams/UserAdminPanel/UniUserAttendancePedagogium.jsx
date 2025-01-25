@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
   AdminFormBtn,
@@ -14,9 +14,7 @@ import {
   UserDBCaption,
   UserDBRow,
   UserDBTable,
-  UserDeleteButton,
-  UserEditButton,
-  UserHeadCell
+  UserHeadCell,
 } from './UserAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -28,14 +26,8 @@ const UniUserAttendancePedagogium = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [users, setUsers] = useState([]);
-  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-  const [userToEdit, setUserToEdit] = useState({});
-  const [uniValue, setUniValue] = useState(null);
-  const [isUniEmpty, setIsUniEmpty] = useState(false);
   // eslint-disable-next-line
   const [daysAfterLastLogin, setDaysAfterLastLogin] = useState(7);
-  const selectInputRef = useRef();
-
 
   useEffect(() => {
     document.title = 'Polish University Users Admin Panel | AP Education';
@@ -66,17 +58,7 @@ const UniUserAttendancePedagogium = () => {
     };
     getUsers();
 
-    const onEscapeClose = event => {
-      if (event.code === 'Escape') {
-        closeEditForm();
-      }
-    };
-
-    window.addEventListener('keydown', onEscapeClose);
-
-    return () => {
-      window.removeEventListener('keydown', onEscapeClose);
-    };
+    return () => {};
   }, [isUserAdmin]);
 
   const initialLoginValues = {
@@ -89,16 +71,10 @@ const UniUserAttendancePedagogium = () => {
     password: yup.string().required('Введіть пароль!'),
   });
 
-  const onClear = () => {
-    selectInputRef.current.clearValue();
-  };
-
   const changeDateFormat = dateString => {
     if (dateString) {
       const dateArray = dateString.split('.');
-      return dateArray.length > 2
-        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
-        : Date.parse(dateString);
+      return dateArray.length > 2 ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/')) : Date.parse(dateString);
     }
     return;
   };
@@ -118,145 +94,18 @@ const UniUserAttendancePedagogium = () => {
     }
   };
 
-  const initialUserValues = {
-    name: '',
-    mail: '',
-    password: '',
-    crmId: '',
-    contactId: '',
-    pupilId: '',
-    university: '',
-  };
-
-  const usersSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required(
-        "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"
-      ),
-    mail: yup.string().required("Пошта - обов'язкове поле!"),
-    password: yup.string().required("Пароль - обов'язкове поле!"),
-    crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
-    contactId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
-    pupilId: yup
-      .string()
-      .min(6, 'Не менше 6 цифр')
-      .max(7, 'Не більше 7 цифр')
-      .matches(/^\d{1,7}$/, 'Лише цифри')
-      .required("Обов'язкове поле, дивитись на платформі"),
-  });
-
-  const handleUserSubmit = async (values, { resetForm }) => {
-    setIsLoading(isLoading => (isLoading = true));
-    values.name = values.name.trim().trimStart();
-    values.mail = values.mail.toLowerCase().trim().trimStart();
-    values.password = values.password.trim().trimStart();
-    values.crmId = values.crmId ? +values.crmId.trim().trimStart() : undefined;
-    values.contactId = values.contactId
-      ? +values.contactId.trim().trimStart()
-      : undefined;
-    values.pupilId = values.pupilId.trim().trimStart();
-    values.university = uniValue.value;
-    try {
-      const response = await axios.post('/uniusers/new', values);
-      console.log(response.data);
-      setUsers(users => [response.data, ...users]);
-      resetForm();
-      onClear();
-      alert('Юзера додано');
-    } catch (error) {
-      console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
-    } finally {
-      setIsLoading(isLoading => (isLoading = false));
-    }
-  };
-
-  const handleEdit = async id => {
-    setIsEditFormOpen(true);
-    setUserToEdit(
-      userToEdit => (userToEdit = users.find(user => user._id === id))
-    );
-  };
-
-  const closeEditForm = e => {
-    setIsEditFormOpen(false);
-  };
-
-  const closeEditFormOnClick = e => {
-    if (e.target.id === 'close-on-click') {
-      setIsEditFormOpen(false);
-    }
-  };
-
-  const updateUser = (id, values) => {
-    const userToUpdate = users.find(user => user._id === id);
-    userToUpdate.name = values.name;
-    userToUpdate.mail = values.mail;
-    userToUpdate.password = values.password;
-    userToUpdate.pupilId = values.pupilId;
-    userToUpdate.crmId = values.crmId;
-    userToUpdate.contactId = values.contactId;
-    userToUpdate.university = values.university;
-
-    console.log(userToUpdate);
-
-    setUsers(
-      users =>
-        (users = users.map((user, i) =>
-          i === users.findIndex(user => user._id === id) ? userToUpdate : user
-        ))
-    );
-  };
-
-  const handleDelete = async id => {
-    setIsLoading(isLoading => (isLoading = true));
-    const areYouSure = window.confirm(
-      `Точно видалити ${users.find(user => user._id === id).name}?`
-    );
-
-    if (!areYouSure) {
-      setIsLoading(isLoading => (isLoading = false));
-      return;
-    } else {
-      try {
-        const response = await axios.delete(`/uniusers/${id}`);
-        console.log(response);
-        alert('Юзера видалено');
-        setUsers(users => (users = [...users.filter(user => user._id !== id)]));
-      } catch (error) {
-        console.error(error);
-        alert(
-          'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-        );
-      } finally {
-        setIsLoading(isLoading => (isLoading = false));
-      }
-    }
-  };
-
   return (
     <>
       <AdminPanelSection>
         {!isUserAdmin && (
-          <Formik
-            initialValues={initialLoginValues}
-            onSubmit={handleLoginSubmit}
-            validationSchema={loginSchema}
-          >
+          <Formik initialValues={initialLoginValues} onSubmit={handleLoginSubmit} validationSchema={loginSchema}>
             <LoginForm>
               <Label>
                 <AdminInput type="text" name="login" placeholder="Login" />
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -277,26 +126,16 @@ const UniUserAttendancePedagogium = () => {
                 <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
                 <UserHeadCell>Відвідини з часом</UserHeadCell>
-                <UserHeadCell>Edit</UserHeadCell>
-                <UserHeadCell>Delete</UserHeadCell>
               </UserDBRow>
             </thead>
             <tbody>
               {users.map(user => (
                 <UserDBRow key={user._id}>
                   <UserCell>
-                    <a
-                      href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <a href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`} target="_blank" rel="noreferrer">
                       {user.crmId}
                     </a>{' '}
-                    <a
-                      href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <a href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`} target="_blank" rel="noreferrer">
                       {user.contactId}
                     </a>
                   </UserCell>
@@ -307,13 +146,7 @@ const UniUserAttendancePedagogium = () => {
                   <UserCell>{user.pupilId}</UserCell>
                   <UserCell
                     className={
-                      Math.floor(
-                        (Date.now() -
-                          changeDateFormat(
-                            user.visited[user.visited.length - 1]
-                          )) /
-                          86400000
-                      ) > daysAfterLastLogin
+                      Math.floor((Date.now() - changeDateFormat(user.visited[user.visited.length - 1])) / 86400000) > daysAfterLastLogin
                         ? 'attention'
                         : ''
                     }
@@ -323,32 +156,9 @@ const UniUserAttendancePedagogium = () => {
                   <UserCell>
                     {!user.visitedTime[user.visitedTime.length - 1]
                       ? ''
-                      : user.visitedTime[user.visitedTime.length - 1].match(
-                          '^202'
-                        )
-                      ? new Date(
-                          user.visitedTime[user.visitedTime.length - 1]
-                        ).toLocaleString('uk-UA')
-                      : new Date(
-                          changeDateFormat(
-                            user.visitedTime[user.visitedTime.length - 1]
-                          )
-                        ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
-                  </UserCell>
-
-                  <UserCell>
-                    {/* {user.name === 'Dev Acc' ? null : ( */}
-                    <UserEditButton onClick={() => handleEdit(user._id)}>
-                      Edit
-                    </UserEditButton>
-                    {/* )} */}
-                  </UserCell>
-                  <UserCell>
-                    {user.name === 'Dev Acc' ? null : (
-                      <UserDeleteButton onClick={() => handleDelete(user._id)}>
-                        Del
-                      </UserDeleteButton>
-                    )}
+                      : user.visitedTime[user.visitedTime.length - 1].match('^202')
+                      ? new Date(user.visitedTime[user.visitedTime.length - 1]).toLocaleString('uk-UA')
+                      : new Date(changeDateFormat(user.visitedTime[user.visitedTime.length - 1])).toLocaleString('uk-UA', { timeZone: '+06:00' })}
                   </UserCell>
                 </UserDBRow>
               ))}

@@ -136,6 +136,7 @@ const StreamSpeakingClub = () => {
           )}
           {((course === user.course || user.course?.split('/').some(singleCourse => singleCourse === course)) &&
             (lang === user.lang || user.lang?.split('/').some(singleLang => singleLang === lang))) ||
+          (page.includes('deb2_') && user.course?.includes('12')) ||
           user.name === 'Dev Acc' ||
           user.course === '10' ||
           user.course?.split('/').some(singleCourse => singleCourse === '10') ||
@@ -173,6 +174,7 @@ const StreamSpeakingClub = () => {
             redirectLink &&
             redirectLink !== '1' &&
             isApproved) ||
+            (page.includes('deb2_') && user.course?.includes('12')) ||
             (user.name === 'Dev Acc' && isApproved) ||
             ((user.course === '10' || user.course?.split('/').some(singleCourse => singleCourse === '10')) && isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&

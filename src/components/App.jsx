@@ -324,7 +324,7 @@ export const App = () => {
             <Route path="uni-host-kahoot-admin-panel" element={<UniHostKahootAdminPanel />} noindex={true} />
             <Route path="user-admin-panel" element={<UserAdminPanel />} noindex={true} />
             <Route path="pl-user-admin-panel" element={<UniUserAdminPanel />} noindex={true} />
-            <Route path="pedagogium-attendance" element={<UniUserAdminPanel />} noindex={true} />
+            <Route path="pedagogium-attendance" element={<UniUserAttendancePedagogium />} noindex={true} />
             <Route path="c1-speaking-panel" element={<C1SpeakingPanel />} noindex={true} />
             <Route path="teacher-teamlead-panel" element={<TeacherAdminPanel />} noindex={true} />
             <Route path="tcp" element={<TeacherControlPage />} noindex={true} />
