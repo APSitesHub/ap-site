@@ -25,6 +25,8 @@ const StreamSpeakingClub = () => {
   const location = useLocation().pathname;
 
   const page = location.replace('/streams/', '').replace('sc', '');
+  console.log(28, page);
+
   const link = page.includes('dea1')
     ? page.replace('dea1', 'deutsch')
     : page.includes('de')
@@ -34,6 +36,8 @@ const StreamSpeakingClub = () => {
     : page.includes('pl')
     ? page.replace('pl', 'polski')
     : page;
+
+  console.log(40, link);
 
   useLayoutEffect(() => {
     const getLinksRequest = async () => {
@@ -88,20 +92,12 @@ const StreamSpeakingClub = () => {
 
     const sendUserInfo = async () => {
       try {
-        setCourse(
-          (await axios.get('/timetable')).data.filter(
-            timetable =>
-              page.includes(timetable.level) && lang === timetable.lang
-          )[0].course
-        );
+        setCourse((await axios.get('/timetable')).data.filter(timetable => page.includes(timetable.level) && lang === timetable.lang)[0].course);
         setLevel(
           (await axios.get('/timetable')).data.filter(
             timetable =>
               lang === timetable.lang &&
-              (user.course === timetable.course ||
-                user.course
-                  ?.split('/')
-                  .some(singleCourse => singleCourse === timetable.course))
+              (user.course === timetable.course || user.course?.split('/').some(singleCourse => singleCourse === timetable.course))
           )[0].level
         );
 
@@ -110,9 +106,7 @@ const StreamSpeakingClub = () => {
         console.log('existingUser', existingUser);
         console.log(103, user);
 
-        const res = !existingUser.data
-          ? await axios.post('/speakingusers/new', user)
-          : await axios.put(`/speakingusers/${user.userId}`, user);
+        const res = !existingUser.data ? await axios.post('/speakingusers/new', user) : await axios.put(`/speakingusers/${user.userId}`, user);
 
         res.data._id && setIsApproved(true);
       } catch (error) {
@@ -132,22 +126,16 @@ const StreamSpeakingClub = () => {
               <Loader />
             </LoaderWrapper>
           )}
-          {(redirectLink === undefined || redirectLink[0] < 10) &&
-            !isLoading && (
-              <StreamPlaceHolder>
-                <StreamPlaceHolderText>
-                  Привіт! <br />
-                  Наразі урок на цій сторінці не проводиться! Перевірте, чи ви
-                  перейшли за правильним посиланням або спробуйте пізніше.
-                </StreamPlaceHolderText>
-              </StreamPlaceHolder>
-            )}
-          {((course === user.course ||
-            user.course
-              ?.split('/')
-              .some(singleCourse => singleCourse === course)) &&
-            (lang === user.lang ||
-              user.lang?.split('/').some(singleLang => singleLang === lang))) ||
+          {(redirectLink === undefined || redirectLink[0] < 10) && !isLoading && (
+            <StreamPlaceHolder>
+              <StreamPlaceHolderText>
+                Привіт! <br />
+                Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за правильним посиланням або спробуйте пізніше.
+              </StreamPlaceHolderText>
+            </StreamPlaceHolder>
+          )}
+          {((course === user.course || user.course?.split('/').some(singleCourse => singleCourse === course)) &&
+            (lang === user.lang || user.lang?.split('/').some(singleLang => singleLang === lang))) ||
           user.name === 'Dev Acc' ||
           user.course === '10' ||
           user.course?.split('/').some(singleCourse => singleCourse === '10') ||
@@ -155,60 +143,38 @@ const StreamSpeakingClub = () => {
             <StreamPlaceHolder>
               <StreamPlaceHolderText>
                 Привіт! <br />
-                Будь ласка, зачекайте, незабаром вас переадресує на практичне
-                заняття в Zoom
+                Будь ласка, зачекайте, незабаром вас переадресує на практичне заняття в Zoom
               </StreamPlaceHolderText>
               <StreamRefreshText>
-                <StreamRefreshQuestion>
-                  Очікуєте занадто довго?
-                </StreamRefreshQuestion>
-                <StreamRefreshPageLink onClick={() => window.location.reload()}>
-                  Натисніть сюди, щоб оновити сторінку
-                </StreamRefreshPageLink>
+                <StreamRefreshQuestion>Очікуєте занадто довго?</StreamRefreshQuestion>
+                <StreamRefreshPageLink onClick={() => window.location.reload()}>Натисніть сюди, щоб оновити сторінку</StreamRefreshPageLink>
               </StreamRefreshText>
             </StreamPlaceHolder>
           ) : (
             <StreamPlaceHolder>
               <StreamPlaceHolderText>
                 Хммм... <br />
-                Здається, ви намагаєтесь під'єднатися до практичного заняття не
-                свого рівня!
+                Здається, ви намагаєтесь під'єднатися до практичного заняття не свого рівня!
               </StreamPlaceHolderText>
               <StreamRefreshText>
                 <StreamRefreshQuestion>
-                  Впевнені, що не помилились? <br /> Зв'яжіться з вашим
-                  менеджером або
+                  Впевнені, що не помилились? <br /> Зв'яжіться з вашим менеджером або
                 </StreamRefreshQuestion>
                 <StreamRefreshPageLink
-                  onClick={() =>
-                    window.location.replace(
-                      'https://www.academy.ap.education/streams/' +
-                        (lang !== 'en' ? lang : '') +
-                        level +
-                        'sc'
-                    )
-                  }
+                  onClick={() => window.location.replace('https://www.academy.ap.education/streams/' + (lang !== 'en' ? lang : '') + level + 'sc')}
                 >
                   може, це ваше практичне заняття?
                 </StreamRefreshPageLink>
               </StreamRefreshText>
             </StreamPlaceHolder>
           )}
-          {(((course === user.course ||
-            user.course
-              ?.split('/')
-              .some(singleCourse => singleCourse === course)) &&
-            (lang === user.lang ||
-              user.lang?.split('/').some(singleLang => singleLang === lang)) &&
+          {(((course === user.course || user.course?.split('/').some(singleCourse => singleCourse === course)) &&
+            (lang === user.lang || user.lang?.split('/').some(singleLang => singleLang === lang)) &&
             redirectLink &&
             redirectLink !== '1' &&
             isApproved) ||
             (user.name === 'Dev Acc' && isApproved) ||
-            ((user.course === '10' ||
-              user.course
-                ?.split('/')
-                .some(singleCourse => singleCourse === '10')) &&
-              isApproved) ||
+            ((user.course === '10' || user.course?.split('/').some(singleCourse => singleCourse === '10')) && isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&
             redirectLink !== undefined &&
             redirectLink !== '1' &&
