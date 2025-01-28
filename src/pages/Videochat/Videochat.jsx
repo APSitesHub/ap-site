@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { getRooms } from './utils/api/getRooms';
+import { createRoom } from './utils/api/createRoom';
+import { getToken } from './utils/api/getToken';
 import {
   Container,
   Title,
@@ -13,45 +15,34 @@ import {
   JoinButton
 } from './Videochat.styled';
 
-axios.defaults.baseURL = 'http://localhost:3001';
-
 function Videochat() {
   const navigate = useNavigate();
-  const [rooms, updateRooms] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const newRoomName = useRef('');
 
   useEffect(() => {
-    if (!getTeacherMail()) {
+    if (!getToken()) {
       navigate('../teacher-login');
     }
 
-    getRooms();
+    updateRooms();
   }, []);
 
-  const createRoom = () => {
-    const options = {
-      name: newRoomName.current.value,
-      userEmail: getTeacherMail(),
-    };
+  const updateRooms = async () => {
+    const rooms = await getRooms();
 
-    axios.post('/room/create', options);
-
-    getRooms();
+    setRooms(rooms);
   };
 
-  const getRooms = async () => {
-    const rooms = await axios.get(`/room/byEmail?email=${getTeacherMail()}`);
+  const handleCreateRoom = async () => {
+    await createRoom(newRoomName.current.value);
 
-    updateRooms(rooms.data)
-  };
-
-  const getTeacherMail = () => {
-    return localStorage.getItem('mail');
+    await updateRooms();
   }
 
   return (
     <Container>
-      <Title>Logined as {getTeacherMail()}</Title>
+      <Title>Logined as Teacher</Title>
 
       <div>
         <SubTitle>Create Room</SubTitle>
@@ -61,9 +52,7 @@ function Videochat() {
       <Input type="text" id="room-name" ref={newRoomName} />
 
       <Button
-        onClick={() => {
-          createRoom();
-        }}
+        onClick={handleCreateRoom}
       >
         Create New Room
       </Button>
