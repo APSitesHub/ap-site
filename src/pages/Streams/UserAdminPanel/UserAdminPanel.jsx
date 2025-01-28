@@ -163,9 +163,7 @@ const UserAdminPanel = () => {
   const changeDateFormat = dateString => {
     if (dateString) {
       const dateArray = dateString.split('.');
-      return dateArray.length > 2
-        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
-        : Date.parse(dateString);
+      return dateArray.length > 2 ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/')) : Date.parse(dateString);
     }
     return;
   };
@@ -174,34 +172,15 @@ const UserAdminPanel = () => {
     if (current === '' && sortedUsers.current.length === 0) {
       setUsers(users => (users = [...persistentUsers.current]));
       sortedUsers.current = [];
-    } else if (
-      sortedUsers.current.length > 0 &&
-      filteredUsers.current.length === 0
-    ) {
-      setUsers(
-        users =>
-          (users = [
-            ...sortedUsers.current.filter(user => user.manager === current),
-          ])
-      );
-      filteredUsers.current = [
-        ...sortedUsers.current.filter(user => user.manager === current),
-      ];
+    } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
+      setUsers(users => (users = [...sortedUsers.current.filter(user => user.manager === current)]));
+      filteredUsers.current = [...sortedUsers.current.filter(user => user.manager === current)];
     } else {
       console.log('managers else');
       console.log(filteredUsers);
-      setUsers(
-        users =>
-          (users = [
-            ...persistentUsers.current.filter(user => user.manager === current),
-          ])
-      );
-      sortedUsers.current = [
-        ...persistentUsers.current.filter(user => user.manager === current),
-      ];
-      filteredUsers.current = [
-        ...persistentUsers.current.filter(user => user.manager === current),
-      ];
+      setUsers(users => (users = [...persistentUsers.current.filter(user => user.manager === current)]));
+      sortedUsers.current = [...persistentUsers.current.filter(user => user.manager === current)];
+      filteredUsers.current = [...persistentUsers.current.filter(user => user.manager === current)];
       console.log(filteredUsers);
     }
   };
@@ -210,32 +189,13 @@ const UserAdminPanel = () => {
     if (current === '' && sortedUsers.current.length === 0) {
       setUsers(users => (users = [...persistentUsers.current]));
       sortedUsers.current = [];
-    } else if (
-      sortedUsers.current.length > 0 &&
-      filteredUsers.current.length === 0
-    ) {
-      setUsers(
-        users =>
-          (users = [
-            ...sortedUsers.current.filter(user => user.course === current),
-          ])
-      );
-      filteredUsers.current = [
-        ...sortedUsers.current.filter(user => user.course === current),
-      ];
+    } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
+      setUsers(users => (users = [...sortedUsers.current.filter(user => user.course === current)]));
+      filteredUsers.current = [...sortedUsers.current.filter(user => user.course === current)];
     } else {
-      setUsers(
-        users =>
-          (users = [
-            ...persistentUsers.current.filter(user => user.course === current),
-          ])
-      );
-      sortedUsers.current = [
-        ...persistentUsers.current.filter(user => user.course === current),
-      ];
-      filteredUsers.current = [
-        ...persistentUsers.current.filter(user => user.course === current),
-      ];
+      setUsers(users => (users = [...persistentUsers.current.filter(user => user.course === current)]));
+      sortedUsers.current = [...persistentUsers.current.filter(user => user.course === current)];
+      filteredUsers.current = [...persistentUsers.current.filter(user => user.course === current)];
     }
   };
 
@@ -243,32 +203,13 @@ const UserAdminPanel = () => {
     if (current === '' && sortedUsers.current.length === 0) {
       setUsers(users => (users = [...persistentUsers.current]));
       sortedUsers.current = [];
-    } else if (
-      sortedUsers.current.length > 0 &&
-      filteredUsers.current.length === 0
-    ) {
-      setUsers(
-        users =>
-          (users = [
-            ...sortedUsers.current.filter(user => user.lang === current),
-          ])
-      );
-      filteredUsers.current = [
-        ...sortedUsers.current.filter(user => user.lang === current),
-      ];
+    } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
+      setUsers(users => (users = [...sortedUsers.current.filter(user => user.lang === current)]));
+      filteredUsers.current = [...sortedUsers.current.filter(user => user.lang === current)];
     } else {
-      setUsers(
-        users =>
-          (users = [
-            ...persistentUsers.current.filter(user => user.lang === current),
-          ])
-      );
-      sortedUsers.current = [
-        ...persistentUsers.current.filter(user => user.lang === current),
-      ];
-      filteredUsers.current = [
-        ...persistentUsers.current.filter(user => user.lang === current),
-      ];
+      setUsers(users => (users = [...persistentUsers.current.filter(user => user.lang === current)]));
+      sortedUsers.current = [...persistentUsers.current.filter(user => user.lang === current)];
+      filteredUsers.current = [...persistentUsers.current.filter(user => user.lang === current)];
     }
   };
 
@@ -283,18 +224,9 @@ const UserAdminPanel = () => {
           (users = [
             ...filteredUsers.current
               .filter(user =>
-                user.visited.length > 0
-                  ? (Date.now() -
-                      changeDateFormat(user.visited[user.visited.length - 1])) /
-                      86400000 >
-                    current
-                  : 0
+                user.visited.length > 0 ? (Date.now() - changeDateFormat(user.visited[user.visited.length - 1])) / 86400000 > current : 0
               )
-              .sort(
-                (a, b) =>
-                  (changeDateFormat(a.visited[a.visited.length - 1]) || 0) -
-                  (changeDateFormat(b.visited[b.visited.length - 1]) || 0)
-              ),
+              .sort((a, b) => (changeDateFormat(a.visited[a.visited.length - 1]) || 0) - (changeDateFormat(b.visited[b.visited.length - 1]) || 0)),
           ])
       );
     } else {
@@ -304,18 +236,9 @@ const UserAdminPanel = () => {
           (users = [
             ...persistentUsers.current
               .filter(user =>
-                user.visited.length > 0
-                  ? (Date.now() -
-                      changeDateFormat(user.visited[user.visited.length - 1])) /
-                      86400000 >
-                    current
-                  : 0
+                user.visited.length > 0 ? (Date.now() - changeDateFormat(user.visited[user.visited.length - 1])) / 86400000 > current : 0
               )
-              .sort(
-                (a, b) =>
-                  (changeDateFormat(b.visited[b.visited.length - 1]) || 0) -
-                  (changeDateFormat(a.visited[a.visited.length - 1]) || 0)
-              ),
+              .sort((a, b) => (changeDateFormat(b.visited[b.visited.length - 1]) || 0) - (changeDateFormat(a.visited[a.visited.length - 1]) || 0)),
           ])
       );
     }
@@ -325,34 +248,13 @@ const UserAdminPanel = () => {
     if (current === '' && sortedUsers.current.length === 0) {
       setUsers(users => (users = [...persistentUsers.current]));
       sortedUsers.current = [];
-    } else if (
-      sortedUsers.current.length > 0 &&
-      filteredUsers.current.length === 0
-    ) {
-      setUsers(
-        users =>
-          (users = [
-            ...sortedUsers.current.filter(user => user.knowledge === current),
-          ])
-      );
-      filteredUsers.current = [
-        ...sortedUsers.current.filter(user => user.knowledge === current),
-      ];
+    } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
+      setUsers(users => (users = [...sortedUsers.current.filter(user => user.knowledge === current)]));
+      filteredUsers.current = [...sortedUsers.current.filter(user => user.knowledge === current)];
     } else {
-      setUsers(
-        users =>
-          (users = [
-            ...persistentUsers.current.filter(
-              user => user.knowledge === current
-            ),
-          ])
-      );
-      sortedUsers.current = [
-        ...persistentUsers.current.filter(user => user.knowledge === current),
-      ];
-      filteredUsers.current = [
-        ...persistentUsers.current.filter(user => user.knowledge === current),
-      ];
+      setUsers(users => (users = [...persistentUsers.current.filter(user => user.knowledge === current)]));
+      sortedUsers.current = [...persistentUsers.current.filter(user => user.knowledge === current)];
+      filteredUsers.current = [...persistentUsers.current.filter(user => user.knowledge === current)];
     }
   };
 
@@ -390,11 +292,7 @@ const UserAdminPanel = () => {
   };
 
   const usersSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required(
-        "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"
-      ),
+    name: yup.string().required("Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"),
     mail: yup.string().required("Пошта - обов'язкове поле!"),
     zoomMail: yup.string(),
     password: yup.string().required("Пароль - обов'язкове поле!"),
@@ -406,33 +304,20 @@ const UserAdminPanel = () => {
       .max(7, 'Не більше 7 цифр')
       .matches(/^\d{1,7}$/, 'Лише цифри')
       .required("Обов'язкове поле, дивитись на платформі"),
-    marathonNumber: yup
-      .string()
-      .max(1, 'Не більше 1 цифри')
-      .matches(/[12]/, 'Лише цифри 1 або 2'),
-    age: yup
-      .string()
-      .required(
-        "Вік - обов'язкове поле, якщо віку з якоїсь причини ми не знаємо, введіть N/A"
-      ),
+    marathonNumber: yup.string().max(1, 'Не більше 1 цифри').matches(/[12]/, 'Лише цифри 1 або 2'),
+    age: yup.string().required("Вік - обов'язкове поле, якщо віку з якоїсь причини ми не знаємо, введіть N/A"),
     lang: yup
       .string()
       .required("Мова - обов'язкове поле")
       .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
-    course: yup
-      .string()
-      .required(
-        "Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"
-      ),
+    course: yup.string().required("Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"),
     package: yup.string().optional(),
     // .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     knowledge: yup
       .string()
       .optional()
-      .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
-    manager: yup
-      .string()
-      .required("Менеджер - обов'язкове поле, введіть прізвище"),
+      .matches(/^[A-Za-z0-9_/]+$/, 'Лише латинські літери'),
+    manager: yup.string().required("Менеджер - обов'язкове поле, введіть прізвище"),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
@@ -442,9 +327,7 @@ const UserAdminPanel = () => {
     values.zoomMail = values.zoomMail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.crmId = values.crmId ? +values.crmId.trim().trimStart() : undefined;
-    values.contactId = values.contactId
-      ? +values.contactId.trim().trimStart()
-      : undefined;
+    values.contactId = values.contactId ? +values.contactId.trim().trimStart() : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
     values.marathonNumber = values.marathonNumber.trim().trimStart();
     values.age = values.age.trim().trimStart();
@@ -461,9 +344,7 @@ const UserAdminPanel = () => {
       alert('Юзера додано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -471,9 +352,7 @@ const UserAdminPanel = () => {
 
   const handleEdit = async id => {
     setIsEditFormOpen(true);
-    setUserToEdit(
-      userToEdit => (userToEdit = users.find(user => user._id === id))
-    );
+    setUserToEdit(userToEdit => (userToEdit = users.find(user => user._id === id)));
   };
 
   const closeEditForm = e => {
@@ -506,12 +385,7 @@ const UserAdminPanel = () => {
 
     console.log(userToUpdate);
 
-    setUsers(
-      users =>
-        (users = users.map((user, i) =>
-          i === users.findIndex(user => user._id === id) ? userToUpdate : user
-        ))
-    );
+    setUsers(users => (users = users.map((user, i) => (i === users.findIndex(user => user._id === id) ? userToUpdate : user))));
   };
 
   const toggleDaysSinceLastVisitPicker = () => {
@@ -536,9 +410,7 @@ const UserAdminPanel = () => {
 
   const handleDelete = async id => {
     setIsLoading(isLoading => (isLoading = true));
-    const areYouSure = window.confirm(
-      `Точно видалити ${users.find(user => user._id === id).name}?`
-    );
+    const areYouSure = window.confirm(`Точно видалити ${users.find(user => user._id === id).name}?`);
 
     if (!areYouSure) {
       setIsLoading(isLoading => (isLoading = false));
@@ -551,9 +423,7 @@ const UserAdminPanel = () => {
         setUsers(users => (users = [...users.filter(user => user._id !== id)]));
       } catch (error) {
         console.error(error);
-        alert(
-          'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-        );
+        alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
       } finally {
         setIsLoading(isLoading => (isLoading = false));
       }
@@ -564,17 +434,12 @@ const UserAdminPanel = () => {
     setIsLoading(isLoading => (isLoading = true));
 
     try {
-      const response = await axios.patch(
-        `/users/${id}`,
-        isBanned ? { isBanned: false } : { isBanned: true }
-      );
+      const response = await axios.patch(`/users/${id}`, isBanned ? { isBanned: false } : { isBanned: true });
       console.log(response);
       isBanned ? alert('Юзера розблоковано') : alert('Юзера заблоковано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -584,22 +449,14 @@ const UserAdminPanel = () => {
     <>
       <AdminPanelSection>
         {!isUserAdmin && (
-          <Formik
-            initialValues={initialLoginValues}
-            onSubmit={handleLoginSubmit}
-            validationSchema={loginSchema}
-          >
+          <Formik initialValues={initialLoginValues} onSubmit={handleLoginSubmit} validationSchema={loginSchema}>
             <LoginForm>
               <Label>
                 <AdminInput type="text" name="login" placeholder="Login" />
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -608,34 +465,18 @@ const UserAdminPanel = () => {
         )}
 
         {isUserAdmin && (
-          <Formik
-            initialValues={initialUserValues}
-            onSubmit={handleUserSubmit}
-            validationSchema={usersSchema}
-          >
+          <Formik initialValues={initialUserValues} onSubmit={handleUserSubmit} validationSchema={usersSchema}>
             <UsersForm>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="name"
-                  placeholder="Прізвище та ім'я"
-                />
+                <AdminInput type="text" name="name" placeholder="Прізвище та ім'я" />
                 <AdminInputNote component="p" name="name" />
               </Label>
               <Label>
-                <AdminInput
-                  type="email"
-                  name="mail"
-                  placeholder="Електронна пошта (логін)"
-                />
+                <AdminInput type="email" name="mail" placeholder="Електронна пошта (логін)" />
                 <AdminInputNote component="p" name="mail" />
               </Label>
               <Label>
-                <AdminInput
-                  type="email"
-                  name="zoomMail"
-                  placeholder="Електронна пошта (Zoom)"
-                />
+                <AdminInput type="email" name="zoomMail" placeholder="Електронна пошта (Zoom)" />
                 <AdminInputNote component="p" name="zoomMail" />
               </Label>
               <Label>
@@ -643,35 +484,19 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="password" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="crmId"
-                  placeholder="ID ліда в CRM"
-                />
+                <AdminInput type="text" name="crmId" placeholder="ID ліда в CRM" />
                 <AdminInputNote component="p" name="crmId" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="contactId"
-                  placeholder="ID контакту в CRM"
-                />
+                <AdminInput type="text" name="contactId" placeholder="ID контакту в CRM" />
                 <AdminInputNote component="p" name="contactId" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="pupilId"
-                  placeholder="ID учня на платформі"
-                />
+                <AdminInput type="text" name="pupilId" placeholder="ID учня на платформі" />
                 <AdminInputNote component="p" name="pupilId" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="marathonNumber"
-                  placeholder="№ марафону на платформі"
-                />
+                <AdminInput type="text" name="marathonNumber" placeholder="№ марафону на платформі" />
                 <AdminInputNote component="p" name="marathonNumber" />
               </Label>
               <Label>
@@ -687,27 +512,15 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="course" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="package"
-                  placeholder="Пакет послуг"
-                />
+                <AdminInput type="text" name="package" placeholder="Пакет послуг" />
                 <AdminInputNote component="p" name="package" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="knowledge"
-                  placeholder="Рівень знань"
-                />
+                <AdminInput type="text" name="knowledge" placeholder="Рівень знань" />
                 <AdminInputNote component="p" name="knowledge" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="manager"
-                  placeholder="Прізвище відповідального менеджера"
-                />
+                <AdminInput type="text" name="manager" placeholder="Прізвище відповідального менеджера" />
                 <AdminInputNote component="p" name="manager" />
               </Label>
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
@@ -730,9 +543,7 @@ const UserAdminPanel = () => {
                 <UserHeadCell>
                   <Filterable>
                     Відвідини
-                    <FilterButton
-                      onClick={toggleDaysSinceLastVisitPicker}
-                    ></FilterButton>
+                    <FilterButton onClick={toggleDaysSinceLastVisitPicker}></FilterButton>
                     {isDaysPickerOpen && (
                       <FilterPicker>
                         {DAYS_SET.map((days, i) => (
@@ -890,18 +701,10 @@ const UserAdminPanel = () => {
               {users.map(user => (
                 <UserDBRow key={user._id}>
                   <UserCell>
-                    <a
-                      href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <a href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`} target="_blank" rel="noreferrer">
                       {user.crmId}
                     </a>{' '}
-                    <a
-                      href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <a href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`} target="_blank" rel="noreferrer">
                       {user.contactId}
                     </a>
                   </UserCell>
@@ -911,18 +714,10 @@ const UserAdminPanel = () => {
                   <UserCell>{user.password}</UserCell>
                   <UserCell>{user.pupilId}</UserCell>
                   <UserCell>{user.marathonNumber}</UserCell>
-                  <UserCell>
-                    {new Date(user.createdAt).toLocaleDateString('uk-UA')}
-                  </UserCell>
+                  <UserCell>{new Date(user.createdAt).toLocaleDateString('uk-UA')}</UserCell>
                   <UserCell
                     className={
-                      Math.floor(
-                        (Date.now() -
-                          changeDateFormat(
-                            user.visited[user.visited.length - 1]
-                          )) /
-                          86400000
-                      ) > daysAfterLastLogin
+                      Math.floor((Date.now() - changeDateFormat(user.visited[user.visited.length - 1])) / 86400000) > daysAfterLastLogin
                         ? 'attention'
                         : ''
                     }
@@ -932,47 +727,22 @@ const UserAdminPanel = () => {
                   <UserCell>
                     {!user.visitedTime[user.visitedTime.length - 1]
                       ? ''
-                      : user.visitedTime[user.visitedTime.length - 1].match(
-                          '^202'
-                        )
-                      ? new Date(
-                          user.visitedTime[user.visitedTime.length - 1]
-                        ).toLocaleString('uk-UA')
-                      : new Date(
-                          changeDateFormat(
-                            user.visitedTime[user.visitedTime.length - 1]
-                          )
-                        ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
+                      : user.visitedTime[user.visitedTime.length - 1].match('^202')
+                      ? new Date(user.visitedTime[user.visitedTime.length - 1]).toLocaleString('uk-UA')
+                      : new Date(changeDateFormat(user.visitedTime[user.visitedTime.length - 1])).toLocaleString('uk-UA', { timeZone: '+06:00' })}
                   </UserCell>
                   <UserCell>{user.lang}</UserCell>
                   <UserCell>{user.course}</UserCell>
-                  <UserCell
-                    className={user.knowledge?.includes('а') && 'error'}
-                  >
-                    {user.knowledge}
-                  </UserCell>
+                  <UserCell className={user.knowledge?.includes('а') && 'error'}>{user.knowledge}</UserCell>
                   <UserCell>{user.package}</UserCell>
                   <UserCell className="last-name">{user.manager}</UserCell>
+                  <UserCell>{user.name === 'Dev Acc' ? null : <UserEditButton onClick={() => handleEdit(user._id)}>Edit</UserEditButton>}</UserCell>
                   <UserCell>
-                    {user.name === 'Dev Acc' ? null : (
-                      <UserEditButton onClick={() => handleEdit(user._id)}>
-                        Edit
-                      </UserEditButton>
-                    )}
+                    {user.name === 'Dev Acc' ? null : <UserDeleteButton onClick={() => handleDelete(user._id)}>Del</UserDeleteButton>}
                   </UserCell>
                   <UserCell>
                     {user.name === 'Dev Acc' ? null : (
-                      <UserDeleteButton onClick={() => handleDelete(user._id)}>
-                        Del
-                      </UserDeleteButton>
-                    )}
-                  </UserCell>
-                  <UserCell>
-                    {user.name === 'Dev Acc' ? null : (
-                      <UserBanButton
-                        className={user.isBanned ? 'banned' : 'not_banned'}
-                        onClick={() => handleBan(user._id, user.isBanned)}
-                      >
+                      <UserBanButton className={user.isBanned ? 'banned' : 'not_banned'} onClick={() => handleBan(user._id, user.isBanned)}>
                         {user.isBanned ? 'Unban' : 'Ban'}
                       </UserBanButton>
                     )}
@@ -984,11 +754,7 @@ const UserAdminPanel = () => {
         )}
         {isEditFormOpen && (
           <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
-            <UserEditForm
-              userToEdit={userToEdit}
-              updateUser={updateUser}
-              closeEditForm={closeEditForm}
-            />
+            <UserEditForm userToEdit={userToEdit} updateUser={updateUser} closeEditForm={closeEditForm} />
           </Backdrop>
         )}
         {isLoading && <Loader />}

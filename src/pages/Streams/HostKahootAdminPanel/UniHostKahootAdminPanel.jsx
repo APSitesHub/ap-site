@@ -4,6 +4,8 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { EWSPALogisticsKahootForm } from '../KahootAdminPanel/EWSPALogisticsKahootForm';
+import { EWSPAPrepKahootForm } from '../KahootAdminPanel/EWSPAPrepKahootForm';
 import {
   AdminFormBtn,
   AdminInput,
@@ -132,6 +134,12 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('wsbmir_prep')}>
               WSBMIR Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('ewspa_logistics')}>
+              EWSPA Logistics
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('ewspa_prep')}>
+              EWSPA Prep
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -152,6 +160,12 @@ const UniHostKahootAdminPanel = () => {
           )}
           {levels.includes('wsbmir_prep') && (
             <WSBMIRPrepKahootForm destination={destination} />
+          )}
+          {levels.includes('ewspa_logistics') && (
+            <EWSPALogisticsKahootForm destination={destination} />
+          )}
+          {levels.includes('ewspa_prep') && (
+            <EWSPAPrepKahootForm destination={destination} />
           )}
         </KahootFormBox>
         {isLoading && <Loader />}

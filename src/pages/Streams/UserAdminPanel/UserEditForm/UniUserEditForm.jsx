@@ -26,30 +26,12 @@ export const UniUserEditForm = ({
   updateUser,
   closeEditForm,
   uniOptions,
-  pedagogiumMarathonOptions,
-  wstijoMarathonOptions,
-  wsbmirMarathonOptions,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [uniValue, setUniValue] = useState(
     uniOptions.find(option => option.value === userToEdit.university)
   );
   const [isUniEmpty, setIsUniEmpty] = useState(false);
-  const [marathonValue, setMarathonValue] = useState(
-    uniValue.value ===
-      'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
-      ? wstijoMarathonOptions.find(
-          option => option.value === userToEdit.marathonId
-        )
-      : uniValue.value === 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
-      ? wsbmirMarathonOptions.find(
-          option => option.value === userToEdit.marathonId
-        )
-      : pedagogiumMarathonOptions.find(
-          option => option.value === userToEdit.marathonId
-        )
-  );
-  const [isMarathonEmpty, setIsMarathonEmpty] = useState(false);
   const selectInputRef = useRef();
 
   console.log(userToEdit);
@@ -61,7 +43,6 @@ export const UniUserEditForm = ({
     mail: userToEdit.mail,
     password: userToEdit.password,
     pupilId: userToEdit.pupilId,
-    marathonId: userToEdit.marathonId || '',
     university: userToEdit.university,
   };
 
@@ -96,7 +77,6 @@ export const UniUserEditForm = ({
       values.contactId && typeof values.crmId === 'string'
         ? +values.contactId.trim().trimStart()
         : undefined;
-    values.marathonId = marathonValue.value;
     values.university = uniValue.value;
     try {
       setIsLoading(isLoading => (isLoading = true));
@@ -206,73 +186,6 @@ export const UniUserEditForm = ({
               <ErrorNote> Університет - обов'язкове поле!</ErrorNote>
             )}
           </SpeakingLabel>
-          {uniValue && uniValue.value && (
-            <SpeakingLabel>
-              {marathonValue && marathonValue.value && (
-                <LabelText>Марафон</LabelText>
-              )}
-              <TeacherLangSelect
-                ref={selectInputRef}
-                options={
-                  uniValue.value ===
-                  'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
-                    ? wstijoMarathonOptions
-                    : uniValue.value ===
-                      'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
-                    ? wsbmirMarathonOptions
-                    : pedagogiumMarathonOptions
-                }
-                defaultValue={
-                  uniValue.value ===
-                  'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
-                    ? wstijoMarathonOptions.find(
-                        option => option.value === userToEdit.marathonId
-                      )
-                    : uniValue.value ===
-                      'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
-                    ? wsbmirMarathonOptions.find(
-                        option => option.value === userToEdit.marathonId
-                      )
-                    : pedagogiumMarathonOptions.find(
-                        option => option.value === userToEdit.marathonId
-                      )
-                }
-                styles={{
-                  control: (baseStyles, state) => ({
-                    ...baseStyles,
-                    border: 'none',
-                    borderRadius: '50px',
-                    minHeight: '34px',
-                  }),
-                  menu: (baseStyles, state) => ({
-                    ...baseStyles,
-                    position: 'absolute',
-                    zIndex: '2',
-                    top: '36px',
-                  }),
-                  dropdownIndicator: (baseStyles, state) => ({
-                    ...baseStyles,
-                    padding: '7px',
-                  }),
-                }}
-                placeholder="Марафон"
-                name="marathon"
-                onBlur={() => {
-                  !uniValue
-                    ? setIsMarathonEmpty(empty => (empty = true))
-                    : setIsMarathonEmpty(empty => (empty = false));
-                }}
-                onChange={marathon => {
-                  setMarathonValue(marathon);
-                  marathon?.value &&
-                    setIsMarathonEmpty(empty => (empty = false));
-                }}
-              />
-              {isMarathonEmpty && (
-                <ErrorNote> Марафон - обов'язкове поле!</ErrorNote>
-              )}
-            </SpeakingLabel>
-          )}
           <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
         </UsersEditForm>
       </Formik>

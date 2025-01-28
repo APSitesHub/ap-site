@@ -197,9 +197,7 @@ const TeacherControlPagePl = () => {
                         )
                         .map(text => (
                           <Feedback>
-                            {text.length > 200
-                              ? `(Відгук від ${text.match(regex)} ${text.slice(0, 200)}...`
-                              : `(Відгук від ${text.match(regex)} ${text}`}
+                            {`Відгук від ${text.match(regex)} ${text}`}
                           </Feedback>
                         ))}
                     </UserCell>

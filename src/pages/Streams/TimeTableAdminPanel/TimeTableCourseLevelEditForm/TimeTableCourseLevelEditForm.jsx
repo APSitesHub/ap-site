@@ -5,7 +5,7 @@ import { useState } from 'react';
 import * as yup from 'yup';
 import {
   AdminFormBtn,
-  UsersEditForm
+  UsersEditForm,
 } from '../../UserAdminPanel/UserAdminPanel.styled';
 import { FormSelect } from '../TimeTableAdminPanel.styled';
 
@@ -16,8 +16,10 @@ export const TimeTableCourseLevelEditForm = ({
   languageOptions,
   levelOptions,
   levelOptionsWithBeginners,
+  levelOptionsForDe,
   courseOptions,
   courseEnglishOptions,
+  courseDeutschOptions,
   closeCourseLevelEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +51,10 @@ export const TimeTableCourseLevelEditForm = ({
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.patch(`/timetable/course/${lessonToEdit._id}`, values);
+      const response = await axios.patch(
+        `/timetable/course/${lessonToEdit._id}`,
+        values
+      );
       console.log(response);
       closeCourseLevelEditForm();
       alert('Відредаговано');
@@ -92,7 +97,11 @@ export const TimeTableCourseLevelEditForm = ({
           />
           <FormSelect
             options={
-              langValue !== 'enkids' ? levelOptions : levelOptionsWithBeginners
+              langValue === 'enkids'
+                ? levelOptionsWithBeginners
+                : langValue === 'de'
+                ? levelOptionsForDe
+                : levelOptions
             }
             styles={{
               control: (baseStyles, state) => ({
@@ -109,6 +118,9 @@ export const TimeTableCourseLevelEditForm = ({
               ) ||
               levelOptionsWithBeginners.find(
                 option => option.value === lessonToEdit.level
+              ) ||
+              levelOptionsForDe.find(
+                option => option.value === lessonToEdit.level
               )
             }
             onChange={level => {
@@ -119,6 +131,8 @@ export const TimeTableCourseLevelEditForm = ({
             options={
               langValue === 'en' || langValue === 'enkids'
                 ? courseEnglishOptions
+                : langValue === 'de'
+                ? courseDeutschOptions
                 : courseOptions
             }
             styles={{
@@ -135,6 +149,9 @@ export const TimeTableCourseLevelEditForm = ({
                 option => option.value === lessonToEdit.course
               ) ||
               courseEnglishOptions.find(
+                option => option.value === lessonToEdit.course
+              ) ||
+              courseDeutschOptions.find(
                 option => option.value === lessonToEdit.course
               )
             }
