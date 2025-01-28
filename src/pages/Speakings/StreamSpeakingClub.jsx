@@ -174,7 +174,7 @@ const StreamSpeakingClub = () => {
             redirectLink &&
             redirectLink !== '1' &&
             isApproved) ||
-            (page.includes('deb2_') && user.course?.includes('12')) ||
+            (page.includes('deb2_') && user.course?.includes('12') && isApproved) ||
             (user.name === 'Dev Acc' && isApproved) ||
             ((user.course === '10' || user.course?.split('/').some(singleCourse => singleCourse === '10')) && isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&

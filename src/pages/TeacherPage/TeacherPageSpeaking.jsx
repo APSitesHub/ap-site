@@ -197,11 +197,14 @@ const TeacherPageSpeaking = () => {
         </thead>
         <tbody>
           {users
-            .filter(
-              user =>
-                new Date() - new Date(changeDateFormat(user.visited[user.visited.length - 1])) <= 4 * 86400000 &&
-                (lang === user.lang || user.lang.split('/').some(userLang => lang === userLang)) &&
-                (course === user.course || user.course.split('/').some(userCourse => course === userCourse))
+            .filter(user =>
+              page === 'deb2sc'
+                ? new Date() - new Date(changeDateFormat(user.visited[user.visited.length - 1])) <= 4 * 86400000 &&
+                  (lang === user.lang || user.lang.split('/').some(userLang => lang === userLang)) &&
+                  (user.course.includes('12') || user.course.split('/').some(usersCourse => usersCourse.includes('12')))
+                : new Date() - new Date(changeDateFormat(user.visited[user.visited.length - 1])) <= 4 * 86400000 &&
+                  (lang === user.lang || user.lang.split('/').some(userLang => lang === userLang)) &&
+                  (course === user.course || user.course.split('/').some(userCourse => course === userCourse))
             )
             .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
             .map((user, i) => (
