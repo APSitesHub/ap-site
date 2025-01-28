@@ -3,10 +3,10 @@ import freeice from 'freeice';
 import useStateWithCallback from './useStateWithCallback';
 import socket from '../socket';
 import ACTIONS from '../socket/actions';
-import axios from 'axios';
+import { getToken } from '../api/getToken';
+import { isRoomAdmin } from '../api/isRoomAdmin';
 
 export const LOCAL_VIDEO = 'LOCAL_VIDEO';
-axios.defaults.baseURL = 'http://localhost:3001';
 
 export default function useWebRTC(roomID) {
   const [clients, updateClients] = useStateWithCallback([]);
@@ -14,23 +14,16 @@ export default function useWebRTC(roomID) {
   const [isLocalMicrophoneEnabled, setLocalMicrophoneEnabled] = useState(true);
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
-  const [remoteRoles, setRemoteRoles] = useState({});
 
   const determineRole = async () => {
-    try {
-      const response = await axios.get(
-        `/room/isRoomAdmin?id=${roomID}&mail=${getLocalUserMail()}`
-      );
-
-      const role = response.data.isRoomAdmin ? 'admin' : 'user';
-      setLocalRole(role);
-    } catch (error) {
-      console.error('Error determining user role:', error);
+    if (!getToken()) {
+      setLocalRole('user');
+      return;
     }
-  };
 
-  const getLocalUserMail = () => {
-    return localStorage.getItem('mail');
+    const role = await isRoomAdmin(roomID) ? 'admin' : 'user';
+
+    setLocalRole(role);
   };
 
   const addNewClient = useCallback(

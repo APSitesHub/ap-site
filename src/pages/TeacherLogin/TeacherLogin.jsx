@@ -10,23 +10,20 @@ import {
 } from './TeacherLogin.styled';
 
 const TeacherLogin = () => {
-  const emailRef = useRef(null);
+  const loginRef = useRef(null);
   const passwordRef = useRef(null);
   const navigate = useNavigate();
 
   const handleSubmit = async event => {
     const values = {
-      mail: emailRef.current.value.toLowerCase().trim().trimStart(),
+      login: loginRef.current.value.toLowerCase().trim().trimStart(),
       password: passwordRef.current.value.trim().trimStart(),
     };
     event.preventDefault();
 
     try {
-      const response = await axios.post('/users/login', values);
-      console.log(response);
-
+      const response = await axios.post('/teachers/login', values);
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('mail', response.data.user.mail);
       navigate('../videochat');
     } catch (error) {
       console.error(error);
@@ -38,8 +35,8 @@ const TeacherLogin = () => {
       <LoginForm onSubmit={handleSubmit}>
         <h2>Login</h2>
         <InputContainer>
-          <label htmlFor="email">Email:</label>
-          <InputField type="text" id="email" ref={emailRef} required />
+          <label htmlFor="login">Login:</label>
+          <InputField type="text" id="login" ref={loginRef} required />
         </InputContainer>
         <InputContainer>
           <label htmlFor="password">Password:</label>
