@@ -3,26 +3,41 @@ import freeice from 'freeice';
 import useStateWithCallback from './useStateWithCallback';
 import socket from '../socket';
 import ACTIONS from '../socket/actions';
+import axios from 'axios';
 
 export const LOCAL_VIDEO = 'LOCAL_VIDEO';
+axios.defaults.baseURL = 'http://localhost:3001';
 
 export default function useWebRTC(roomID) {
   const [clients, updateClients] = useStateWithCallback([]);
   const [isLocalCameraEnabled, setLocalCameraEnabled] = useState(true);
   const [isLocalMicrophoneEnabled, setLocalMicrophoneEnabled] = useState(true);
   const [localDevices, setLocalDevices] = useState([]);
+  const [localRole, setLocalRole] = useState(null);
+  const [remoteRoles, setRemoteRoles] = useState({});
 
-  const determineRole = useCallback((newClient) => {
-    // TODO: implement a normal role determination
-    return newClient === LOCAL_VIDEO ? 'admin' : 'user';
-  }, []);
+  const determineRole = async () => {
+    try {
+      const response = await axios.get(
+        `/room/isRoomAdmin?id=${roomID}&mail=${getLocalUserMail()}`
+      );
+
+      const role = response.data.isRoomAdmin ? 'admin' : 'user';
+      setLocalRole(role);
+    } catch (error) {
+      console.error('Error determining user role:', error);
+    }
+  };
+
+  const getLocalUserMail = () => {
+    return localStorage.getItem('mail');
+  };
 
   const addNewClient = useCallback(
-    (newClient, cb) => {
+    async (newClient, role, cb) => {
       updateClients(list => {
         const exists = list.some(client => client.clientId === newClient);
         if (!exists) {
-          const role = determineRole(newClient);
           return [
             ...list,
             {
@@ -36,7 +51,7 @@ export default function useWebRTC(roomID) {
         return list;
       }, cb);
     },
-    [updateClients, determineRole]
+    [updateClients]
   );
 
   const peerConnections = useRef({});
@@ -55,7 +70,9 @@ export default function useWebRTC(roomID) {
         videoTrack.enabled = !videoTrack.enabled;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
-          const vt = targetObj.getSenders().find(sender => sender.track.kind === 'video');
+          const vt = targetObj
+            .getSenders()
+            .find(sender => sender.track.kind === 'video');
           vt.track.enabled = videoTrack.enabled;
         });
 
@@ -85,7 +102,9 @@ export default function useWebRTC(roomID) {
         audioTrack.enabled = !audioTrack.enabled;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
-          const at = targetObj.getSenders().find(sender => sender.track.kind === 'audio');
+          const at = targetObj
+            .getSenders()
+            .find(sender => sender.track.kind === 'audio');
           at.track.enabled = audioTrack.enabled;
         });
 
@@ -97,7 +116,7 @@ export default function useWebRTC(roomID) {
     }
   };
 
-  const changeMicrophone = async (deviceId) => {
+  const changeMicrophone = async deviceId => {
     try {
       const newStream = await navigator.mediaDevices.getUserMedia({
         audio: { deviceId: { exact: deviceId } },
@@ -110,7 +129,7 @@ export default function useWebRTC(roomID) {
           const rtc = peerConnections.current[id];
           const senders = rtc.getSenders();
           const audioSender = senders.find(
-            (sender) => sender.track && sender.track.kind === "audio"
+            sender => sender.track && sender.track.kind === 'audio'
           );
 
           if (audioSender) {
@@ -123,7 +142,7 @@ export default function useWebRTC(roomID) {
     }
   };
 
-  const changeCamera = async (deviceId) => {
+  const changeCamera = async deviceId => {
     try {
       const newStream = await navigator.mediaDevices.getUserMedia({
         audio: false,
@@ -136,7 +155,7 @@ export default function useWebRTC(roomID) {
           const rtc = peerConnections.current[id];
           const senders = rtc.getSenders();
           const videoSender = senders.find(
-            (sender) => sender.track && sender.track.kind === "video"
+            sender => sender.track && sender.track.kind === 'video'
           );
 
           if (videoSender) {
@@ -162,21 +181,24 @@ export default function useWebRTC(roomID) {
       const devices = await navigator.mediaDevices.enumerateDevices();
       setLocalDevices(devices);
 
-      addNewClient(LOCAL_VIDEO, () => {
-        const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
-        if (localVideoElement) {
-          localVideoElement.volume = 0;
-          localVideoElement.srcObject = localMediaStream.current;
-        }
-      });
+      if (localRole) {
+        addNewClient(LOCAL_VIDEO, localRole, () => {
+          const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
+          if (localVideoElement) {
+            localVideoElement.volume = 0;
+            localVideoElement.srcObject = localMediaStream.current;
+          }
+        });
 
-      socket.emit(ACTIONS.JOIN, { room: roomID });
+        socket.emit(ACTIONS.JOIN, { room: roomID, role: localRole });
+      }
+
     } catch (error) {
       console.error('Error getting userMedia:', error);
     }
-  };
+  }
 
-  async function handleNewPeer({ peerID, createOffer }) {
+  async function handleNewPeer({ peerID, roles, createOffer }) {
     if (peerConnections.current[peerID]) {
       return console.warn(`Already connected to peer ${peerID}`);
     }
@@ -202,7 +224,7 @@ export default function useWebRTC(roomID) {
       tracksNumber++;
 
       if (tracksNumber === 2) {
-        addNewClient(peerID, () => {
+        addNewClient(peerID, roles[peerID], () => {
           if (peerMediaElements.current[peerID]) {
             peerMediaElements.current[peerID].srcObject = remoteStream;
           }
@@ -225,7 +247,7 @@ export default function useWebRTC(roomID) {
         sessionDescription: offer,
       });
     }
-  };
+  }
 
   async function setRemoteMedia({
     peerID,
@@ -247,7 +269,7 @@ export default function useWebRTC(roomID) {
         sessionDescription: answer,
       });
     }
-  };
+  }
 
   const handleIceCandidate = ({ peerID, iceCandidate }) => {
     const peerConnection = peerConnections.current[peerID];
@@ -265,8 +287,12 @@ export default function useWebRTC(roomID) {
     delete peerConnections.current[peerID];
     delete peerMediaElements.current[peerID];
 
-    updateClients(list => list.filter(c => c !== peerID));
+    updateClients(list => list.filter(c => c.clientId !== peerID));
   };
+
+  useEffect(() => {
+    determineRole()
+  }, []);
 
   useEffect(() => {
     socket.on(ACTIONS.ADD_PEER, handleNewPeer);
@@ -310,7 +336,7 @@ export default function useWebRTC(roomID) {
 
       socket.emit(ACTIONS.LEAVE);
     };
-  }, [addNewClient, roomID]);
+  }, [addNewClient, roomID, localRole]);
 
   useEffect(() => {
     socket.on(ACTIONS.TOGGLE_MICRO, client => {

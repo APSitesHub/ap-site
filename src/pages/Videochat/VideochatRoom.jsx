@@ -31,7 +31,6 @@ function VideochatRoom() {
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
-  const [selectedVideoDevice, setSelectedVideoDevice] = useState(null);
 
   useEffect(() => {
     const video = localDevices.filter(device => device.kind === 'videoinput');
@@ -40,8 +39,13 @@ function VideochatRoom() {
     setVideoDevices(video);
   }, [localDevices]);
 
+  const test = () => {
+    console.log(clients);
+  };
+
   return (
     <PageContainer>
+      <button onClick={test}>get clients</button>
       <VideochatContainer>
         <UsersVideosContainer>
           {clients

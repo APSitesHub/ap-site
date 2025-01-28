@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// Room styles
 export const PageContainer = styled.div`
   display: flex;
   height: 100vh;
@@ -94,4 +95,81 @@ export const DisabledMicroIcon = styled.div`
   position: absolute;
   bottom: 8px;
   left: 8px;
+`;
+
+// Videochat styles
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+export const Title = styled.h1`
+  font-size: 24px;
+  color: #333;
+`;
+
+export const SubTitle = styled.h3`
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 10px;
+`;
+
+export const Label = styled.label`
+  font-size: 16px;
+  color: #444;
+`;
+
+export const Input = styled.input`
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+`;
+
+export const Button = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+export const RoomList = styled.ul`
+  list-style: none;
+  padding: 0;
+  width: 100%;
+`;
+
+export const RoomItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+`;
+
+export const JoinButton = styled(Button)`
+  background-color: #28a745;
+
+  &:hover {
+    background-color: #218838;
+  }
 `;

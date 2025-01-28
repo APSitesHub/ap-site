@@ -1,63 +1,88 @@
 import { useState, useEffect, useRef } from 'react';
-import socket from './utils/socket';
-import ACTIONS from './utils/socket/actions';
 import { useNavigate } from 'react-router-dom';
-import { v4 } from 'uuid';
+import axios from 'axios';
+import {
+  Container,
+  Title,
+  SubTitle,
+  Label,
+  Input,
+  Button,
+  RoomList,
+  RoomItem,
+  JoinButton
+} from './Videochat.styled';
+
+axios.defaults.baseURL = 'http://localhost:3001';
 
 function Videochat() {
   const navigate = useNavigate();
   const [rooms, updateRooms] = useState([]);
-  const rootNode = useRef();
+  const newRoomName = useRef('');
 
   useEffect(() => {
     if (!getTeacherMail()) {
       navigate('../teacher-login');
     }
 
-    const handleShareRooms = ({ rooms = [] } = {}) => {
-      if (rootNode.current) {
-        updateRooms(rooms);
-      }
-    };
-
-    socket.on(ACTIONS.SHARE_ROOMS, handleShareRooms);
-
-    return () => {
-      socket.off(ACTIONS.SHARE_ROOMS, handleShareRooms);
-    };
+    getRooms();
   }, []);
 
+  const createRoom = () => {
+    const options = {
+      name: newRoomName.current.value,
+      userEmail: getTeacherMail(),
+    };
+
+    axios.post('/room/create', options);
+
+    getRooms();
+  };
+
+  const getRooms = async () => {
+    const rooms = await axios.get(`/room/byEmail?email=${getTeacherMail()}`);
+
+    updateRooms(rooms.data)
+  };
+
   const getTeacherMail = () => {
-    return localStorage.getItem('mail')
+    return localStorage.getItem('mail');
   }
 
   return (
-    <div ref={rootNode}>
-      <h1>Logined as {getTeacherMail()}</h1>
+    <Container>
+      <Title>Logined as {getTeacherMail()}</Title>
 
-      <ul>
-        {rooms.map(roomID => (
-          <li key={roomID}>
-            {roomID}
-            <button
-              onClick={() => {
-                navigate(`/room/${roomID}`);
-              }}
-            >
-              JOIN ROOM
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <SubTitle>Create Room</SubTitle>
+      </div>
 
-      <button
+      <Label htmlFor="room-name">Room name:</Label>
+      <Input type="text" id="room-name" ref={newRoomName} />
+
+      <Button
         onClick={() => {
-          navigate(`/room/${v4()}`);
+          createRoom();
         }}
       >
         Create New Room
-      </button>
-    </div>
+      </Button>
+
+      <RoomList>
+        {rooms.map((room) => (
+          <RoomItem key={room.id}>
+            {room.name}
+            <JoinButton
+              onClick={() => {
+                navigate(`/room/${room.id}`);
+              }}
+            >
+              JOIN ROOM
+            </JoinButton>
+          </RoomItem>
+        ))}
+      </RoomList>
+    </Container>
   );
 }
 
