@@ -142,7 +142,7 @@ const LeadFormPage = lazy(() => import(/* webpackChunkName: "Lead Form Page" */ 
 const UniversalLeadFormPage = lazy(() => import(/* webpackChunkName: "Universal Lead Form Page" */ '../pages/LeadFormPage/UniversalLeadFormPage'));
 const AmbassadorFormPage = lazy(() => import(/* webpackChunkName: "Ambassador Form Page" */ '../pages/AmbassadorFormPage/AmbassadorFormPage'));
 const TeacherFormPage = lazy(() => import(/* webpackChunkName: "Teacher Form Page" */ '../pages/TeacherFormPage/TeacherFormPage'));
-const TestLogin = lazy(() => import(/* webpackChunkName: "TestLogin" */ '../pages/TestLogin/TestLogin'));
+const TeacherLogin = lazy(() => import(/* webpackChunkName: "TeacherLogin" */ '../pages/TeacherLogin/TeacherLogin'));
 const Videochat = lazy(() => import(/* webpackChunkName: "Videochat" */ '../pages/Videochat/Videochat'));
 const VideochatRoom = lazy(() => import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom'));
 const MyAP = lazy(() => import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP'));
@@ -220,7 +220,7 @@ export const App = () => {
             <Route path="university" element={<University utms={utms} noindex={true} />} />
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
-          <Route path="test-login" element={<TestLogin />} />
+          <Route path="teacher-login" element={<TeacherLogin />} />
           <Route path="videochat" element={<Videochat />} />
           <Route path="room/:id" element={<VideochatRoom />} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />

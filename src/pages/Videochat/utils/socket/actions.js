@@ -10,6 +10,8 @@ const ACTIONS = {
   SESSION_DESCRIPTION: 'session-description',
   TOGGLE_MICRO: 'toggle-micro',
   TOGGLE_CAMERA: 'toggle-camera',
+  RECEIVE_ROLE: "receive-role",
+  SEND_ROLE: "send-role",
 };
 
 export default ACTIONS;
