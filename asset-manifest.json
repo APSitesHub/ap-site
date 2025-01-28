@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.02ff2a26.js",
+    "main.js": "/ap-site/static/js/main.72a0fb26.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -41,7 +41,7 @@
     "NMTHistory Education page.js": "/ap-site/static/js/NMTHistory Education page.d24617f7.chunk.js",
     "AP Conference Education page.js": "/ap-site/static/js/AP Conference Education page.8254e673.chunk.js",
     "Teacher layout.js": "/ap-site/static/js/Teacher layout.2261838c.chunk.js",
-    "Speaking Club redirect page.js": "/ap-site/static/js/Speaking Club redirect page.449ae6df.chunk.js",
+    "Speaking Club redirect page.js": "/ap-site/static/js/Speaking Club redirect page.de784bf9.chunk.js",
     "Speaking Club Kids redirect page.js": "/ap-site/static/js/Speaking Club Kids redirect page.9a1d225b.chunk.js",
     "Links Admin Panel page.js": "/ap-site/static/js/Links Admin Panel page.0c22bb67.chunk.js",
     "Pl University Links Admin Panel page.js": "/ap-site/static/js/Pl University Links Admin Panel page.ee98db4d.chunk.js",
@@ -72,7 +72,7 @@
     "Teacher Page.js": "/ap-site/static/js/Teacher Page.591cb36f.chunk.js",
     "Teacher Page Farm.js": "/ap-site/static/js/Teacher Page Farm.f1dc24fb.chunk.js",
     "Teacher Page Warehouse.js": "/ap-site/static/js/Teacher Page Warehouse.31bbcdbe.chunk.js",
-    "Speaking Teacher Page.js": "/ap-site/static/js/Speaking Teacher Page.72826875.chunk.js",
+    "Speaking Teacher Page.js": "/ap-site/static/js/Speaking Teacher Page.bf3d475e.chunk.js",
     "Speaking Course 13 Teacher Page.js": "/ap-site/static/js/Speaking Course 13 Teacher Page.c9507491.chunk.js",
     "Forms Linktree Page.js": "/ap-site/static/js/Forms Linktree Page.cab1fa4b.chunk.js",
     "Lead Form Page.js": "/ap-site/static/js/Lead Form Page.2bc436b4.chunk.js",
@@ -266,7 +266,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.02ff2a26.js.map": "/ap-site/static/js/main.02ff2a26.js.map",
+    "main.72a0fb26.js.map": "/ap-site/static/js/main.72a0fb26.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -306,7 +306,7 @@
     "NMTHistory Education page.d24617f7.chunk.js.map": "/ap-site/static/js/NMTHistory Education page.d24617f7.chunk.js.map",
     "AP Conference Education page.8254e673.chunk.js.map": "/ap-site/static/js/AP Conference Education page.8254e673.chunk.js.map",
     "Teacher layout.2261838c.chunk.js.map": "/ap-site/static/js/Teacher layout.2261838c.chunk.js.map",
-    "Speaking Club redirect page.449ae6df.chunk.js.map": "/ap-site/static/js/Speaking Club redirect page.449ae6df.chunk.js.map",
+    "Speaking Club redirect page.de784bf9.chunk.js.map": "/ap-site/static/js/Speaking Club redirect page.de784bf9.chunk.js.map",
     "Speaking Club Kids redirect page.9a1d225b.chunk.js.map": "/ap-site/static/js/Speaking Club Kids redirect page.9a1d225b.chunk.js.map",
     "Links Admin Panel page.0c22bb67.chunk.js.map": "/ap-site/static/js/Links Admin Panel page.0c22bb67.chunk.js.map",
     "Pl University Links Admin Panel page.ee98db4d.chunk.js.map": "/ap-site/static/js/Pl University Links Admin Panel page.ee98db4d.chunk.js.map",
@@ -337,7 +337,7 @@
     "Teacher Page.591cb36f.chunk.js.map": "/ap-site/static/js/Teacher Page.591cb36f.chunk.js.map",
     "Teacher Page Farm.f1dc24fb.chunk.js.map": "/ap-site/static/js/Teacher Page Farm.f1dc24fb.chunk.js.map",
     "Teacher Page Warehouse.31bbcdbe.chunk.js.map": "/ap-site/static/js/Teacher Page Warehouse.31bbcdbe.chunk.js.map",
-    "Speaking Teacher Page.72826875.chunk.js.map": "/ap-site/static/js/Speaking Teacher Page.72826875.chunk.js.map",
+    "Speaking Teacher Page.bf3d475e.chunk.js.map": "/ap-site/static/js/Speaking Teacher Page.bf3d475e.chunk.js.map",
     "Speaking Course 13 Teacher Page.c9507491.chunk.js.map": "/ap-site/static/js/Speaking Course 13 Teacher Page.c9507491.chunk.js.map",
     "Forms Linktree Page.cab1fa4b.chunk.js.map": "/ap-site/static/js/Forms Linktree Page.cab1fa4b.chunk.js.map",
     "Lead Form Page.2bc436b4.chunk.js.map": "/ap-site/static/js/Lead Form Page.2bc436b4.chunk.js.map",
@@ -385,6 +385,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.02ff2a26.js"
+    "static/js/main.72a0fb26.js"
   ]
 }
