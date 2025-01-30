@@ -1,13 +1,6 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { animateScroll } from 'react-scroll';
-import {
-  ChatFooterBox,
-  ChatMessageForm,
-  ChatSend,
-  ChatWindowedMessageInput,
-  СhatSendMessageButton,
-} from '../Chat.styled';
+import { ChatFooterBox, ChatMessageForm, ChatSend, ChatWindowedMessageInput, СhatSendMessageButton } from '../Chat.styled';
 
 export const ChatWindowedFooter = ({ socket, room }) => {
   const [message, setMessage] = useState('');
@@ -16,13 +9,12 @@ export const ChatWindowedFooter = ({ socket, room }) => {
     e.preventDefault();
     console.log(message);
     console.log(message.trim() && localStorage.getItem('userName'));
-    const ip = await axios.get('https://jsonip.com/');
     if (message.trim() && localStorage.getItem('userName')) {
       socket.emit('message', {
         text: message,
         username: localStorage.getItem('userName'),
         userID: localStorage.getItem('userID'),
-        userIP: ip.data.ip,
+        userIP: '',
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
         roomLocation: room,
@@ -40,12 +32,7 @@ export const ChatWindowedFooter = ({ socket, room }) => {
   return (
     <ChatFooterBox>
       <ChatMessageForm className="form" onSubmit={handleSendMessage}>
-        <ChatWindowedMessageInput
-          type="text"
-          placeholder="Введіть повідомлення"
-          value={message}
-          onChange={e => setMessage(e.target.value)}
-        />
+        <ChatWindowedMessageInput type="text" placeholder="Введіть повідомлення" value={message} onChange={e => setMessage(e.target.value)} />
         <СhatSendMessageButton>
           <ChatSend />
         </СhatSendMessageButton>
