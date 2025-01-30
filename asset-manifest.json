@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.37a4a2ed.js",
+    "main.js": "/ap-site/static/js/main.5f9fab7d.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
     "School page.js": "/ap-site/static/js/School page.bc883d21.chunk.js",
     "University page.css": "/ap-site/static/css/University page.e8ee1c85.chunk.css",
     "University page.js": "/ap-site/static/js/University page.475943ba.chunk.js",
-    "Streams page.js": "/ap-site/static/js/Streams page.25c9241d.chunk.js",
+    "Streams page.js": "/ap-site/static/js/Streams page.63f1f8a1.chunk.js",
     "Speakings teacher page.js": "/ap-site/static/js/Speakings teacher page.336403c7.chunk.js",
     "Streams A0 page.js": "/ap-site/static/js/Streams A0 page.17908107.chunk.js",
     "Streams A0_2 page.js": "/ap-site/static/js/Streams A0_2 page.cf62ad1b.chunk.js",
@@ -266,14 +266,14 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.37a4a2ed.js.map": "/ap-site/static/js/main.37a4a2ed.js.map",
+    "main.5f9fab7d.js.map": "/ap-site/static/js/main.5f9fab7d.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
     "School page.bc883d21.chunk.js.map": "/ap-site/static/js/School page.bc883d21.chunk.js.map",
     "University page.e8ee1c85.chunk.css.map": "/ap-site/static/css/University page.e8ee1c85.chunk.css.map",
     "University page.475943ba.chunk.js.map": "/ap-site/static/js/University page.475943ba.chunk.js.map",
-    "Streams page.25c9241d.chunk.js.map": "/ap-site/static/js/Streams page.25c9241d.chunk.js.map",
+    "Streams page.63f1f8a1.chunk.js.map": "/ap-site/static/js/Streams page.63f1f8a1.chunk.js.map",
     "Speakings teacher page.336403c7.chunk.js.map": "/ap-site/static/js/Speakings teacher page.336403c7.chunk.js.map",
     "Streams A0 page.17908107.chunk.js.map": "/ap-site/static/js/Streams A0 page.17908107.chunk.js.map",
     "Streams A0_2 page.cf62ad1b.chunk.js.map": "/ap-site/static/js/Streams A0_2 page.cf62ad1b.chunk.js.map",
@@ -385,6 +385,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.37a4a2ed.js"
+    "static/js/main.5f9fab7d.js"
   ]
 }
