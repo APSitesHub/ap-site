@@ -21,7 +21,7 @@ export default function useWebRTC(roomID) {
       return;
     }
 
-    const role = await isRoomAdmin(roomID) ? 'admin' : 'user';
+    const role = (await isRoomAdmin(roomID)) ? 'admin' : 'user';
 
     setLocalRole(role);
   };
@@ -55,17 +55,13 @@ export default function useWebRTC(roomID) {
 
   const toggleCamera = () => {
     if (localMediaStream.current) {
-      const videoTrack = localMediaStream.current
-        .getTracks()
-        .find(track => track.kind === 'video');
+      const videoTrack = localMediaStream.current.getTracks().find(track => track.kind === 'video');
 
       if (videoTrack) {
         videoTrack.enabled = !videoTrack.enabled;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
-          const vt = targetObj
-            .getSenders()
-            .find(sender => sender.track.kind === 'video');
+          const vt = targetObj.getSenders().find(sender => sender.track.kind === 'video');
           vt.track.enabled = videoTrack.enabled;
         });
 
@@ -87,17 +83,13 @@ export default function useWebRTC(roomID) {
 
   const toggleMicrophone = () => {
     if (localMediaStream.current) {
-      const audioTrack = localMediaStream.current
-        .getTracks()
-        .find(track => track.kind === 'audio');
+      const audioTrack = localMediaStream.current.getTracks().find(track => track.kind === 'audio');
 
       if (audioTrack) {
         audioTrack.enabled = !audioTrack.enabled;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
-          const at = targetObj
-            .getSenders()
-            .find(sender => sender.track.kind === 'audio');
+          const at = targetObj.getSenders().find(sender => sender.track.kind === 'audio');
           at.track.enabled = audioTrack.enabled;
         });
 
@@ -121,9 +113,7 @@ export default function useWebRTC(roomID) {
         Object.keys(peerConnections.current).forEach(id => {
           const rtc = peerConnections.current[id];
           const senders = rtc.getSenders();
-          const audioSender = senders.find(
-            sender => sender.track && sender.track.kind === 'audio'
-          );
+          const audioSender = senders.find(sender => sender.track && sender.track.kind === 'audio');
 
           if (audioSender) {
             audioSender.replaceTrack(audioTrack);
@@ -147,9 +137,7 @@ export default function useWebRTC(roomID) {
         Object.keys(peerConnections.current).forEach(id => {
           const rtc = peerConnections.current[id];
           const senders = rtc.getSenders();
-          const videoSender = senders.find(
-            sender => sender.track && sender.track.kind === 'video'
-          );
+          const videoSender = senders.find(sender => sender.track && sender.track.kind === 'video');
 
           if (videoSender) {
             videoSender.replaceTrack(videoTrack);
@@ -185,7 +173,6 @@ export default function useWebRTC(roomID) {
 
         socket.emit(ACTIONS.JOIN, { room: roomID, role: localRole });
       }
-
     } catch (error) {
       console.error('Error getting userMedia:', error);
     }
@@ -242,16 +229,11 @@ export default function useWebRTC(roomID) {
     }
   }
 
-  async function setRemoteMedia({
-    peerID,
-    sessionDescription: remoteDescription,
-  }) {
+  async function setRemoteMedia({ peerID, sessionDescription: remoteDescription }) {
     const peerConnection = peerConnections.current[peerID];
     if (!peerConnection) return;
 
-    await peerConnection.setRemoteDescription(
-      new RTCSessionDescription(remoteDescription)
-    );
+    await peerConnection.setRemoteDescription(new RTCSessionDescription(remoteDescription));
 
     if (remoteDescription.type === 'offer') {
       const answer = await peerConnection.createAnswer();
@@ -284,7 +266,8 @@ export default function useWebRTC(roomID) {
   };
 
   useEffect(() => {
-    determineRole()
+    determineRole();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -293,6 +276,7 @@ export default function useWebRTC(roomID) {
     return () => {
       socket.off(ACTIONS.ADD_PEER, handleNewPeer);
     };
+    // eslint-disable-next-line
   }, [addNewClient]);
 
   useEffect(() => {
@@ -317,6 +301,7 @@ export default function useWebRTC(roomID) {
     return () => {
       socket.off(ACTIONS.REMOVE_PEER, handleRemovePeer);
     };
+    // eslint-disable-next-line
   }, [updateClients]);
 
   useEffect(() => {
@@ -329,6 +314,7 @@ export default function useWebRTC(roomID) {
 
       socket.emit(ACTIONS.LEAVE);
     };
+    // eslint-disable-next-line
   }, [addNewClient, roomID, localRole]);
 
   useEffect(() => {

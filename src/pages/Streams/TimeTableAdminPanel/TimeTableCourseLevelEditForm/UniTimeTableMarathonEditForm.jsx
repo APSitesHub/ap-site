@@ -3,10 +3,7 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import * as yup from 'yup';
-import {
-  AdminFormBtn,
-  UsersEditForm,
-} from '../../UserAdminPanel/UserAdminPanel.styled';
+import { AdminFormBtn, UsersEditForm } from '../../UserAdminPanel/UserAdminPanel.styled';
 import { FormSelect } from '../TimeTableAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -18,13 +15,12 @@ export const UniTimeTableMarathonEditForm = ({
   wstijoMarathonOptions,
   wsbmirMarathonOptions,
   ewspaMarathonOptions,
+  meritoMarathonOptions,
   closeMarathonEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [uniValue, setUniValue] = useState(lessonToEdit.university || '');
-  const [marathonValue, setMarathonValue] = useState(
-    lessonToEdit.marathon || ''
-  );
+  const [marathonValue, setMarathonValue] = useState(lessonToEdit.marathon || '');
 
   console.log(lessonToEdit);
 
@@ -47,18 +43,13 @@ export const UniTimeTableMarathonEditForm = ({
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.patch(
-        `/unitimetable/marathon/${lessonToEdit._id}`,
-        values
-      );
+      const response = await axios.patch(`/unitimetable/marathon/${lessonToEdit._id}`, values);
       console.log(response);
       closeMarathonEditForm();
       alert('Відредаговано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -66,11 +57,7 @@ export const UniTimeTableMarathonEditForm = ({
 
   return (
     <>
-      <Formik
-        initialValues={initialEditTimetableValues}
-        onSubmit={handleEditTimetableSubmit}
-        validationSchema={timetableSchema}
-      >
+      <Formik initialValues={initialEditTimetableValues} onSubmit={handleEditTimetableSubmit} validationSchema={timetableSchema}>
         <UsersEditForm>
           <FormSelect
             options={uniOptions}
@@ -83,9 +70,7 @@ export const UniTimeTableMarathonEditForm = ({
             }}
             placeholder="Університет"
             name="uni"
-            defaultValue={uniOptions.find(
-              option => option.value === lessonToEdit.university
-            )}
+            defaultValue={uniOptions.find(option => option.value === lessonToEdit.university)}
             isDisabled
             onChange={uni => {
               setUniValue(uni.value);
@@ -99,6 +84,8 @@ export const UniTimeTableMarathonEditForm = ({
                 ? wsbmirMarathonOptions
                 : uniValue.includes('EWSPA')
                 ? ewspaMarathonOptions
+                : uniValue.includes('Merito')
+                ? meritoMarathonOptions
                 : pedagogiumMarathonOptions
             }
             styles={{
@@ -111,18 +98,11 @@ export const UniTimeTableMarathonEditForm = ({
             placeholder="Марафон"
             name="marathon"
             defaultValue={
-              pedagogiumMarathonOptions.find(
-                option => option.value === lessonToEdit.marathon
-              ) ||
-              wstijoMarathonOptions.find(
-                option => option.value === lessonToEdit.marathon
-              ) ||
-              wsbmirMarathonOptions.find(
-                option => option.value === lessonToEdit.marathon
-              ) ||
-              ewspaMarathonOptions.find(
-                option => option.value === lessonToEdit.marathon
-              )
+              pedagogiumMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              wstijoMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              wsbmirMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              ewspaMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              meritoMarathonOptions.find(option => option.value === lessonToEdit.marathon)
             }
             onChange={marathon => {
               setMarathonValue(marathon.value);

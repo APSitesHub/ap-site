@@ -58,8 +58,7 @@ export const PedagogiumLogisticsKahootForm = ({ destination }) => {
               <DismissIcon />
             </WarningDismissBtn>
             <WarningText>
-              Краще не відправляти пусту форму, бо так затруться ВСІ лінки. Якщо
-              так і треба, клацай "Затерти все" і відправ форму знов.
+              Краще не відправляти пусту форму, бо так затруться ВСІ лінки. Якщо так і треба, клацай "Затерти все" і відправ форму знов.
             </WarningText>
             <WarningBtnBox>
               <WarningBtn
@@ -71,10 +70,7 @@ export const PedagogiumLogisticsKahootForm = ({ destination }) => {
               >
                 Затерти все
               </WarningBtn>
-              <WarningBtn
-                className="cancel"
-                onClick={() => toast.dismiss(t.id)}
-              >
+              <WarningBtn className="cancel" onClick={() => toast.dismiss(t.id)}>
                 Додати лінки
               </WarningBtn>
             </WarningBtnBox>
@@ -112,59 +108,28 @@ export const PedagogiumLogisticsKahootForm = ({ destination }) => {
   return (
     <>
       <AdminPanelSection>
-        <FormTitle>Pedagogium</FormTitle>
-        <Formik
-          initialValues={initialLinksValues}
-          onSubmit={handleLinksSubmit}
-          validationSchema={linksSchema}
-        >
+        <FormTitle>Pedagogium Logistics</FormTitle>
+        <Formik initialValues={initialLinksValues} onSubmit={handleLinksSubmit} validationSchema={linksSchema}>
           <LinksForm>
             <Label>
-              <AdminInput
-                type="text"
-                name="pedagogium_logistics_1"
-                autoComplete="off"
-                placeholder="Перший кахут для Pedagogium Logistics"
-              />
+              <AdminInput type="text" name="pedagogium_logistics_1" autoComplete="off" placeholder="Перший кахут для Pedagogium Logistics" />
             </Label>
             <Label>
-              <AdminInput
-                type="text"
-                name="pedagogium_logistics_2"
-                autoComplete="off"
-                placeholder="Другий кахут для Pedagogium Logistics"
-              />
+              <AdminInput type="text" name="pedagogium_logistics_2" autoComplete="off" placeholder="Другий кахут для Pedagogium Logistics" />
             </Label>
             <Label>
-              <AdminInput
-                type="text"
-                name="pedagogium_logistics_3"
-                autoComplete="off"
-                placeholder="Третій кахут для Pedagogium Logistics"
-              />
+              <AdminInput type="text" name="pedagogium_logistics_3" autoComplete="off" placeholder="Третій кахут для Pedagogium Logistics" />
             </Label>
             <Label>
-              <AdminInput
-                type="text"
-                name="pedagogium_logistics_4"
-                autoComplete="off"
-                placeholder="Четвертий кахут для Pedagogium Logistics"
-              />
+              <AdminInput type="text" name="pedagogium_logistics_4" autoComplete="off" placeholder="Четвертий кахут для Pedagogium Logistics" />
             </Label>
             <Label>
-              <AdminInput
-                type="text"
-                name="pedagogium_logistics_5"
-                autoComplete="off"
-                placeholder="П'ятий кахут для Pedagogium Logistics"
-              />
+              <AdminInput type="text" name="pedagogium_logistics_5" autoComplete="off" placeholder="П'ятий кахут для Pedagogium Logistics" />
             </Label>
             <LabelCheckBox>
               <AdminCheckbox type="checkbox" name="replace" />
-              Якщо не зняти галочку, всі лінки перезапишуться повністю. <br />{' '}
-              Якщо її зняти, можна виправити конкретний лінк, не зачіпаючи інші.
-              Наприклад, якщо треба виправити тільки один Кахут, наприклад, №3 -
-              внось його лінк у відповідне поле (третє) і знімай галочку.
+              Якщо не зняти галочку, всі лінки перезапишуться повністю. <br /> Якщо її зняти, можна виправити конкретний лінк, не зачіпаючи інші.
+              Наприклад, якщо треба виправити тільки один Кахут, наприклад, №3 - внось його лінк у відповідне поле (третє) і знімай галочку.
             </LabelCheckBox>
             <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
           </LinksForm>

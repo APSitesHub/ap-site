@@ -16,6 +16,8 @@ import {
   KahootLvlBtnBox,
   LoginForm,
 } from '../KahootAdminPanel/KahootAdminPanel.styled';
+import { MeritoLogisticsKahootForm } from '../KahootAdminPanel/MeritoLogisticsKahootForm';
+import { MeritoPrepKahootForm } from '../KahootAdminPanel/MeritoPrepKahootForm';
 import { PedagogiumLogisticsKahootForm } from '../KahootAdminPanel/PedagogiumLogisticsKahootForm';
 import { PedagogiumPrepKahootForm } from '../KahootAdminPanel/PedagogiumPrepKahootForm';
 import { WSBMIRLogisticsKahootForm } from '../KahootAdminPanel/WSBMIRLogisticsKahootForm';
@@ -64,9 +66,7 @@ const UniHostKahootAdminPanel = () => {
   });
 
   const handleBtnClick = lvl => {
-    levels.includes(lvl)
-      ? setLevels(levels => [...levels].filter(level => level !== lvl))
-      : setLevels(levels => [...levels, lvl]);
+    levels.includes(lvl) ? setLevels(levels => [...levels].filter(level => level !== lvl)) : setLevels(levels => [...levels, lvl]);
   };
 
   const handleLoginSubmit = async (values, { resetForm }) => {
@@ -89,22 +89,14 @@ const UniHostKahootAdminPanel = () => {
     <>
       <AdminPanelSection>
         {!isUserAdmin && (
-          <Formik
-            initialValues={initialLoginValues}
-            onSubmit={handleLoginSubmit}
-            validationSchema={loginSchema}
-          >
+          <Formik initialValues={initialLoginValues} onSubmit={handleLoginSubmit} validationSchema={loginSchema}>
             <LoginForm>
               <Label>
                 <AdminInput type="text" name="login" placeholder="Login" />
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -114,59 +106,29 @@ const UniHostKahootAdminPanel = () => {
 
         {isUserAdmin && (
           <KahootLvlBtnBox>
-            <KahootLvlBtn
-              onClick={() => handleBtnClick('pedagogium_logistics')}
-            >
-              Pedagogium Logistics
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_prep')}>
-              Pedagogium Prep
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wstijo_logistics')}>
-              WSTIJO Logistics
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wstijo_prep')}>
-              WSTIJO Prep
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wsbmir_logistics')}>
-              WSBMIR Logistics
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wsbmir_prep')}>
-              WSBMIR Prep
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('ewspa_logistics')}>
-              EWSPA Logistics
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('ewspa_prep')}>
-              EWSPA Prep
-            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_logistics')}>Pedagogium Logistics</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_prep')}>Pedagogium Prep</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wstijo_logistics')}>WSTIJO Logistics</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wstijo_prep')}>WSTIJO Prep</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wsbmir_logistics')}>WSBMIR Logistics</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wsbmir_prep')}>WSBMIR Prep</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('ewspa_logistics')}>EWSPA Logistics</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('ewspa_prep')}>EWSPA Prep</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('merito_logistics')}>Merito Logistics</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('merito_prep')}>Merito Prep</KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
-          {levels.includes('pedagogium_logistics') && (
-            <PedagogiumLogisticsKahootForm destination={destination} />
-          )}
-          {levels.includes('pedagogium_prep') && (
-            <PedagogiumPrepKahootForm destination={destination} />
-          )}
-          {levels.includes('wstijo_logistics') && (
-            <WSTIJOLogisticsKahootForm destination={destination} />
-          )}
-          {levels.includes('wstijo_prep') && (
-            <WSTIJOPrepKahootForm destination={destination} />
-          )}
-          {levels.includes('wsbmir_logistics') && (
-            <WSBMIRLogisticsKahootForm destination={destination} />
-          )}
-          {levels.includes('wsbmir_prep') && (
-            <WSBMIRPrepKahootForm destination={destination} />
-          )}
-          {levels.includes('ewspa_logistics') && (
-            <EWSPALogisticsKahootForm destination={destination} />
-          )}
-          {levels.includes('ewspa_prep') && (
-            <EWSPAPrepKahootForm destination={destination} />
-          )}
+          {levels.includes('pedagogium_logistics') && <PedagogiumLogisticsKahootForm destination={destination} />}
+          {levels.includes('pedagogium_prep') && <PedagogiumPrepKahootForm destination={destination} />}
+          {levels.includes('wstijo_logistics') && <WSTIJOLogisticsKahootForm destination={destination} />}
+          {levels.includes('wstijo_prep') && <WSTIJOPrepKahootForm destination={destination} />}
+          {levels.includes('wsbmir_logistics') && <WSBMIRLogisticsKahootForm destination={destination} />}
+          {levels.includes('wsbmir_prep') && <WSBMIRPrepKahootForm destination={destination} />}
+          {levels.includes('ewspa_logistics') && <EWSPALogisticsKahootForm destination={destination} />}
+          {levels.includes('ewspa_prep') && <EWSPAPrepKahootForm destination={destination} />}
+          {levels.includes('merito_logistics') && <MeritoLogisticsKahootForm destination={destination} />}
+          {levels.includes('merito_prep') && <MeritoPrepKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>

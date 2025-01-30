@@ -4,12 +4,7 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import * as yup from 'yup';
-import {
-  AdminFormBtn,
-  AdminInput,
-  AdminInputNote,
-  UsersEditForm,
-} from '../../UserAdminPanel/UserAdminPanel.styled';
+import { AdminFormBtn, AdminInput, AdminInputNote, UsersEditForm } from '../../UserAdminPanel/UserAdminPanel.styled';
 import { FormSelect } from '../TimeTableAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -22,14 +17,13 @@ export const UniTimeTableEditForm = ({
   wstijoMarathonOptions,
   wsbmirMarathonOptions,
   ewspaMarathonOptions,
+  meritoMarathonOptions,
   daysOptions,
   closeEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [uniValue, setUniValue] = useState(lessonToEdit.university || '');
-  const [marathonValue, setMarathonValue] = useState(
-    lessonToEdit.marathon || ''
-  );
+  const [marathonValue, setMarathonValue] = useState(lessonToEdit.marathon || '');
   const [dayValue, setDayValue] = useState(scheduleToEdit.day);
 
   const initialEditTimetableValues = {
@@ -77,9 +71,7 @@ export const UniTimeTableEditForm = ({
       alert('Урок відредаговано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -87,17 +79,11 @@ export const UniTimeTableEditForm = ({
 
   return (
     <>
-      <Formik
-        initialValues={initialEditTimetableValues}
-        onSubmit={handleEditTimetableSubmit}
-        validationSchema={timetableSchema}
-      >
+      <Formik initialValues={initialEditTimetableValues} onSubmit={handleEditTimetableSubmit} validationSchema={timetableSchema}>
         <UsersEditForm>
           <FormSelect
             options={uniOptions}
-            defaultValue={uniOptions.find(
-              option => option.value === lessonToEdit.university
-            )}
+            defaultValue={uniOptions.find(option => option.value === lessonToEdit.university)}
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -120,6 +106,8 @@ export const UniTimeTableEditForm = ({
                 ? wsbmirMarathonOptions
                 : uniValue.includes('EWSPA')
                 ? ewspaMarathonOptions
+                : uniValue.includes('Merito')
+                ? meritoMarathonOptions
                 : pedagogiumMarathonOptions
             }
             styles={{
@@ -132,18 +120,11 @@ export const UniTimeTableEditForm = ({
             placeholder="Марафон"
             name="marathon"
             defaultValue={
-              wstijoMarathonOptions.find(
-                option => option.value === lessonToEdit.marathon
-              ) ||
-              pedagogiumMarathonOptions.find(
-                option => option.value === lessonToEdit.marathon
-              ) ||
-              wsbmirMarathonOptions.find(
-                option => option.value === lessonToEdit.marathon
-              ) ||
-              ewspaMarathonOptions.find(
-                option => option.value === lessonToEdit.marathon
-              )
+              wstijoMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              pedagogiumMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              wsbmirMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              ewspaMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              meritoMarathonOptions.find(option => option.value === lessonToEdit.marathon)
             }
             isDisabled
             onChange={marathon => {
@@ -161,9 +142,7 @@ export const UniTimeTableEditForm = ({
             }}
             placeholder="День"
             name="day"
-            defaultValue={daysOptions.find(
-              option => +option.value === scheduleToEdit.day
-            )}
+            defaultValue={daysOptions.find(option => +option.value === scheduleToEdit.day)}
             onChange={day => {
               setDayValue(day.value);
             }}
@@ -173,11 +152,7 @@ export const UniTimeTableEditForm = ({
             <AdminInputNote component="p" name="time" />
           </Label>
           <Label>
-            <AdminInput
-              type="text"
-              name="lessonNumber"
-              placeholder="Номер уроку"
-            />
+            <AdminInput type="text" name="lessonNumber" placeholder="Номер уроку" />
             <AdminInputNote component="p" name="lessonNumber" />
           </Label>
           <Label>

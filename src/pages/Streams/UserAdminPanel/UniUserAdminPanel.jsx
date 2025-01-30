@@ -61,10 +61,12 @@ const UserAdminPanel = () => {
       value: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
     },
     {
-      label:
-        'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
-      value:
-        'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
+      label: 'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
+      value: 'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
+    },
+    {
+      label: 'Merito (Uniwersytet WSB Merito Warszawa)',
+      value: 'Merito (Uniwersytet WSB Merito Warszawa)',
     },
   ];
 

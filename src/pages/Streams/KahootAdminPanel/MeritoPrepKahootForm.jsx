@@ -21,25 +21,25 @@ import {
   WarningText,
 } from './KahootAdminPanel.styled';
 
-export const WSTIJOLogisticsKahootForm = ({ destination }) => {
+export const MeritoPrepKahootForm = ({ destination }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
 
   const initialLinksValues = {
-    wstijo_logistics_1: '',
-    wstijo_logistics_2: '',
-    wstijo_logistics_3: '',
-    wstijo_logistics_4: '',
-    wstijo_logistics_5: '',
+    merito_prep_1: '',
+    merito_prep_2: '',
+    merito_prep_3: '',
+    merito_prep_4: '',
+    merito_prep_5: '',
     replace: true,
   };
 
   const linksSchema = yup.object().shape({
-    wstijo_logistics_1: yup.string().optional(),
-    wstijo_logistics_2: yup.string().optional(),
-    wstijo_logistics_3: yup.string().optional(),
-    wstijo_logistics_4: yup.string().optional(),
-    wstijo_logistics_5: yup.string().optional(),
+    merito_prep_1: yup.string().optional(),
+    merito_prep_2: yup.string().optional(),
+    merito_prep_3: yup.string().optional(),
+    merito_prep_4: yup.string().optional(),
+    merito_prep_5: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
@@ -80,16 +80,16 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
       );
 
     if (!emptyValues || confirmation) {
-      const wstijo_logisticslinks = { wstijo_logistics: { links: {} } };
+      const merito_preplinks = { merito_prep: { links: {} } };
       for (const [key, value] of Object.entries(values)) {
         if (value && key !== 'replace') {
-          wstijo_logisticslinks.wstijo_logistics.links[key] = value;
+          merito_preplinks.merito_prep.links[key] = value;
         } else {
-          wstijo_logisticslinks.wstijo_logistics.replace = value;
+          merito_preplinks.merito_prep.replace = value;
         }
       }
       try {
-        const response = await axios.patch(destination, wstijo_logisticslinks);
+        const response = await axios.patch(destination, merito_preplinks);
         console.log(response);
         resetForm();
         alert('Лінки замінилися, молодець');
@@ -108,23 +108,23 @@ export const WSTIJOLogisticsKahootForm = ({ destination }) => {
   return (
     <>
       <AdminPanelSection>
-        <FormTitle>WSTIJO Logistics</FormTitle>
+        <FormTitle>Merito Prep</FormTitle>
         <Formik initialValues={initialLinksValues} onSubmit={handleLinksSubmit} validationSchema={linksSchema}>
           <LinksForm>
             <Label>
-              <AdminInput type="text" name="wstijo_logistics_1" autoComplete="off" placeholder="Перший кахут для WSTIJO Logisitics" />
+              <AdminInput type="text" name="merito_prep_1" autoComplete="off" placeholder="Перший кахут для Merito Prep" />
             </Label>
             <Label>
-              <AdminInput type="text" name="wstijo_logistics_2" autoComplete="off" placeholder="Другий кахут для WSTIJO Logisitics" />
+              <AdminInput type="text" name="merito_prep_2" autoComplete="off" placeholder="Другий кахут для Merito Prep" />
             </Label>
             <Label>
-              <AdminInput type="text" name="wstijo_logistics_3" autoComplete="off" placeholder="Третій кахут для WSTIJO Logisitics" />
+              <AdminInput type="text" name="merito_prep_3" autoComplete="off" placeholder="Третій кахут для Merito Prep" />
             </Label>
             <Label>
-              <AdminInput type="text" name="wstijo_logistics_4" autoComplete="off" placeholder="Четвертий кахут для WSTIJO Logisitics" />
+              <AdminInput type="text" name="merito_prep_4" autoComplete="off" placeholder="Четвертий кахут для Merito Prep" />
             </Label>
             <Label>
-              <AdminInput type="text" name="wstijo_logistics_5" autoComplete="off" placeholder="П'ятий кахут для WSTIJO Logisitics" />
+              <AdminInput type="text" name="merito_prep_5" autoComplete="off" placeholder="П'ятий кахут для Merito Prep" />
             </Label>
             <LabelCheckBox>
               <AdminCheckbox type="checkbox" name="replace" />

@@ -58,8 +58,7 @@ export const EWSPALogisticsKahootForm = ({ destination }) => {
               <DismissIcon />
             </WarningDismissBtn>
             <WarningText>
-              Краще не відправляти пусту форму, бо так затруться ВСІ лінки. Якщо
-              так і треба, клацай "Затерти все" і відправ форму знов.
+              Краще не відправляти пусту форму, бо так затруться ВСІ лінки. Якщо так і треба, клацай "Затерти все" і відправ форму знов.
             </WarningText>
             <WarningBtnBox>
               <WarningBtn
@@ -71,10 +70,7 @@ export const EWSPALogisticsKahootForm = ({ destination }) => {
               >
                 Затерти все
               </WarningBtn>
-              <WarningBtn
-                className="cancel"
-                onClick={() => toast.dismiss(t.id)}
-              >
+              <WarningBtn className="cancel" onClick={() => toast.dismiss(t.id)}>
                 Додати лінки
               </WarningBtn>
             </WarningBtnBox>
@@ -112,59 +108,28 @@ export const EWSPALogisticsKahootForm = ({ destination }) => {
   return (
     <>
       <AdminPanelSection>
-        <FormTitle>EWSPA</FormTitle>
-        <Formik
-          initialValues={initialLinksValues}
-          onSubmit={handleLinksSubmit}
-          validationSchema={linksSchema}
-        >
+        <FormTitle>EWSPA Logistics</FormTitle>
+        <Formik initialValues={initialLinksValues} onSubmit={handleLinksSubmit} validationSchema={linksSchema}>
           <LinksForm>
             <Label>
-              <AdminInput
-                type="text"
-                name="ewspa_logistics_1"
-                autoComplete="off"
-                placeholder="Перший кахут для EWSPA Logistics"
-              />
+              <AdminInput type="text" name="ewspa_logistics_1" autoComplete="off" placeholder="Перший кахут для EWSPA Logistics" />
             </Label>
             <Label>
-              <AdminInput
-                type="text"
-                name="ewspa_logistics_2"
-                autoComplete="off"
-                placeholder="Другий кахут для EWSPA Logistics"
-              />
+              <AdminInput type="text" name="ewspa_logistics_2" autoComplete="off" placeholder="Другий кахут для EWSPA Logistics" />
             </Label>
             <Label>
-              <AdminInput
-                type="text"
-                name="ewspa_logistics_3"
-                autoComplete="off"
-                placeholder="Третій кахут для EWSPA Logistics"
-              />
+              <AdminInput type="text" name="ewspa_logistics_3" autoComplete="off" placeholder="Третій кахут для EWSPA Logistics" />
             </Label>
             <Label>
-              <AdminInput
-                type="text"
-                name="ewspa_logistics_4"
-                autoComplete="off"
-                placeholder="Четвертий кахут для EWSPA Logistics"
-              />
+              <AdminInput type="text" name="ewspa_logistics_4" autoComplete="off" placeholder="Четвертий кахут для EWSPA Logistics" />
             </Label>
             <Label>
-              <AdminInput
-                type="text"
-                name="ewspa_logistics_5"
-                autoComplete="off"
-                placeholder="П'ятий кахут для EWSPA Logistics"
-              />
+              <AdminInput type="text" name="ewspa_logistics_5" autoComplete="off" placeholder="П'ятий кахут для EWSPA Logistics" />
             </Label>
             <LabelCheckBox>
               <AdminCheckbox type="checkbox" name="replace" />
-              Якщо не зняти галочку, всі лінки перезапишуться повністю. <br />{' '}
-              Якщо її зняти, можна виправити конкретний лінк, не зачіпаючи інші.
-              Наприклад, якщо треба виправити тільки один Кахут, наприклад, №3 -
-              внось його лінк у відповідне поле (третє) і знімай галочку.
+              Якщо не зняти галочку, всі лінки перезапишуться повністю. <br /> Якщо її зняти, можна виправити конкретний лінк, не зачіпаючи інші.
+              Наприклад, якщо треба виправити тільки один Кахут, наприклад, №3 - внось його лінк у відповідне поле (третє) і знімай галочку.
             </LabelCheckBox>
             <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
           </LinksForm>

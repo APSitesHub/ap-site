@@ -4,18 +4,8 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import {
-  AdminFormBtn,
-  AdminInput,
-  AdminInputNote,
-  AdminPanelSection,
-  LinksForm,
-  LoginForm,
-} from './CollectionsAdminPanel.styled';
-import {
-  LinksFieldGroup,
-  LinksFieldGroupTitle,
-} from '../AdminPanel/AdminPanel.styled';
+import { AdminFormBtn, AdminInput, AdminInputNote, AdminPanelSection, LinksForm, LoginForm } from './CollectionsAdminPanel.styled';
+import { LinksFieldGroup, LinksFieldGroupTitle } from '../AdminPanel/AdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -77,6 +67,10 @@ const UniCollectionsAdminPanel = () => {
     wstijo_prep: '',
     wsbmir_logistics: '',
     wsbmir_prep: '',
+    ewspa_logistics: '',
+    ewspa_prep: '',
+    merito_logistics: '',
+    merito_prep: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -86,18 +80,16 @@ const UniCollectionsAdminPanel = () => {
     wstijo_prep: yup.string().optional(),
     wsbmir_logistics: yup.string().optional(),
     wsbmir_prep: yup.string().optional(),
+    ewspa_logistics: yup.string().optional(),
+    ewspa_prep: yup.string().optional(),
+    merito_logistics: yup.string().optional(),
+    merito_prep: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
 
-    Object.keys(values).forEach(
-      key =>
-        (values[key] = values[key].replace(
-          'width="640" height="480"',
-          'width="100%" height="100%"'
-        ))
-    );
+    Object.keys(values).forEach(key => (values[key] = values[key].replace('width="640" height="480"', 'width="100%" height="100%"')));
 
     try {
       const response = await axios.patch('/unicollections', values);
@@ -116,22 +108,14 @@ const UniCollectionsAdminPanel = () => {
     <>
       <AdminPanelSection>
         {!isUserAdmin && (
-          <Formik
-            initialValues={initialLoginValues}
-            onSubmit={handleLoginSubmit}
-            validationSchema={loginSchema}
-          >
+          <Formik initialValues={initialLoginValues} onSubmit={handleLoginSubmit} validationSchema={loginSchema}>
             <LoginForm>
               <Label>
                 <AdminInput type="text" name="login" placeholder="Login" />
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -140,94 +124,61 @@ const UniCollectionsAdminPanel = () => {
         )}
 
         {isUserAdmin && (
-          <Formik
-            initialValues={initialLinksValues}
-            onSubmit={handleLinksSubmit}
-            validationSchema={linksSchema}
-          >
+          <Formik initialValues={initialLinksValues} onSubmit={handleLinksSubmit} validationSchema={linksSchema}>
             <LinksForm>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>
-                  Pedagogium (Wyższa Szkoła Nauk Społecznych)
-                </LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>Pedagogium (Wyższa Szkoła Nauk Społecznych)</LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="pedagogium_logistics"
-                    placeholder="Pedagogium Logistics Collection"
-                  />
+                  <AdminInput type="text" name="pedagogium_logistics" placeholder="Pedagogium Logistics Collection" />
                   <AdminInputNote component="p" name="pedagogium" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="pedagogium_prep"
-                    placeholder="Pedagogium Przygotowawczy Kurs Collection"
-                  />
+                  <AdminInput type="text" name="pedagogium_prep" placeholder="Pedagogium Preparation Course Collection" />
                   <AdminInputNote component="p" name="pedagogium" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>
-                  WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)
-                </LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)</LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="wstijo_logistics"
-                    placeholder="WSTIJO Logistics Collection"
-                  />
+                  <AdminInput type="text" name="wstijo_logistics" placeholder="WSTIJO Logistics Collection" />
                   <AdminInputNote component="p" name="wstijo_logistics" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="wstijo_prep"
-                    placeholder="WSTIJO Przygotowawczy Kurs Collection"
-                  />
+                  <AdminInput type="text" name="wstijo_prep" placeholder="WSTIJO Preparation Course Collection" />
                   <AdminInputNote component="p" name="wstijo_prep" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>
-                  WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)
-                </LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)</LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="wsbmir_logistics"
-                    placeholder="WSBMIR Logistics Collection"
-                  />
+                  <AdminInput type="text" name="wsbmir_logistics" placeholder="WSBMIR Logistics Collection" />
                   <AdminInputNote component="p" name="wsbmir_logistics" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="wsbmir_prep"
-                    placeholder="WSBMIR Przygotowawczy Kurs Collection"
-                  />
+                  <AdminInput type="text" name="wsbmir_prep" placeholder="WSBMIR Preparation Course Collection" />
                   <AdminInputNote component="p" name="wsbmir_prep" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>
-                  EWSPA (Wyższa Szkoła Biznesu, Mediów i Reklamy)
-                </LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>EWSPA (Wyższa Szkoła Biznesu, Mediów i Reklamy)</LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="ewspa_logistics"
-                    placeholder="EWSPA Logistics Collection"
-                  />
+                  <AdminInput type="text" name="ewspa_logistics" placeholder="EWSPA Logistics Collection" />
                   <AdminInputNote component="p" name="ewspa_logistics" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="ewspa_prep"
-                    placeholder="EWSPA Przygotowawczy Kurs Collection"
-                  />
+                  <AdminInput type="text" name="ewspa_prep" placeholder="EWSPA Preparation Course Collection" />
                   <AdminInputNote component="p" name="ewspa_prep" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>Merito (Uniwersytet WSB Merito Warszawa)</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="merito_logistics" placeholder="Merito Logistics Collection" />
+                  <AdminInputNote component="p" name="merito_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput type="text" name="merito_prep" placeholder="Merito Preparation Course Collection" />
+                  <AdminInputNote component="p" name="merito_prep" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
