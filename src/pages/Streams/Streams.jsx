@@ -47,7 +47,7 @@ const Streams = () => {
           (currentUser = user.data || {
             username: 'User Is Not Logged In',
             isBanned: false,
-            userIP: '',
+            userIP: 'no ip',
           })
       );
     } catch (error) {
