@@ -67,7 +67,7 @@ export const TeacherButtonBoxVertical = styled.div`
 
 export const TeacherButtonBoxHideSwitch = styled.div`
   position: absolute;
-  bottom: 210px;
+  bottom: 250px;
   right: 0;
 
   filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.09));

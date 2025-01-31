@@ -30,11 +30,13 @@ import {
   SupportPointer,
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
+import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 
 const StreamA1 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const [isInputOpen, setIsInputOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isAnimated, setIsAnimated] = useState(false);
@@ -49,21 +51,28 @@ const StreamA1 = () => {
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    isChatOpen || isSupportOpen
+    isChatOpen || isSupportOpen || isInputOpen
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleChat = () => {
     setIsChatOpen(isChatOpen => !isChatOpen);
-    isKahootOpen || isSupportOpen
+    isKahootOpen || isSupportOpen || isInputOpen
       ? setIsOpenedLast(isOpenedLast => 'chat')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleSupport = () => {
     setIsSupportOpen(isSupportOpen => !isSupportOpen);
     setAnimationID('');
-    isKahootOpen || isChatOpen
+    isKahootOpen || isChatOpen || isInputOpen
       ? setIsOpenedLast(isOpenedLast => 'support')
+      : setIsOpenedLast(isOpenedLast => '');
+  };
+  const toggleInput = () => {
+    setIsInputOpen(isInputOpen => !isInputOpen);
+    setAnimationID('');
+    isKahootOpen || isChatOpen || isSupportOpen
+      ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleButtonBox = () => {
@@ -93,6 +102,12 @@ const StreamA1 = () => {
       socketRef.current.emit('connected:user', socketRef.current.id, room);
     });
 
+    socketRef.current.on('question:input', howdy => {
+      console.log(howdy);
+      console.log(room);
+      setIsInputOpen(true);
+    });
+
     socketRef.current.on('connected:user', (id, lvl) => {
       console.log(id);
       console.log(lvl);
@@ -110,8 +125,7 @@ const StreamA1 = () => {
           }
         );
         const todayMessages = dbMessages.data.filter(
-          message =>
-            new Date(message.createdAt).getDate() === new Date().getDate()
+          message => new Date(message.createdAt).getDate() === new Date().getDate()
         );
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
@@ -124,10 +138,7 @@ const StreamA1 = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post(
-            'https://ap-chat-server.onrender.com/messages',
-            data
-          );
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -152,14 +163,11 @@ const StreamA1 = () => {
     socketRef.current.on('message:delete', async id => {
       console.log('delete fired');
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(
-            `https://ap-chat-server.onrender.com/messages/${id}`
-          );
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }
@@ -170,8 +178,7 @@ const StreamA1 = () => {
     socketRef.current.on('message:deleted', async id => {
       console.log(id);
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
     });
 
@@ -185,11 +192,7 @@ const StreamA1 = () => {
 
     return () => {
       console.log('disconnecting');
-      socketRef.current.emit(
-        'connected:disconnect',
-        socketRef.current.id,
-        room
-      );
+      socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
       socketRef.current.off('connected');
       socketRef.current.off('message');
       socketRef.current.off('user');
@@ -203,24 +206,23 @@ const StreamA1 = () => {
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
-            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви
-            перейшли за правильним посиланням або спробуйте пізніше.
+            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
+            правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Хмммм, схоже що ви були нечемні! <br />
-            Вас було заблоковано за порушення правил нашої платформи. Зв'яжіться
-            зі своїм менеджером сервісу!
+            Вас було заблоковано за порушення правил нашої платформи. Зв'яжіться зі своїм
+            менеджером сервісу!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : (
         <>
           <StreamSection
             style={{
-              width:
-                isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+              width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
             }}
           >
             <VideoBox>
@@ -244,14 +246,10 @@ const StreamA1 = () => {
                 />
               </SupportMarkerLeft>
               <SupportMarkerRight
-                className={
-                  isAnimated && animatedID === 'quality' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
               >
                 <SupportPointer
-                  className={
-                    isAnimated && animatedID === 'quality' ? 'animated' : ''
-                  }
+                  className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
                 />
               </SupportMarkerRight>
               <ReactPlayer
@@ -278,18 +276,14 @@ const StreamA1 = () => {
             <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
               <KahootBtn
                 onClick={toggleKahoot}
-                className={
-                  isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''}
               >
                 <KahootLogo />
               </KahootBtn>
 
               <ChatBtn
                 onClick={toggleChat}
-                className={
-                  isAnimated && animatedID === 'chat_open' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'chat_open' ? 'animated' : ''}
               >
                 <ChatLogo />
               </ChatBtn>
@@ -307,9 +301,7 @@ const StreamA1 = () => {
               <ChatBox
                 ref={chatEl}
                 className={isChatOpen ? 'shown' : 'hidden'}
-                style={
-                  isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
-                }
+                style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
               >
                 <Chat
                   socket={socketRef.current}
@@ -319,6 +311,8 @@ const StreamA1 = () => {
                 />
               </ChatBox>
             )}
+
+            <StudentInput isInputOpen={isInputOpen} toggleInput={toggleInput} />
 
             <Support
               sectionWidth={width}
@@ -341,9 +335,7 @@ const StreamA1 = () => {
             <ChatBox
               ref={chatEl}
               className={isChatOpen ? 'shown' : 'hidden'}
-              style={
-                isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
-              }
+              style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
             >
               <Chat
                 socket={socketRef.current}

@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { ReactComponent as BoxSwitchLeft } from '../../img/svg/btnbox-switch-left.svg';
 import { ReactComponent as BoxSwitchRight } from '../../img/svg/btnbox-switch-right.svg';
 import { ReactComponent as KahootIcon } from '../../img/svg/kahootIcon.svg';
+import { ReactComponent as InputIcon } from '../../img/svg/teacherQuestion.svg';
 import { ReactComponent as LogoClean } from '../../img/svg/myap/logo-clean.svg';
 import { ReactComponent as SupportIcon } from '../../img/svg/supportIcon.svg';
 // eslint-disable-next-line
@@ -300,6 +301,19 @@ export const ChatBtn = styled.button`
 export const KahootBtn = styled(ChatBtn)``;
 
 export const KahootLogo = styled(KahootIcon)`
+  width: 25px;
+  height: 25px;
+  z-index: 5;
+
+  @media screen and (min-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+export const InputBtn = styled(ChatBtn)``;
+
+export const InputLogo = styled(InputIcon)`
   width: 25px;
   height: 25px;
   z-index: 5;

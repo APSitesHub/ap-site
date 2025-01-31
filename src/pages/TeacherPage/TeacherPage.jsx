@@ -1,10 +1,16 @@
 import useSize from '@react-hook/size';
-import { KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
+import {
+  InputBtn,
+  InputLogo,
+  KahootBtn,
+  KahootLogo,
+} from 'components/Stream/Stream.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HostKahoots } from './HostKahoots/HostKahoots';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
+import { TeacherInput } from './TeacherInput/TeacherInput';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
@@ -25,6 +31,7 @@ const TeacherPage = () => {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
+  const [isInputOpen, setIsInputOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [width, height] = useSize(document.body);
@@ -75,9 +82,8 @@ const TeacherPage = () => {
   const toggleViewer = () => {
     !isOpenedLast
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)
-      : isOpenedLast === 'viewer' &&
-        setIsViewerOpen(isViewerOpen => !isViewerOpen);
-    isWhiteBoardOpen || isPlatformOpen || isKahootOpen
+      : isOpenedLast === 'viewer' && setIsViewerOpen(isViewerOpen => !isViewerOpen);
+    isWhiteBoardOpen || isPlatformOpen || isKahootOpen || isInputOpen
       ? setIsOpenedLast(isOpenedLast => 'viewer')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -86,7 +92,7 @@ const TeacherPage = () => {
       ? setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen)
       : isOpenedLast === 'whiteboard' &&
         setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen);
-    isViewerOpen || isPlatformOpen || isKahootOpen
+    isViewerOpen || isPlatformOpen || isKahootOpen || isInputOpen
       ? setIsOpenedLast(isOpenedLast => 'whiteboard')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -95,17 +101,24 @@ const TeacherPage = () => {
       ? setIsPlatformOpen(isPlatformOpen => !isPlatformOpen)
       : isOpenedLast === 'platform' &&
         setIsPlatformOpen(isPlatformOpen => !isPlatformOpen);
-    isViewerOpen || isWhiteBoardOpen || isKahootOpen
+    isViewerOpen || isWhiteBoardOpen || isKahootOpen || isInputOpen
       ? setIsOpenedLast(isOpenedLast => 'platform')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleKahoot = () => {
     !isOpenedLast
       ? setIsKahootOpen(isKahootOpen => !isKahootOpen)
-      : isOpenedLast === 'kahoot' &&
-        setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    isPlatformOpen || isWhiteBoardOpen || isViewerOpen
+      : isOpenedLast === 'kahoot' && setIsKahootOpen(isKahootOpen => !isKahootOpen);
+    isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isInputOpen
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
+      : setIsOpenedLast(isOpenedLast => '');
+  };
+  const toggleInput = () => {
+    !isOpenedLast
+      ? setIsInputOpen(isInputOpen => !isInputOpen)
+      : isOpenedLast === 'input' && setIsInputOpen(isInputOpen => !isInputOpen);
+    isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
+      ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleButtonBox = () => {
@@ -130,6 +143,10 @@ const TeacherPage = () => {
         <KahootBtn onClick={toggleKahoot}>
           <KahootLogo />
         </KahootBtn>
+
+        <InputBtn onClick={toggleInput}>
+          <InputLogo />
+        </InputBtn>
       </TeacherButtonBox>
       <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
@@ -162,6 +179,7 @@ const TeacherPage = () => {
         isOpenedLast={isOpenedLast}
       />
       <TeacherChat page={page} />
+      <TeacherInput page={page} isInputOpen={isInputOpen} isOpenedLast={isOpenedLast} />
     </>
   );
 };
