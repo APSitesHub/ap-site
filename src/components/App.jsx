@@ -173,6 +173,8 @@ const QuizOneRequestDiscountNoEngage = lazy(() =>
   )
 );
 
+const TrialLesson = lazy(()=> import('../pages/TrialLesson/TrialLesson'))
+
 const NotFound = lazy(() => import(/* webpackChunkName: "Not Found" */ '../pages/NotFound/NotFound'));
 
 export const App = () => {
@@ -220,9 +222,10 @@ export const App = () => {
             <Route path="university" element={<University utms={utms} noindex={true} />} />
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
-          <Route path="teacher-login" element={<TeacherLogin />} />
-          <Route path="videochat" element={<Videochat />} />
-          <Route path="room/:id" element={<VideochatRoom />} />
+          <Route path="teacher-login" element={<TeacherLogin />} noindex={true} />
+          <Route path="videochat" element={<Videochat />} noindex={true} />
+          <Route path="room/:id" element={<VideochatRoom />} noindex={true} />
+          <Route path="trialLesson/:language/:userId" element={<TrialLesson />} noindex={true}/>
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
