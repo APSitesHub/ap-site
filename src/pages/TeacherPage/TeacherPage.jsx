@@ -1,16 +1,10 @@
 import useSize from '@react-hook/size';
-import {
-  InputBtn,
-  InputLogo,
-  KahootBtn,
-  KahootLogo,
-} from 'components/Stream/Stream.styled';
+import { KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HostKahoots } from './HostKahoots/HostKahoots';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
-import { TeacherInput } from './TeacherInput/TeacherInput';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
@@ -113,6 +107,7 @@ const TeacherPage = () => {
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
   };
+  // eslint-disable-next-line
   const toggleInput = () => {
     !isOpenedLast
       ? setIsInputOpen(isInputOpen => !isInputOpen)
@@ -144,9 +139,9 @@ const TeacherPage = () => {
           <KahootLogo />
         </KahootBtn>
 
-        <InputBtn onClick={toggleInput}>
+        {/* <InputBtn onClick={toggleInput}>
           <InputLogo />
-        </InputBtn>
+        </InputBtn> */}
       </TeacherButtonBox>
       <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
@@ -179,7 +174,7 @@ const TeacherPage = () => {
         isOpenedLast={isOpenedLast}
       />
       <TeacherChat page={page} />
-      <TeacherInput page={page} isInputOpen={isInputOpen} isOpenedLast={isOpenedLast} />
+      {/* <TeacherInput page={page} isInputOpen={isInputOpen} isOpenedLast={isOpenedLast} /> */}
     </>
   );
 };

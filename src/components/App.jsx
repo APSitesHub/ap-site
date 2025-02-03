@@ -39,126 +39,355 @@ import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { StreamDeutschB2 } from 'pages/Streams/Deutsch B2/StreamDeutschB2';
 import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
+import MyAPPl from 'pages/MyAP/MyAPPl';
 
-const NewDesign = lazy(() => import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign'));
-const School = lazy(() => import(/* webpackChunkName: "School page" */ '../pages/School/School'));
-const University = lazy(() => import(/* webpackChunkName: "University page" */ '../pages/University/University'));
-const Streams = lazy(() => import(/* webpackChunkName: "Streams page" */ '../pages/Streams/Streams'));
-const Speakings = lazy(() => import(/* webpackChunkName: "Speakings teacher page" */ '../pages/Streams/Speakings'));
-const StreamA0 = lazy(() => import(/* webpackChunkName: "Streams A0 page" */ '../pages/Streams/A0/StreamA0'));
-const StreamA02 = lazy(() => import(/* webpackChunkName: "Streams A0_2 page" */ '../pages/Streams/A0/StreamA02'));
-const StreamA1 = lazy(() => import(/* webpackChunkName: "Streams A1 page" */ '../pages/Streams/A1/StreamA1'));
-const StreamA1Free = lazy(() => import(/* webpackChunkName: "Free streams A1 page" */ '../pages/Streams/A1/StreamA1Free'));
-const StreamA2 = lazy(() => import(/* webpackChunkName: "Streams A2 page" */ '../pages/Streams/A2/StreamA2'));
-const StreamA2Free = lazy(() => import(/* webpackChunkName: "Free streams A2 page" */ '../pages/Streams/A2/StreamA2Free'));
-const StreamB1 = lazy(() => import(/* webpackChunkName: "Streams B1 page" */ '../pages/Streams/B1/StreamB1'));
-const StreamB2 = lazy(() => import(/* webpackChunkName: "Streams B2 page" */ '../pages/Streams/B2/StreamB2'));
-const StreamC1 = lazy(() => import(/* webpackChunkName: "Streams C1 page" */ '../pages/Streams/C1/StreamC1'));
-const StreamDeutschA02 = lazy(() => import(/* webpackChunkName: "Streams Deutsch A0_2 page" */ '../pages/Streams/Deutsch A0/StreamDeutschA02'));
-const StreamPolskiA02 = lazy(() => import(/* webpackChunkName: "Streams Polski A0_2 page" */ '../pages/Streams/Polski A0/StreamPolskiA02'));
-const RecordLinkTree = lazy(() => import(/* webpackChunkName: "Record Link Tree page" */ '../pages/RecordLinkTree/RecordLinkTree'));
-const Service = lazy(() => import(/* webpackChunkName: "Service page" */ '../pages/Service/Service'));
-const HR = lazy(() => import(/* webpackChunkName: "HR page" */ '../pages/HR/HR'));
-const StreamsKids = lazy(() => import(/* webpackChunkName: "Streams Kids page" */ '../pages/StreamsKids/StreamsKids'));
-const KidsDeA0 = lazy(() => import(/* webpackChunkName: "Deutsch Streams A0 Kids page" */ '../pages/StreamsKids/KidsDeA0/KidsDeA0'));
-const KidsDeA1 = lazy(() => import(/* webpackChunkName: "Deutsch Streams A1 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1'));
-const KidsPlA1 = lazy(() => import(/* webpackChunkName: "Polski Streams A1 Kids page" */ '../pages/StreamsKids/KidsPlA1/KidsPlA1'));
-const KidsDeA1Free = lazy(() => import(/* webpackChunkName: "Deutsch Free Streams A1 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1Free'));
-const KidsPlA1Free = lazy(() => import(/* webpackChunkName: "Polski Free Streams A1 Kids page" */ '../pages/StreamsKids/KidsPlA1/KidsPlA1Free'));
-const KidsPRE = lazy(() => import(/* webpackChunkName: "English Kids PRE page" */ '../pages/StreamsKids/KidsPRE/KidsPRE'));
-const KidsBEG = lazy(() => import(/* webpackChunkName: "English Kids BEG page" */ '../pages/StreamsKids/KidsBEG/KidsBEG'));
-const KidsMID = lazy(() => import(/* webpackChunkName: "English Kids MID page" */ '../pages/StreamsKids/KidsMID/KidsMID'));
-const KidsHIGH = lazy(() => import(/* webpackChunkName: "English Kids HIGH page" */ '../pages/StreamsKids/KidsHIGH/KidsHIGH'));
-const Preschool = lazy(() => import(/* webpackChunkName: "Preschool Education page" */ '../pages/StreamsKids/Preschool/Preschool'));
-const NMTUkr = lazy(() => import(/* webpackChunkName: "NMTUkr Education page" */ '../pages/Streams/NMTUkr/NMTUkr'));
-const NMTEn = lazy(() => import(/* webpackChunkName: "NMTEn Education page" */ '../pages/Streams/NMTEn/NMTEn'));
-const NMTMath = lazy(() => import(/* webpackChunkName: "NMTMath Education page" */ '../pages/Streams/NMTMath/NMTMath'));
-const NMTHistory = lazy(() => import(/* webpackChunkName: "NMTHistory Education page" */ '../pages/Streams/NMTHistory/NMTHistory'));
-const APConf = lazy(() => import(/* webpackChunkName: "AP Conference Education page" */ '../pages/Streams/APConf/APConf'));
-const Teacher = lazy(() => import(/* webpackChunkName: "Teacher layout" */ '../pages/Teacher/Teacher'));
-const StreamSpeakingClub = lazy(() => import(/* webpackChunkName: "Speaking Club redirect page" */ '../pages/Speakings/StreamSpeakingClub'));
-const StreamSpeakingClubKids = lazy(() =>
-  import(/* webpackChunkName: "Speaking Club Kids redirect page" */ '../pages/Speakings/StreamSpeakingClubKids')
+const NewDesign = lazy(() =>
+  import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
 );
-const AdminPanel = lazy(() => import(/* webpackChunkName: "Links Admin Panel page" */ '../pages/Streams/AdminPanel/AdminPanel'));
-const UniAdminPanel = lazy(() => import(/* webpackChunkName: "Pl University Links Admin Panel page" */ '../pages/Streams/AdminPanel/UniAdminPanel'));
+const School = lazy(() =>
+  import(/* webpackChunkName: "School page" */ '../pages/School/School')
+);
+const University = lazy(() =>
+  import(/* webpackChunkName: "University page" */ '../pages/University/University')
+);
+const Streams = lazy(() =>
+  import(/* webpackChunkName: "Streams page" */ '../pages/Streams/Streams')
+);
+const Speakings = lazy(() =>
+  import(/* webpackChunkName: "Speakings teacher page" */ '../pages/Streams/Speakings')
+);
+const StreamA0 = lazy(() =>
+  import(/* webpackChunkName: "Streams A0 page" */ '../pages/Streams/A0/StreamA0')
+);
+const StreamA02 = lazy(() =>
+  import(/* webpackChunkName: "Streams A0_2 page" */ '../pages/Streams/A0/StreamA02')
+);
+const StreamA1 = lazy(() =>
+  import(/* webpackChunkName: "Streams A1 page" */ '../pages/Streams/A1/StreamA1')
+);
+const StreamA1Free = lazy(() =>
+  import(
+    /* webpackChunkName: "Free streams A1 page" */ '../pages/Streams/A1/StreamA1Free'
+  )
+);
+const StreamA2 = lazy(() =>
+  import(/* webpackChunkName: "Streams A2 page" */ '../pages/Streams/A2/StreamA2')
+);
+const StreamA2Free = lazy(() =>
+  import(
+    /* webpackChunkName: "Free streams A2 page" */ '../pages/Streams/A2/StreamA2Free'
+  )
+);
+const StreamB1 = lazy(() =>
+  import(/* webpackChunkName: "Streams B1 page" */ '../pages/Streams/B1/StreamB1')
+);
+const StreamB2 = lazy(() =>
+  import(/* webpackChunkName: "Streams B2 page" */ '../pages/Streams/B2/StreamB2')
+);
+const StreamC1 = lazy(() =>
+  import(/* webpackChunkName: "Streams C1 page" */ '../pages/Streams/C1/StreamC1')
+);
+const StreamDeutschA02 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Deutsch A0_2 page" */ '../pages/Streams/Deutsch A0/StreamDeutschA02'
+  )
+);
+const StreamPolskiA02 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski A0_2 page" */ '../pages/Streams/Polski A0/StreamPolskiA02'
+  )
+);
+const RecordLinkTree = lazy(() =>
+  import(
+    /* webpackChunkName: "Record Link Tree page" */ '../pages/RecordLinkTree/RecordLinkTree'
+  )
+);
+const Service = lazy(() =>
+  import(/* webpackChunkName: "Service page" */ '../pages/Service/Service')
+);
+const HR = lazy(() => import(/* webpackChunkName: "HR page" */ '../pages/HR/HR'));
+const StreamsKids = lazy(() =>
+  import(/* webpackChunkName: "Streams Kids page" */ '../pages/StreamsKids/StreamsKids')
+);
+const KidsDeA0 = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Streams A0 Kids page" */ '../pages/StreamsKids/KidsDeA0/KidsDeA0'
+  )
+);
+const KidsDeA1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Streams A1 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1'
+  )
+);
+const KidsPlA1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Polski Streams A1 Kids page" */ '../pages/StreamsKids/KidsPlA1/KidsPlA1'
+  )
+);
+const KidsDeA1Free = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Free Streams A1 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1Free'
+  )
+);
+const KidsPlA1Free = lazy(() =>
+  import(
+    /* webpackChunkName: "Polski Free Streams A1 Kids page" */ '../pages/StreamsKids/KidsPlA1/KidsPlA1Free'
+  )
+);
+const KidsPRE = lazy(() =>
+  import(
+    /* webpackChunkName: "English Kids PRE page" */ '../pages/StreamsKids/KidsPRE/KidsPRE'
+  )
+);
+const KidsBEG = lazy(() =>
+  import(
+    /* webpackChunkName: "English Kids BEG page" */ '../pages/StreamsKids/KidsBEG/KidsBEG'
+  )
+);
+const KidsMID = lazy(() =>
+  import(
+    /* webpackChunkName: "English Kids MID page" */ '../pages/StreamsKids/KidsMID/KidsMID'
+  )
+);
+const KidsHIGH = lazy(() =>
+  import(
+    /* webpackChunkName: "English Kids HIGH page" */ '../pages/StreamsKids/KidsHIGH/KidsHIGH'
+  )
+);
+const Preschool = lazy(() =>
+  import(
+    /* webpackChunkName: "Preschool Education page" */ '../pages/StreamsKids/Preschool/Preschool'
+  )
+);
+const NMTUkr = lazy(() =>
+  import(/* webpackChunkName: "NMTUkr Education page" */ '../pages/Streams/NMTUkr/NMTUkr')
+);
+const NMTEn = lazy(() =>
+  import(/* webpackChunkName: "NMTEn Education page" */ '../pages/Streams/NMTEn/NMTEn')
+);
+const NMTMath = lazy(() =>
+  import(
+    /* webpackChunkName: "NMTMath Education page" */ '../pages/Streams/NMTMath/NMTMath'
+  )
+);
+const NMTHistory = lazy(() =>
+  import(
+    /* webpackChunkName: "NMTHistory Education page" */ '../pages/Streams/NMTHistory/NMTHistory'
+  )
+);
+const APConf = lazy(() =>
+  import(
+    /* webpackChunkName: "AP Conference Education page" */ '../pages/Streams/APConf/APConf'
+  )
+);
+const Teacher = lazy(() =>
+  import(/* webpackChunkName: "Teacher layout" */ '../pages/Teacher/Teacher')
+);
+const StreamSpeakingClub = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Club redirect page" */ '../pages/Speakings/StreamSpeakingClub'
+  )
+);
+const StreamSpeakingClubKids = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Club Kids redirect page" */ '../pages/Speakings/StreamSpeakingClubKids'
+  )
+);
+const AdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Links Admin Panel page" */ '../pages/Streams/AdminPanel/AdminPanel'
+  )
+);
+const UniAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Pl University Links Admin Panel page" */ '../pages/Streams/AdminPanel/UniAdminPanel'
+  )
+);
 const UniCollectionsAdminPanel = lazy(() =>
-  import(/* webpackChunkName: "Pl University Collections Admin Panel page" */ '../pages/Streams/CollectionsAdminPanel/UniCollectionsAdminPanel')
+  import(
+    /* webpackChunkName: "Pl University Collections Admin Panel page" */ '../pages/Streams/CollectionsAdminPanel/UniCollectionsAdminPanel'
+  )
 );
 const UniKahootAdminPanel = lazy(() =>
-  import(/* webpackChunkName: "Pl University Kahoots Admin Panel page" */ '../pages/Streams/KahootAdminPanel/UniKahootAdminPanel')
+  import(
+    /* webpackChunkName: "Pl University Kahoots Admin Panel page" */ '../pages/Streams/KahootAdminPanel/UniKahootAdminPanel'
+  )
 );
 const UniHostKahootAdminPanel = lazy(() =>
-  import(/* webpackChunkName: "Pl University Host Kahoots Admin Panel page" */ '../pages/Streams/HostKahootAdminPanel/UniHostKahootAdminPanel')
+  import(
+    /* webpackChunkName: "Pl University Host Kahoots Admin Panel page" */ '../pages/Streams/HostKahootAdminPanel/UniHostKahootAdminPanel'
+  )
 );
-const UserAdminPanel = lazy(() => import(/* webpackChunkName: "User Admin Panel page" */ '../pages/Streams/UserAdminPanel/UserAdminPanel'));
+const UserAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "User Admin Panel page" */ '../pages/Streams/UserAdminPanel/UserAdminPanel'
+  )
+);
 const UniUserAdminPanel = lazy(() =>
-  import(/* webpackChunkName: "Polish University Users Admin Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAdminPanel')
+  import(
+    /* webpackChunkName: "Polish University Users Admin Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAdminPanel'
+  )
 );
 const UniUserAttendancePedagogium = lazy(() =>
-  import(/* webpackChunkName: "Pedagogium Attendance Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAttendancePedagogium')
+  import(
+    /* webpackChunkName: "Pedagogium Attendance Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAttendancePedagogium'
+  )
 );
 const C1SpeakingPanel = lazy(() =>
-  import(/* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel')
+  import(
+    /* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel'
+  )
 );
 const TeacherAdminPanel = lazy(() =>
-  import(/* webpackChunkName: "Teacher Admin Panel page" */ '../pages/Streams/TeacherAdminPanel/TeacherAdminPanel')
+  import(
+    /* webpackChunkName: "Teacher Admin Panel page" */ '../pages/Streams/TeacherAdminPanel/TeacherAdminPanel'
+  )
 );
-const TeacherControlPage = lazy(() => import(/* webpackChunkName: "Teacher Control page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPage'));
+const TeacherControlPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Control page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPage'
+  )
+);
 const TeacherControlPageEn = lazy(() =>
-  import(/* webpackChunkName: "Teacher Control English page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPageEn')
+  import(
+    /* webpackChunkName: "Teacher Control English page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPageEn'
+  )
 );
 const TeacherControlPageDe = lazy(() =>
-  import(/* webpackChunkName: "Teacher Control Deutsch page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPageDe')
+  import(
+    /* webpackChunkName: "Teacher Control Deutsch page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPageDe'
+  )
 );
 const TeacherControlPagePl = lazy(() =>
-  import(/* webpackChunkName: "Teacher Control Polski page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPagePl')
+  import(
+    /* webpackChunkName: "Teacher Control Polski page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPagePl'
+  )
 );
-const UserJsonPanel = lazy(() => import(/* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'));
+const UserJsonPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'
+  )
+);
 const RatingsAdminPanel = lazy(() =>
-  import(/* webpackChunkName: "Ratings Admin Panel page" */ '../pages/Streams/RatingsAdminPanel/RatingsAdminPanel')
+  import(
+    /* webpackChunkName: "Ratings Admin Panel page" */ '../pages/Streams/RatingsAdminPanel/RatingsAdminPanel'
+  )
 );
 const TimeTableAdminPanel = lazy(() =>
-  import(/* webpackChunkName: "TimeTable Admin Panel page" */ '../pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel')
+  import(
+    /* webpackChunkName: "TimeTable Admin Panel page" */ '../pages/Streams/TimeTableAdminPanel/TimeTableAdminPanel'
+  )
 );
 const UniTimeTableAdminPanel = lazy(() =>
-  import(/* webpackChunkName: "Pl University TimeTable Admin Panel page" */ '../pages/Streams/TimeTableAdminPanel/UniTimeTableAdminPanel')
+  import(
+    /* webpackChunkName: "Pl University TimeTable Admin Panel page" */ '../pages/Streams/TimeTableAdminPanel/UniTimeTableAdminPanel'
+  )
 );
-const SpeakingAdminPanel = lazy(() => import(/* webpackChunkName: "Speaking Admin Panel page" */ '../pages/Streams/AdminPanel/SpeakingAdminPanel'));
-const SpeakingsRatings = lazy(() => import(/* webpackChunkName: "Speaking Rating Admin page" */ '../pages/Streams/SpeakingsRatings'));
-const English = lazy(() => import(/* webpackChunkName: "English courses page" */ '../pages/English/English'));
-const Polski = lazy(() => import(/* webpackChunkName: "Polski courses page" */ '../pages/Polski/Polski'));
-const Deutsch = lazy(() => import(/* webpackChunkName: "Deutsch courses page" */ '../pages/Deutsch/Deutsch'));
-const TeacherPage = lazy(() => import(/* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPage'));
-const TeacherPageFarm = lazy(() => import(/* webpackChunkName: "Teacher Page Farm" */ '../pages/TeacherPage/TeacherPageFarm'));
-const TeacherPageWarehouse = lazy(() => import(/* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouse'));
-const TeacherPageVertical = lazy(() => import(/* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPageVertical'));
-const TeacherPageSpeaking = lazy(() => import(/* webpackChunkName: "Speaking Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking'));
+const SpeakingAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Admin Panel page" */ '../pages/Streams/AdminPanel/SpeakingAdminPanel'
+  )
+);
+const SpeakingsRatings = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Rating Admin page" */ '../pages/Streams/SpeakingsRatings'
+  )
+);
+const English = lazy(() =>
+  import(/* webpackChunkName: "English courses page" */ '../pages/English/English')
+);
+const Polski = lazy(() =>
+  import(/* webpackChunkName: "Polski courses page" */ '../pages/Polski/Polski')
+);
+const Deutsch = lazy(() =>
+  import(/* webpackChunkName: "Deutsch courses page" */ '../pages/Deutsch/Deutsch')
+);
+const TeacherPage = lazy(() =>
+  import(/* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPage')
+);
+const TeacherPageFarm = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page Farm" */ '../pages/TeacherPage/TeacherPageFarm'
+  )
+);
+const TeacherPageWarehouse = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouse'
+  )
+);
+const TeacherPageVertical = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPageVertical'
+  )
+);
+const TeacherPageSpeaking = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking'
+  )
+);
 const TeacherPageSpeaking13 = lazy(() =>
-  import(/* webpackChunkName: "Speaking Course 13 Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking13')
+  import(
+    /* webpackChunkName: "Speaking Course 13 Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking13'
+  )
 );
-const FormsLinkTree = lazy(() => import(/* webpackChunkName: "Forms Linktree Page" */ '../pages/FormsLinkTree/FormsLinkTree'));
-const LeadFormPage = lazy(() => import(/* webpackChunkName: "Lead Form Page" */ '../pages/LeadFormPage/LeadFormPage'));
-const UniversalLeadFormPage = lazy(() => import(/* webpackChunkName: "Universal Lead Form Page" */ '../pages/LeadFormPage/UniversalLeadFormPage'));
-const AmbassadorFormPage = lazy(() => import(/* webpackChunkName: "Ambassador Form Page" */ '../pages/AmbassadorFormPage/AmbassadorFormPage'));
-const TeacherFormPage = lazy(() => import(/* webpackChunkName: "Teacher Form Page" */ '../pages/TeacherFormPage/TeacherFormPage'));
-const TeacherLogin = lazy(() => import(/* webpackChunkName: "TeacherLogin" */ '../pages/TeacherLogin/TeacherLogin'));
-const Videochat = lazy(() => import(/* webpackChunkName: "Videochat" */ '../pages/Videochat/Videochat'));
-const VideochatRoom = lazy(() => import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom'));
-const MyAP = lazy(() => import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP'));
-const ConferenceTest = lazy(() => import(/* webpackChunkName: "AP Conference Test Page" */ '../pages/MyAP/ConferenceTest'));
-const HRCalc = lazy(() => import(/* webpackChunkName: "HR Salary Calculator Page" */ '../pages/HR/HRCalc/HRCalc'));
+const FormsLinkTree = lazy(() =>
+  import(
+    /* webpackChunkName: "Forms Linktree Page" */ '../pages/FormsLinkTree/FormsLinkTree'
+  )
+);
+const LeadFormPage = lazy(() =>
+  import(/* webpackChunkName: "Lead Form Page" */ '../pages/LeadFormPage/LeadFormPage')
+);
+const UniversalLeadFormPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Universal Lead Form Page" */ '../pages/LeadFormPage/UniversalLeadFormPage'
+  )
+);
+const AmbassadorFormPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Ambassador Form Page" */ '../pages/AmbassadorFormPage/AmbassadorFormPage'
+  )
+);
+const TeacherFormPage = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Form Page" */ '../pages/TeacherFormPage/TeacherFormPage'
+  )
+);
+const TeacherLogin = lazy(() =>
+  import(/* webpackChunkName: "TeacherLogin" */ '../pages/TeacherLogin/TeacherLogin')
+);
+const Videochat = lazy(() =>
+  import(/* webpackChunkName: "Videochat" */ '../pages/Videochat/Videochat')
+);
+const VideochatRoom = lazy(() =>
+  import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom')
+);
+const MyAP = lazy(() =>
+  import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
+);
+const ConferenceTest = lazy(() =>
+  import(/* webpackChunkName: "AP Conference Test Page" */ '../pages/MyAP/ConferenceTest')
+);
+const HRCalc = lazy(() =>
+  import(/* webpackChunkName: "HR Salary Calculator Page" */ '../pages/HR/HRCalc/HRCalc')
+);
 
 const ViberMarathonRedirect = lazy(() =>
-  import(/* webpackChunkName: "Marathon redirect page to Viber chatbot" */ '../pages/Service/ViberRedirect/ViberMarathonRedirect')
+  import(
+    /* webpackChunkName: "Marathon redirect page to Viber chatbot" */ '../pages/Service/ViberRedirect/ViberMarathonRedirect'
+  )
 );
 
 const TelegramMarathonRedirect = lazy(() =>
-  import(/* webpackChunkName: "Marathon redirect page to Telegram chatbot" */ '../pages/Service/TelegramRedirect/TelegramMarathonRedirect')
+  import(
+    /* webpackChunkName: "Marathon redirect page to Telegram chatbot" */ '../pages/Service/TelegramRedirect/TelegramMarathonRedirect'
+  )
 );
 
 const WhatsAppRedirect = lazy(() =>
-  import(/* webpackChunkName: "Marathon redirect page to WhatsApp chat" */ '../pages/Service/WhatsAppRedirect/WhatsAppRedirect')
+  import(
+    /* webpackChunkName: "Marathon redirect page to WhatsApp chat" */ '../pages/Service/WhatsAppRedirect/WhatsAppRedirect'
+  )
 );
 
 const QuizOneRequestGoogleNoEngage = lazy(() =>
@@ -173,7 +402,9 @@ const QuizOneRequestDiscountNoEngage = lazy(() =>
   )
 );
 
-const NotFound = lazy(() => import(/* webpackChunkName: "Not Found" */ '../pages/NotFound/NotFound'));
+const NotFound = lazy(() =>
+  import(/* webpackChunkName: "Not Found" */ '../pages/NotFound/NotFound')
+);
 
 export const App = () => {
   // eslint-disable-next-line
@@ -192,7 +423,8 @@ export const App = () => {
     'fbclid',
   ];
 
-  const localStorageTagSetter = tags => tags.map(tag => localStorage.setItem(tag, searchParams.get(tag) || ''));
+  const localStorageTagSetter = tags =>
+    tags.map(tag => localStorage.setItem(tag, searchParams.get(tag) || ''));
 
   localStorageTagSetter(utm_tags);
 
@@ -217,13 +449,17 @@ export const App = () => {
             <Route path="deutsch" element={<Deutsch utms={utms} noindex={true} />} />
             <Route path="polski" element={<Polski utms={utms} noindex={true} />} />
             <Route path="school" element={<School utms={utms} noindex={true} />} />
-            <Route path="university" element={<University utms={utms} noindex={true} />} />
+            <Route
+              path="university"
+              element={<University utms={utms} noindex={true} />}
+            />
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
-          <Route path="teacher-login" element={<TeacherLogin />} />
-          <Route path="videochat" element={<Videochat />} />
-          <Route path="room/:id" element={<VideochatRoom />} />
+          <Route path="teacher-login" element={<TeacherLogin />} noindex={true} />
+          <Route path="videochat" element={<Videochat />} noindex={true} />
+          <Route path="room/:id" element={<VideochatRoom />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
+          <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
@@ -276,7 +512,11 @@ export const App = () => {
             <Route path="dec1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutschfree" element={<StreamDeutschFree />} noindex={true} />
             <Route path="deutschfree-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="deutscha2free" element={<StreamDeutschA2Free />} noindex={true} />
+            <Route
+              path="deutscha2free"
+              element={<StreamDeutschA2Free />}
+              noindex={true}
+            />
             <Route path="deutscha2free-chat" element={<WindowedChat />} noindex={true} />
             <Route path="polskia0" element={<StreamPolskiA0 />} noindex={true} />
             <Route path="pla0sc" element={<StreamSpeakingClub />} noindex={true} />
@@ -316,33 +556,105 @@ export const App = () => {
             <Route path="apconf" element={<APConf />} noindex={true} />
             <Route path="apconf-chat" element={<WindowedChat />} noindex={true} />
             <Route path="stream-admin-panel" element={<AdminPanel />} noindex={true} />
-            <Route path="uni-stream-admin-panel" element={<UniAdminPanel />} noindex={true} />
-            <Route path="speaking-admin-panel" element={<SpeakingAdminPanel />} noindex={true} />
-            <Route path="kahoot-admin-panel" element={<KahootAdminPanel />} noindex={true} />
-            <Route path="uni-kahoot-admin-panel" element={<UniKahootAdminPanel />} noindex={true} />
-            <Route path="host-kahoot-admin-panel" element={<HostKahootAdminPanel />} noindex={true} />
-            <Route path="uni-host-kahoot-admin-panel" element={<UniHostKahootAdminPanel />} noindex={true} />
+            <Route
+              path="uni-stream-admin-panel"
+              element={<UniAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="speaking-admin-panel"
+              element={<SpeakingAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="kahoot-admin-panel"
+              element={<KahootAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="uni-kahoot-admin-panel"
+              element={<UniKahootAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="host-kahoot-admin-panel"
+              element={<HostKahootAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="uni-host-kahoot-admin-panel"
+              element={<UniHostKahootAdminPanel />}
+              noindex={true}
+            />
             <Route path="user-admin-panel" element={<UserAdminPanel />} noindex={true} />
-            <Route path="pl-user-admin-panel" element={<UniUserAdminPanel />} noindex={true} />
-            <Route path="pedagogium-attendance" element={<UniUserAttendancePedagogium />} noindex={true} />
-            <Route path="c1-speaking-panel" element={<C1SpeakingPanel />} noindex={true} />
-            <Route path="teacher-teamlead-panel" element={<TeacherAdminPanel />} noindex={true} />
+            <Route
+              path="pl-user-admin-panel"
+              element={<UniUserAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="pedagogium-attendance"
+              element={<UniUserAttendancePedagogium />}
+              noindex={true}
+            />
+            <Route
+              path="c1-speaking-panel"
+              element={<C1SpeakingPanel />}
+              noindex={true}
+            />
+            <Route
+              path="teacher-teamlead-panel"
+              element={<TeacherAdminPanel />}
+              noindex={true}
+            />
             <Route path="tcp" element={<TeacherControlPage />} noindex={true} />
             <Route path="tcp-en" element={<TeacherControlPageEn />} noindex={true} />
             <Route path="tcp-de" element={<TeacherControlPageDe />} noindex={true} />
             <Route path="tcp-pl" element={<TeacherControlPagePl />} noindex={true} />
             <Route path="user-json-panel" element={<UserJsonPanel />} noindex={true} />
-            <Route path="ratings-admin-panel" element={<RatingsAdminPanel />} noindex={true} />
-            <Route path="lessons-admin-panel" element={<LessonsAdminPanel />} noindex={true} />
-            <Route path="timetable-admin-panel" element={<TimeTableAdminPanel />} noindex={true} />
-            <Route path="uni-timetable-admin-panel" element={<UniTimeTableAdminPanel />} noindex={true} />
-            <Route path="teacher-admin-panel" element={<TeacherLessonsAdminPanel />} noindex={true} />
-            <Route path="collection-admin-panel" element={<CollectionsAdminPanel />} noindex={true} />
-            <Route path="uni-collection-admin-panel" element={<UniCollectionsAdminPanel />} noindex={true} />
+            <Route
+              path="ratings-admin-panel"
+              element={<RatingsAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="lessons-admin-panel"
+              element={<LessonsAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="timetable-admin-panel"
+              element={<TimeTableAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="uni-timetable-admin-panel"
+              element={<UniTimeTableAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="teacher-admin-panel"
+              element={<TeacherLessonsAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="collection-admin-panel"
+              element={<CollectionsAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="uni-collection-admin-panel"
+              element={<UniCollectionsAdminPanel />}
+              noindex={true}
+            />
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>
             <Route path="preschool" element={<Preschool />} noindex={true} />
-            <Route path="preschoolsc" element={<StreamSpeakingClubKids />} noindex={true} />
+            <Route
+              path="preschoolsc"
+              element={<StreamSpeakingClubKids />}
+              noindex={true}
+            />
             <Route path="preschool-chat" element={<WindowedChat />} noindex={true} />
             <Route path="pre" element={<KidsPRE />} noindex={true} />
             <Route path="presc" element={<StreamSpeakingClubKids />} noindex={true} />
@@ -375,10 +687,18 @@ export const App = () => {
             <Route path="c1sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="c1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="b1beginner" element={<KidsB1Beginner />} noindex={true} />
-            <Route path="b1beginnersc" element={<StreamSpeakingClubKids />} noindex={true} />
+            <Route
+              path="b1beginnersc"
+              element={<StreamSpeakingClubKids />}
+              noindex={true}
+            />
             <Route path="b1beginner-chat" element={<WindowedChat />} noindex={true} />
             <Route path="b2beginner" element={<KidsB2Beginner />} noindex={true} />
-            <Route path="b2beginnersc" element={<StreamSpeakingClubKids />} noindex={true} />
+            <Route
+              path="b2beginnersc"
+              element={<StreamSpeakingClubKids />}
+              noindex={true}
+            />
             <Route path="b2beginner-chat" element={<WindowedChat />} noindex={true} />
             <Route path="dea0" element={<KidsDeA0 />} noindex={true} />
             <Route path="dea0-chat" element={<WindowedChat />} noindex={true} />
@@ -441,15 +761,27 @@ export const App = () => {
             <Route path="kids-b1sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="kids-b2sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="kids-c1sc" element={<TeacherPageSpeaking />} noindex={true} />
-            <Route path="kids-c1schigh" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route
+              path="kids-c1schigh"
+              element={<TeacherPageSpeaking />}
+              noindex={true}
+            />
             <Route path="kids-dea0sc" element={<TeacherPageSpeaking />} noindex={true} />
-            <Route path="kids-dea0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route
+              path="kids-dea0_2sc"
+              element={<TeacherPageSpeaking />}
+              noindex={true}
+            />
             <Route path="kids-dea1sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="kids-dea2sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="kids-deb1sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="kids-deb2sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="kids-pla0sc" element={<TeacherPageSpeaking />} noindex={true} />
-            <Route path="kids-pla0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
+            <Route
+              path="kids-pla0_2sc"
+              element={<TeacherPageSpeaking />}
+              noindex={true}
+            />
             <Route path="kids-pla1sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="kids-pla2sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="kids-plb1sc" element={<TeacherPageSpeaking />} noindex={true} />
@@ -518,16 +850,40 @@ export const App = () => {
             <Route path="wsbmir" element={<TeacherPage />} noindex={true} />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
-          <Route path="quiz-g" element={<QuizOneRequestGoogleNoEngage utms={utms} noindex={true} />} />
-          <Route path="quiz-d11p" element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true} />} />
-          <Route path="quiz-d20p" element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true} />} />
-          <Route path="quiz-d30p" element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true} />} />
+          <Route
+            path="quiz-g"
+            element={<QuizOneRequestGoogleNoEngage utms={utms} noindex={true} />}
+          />
+          <Route
+            path="quiz-d11p"
+            element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true} />}
+          />
+          <Route
+            path="quiz-d20p"
+            element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true} />}
+          />
+          <Route
+            path="quiz-d30p"
+            element={<QuizOneRequestDiscountNoEngage utms={utms} noindex={true} />}
+          />
           <Route path="forms-tree" element={<FormsLinkTree />} noindex={true} />
-          <Route path="un-form" element={<UniversalLeadFormPage utms={utms} />} noindex={true} />
+          <Route
+            path="un-form"
+            element={<UniversalLeadFormPage utms={utms} />}
+            noindex={true}
+          />
           <Route path="form" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-uni" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="teacher-form" element={<TeacherFormPage utms={utms} />} noindex={true} />
-          <Route path="amb-form" element={<AmbassadorFormPage utms={utms} />} noindex={true} />
+          <Route
+            path="teacher-form"
+            element={<TeacherFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="amb-form"
+            element={<AmbassadorFormPage utms={utms} />}
+            noindex={true}
+          />
           <Route path="form-a" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-b" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-c" element={<LeadFormPage utms={utms} />} noindex={true} />
@@ -545,13 +901,37 @@ export const App = () => {
           <Route path="form-o" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-ov" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-nuts" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-friend" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-apbot" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-engpls" element={<LeadFormPage utms={utms} />} noindex={true} />
+          <Route
+            path="form-friend"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-apbot"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-engpls"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
           <Route path="form-qeng" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-london" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-speak" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-trrudtg" element={<LeadFormPage utms={utms} />} noindex={true} />
+          <Route
+            path="form-london"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-speak"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-trrudtg"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
           <Route path="form-tg1" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-tg2" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-tg3" element={<LeadFormPage utms={utms} />} noindex={true} />
@@ -562,14 +942,46 @@ export const App = () => {
           <Route path="form-tg8" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-tg9" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-tg10" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-mova1" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-mova2" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-mova3" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-mova4" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-mova5" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-mova6" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-mova7" element={<LeadFormPage utms={utms} />} noindex={true} />
-          <Route path="form-mova8" element={<LeadFormPage utms={utms} />} noindex={true} />
+          <Route
+            path="form-mova1"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova2"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova3"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova4"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova5"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova6"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova7"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
+          <Route
+            path="form-mova8"
+            element={<LeadFormPage utms={utms} />}
+            noindex={true}
+          />
           <Route path="form-mix1" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-mix2" element={<LeadFormPage utms={utms} />} noindex={true} />
           <Route path="form-mix3" element={<LeadFormPage utms={utms} />} noindex={true} />
