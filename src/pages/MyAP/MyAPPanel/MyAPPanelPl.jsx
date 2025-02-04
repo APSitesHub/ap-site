@@ -3,12 +3,9 @@ import { useEffect, useState } from 'react';
 import {
   APPanel,
   APPanelBtn,
-  APPanelToggleBtn,
   CalendarBtnIcon,
   CupBtnIcon,
   FeedbackBtnIcon,
-  IframeResetLinkButton,
-  LangIcon,
   PanelBackdrop,
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
@@ -18,9 +15,6 @@ import {
 } from './MyAPPanel.styled';
 
 import { MyAPStudentChartPl } from 'pages/TeacherPage/StudentChart/MyAPStudentChartPl';
-import de from '../../../img/svg/myap/langs/de.png';
-import en from '../../../img/svg/myap/langs/en.png';
-import pl from '../../../img/svg/myap/langs/pl.png';
 import { AttendancePl } from '../Attendance/AttendancePl';
 import { LessonFinderPl } from '../LessonFinder/LessonFinderPl';
 import { PointsPl } from '../Points/PointsPl';
@@ -302,22 +296,8 @@ export const MyAPPanelPl = ({
         </IframeMarathonLinkPanel>
       )} */}
       <APPanel className={isButtonBoxShown ? '' : 'hidden'} style={{ ...panelStyles() }}>
-        {isMultipleCourses && (
+        {/* {isMultipleCourses && (
           <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
-            {/* <APPanelResetBtn
-            id="reset-btn"
-            className={isMultipleCourses ? 'multiple' : ''}
-            onMouseEnter={e => toggleTooltip(e)}
-            onMouseOut={e => toggleTooltip(e)}
-            onClick={() => {
-              console.log(link);
-
-              setPlatformIframeLink(link + ' ');
-            }}
-          >
-            <IframeSetLinkIcon />
-          </APPanelResetBtn> */}
-
             <APPanelToggleBtn
               id="toggle-btn"
               onMouseEnter={e => toggleTooltip(e)}
@@ -341,8 +321,8 @@ export const MyAPPanelPl = ({
                 src={language.includes('de') ? de : language.includes('pl') ? pl : en}
               />
             </APPanelToggleBtn>
-          </IframeResetLinkButton>
-        )}
+          </IframeResetLinkButton>)} 
+        */}
         <APPanelBtn
           onClick={toggleSearch}
           onMouseEnter={e => toggleTooltip(e)}

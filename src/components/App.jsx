@@ -39,8 +39,6 @@ import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { StreamDeutschB2 } from 'pages/Streams/Deutsch B2/StreamDeutschB2';
 import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
-import MyAPPl from 'pages/MyAP/MyAPPl';
-import TrialLesson from '../pages/TrialLesson/TrialLesson'
 
 const NewDesign = lazy(() =>
   import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
@@ -366,6 +364,12 @@ const VideochatRoom = lazy(() =>
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
 );
+const MyAPPl = lazy(() =>
+  import(/* webpackChunkName: "My AP Pl Page" */ '../pages/MyAP/MyAPPl')
+);
+const TrialLesson = lazy(() =>
+  import(/* webpackChunkName: "Trial Lesson Page" */ '../pages/TrialLesson/TrialLesson')
+);
 const ConferenceTest = lazy(() =>
   import(/* webpackChunkName: "AP Conference Test Page" */ '../pages/MyAP/ConferenceTest')
 );
@@ -456,7 +460,11 @@ export const App = () => {
             />
             <Route path="*" element={<NotFound />} noindex={true} />
           </Route>
-          <Route path="trial-lesson/:language/:crmId" element={<TrialLesson />} noindex={true} />
+          <Route
+            path="trial-lesson/:language/:crmId"
+            element={<TrialLesson />}
+            noindex={true}
+          />
           <Route path="teacher-login" element={<TeacherLogin />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
           <Route path="room/:id" element={<VideochatRoom />} noindex={true} />
