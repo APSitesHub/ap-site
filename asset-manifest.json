@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ap-site/static/css/main.78c1cfa0.css",
-    "main.js": "/ap-site/static/js/main.c312ea9f.js",
+    "main.js": "/ap-site/static/js/main.75367aaf.js",
     "New Design Homepage.css": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css",
     "New Design Homepage.js": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js",
     "School page.css": "/ap-site/static/css/School page.e8ee1c85.chunk.css",
@@ -82,7 +82,7 @@
     "TeacherLogin.js": "/ap-site/static/js/TeacherLogin.22d0458d.chunk.js",
     "Videochat.js": "/ap-site/static/js/Videochat.9d8c9c01.chunk.js",
     "Videochat Room.js": "/ap-site/static/js/Videochat Room.3acf6d51.chunk.js",
-    "My AP Page.js": "/ap-site/static/js/My AP Page.689f842d.chunk.js",
+    "My AP Page.js": "/ap-site/static/js/My AP Page.859bed42.chunk.js",
     "My AP Pl Page.js": "/ap-site/static/js/My AP Pl Page.cf1925c6.chunk.js",
     "Trial Lesson Page.js": "/ap-site/static/js/Trial Lesson Page.44529d06.chunk.js",
     "AP Conference Test Page.js": "/ap-site/static/js/AP Conference Test Page.6e142399.chunk.js",
@@ -270,7 +270,7 @@
     "static/media/btnbox-switch-right-gray.svg": "/ap-site/static/media/btnbox-switch-right-gray.69cf7ea74c4470687594894fc4976d49.svg",
     "static/media/btnbox-switch-left-gray.svg": "/ap-site/static/media/btnbox-switch-left-gray.76c5407e54d9c6babd3f2224b79131dd.svg",
     "main.78c1cfa0.css.map": "/ap-site/static/css/main.78c1cfa0.css.map",
-    "main.c312ea9f.js.map": "/ap-site/static/js/main.c312ea9f.js.map",
+    "main.75367aaf.js.map": "/ap-site/static/js/main.75367aaf.js.map",
     "New Design Homepage.e8ee1c85.chunk.css.map": "/ap-site/static/css/New Design Homepage.e8ee1c85.chunk.css.map",
     "New Design Homepage.a1351f64.chunk.js.map": "/ap-site/static/js/New Design Homepage.a1351f64.chunk.js.map",
     "School page.e8ee1c85.chunk.css.map": "/ap-site/static/css/School page.e8ee1c85.chunk.css.map",
@@ -351,7 +351,7 @@
     "TeacherLogin.22d0458d.chunk.js.map": "/ap-site/static/js/TeacherLogin.22d0458d.chunk.js.map",
     "Videochat.9d8c9c01.chunk.js.map": "/ap-site/static/js/Videochat.9d8c9c01.chunk.js.map",
     "Videochat Room.3acf6d51.chunk.js.map": "/ap-site/static/js/Videochat Room.3acf6d51.chunk.js.map",
-    "My AP Page.689f842d.chunk.js.map": "/ap-site/static/js/My AP Page.689f842d.chunk.js.map",
+    "My AP Page.859bed42.chunk.js.map": "/ap-site/static/js/My AP Page.859bed42.chunk.js.map",
     "My AP Pl Page.cf1925c6.chunk.js.map": "/ap-site/static/js/My AP Pl Page.cf1925c6.chunk.js.map",
     "Trial Lesson Page.44529d06.chunk.js.map": "/ap-site/static/js/Trial Lesson Page.44529d06.chunk.js.map",
     "AP Conference Test Page.6e142399.chunk.js.map": "/ap-site/static/js/AP Conference Test Page.6e142399.chunk.js.map",
@@ -392,6 +392,6 @@
   },
   "entrypoints": [
     "static/css/main.78c1cfa0.css",
-    "static/js/main.c312ea9f.js"
+    "static/js/main.75367aaf.js"
   ]
 }
