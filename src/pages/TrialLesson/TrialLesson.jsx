@@ -25,12 +25,8 @@ const TrialLesson = () => {
       } else {
         localStorage.removeItem('previousUrl');
       }
-
       try {
         const response = await axios.get(`https://ap-server-8qi1.onrender.com/trial-lesson/${crmId}?language=${language}&lvl=${lvl}&age=${age}`);
-
-        console.log('Response:', response);
-
         if (response.data.link) {
           localStorage.setItem('previousUrl', window.location.href);
           setLink(response.data.link);
