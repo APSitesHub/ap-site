@@ -272,11 +272,6 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
           new Date(lessonDay).getMonth() + 1
         )}.${new Date(lessonDay).getFullYear()}`
     );
-    console.log(298, lessonDays);
-    console.log(
-      299,
-      user.visited.filter(date => (date = lessonDays.includes(date))).length
-    );
 
     return user.visited.filter(date => (date = lessonDays.includes(date))).length;
   };

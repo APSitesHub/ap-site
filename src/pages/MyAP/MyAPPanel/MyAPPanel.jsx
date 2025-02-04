@@ -64,9 +64,7 @@ export const MyAPPanel = ({
       : timeline.lang === language && timeline.course === user.course
   );
 
-  const personalLessonsDays = personalTimetable.schedule.map(
-    lesson => lesson.day
-  );
+  const personalLessonsDays = personalTimetable?.schedule.map(lesson => lesson.day);
 
   const toggleButtonBox = () => {
     hideBackdrop();
@@ -76,8 +74,7 @@ export const MyAPPanel = ({
   const pointsByLang = Object.keys(points)
     .filter(
       key =>
-        (key.includes(language) &&
-          key.length === (language + user.knowledge).length) ||
+        (key.includes(language) && key.length === (language + user.knowledge).length) ||
         (key.includes(language) && key.includes('done'))
     )
     .reduce((obj, key) => {
@@ -88,8 +85,7 @@ export const MyAPPanel = ({
   const monthlyPointsByLang = Object.keys(montlyPoints)
     .filter(
       key =>
-        (key.includes(language) &&
-          key.length === (language + user.knowledge).length) ||
+        (key.includes(language) && key.length === (language + user.knowledge).length) ||
         (key.includes(language) && key.includes('done'))
     )
     .reduce((obj, key) => {
@@ -97,9 +93,7 @@ export const MyAPPanel = ({
       return obj;
     }, {});
   const flatPoints = Object.values(pointsByLang).flatMap(user => user);
-  const flatMonthlyPoints = Object.values(monthlyPointsByLang).flatMap(
-    user => user
-  );
+  const flatMonthlyPoints = Object.values(monthlyPointsByLang).flatMap(user => user);
 
   console.log(user);
 
@@ -114,10 +108,7 @@ export const MyAPPanel = ({
 
   const toggleSearch = () => {
     !isBackdropShown &&
-      (!isRatingShown ||
-        !isCalendarShown ||
-        !isTimetableShown ||
-        !isFeedbackShown) &&
+      (!isRatingShown || !isCalendarShown || !isTimetableShown || !isFeedbackShown) &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
     isBackdropShown &&
       !isRatingShown &&
@@ -154,10 +145,7 @@ export const MyAPPanel = ({
 
   const toggleCalendar = () => {
     !isBackdropShown &&
-      (!isRatingShown ||
-        !isLessonFinderShown ||
-        !isTimetableShown ||
-        !isFeedbackShown) &&
+      (!isRatingShown || !isLessonFinderShown || !isTimetableShown || !isFeedbackShown) &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
     isBackdropShown &&
       !isRatingShown &&
@@ -174,10 +162,7 @@ export const MyAPPanel = ({
 
   const toggleTimetable = () => {
     !isBackdropShown &&
-      (!isRatingShown ||
-        !isLessonFinderShown ||
-        !isCalendarShown ||
-        !isFeedbackShown) &&
+      (!isRatingShown || !isLessonFinderShown || !isCalendarShown || !isFeedbackShown) &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
     isBackdropShown &&
       !isRatingShown &&
@@ -194,10 +179,7 @@ export const MyAPPanel = ({
 
   const toggleFeedback = () => {
     !isBackdropShown &&
-      (!isRatingShown ||
-        !isLessonFinderShown ||
-        !isTimetableShown ||
-        !isCalendarShown) &&
+      (!isRatingShown || !isLessonFinderShown || !isTimetableShown || !isCalendarShown) &&
       setIsBackdropShown(isBackdropShown => (isBackdropShown = true));
     isBackdropShown &&
       !isRatingShown &&
@@ -294,10 +276,7 @@ export const MyAPPanel = ({
 
   return (
     <>
-      <PanelBackdrop
-        onClick={hideBackdrop}
-        className={isBackdropShown ? '' : 'hidden'}
-      />
+      <PanelBackdrop onClick={hideBackdrop} className={isBackdropShown ? '' : 'hidden'} />
 
       <PanelHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
@@ -322,14 +301,9 @@ export const MyAPPanel = ({
           </APPanelMarathonBtn>
         </IframeMarathonLinkPanel>
       )} */}
-      <APPanel
-        className={isButtonBoxShown ? '' : 'hidden'}
-        style={{ ...panelStyles() }}
-      >
+      <APPanel className={isButtonBoxShown ? '' : 'hidden'} style={{ ...panelStyles() }}>
         {isMultipleCourses && (
-          <IframeResetLinkButton
-            className={isMultipleCourses ? 'multiple' : ''}
-          >
+          <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
             {/* <APPanelResetBtn
             id="reset-btn"
             className={isMultipleCourses ? 'multiple' : ''}
@@ -359,19 +333,12 @@ export const MyAPPanel = ({
                 );
                 setLanguageIndex(
                   index =>
-                    (index =
-                      index + 1 < user.lang.split('/').length ? index + 1 : 0)
+                    (index = index + 1 < user.lang.split('/').length ? index + 1 : 0)
                 );
               }}
             >
               <LangIcon
-                src={
-                  language.includes('de')
-                    ? de
-                    : language.includes('pl')
-                    ? pl
-                    : en
-                }
+                src={language.includes('de') ? de : language.includes('pl') ? pl : en}
               />
             </APPanelToggleBtn>
           </IframeResetLinkButton>
@@ -381,10 +348,7 @@ export const MyAPPanel = ({
           onMouseEnter={e => toggleTooltip(e)}
           onMouseOut={e => toggleTooltip(e)}
         >
-          <SearchBtnIcon
-            id="search-btn"
-            className={isLessonFinderShown && 'active'}
-          />
+          <SearchBtnIcon id="search-btn" className={isLessonFinderShown && 'active'} />
         </APPanelBtn>
         {user.package !== 'online' && (
           <APPanelBtn
@@ -401,10 +365,7 @@ export const MyAPPanel = ({
             onMouseEnter={e => toggleTooltip(e)}
             onMouseOut={e => toggleTooltip(e)}
           >
-            <FeedbackBtnIcon
-              id="feedback-btn"
-              className={isFeedbackShown && 'active'}
-            />
+            <FeedbackBtnIcon id="feedback-btn" className={isFeedbackShown && 'active'} />
           </APPanelBtn>
         )}
         {user.package !== 'online' && (
@@ -413,10 +374,7 @@ export const MyAPPanel = ({
             onMouseEnter={e => toggleTooltip(e)}
             onMouseOut={e => toggleTooltip(e)}
           >
-            <CalendarBtnIcon
-              id="calendar-btn"
-              className={isCalendarShown && 'active'}
-            />
+            <CalendarBtnIcon id="calendar-btn" className={isCalendarShown && 'active'} />
           </APPanelBtn>
         )}
         {user.package !== 'online' && (
@@ -462,9 +420,7 @@ export const MyAPPanel = ({
           isMultipleCourses={isMultipleCourses}
         />
       )}
-      {isFeedbackShown && (
-        <MyAPStudentChart currentStudentChart={currentStudentChart} />
-      )}
+      {isFeedbackShown && <MyAPStudentChart currentStudentChart={currentStudentChart} />}
       {isTimetableShown && (
         <Timetable
           user={user}
