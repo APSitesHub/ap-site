@@ -90,6 +90,7 @@ export const JoinButton = styled.button`
   background-color: #0f645b;
   color: white;
   border: none;
+  font-weight: bold;
   border-radius: 25px;
   font-size: 1.5rem;
   cursor: pointer;

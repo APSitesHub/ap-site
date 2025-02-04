@@ -53,7 +53,7 @@ const TrialLesson = () => {
       {loading && !link ? <LoadingMessage>Зачекайте, шукаємо ваше посилання...</LoadingMessage> : <Message>{message}</Message>}
       {
         link && <JoinWrapper>
-          <JoinMessage>Пробне заняття буде відбуватись у Zoom. Підготуйтесь до пробного уроку коли будете готові натисніть кнопку нижче щоб відкрити сторінку Zoom</JoinMessage>
+          <JoinMessage>Пробне заняття буде відбуватись на платформі Zoom. Як будете готові, натисніть кнопку нижче</JoinMessage>
           <JoinButton onClick={handleClick}>Доєднатись</JoinButton>
         </JoinWrapper>
       }
