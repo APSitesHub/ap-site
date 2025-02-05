@@ -80,6 +80,8 @@ const UniAdminPanel = () => {
     ewspa_prep: '',
     merito_logistics: '',
     merito_prep: '',
+    wstih_logistics: '',
+    wstih_prep: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -93,6 +95,8 @@ const UniAdminPanel = () => {
     ewspa_prep: yup.string().optional(),
     merito_logistics: yup.string().optional(),
     merito_prep: yup.string().optional(),
+    wstih_logistics: yup.string().optional(),
+    wstih_prep: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -115,7 +119,11 @@ const UniAdminPanel = () => {
     <>
       <AdminPanelSection>
         {!isUserAdmin && (
-          <Formik initialValues={initialLoginValues} onSubmit={handleLoginSubmit} validationSchema={loginSchema}>
+          <Formik
+            initialValues={initialLoginValues}
+            onSubmit={handleLoginSubmit}
+            validationSchema={loginSchema}
+          >
             <LoginForm>
               <Label>
                 <AdminInput type="text" name="login" placeholder="Login" />
@@ -131,61 +139,136 @@ const UniAdminPanel = () => {
         )}
 
         {isUserAdmin && (
-          <Formik initialValues={initialLinksValues} onSubmit={handleLinksSubmit} validationSchema={linksSchema}>
+          <Formik
+            initialValues={initialLinksValues}
+            onSubmit={handleLinksSubmit}
+            validationSchema={linksSchema}
+          >
             <LinksForm>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>Pedagogium (Wyższa Szkoła Nauk Społecznych)</LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>
+                  Pedagogium (Wyższa Szkoła Nauk Społecznych)
+                </LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput type="text" name="pedagogium_logistics" placeholder="Pedagogium Logistics" />
+                  <AdminInput
+                    type="text"
+                    name="pedagogium_logistics"
+                    placeholder="Pedagogium Logistics"
+                  />
                   <AdminInputNote component="p" name="pedagogium" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="pedagogium_prep" placeholder="Pedagogium Przygotowawczy Kurs" />
+                  <AdminInput
+                    type="text"
+                    name="pedagogium_prep"
+                    placeholder="Pedagogium Przygotowawczy Kurs"
+                  />
                   <AdminInputNote component="p" name="pedagogium" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)</LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>
+                  WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)
+                </LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput type="text" name="wstijo_logistics" placeholder="WSTIJO Logistics" />
+                  <AdminInput
+                    type="text"
+                    name="wstijo_logistics"
+                    placeholder="WSTIJO Logistics"
+                  />
                   <AdminInputNote component="p" name="wstijo_logistics" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="wstijo_prep" placeholder="WSTIJO Przygotowawczy Kurs" />
+                  <AdminInput
+                    type="text"
+                    name="wstijo_prep"
+                    placeholder="WSTIJO Przygotowawczy Kurs"
+                  />
                   <AdminInputNote component="p" name="wstijo_prep" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)</LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>
+                  WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)
+                </LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput type="text" name="wsbmir_logistics" placeholder="WSBMIR Logistics" />
+                  <AdminInput
+                    type="text"
+                    name="wsbmir_logistics"
+                    placeholder="WSBMIR Logistics"
+                  />
                   <AdminInputNote component="p" name="wsbmir_logistics" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="wsbmir_prep" placeholder="WSBMIR Przygotowawczy Kurs" />
+                  <AdminInput
+                    type="text"
+                    name="wsbmir_prep"
+                    placeholder="WSBMIR Przygotowawczy Kurs"
+                  />
                   <AdminInputNote component="p" name="wsbmir_prep" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>EWSPA (Wyższa Szkoła Biznesu, Mediów i Reklamy)</LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>
+                  EWSPA (Wyższa Szkoła Biznesu, Mediów i Reklamy)
+                </LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput type="text" name="ewspa_logistics" placeholder="EWSPA Logistics" />
+                  <AdminInput
+                    type="text"
+                    name="ewspa_logistics"
+                    placeholder="EWSPA Logistics"
+                  />
                   <AdminInputNote component="p" name="ewspa_logistics" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="ewspa_prep" placeholder="EWSPA Przygotowawczy Kurs" />
+                  <AdminInput
+                    type="text"
+                    name="ewspa_prep"
+                    placeholder="EWSPA Przygotowawczy Kurs"
+                  />
                   <AdminInputNote component="p" name="ewspa_prep" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
-                <LinksFieldGroupTitle>Merito (Uniwersytet WSB Merito Warszawa)</LinksFieldGroupTitle>
+                <LinksFieldGroupTitle>
+                  Merito (Uniwersytet WSB Merito Warszawa)
+                </LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput type="text" name="merito_logistics" placeholder="Merito Logistics" />
+                  <AdminInput
+                    type="text"
+                    name="merito_logistics"
+                    placeholder="Merito Logistics"
+                  />
                   <AdminInputNote component="p" name="merito_logistics" />
                 </Label>
                 <Label>
-                  <AdminInput type="text" name="merito_prep" placeholder="Merito Preparation Course" />
+                  <AdminInput
+                    type="text"
+                    name="merito_prep"
+                    placeholder="Merito Preparation Course"
+                  />
                   <AdminInputNote component="p" name="merito_prep" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wstih_logistics"
+                    placeholder="WSTiH Logistics"
+                  />
+                  <AdminInputNote component="p" name="wstih_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wstih_prep"
+                    placeholder="WSTiH Preparation Course"
+                  />
+                  <AdminInputNote component="p" name="wstih_prep" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

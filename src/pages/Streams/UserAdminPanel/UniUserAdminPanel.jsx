@@ -68,6 +68,10 @@ const UserAdminPanel = () => {
       label: 'Merito (Uniwersytet WSB Merito Warszawa)',
       value: 'Merito (Uniwersytet WSB Merito Warszawa)',
     },
+    {
+      label: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
+      value: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
+    },
   ];
 
   useEffect(() => {
@@ -199,9 +203,7 @@ const UserAdminPanel = () => {
       alert('Юзера додано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -209,9 +211,7 @@ const UserAdminPanel = () => {
 
   const handleEdit = async id => {
     setIsEditFormOpen(true);
-    setUserToEdit(
-      userToEdit => (userToEdit = users.find(user => user._id === id))
-    );
+    setUserToEdit(userToEdit => (userToEdit = users.find(user => user._id === id)));
   };
 
   const closeEditForm = e => {
@@ -261,9 +261,7 @@ const UserAdminPanel = () => {
         setUsers(users => (users = [...users.filter(user => user._id !== id)]));
       } catch (error) {
         console.error(error);
-        alert(
-          'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-        );
+        alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
       } finally {
         setIsLoading(isLoading => (isLoading = false));
       }
@@ -285,11 +283,7 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -305,11 +299,7 @@ const UserAdminPanel = () => {
           >
             <UsersForm>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="name"
-                  placeholder="Прізвище та ім'я"
-                />
+                <AdminInput type="text" name="name" placeholder="Прізвище та ім'я" />
                 <AdminInputNote component="p" name="name" />
               </Label>
               <Label>
@@ -325,11 +315,7 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="password" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="crmId"
-                  placeholder="ID ліда в CRM"
-                />
+                <AdminInput type="text" name="crmId" placeholder="ID ліда в CRM" />
                 <AdminInputNote component="p" name="crmId" />
               </Label>
               <Label>
@@ -349,9 +335,7 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="pupilId" />
               </Label>
               <SpeakingLabel>
-                {uniValue && uniValue.value && (
-                  <LabelText>Університет</LabelText>
-                )}
+                {uniValue && uniValue.value && <LabelText>Університет</LabelText>}
                 <TeacherLangSelect
                   ref={selectInputRef}
                   options={uniOptions}
@@ -385,9 +369,7 @@ const UserAdminPanel = () => {
                     uni?.value && setIsUniEmpty(empty => (empty = false));
                   }}
                 />
-                {isUniEmpty && (
-                  <ErrorNote> Університет - обов'язкове поле!</ErrorNote>
-                )}
+                {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
               </SpeakingLabel>
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
             </UsersForm>
@@ -438,9 +420,7 @@ const UserAdminPanel = () => {
                     className={
                       Math.floor(
                         (Date.now() -
-                          changeDateFormat(
-                            user.visited[user.visited.length - 1]
-                          )) /
+                          changeDateFormat(user.visited[user.visited.length - 1])) /
                           86400000
                       ) > daysAfterLastLogin
                         ? 'attention'
@@ -452,16 +432,12 @@ const UserAdminPanel = () => {
                   <UserCell>
                     {!user.visitedTime[user.visitedTime.length - 1]
                       ? ''
-                      : user.visitedTime[user.visitedTime.length - 1].match(
-                          '^202'
-                        )
+                      : user.visitedTime[user.visitedTime.length - 1].match('^202')
                       ? new Date(
                           user.visitedTime[user.visitedTime.length - 1]
                         ).toLocaleString('uk-UA')
                       : new Date(
-                          changeDateFormat(
-                            user.visitedTime[user.visitedTime.length - 1]
-                          )
+                          changeDateFormat(user.visitedTime[user.visitedTime.length - 1])
                         ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
                   </UserCell>
 

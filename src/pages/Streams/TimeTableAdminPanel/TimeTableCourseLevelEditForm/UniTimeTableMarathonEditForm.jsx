@@ -16,6 +16,7 @@ export const UniTimeTableMarathonEditForm = ({
   wsbmirMarathonOptions,
   ewspaMarathonOptions,
   meritoMarathonOptions,
+  wstihMarathonOptions,
   closeMarathonEditForm,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +44,10 @@ export const UniTimeTableMarathonEditForm = ({
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.patch(`/unitimetable/marathon/${lessonToEdit._id}`, values);
+      const response = await axios.patch(
+        `/unitimetable/marathon/${lessonToEdit._id}`,
+        values
+      );
       console.log(response);
       closeMarathonEditForm();
       alert('Відредаговано');
@@ -57,7 +61,11 @@ export const UniTimeTableMarathonEditForm = ({
 
   return (
     <>
-      <Formik initialValues={initialEditTimetableValues} onSubmit={handleEditTimetableSubmit} validationSchema={timetableSchema}>
+      <Formik
+        initialValues={initialEditTimetableValues}
+        onSubmit={handleEditTimetableSubmit}
+        validationSchema={timetableSchema}
+      >
         <UsersEditForm>
           <FormSelect
             options={uniOptions}
@@ -70,7 +78,9 @@ export const UniTimeTableMarathonEditForm = ({
             }}
             placeholder="Університет"
             name="uni"
-            defaultValue={uniOptions.find(option => option.value === lessonToEdit.university)}
+            defaultValue={uniOptions.find(
+              option => option.value === lessonToEdit.university
+            )}
             isDisabled
             onChange={uni => {
               setUniValue(uni.value);
@@ -86,6 +96,8 @@ export const UniTimeTableMarathonEditForm = ({
                 ? ewspaMarathonOptions
                 : uniValue.includes('Merito')
                 ? meritoMarathonOptions
+                : uniValue.includes('WSTiH')
+                ? wstihMarathonOptions
                 : pedagogiumMarathonOptions
             }
             styles={{
@@ -98,11 +110,22 @@ export const UniTimeTableMarathonEditForm = ({
             placeholder="Марафон"
             name="marathon"
             defaultValue={
-              pedagogiumMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
-              wstijoMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
-              wsbmirMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
-              ewspaMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
-              meritoMarathonOptions.find(option => option.value === lessonToEdit.marathon)
+              pedagogiumMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              wstijoMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              wsbmirMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              ewspaMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              meritoMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              wstihMarathonOptions.find(option => option.value === lessonToEdit.marathon)
             }
             onChange={marathon => {
               setMarathonValue(marathon.value);

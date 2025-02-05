@@ -4,7 +4,12 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import * as yup from 'yup';
-import { AdminFormBtn, AdminInput, AdminInputNote, UsersEditForm } from '../../UserAdminPanel/UserAdminPanel.styled';
+import {
+  AdminFormBtn,
+  AdminInput,
+  AdminInputNote,
+  UsersEditForm,
+} from '../../UserAdminPanel/UserAdminPanel.styled';
 import { FormSelect } from '../TimeTableAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -18,6 +23,7 @@ export const UniTimeTableEditForm = ({
   wsbmirMarathonOptions,
   ewspaMarathonOptions,
   meritoMarathonOptions,
+  wstihMarathonOptions,
   daysOptions,
   closeEditForm,
 }) => {
@@ -79,11 +85,17 @@ export const UniTimeTableEditForm = ({
 
   return (
     <>
-      <Formik initialValues={initialEditTimetableValues} onSubmit={handleEditTimetableSubmit} validationSchema={timetableSchema}>
+      <Formik
+        initialValues={initialEditTimetableValues}
+        onSubmit={handleEditTimetableSubmit}
+        validationSchema={timetableSchema}
+      >
         <UsersEditForm>
           <FormSelect
             options={uniOptions}
-            defaultValue={uniOptions.find(option => option.value === lessonToEdit.university)}
+            defaultValue={uniOptions.find(
+              option => option.value === lessonToEdit.university
+            )}
             styles={{
               control: (baseStyles, state) => ({
                 ...baseStyles,
@@ -108,6 +120,8 @@ export const UniTimeTableEditForm = ({
                 ? ewspaMarathonOptions
                 : uniValue.includes('Merito')
                 ? meritoMarathonOptions
+                : uniValue.includes('WSTiH')
+                ? wstihMarathonOptions
                 : pedagogiumMarathonOptions
             }
             styles={{
@@ -120,11 +134,22 @@ export const UniTimeTableEditForm = ({
             placeholder="Марафон"
             name="marathon"
             defaultValue={
-              wstijoMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
-              pedagogiumMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
-              wsbmirMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
-              ewspaMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
-              meritoMarathonOptions.find(option => option.value === lessonToEdit.marathon)
+              wstijoMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              pedagogiumMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              wsbmirMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              ewspaMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              meritoMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              wstihMarathonOptions.find(option => option.value === lessonToEdit.marathon)
             }
             isDisabled
             onChange={marathon => {
@@ -142,7 +167,9 @@ export const UniTimeTableEditForm = ({
             }}
             placeholder="День"
             name="day"
-            defaultValue={daysOptions.find(option => +option.value === scheduleToEdit.day)}
+            defaultValue={daysOptions.find(
+              option => +option.value === scheduleToEdit.day
+            )}
             onChange={day => {
               setDayValue(day.value);
             }}

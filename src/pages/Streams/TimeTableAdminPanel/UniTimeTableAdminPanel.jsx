@@ -197,6 +197,10 @@ const UniTimeTableAdminPanel = () => {
       label: 'Merito (Uniwersytet WSB Merito Warszawa)',
       value: 'Merito (Uniwersytet WSB Merito Warszawa)',
     },
+    {
+      label: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
+      value: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -254,6 +258,17 @@ const UniTimeTableAdminPanel = () => {
     },
   ];
 
+  const wstihMarathonOptions = [
+    {
+      label: 'Logistics (WSTiH)',
+      value: '83530',
+    },
+    {
+      label: 'Kurs Przygotowawczy (WSTiH)',
+      value: '83568',
+    },
+  ];
+
   const daysOptions = [
     {
       label: 'Понеділок',
@@ -299,13 +314,21 @@ const UniTimeTableAdminPanel = () => {
 
   const handleEdit = async (id, scheduleId) => {
     setIsEditFormOpen(true);
-    setLessonToEdit(lessonToEdit => (lessonToEdit = lessons.find(lesson => lesson._id === id)));
-    setScheduleToEdit(scheduleToEdit => lessons.find(lesson => lesson._id === id).schedule.find(lesson => lesson._id === scheduleId));
+    setLessonToEdit(
+      lessonToEdit => (lessonToEdit = lessons.find(lesson => lesson._id === id))
+    );
+    setScheduleToEdit(scheduleToEdit =>
+      lessons
+        .find(lesson => lesson._id === id)
+        .schedule.find(lesson => lesson._id === scheduleId)
+    );
   };
 
   const handleMarathonEdit = async id => {
     setIsEditMarathonFormOpen(true);
-    setLessonToEdit(lessonToEdit => (lessonToEdit = lessons.find(lesson => lesson._id === id)));
+    setLessonToEdit(
+      lessonToEdit => (lessonToEdit = lessons.find(lesson => lesson._id === id))
+    );
   };
 
   const handleDelete = async (parentId, scheduleId) => {
@@ -331,7 +354,11 @@ const UniTimeTableAdminPanel = () => {
     <>
       <AdminPanelSection>
         {!isUserAdmin && (
-          <Formik initialValues={initialLoginValues} onSubmit={handleLoginSubmit} validationSchema={loginSchema}>
+          <Formik
+            initialValues={initialLoginValues}
+            onSubmit={handleLoginSubmit}
+            validationSchema={loginSchema}
+          >
             <LoginForm>
               <Label>
                 <AdminInput type="text" name="login" placeholder="Login" />
@@ -347,7 +374,11 @@ const UniTimeTableAdminPanel = () => {
         )}
 
         {isUserAdmin && (
-          <Formik initialValues={initialTimetableValues} onSubmit={handleTimetableSubmit} validationSchema={timetableSchema}>
+          <Formik
+            initialValues={initialTimetableValues}
+            onSubmit={handleTimetableSubmit}
+            validationSchema={timetableSchema}
+          >
             <UsersForm>
               <FormSelect
                 options={uniOptions}
@@ -366,14 +397,19 @@ const UniTimeTableAdminPanel = () => {
               />
               <FormSelect
                 options={
-                  uniValue === 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
+                  uniValue ===
+                  'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)'
                     ? wstijoMarathonOptions
                     : uniValue === 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)'
                     ? wsbmirMarathonOptions
-                    : uniValue === 'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)'
+                    : uniValue ===
+                      'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)'
                     ? ewspaMarathonOptions
                     : uniValue === 'Merito (Uniwersytet WSB Merito Warszawa)'
                     ? meritoMarathonOptions
+                    : uniValue ===
+                      'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)'
+                    ? wstihMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -423,33 +459,54 @@ const UniTimeTableAdminPanel = () => {
         <ScheduleList>
           {lessons &&
             lessons
-              .sort((a, b) => a.university.localeCompare(b.university) || a.marathon - b.marathon)
+              .sort(
+                (a, b) =>
+                  a.university.localeCompare(b.university) || a.marathon - b.marathon
+              )
               .map(timetable => (
                 <ScheduleItem key={timetable._id}>
                   <ScheduleHeading>
                     {timetable.university.split(' ')[0]}{' '}
-                    {timetable.university.includes('Pedagogium') && timetable.marathon === '72421'
+                    {timetable.university.includes('Pedagogium') &&
+                    timetable.marathon === '72421'
                       ? `Logistics ${timetable.marathon}`
-                      : timetable.university.includes('Pedagogium') && timetable.marathon === '79231'
+                      : timetable.university.includes('Pedagogium') &&
+                        timetable.marathon === '79231'
                       ? `Preparation Course ${timetable.marathon}`
-                      : timetable.university.includes('WSTIJO') && timetable.marathon === '78737'
+                      : timetable.university.includes('WSTIJO') &&
+                        timetable.marathon === '78737'
                       ? `Logistics ${timetable.marathon}`
-                      : timetable.university.includes('WSTIJO') && timetable.marathon === '72468'
+                      : timetable.university.includes('WSTIJO') &&
+                        timetable.marathon === '72468'
                       ? `Preparation Course ${timetable.marathon}`
-                      : timetable.university.includes('WSBMIR') && timetable.marathon === '80641'
+                      : timetable.university.includes('WSBMIR') &&
+                        timetable.marathon === '80641'
                       ? `Logistics ${timetable.marathon}`
-                      : timetable.university.includes('WSBMIR') && timetable.marathon === '80640'
+                      : timetable.university.includes('WSBMIR') &&
+                        timetable.marathon === '80640'
                       ? `Preparation Course ${timetable.marathon}`
-                      : timetable.university.includes('EWSPA') && timetable.marathon === '81950'
+                      : timetable.university.includes('EWSPA') &&
+                        timetable.marathon === '81950'
                       ? `Logistics ${timetable.marathon}`
-                      : timetable.university.includes('EWSPA') && timetable.marathon === '81951'
+                      : timetable.university.includes('EWSPA') &&
+                        timetable.marathon === '81951'
                       ? `Preparation Course ${timetable.marathon}`
-                      : timetable.university.includes('Merito') && timetable.marathon === '82851'
+                      : timetable.university.includes('Merito') &&
+                        timetable.marathon === '82851'
                       ? `Logistics ${timetable.marathon}`
-                      : timetable.university.includes('Merito') && timetable.marathon === '82850'
+                      : timetable.university.includes('Merito') &&
+                        timetable.marathon === '82850'
+                      ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('WSTiH') &&
+                        timetable.marathon === '83530'
+                      ? `Logistics ${timetable.marathon}`
+                      : timetable.university.includes('WSTiH') &&
+                        timetable.marathon === '83568'
                       ? `Preparation Course ${timetable.marathon}`
                       : ''}{' '}
-                    <UserEditButton onClick={() => handleMarathonEdit(timetable._id)}>Edit</UserEditButton>
+                    <UserEditButton onClick={() => handleMarathonEdit(timetable._id)}>
+                      Edit
+                    </UserEditButton>
                   </ScheduleHeading>
 
                   <ScheduleInfo>
@@ -457,15 +514,27 @@ const UniTimeTableAdminPanel = () => {
                       .sort((a, b) => a.day - b.day)
                       .map(schedule => (
                         <ScheduleData key={schedule._id}>
-                          <ScheduleDataDayText>{DAYS[schedule.day - 1] || DAYS[DAYS.length - 1]}</ScheduleDataDayText>
+                          <ScheduleDataDayText>
+                            {DAYS[schedule.day - 1] || DAYS[DAYS.length - 1]}
+                          </ScheduleDataDayText>
                           <ScheduleDataTypeText>{schedule.type}</ScheduleDataTypeText>
                           <ScheduleDataTimeText>{schedule.time}</ScheduleDataTimeText>
-                          <ScheduleDataTimeText>{schedule.lessonNumber}</ScheduleDataTimeText>
+                          <ScheduleDataTimeText>
+                            {schedule.lessonNumber}
+                          </ScheduleDataTimeText>
                           <ScheduleDataTimeText>{schedule.topic}</ScheduleDataTimeText>
                           <ScheduleDataTimeText>{schedule.package}</ScheduleDataTimeText>
-                          <UserEditButton onClick={() => handleEdit(timetable._id, schedule._id)}>Edit</UserEditButton>
+                          <UserEditButton
+                            onClick={() => handleEdit(timetable._id, schedule._id)}
+                          >
+                            Edit
+                          </UserEditButton>
 
-                          <UserDeleteButton onClick={() => handleDelete(timetable._id, schedule._id)}>Del</UserDeleteButton>
+                          <UserDeleteButton
+                            onClick={() => handleDelete(timetable._id, schedule._id)}
+                          >
+                            Del
+                          </UserDeleteButton>
                         </ScheduleData>
                       ))}
                   </ScheduleInfo>
@@ -483,6 +552,7 @@ const UniTimeTableAdminPanel = () => {
               wsbmirMarathonOptions={wsbmirMarathonOptions}
               ewspaMarathonOptions={ewspaMarathonOptions}
               meritoMarathonOptions={meritoMarathonOptions}
+              wstihMarathonOptions={wstihMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
             />
@@ -498,6 +568,7 @@ const UniTimeTableAdminPanel = () => {
               wsbmirMarathonOptions={wsbmirMarathonOptions}
               ewspaMarathonOptions={ewspaMarathonOptions}
               meritoMarathonOptions={meritoMarathonOptions}
+              wstihMarathonOptions={wstihMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>
