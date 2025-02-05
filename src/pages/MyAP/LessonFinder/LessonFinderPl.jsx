@@ -228,15 +228,11 @@ export const LessonFinderPl = ({
                 <LessonBoxItem key={lesson._id}>
                   <LessonTopBox>
                     <LessonValuesLogo>
-                      {lesson.level +
-                        lesson.lesson
-                          .replace('Lesson', ' -')
-                          .replace('Lekcja', ' -')
-                          .replace('Unterricht', ' -')}
+                      {lesson.level + ' - ' + lesson.lesson.match(/\d+/)}
                     </LessonValuesLogo>
                     <LessonTextValuesBox>
                       <LessonValueName>
-                        {lesson.level} {lesson.lesson}
+                        {lesson.level} {lesson.lesson.match(/\d+/)}
                       </LessonValueName>
                       <LessonLinksBox>
                         <LessonInternalLinkButton
@@ -263,7 +259,7 @@ export const LessonFinderPl = ({
                           <ExternalLinkIcon />
                         </LessonExternalLinkButton>
                       </LessonLinksBox>
-                      <LessonValueTopic>{lesson.topic}</LessonValueTopic>
+                      <LessonValueTopic>{lesson.lesson}</LessonValueTopic>
                     </LessonTextValuesBox>
                   </LessonTopBox>
                   {lesson.video[0] && (
@@ -301,7 +297,7 @@ export const LessonFinderPl = ({
                               to={parse(pdf)}
                               key={i}
                             >
-                              Граматика {i + 1}
+                              Gramatyka {i + 1}
                               <ExternalLinkIcon />
                             </LessonValuePdfLink>
                           </PdfWrapper>

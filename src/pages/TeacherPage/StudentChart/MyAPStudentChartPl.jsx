@@ -75,7 +75,7 @@ export const MyAPStudentChartPl = ({ currentStudentChart }) => {
   return (
     <>
       <MyAPStudentChartArea>
-        <EditFormHeader id="focus">{currentStudentChart.name}</EditFormHeader>
+        <EditFormHeader id="focus">Student</EditFormHeader>
         <FeedbackText
           dangerouslySetInnerHTML={{
             __html:

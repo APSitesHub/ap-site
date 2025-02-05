@@ -29,15 +29,11 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
 
   const pointsSorted =
     activeRating > 0
-      ? flatMonthlyPoints
-          .filter(student => `${student.course}` === user.course)
-          .sort((a, b) => b.points - a.points)
-      : flatPoints
-          .filter(student => `${student.course}`[0] === user.course[0])
-          .sort((a, b) => b.points - a.points);
+      ? flatMonthlyPoints.sort((a, b) => b.points - a.points)
+      : flatPoints.sort((a, b) => b.points - a.points);
 
   const userPlace = pointsSorted.findIndex(
-    leader => leader.mail.toLowerCase() === user.mail.toLowerCase()
+    leader => leader.name.toLowerCase() === user.name.toLowerCase()
   );
 
   const calculatePointerPosition = i => {
@@ -94,10 +90,10 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
           <PointsUser>
             <PointsUserData>
               {pointsSorted.findIndex(
-                leader => leader.mail.toLowerCase() === user.mail.toLowerCase()
+                leader => leader.name.toLowerCase() === user.name.toLowerCase()
               ) + 1}
             </PointsUserData>
-            <PointsUserDataWide>{user.name}</PointsUserDataWide>
+            <PointsUserDataWide>Student</PointsUserDataWide>
             <PointsUserData>
               {pointsSorted[userPlace].points < 0 ? 0 : pointsSorted[userPlace].points}
             </PointsUserData>

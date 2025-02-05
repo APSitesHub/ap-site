@@ -24,18 +24,13 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const MyAPPanelPl = ({
   lessons,
-  link,
   user,
   language,
   points,
   timetable,
-  marathonLink,
   montlyPoints,
   isMultipleCourses,
   setPlatformIframeLink,
-  languageIndex,
-  setLanguage,
-  setLanguageIndex,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
   const [isLessonFinderShown, setIsLessonFinderShown] = useState(false);
@@ -50,44 +45,12 @@ export const MyAPPanelPl = ({
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
   // const [isMarathonBtnClicked, setIsMarathonBtnClicked] = useState(false);
 
-  const personalTimetable = timetable.find(timeline =>
-    language === 'enkids' && user.knowledge.includes('beginner')
-      ? timeline.lang === language &&
-        timeline.course === user.course &&
-        timeline.level === user.knowledge
-      : timeline.lang === language && timeline.course === user.course
-  );
-
-  const personalLessonsDays = personalTimetable.schedule.map(lesson => lesson.day);
+  const personalLessonsDays = timetable.map(lesson => lesson.day);
 
   const toggleButtonBox = () => {
     hideBackdrop();
     setIsButtonBoxShown(isShown => !isShown);
   };
-
-  const pointsByLang = Object.keys(points)
-    .filter(
-      key =>
-        (key.includes(language) && key.length === (language + user.knowledge).length) ||
-        (key.includes(language) && key.includes('done'))
-    )
-    .reduce((obj, key) => {
-      obj[key] = points[key];
-      return obj;
-    }, {});
-
-  const monthlyPointsByLang = Object.keys(montlyPoints)
-    .filter(
-      key =>
-        (key.includes(language) && key.length === (language + user.knowledge).length) ||
-        (key.includes(language) && key.includes('done'))
-    )
-    .reduce((obj, key) => {
-      obj[key] = montlyPoints[key];
-      return obj;
-    }, {});
-  const flatPoints = Object.values(pointsByLang).flatMap(user => user);
-  const flatMonthlyPoints = Object.values(monthlyPointsByLang).flatMap(user => user);
 
   console.log(user);
 
@@ -388,8 +351,8 @@ export const MyAPPanelPl = ({
       {isRatingShown && (
         <PointsPl
           user={user}
-          flatPoints={flatPoints}
-          flatMonthlyPoints={flatMonthlyPoints}
+          flatPoints={points}
+          flatMonthlyPoints={montlyPoints}
           isMultipleCourses={isMultipleCourses}
         />
       )}

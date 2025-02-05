@@ -53,7 +53,7 @@ export const MyAPStudentChartArea = styled(StudentChartArea)`
   z-index: 5;
   transform: translate(0, 0);
   width: calc(100% - 65px);
-  max-height: 400px;
+  max-height: 556px;
   overflow-y: scroll;
 
   @media screen and (min-width: 480px) {
@@ -73,6 +73,10 @@ export const MyAPStudentChartArea = styled(StudentChartArea)`
 
   @media screen and (min-height: 640px) {
     top: 184px;
+  }
+
+  @media screen and (min-height: 768px) {
+    height: 556px;
   }
 `;
 
