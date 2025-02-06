@@ -80,6 +80,10 @@ export const MyAPStudentChartArea = styled(StudentChartArea)`
   }
 `;
 
+export const TeacherChartArea = styled.div`
+  padding: 30px;
+`;
+
 export const GradientBg = styled.div`
   position: absolute;
   top: calc(50% + 23px);
@@ -117,4 +121,9 @@ export const ChartAreaLimiter = styled.div`
 
 export const FeedbackText = styled.p`
   margin: 5px 0 7px 0;
+`;
+
+export const ChartImage = styled.img`
+  width: 100%;
+  height: auto;
 `;

@@ -11,6 +11,8 @@ import { ReactComponent as _ArrowDown } from '../../img/svg/faq-arrow-down.svg';
 export const PageContainer = styled.div`
   display: flex;
   height: 100vh;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const VideochatContainer = styled.div`

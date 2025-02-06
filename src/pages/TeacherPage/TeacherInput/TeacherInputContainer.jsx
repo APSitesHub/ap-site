@@ -1,3 +1,4 @@
+import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
 import { TeacherChatPageContainer } from './TeacherChat.styled';
 
 export const TeacherInputContainer = ({ socket, answers }) => {
@@ -7,9 +8,10 @@ export const TeacherInputContainer = ({ socket, answers }) => {
 
   return (
     <TeacherChatPageContainer>
-      <button type="button" onClick={emitSomething}>
+      <TeacherAnswersChart></TeacherAnswersChart>
+      {/* <button type="button" onClick={emitSomething}>
         Start
-      </button>
+      </button> */}
       {/* <TeacherChatBody socket={socket} messages={messages} room={room} /> */}
     </TeacherChatPageContainer>
   );

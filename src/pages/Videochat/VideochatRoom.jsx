@@ -1,27 +1,40 @@
-import { useEffect, useState } from 'react';
+import useSize from '@react-hook/size';
+import { KahootsVideo } from 'components/Stream/Kahoots/KahootsVideo';
+import {
+  ButtonBox,
+  ChatBox,
+  ChatBtn,
+  ChatLogo,
+  KahootBtn,
+  KahootLogo,
+} from 'components/Stream/Stream.styled';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import useWebRTC, { LOCAL_VIDEO } from './utils/hooks/useWebRTC';
 import {
-  ButtonsContainer,
-  ChatContainer,
-  MicroIcon,
-  DisabledMicroIcon,
-  CameraIcon,
-  DisabledCameraIcon,
-  ArrowUp,
   ArrowDown,
-  MainVideoContainer,
+  ArrowUp,
+  ButtonsContainer,
+  CameraIcon,
+  ChatContainer,
+  DisabledCameraIcon,
+  DisabledMicroIcon,
   MainVideo,
+  MainVideoContainer,
   MediaButton,
   MediaButtonContainer,
   MediaOption,
   MediaSelector,
+  MicroIcon,
   PageContainer,
   SideContainer,
   UsersVideosContainer,
   UserVideo,
   VideochatContainer,
 } from './Videochat.styled';
+import { Chat } from 'utils/Chat/Chat';
+import { io } from 'socket.io-client';
+import axios from 'axios';
 
 const VISIBLE_USERS_COUNT = 4;
 
@@ -42,7 +55,26 @@ function VideochatRoom() {
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
+  const [isKahootOpen, setIsKahootOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
+  const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(0);
+  const [width, height] = useSize(document.body);
+
+  const currentUser = {username: 'User Is Not Logged In', isBanned: false, userIP: 'no ip'}
+  const room = 'videochat'
+
+  const chatEl = useRef();
+  const socketRef = useRef(null);
+
+  const toggleKahoot = e => {
+    setIsKahootOpen(isKahootOpen => !isKahootOpen);
+  };
+
+  const toggleChat = () => {
+    setIsChatOpen(isChatOpen => !isChatOpen);
+  };
 
   useEffect(() => {
     const video = localDevices.filter(device => device.kind === 'videoinput');
@@ -51,14 +83,111 @@ function VideochatRoom() {
     setVideoDevices(video);
   }, [localDevices]);
 
-  const changePage = (isUp) => {
+  const changePage = isUp => {
     if (isUp) {
       setPage(prevPage => prevPage - 1);
     } else {
       setPage(prevPage => prevPage + 1);
-
     }
-  }
+  };
+
+  useEffect(() => {
+
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
+
+    socketRef.current.on('connected', (connected, handshake) => {
+      console.log(connected);
+      console.log(handshake.time);
+    });
+
+    const getMessages = async () => {
+      console.log('get');
+      try {
+        const dbMessages = await axios.get(
+          `https://ap-chat-server.onrender.com/messages/room`,
+          {
+            params: {
+              room,
+            },
+          }
+        );
+        const todayMessages = dbMessages.data.filter(
+          message =>
+            new Date(message.createdAt).getDate() === new Date().getDate()
+        );
+        setMessages(messages => (messages = todayMessages));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getMessages();
+
+    socketRef.current.on('message', async data => {
+      setMessages(messages => (messages = [...messages, data]));
+      const updateMessages = async () => {
+        try {
+          await axios.post(
+            'https://ap-chat-server.onrender.com/messages',
+            data
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      await updateMessages();
+    });
+
+    socketRef.current.on('message:get', async data => {
+      setMessages(messages => (messages = [...messages, data]));
+    });
+
+    socketRef.current.on('message:pinned', async (id, data) => {
+      console.log(id);
+      console.log(data);
+      setMessages(messages => {
+        messages[messages.findIndex(message => message.id === id)].isPinned =
+          data.isPinned;
+        return [...messages];
+      });
+    });
+
+    socketRef.current.on('message:delete', async id => {
+      console.log('delete fired');
+      setMessages(
+        messages =>
+          (messages = [...messages.filter(message => message.id !== id)])
+      );
+      const deleteMessage = async () => {
+        try {
+          await axios.delete(
+            `https://ap-chat-server.onrender.com/messages/${id}`
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      await deleteMessage();
+    });
+
+    socketRef.current.on('message:deleted', async id => {
+      console.log(id);
+      setMessages(
+        messages =>
+          (messages = [...messages.filter(message => message.id !== id)])
+      );
+    });
+
+    socketRef.current.on('user:banned', async (userID, userIP) => {
+      console.log(userID);
+      console.log(userIP);
+    });
+
+    return () => {
+      socketRef.current.off('connected');
+      socketRef.current.off('message');
+      socketRef.current.disconnect();
+    };
+  }, [currentUser, room]);
 
   return (
     <PageContainer>
@@ -172,13 +301,40 @@ function VideochatRoom() {
                 })}
             </UsersVideosContainer>
             <MediaButtonContainer $isPagintionButton>
-              <MediaButton onClick={() => changePage(false)} disabled={page + VISIBLE_USERS_COUNT >= clients.length - 1}>
+              <MediaButton
+                onClick={() => changePage(false)}
+                disabled={page + VISIBLE_USERS_COUNT >= clients.length - 1}
+              >
                 <ArrowDown />
               </MediaButton>
             </MediaButtonContainer>
           </SideContainer>
         )}
       </VideochatContainer>
+      <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
+        <KahootBtn onClick={toggleKahoot}>
+          <KahootLogo />
+        </KahootBtn>
+        <ChatBtn onClick={toggleChat}>
+          <ChatLogo />
+        </ChatBtn>
+      </ButtonBox>
+      <KahootsVideo
+        sectionWidth={width}
+        sectionHeight={height}
+        isKahootOpen={isKahootOpen}
+      />
+      <ChatBox
+        ref={chatEl}
+        className={isChatOpen ? 'shown' : 'hidden'}
+      >
+        <Chat
+          socket={socketRef.current}
+          messages={messages}
+          isChatOpen={isChatOpen}
+          currentUser={currentUser}
+        />
+      </ChatBox>
       <ChatContainer>TODO: text chat</ChatContainer>
     </PageContainer>
   );

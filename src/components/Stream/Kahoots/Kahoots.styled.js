@@ -61,6 +61,20 @@ export const KahootBackground = styled(StreamsBackgroundWrapper)`
   }
 `;
 
+export const KahootVideoBackground = styled(StreamsBackgroundWrapper)`
+  background-image: none;
+
+  transition: transform var(--animation-global);
+
+  &.hidden {
+    transform: translateX(100%);
+  }
+
+  &.shown {
+    transform: translateX(0);
+  }
+`;
+
 export const KahootDisclaimerBackground = styled(KahootBackground)`
   display: flex;
   flex-direction: column;

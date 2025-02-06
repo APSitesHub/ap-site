@@ -274,3 +274,9 @@ export const EditFormHeader = styled.h2`
   font-weight: 700;
   text-align: center;
 `;
+
+export const QuestionHeader = styled.h2`
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 18px;
+`;

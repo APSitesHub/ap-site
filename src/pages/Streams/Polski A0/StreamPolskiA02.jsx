@@ -47,6 +47,10 @@ const StreamPolskiA02 = () => {
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
 
+  console.log(50, currentUser);
+  console.log(51, room);
+  
+
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
     isChatOpen || isSupportOpen

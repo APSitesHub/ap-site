@@ -38,11 +38,10 @@ export const TeacherChatBox = styled.div`
 export const TeacherInputBox = styled.div`
   position: absolute;
   top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%);
+  right: 15%;
+  transform: translate(15%, -50%);
   z-index: 8;
-  height: 400px;
-  width: 40%;
+  width: 36%;
   /* overflow: hidden; */
   border-top-left-radius: 5px;
 
