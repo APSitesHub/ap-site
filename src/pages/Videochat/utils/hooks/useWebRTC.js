@@ -95,9 +95,6 @@ export default function useWebRTC(roomID) {
         } else {
           audioTrack.enabled = !audioTrack.enabled;
         }
-
-        console.log(audioTrack.enabled);
-
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
           const at = targetObj.getSenders().find(sender => sender.track.kind === 'audio');
           at.track.enabled = audioTrack.enabled;
@@ -144,6 +141,9 @@ export default function useWebRTC(roomID) {
         video: { deviceId: { exact: deviceId } },
       });
       const videoTrack = newStream.getVideoTracks()[0];
+      const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
+
+      localVideoElement.srcObject = newStream;
 
       if (peerConnections.current) {
         Object.keys(peerConnections.current).forEach(id => {
@@ -371,8 +371,6 @@ export default function useWebRTC(roomID) {
     });
 
     socket.on('mute-all', () => {
-      console.log('mute-all');
-
       toggleMicrophone(true);
     });
   }, [updateClients]);
