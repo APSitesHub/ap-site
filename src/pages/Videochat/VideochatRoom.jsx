@@ -4,7 +4,12 @@ import useWebRTC, { LOCAL_VIDEO } from './utils/hooks/useWebRTC';
 import {
   ButtonsContainer,
   ChatContainer,
+  MicroIcon,
   DisabledMicroIcon,
+  CameraIcon,
+  DisabledCameraIcon,
+  ArrowUp,
+  ArrowDown,
   MainVideoContainer,
   MainVideo,
   MediaButton,
@@ -12,10 +17,13 @@ import {
   MediaOption,
   MediaSelector,
   PageContainer,
+  SideContainer,
   UsersVideosContainer,
   UserVideo,
   VideochatContainer,
 } from './Videochat.styled';
+
+const VISIBLE_USERS_COUNT = 4;
 
 function VideochatRoom() {
   const { id: roomID } = useParams();
@@ -34,6 +42,7 @@ function VideochatRoom() {
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     const video = localDevices.filter(device => device.kind === 'videoinput');
@@ -41,6 +50,15 @@ function VideochatRoom() {
     setAudioDevices(audio);
     setVideoDevices(video);
   }, [localDevices]);
+
+  const changePage = (isUp) => {
+    if (isUp) {
+      setPage(prevPage => prevPage - 1);
+    } else {
+      setPage(prevPage => prevPage + 1);
+
+    }
+  }
 
   return (
     <PageContainer>
@@ -60,11 +78,11 @@ function VideochatRoom() {
                 />
                 {(!isCameraEnabled ||
                   (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
-                    <DisabledMicroIcon>Camera Disabled</DisabledMicroIcon>
+                  <DisabledCameraIcon $isAbsolute />
                 )}
                 {(!isMicroEnabled ||
                   (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
-                    <DisabledMicroIcon>Micro Disabled</DisabledMicroIcon>
+                  <DisabledMicroIcon $isAbsolute />
                 )}
 
                 <ButtonsContainer>
@@ -75,7 +93,7 @@ function VideochatRoom() {
                   )}
                   <MediaButtonContainer>
                     <MediaButton onClick={toggleMicrophone}>
-                      Micro
+                      {isLocalMicrophoneEnabled ? <MicroIcon /> : <DisabledMicroIcon />}
                     </MediaButton>
                     <MediaSelector
                       name="micro"
@@ -90,7 +108,9 @@ function VideochatRoom() {
                     </MediaSelector>
                   </MediaButtonContainer>
                   <MediaButtonContainer>
-                    <MediaButton onClick={toggleCamera}>Camera</MediaButton>
+                    <MediaButton onClick={toggleCamera}>
+                      {isLocalCameraEnabled ? <CameraIcon /> : <DisabledCameraIcon />}
+                    </MediaButton>
                     <MediaSelector
                       name="camera"
                       id="camera"
@@ -108,50 +128,55 @@ function VideochatRoom() {
             );
           })}
 
-        {clients.filter(({ role }) => true).length > 0 && (
-          <UsersVideosContainer>
-            <MediaButtonContainer $isPagintionButton={true}>
-              <MediaButton>&lt;</MediaButton>
+        {clients.filter(({ role }) => role !== 'admin').length > 0 && (
+          <SideContainer>
+            <MediaButtonContainer $isPagintionButton>
+              <MediaButton onClick={() => changePage(true)} disabled={page === 0}>
+                <ArrowUp />
+              </MediaButton>
             </MediaButtonContainer>
-
-            {clients
-              .filter(({ role }) => role !== 'admin')
-              .map(({ clientId, isMicroEnabled, isCameraEnabled }) => {
-                return (
-                  <UserVideo
-                    key={clientId}
-                    id={clientId}
-                    $isUserVideo={clientId === LOCAL_VIDEO}
-                  >
-                    <video
-                      width="100%"
-                      height="100%"
-                      ref={instance => {
-                        provideMediaRef(clientId, instance);
-                      }}
-                      autoPlay
-                      playsInline
-                      muted={clientId === LOCAL_VIDEO}
-                    />
-                    {(!isCameraEnabled ||
-                      (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
-                      <DisabledMicroIcon />
-                    )}
-                    {(!isMicroEnabled ||
-                      (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
-                      <DisabledMicroIcon />
-                    )}
-                  </UserVideo>
-                );
-              })}
-            <UserVideo />
-            <UserVideo />
-            <UserVideo />
-
-            <MediaButtonContainer $isPagintionButton={true}>
-              <MediaButton>&gt;</MediaButton>
+            <UsersVideosContainer>
+              {clients
+                .filter(({ role }) => role !== 'admin')
+                .slice(page, page + VISIBLE_USERS_COUNT)
+                .map(({ clientId, isMicroEnabled, isCameraEnabled }) => {
+                  return (
+                    <UserVideo
+                      key={clientId}
+                      id={clientId}
+                      $isUserVideo={clientId === LOCAL_VIDEO}
+                    >
+                      <video
+                        width="100%"
+                        height="100%"
+                        ref={instance => {
+                          provideMediaRef(clientId, instance);
+                        }}
+                        autoPlay
+                        playsInline
+                        muted={clientId === LOCAL_VIDEO}
+                      />
+                      <div style={{ position: 'absolute', color: 'white' }}>
+                        {clientId}
+                      </div>
+                      {(!isCameraEnabled ||
+                        (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
+                        <DisabledCameraIcon $isAbsolute $isSmall />
+                      )}
+                      {(!isMicroEnabled ||
+                        (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
+                        <DisabledMicroIcon $isAbsolute $isSmall />
+                      )}
+                    </UserVideo>
+                  );
+                })}
+            </UsersVideosContainer>
+            <MediaButtonContainer $isPagintionButton>
+              <MediaButton onClick={() => changePage(false)} disabled={page + VISIBLE_USERS_COUNT >= clients.length - 1}>
+                <ArrowDown />
+              </MediaButton>
             </MediaButtonContainer>
-          </UsersVideosContainer>
+          </SideContainer>
         )}
       </VideochatContainer>
       <ChatContainer>TODO: text chat</ChatContainer>

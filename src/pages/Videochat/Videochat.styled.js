@@ -1,5 +1,12 @@
 import styled, { css } from 'styled-components';
 
+import { ReactComponent as _CameraIcon } from '../../img/svg/camera.svg';
+import { ReactComponent as _DisabledCameraIcon } from '../../img/svg/camera-slash.svg';
+import { ReactComponent as _MicroIcon } from '../../img/svg/microphone.svg';
+import { ReactComponent as _DisabledMicroIcon } from '../../img/svg/microphone-slash.svg';
+import { ReactComponent as _ArrowUp } from '../../img/svg/faq-arrow-up.svg';
+import { ReactComponent as _ArrowDown } from '../../img/svg/faq-arrow-down.svg';
+
 // Room styles
 export const PageContainer = styled.div`
   display: flex;
@@ -31,7 +38,6 @@ export const MainVideoContainer = styled.div`
   min-height: 0;
 
   @media (max-width: 1024px) {
-    position: static;
     margin: 0;
   }
 
@@ -52,25 +58,36 @@ export const MainVideo = styled.video`
   backdrop-filter: blur(10px);
 `;
 
+export const SideContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-basis: 16%;
+  gap: 8px;
+
+  @media (max-width: 1024px) {
+    flex-basis: 0;
+  }
+`;
+
 export const UsersVideosContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
   overflow: visible;
-  justify-content: center;
-  min-width: 128px;
+  flex-grow: 1;
 `;
 
 export const UserVideo = styled.div`
-  height: 20%;
   display: flex;
-  flex-shrink: 0;
-  background-color: black;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
   position: relative;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
   z-index: 1;
+  min-width: 164px;
 
   ${({ $isUserVideo }) =>
     !$isUserVideo &&
@@ -90,10 +107,6 @@ export const UserVideo = styled.div`
         border: 1px solid #09c6cc;
         width: 180px;
         height: auto;
-      }
-
-      @media (max-width: 768px) {
-        width: 40%;
       }
     `}
 `;
@@ -122,6 +135,11 @@ export const MediaButtonContainer = styled.div`
   padding: 8px;
   background-color: rgba(0, 0, 0, 0.6);
   border: 1px solid gray;
+  justify-content: center;
+
+  &:has(button:disabled) {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 
   ${({ $isPagintionButton }) =>
     $isPagintionButton &&
@@ -136,7 +154,15 @@ export const MediaButton = styled.button`
   background-color: transparent;
   color: white;
   border: none;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  width: 100%;
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
 `;
 
 export const MediaSelector = styled.select`
@@ -154,11 +180,76 @@ export const MediaOption = styled.option`
   background-color: rgba(0, 0, 0, 0.7);
 `;
 
-export const DisabledMicroIcon = styled.div`
-  color: red;
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
+export const MicroIcon = styled(_MicroIcon)`
+  fill: #ffffff;
+  height: 28px;
+  width: 28px;
+`;
+
+export const DisabledMicroIcon = styled(_DisabledMicroIcon)`
+  fill: #c62323;
+  height: 28px;
+  width: 28px;
+
+  ${({ $isAbsolute }) =>
+    $isAbsolute &&
+    css`
+      position: absolute;
+      bottom: 16px;
+      left: 24px;
+    `}
+
+  ${({ $isSmall }) =>
+    $isSmall &&
+    css`
+      width: 18px;
+      height: 18px;
+      bottom: 6px;
+      left: 6px;
+    `}
+`;
+
+export const CameraIcon = styled(_CameraIcon)`
+  fill: #ffffff;
+  height: 28px;
+  width: 28px;
+`;
+
+export const DisabledCameraIcon = styled(_DisabledCameraIcon)`
+  fill: #c62323;
+  height: 28px;
+  width: 28px;
+
+  ${({ $isAbsolute }) =>
+    $isAbsolute &&
+    css`
+      width: 64px;
+      height: 64px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      translate: -32px -32px;
+    `}
+
+  ${({ $isSmall }) =>
+    $isSmall &&
+    css`
+      width: 18px;
+      height: 18px;
+      top: 50%;
+      left: 50%;
+      translate: -9px -9px;
+    `}
+`;
+
+export const ArrowUp = styled(_ArrowUp)`
+  height: 24px;
+  width: 24px;
+`;
+
+export const ArrowDown = styled(_ArrowDown)`
+  height: 24px;
+  width: 24px;
 `;
 
 // Videochat styles
