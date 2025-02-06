@@ -309,9 +309,14 @@ const TeacherPageFarm = lazy(() =>
     /* webpackChunkName: "Teacher Page Farm" */ '../pages/TeacherPage/TeacherPageFarm'
   )
 );
-const TeacherPageWarehouse = lazy(() =>
+// const TeacherPageWarehouse = lazy(() =>
+//   import(
+//     /* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouse'
+//   )
+// );
+const TeacherPageWarehouseHotel = lazy(() =>
   import(
-    /* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouse'
+    /* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouseHotel'
   )
 );
 const TeacherPageVertical = lazy(() =>
@@ -840,7 +845,7 @@ export const App = () => {
             <Route path="dekidsfree" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a0" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a0_2" element={<TeacherPageFarm />} noindex={true} />
-            <Route path="polski-a0_3" element={<TeacherPageWarehouse />} noindex={true} />
+            <Route path="polski-a0_3" element={<TeacherPageWarehouseHotel />} noindex={true} />
             <Route path="polski-a1" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a1free" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a2" element={<TeacherPage />} noindex={true} />

@@ -312,7 +312,7 @@ const StreamA1 = () => {
               </ChatBox>
             )}
 
-            <StudentInput isInputOpen={isInputOpen} toggleInput={toggleInput} />
+            <StudentInput isInputOpen={isInputOpen} socket={socketRef.current} toggleInput={toggleInput} />
 
             <Support
               sectionWidth={width}

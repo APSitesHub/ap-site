@@ -3,6 +3,7 @@ import { ReactComponent as ViewerIcon } from '../../img/svg/viewerIcon.svg';
 import { ReactComponent as WhiteBoardIcon } from '../../img/svg/whiteBoardIcon.svg';
 import { ReactComponent as PlatformIcon } from '../../img/svg/myap/logo-short.svg';
 import { ReactComponent as Warehouse } from '../../img/svg/warehouse.svg';
+import { ReactComponent as Hotel } from '../../img/svg/hotel.svg';
 import { ReactComponent as Cow } from '../../img/svg/cow.svg';
 import { ReactComponent as Pig } from '../../img/svg/pig.svg';
 import { ReactComponent as BoxSwitchUp } from '../../img/svg/btnbox-switch-up.svg';
@@ -90,6 +91,10 @@ export const TeacherButtonBoxHideSwitch = styled.div`
 
 export const TeacherFarmButtonBoxHideSwitch = styled(TeacherButtonBoxHideSwitch)`
   bottom: 210px;
+`;
+
+export const TeacherWarehouseHotelButtonBoxHideSwitch = styled(TeacherButtonBoxHideSwitch)`
+  bottom: 290px;
 `;
 
 export const TeacherButtonBoxHideSwitchVertical = styled.div`
@@ -185,6 +190,17 @@ export const CowLogo = styled(Cow)`
 `;
 
 export const WarehouseLogo = styled(Warehouse)`
+  width: 25px;
+  height: 25px;
+  z-index: 5;
+
+  @media screen and (min-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+export const HotelLogo = styled(Hotel)`
   width: 25px;
   height: 25px;
   z-index: 5;

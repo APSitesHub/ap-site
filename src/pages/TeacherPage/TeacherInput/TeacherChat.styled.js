@@ -46,14 +46,18 @@ export const TeacherInputBox = styled.div`
   /* overflow: hidden; */
   border-top-left-radius: 5px;
 
+  background-color: white;
+  border-radius: 50px;
+  overflow: hidden;
+
   font-family: var(--streams-font-family);
 
   box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.25);
 
-  transition: transform var(--animation-global);
+  transition: opacity var(--animation-global);
 
   &.hidden {
-    opacity: 0.1;
+    opacity: 0;
     pointer-events: none;
   }
 
