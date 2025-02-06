@@ -5,6 +5,7 @@ import {
   ButtonsContainer,
   ChatContainer,
   DisabledMicroIcon,
+  MainVideoContainer,
   MainVideo,
   MediaButton,
   MediaButtonContainer,
@@ -21,11 +22,13 @@ function VideochatRoom() {
   const {
     clients,
     provideMediaRef,
+    localRole,
     localDevices,
     toggleCamera,
     toggleMicrophone,
     changeCamera,
     changeMicrophone,
+    muteAll,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   } = useWebRTC(roomID);
@@ -39,55 +42,15 @@ function VideochatRoom() {
     setVideoDevices(video);
   }, [localDevices]);
 
-  const test = () => {
-    console.log(clients);
-  };
-
   return (
     <PageContainer>
-      <button onClick={test}>get clients</button>
       <VideochatContainer>
-        <UsersVideosContainer>
-          {clients
-            .filter(({ role }) => role !== 'admin')
-            .map(({ clientId, isMicroEnabled, isCameraEnabled }) => {
-              return (
-                <UserVideo key={clientId} id={clientId}>
-                  <video
-                    width="100%"
-                    height="100%"
-                    ref={instance => {
-                      provideMediaRef(clientId, instance);
-                    }}
-                    autoPlay
-                    playsInline
-                    muted={clientId === LOCAL_VIDEO}
-                  />
-                  {!isCameraEnabled && (
-                    <DisabledMicroIcon>Camera Disabled</DisabledMicroIcon>
-                  )}
-                  {!isMicroEnabled && (
-                    <DisabledMicroIcon>Micro Disabled</DisabledMicroIcon>
-                  )}
-                </UserVideo>
-              );
-            })}
-          <UserVideo />
-          <UserVideo />
-          <UserVideo />
-          <UserVideo />
-          <UserVideo />
-          <UserVideo />
-          <UserVideo />
-        </UsersVideosContainer>
         {clients
           .filter(({ role }) => role === 'admin')
-          .map(({ clientId }) => {
+          .map(({ clientId, isCameraEnabled, isMicroEnabled }) => {
             return (
-              <MainVideo key={clientId} id={clientId}>
-                <video
-                  width="100%"
-                  height="100%"
+              <MainVideoContainer key={clientId} id={clientId}>
+                <MainVideo
                   ref={instance => {
                     provideMediaRef(clientId, instance);
                   }}
@@ -95,45 +58,101 @@ function VideochatRoom() {
                   playsInline
                   muted={clientId === LOCAL_VIDEO}
                 />
-                {!isLocalCameraEnabled && (
-                  <DisabledMicroIcon>Camera Disabled</DisabledMicroIcon>
+                {(!isCameraEnabled ||
+                  (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
+                    <DisabledMicroIcon>Camera Disabled</DisabledMicroIcon>
                 )}
-                {!isLocalMicrophoneEnabled && (
-                  <DisabledMicroIcon>Micro Disabled</DisabledMicroIcon>
+                {(!isMicroEnabled ||
+                  (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
+                    <DisabledMicroIcon>Micro Disabled</DisabledMicroIcon>
                 )}
-              </MainVideo>
+
+                <ButtonsContainer>
+                  {localRole === 'admin' && (
+                    <MediaButtonContainer>
+                      <MediaButton onClick={muteAll}>Mute All</MediaButton>
+                    </MediaButtonContainer>
+                  )}
+                  <MediaButtonContainer>
+                    <MediaButton onClick={toggleMicrophone}>
+                      Micro
+                    </MediaButton>
+                    <MediaSelector
+                      name="micro"
+                      id="micro"
+                      onChange={e => changeMicrophone(e.target.value)}
+                    >
+                      {audioDevices.map(device => (
+                        <MediaOption key={device.deviceId} value={device.deviceId}>
+                          {device.label}
+                        </MediaOption>
+                      ))}
+                    </MediaSelector>
+                  </MediaButtonContainer>
+                  <MediaButtonContainer>
+                    <MediaButton onClick={toggleCamera}>Camera</MediaButton>
+                    <MediaSelector
+                      name="camera"
+                      id="camera"
+                      onChange={e => changeCamera(e.target.value)}
+                    >
+                      {videoDevices.map(device => (
+                        <MediaOption key={device.deviceId} value={device.deviceId}>
+                          {device.label}
+                        </MediaOption>
+                      ))}
+                    </MediaSelector>
+                  </MediaButtonContainer>
+                </ButtonsContainer>
+              </MainVideoContainer>
             );
           })}
-        <ButtonsContainer>
-          <MediaButtonContainer>
-            <MediaButton onClick={toggleMicrophone}>Micro</MediaButton>
-            <MediaSelector
-              name="micro"
-              id="micro"
-              onChange={e => changeMicrophone(e.target.value)}
-            >
-              {audioDevices.map(device => (
-                <MediaOption key={device.deviceId} value={device.deviceId}>
-                  {device.label}
-                </MediaOption>
-              ))}
-            </MediaSelector>
-          </MediaButtonContainer>
-          <MediaButtonContainer>
-            <MediaButton onClick={toggleCamera}>Camera</MediaButton>
-            <MediaSelector
-              name="camera"
-              id="camera"
-              onChange={e => changeCamera(e.target.value)}
-            >
-              {videoDevices.map(device => (
-                <MediaOption key={device.deviceId} value={device.deviceId}>
-                  {device.label}
-                </MediaOption>
-              ))}
-            </MediaSelector>
-          </MediaButtonContainer>
-        </ButtonsContainer>
+
+        {clients.filter(({ role }) => true).length > 0 && (
+          <UsersVideosContainer>
+            <MediaButtonContainer $isPagintionButton={true}>
+              <MediaButton>&lt;</MediaButton>
+            </MediaButtonContainer>
+
+            {clients
+              .filter(({ role }) => role !== 'admin')
+              .map(({ clientId, isMicroEnabled, isCameraEnabled }) => {
+                return (
+                  <UserVideo
+                    key={clientId}
+                    id={clientId}
+                    $isUserVideo={clientId === LOCAL_VIDEO}
+                  >
+                    <video
+                      width="100%"
+                      height="100%"
+                      ref={instance => {
+                        provideMediaRef(clientId, instance);
+                      }}
+                      autoPlay
+                      playsInline
+                      muted={clientId === LOCAL_VIDEO}
+                    />
+                    {(!isCameraEnabled ||
+                      (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
+                      <DisabledMicroIcon />
+                    )}
+                    {(!isMicroEnabled ||
+                      (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
+                      <DisabledMicroIcon />
+                    )}
+                  </UserVideo>
+                );
+              })}
+            <UserVideo />
+            <UserVideo />
+            <UserVideo />
+
+            <MediaButtonContainer $isPagintionButton={true}>
+              <MediaButton>&gt;</MediaButton>
+            </MediaButtonContainer>
+          </UsersVideosContainer>
+        )}
       </VideochatContainer>
       <ChatContainer>TODO: text chat</ChatContainer>
     </PageContainer>

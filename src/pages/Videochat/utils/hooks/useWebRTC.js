@@ -55,7 +55,9 @@ export default function useWebRTC(roomID) {
 
   const toggleCamera = () => {
     if (localMediaStream.current) {
-      const videoTrack = localMediaStream.current.getTracks().find(track => track.kind === 'video');
+      const videoTrack = localMediaStream.current
+        .getTracks()
+        .find(track => track.kind === 'video');
 
       if (videoTrack) {
         videoTrack.enabled = !videoTrack.enabled;
@@ -81,12 +83,20 @@ export default function useWebRTC(roomID) {
     }
   };
 
-  const toggleMicrophone = () => {
+  const toggleMicrophone = mute => {
     if (localMediaStream.current) {
-      const audioTrack = localMediaStream.current.getTracks().find(track => track.kind === 'audio');
+      const audioTrack = localMediaStream.current
+        .getTracks()
+        .find(track => track.kind === 'audio');
 
       if (audioTrack) {
-        audioTrack.enabled = !audioTrack.enabled;
+        if (mute === true) {
+          audioTrack.enabled = false;
+        } else {
+          audioTrack.enabled = !audioTrack.enabled;
+        }
+
+        console.log(audioTrack.enabled);
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
           const at = targetObj.getSenders().find(sender => sender.track.kind === 'audio');
@@ -113,7 +123,9 @@ export default function useWebRTC(roomID) {
         Object.keys(peerConnections.current).forEach(id => {
           const rtc = peerConnections.current[id];
           const senders = rtc.getSenders();
-          const audioSender = senders.find(sender => sender.track && sender.track.kind === 'audio');
+          const audioSender = senders.find(
+            sender => sender.track && sender.track.kind === 'audio'
+          );
 
           if (audioSender) {
             audioSender.replaceTrack(audioTrack);
@@ -137,7 +149,9 @@ export default function useWebRTC(roomID) {
         Object.keys(peerConnections.current).forEach(id => {
           const rtc = peerConnections.current[id];
           const senders = rtc.getSenders();
-          const videoSender = senders.find(sender => sender.track && sender.track.kind === 'video');
+          const videoSender = senders.find(
+            sender => sender.track && sender.track.kind === 'video'
+          );
 
           if (videoSender) {
             videoSender.replaceTrack(videoTrack);
@@ -147,6 +161,10 @@ export default function useWebRTC(roomID) {
     } catch (error) {
       console.error('error change camera: ' + error);
     }
+  };
+
+  const muteAll = async () => {
+    socket.emit('mute-all');
   };
 
   async function startCapture() {
@@ -233,7 +251,9 @@ export default function useWebRTC(roomID) {
     const peerConnection = peerConnections.current[peerID];
     if (!peerConnection) return;
 
-    await peerConnection.setRemoteDescription(new RTCSessionDescription(remoteDescription));
+    await peerConnection.setRemoteDescription(
+      new RTCSessionDescription(remoteDescription)
+    );
 
     if (remoteDescription.type === 'offer') {
       const answer = await peerConnection.createAnswer();
@@ -267,7 +287,6 @@ export default function useWebRTC(roomID) {
 
   useEffect(() => {
     determineRole();
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -276,7 +295,6 @@ export default function useWebRTC(roomID) {
     return () => {
       socket.off(ACTIONS.ADD_PEER, handleNewPeer);
     };
-    // eslint-disable-next-line
   }, [addNewClient]);
 
   useEffect(() => {
@@ -351,6 +369,12 @@ export default function useWebRTC(roomID) {
         });
       });
     });
+
+    socket.on('mute-all', () => {
+      console.log('mute-all');
+
+      toggleMicrophone(true);
+    });
   }, [updateClients]);
 
   const provideMediaRef = useCallback((id, node) => {
@@ -360,11 +384,13 @@ export default function useWebRTC(roomID) {
   return {
     clients,
     provideMediaRef,
+    localRole,
     localDevices,
     toggleCamera,
     toggleMicrophone,
     changeCamera,
     changeMicrophone,
+    muteAll,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   };
