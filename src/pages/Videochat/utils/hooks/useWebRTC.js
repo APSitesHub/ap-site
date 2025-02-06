@@ -95,9 +95,6 @@ export default function useWebRTC(roomID) {
         } else {
           audioTrack.enabled = !audioTrack.enabled;
         }
-
-        console.log(audioTrack.enabled);
-
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
           const at = targetObj.getSenders().find(sender => sender.track.kind === 'audio');
           at.track.enabled = audioTrack.enabled;
@@ -144,6 +141,9 @@ export default function useWebRTC(roomID) {
         video: { deviceId: { exact: deviceId } },
       });
       const videoTrack = newStream.getVideoTracks()[0];
+      const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
+
+      localVideoElement.srcObject = newStream;
 
       if (peerConnections.current) {
         Object.keys(peerConnections.current).forEach(id => {
@@ -171,14 +171,28 @@ export default function useWebRTC(roomID) {
     try {
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: {
-          width: 1280,
-          height: 720,
-        },
+        video: { width: 1280, height: 720 },
       });
 
       const devices = await navigator.mediaDevices.enumerateDevices();
       setLocalDevices(devices);
+
+      const defaultCamera = devices.find(device => device.kind === 'videoinput');
+      const defaultMicrophone = devices.find(device => device.kind === 'audioinput');
+
+      localMediaStream.current = await navigator.mediaDevices.getUserMedia({
+        audio: defaultMicrophone ? { deviceId: defaultMicrophone.deviceId } : true,
+        video: defaultCamera
+          ? {
+              deviceId: { exact: defaultCamera.deviceId },
+              width: localRole === 'admin' ? 1920 : 320,
+              height: localRole === 'admin' ? 1080 : 180,
+            }
+          : {
+              width: localRole === 'admin' ? 1920 : 320,
+              height: localRole === 'admin' ? 1080 : 180,
+            },
+      });
 
       if (localRole) {
         addNewClient(LOCAL_VIDEO, localRole, () => {
@@ -371,8 +385,6 @@ export default function useWebRTC(roomID) {
     });
 
     socket.on('mute-all', () => {
-      console.log('mute-all');
-
       toggleMicrophone(true);
     });
   }, [updateClients]);
