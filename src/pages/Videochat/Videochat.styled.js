@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 // Room styles
 export const PageContainer = styled.div`
@@ -7,47 +7,103 @@ export const PageContainer = styled.div`
 `;
 
 export const VideochatContainer = styled.div`
-  background-color: darkslateblue;
+  background-color: #0f645b;
   position: relative;
   display: flex;
-  flex-direction: column;
-  flex-basis: 80%;
+  justify-content: center;
   padding: 36px;
   gap: 16px;
-  max-width: 80%;
-`;
-
-export const MainVideo = styled.div`
-  position: relative;
-  background-color: black;
   width: 100%;
   height: 100%;
-  flex-basis: 70%;
-  max-height: 70%;
+  min-height: 0;
+  min-width: 0;
+
+  @media (max-width: 1024px) {
+    padding: 16px;
+    gap: 0;
+  }
+`;
+
+export const MainVideoContainer = styled.div`
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-height: 0;
+
+  @media (max-width: 1024px) {
+    position: static;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    margin: auto;
+  }
+`;
+
+export const MainVideo = styled.video`
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  box-shadow: 0 0 500px rgba(0, 0, 0, 1);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
 `;
 
 export const UsersVideosContainer = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 8px;
-  overflow-x: auto;
-  flex-basis: 30%;
-  max-width: 100%;
+  overflow: visible;
+  justify-content: center;
+  min-width: 128px;
 `;
 
 export const UserVideo = styled.div`
-  width: 250px;
-  height: 100%;
+  height: 20%;
   display: flex;
   flex-shrink: 0;
   background-color: black;
   position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+
+  ${({ $isUserVideo }) =>
+    !$isUserVideo &&
+    css`
+      @media (max-width: 1024px) {
+        display: none;
+      }
+    `}
+
+  ${({ $isUserVideo }) =>
+    $isUserVideo &&
+    css`
+      @media (max-width: 1024px) {
+        position: absolute;
+        left: 24px;
+        top: 24px;
+        border: 1px solid #09c6cc;
+        width: 180px;
+        height: auto;
+      }
+
+      @media (max-width: 768px) {
+        width: 40%;
+      }
+    `}
 `;
 
 export const ChatContainer = styled.div`
-  background-color: beige;
+  display: none;
+  /* background-color: beige;
   display: flex;
   flex-basis: 20%;
-  flex-shrink: 0;
+  flex-shrink: 0; */
 `;
 
 export const ButtonsContainer = styled.div`
@@ -66,6 +122,14 @@ export const MediaButtonContainer = styled.div`
   padding: 8px;
   background-color: rgba(0, 0, 0, 0.6);
   border: 1px solid gray;
+
+  ${({ $isPagintionButton }) =>
+    $isPagintionButton &&
+    `
+      @media (max-width: 1024px) {
+        display: none;
+      }
+    `}
 `;
 
 export const MediaButton = styled.button`
