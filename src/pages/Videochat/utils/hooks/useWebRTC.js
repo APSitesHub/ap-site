@@ -171,14 +171,28 @@ export default function useWebRTC(roomID) {
     try {
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: {
-          width: 1280,
-          height: 720,
-        },
+        video: { width: 1280, height: 720 },
       });
 
       const devices = await navigator.mediaDevices.enumerateDevices();
       setLocalDevices(devices);
+
+      const defaultCamera = devices.find(device => device.kind === 'videoinput');
+      const defaultMicrophone = devices.find(device => device.kind === 'audioinput');
+
+      localMediaStream.current = await navigator.mediaDevices.getUserMedia({
+        audio: defaultMicrophone ? { deviceId: defaultMicrophone.deviceId } : true,
+        video: defaultCamera
+          ? {
+              deviceId: { exact: defaultCamera.deviceId },
+              width: localRole === 'admin' ? 1920 : 320,
+              height: localRole === 'admin' ? 1080 : 180,
+            }
+          : {
+              width: localRole === 'admin' ? 1920 : 320,
+              height: localRole === 'admin' ? 1080 : 180,
+            },
+      });
 
       if (localRole) {
         addNewClient(LOCAL_VIDEO, localRole, () => {
