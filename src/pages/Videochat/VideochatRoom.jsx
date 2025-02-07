@@ -299,9 +299,9 @@ function VideochatRoom() {
                         playsInline
                         muted={clientId === LOCAL_VIDEO}
                       />
-                      <div style={{ position: 'absolute', color: 'white' }}>
+                      {/* <div style={{ position: 'absolute', color: 'white' }}>
                         {clientId}
-                      </div>
+                      </div> */}
                       {(!isCameraEnabled ||
                         (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
                         <DisabledCameraIcon $isAbsolute $isSmall />
