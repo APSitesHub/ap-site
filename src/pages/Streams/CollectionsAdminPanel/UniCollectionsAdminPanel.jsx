@@ -80,6 +80,10 @@ const UniCollectionsAdminPanel = () => {
     merito_prep: '',
     wstih_logistics: '',
     wstih_prep: '',
+    wskm_logistics: '',
+    wskm_prep: '',
+    wssip_logistics: '',
+    wssip_prep: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -95,6 +99,10 @@ const UniCollectionsAdminPanel = () => {
     merito_prep: yup.string().optional(),
     wstih_logistics: yup.string().optional(),
     wstih_prep: yup.string().optional(),
+    wskm_logistics: yup.string().optional(),
+    wskm_prep: yup.string().optional(),
+    wssip_logistics: yup.string().optional(),
+    wssip_prep: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -275,6 +283,48 @@ const UniCollectionsAdminPanel = () => {
                     placeholder="WSTiH Preparation Course Collection"
                   />
                   <AdminInputNote component="p" name="wstih_prep" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  WSKM (Wyższa Szkoła Kadr Menedżerskich)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wskm_logistics"
+                    placeholder="WSKM Logistics Collection"
+                  />
+                  <AdminInputNote component="p" name="wskm_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wskm_prep"
+                    placeholder="WSKM Preparation Course Collection"
+                  />
+                  <AdminInputNote component="p" name="wskm_prep" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  WSSiP (Wyższa Szkoła Sztuki i Projektowania)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wssip_logistics"
+                    placeholder="WSSiP Logistics Collection"
+                  />
+                  <AdminInputNote component="p" name="wssip_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wssip_prep"
+                    placeholder="WSSiP Preparation Course Collection"
+                  />
+                  <AdminInputNote component="p" name="wssip_prep" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

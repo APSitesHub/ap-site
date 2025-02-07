@@ -72,6 +72,14 @@ const UserAdminPanel = () => {
       label: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
       value: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
     },
+    {
+      label: 'WSKM (Wyższa Szkoła Kadr Menedżerskich)',
+      value: 'WSKM (Wyższa Szkoła Kadr Menedżerskich)',
+    },
+    {
+      label: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
+      value: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
+    },
   ];
 
   useEffect(() => {
