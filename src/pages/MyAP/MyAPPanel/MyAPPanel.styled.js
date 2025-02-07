@@ -561,8 +561,7 @@ export const APPanelMarathonBtn = styled.button`
 
     transition: opacity 350ms linear;
 
-    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%),
-      #09c6cc;
+    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%), #09c6cc;
   }
 
   &:hover,
@@ -629,4 +628,16 @@ export const IframeMarathonPointerLinkIcon = styled(PointerIcon)`
     width: 20px;
     height: 20px;
   }
+`;
+
+export const PlatformDataConcealer = styled.div`
+  position: absolute;
+  top: 2px;
+  right: 100px;
+  z-index: 5;
+
+  width: 365px;
+  height: 60px;
+
+  background-color: white;
 `;

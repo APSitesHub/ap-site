@@ -10,6 +10,7 @@ import {
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
   PanelHideSwitch,
+  PlatformDataConcealer,
   SearchBtnIcon,
   TimetableBtnIcon,
 } from './MyAPPanel.styled';
@@ -234,7 +235,7 @@ export const MyAPPanelPl = ({
   return (
     <>
       <PanelBackdrop onClick={hideBackdrop} className={isBackdropShown ? '' : 'hidden'} />
-
+      <PlatformDataConcealer />
       <PanelHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
       </PanelHideSwitch>
@@ -338,7 +339,6 @@ export const MyAPPanelPl = ({
           </APPanelBtn>
         </APPanelInstructionsPanel> */}
       </APPanel>
-
       {isLessonFinderShown && (
         <LessonFinderPl
           lessons={lessons}
