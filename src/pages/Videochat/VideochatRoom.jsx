@@ -1,4 +1,5 @@
 import useSize from '@react-hook/size';
+import axios from 'axios';
 import { KahootsVideo } from 'components/Stream/Kahoots/KahootsVideo';
 import {
   ButtonBox,
@@ -8,15 +9,17 @@ import {
   KahootBtn,
   KahootLogo,
 } from 'components/Stream/Stream.styled';
-import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { nanoid } from 'nanoid';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation, useParams } from 'react-router';
+import { io } from 'socket.io-client';
+import { ChatVideo } from 'utils/Chat/ChatVideo';
 import useWebRTC, { LOCAL_VIDEO } from './utils/hooks/useWebRTC';
 import {
   ArrowDown,
   ArrowUp,
   ButtonsContainer,
   CameraIcon,
-  ChatContainer,
   DisabledCameraIcon,
   DisabledMicroIcon,
   MainVideo,
@@ -32,9 +35,6 @@ import {
   UserVideo,
   VideochatContainer,
 } from './Videochat.styled';
-import { Chat } from 'utils/Chat/Chat';
-import { io } from 'socket.io-client';
-import axios from 'axios';
 
 const VISIBLE_USERS_COUNT = 4;
 
@@ -57,23 +57,41 @@ function VideochatRoom() {
   const [audioDevices, setAudioDevices] = useState([]);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isOpenedLast, setIsOpenedLast] = useState('');
+  const [activeKahoot, setActiveKahoot] = useState(0);
+  // eslint-disable-next-line
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(0);
   const [width, height] = useSize(document.body);
+  const currentUser = useMemo(
+    () => ({
+      username: 'User ' + nanoid(4),
+      isBanned: false,
+      userIP: 'no ip',
+    }),
+    []
+  );
+  let location = useLocation();
 
-  const currentUser = {username: 'User Is Not Logged In', isBanned: false, userIP: 'no ip'}
-  const room = 'videochat'
+  const room = location.pathname;
 
   const chatEl = useRef();
   const socketRef = useRef(null);
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
+    setActiveKahoot(1);
+    isChatOpen
+      ? setIsOpenedLast(isOpenedLast => 'kahoot')
+      : setIsOpenedLast(isOpenedLast => '');
   };
 
   const toggleChat = () => {
     setIsChatOpen(isChatOpen => !isChatOpen);
+    isKahootOpen
+      ? setIsOpenedLast(isOpenedLast => 'chat')
+      : setIsOpenedLast(isOpenedLast => '');
   };
 
   useEffect(() => {
@@ -92,6 +110,10 @@ function VideochatRoom() {
   };
 
   useEffect(() => {
+    if (!localStorage.getItem('userName')) {
+      localStorage.setItem('userName', currentUser.username);
+      localStorage.setItem('userID', currentUser.username.slice(5));
+    }
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
@@ -112,8 +134,7 @@ function VideochatRoom() {
           }
         );
         const todayMessages = dbMessages.data.filter(
-          message =>
-            new Date(message.createdAt).getDate() === new Date().getDate()
+          message => new Date(message.createdAt).getDate() === new Date().getDate()
         );
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
@@ -126,10 +147,7 @@ function VideochatRoom() {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post(
-            'https://ap-chat-server.onrender.com/messages',
-            data
-          );
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -154,14 +172,11 @@ function VideochatRoom() {
     socketRef.current.on('message:delete', async id => {
       console.log('delete fired');
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(
-            `https://ap-chat-server.onrender.com/messages/${id}`
-          );
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }
@@ -172,8 +187,7 @@ function VideochatRoom() {
     socketRef.current.on('message:deleted', async id => {
       console.log(id);
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
     });
 
@@ -323,19 +337,22 @@ function VideochatRoom() {
         sectionWidth={width}
         sectionHeight={height}
         isKahootOpen={isKahootOpen}
+        isChatOpen={isChatOpen}
+        isOpenedLast={isOpenedLast}
+        activeKahoot={activeKahoot}
       />
       <ChatBox
         ref={chatEl}
         className={isChatOpen ? 'shown' : 'hidden'}
+        style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
       >
-        <Chat
+        <ChatVideo
           socket={socketRef.current}
           messages={messages}
           isChatOpen={isChatOpen}
           currentUser={currentUser}
         />
       </ChatBox>
-      <ChatContainer>TODO: text chat</ChatContainer>
     </PageContainer>
   );
 }

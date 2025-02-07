@@ -76,8 +76,7 @@ export const ChatLoginButton = styled.button`
   border: none;
   border-radius: 5px;
 
-  transition: background-color var(--animation-global),
-    color var(--animation-global);
+  transition: background-color var(--animation-global), color var(--animation-global);
 
   &:hover,
   &:focus {
@@ -119,6 +118,10 @@ export const ChatContainer = styled.div`
     background-size: calc(100% - 64px);
     background-position: top 120px center;
   }
+`;
+
+export const ChatContainerVideoChat = styled(ChatContainer)`
+  background-image: unset;
 `;
 
 export const ChatWindowedContainer = styled(ChatContainer)`
@@ -378,8 +381,7 @@ export const СhatSendMessageButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color var(--animation-global),
-    box-shadow var(--animation-global);
+  transition: background-color var(--animation-global), box-shadow var(--animation-global);
 
   &:hover,
   &:focus {

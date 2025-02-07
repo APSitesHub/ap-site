@@ -1,23 +1,23 @@
 import axios from 'axios';
 import { useLayoutEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
 import {
   KahootBox,
   KahootExitFullScreenIcon,
   KahootFullScreenBtn,
   KahootFullScreenIcon,
-  KahootVideoBackground
+  KahootVideoBackground,
 } from './Kahoots.styled';
 
-export const KahootsVideo = ({ sectionWidth, sectionHeight, isKahootOpen }) => {
+export const KahootsVideo = ({
+  sectionWidth,
+  sectionHeight,
+  isKahootOpen,
+  isChatOpen,
+  isOpenedLast,
+  activeKahoot,
+}) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [kahoots, setKahoots] = useState({});
-  const [activeKahoot, setActiveKahoot] = useState(1);
-
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    delay: 1000,
-  });
 
   const page = 'polskia0_3';
 
@@ -58,17 +58,17 @@ export const KahootsVideo = ({ sectionWidth, sectionHeight, isKahootOpen }) => {
     <>
       {Object.keys(kahoots).length && (
         <KahootBox
-          ref={ref}
           className={isKahootOpen ? 'shown' : 'hidden'}
           style={{
-            zIndex: '3',
-            width: kahootWidth,
+            zIndex: isOpenedLast === 'kahoot' ? '2' : '1',
+            width: isChatOpen ? kahootWidth - 300 : kahootWidth,
             height: sectionHeight,
+            right: isChatOpen ? '600px' : '0',
+            transform: isChatOpen && !isKahootOpen ? 'translateX(1000%)' : '',
           }}
           onTransitionEnd={kahootLinksRefresher}
         >
-
-          {isKahootOpen ? (
+          {activeKahoot ? (
             getLinksForLocation().map(
               (link, i) =>
                 activeKahoot === i + 1 && (
@@ -77,7 +77,13 @@ export const KahootsVideo = ({ sectionWidth, sectionHeight, isKahootOpen }) => {
                       id="kahoot-window"
                       title="kahoot-pin"
                       src={link}
-                      width={kahootWidth}
+                      width={
+                        !isChatOpen
+                          ? kahootWidth
+                          : isFullScreen
+                          ? kahootWidth - 300
+                          : kahootWidth
+                      }
                       height={sectionHeight}
                     ></iframe>
                     <KahootFullScreenBtn onClick={toggleFullScreen}>

@@ -2,9 +2,9 @@ import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
 import { TeacherChatPageContainer } from './TeacherChat.styled';
 
 export const TeacherInputContainer = ({ socket, answers }) => {
-  const emitSomething = () => {
-    socket.emit('question:asked', { question: 'howdy' });
-  };
+  // const emitSomething = () => {
+  //   socket.emit('question:asked', { question: 'howdy' });
+  // };
 
   return (
     <TeacherChatPageContainer>
