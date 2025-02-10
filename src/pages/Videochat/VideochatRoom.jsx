@@ -29,7 +29,9 @@ import {
   MediaOption,
   MediaSelector,
   MicroIcon,
+  OverlayContainer,
   PageContainer,
+  RotateIcon,
   SideContainer,
   UsersVideosContainer,
   UserVideo,
@@ -59,6 +61,7 @@ function VideochatRoom() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [activeKahoot, setActiveKahoot] = useState(0);
+  const [isPortraitOrientaion, setIsPortraitOrientaion] = useState(false);
   // eslint-disable-next-line
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [messages, setMessages] = useState([]);
@@ -94,13 +97,6 @@ function VideochatRoom() {
       : setIsOpenedLast(isOpenedLast => '');
   };
 
-  useEffect(() => {
-    const video = localDevices.filter(device => device.kind === 'videoinput');
-    const audio = localDevices.filter(device => device.kind === 'audioinput');
-    setAudioDevices(audio);
-    setVideoDevices(video);
-  }, [localDevices]);
-
   const changePage = isUp => {
     if (isUp) {
       setPage(prevPage => prevPage - 1);
@@ -108,6 +104,32 @@ function VideochatRoom() {
       setPage(prevPage => prevPage + 1);
     }
   };
+
+  useEffect(() => {
+    const checkOrientation = () => {
+      const isMobile = window.matchMedia('(pointer: coarse)').matches;
+      const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+
+      setIsPortraitOrientaion(isMobile && isPortrait);
+    };
+
+    checkOrientation();
+
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+
+    return () => {
+      window.removeEventListener('resize', checkOrientation);
+      window.removeEventListener('orientationchange', checkOrientation);
+    };
+  }, []);
+
+  useEffect(() => {
+    const video = localDevices.filter(device => device.kind === 'videoinput');
+    const audio = localDevices.filter(device => device.kind === 'audioinput');
+    setAudioDevices(audio);
+    setVideoDevices(video);
+  }, [localDevices]);
 
   useEffect(() => {
     if (!localStorage.getItem('userName')) {
@@ -205,6 +227,11 @@ function VideochatRoom() {
 
   return (
     <PageContainer>
+      {isPortraitOrientaion && (
+        <OverlayContainer>
+          <RotateIcon />
+        </OverlayContainer>
+      )}
       <VideochatContainer>
         {clients
           .filter(({ role }) => role === 'admin')

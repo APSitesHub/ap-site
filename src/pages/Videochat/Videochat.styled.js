@@ -6,6 +6,7 @@ import { ReactComponent as _MicroIcon } from '../../img/svg/microphone.svg';
 import { ReactComponent as _DisabledMicroIcon } from '../../img/svg/microphone-slash.svg';
 import { ReactComponent as _ArrowUp } from '../../img/svg/faq-arrow-up.svg';
 import { ReactComponent as _ArrowDown } from '../../img/svg/faq-arrow-down.svg';
+import { ReactComponent as _RotateIcon } from '../../img/svg/rotate-mobile.svg';
 
 // Room styles
 export const PageContainer = styled.div`
@@ -41,6 +42,7 @@ export const MainVideoContainer = styled.div`
 
   @media (max-width: 1024px) {
     margin: 0;
+    position: static;
   }
 
   @media (max-width: 768px) {
@@ -321,6 +323,40 @@ export const RoomItem = styled.li`
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-bottom: 10px;
+`;
+
+export const OverlayContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 9999;
+  touch-action: none;
+  pointer-events: none;
+  overflow: hidden;
+`;
+
+export const RotateIcon = styled(_RotateIcon)`
+  width: 80px;
+  height: 80px;
+  animation: rotate-animation 2s infinite ease-in-out alternate;
+  fill: #ffffff;
+
+  @keyframes rotate-animation {
+    0% {
+      transform: rotate(25deg);
+    }
+    100% {
+      transform: rotate(-25deg);
+    }
+  }
 `;
 
 export const JoinButton = styled(Button)`
