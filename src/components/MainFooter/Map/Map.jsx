@@ -24,7 +24,7 @@ export const Map = () => {
   };
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    googleMapsApiKey: 'AIzaSyCz23fuo0leBt_zjKD47eB0ZebIRwSy5t8',
   });
 
   return (
