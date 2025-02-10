@@ -7,6 +7,7 @@ import { getToken } from '../api/getToken';
 import { isRoomAdmin } from '../api/isRoomAdmin';
 
 export const LOCAL_VIDEO = 'LOCAL_VIDEO';
+const debug = true;
 
 export default function useWebRTC(roomID) {
   const [clients, updateClients] = useStateWithCallback([]);
@@ -42,7 +43,11 @@ export default function useWebRTC(roomID) {
           ];
         }
         return list;
-      }, cb);
+      });
+
+      if (cb) {
+        setTimeout(cb, 0);
+      }
     },
     [updateClients]
   );
@@ -233,14 +238,31 @@ export default function useWebRTC(roomID) {
     let tracksNumber = 0;
 
     peerConnection.ontrack = ({ streams: [remoteStream] }) => {
+      if (debug) {
+        console.log('ONTRACK');
+        console.log('peer id: ' + peerID);
+      }
+
       tracksNumber++;
 
       if (tracksNumber === 2) {
-        addNewClient(peerID, roles[peerID], () => {
-          if (peerMediaElements.current[peerID]) {
-            peerMediaElements.current[peerID].srcObject = remoteStream;
-          }
-        });
+        setTimeout(() => {
+          addNewClient(peerID, roles[peerID], async () => {
+            if (debug) {
+              console.log('media element');
+              console.log(peerMediaElements.current[peerID]);
+            }
+
+            if (peerMediaElements.current[peerID]) {
+              if (debug) {
+                console.log('remote streams: ');
+                console.log(remoteStream.getAudioTracks());
+                console.log(remoteStream.getVideoTracks());
+              }
+              peerMediaElements.current[peerID].srcObject = remoteStream;
+            }
+          });
+        }, 1);
       }
     };
 
@@ -287,6 +309,44 @@ export default function useWebRTC(roomID) {
     }
   };
 
+  const handleToggleMicro = client => {
+    updateClients(list => {
+      return list.map(item => {
+        if (item.clientId === client.peerID) {
+          return {
+            ...item,
+            isMicroEnabled: client.isMicroEnabled,
+          };
+        }
+
+        return {
+          ...item,
+        };
+      });
+    });
+  };
+
+  const handleToggleCamera = client => {
+    updateClients(list => {
+      return list.map(item => {
+        if (item.clientId === client.peerID) {
+          return {
+            ...item,
+            isCameraEnabled: client.isCameraEnabled,
+          };
+        }
+
+        return {
+          ...item,
+        };
+      });
+    });
+  };
+
+  const handleMuteAll = () => {
+    toggleMicrophone(true);
+  };
+
   const handleRemovePeer = ({ peerID }) => {
     const peerConnection = peerConnections.current[peerID];
     if (peerConnection) {
@@ -301,6 +361,13 @@ export default function useWebRTC(roomID) {
 
   useEffect(() => {
     determineRole();
+    socket.on(ACTIONS.SESSION_DESCRIPTION, setRemoteMedia);
+    socket.on(ACTIONS.ICE_CANDIDATE, handleIceCandidate);
+
+    return () => {
+      socket.off(ACTIONS.SESSION_DESCRIPTION, setRemoteMedia);
+      socket.off(ACTIONS.ICE_CANDIDATE, handleIceCandidate);
+    };
   }, []);
 
   useEffect(() => {
@@ -310,31 +377,6 @@ export default function useWebRTC(roomID) {
       socket.off(ACTIONS.ADD_PEER, handleNewPeer);
     };
   }, [addNewClient]);
-
-  useEffect(() => {
-    socket.on(ACTIONS.SESSION_DESCRIPTION, setRemoteMedia);
-
-    return () => {
-      socket.off(ACTIONS.SESSION_DESCRIPTION, setRemoteMedia);
-    };
-  }, []);
-
-  useEffect(() => {
-    socket.on(ACTIONS.ICE_CANDIDATE, handleIceCandidate);
-
-    return () => {
-      socket.off(ACTIONS.ICE_CANDIDATE, handleIceCandidate);
-    };
-  }, []);
-
-  useEffect(() => {
-    socket.on(ACTIONS.REMOVE_PEER, handleRemovePeer);
-
-    return () => {
-      socket.off(ACTIONS.REMOVE_PEER, handleRemovePeer);
-    };
-    // eslint-disable-next-line
-  }, [updateClients]);
 
   useEffect(() => {
     startCapture();
@@ -350,43 +392,17 @@ export default function useWebRTC(roomID) {
   }, [addNewClient, roomID, localRole]);
 
   useEffect(() => {
-    socket.on(ACTIONS.TOGGLE_MICRO, client => {
-      updateClients(list => {
-        return list.map(item => {
-          if (item.clientId === client.peerID) {
-            return {
-              ...item,
-              isMicroEnabled: client.isMicroEnabled,
-            };
-          }
+    socket.on(ACTIONS.TOGGLE_MICRO, handleToggleMicro);
+    socket.on(ACTIONS.TOGGLE_CAMERA, handleToggleCamera);
+    socket.on('mute-all', handleMuteAll);
+    socket.on(ACTIONS.REMOVE_PEER, handleRemovePeer);
 
-          return {
-            ...item,
-          };
-        });
-      });
-    });
-
-    socket.on(ACTIONS.TOGGLE_CAMERA, client => {
-      updateClients(list => {
-        return list.map(item => {
-          if (item.clientId === client.peerID) {
-            return {
-              ...item,
-              isCameraEnabled: client.isCameraEnabled,
-            };
-          }
-
-          return {
-            ...item,
-          };
-        });
-      });
-    });
-
-    socket.on('mute-all', () => {
-      toggleMicrophone(true);
-    });
+    return () => {
+      socket.off(ACTIONS.TOGGLE_MICRO, handleToggleMicro);
+      socket.off(ACTIONS.TOGGLE_CAMERA, handleToggleCamera);
+      socket.off('mute-all', handleMuteAll);
+      socket.off(ACTIONS.REMOVE_PEER, handleRemovePeer);
+    };
   }, [updateClients]);
 
   const provideMediaRef = useCallback((id, node) => {
