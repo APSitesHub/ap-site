@@ -13,6 +13,7 @@ import { LoginErrorNote, LoginInput, LoginInputNote, LoginLogo, StreamAuthText, 
 import { AdminFormBtn, LoginForm } from './AdminPanel/AdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+axios.defaults.headers.common['X-Page-URL'] = window.location.href;
 
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
