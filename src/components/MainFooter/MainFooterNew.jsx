@@ -33,7 +33,6 @@ import {
   TikTokBtnNew,
   YouTubeBtnNew,
 } from './MainFooter.styled';
-import { Map } from './Map/Map';
 
 export const MainFooterNew = ({ toggleModal }) => {
   // eslint-disable-next-line
@@ -177,7 +176,7 @@ export const MainFooterNew = ({ toggleModal }) => {
           </MobileLogoBox>
         </FooterBoxNew>
       </Box>
-      <Map />
+      {/* <Map /> */}
     </FooterNew>
   );
 };

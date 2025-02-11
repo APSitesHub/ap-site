@@ -22,6 +22,10 @@ import { PedagogiumLogisticsKahootForm } from './PedagogiumLogisticsKahootForm';
 import { PedagogiumPrepKahootForm } from './PedagogiumPrepKahootForm';
 import { WSBMIRLogisticsKahootForm } from './WSBMIRLogisticsKahootForm';
 import { WSBMIRPrepKahootForm } from './WSBMIRPrepKahootForm';
+import { WSKMLogisticsKahootForm } from './WSKMLogisticsKahootForm';
+import { WSKMPrepKahootForm } from './WSKMPrepKahootForm';
+import { WSSiPLogisticsKahootForm } from './WSSiPLogisticsKahootForm';
+import { WSSiPPrepKahootForm } from './WSSiPPrepKahootForm';
 import { WSTIJOLogisticsKahootForm } from './WSTIJOLogisticsKahootForm';
 import { WSTIJOPrepKahootForm } from './WSTIJOPrepKahootForm';
 import { WSTiHLogisticsKahootForm } from './WSTiHLogisticsKahootForm';
@@ -150,6 +154,18 @@ const UniKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('wstih_prep')}>
               WSTiH Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wskm_logistics')}>
+              WSKM Logistics
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wskm_prep')}>
+              WSKM Prep
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wssip_logistics')}>
+              WSSiP Logistics
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wssip_prep')}>
+              WSSiP Prep
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -188,6 +204,18 @@ const UniKahootAdminPanel = () => {
           )}
           {levels.includes('wstih_prep') && (
             <WSTiHPrepKahootForm destination={destination} />
+          )}
+          {levels.includes('wskm_logistics') && (
+            <WSKMLogisticsKahootForm destination={destination} />
+          )}
+          {levels.includes('wskm_prep') && (
+            <WSKMPrepKahootForm destination={destination} />
+          )}
+          {levels.includes('wssip_logistics') && (
+            <WSSiPLogisticsKahootForm destination={destination} />
+          )}
+          {levels.includes('wssip_prep') && (
+            <WSSiPPrepKahootForm destination={destination} />
           )}
         </KahootFormBox>
         {isLoading && <Loader />}

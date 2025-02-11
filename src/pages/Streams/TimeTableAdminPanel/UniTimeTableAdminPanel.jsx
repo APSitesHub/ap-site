@@ -201,6 +201,14 @@ const UniTimeTableAdminPanel = () => {
       label: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
       value: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
     },
+    {
+      label: 'WSKM (Wyższa Szkoła Kadr Menedżerskich)',
+      value: 'WSKM (Wyższa Szkoła Kadr Menedżerskich)',
+    },
+    {
+      label: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
+      value: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -266,6 +274,28 @@ const UniTimeTableAdminPanel = () => {
     {
       label: 'Kurs Przygotowawczy (WSTiH)',
       value: '83568',
+    },
+  ];
+
+  const wskmMarathonOptions = [
+    {
+      label: 'Logistics (WSKM)',
+      value: '83751',
+    },
+    {
+      label: 'Kurs Przygotowawczy (WSKM)',
+      value: '83752',
+    },
+  ];
+
+  const wssipMarathonOptions = [
+    {
+      label: 'Logistics (WSSiP)',
+      value: '83761',
+    },
+    {
+      label: 'Kurs Przygotowawczy (WSSiP)',
+      value: '83765',
     },
   ];
 
@@ -410,6 +440,10 @@ const UniTimeTableAdminPanel = () => {
                     : uniValue ===
                       'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)'
                     ? wstihMarathonOptions
+                    : uniValue === 'WSKM (Wyższa Szkoła Kadr Menedżerskich)'
+                    ? wskmMarathonOptions
+                    : uniValue === 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)'
+                    ? wssipMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -503,6 +537,18 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('WSTiH') &&
                         timetable.marathon === '83568'
                       ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('WSKM') &&
+                        timetable.marathon === '83751'
+                      ? `Logistics ${timetable.marathon}`
+                      : timetable.university.includes('WSKM') &&
+                        timetable.marathon === '83752'
+                      ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('WSSiP') &&
+                        timetable.marathon === '83761'
+                      ? `Logistics ${timetable.marathon}`
+                      : timetable.university.includes('WSSiP') &&
+                        timetable.marathon === '83765'
+                      ? `Preparation Course ${timetable.marathon}`
                       : ''}{' '}
                     <UserEditButton onClick={() => handleMarathonEdit(timetable._id)}>
                       Edit
@@ -553,6 +599,8 @@ const UniTimeTableAdminPanel = () => {
               ewspaMarathonOptions={ewspaMarathonOptions}
               meritoMarathonOptions={meritoMarathonOptions}
               wstihMarathonOptions={wstihMarathonOptions}
+              wskmMarathonOptions={wskmMarathonOptions}
+              wssipMarathonOptions={wssipMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
             />
@@ -569,6 +617,8 @@ const UniTimeTableAdminPanel = () => {
               ewspaMarathonOptions={ewspaMarathonOptions}
               meritoMarathonOptions={meritoMarathonOptions}
               wstihMarathonOptions={wstihMarathonOptions}
+              wskmMarathonOptions={wskmMarathonOptions}
+              wssipMarathonOptions={wssipMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>

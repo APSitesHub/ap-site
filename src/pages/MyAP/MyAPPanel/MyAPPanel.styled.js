@@ -634,7 +634,7 @@ export const PlatformDataConcealer = styled.div`
   position: absolute;
   top: 2px;
   right: 100px;
-  z-index: 5;
+  z-index: 3;
 
   width: 365px;
   height: 60px;
