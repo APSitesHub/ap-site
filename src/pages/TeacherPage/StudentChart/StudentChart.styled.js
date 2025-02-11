@@ -127,3 +127,26 @@ export const ChartImage = styled.img`
   width: 100%;
   height: auto;
 `;
+
+export const TooltipArea = styled.div`
+  background-color: white;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+`;
+
+export const TooltipColorLabel = styled.div`
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  border: 0.5px solid gray;
+  display: inline-block;
+`;
+
+export const TooltipIdText = styled.span``;
+
+export const TooltipValueText = styled.span`
+  font-weight: 700;
+`;

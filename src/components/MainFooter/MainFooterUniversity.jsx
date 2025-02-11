@@ -33,7 +33,6 @@ import {
   TikTokBtnNew,
   YouTubeBtnNew,
 } from './MainFooter.styled';
-import { Map } from './Map/Map';
 
 export const MainFooterUniversity = ({ toggleModal }) => {
   // eslint-disable-next-line
@@ -67,10 +66,7 @@ export const MainFooterUniversity = ({ toggleModal }) => {
               </FooterLogoLink>
               <LeadWrapperNew>
                 <LeadDescNew>... якщо залишились запитання </LeadDescNew>
-                <FooterLeadBtnNew
-                  onClick={toggleModal}
-                  data-pagename="university"
-                >
+                <FooterLeadBtnNew onClick={toggleModal} data-pagename="university">
                   ЗАЛИШИТИ ЗАЯВКУ
                 </FooterLeadBtnNew>
               </LeadWrapperNew>
@@ -83,9 +79,7 @@ export const MainFooterUniversity = ({ toggleModal }) => {
                   <LinkList>
                     {footerProjectsItems.map((item, i) => (
                       <LinkListItemNew key={i}>
-                        <FooterNavLinkNew to={item.to}>
-                          {item.service}
-                        </FooterNavLinkNew>
+                        <FooterNavLinkNew to={item.to}>{item.service}</FooterNavLinkNew>
                       </LinkListItemNew>
                     ))}
                   </LinkList>
@@ -95,9 +89,7 @@ export const MainFooterUniversity = ({ toggleModal }) => {
                   <LinkList>
                     {footerCoursesItems.map((item, i) => (
                       <LinkListItemNew key={i}>
-                        <FooterNavLinkNew to={item.to}>
-                          {item.course}
-                        </FooterNavLinkNew>
+                        <FooterNavLinkNew to={item.to}>{item.course}</FooterNavLinkNew>
                       </LinkListItemNew>
                     ))}
                   </LinkList>
@@ -180,7 +172,7 @@ export const MainFooterUniversity = ({ toggleModal }) => {
           </MobileLogoBox>
         </FooterBoxNew>
       </Box>
-      <Map />
+      {/* <Map /> */}
     </FooterUniversity>
   );
 };
