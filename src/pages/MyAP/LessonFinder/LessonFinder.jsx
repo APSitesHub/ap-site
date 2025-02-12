@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { ReactComponent as PdfIcon } from '../../../img/svg/pdf-icon.svg';
 
@@ -53,6 +53,7 @@ export const LessonFinder = ({
   isMultipleCourses,
 }) => {
   const [lessonsFound, setLessonsFound] = useState([]);
+  const [visibleLessons, setVisibleLessons] = useState([]);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [openedPdf, setOpenedPdf] = useState('');
   const [isFaqListOpen, setIsFaqListOpen] = useState(false);
@@ -62,6 +63,7 @@ export const LessonFinder = ({
   const [isAnswerOpen, setIsAnswerOpen] = useState(false);
   const [openedAnswer, setOpenedAnswer] = useState(0);
   const [isInputEmpty, setIsInputEmpty] = useState(true);
+  const loadMoreRef = useRef(null);
 
   const path = window.location.origin + window.location.pathname;
 
@@ -202,6 +204,44 @@ export const LessonFinder = ({
     };
   };
 
+  const loadMoreLessons = () => {
+    setVisibleLessons(prev => {
+      const nextIndex = prev.length;
+      return [...prev, ...lessonsFound.slice(nextIndex, nextIndex + 5)];
+    });
+  };
+
+  useEffect(() => {
+    setVisibleLessons(lessonsFound.slice(0, 5));
+  }, [lessonsFound]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        console.log('entries');
+        console.log(entries);
+
+        if (entries[0].isIntersecting) {
+          loadMoreLessons();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    console.log('observer');
+    console.log(observer);
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current);
+      }
+    };
+  }, [visibleLessons]);
+
   return (
     <FinderBox
       className={lessonsFound.length === 0 && 'nothing-found'}
@@ -226,7 +266,7 @@ export const LessonFinder = ({
         <>
           <FinderLessons>
             <LessonBox>
-              {lessonsFound.slice(0, 5).map(lesson => (
+              {visibleLessons.map(lesson => (
                 <LessonBoxItem key={lesson._id}>
                   <LessonTopBox>
                     <LessonValuesLogo>
@@ -410,6 +450,7 @@ export const LessonFinder = ({
                 </LessonBoxItem>
               ))}
             </LessonBox>
+            <div ref={loadMoreRef} style={{ height: '10px' }}></div>
           </FinderLessons>
           <FinderMolding />
         </>
