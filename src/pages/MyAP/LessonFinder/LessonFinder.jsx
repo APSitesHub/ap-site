@@ -269,11 +269,7 @@ export const LessonFinder = ({
                 <LessonBoxItem key={lesson._id}>
                   <LessonTopBox>
                     <LessonValuesLogo>
-                      {lesson.level +
-                        lesson.lesson
-                          .replace('Lesson', ' -')
-                          .replace('Lekcja', ' -')
-                          .replace('Unterricht', ' -')}
+                      {lesson.level + ' - ' + lesson.lesson.match(/\d+/)}
                     </LessonValuesLogo>
                     <LessonTextValuesBox>
                       <LessonValueName>
