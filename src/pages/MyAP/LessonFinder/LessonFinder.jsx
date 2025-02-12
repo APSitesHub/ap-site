@@ -113,9 +113,7 @@ export const LessonFinder = ({
         )
       : setLessonsFound(
           lessonsFound =>
-            (lessonsFound = [
-              ...lessons.filter(lesson => language === lesson.lang),
-            ])
+            (lessonsFound = [...lessons.filter(lesson => language === lesson.lang)])
         );
     sessionStorage.setItem('searchValue', value);
   };
@@ -204,23 +202,20 @@ export const LessonFinder = ({
     };
   };
 
-  const loadMoreLessons = () => {
-    setVisibleLessons(prev => {
-      const nextIndex = prev.length;
-      return [...prev, ...lessonsFound.slice(nextIndex, nextIndex + 5)];
-    });
-  };
-
   useEffect(() => {
     setVisibleLessons(lessonsFound.slice(0, 5));
   }, [lessonsFound]);
 
   useEffect(() => {
+    const loadMoreLessons = () => {
+      setVisibleLessons(prev => {
+        const nextIndex = prev.length;
+        return [...prev, ...lessonsFound.slice(nextIndex, nextIndex + 5)];
+      });
+    };
+
     const observer = new IntersectionObserver(
       entries => {
-        console.log('entries');
-        console.log(entries);
-
         if (entries[0].isIntersecting) {
           loadMoreLessons();
         }
@@ -228,19 +223,23 @@ export const LessonFinder = ({
       { threshold: 1.0 }
     );
 
-    console.log('observer');
-    console.log(observer);
-
     if (loadMoreRef.current) {
       observer.observe(loadMoreRef.current);
     }
 
+    // added to prevent loading non-exisiting lessons when scrolled to the end of the list
+    if (loadMoreRef.current && lessonsFound.length === visibleLessons.length) {
+      observer.unobserve(loadMoreRef.current);
+    }
+
+    const observerRef = loadMoreRef.current;
+
     return () => {
-      if (loadMoreRef.current) {
-        observer.unobserve(loadMoreRef.current);
+      if (observerRef) {
+        observer.unobserve(observerRef);
       }
     };
-  }, [visibleLessons]);
+  }, [visibleLessons, lessonsFound]);
 
   return (
     <FinderBox
@@ -349,9 +348,7 @@ export const LessonFinder = ({
                           </PdfWrapper>
                           <PdfPreviewBackground
                             className={
-                              isPdfPreviewOpen &&
-                              openedPdf === pdf &&
-                              'preview-open'
+                              isPdfPreviewOpen && openedPdf === pdf && 'preview-open'
                             }
                           >
                             {isPdfPreviewOpen && openedPdf === pdf && (
@@ -383,9 +380,7 @@ export const LessonFinder = ({
 
                       <FaqFinderLabel
                         className={
-                          isFaqListOpen &&
-                          openedFaq === lesson._id &&
-                          'faqlistopen'
+                          isFaqListOpen && openedFaq === lesson._id && 'faqlistopen'
                         }
                       >
                         <FaqFinderInput
@@ -397,9 +392,7 @@ export const LessonFinder = ({
                       </FaqFinderLabel>
                       <FaqList
                         className={
-                          isFaqListOpen &&
-                          openedFaq === lesson._id &&
-                          'faqlistopen'
+                          isFaqListOpen && openedFaq === lesson._id && 'faqlistopen'
                         }
                       >
                         {answersFound.map((q, i) => (
@@ -409,18 +402,14 @@ export const LessonFinder = ({
                             </FaqListLink>
                             <FaqQuestion
                               className={
-                                isAnswerOpen &&
-                                openedAnswer === i &&
-                                'preview-open'
+                                isAnswerOpen && openedAnswer === i && 'preview-open'
                               }
                             >
                               {q.question}
                             </FaqQuestion>
                             <FaqPreviewBackground
                               className={
-                                isAnswerOpen &&
-                                openedAnswer === i &&
-                                'preview-open'
+                                isAnswerOpen && openedAnswer === i && 'preview-open'
                               }
                             >
                               {isAnswerOpen && openedAnswer === i && (
