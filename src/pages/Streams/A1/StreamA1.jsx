@@ -84,6 +84,9 @@ const StreamA1 = () => {
       setIsAnimated(isAnimated => !isAnimated);
     }
   };
+  const handleDisconnect = () => {
+    socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
+  };
 
   const videoBoxWidth =
     chatWidth === 0 && width > height ? width - 300 : width - chatWidth;
@@ -190,9 +193,13 @@ const StreamA1 = () => {
       }
     });
 
+    window.addEventListener('beforeunload', handleDisconnect);
+
     return () => {
+      window.removeEventListener('beforeunload', handleDisconnect);
+
       console.log('disconnecting');
-      socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
+      handleDisconnect();
       socketRef.current.off('connected');
       socketRef.current.off('message');
       socketRef.current.off('user');
@@ -312,7 +319,7 @@ const StreamA1 = () => {
               </ChatBox>
             )}
 
-            <StudentInput isInputOpen={isInputOpen} toggleInput={toggleInput} />
+            <StudentInput isInputOpen={isInputOpen} socket={socketRef.current} toggleInput={toggleInput} />
 
             <Support
               sectionWidth={width}
