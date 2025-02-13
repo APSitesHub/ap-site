@@ -215,6 +215,12 @@ export const CameraIcon = styled(_CameraIcon)`
   fill: #ffffff;
   height: 28px;
   width: 28px;
+
+  ${({ $isGray }) =>
+    $isGray &&
+    css`
+      fill: #bebecc;
+    `}
 `;
 
 export const DisabledCameraIcon = styled(_DisabledCameraIcon)`

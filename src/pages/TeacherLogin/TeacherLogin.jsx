@@ -24,7 +24,7 @@ const TeacherLogin = () => {
     try {
       const response = await axios.post('/teachers/login', values);
       localStorage.setItem('token', response.data.token);
-      navigate('../videochat');
+      navigate('../teacher-ap');
     } catch (error) {
       console.error(error);
     }
