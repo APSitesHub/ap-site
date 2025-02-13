@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { ReactComponent as PdfIcon } from '../../../img/svg/pdf-icon.svg';
 
@@ -53,6 +53,7 @@ export const LessonFinder = ({
   isMultipleCourses,
 }) => {
   const [lessonsFound, setLessonsFound] = useState([]);
+  const [visibleLessons, setVisibleLessons] = useState([]);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [openedPdf, setOpenedPdf] = useState('');
   const [isFaqListOpen, setIsFaqListOpen] = useState(false);
@@ -62,6 +63,7 @@ export const LessonFinder = ({
   const [isAnswerOpen, setIsAnswerOpen] = useState(false);
   const [openedAnswer, setOpenedAnswer] = useState(0);
   const [isInputEmpty, setIsInputEmpty] = useState(true);
+  const loadMoreRef = useRef(null);
 
   const path = window.location.origin + window.location.pathname;
 
@@ -111,9 +113,7 @@ export const LessonFinder = ({
         )
       : setLessonsFound(
           lessonsFound =>
-            (lessonsFound = [
-              ...lessons.filter(lesson => language === lesson.lang),
-            ])
+            (lessonsFound = [...lessons.filter(lesson => language === lesson.lang)])
         );
     sessionStorage.setItem('searchValue', value);
   };
@@ -202,6 +202,45 @@ export const LessonFinder = ({
     };
   };
 
+  useEffect(() => {
+    setVisibleLessons(lessonsFound.slice(0, 5));
+  }, [lessonsFound]);
+
+  useEffect(() => {
+    const loadMoreLessons = () => {
+      setVisibleLessons(prev => {
+        const nextIndex = prev.length;
+        return [...prev, ...lessonsFound.slice(nextIndex, nextIndex + 5)];
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          loadMoreLessons();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    // added to prevent loading non-exisiting lessons when scrolled to the end of the list
+    if (loadMoreRef.current && lessonsFound.length === visibleLessons.length) {
+      observer.unobserve(loadMoreRef.current);
+    }
+
+    const observerRef = loadMoreRef.current;
+
+    return () => {
+      if (observerRef) {
+        observer.unobserve(observerRef);
+      }
+    };
+  }, [visibleLessons, lessonsFound]);
+
   return (
     <FinderBox
       className={lessonsFound.length === 0 && 'nothing-found'}
@@ -226,15 +265,11 @@ export const LessonFinder = ({
         <>
           <FinderLessons>
             <LessonBox>
-              {lessonsFound.slice(0, 5).map(lesson => (
+              {visibleLessons.map(lesson => (
                 <LessonBoxItem key={lesson._id}>
                   <LessonTopBox>
                     <LessonValuesLogo>
-                      {lesson.level +
-                        lesson.lesson
-                          .replace('Lesson', ' -')
-                          .replace('Lekcja', ' -')
-                          .replace('Unterricht', ' -')}
+                      {lesson.level + ' - ' + lesson.lesson.match(/\d+/)}
                     </LessonValuesLogo>
                     <LessonTextValuesBox>
                       <LessonValueName>
@@ -309,9 +344,7 @@ export const LessonFinder = ({
                           </PdfWrapper>
                           <PdfPreviewBackground
                             className={
-                              isPdfPreviewOpen &&
-                              openedPdf === pdf &&
-                              'preview-open'
+                              isPdfPreviewOpen && openedPdf === pdf && 'preview-open'
                             }
                           >
                             {isPdfPreviewOpen && openedPdf === pdf && (
@@ -343,9 +376,7 @@ export const LessonFinder = ({
 
                       <FaqFinderLabel
                         className={
-                          isFaqListOpen &&
-                          openedFaq === lesson._id &&
-                          'faqlistopen'
+                          isFaqListOpen && openedFaq === lesson._id && 'faqlistopen'
                         }
                       >
                         <FaqFinderInput
@@ -357,9 +388,7 @@ export const LessonFinder = ({
                       </FaqFinderLabel>
                       <FaqList
                         className={
-                          isFaqListOpen &&
-                          openedFaq === lesson._id &&
-                          'faqlistopen'
+                          isFaqListOpen && openedFaq === lesson._id && 'faqlistopen'
                         }
                       >
                         {answersFound.map((q, i) => (
@@ -369,18 +398,14 @@ export const LessonFinder = ({
                             </FaqListLink>
                             <FaqQuestion
                               className={
-                                isAnswerOpen &&
-                                openedAnswer === i &&
-                                'preview-open'
+                                isAnswerOpen && openedAnswer === i && 'preview-open'
                               }
                             >
                               {q.question}
                             </FaqQuestion>
                             <FaqPreviewBackground
                               className={
-                                isAnswerOpen &&
-                                openedAnswer === i &&
-                                'preview-open'
+                                isAnswerOpen && openedAnswer === i && 'preview-open'
                               }
                             >
                               {isAnswerOpen && openedAnswer === i && (
@@ -410,6 +435,7 @@ export const LessonFinder = ({
                 </LessonBoxItem>
               ))}
             </LessonBox>
+            <div ref={loadMoreRef} style={{ height: '10px' }}></div>
           </FinderLessons>
           <FinderMolding />
         </>
