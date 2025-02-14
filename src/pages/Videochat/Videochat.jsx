@@ -11,10 +11,6 @@ function Videochat() {
   const newRoomName = useRef('');
 
   useEffect(() => {
-    if (!getToken()) {
-      navigate('../teacher-login');
-    }
-
     updateRooms();
     // eslint-disable-next-line
   }, []);
