@@ -37,7 +37,7 @@ export const APPanel = styled.div`
   padding: 6px 4px;
 
   position: absolute;
-  top: 142px;
+  top: 145px;
   right: 14px;
   z-index: 5;
   border-radius: 8px;
@@ -307,7 +307,7 @@ export const GuideBtnIcon = styled(GuideIcon)`
 
 export const PanelHideSwitch = styled.div`
   position: absolute;
-  top: 197px;
+  top: 215px;
   right: 0;
 
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
@@ -330,7 +330,7 @@ export const PanelHideSwitch = styled.div`
   }
 
   @media screen and (min-width: 768px) {
-    top: 240px;
+    top: 255px;
     transform: translateY(-50%);
     width: 12px;
     height: 42px;

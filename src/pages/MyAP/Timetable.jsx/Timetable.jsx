@@ -102,7 +102,7 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
 
   const panelStyles = () => {
     return {
-      top: isMultipleCourses ? '184px' : '142px',
+      top: isMultipleCourses ? '145px' : '142px',
     };
   };
 
@@ -143,9 +143,7 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
                 <tr>
                   <TimetableHead className="day">День</TimetableHead>
                   <TimetableHead className="time">Час</TimetableHead>
-                  <TimetableHead className="lessonNumber">
-                    № уроку
-                  </TimetableHead>
+                  <TimetableHead className="lessonNumber">№ уроку</TimetableHead>
                   <TimetableHead className="teacher">Викладач</TimetableHead>
                 </tr>
               </thead>
@@ -153,8 +151,7 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
                 {personalTimetable.schedule
                   .filter(
                     lesson =>
-                      lesson.type === 'webinar' ||
-                      lesson.type === 'webinar, repeat'
+                      lesson.type === 'webinar' || lesson.type === 'webinar, repeat'
                   )
                   .sort((a, b) => a.day - b.day)
                   .map((lesson, i) => (
@@ -195,9 +192,7 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
                 <tr>
                   <TimetableHead className="day">День</TimetableHead>
                   <TimetableHead className="time">Час</TimetableHead>
-                  <TimetableHead className="lessonNumber">
-                    № уроку
-                  </TimetableHead>
+                  <TimetableHead className="lessonNumber">№ уроку</TimetableHead>
                   <TimetableHead className="teacher">Викладач</TimetableHead>
                 </tr>
               </thead>

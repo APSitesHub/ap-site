@@ -84,9 +84,6 @@ const StreamA1 = () => {
       setIsAnimated(isAnimated => !isAnimated);
     }
   };
-  const handleDisconnect = () => {
-    socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
-  };
 
   const videoBoxWidth =
     chatWidth === 0 && width > height ? width - 300 : width - chatWidth;
@@ -98,6 +95,10 @@ const StreamA1 = () => {
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
     // socketRef.current = io('http://localhost:4000/');
+
+    const handleDisconnect = () => {
+      socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
+    };
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
@@ -319,7 +320,11 @@ const StreamA1 = () => {
               </ChatBox>
             )}
 
-            <StudentInput isInputOpen={isInputOpen} socket={socketRef.current} toggleInput={toggleInput} />
+            <StudentInput
+              isInputOpen={isInputOpen}
+              socket={socketRef.current}
+              toggleInput={toggleInput}
+            />
 
             <Support
               sectionWidth={width}

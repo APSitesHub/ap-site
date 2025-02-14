@@ -23,12 +23,7 @@ import {
   UserPlace,
 } from './Points.styled';
 
-export const Points = ({
-  user,
-  flatPoints,
-  flatMonthlyPoints,
-  isMultipleCourses,
-}) => {
+export const Points = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourses }) => {
   const [position, setPosition] = useState('0%');
   const [activeRating, setActiveRating] = useState(0);
 
@@ -52,7 +47,7 @@ export const Points = ({
 
   const panelStyles = () => {
     return {
-      top: isMultipleCourses ? '184px' : '142px',
+      top: isMultipleCourses ? '145px' : '142px',
     };
   };
 
@@ -73,9 +68,7 @@ export const Points = ({
       ) : (
         <>
           <PointsCategoryPicker>
-            <PointsCategoryPointer
-              style={{ transform: `translateX(${position})` }}
-            />
+            <PointsCategoryPointer style={{ transform: `translateX(${position})` }} />
             <PointsCategory
               onClick={() => {
                 calculatePointerPosition(0);
@@ -106,9 +99,7 @@ export const Points = ({
             </PointsUserData>
             <PointsUserDataWide>{user.name}</PointsUserDataWide>
             <PointsUserData>
-              {pointsSorted[userPlace].points < 0
-                ? 0
-                : pointsSorted[userPlace].points}
+              {pointsSorted[userPlace].points < 0 ? 0 : pointsSorted[userPlace].points}
             </PointsUserData>
           </PointsUser>
           <PointsLeaderboard>

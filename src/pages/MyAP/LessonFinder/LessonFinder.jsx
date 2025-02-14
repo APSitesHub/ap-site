@@ -198,7 +198,7 @@ export const LessonFinder = ({
 
   const panelStyles = () => {
     return {
-      top: isMultipleCourses ? '184px' : '142px',
+      top: isMultipleCourses ? '145px' : '142px',
     };
   };
 
