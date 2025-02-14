@@ -25,7 +25,7 @@ import {
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
 } from './MyAPPanel/MyAPPanel.styled';
-import { MyAPPanelPl } from './MyAPPanel/MyAPPanelPl';
+import { MyAPPanelPlTemp } from './MyAPPanel/MyAPPanelPlTemp';
 
 const monthly = [
   { name: 'Adam Nowak', points: 327 },
@@ -119,42 +119,42 @@ const pltimetable = [
   },
   {
     day: 2,
-    subject: 'Supply chain management',
+    subject: 'Introduction to Machining and CNC Technology',
     lessonNumber: '1',
     time: '12:00',
     marathon: 'logistics',
   },
   {
     day: 2,
-    subject: 'Knowledge about Poland',
+    subject: 'Operation and Setup of CNC Machines',
     lessonNumber: '1',
     time: '13:00',
     marathon: 'prep',
   },
   {
     day: 3,
-    subject: 'Inventory management',
+    subject: 'Machining Technology and Parameter Selection',
     lessonNumber: '1',
     time: '12:00',
     marathon: 'logistics',
   },
   {
     day: 3,
-    subject: 'Adaptation in Europe',
+    subject: 'Maintenance and Diagnostics of CNC Machines',
     lessonNumber: '1',
     time: '13:00',
     marathon: 'prep',
   },
   {
     day: 4,
-    subject: 'Polish',
+    subject: 'Safety Rules in CNC Machine Operation',
     lessonNumber: '1',
     time: '11:00',
     marathon: 'logistics',
   },
   {
     day: 4,
-    subject: 'Balanced logistics ',
+    subject: 'CNC Machine Programming',
     lessonNumber: '1',
     time: '12:00',
     marathon: 'logistics',
@@ -384,7 +384,7 @@ const MyAPPl = () => {
       ) : (
         <>
           {Object.values(points).length > 0 && (
-            <MyAPPanelPl
+            <MyAPPanelPlTemp
               lessons={lessons}
               user={user}
               points={points}

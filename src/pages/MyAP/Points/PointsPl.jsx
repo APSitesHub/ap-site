@@ -33,7 +33,7 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
       : flatPoints.sort((a, b) => b.points - a.points);
 
   const userPlace = pointsSorted.findIndex(
-    leader => leader.name.toLowerCase() === user.name.toLowerCase()
+    leader => leader.name.toLowerCase() === 'dev acc'
   );
 
   const calculatePointerPosition = i => {
@@ -89,9 +89,8 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
           </PointsTableHead>
           <PointsUser>
             <PointsUserData>
-              {pointsSorted.findIndex(
-                leader => leader.name.toLowerCase() === user.name.toLowerCase()
-              ) + 1}
+              {pointsSorted.findIndex(leader => leader.name.toLowerCase() === 'dev acc') +
+                1}
             </PointsUserData>
             <PointsUserDataWide>Student</PointsUserDataWide>
             <PointsUserData>

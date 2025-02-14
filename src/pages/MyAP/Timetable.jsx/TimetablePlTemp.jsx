@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import eyesImg from '../../../img/quiz/eyes.png';
 import { CalendarIcon } from '../Attendance/Attendance.styled';
 import {
@@ -9,32 +8,19 @@ import {
 import {
   TimetableBody,
   TimetableBox,
-  TimetableChangeCourseBtn,
-  TimetableChangeCourseBtnText,
   TimetableDaysCell,
   TimetableDaysItem,
   TimetableHead,
   TimetableHeading,
   TimetableLessonLink,
   TimetableLessonLinkText,
-  TimetableLessonPlType,
+  TimetableLessonType,
   TimetableTable,
   TimetableWebinars,
   TimetableWebinarsHead,
 } from './Timetable.styled';
 
-export const TimetablePl = ({ user, language, timetable, isMultipleCourses }) => {
-  const [course, setCourse] = useState('logistics');
-  const [isAnimated, setIsAnimated] = useState(false);
-
-  const changeTimetable = () => {
-    setIsAnimated(true);
-    setCourse(course => (course === 'logistics' ? 'prep' : 'logistics'));
-    setTimeout(() => {
-      setIsAnimated(false);
-    }, 3000);
-  };
-
+export const TimetablePlTemp = ({ user, language, timetable, isMultipleCourses }) => {
   const getLink = () => {
     const baseStreamUrl = 'https://academy.ap.education/streams/';
 
@@ -56,9 +42,6 @@ export const TimetablePl = ({ user, language, timetable, isMultipleCourses }) =>
       <TimetableHeading>
         <CalendarIcon />
         Harmonogram zajęć
-        <TimetableChangeCourseBtn onClick={changeTimetable}>
-          <TimetableChangeCourseBtnText>Change course</TimetableChangeCourseBtnText>
-        </TimetableChangeCourseBtn>
       </TimetableHeading>
       {!timetable ? (
         <PointsPlaceHolder>
@@ -74,9 +57,7 @@ export const TimetablePl = ({ user, language, timetable, isMultipleCourses }) =>
         <TimetableBody>
           <TimetableWebinars>
             <TimetableWebinarsHead>
-              <TimetableLessonPlType className={isAnimated ? 'animated' : undefined}>
-                {course === 'logistics' ? 'Logistics' : 'Preparation Course'}
-              </TimetableLessonPlType>
+              <TimetableLessonType>Teoretyczne zajęcia</TimetableLessonType>
               <TimetableLessonLink href={link} target="_blank">
                 <TimetableLessonLinkText>Przejść do</TimetableLessonLinkText>
               </TimetableLessonLink>
@@ -92,7 +73,6 @@ export const TimetablePl = ({ user, language, timetable, isMultipleCourses }) =>
               </thead>
               <tbody>
                 {timetable
-                  .filter(lesson => course === lesson.marathon)
                   .sort((a, b) => a.day - b.day)
                   .map((lesson, i) => (
                     <TimetableDaysItem

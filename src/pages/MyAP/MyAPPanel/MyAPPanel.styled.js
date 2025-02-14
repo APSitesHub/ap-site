@@ -307,7 +307,7 @@ export const GuideBtnIcon = styled(GuideIcon)`
 
 export const PanelHideSwitch = styled.div`
   position: absolute;
-  top: 215px;
+  top: 210px;
   right: 0;
 
   box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);

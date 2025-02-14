@@ -372,6 +372,9 @@ const MyAP = lazy(() =>
 const MyAPPl = lazy(() =>
   import(/* webpackChunkName: "My AP Pl Page" */ '../pages/MyAP/MyAPPl')
 );
+const MyAPPlTemp = lazy(() =>
+  import(/* webpackChunkName: "My AP Temp Page" */ '../pages/MyAP/MyAPPlTemp')
+);
 const TrialLesson = lazy(() =>
   import(/* webpackChunkName: "Trial Lesson Page" */ '../pages/TrialLesson/TrialLesson')
 );
@@ -475,7 +478,7 @@ export const App = () => {
           <Route path="room/:id" element={<VideochatRoom />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
-          <Route path="my-ap-ts" element={<MyAPPl />} noindex={true} />
+          <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
@@ -846,7 +849,11 @@ export const App = () => {
             <Route path="dekidsfree" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a0" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a0_2" element={<TeacherPageFarm />} noindex={true} />
-            <Route path="polski-a0_3" element={<TeacherPageWarehouseHotel />} noindex={true} />
+            <Route
+              path="polski-a0_3"
+              element={<TeacherPageWarehouseHotel />}
+              noindex={true}
+            />
             <Route path="polski-a1" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a1free" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a2" element={<TeacherPage />} noindex={true} />
