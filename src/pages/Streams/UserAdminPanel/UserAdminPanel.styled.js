@@ -151,6 +151,8 @@ export const UserCellLeft = styled(UserCell)`
   text-align: start;
   padding-left: 8px;
   max-width: 50vw;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 `;
 
 export const UserEditButton = styled.button`

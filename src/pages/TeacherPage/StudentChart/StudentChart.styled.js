@@ -120,6 +120,8 @@ export const ChartAreaLimiter = styled.div`
 `;
 
 export const FeedbackText = styled.p`
+  white-space: pre-wrap;
+  word-wrap: break-word;
   margin: 5px 0 7px 0;
 `;
 
