@@ -93,7 +93,9 @@ export const TeacherFarmButtonBoxHideSwitch = styled(TeacherButtonBoxHideSwitch)
   bottom: 210px;
 `;
 
-export const TeacherWarehouseHotelButtonBoxHideSwitch = styled(TeacherButtonBoxHideSwitch)`
+export const TeacherWarehouseHotelButtonBoxHideSwitch = styled(
+  TeacherButtonBoxHideSwitch
+)`
   bottom: 290px;
 `;
 
@@ -279,4 +281,37 @@ export const QuestionHeader = styled.h2`
   font-size: 16px;
   text-align: center;
   margin-bottom: 18px;
+`;
+
+export const InputButtonBox = styled.div`
+  position: absolute;
+  bottom: -5px;
+  right: 35px;
+  z-index: -1;
+
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 85%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 1;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+
+  height: 80px;
+  padding-left: 5px;
+  padding-right: 55px;
+  transition: transform var(--animation-global), opacity 125ms linear;
+  transform-origin: right;
+
+  &.hidden {
+    transform: scaleX(30%);
+    opacity: 0;
+    background: transparent;
+    pointer-events: none;
+  }
 `;

@@ -28,6 +28,8 @@ const TeacherPage = () => {
   const [isInputOpen, setIsInputOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
+  // eslint-disable-next-line
+  const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
   const location = useLocation().pathname.split('/teacher/')[1];
 
@@ -119,6 +121,10 @@ const TeacherPage = () => {
   const toggleButtonBox = () => {
     setIsButtonBoxOpen(isOpen => !isOpen);
   };
+  // eslint-disable-next-line
+  const toggleInputButtonBox = () => {
+    setIsInputButtonBoxOpen(isInputButtonBoxOpen => !isInputButtonBoxOpen);
+  };
 
   return (
     <>
@@ -126,22 +132,31 @@ const TeacherPage = () => {
         <ViewerBtn onClick={toggleViewer}>
           <ViewerLogo />
         </ViewerBtn>
-
         <WhiteBoardBtn onClick={toggleWhiteBoard}>
           <WhiteBoardLogo />
         </WhiteBoardBtn>
-
         <PlatformBtn onClick={togglePlatform}>
           <PlatformLogo />
         </PlatformBtn>
-
         <KahootBtn onClick={toggleKahoot}>
           <KahootLogo />
         </KahootBtn>
-
-        {/* <InputBtn onClick={toggleInput}>
+        {/* <InputBtn onClick={toggleInputButtonBox}>
           <InputLogo />
-        </InputBtn> */}
+        </InputBtn>
+        <InputButtonBox className={isInputButtonBoxOpen ? '' : 'hidden'}>
+          <InputBtn onClick={toggleInput}>
+            <InputLogo />
+          </InputBtn>
+
+          <InputBtn onClick={toggleInput}>
+            <InputLogo />
+          </InputBtn>
+
+          <InputBtn onClick={toggleInput}>
+            <InputLogo />
+          </InputBtn>
+        </InputButtonBox> */}
       </TeacherButtonBox>
       <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
