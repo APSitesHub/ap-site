@@ -216,7 +216,21 @@ export default function useWebRTC(roomID) {
     }
 
     const peerConnection = new RTCPeerConnection({
-      iceServers: freeice(),
+      iceServers: [
+        { urls: [ "stun:fr-turn7.xirsys.com" ]},
+        {
+          username: "rML4PodE2lPMv5sdudSaQiggcUIbJcSOWCgCdt7hyAbOmbdBL5pdMNpY0InU0j8HAAAAAGevPBlJbGxpYQ==",
+          credential: "47c1cabe-ead2-11ef-8c23-0242ac120004",
+          urls: [
+            "turn:fr-turn7.xirsys.com:80?transport=udp",
+            "turn:fr-turn7.xirsys.com:3478?transport=udp",
+            "turn:fr-turn7.xirsys.com:80?transport=tcp",
+            "turn:fr-turn7.xirsys.com:3478?transport=tcp",
+            "turns:fr-turn7.xirsys.com:443?transport=tcp",
+            "turns:fr-turn7.xirsys.com:5349?transport=tcp",
+          ]
+        }
+      ]
     });
 
     peerConnections.current[peerID] = peerConnection;
