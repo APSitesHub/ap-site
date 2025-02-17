@@ -118,9 +118,24 @@ const KidsDeA1 = lazy(() =>
     /* webpackChunkName: "Deutsch Streams A1 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1'
   )
 );
+const KidsDeA2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Streams A2 Kids page" */ '../pages/StreamsKids/KidsDeA2/KidsDeA2'
+  )
+);
+const KidsDeB1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Deutsch Streams B1 Kids page" */ '../pages/StreamsKids/KidsDeB1/KidsDeB1'
+  )
+);
 const KidsPlA1 = lazy(() =>
   import(
     /* webpackChunkName: "Polski Streams A1 Kids page" */ '../pages/StreamsKids/KidsPlA1/KidsPlA1'
+  )
+);
+const KidsPlA2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Polski Streams A2 Kids page" */ '../pages/StreamsKids/KidsPlA2/KidsPlA2'
   )
 );
 const KidsDeA1Free = lazy(() =>
@@ -725,9 +740,18 @@ export const App = () => {
             <Route path="dea1" element={<KidsDeA1 />} noindex={true} />
             <Route path="dea1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="dea1sc" element={<StreamSpeakingClubKids />} noindex={true} />
+            <Route path="dea2" element={<KidsDeA2 />} noindex={true} />
+            <Route path="dea2-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="dea2sc" element={<StreamSpeakingClubKids />} noindex={true} />
+            <Route path="deb1" element={<KidsDeB1 />} noindex={true} />
+            <Route path="deb1-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="deb1sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="pla1" element={<KidsPlA1 />} noindex={true} />
             <Route path="pla1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="pla1sc" element={<StreamSpeakingClubKids />} noindex={true} />
+            <Route path="pla2" element={<KidsPlA2 />} noindex={true} />
+            <Route path="pla2-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="pla2sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="a1free" element={<KidsA1Free />} noindex={true} />
             <Route path="a1free-chat" element={<WindowedChat />} noindex={true} />
             <Route path="dea1free" element={<KidsDeA1Free />} noindex={true} />
@@ -846,6 +870,8 @@ export const App = () => {
             <Route path="deutsch-a2free" element={<TeacherPage />} noindex={true} />
             <Route path="dea0kids" element={<TeacherPage />} noindex={true} />
             <Route path="dea1kids" element={<TeacherPage />} noindex={true} />
+            <Route path="dea2kids" element={<TeacherPage />} noindex={true} />
+            <Route path="deb1kids" element={<TeacherPage />} noindex={true} />
             <Route path="dekidsfree" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a0" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a0_2" element={<TeacherPageFarm />} noindex={true} />
@@ -860,6 +886,7 @@ export const App = () => {
             <Route path="polski-b1" element={<TeacherPage />} noindex={true} />
             <Route path="polski-b2" element={<TeacherPage />} noindex={true} />
             <Route path="pla1kids" element={<TeacherPage />} noindex={true} />
+            <Route path="pla2kids" element={<TeacherPage />} noindex={true} />
             <Route path="plkidsfree" element={<TeacherPage />} noindex={true} />
             <Route path="record" element={<TeacherPageVertical />} noindex={true} />
             <Route path="apconf" element={<TeacherPage />} noindex={true} />

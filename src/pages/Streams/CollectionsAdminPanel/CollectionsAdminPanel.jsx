@@ -105,7 +105,10 @@ export const CollectionsAdminPanel = () => {
     b1kidsbeginner: '',
     b2kidsbeginner: '',
     dea1kids: '',
+    dea2kids: '',
+    deb1kids: '',
     pla1kids: '',
+    pla2kids: '',
     a1kidsfree: '',
     dekidsfree: '',
     plkidsfree: '',
@@ -157,7 +160,10 @@ export const CollectionsAdminPanel = () => {
     b1kidsbeginner: yup.string().optional(),
     b2kidsbeginner: yup.string().optional(),
     dea1kids: yup.string().optional(),
+    dea2kids: yup.string().optional(),
+    deb1kids: yup.string().optional(),
     pla1kids: yup.string().optional(),
+    pla2kids: yup.string().optional(),
     a1kidsfree: yup.string().optional(),
     dekidsfree: yup.string().optional(),
     plkidsfree: yup.string().optional(),
@@ -574,10 +580,34 @@ export const CollectionsAdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
+                    name="dea2kids"
+                    placeholder="A2 Kids Deutsch collection"
+                  />
+                  <AdminInputNote component="p" name="dea2kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deb1kids"
+                    placeholder="B1 Kids Deutsch collection"
+                  />
+                  <AdminInputNote component="p" name="deb1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
                     name="pla1kids"
                     placeholder="A1 Kids Polski collection"
                   />
                   <AdminInputNote component="p" name="pla1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="pla2kids"
+                    placeholder="A2 Kids Polski collection"
+                  />
+                  <AdminInputNote component="p" name="pla2kids" />
                 </Label>
                 <Label>
                   <AdminInput
