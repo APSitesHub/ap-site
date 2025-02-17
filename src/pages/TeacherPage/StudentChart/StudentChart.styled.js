@@ -133,6 +133,7 @@ export const ChartImage = styled.img`
 export const TooltipArea = styled.div`
   background-color: white;
   padding: 8px;
+  max-width: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,6 +146,7 @@ export const TooltipColorLabel = styled.div`
   margin-right: 0.5em;
   border: 0.5px solid gray;
   display: inline-block;
+  flex-shrink: 0;
 `;
 
 export const TooltipIdText = styled.span``;

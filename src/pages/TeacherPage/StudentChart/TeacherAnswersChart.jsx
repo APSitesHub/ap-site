@@ -16,10 +16,10 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 export const TeacherAnswersChart = ({ currentStudentChart }) => {
   const data = [
     {
-      schronisko: 28,
-      hotel: 34,
-      motel: 14,
-      kamping: 11,
+      Wysoka_precyzja: 28,
+      Automatyzacja_procesów: 34,
+      Skrócenie_czasu_produkcji: 14,
+      Ręczne_sterowanie_każdą_operacją: 11,
     },
   ];
 
@@ -42,7 +42,9 @@ export const TeacherAnswersChart = ({ currentStudentChart }) => {
               backgroundColor: color,
             }}
           ></TooltipColorLabel>{' '}
-          <TooltipIdText>{id}: <TooltipValueText>{value}</TooltipValueText></TooltipIdText>
+          <TooltipIdText>
+            {id.replaceAll('_', ' ')}: <TooltipValueText>{value}</TooltipValueText>
+          </TooltipIdText>
         </TooltipArea>
       )}
     />
@@ -51,11 +53,7 @@ export const TeacherAnswersChart = ({ currentStudentChart }) => {
   return (
     <>
       <TeacherChartArea>
-        <QuestionHeader id="focus">
-          Jak nazywa się budynek dla turystów?
-          <br />
-          Który znajduje się w górach.
-        </QuestionHeader>
+        <QuestionHeader id="focus">Jakie są główne zalety maszyn CNC?</QuestionHeader>
         <ChartAreaLimiter
           id="chartlimiter"
           style={{

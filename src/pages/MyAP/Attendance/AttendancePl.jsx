@@ -40,18 +40,18 @@ export const AttendancePl = ({ user, personalLessonsDays, isMultipleCourses }) =
   };
 
   const MONTHS = [
-    'Січень',
+    'Styczeń',
     'Luty',
-    'Березень',
-    'Квітень',
-    'Травень',
-    'Червень',
-    'Липень',
-    'Серпень',
-    'Вересень',
-    'Жовтень',
-    'Листопад',
-    'Грудень',
+    'Marzec',
+    'Kwiecień',
+    'Maj',
+    'Czerwiec',
+    'Lipiec',
+    'Sierpień',
+    'Wrzesień',
+    'Październik',
+    'Listopad',
+    'Grudzień',
   ];
 
   const DATES_TO_EXCLUDE = useMemo(

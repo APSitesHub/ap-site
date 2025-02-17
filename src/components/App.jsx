@@ -390,6 +390,9 @@ const MyAPPl = lazy(() =>
 const MyAPPlTemp = lazy(() =>
   import(/* webpackChunkName: "My AP Temp Page" */ '../pages/MyAP/MyAPPlTemp')
 );
+const MyWSPA = lazy(() =>
+  import(/* webpackChunkName: "My WSPA Page" */ '../pages/MyAP/MyWSPA')
+);
 const TrialLesson = lazy(() =>
   import(/* webpackChunkName: "Trial Lesson Page" */ '../pages/TrialLesson/TrialLesson')
 );
@@ -494,6 +497,7 @@ export const App = () => {
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />
+          <Route path="my-wspa" element={<MyWSPA />} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
