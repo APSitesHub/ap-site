@@ -80,6 +80,10 @@ const UserAdminPanel = () => {
       label: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
       value: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
     },
+    {
+      label: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
+      value: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
+    },
   ];
 
   useEffect(() => {

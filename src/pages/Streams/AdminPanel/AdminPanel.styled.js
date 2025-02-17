@@ -58,3 +58,15 @@ export const AdminInputNote = styled(InputNote)`
   font-size: 14px;
   bottom: -1.1em;
 `;
+
+export const AdminInputWSPA = styled(Input)`
+  border: 2px solid #E40521;
+  max-width: 600px;
+`;
+
+export const AdminInputNoteWSPA = styled(InputNote)`
+  position: static;
+  color: #E40521;
+  font-size: 14px;
+  bottom: -1.1em;
+`;

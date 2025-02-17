@@ -1,18 +1,16 @@
 import axios from 'axios';
-import {
-  Label
-} from 'components/LeadForm/LeadForm.styled';
+import { FormBtnWSPA, Label } from 'components/LeadForm/LeadForm.styled';
 import {
   LoginErrorNote,
-  LoginFormText,
-  StreamSection,
+  LoginFormTextWSPA,
+  StreamSection
 } from 'components/Stream/Stream.styled';
 import { Formik } from 'formik';
+import { FormBtnText } from 'pages/LeadFormPage/UniversalLeadFormPage.styled';
 import {
-  AdminFormBtn,
-  AdminInput,
-  AdminInputNote,
-  LoginForm,
+  AdminInputNoteWSPA,
+  AdminInputWSPA,
+  LoginForm
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -25,7 +23,7 @@ import {
   PanelHideRightSwitch,
   UniLoginLogo,
 } from './MyAPPanel/MyAPPanel.styled';
-import { MyAPPanelPl } from './MyAPPanel/MyAPPanelPl';
+import { MyWSPAPanel } from './MyAPPanel/MyWSPAPanel';
 
 const monthly = [
   { name: 'Adam Nowak', points: 327 },
@@ -212,7 +210,7 @@ const MyWSPA = () => {
     const refreshToken = async () => {
       console.log('token refresher');
       try {
-        const res = await axios.post('/users/refresh', {
+        const res = await axios.post('/uniusers/refresh', {
           mail: localStorage.getItem('mail'),
         });
         setIsUserLogged(isLogged => (isLogged = true));
@@ -312,7 +310,7 @@ const MyWSPA = () => {
     values.mail = values.mail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     try {
-      const response = await axios.post('/users/login', values);
+      const response = await axios.post('/uniusers/login', values);
       console.log(response);
 
       setAuthToken(response.data.token);
@@ -347,32 +345,33 @@ const MyWSPA = () => {
         >
           <LoginForm>
             <UniLoginLogo src={logo} alt="WSPA logo" />
-            <LoginFormText>
+            <LoginFormTextWSPA>
               Dzień dobry!
               <br />
-              Ta strona nie jest dostępna dla nieautoryzowanych użytkowników. Jeśli jednak
-              masz dostęp do naszej platformy, to ta strona również ją ma. Wchodzić dane,
-              których używasz do logowania się na platformie.
-            </LoginFormText>
+              Ta strona nie jest dostępna dla nieautoryzowanych użytkowników. Proszę
+              wprowadzić swój login i hasło.
+            </LoginFormTextWSPA>
             <Label>
-              <AdminInput
+              <AdminInputWSPA
                 type="text"
                 name="mail"
                 placeholder="Login"
                 onBlur={() => setIsUserInfoIncorrect(false)}
               />
-              <AdminInputNote component="p" name="mail" type="email" />
+              <AdminInputNoteWSPA component="p" name="mail" type="email" />
             </Label>
             <Label>
-              <AdminInput
+              <AdminInputWSPA
                 type="password"
                 name="password"
                 placeholder="Password"
                 onBlur={() => setIsUserInfoIncorrect(false)}
               />
-              <AdminInputNote component="p" name="password" />
+              <AdminInputNoteWSPA component="p" name="password" />
             </Label>
-            <AdminFormBtn type="submit">Zaloguj się</AdminFormBtn>
+            <FormBtnWSPA type="submit">
+              <FormBtnText> Zaloguj się </FormBtnText>
+            </FormBtnWSPA>
             <LoginErrorNote
               style={isUserInfoIncorrect ? { opacity: '1' } : { opacity: '0' }}
             >
@@ -383,7 +382,7 @@ const MyWSPA = () => {
       ) : (
         <>
           {Object.values(points).length > 0 && (
-            <MyAPPanelPl
+            <MyWSPAPanel
               lessons={lessons}
               user={user}
               points={points}

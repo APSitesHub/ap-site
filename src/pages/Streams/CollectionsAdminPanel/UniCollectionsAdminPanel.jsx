@@ -84,6 +84,8 @@ const UniCollectionsAdminPanel = () => {
     wskm_prep: '',
     wssip_logistics: '',
     wssip_prep: '',
+    wspa_logistics: '',
+    wspa_prep: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -103,6 +105,8 @@ const UniCollectionsAdminPanel = () => {
     wskm_prep: yup.string().optional(),
     wssip_logistics: yup.string().optional(),
     wssip_prep: yup.string().optional(),
+    wspa_logistics: yup.string().optional(),
+    wspa_prep: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -325,6 +329,27 @@ const UniCollectionsAdminPanel = () => {
                     placeholder="WSSiP Preparation Course Collection"
                   />
                   <AdminInputNote component="p" name="wssip_prep" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wspa_logistics"
+                    placeholder="WSPA Logistics Collection"
+                  />
+                  <AdminInputNote component="p" name="wspa_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wspa_prep"
+                    placeholder="WSPA Preparation Course Collection"
+                  />
+                  <AdminInputNote component="p" name="wspa_prep" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

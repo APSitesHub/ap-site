@@ -561,6 +561,12 @@ export const LoginFormText = styled.p`
   }
 `;
 
+export const LoginFormTextWSPA = styled(LoginFormText)`
+  @media screen and (min-width: 1280px) {
+    max-width: 600px;
+  }
+`;
+
 export const LoginLogo = styled(LogoClean)`
   width: 240px;
 
@@ -614,8 +620,7 @@ export const LoginInput = styled(Input)`
     &:focus {
       font-family: var(--new-font-family);
       -webkit-text-fill-color: var(--main-color);
-      -webkit-box-shadow: 0 0 0px 50px var(--accent-semi-transparent-color)
-        inset;
+      -webkit-box-shadow: 0 0 0px 50px var(--accent-semi-transparent-color) inset;
     }
   }
 `;

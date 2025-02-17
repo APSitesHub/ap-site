@@ -103,8 +103,7 @@ export const Input = styled(Field)`
     &,
     &:hover,
     &:focus {
-      -webkit-box-shadow: 0 0 0px 1000px var(--accent-semi-transparent-color)
-        inset;
+      -webkit-box-shadow: 0 0 0px 1000px var(--accent-semi-transparent-color) inset;
     }
   }
 
@@ -137,8 +136,7 @@ export const InputSelect = styled(Field)`
     &,
     &:hover,
     &:focus {
-      -webkit-box-shadow: 0 0 0px 1000px var(--accent-semi-transparent-color)
-        inset;
+      -webkit-box-shadow: 0 0 0px 1000px var(--accent-semi-transparent-color) inset;
     }
   }
 
@@ -292,5 +290,32 @@ export const FormBtn = styled.button`
 
   &:hover,
   &:focus {
+  }
+`;
+
+export const FormBtnWSPA = styled(FormBtn)`
+  background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+
+    transition: opacity 350ms linear;
+
+    background: linear-gradient(90deg, #000 -31.6%, #e40521 107.95%);
+  }
+
+  &:hover,
+  &:focus {
+    &::before {
+      opacity: 1;
+    }
   }
 `;
