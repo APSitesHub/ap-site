@@ -72,7 +72,7 @@ export const MyAPStudentChartArea = styled(StudentChartArea)`
   }
 
   @media screen and (min-height: 640px) {
-    top: 142px;
+    top: 145px;
   }
 
   @media screen and (min-height: 768px) {

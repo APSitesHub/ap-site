@@ -4,12 +4,12 @@ import eyesImg from '../../../img/quiz/eyes.png';
 import {
   CupIcon,
   EyesEmoji,
-  LeaderPlace,
+  LeaderPlaceWSPA,
   PointsBox,
   PointsBoxHeading,
   PointsCategory,
   PointsCategoryPicker,
-  PointsCategoryPointer,
+  PointsCategoryPointerWSPA,
   PointsLeader,
   PointsLeaderboard,
   PointsPlaceHolder,
@@ -23,21 +23,22 @@ import {
   UserPlace,
 } from './Points.styled';
 
-export const Points = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourses }) => {
+export const PointsWSPA = ({
+  user,
+  flatPoints,
+  flatMonthlyPoints,
+  isMultipleCourses,
+}) => {
   const [position, setPosition] = useState('0%');
   const [activeRating, setActiveRating] = useState(0);
 
   const pointsSorted =
     activeRating > 0
-      ? flatMonthlyPoints
-          .filter(student => `${student.course}` === user.course)
-          .sort((a, b) => b.points - a.points)
-      : flatPoints
-          .filter(student => `${student.course}`[0] === user.course[0])
-          .sort((a, b) => b.points - a.points);
+      ? flatMonthlyPoints.sort((a, b) => b.points - a.points)
+      : flatPoints.sort((a, b) => b.points - a.points);
 
   const userPlace = pointsSorted.findIndex(
-    leader => leader.mail.toLowerCase() === user.mail.toLowerCase()
+    leader => leader.name.toLowerCase() === 'dev acc'
   );
 
   const calculatePointerPosition = i => {
@@ -49,27 +50,27 @@ export const Points = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourses 
     <PointsBox style={{ top: '145px' }}>
       <PointsBoxHeading>
         <CupIcon />
-        Рейтинг
+        Ranking
       </PointsBoxHeading>
       {userPlace === -1 ? (
         <PointsPlaceHolder>
           <EyesEmoji src={eyesImg} alt="Eyes emoji" width="80" />
-          <PointsPlaceHolderText>Шукаємо вас у рейтингу.</PointsPlaceHolderText>
+          <PointsPlaceHolderText>Szukamy was w rankingu.</PointsPlaceHolderText>
           <PointsPlaceHolderText>
-            Виконайте ще кілька вправ, <br /> щоб бути в топі! 🤩
+            Proszę zrobić jeszcze kilka zadań, <br /> żeby być w topie 🤩
           </PointsPlaceHolderText>
         </PointsPlaceHolder>
       ) : (
         <>
           <PointsCategoryPicker>
-            <PointsCategoryPointer style={{ transform: `translateX(${position})` }} />
+            <PointsCategoryPointerWSPA style={{ transform: `translateX(${position})` }} />
             <PointsCategory
               onClick={() => {
                 calculatePointerPosition(0);
               }}
               className={activeRating === 0 && 'active'}
             >
-              Загальний
+              Ogólny
             </PointsCategory>
             <PointsCategory
               onClick={() => {
@@ -77,21 +78,20 @@ export const Points = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourses 
               }}
               className={activeRating === 1 && 'active'}
             >
-              Місячний
+              Miesięczny
             </PointsCategory>
           </PointsCategoryPicker>
           <PointsTableHead>
-            <PointsTableHeadItem>Місце</PointsTableHeadItem>
-            <PointsTableHeadItemWide>Прізвище та ім’я</PointsTableHeadItemWide>
-            <PointsTableHeadItem>Бали</PointsTableHeadItem>
+            <PointsTableHeadItem>Miejsce</PointsTableHeadItem>
+            <PointsTableHeadItemWide>Imię i nazwisko</PointsTableHeadItemWide>
+            <PointsTableHeadItem>Punkty</PointsTableHeadItem>
           </PointsTableHead>
           <PointsUser>
             <PointsUserData>
-              {pointsSorted.findIndex(
-                leader => leader.mail.toLowerCase() === user.mail.toLowerCase()
-              ) + 1}
+              {pointsSorted.findIndex(leader => leader.name.toLowerCase() === 'dev acc') +
+                1}
             </PointsUserData>
-            <PointsUserDataWide>{user.name}</PointsUserDataWide>
+            <PointsUserDataWide>Student</PointsUserDataWide>
             <PointsUserData>
               {pointsSorted[userPlace].points < 0 ? 0 : pointsSorted[userPlace].points}
             </PointsUserData>
@@ -100,7 +100,7 @@ export const Points = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourses 
             {pointsSorted.slice(0, 10).map((leader, i) => (
               <PointsLeader key={nanoid(8)}>
                 {i <= 2 ? (
-                  <LeaderPlace>{i + 1}</LeaderPlace>
+                  <LeaderPlaceWSPA>{i + 1}</LeaderPlaceWSPA>
                 ) : (
                   <UserPlace>{i + 1}</UserPlace>
                 )}

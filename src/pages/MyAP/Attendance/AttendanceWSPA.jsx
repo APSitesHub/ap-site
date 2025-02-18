@@ -16,7 +16,7 @@ import {
   AttendancePointsBox,
   AttendancePointsContainer,
   AttendanceVisitedBox,
-  MonthSwitchBox,
+  MonthSwitchBoxWSPA,
   VisitedCounter,
   VisitedItem,
   VisitedList,
@@ -25,33 +25,28 @@ import {
   VisitedYearBox,
 } from './Attendance.styled';
 
-export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => {
+export const AttendanceWSPA = ({ user, personalLessonsDays, isMultipleCourses }) => {
   const [week, setWeek] = useState(new Date().getDate() - new Date().getDay());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
-  const [lessonDaysForWeek, setLessonDaysForWeek] = useState([]);
-  const [lessonDaysForMonth, setLessonDaysForMonth] = useState([]);
-  const [lessonDaysForYear, setLessonDaysForYear] = useState([]);
+  const [lessonDaysForWeek, SetLessonDaysForWeek] = useState([]);
+  const [lessonDaysForMonth, SetLessonDaysForMonth] = useState([]);
+  const [lessonDaysForYear, SetLessonDaysForYear] = useState([]);
 
   const MONTHS = [
-    'Січень',
-    'Лютий',
-    'Березень',
-    'Квітень',
-    'Травень',
-    'Червень',
-    'Липень',
-    'Серпень',
-    'Вересень',
-    'Жовтень',
-    'Листопад',
-    'Грудень',
+    'Styczeń',
+    'Luty',
+    'Marzec',
+    'Kwiecień',
+    'Maj',
+    'Czerwiec',
+    'Lipiec',
+    'Sierpień',
+    'Wrzesień',
+    'Październik',
+    'Listopad',
+    'Grudzień',
   ];
-
-  const startingDate = useMemo(
-    () => new Date(user.visited[0].split('.').reverse().join('/')),
-    [user.visited]
-  );
 
   const DATES_TO_EXCLUDE = useMemo(
     () => [
@@ -92,8 +87,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
           personalLessonsDays.includes(date.getDay()) &&
           !DATES_TO_EXCLUDE.includes(
             +new Date(date.getFullYear(), date.getMonth(), date.getDate())
-          ) &&
-          +new Date(date.getFullYear(), date.getMonth(), date.getDate()) >= startingDate
+          )
         ) {
           lessonDays.push(
             new Date(date.getFullYear(), date.getMonth(), date.getDate(), 3).toISOString()
@@ -101,7 +95,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
         }
         date.setDate(date.getDate() + 1);
       }
-      setLessonDaysForWeek(days => (days = lessonDays));
+      SetLessonDaysForWeek(days => (days = lessonDays));
     };
     getLessonDaysForWeeks();
 
@@ -116,8 +110,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
           personalLessonsDays.includes(date.getDay()) &&
           !DATES_TO_EXCLUDE.includes(
             +new Date(date.getFullYear(), date.getMonth(), date.getDate())
-          ) &&
-          +new Date(date.getFullYear(), date.getMonth(), date.getDate()) >= startingDate
+          )
         ) {
           lessonDays.push(
             new Date(date.getFullYear(), date.getMonth(), date.getDate(), 3).toISOString()
@@ -125,7 +118,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
         }
         date.setDate(date.getDate() + 1);
       }
-      setLessonDaysForMonth(days => (days = lessonDays));
+      SetLessonDaysForMonth(days => (days = lessonDays));
     };
     getLessonDaysForMonths();
 
@@ -142,8 +135,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
           personalLessonsDays.includes(date.getDay()) &&
           !DATES_TO_EXCLUDE.includes(
             +new Date(date.getFullYear(), date.getMonth(), date.getDate())
-          ) &&
-          +new Date(date.getFullYear(), date.getMonth(), date.getDate()) >= startingDate
+          )
         ) {
           lessonDays.push(
             new Date(date.getFullYear(), date.getMonth(), date.getDate(), 3).toISOString()
@@ -151,10 +143,10 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
         }
         date.setDate(date.getDate() + 1);
       }
-      setLessonDaysForYear(days => (days = lessonDays));
+      SetLessonDaysForYear(days => (days = lessonDays));
     };
     getLessonDaysForYears();
-  }, [week, month, year, personalLessonsDays, DATES_TO_EXCLUDE, startingDate]);
+  }, [week, month, year, personalLessonsDays, DATES_TO_EXCLUDE]);
 
   const decreaseWeek = () => {
     const newWeek = week - 7;
@@ -265,6 +257,11 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
         `${editDateFormat(new Date(lessonDay).getDate())}.${editDateFormat(
           new Date(lessonDay).getMonth() + 1
         )}.${new Date(lessonDay).getFullYear()}`
+    );
+    console.log(298, lessonDays);
+    console.log(
+      299,
+      user.visited.filter(date => (date = lessonDays.includes(date))).length
     );
 
     return user.visited.filter(date => (date = lessonDays.includes(date))).length;
@@ -441,10 +438,10 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
     <AttendanceBox style={{ top: '145px' }}>
       <AttendanceHeading>
         <AttendanceIcon />
-        Відвідуваність
+        Obecność
       </AttendanceHeading>
       <AttendanceVisitedBox>
-        <MonthSwitchBox>
+        <MonthSwitchBoxWSPA>
           <AttendanceBtn
             disabled={calculateSetWeeklyVisits(week - 7) === 0 ? true : false}
             onClick={decreaseWeek}
@@ -462,12 +459,12 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
               className={calculateSetWeeklyVisits(week + 7) !== 0 && 'available'}
             />
           </AttendanceBtn>
-        </MonthSwitchBox>
+        </MonthSwitchBoxWSPA>
         <VisitedList>
           <VisitedItem>
             <AttendancePointsBox>
               <AttendanceFlex>
-                <VisitedText>Відвідано:</VisitedText>
+                <VisitedText>Odwiedzono:</VisitedText>
                 <AttendancePoints>
                   <AttendancePointsContainer>
                     {calculatePoints()}
@@ -481,7 +478,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
             </AttendancePointsBox>
           </VisitedItem>
           <VisitedItem>
-            <VisitedText>Пропуски:</VisitedText>
+            <VisitedText>Braki:</VisitedText>
             <VisitedCounter
               style={{
                 color: calculateWeeklyUnattended() > 0 && '#D61D1D',
@@ -491,7 +488,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
             </VisitedCounter>
           </VisitedItem>
         </VisitedList>
-        <MonthSwitchBox>
+        <MonthSwitchBoxWSPA>
           <AttendanceBtn
             disabled={calculateMonthlyVisits(month - 1) === 0 ? true : false}
             onClick={decreaseMonth}
@@ -509,17 +506,17 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
               className={calculateMonthlyVisits(month + 1) !== 0 && 'available'}
             />
           </AttendanceBtn>
-        </MonthSwitchBox>
+        </MonthSwitchBoxWSPA>
         <VisitedList>
           <VisitedItem>
-            <VisitedText>Відвідано:</VisitedText>
+            <VisitedText>Odwiedzono:</VisitedText>
             <VisitedCounter>
               {calculateMonthlyVisits(month)}/
               <VisitedTotal>{lessonDaysForMonth.length}</VisitedTotal>
             </VisitedCounter>
           </VisitedItem>
           <VisitedItem>
-            <VisitedText>Пропуски:</VisitedText>
+            <VisitedText>Braki:</VisitedText>
             <VisitedCounter
               style={{ color: calculateMonthlyUnattended() > 0 && '#D61D1D' }}
             >
@@ -528,7 +525,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
           </VisitedItem>
         </VisitedList>
         <VisitedYearBox>
-          <VisitedText>Загалом відвідано уроків за рік:</VisitedText>
+          <VisitedText>Łączna liczba lekcji odbytych w ciągu roku:</VisitedText>
           <VisitedCounter>
             {calculateYearlyVisits()}/
             <VisitedTotal>{lessonDaysForYear.length}</VisitedTotal>

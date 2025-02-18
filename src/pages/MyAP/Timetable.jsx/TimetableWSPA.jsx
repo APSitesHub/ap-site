@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import eyesImg from '../../../img/quiz/eyes.png';
 import { CalendarIcon } from '../Attendance/Attendance.styled';
 import {
@@ -8,19 +9,32 @@ import {
 import {
   TimetableBody,
   TimetableBox,
+  TimetableChangeCourseBtnText,
+  TimetableChangeCourseBtnWSPA,
   TimetableDaysCell,
   TimetableDaysItem,
   TimetableHead,
   TimetableHeading,
-  TimetableLessonLink,
   TimetableLessonLinkText,
-  TimetableLessonType,
+  TimetableLessonLinkWSPA,
+  TimetableLessonPlTypeWSPA,
   TimetableTable,
   TimetableWebinars,
   TimetableWebinarsHead,
 } from './Timetable.styled';
 
-export const TimetablePlTemp = ({ user, language, timetable, isMultipleCourses }) => {
+export const TimetableWSPA = ({ user, language, timetable, isMultipleCourses }) => {
+  const [course, setCourse] = useState('logistics');
+  const [isAnimated, setIsAnimated] = useState(false);
+
+  const changeTimetable = () => {
+    setIsAnimated(true);
+    setCourse(course => (course === 'logistics' ? 'prep' : 'logistics'));
+    setTimeout(() => {
+      setIsAnimated(false);
+    }, 3000);
+  };
+
   const getLink = () => {
     const baseStreamUrl = 'https://academy.ap.education/streams/';
 
@@ -36,6 +50,9 @@ export const TimetablePlTemp = ({ user, language, timetable, isMultipleCourses }
       <TimetableHeading>
         <CalendarIcon />
         Harmonogram zajęć
+        <TimetableChangeCourseBtnWSPA onClick={changeTimetable}>
+          <TimetableChangeCourseBtnText>Zmienić kurs</TimetableChangeCourseBtnText>
+        </TimetableChangeCourseBtnWSPA>
       </TimetableHeading>
       {!timetable ? (
         <PointsPlaceHolder>
@@ -51,10 +68,12 @@ export const TimetablePlTemp = ({ user, language, timetable, isMultipleCourses }
         <TimetableBody>
           <TimetableWebinars>
             <TimetableWebinarsHead>
-              <TimetableLessonType>Teoretyczne zajęcia</TimetableLessonType>
-              <TimetableLessonLink href={link} target="_blank">
+              <TimetableLessonPlTypeWSPA className={isAnimated ? 'animated' : undefined}>
+                {course === 'logistics' ? 'Logistics' : 'Preparation Course'}
+              </TimetableLessonPlTypeWSPA>
+              <TimetableLessonLinkWSPA href={link} target="_blank">
                 <TimetableLessonLinkText>Przejść do</TimetableLessonLinkText>
-              </TimetableLessonLink>
+              </TimetableLessonLinkWSPA>
             </TimetableWebinarsHead>
             <TimetableTable>
               <thead>
@@ -67,6 +86,7 @@ export const TimetablePlTemp = ({ user, language, timetable, isMultipleCourses }
               </thead>
               <tbody>
                 {timetable
+                  .filter(lesson => course === lesson.marathon)
                   .sort((a, b) => a.day - b.day)
                   .map((lesson, i) => (
                     <TimetableDaysItem

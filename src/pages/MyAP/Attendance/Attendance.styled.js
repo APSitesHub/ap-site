@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as ArrowLeft } from '../../../img/svg/month-switch-left.svg';
 import { ReactComponent as ArrowRight } from '../../../img/svg/month-switch-right.svg';
-import {
-  CalendarBtnIcon,
-  TimetableBtnIcon,
-} from '../MyAPPanel/MyAPPanel.styled';
+import { CalendarBtnIcon, TimetableBtnIcon } from '../MyAPPanel/MyAPPanel.styled';
 
 export const AttendanceBox = styled.div`
   position: absolute;
@@ -89,6 +86,10 @@ export const MonthSwitchBox = styled.div`
   padding: 3px 3px;
   border-radius: 6px;
   background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #fff;
+`;
+
+export const MonthSwitchBoxWSPA = styled(MonthSwitchBox)`
+  background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
 `;
 
 export const AttendancePeriod = styled.span`

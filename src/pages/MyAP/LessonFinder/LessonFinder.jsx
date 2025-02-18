@@ -196,12 +196,6 @@ export const LessonFinder = ({
       ? setIsAnswerOpen(isOpen => !isOpen)
       : openAnswer(i);
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '145px' : '142px',
-    };
-  };
-
   useEffect(() => {
     setVisibleLessons(lessonsFound.slice(0, 5));
   }, [lessonsFound]);
@@ -244,7 +238,7 @@ export const LessonFinder = ({
   return (
     <FinderBox
       className={lessonsFound.length === 0 && 'nothing-found'}
-      style={{ ...panelStyles() }}
+      style={{ top: '145px' }}
     >
       <FinderLabel>
         <FinderIcon />

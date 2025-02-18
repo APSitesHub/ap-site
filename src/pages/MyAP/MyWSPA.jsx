@@ -3,14 +3,14 @@ import { FormBtnWSPA, Label } from 'components/LeadForm/LeadForm.styled';
 import {
   LoginErrorNote,
   LoginFormTextWSPA,
-  StreamSection
+  StreamSection,
 } from 'components/Stream/Stream.styled';
 import { Formik } from 'formik';
 import { FormBtnText } from 'pages/LeadFormPage/UniversalLeadFormPage.styled';
 import {
   AdminInputNoteWSPA,
   AdminInputWSPA,
-  LoginForm
+  LoginForm,
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -188,7 +188,7 @@ const MyWSPA = () => {
   const [montlyPoints, setMonthlyPoints] = useState({});
   const [user, setUser] = useState({});
   const [languageIndex, setLanguageIndex] = useState(0);
-  const [language, setLanguage] = useState('');
+  const [language, setLanguage] = useState('pl');
   const [platformLink, setPlatformLink] = useState(`https://online.ap.education/`);
   const [isMultipleCourses, setIsMultipleCourses] = useState(false);
   axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -216,13 +216,6 @@ const MyWSPA = () => {
         setIsUserLogged(isLogged => (isLogged = true));
         console.log(73, res.data.user.platformToken);
         setUser(user => (user = { ...res.data.user }));
-        const lang = res.data.user.lang.split('/');
-        if (lang.length > 1 && !language) {
-          setIsMultipleCourses(true);
-          setLanguage(lang[languageIndex]);
-        } else if (lang.length <= 1) {
-          setLanguage(res.data.user.lang);
-        }
       } catch (error) {
         console.log(error);
       }

@@ -100,12 +100,6 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
       : enUrl;
   };
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '145px' : '142px',
-    };
-  };
-
   const link = getLink();
   const indLink = getIndividualLink();
   console.log(indLink);
@@ -114,7 +108,7 @@ export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
   const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
   return (
-    <TimetableBox style={{ ...panelStyles() }}>
+    <TimetableBox style={{ top: '145px' }}>
       <TimetableHeading>
         <CalendarIcon />
         Графік занять

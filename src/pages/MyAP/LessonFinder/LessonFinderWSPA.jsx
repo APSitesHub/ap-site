@@ -37,7 +37,7 @@ import {
   LessonValueName,
   LessonValuePdfLink,
   LessonValueTopic,
-  LessonValuesLogo,
+  LessonValuesLogoWSPA,
   LessonVideoBox,
   PdfBox,
   PdfPreview,
@@ -45,7 +45,7 @@ import {
   PdfWrapper,
 } from './LessonFinder.styled';
 
-export const LessonFinderPl = ({
+export const LessonFinderWSPA = ({
   lessons,
   language,
   user,
@@ -221,9 +221,9 @@ export const LessonFinderPl = ({
               {lessonsFound.slice(0, 5).map(lesson => (
                 <LessonBoxItem key={lesson._id}>
                   <LessonTopBox>
-                    <LessonValuesLogo>
+                    <LessonValuesLogoWSPA>
                       {lesson.level + ' - ' + lesson.lesson.match(/\d+/)}
-                    </LessonValuesLogo>
+                    </LessonValuesLogoWSPA>
                     <LessonTextValuesBox>
                       <LessonValueName>
                         {lesson.level} {lesson.lesson.match(/\d+/)}

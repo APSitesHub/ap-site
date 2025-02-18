@@ -41,14 +41,8 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
     setActiveRating(i);
   };
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '145px' : '142px',
-    };
-  };
-
   return (
-    <PointsBox style={{ ...panelStyles() }}>
+    <PointsBox style={{ top: '145px' }}>
       <PointsBoxHeading>
         <CupIcon />
         Ranking
@@ -56,9 +50,9 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
       {userPlace === -1 ? (
         <PointsPlaceHolder>
           <EyesEmoji src={eyesImg} alt="Eyes emoji" width="80" />
-          <PointsPlaceHolderText>Шукаємо вас у рейтингу.</PointsPlaceHolderText>
+          <PointsPlaceHolderText>Szukamy was w rankingu.</PointsPlaceHolderText>
           <PointsPlaceHolderText>
-            Виконайте ще кілька вправ, <br /> щоб бути в топі! 🤩
+            Proszę zrobić jeszcze kilka zadań, <br /> żeby być w topie 🤩
           </PointsPlaceHolderText>
         </PointsPlaceHolder>
       ) : (

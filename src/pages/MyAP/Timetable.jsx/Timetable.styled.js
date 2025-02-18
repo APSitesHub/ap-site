@@ -151,6 +151,14 @@ export const TimetableLessonLink = styled.a`
   }
 `;
 
+export const TimetableLessonLinkWSPA = styled(TimetableLessonLink)`
+  background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #000 -31.6%, #e40521 107.95%);
+  }
+`;
+
 export const TimetableLessonLinkText = styled.span`
   position: absolute;
   top: 50%;
@@ -217,6 +225,12 @@ export const TimetableLessonPlType = styled.span`
   }
 `;
 
+export const TimetableLessonPlTypeWSPA = styled(TimetableLessonPlType)`
+  color: #000;
+
+  filter: drop-shadow(1px -1px 1px #e40521);
+`;
+
 export const TimetableChangeCourseBtn = styled.button`
   display: block;
   padding: 5px 0;
@@ -232,12 +246,7 @@ export const TimetableChangeCourseBtn = styled.button`
   color: #fff;
   font-weight: 500;
   border: 1px transparent;
-  background: linear-gradient(
-      322deg,
-      var(--main-color) 23.22%,
-      var(--secondary-color) 110.01%
-    ),
-    var(--secondary-color);
+  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #09c6cc;
 
   border-radius: 5px;
   overflow: hidden;
@@ -255,12 +264,7 @@ export const TimetableChangeCourseBtn = styled.button`
 
     transition: opacity var(--animation-global);
 
-    background: linear-gradient(
-        322deg,
-        var(--secondary-color) -30.22%,
-        var(--main-color) 100%
-      ),
-      var(--secondary-color);
+    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%), #09c6cc;
   }
 
   &:hover,
@@ -268,6 +272,14 @@ export const TimetableChangeCourseBtn = styled.button`
     &::before {
       opacity: 1;
     }
+  }
+`;
+
+export const TimetableChangeCourseBtnWSPA = styled(TimetableChangeCourseBtn)`
+  background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #000 -31.6%, #e40521 107.95%);
   }
 `;
 

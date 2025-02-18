@@ -33,12 +33,6 @@ export const AttendancePl = ({ user, personalLessonsDays, isMultipleCourses }) =
   const [lessonDaysForMonth, SetLessonDaysForMonth] = useState([]);
   const [lessonDaysForYear, SetLessonDaysForYear] = useState([]);
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '145px' : '142px',
-    };
-  };
-
   const MONTHS = [
     'Styczeń',
     'Luty',
@@ -441,7 +435,7 @@ export const AttendancePl = ({ user, personalLessonsDays, isMultipleCourses }) =
   };
 
   return (
-    <AttendanceBox style={{ ...panelStyles() }}>
+    <AttendanceBox style={{ top: '145px' }}>
       <AttendanceHeading>
         <AttendanceIcon />
         Obecność

@@ -38,13 +38,7 @@ export const TimetablePl = ({ user, language, timetable, isMultipleCourses }) =>
   const getLink = () => {
     const baseStreamUrl = 'https://academy.ap.education/streams/';
 
-    return baseStreamUrl + 'polski';
-  };
-
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '145px' : '142px',
-    };
+    return baseStreamUrl + 'polskia0_2';
   };
 
   const link = getLink();
@@ -52,12 +46,12 @@ export const TimetablePl = ({ user, language, timetable, isMultipleCourses }) =>
   const DAYS = ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Nd'];
 
   return (
-    <TimetableBox style={{ ...panelStyles() }}>
+    <TimetableBox style={{ top: '145px' }}>
       <TimetableHeading>
         <CalendarIcon />
         Harmonogram zajęć
         <TimetableChangeCourseBtn onClick={changeTimetable}>
-          <TimetableChangeCourseBtnText>Change course</TimetableChangeCourseBtnText>
+          <TimetableChangeCourseBtnText>Zmienić kurs</TimetableChangeCourseBtnText>
         </TimetableChangeCourseBtn>
       </TimetableHeading>
       {!timetable ? (
