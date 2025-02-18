@@ -6,12 +6,7 @@ import {
 import { WhiteBoardBox } from './WhiteBoard.styled';
 import { useState } from 'react';
 
-export const WhiteBoard = ({
-  page,
-  isWhiteBoardOpen,
-  isOpenedLast,
-  sectionWidth,
-}) => {
+export const WhiteBoard = ({ page, isWhiteBoardOpen, isOpenedLast, sectionWidth }) => {
   const [isFullScreen, setIsFullScreen] = useState(true);
 
   const BOARDS = {
@@ -20,10 +15,15 @@ export const WhiteBoard = ({
     a1: 'https://limnu.com/d/draw.html?b=B_FmIZmNqdTfWnRg&',
     a2: 'https://limnu.com/d/draw.html?b=B_Vy959BFwQCylvE&',
     b1: 'https://limnu.com/d/draw.html?b=B_3XD5qpFWQjqvyi&',
-    b2: 'https://limnu.com/d/draw.html?b=B_7OemrrNhSBW57r&',
+    // b2: 'https://limnu.com/d/draw.html?b=B_7OemrrNhSBW57r&',
+    b2: 'https://onlineboard.eu/b/z9ULiIYc',
     c1: 'https://limnu.com/d/draw.html?b=B_mHxmj8tdSXWW4A&',
-    a1free: 'https://limnu.com/d/draw.html?b=B_Bj0YLILtQwyoDz&',
-    a2free: 'https://limnu.com/d/draw.html?b=B_FASIRvrnQAfwFB&',
+    // a1free: 'https://limnu.com/d/draw.html?b=B_Bj0YLILtQwyoDz&',
+    // a1free: 'https://wbo.ophir.dev/boards/a726qY6pVgJ54U1ChaPbCXLUQgNKtMRX8m1IDAtySQI-',
+    a1free: 'https://onlineboard.eu/b/dWc0JMoH',
+    // a2free: 'https://limnu.com/d/draw.html?b=B_FASIRvrnQAfwFB&',
+    // a2free: 'https://wbo.ophir.dev/boards/prSNm094cTCcW8aw5v5bP29-SYSeudvOpZsJbvT-OfI-',
+    a2free: 'https://onlineboard.eu/b/1KnOipMO',
     a0kids: 'https://limnu.com/d/draw.html?b=B_ot1T09RzScMNjo&',
     a1kids: 'https://limnu.com/d/draw.html?b=B_uVZi6U2QE6hcpb&',
     a2kids: 'https://limnu.com/d/draw.html?b=B_amsbEHvSnW3ETh&',
@@ -45,19 +45,32 @@ export const WhiteBoard = ({
     trendets: 'https://limnu.com/d/draw.html?b=B_IOIfiaKoSU2L7O&',
     deutscha0: 'https://limnu.com/d/draw.html?b=B_60k993QOT7WQ1V&',
     deutscha0_2: 'https://limnu.com/d/draw.html?b=B_NATfimnyTeCQi2&',
-    deutsch: 'https://limnu.com/d/draw.html?b=B_hiT6UQ3ST6uWVV&',
+    // deutsch: 'https://limnu.com/d/draw.html?b=B_hiT6UQ3ST6uWVV&',
+    // deutsch: 'https://wbo.ophir.dev/boards/YTlBzu0msFbYhWCoJG7YecUkrjeOwBzEQk-BiT3akg8-',
+    deutsch: 'https://onlineboard.eu/b/x7AI5WxI',
     deutscha2: 'https://limnu.com/d/draw.html?b=B_ncJnY7GRShOIQI&',
     deutschb1: 'https://limnu.com/d/draw.html?b=B_2U0nf6rRH6lpD4&',
-    deutschb2: 'https://limnu.com/d/draw.html?b=B_RJsYwRGrQfOdFz&',
-    deutschfree: 'https://limnu.com/d/draw.html?b=B_A0Fn3t7YRxCHI6&',
-    deutscha2free: 'https://limnu.com/d/draw.html?b=B_KdJXJLGRTiZEU4&',
+    // deutschb2: 'https://limnu.com/d/draw.html?b=B_RJsYwRGrQfOdFz&',
+    // deutschb2:
+    //   'https://wbo.ophir.dev/boards/RFN-yOx72EvSuZHvLosBe30vxogEeJkZvGIITRWVfBw-',
+    deutschb2: 'https://onlineboard.eu/b/x7AI5WxI',
+    // deutschfree: 'https://limnu.com/d/draw.html?b=B_A0Fn3t7YRxCHI6&',
+    // deutschfree:
+    //   'https://wbo.ophir.dev/boards/TiFFzAwkPwLgu9qVQv8JnG2PVdtMUUxOXRKohs9aMzs-',
+    deutschfree: 'https://onlineboard.eu/b/g8MtvNZz',
+    // deutscha2free: 'https://limnu.com/d/draw.html?b=B_KdJXJLGRTiZEU4&',
+    // deutscha2free:
+    //   'https://wbo.ophir.dev/boards/YYfTJ93GSWtgVgMJJCZQU2VsRkXcEqtlIVMIIFi1Kcs-',
+    deutscha2free: 'https://onlineboard.eu/b/1KnOipMO',
     polskia0: 'https://limnu.com/d/draw.html?b=B_GM2gKaJZSjyzC2&',
     polskia0_2: 'https://limnu.com/d/draw.html?b=B_N2DD7ESSSWyJHh&',
     polskia0_3: 'https://limnu.com/d/draw.html?b=B_N2DD7ESSSWyJHh&',
     polski: 'https://limnu.com/d/draw.html?b=B_9TsX3j3TmSHNPn&',
     polskia2: 'https://limnu.com/d/draw.html?b=B_40CRsvLLTp6Wq5&',
     polskib1: 'https://limnu.com/d/draw.html?b=B_OpIkiLsES66saB&',
-    polskib2: 'https://limnu.com/d/draw.html?b=B_l4qF3EkXTYKzb0&',
+    // polskib2: 'https://limnu.com/d/draw.html?b=B_l4qF3EkXTYKzb0&',
+    // polskib2: 'https://wbo.ophir.dev/boards/SInP2nDbk0tjMpn2P46aP7cPttLa2HDMXt5cNzcxB4o-',
+    polskib2: 'https://onlineboard.eu/b/8Dh01GQ0',
     polskifree: 'https://limnu.com/d/draw.html?b=B_BlddXHk7SNiwOz&',
     record: 'https://limnu.com/d/draw.html?b=B_2jL8BzBbR1yp0m&',
     trials: 'https://limnu.com/d/draw.html?b=B_rxjSY6QhRuKju9&',
@@ -93,11 +106,7 @@ export const WhiteBoard = ({
         style={{ ...supportBoxStylesHandler() }}
       >
         <KahootFullScreenBtn onClick={toggleFullScreen}>
-          {isFullScreen ? (
-            <KahootExitFullScreenIcon />
-          ) : (
-            <KahootFullScreenIcon />
-          )}
+          {isFullScreen ? <KahootExitFullScreenIcon /> : <KahootFullScreenIcon />}
         </KahootFullScreenBtn>
         <iframe
           id="whiteboard window"
