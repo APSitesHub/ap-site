@@ -25,17 +25,14 @@ export const Warehouse = ({ isWarehouseOpen, isOpenedLast, sectionWidth }) => {
         style={{ ...supportBoxStylesHandler() }}
       >
         <FullScreenBtn onClick={toggleFullScreen}>
-          {isFullScreen ? (
-            <KahootExitFullScreenIcon />
-          ) : (
-            <KahootFullScreenIcon />
-          )}
+          {isFullScreen ? <KahootExitFullScreenIcon /> : <KahootFullScreenIcon />}
         </FullScreenBtn>
 
         <iframe
           id="warehouse"
           title="warehouse"
-          src="https://pxlbake.com/published/673b1ac298ec661fe05f4a9c"
+          src="https://my.matterport.com/show/?m=HWhMqLbkiCR"
+          // src="https://pxlbake.com/published/673b1ac298ec661fe05f4a9c"
         ></iframe>
       </FarmBox>
     </>

@@ -25,7 +25,8 @@ import {
   ViewerLogo,
   WarehouseLogo,
   WhiteBoardBtn,
-  WhiteBoardLogo
+  WhiteBoardLogo,
+  WorkshopLogo,
 } from './TeacherPage.styled';
 import { Viewer } from './Viewer/Viewer';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
@@ -83,7 +84,7 @@ const TeacherPageWarehouseHotel = () => {
       ? setIsOpenedLast(isOpenedLast => 'warehouse')
       : setIsOpenedLast(isOpenedLast => '');
   };
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   const toggleHotel = () => {
     !isOpenedLast
       ? setIsHotelOpen(isHotelOpen => !isHotelOpen)
@@ -124,9 +125,9 @@ const TeacherPageWarehouseHotel = () => {
   return (
     <>
       <TeacherFarmButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
-        {/* <FarmBtn onClick={toggleHotel}>
-          <HotelLogo />
-        </FarmBtn> */}
+        <FarmBtn onClick={toggleHotel}>
+          <WorkshopLogo />
+        </FarmBtn>
 
         <FarmBtn onClick={toggleWarehouse}>
           <WarehouseLogo />

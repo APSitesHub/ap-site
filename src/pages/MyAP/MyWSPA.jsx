@@ -205,7 +205,7 @@ const MyWSPA = () => {
   };
 
   useEffect(() => {
-    document.title = 'My AP | AP Education';
+    document.title = 'My WSPA';
 
     const refreshToken = async () => {
       console.log('token refresher');

@@ -25,17 +25,14 @@ export const Hotel = ({ isHotelOpen, isOpenedLast, sectionWidth }) => {
         style={{ ...supportBoxStylesHandler() }}
       >
         <FullScreenBtn onClick={toggleFullScreen}>
-          {isFullScreen ? (
-            <KahootExitFullScreenIcon />
-          ) : (
-            <KahootFullScreenIcon />
-          )}
+          {isFullScreen ? <KahootExitFullScreenIcon /> : <KahootFullScreenIcon />}
         </FullScreenBtn>
 
         <iframe
           id="hotel"
           title="hotel"
-          src="https://k2wirtualnespacery.pl/hotelpodroza/"
+          src="https://pxlbake.com/published/673b1ac298ec661fe05f4a9c"
+          // src="https://k2wirtualnespacery.pl/hotelpodroza/"
         ></iframe>
       </FarmBox>
     </>

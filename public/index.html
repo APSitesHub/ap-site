@@ -67,6 +67,17 @@
       }
     </script> -->
     <script>
+      if (window.location.pathname.includes('my-wspa')) {
+        (function () {
+          var link = document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'shortcut icon';
+          link.href = '%PUBLIC_URL%/wspa.ico';
+          document.getElementsByTagName('head')[0].appendChild(link);
+        })();
+      }
+    </script>
+    <script>
       if (window.location.pathname.includes('/my-ap-pl')) {
         (function (a, m, o, c, r, m) {
           a[m] = {

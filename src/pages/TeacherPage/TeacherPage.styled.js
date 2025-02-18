@@ -4,6 +4,7 @@ import { ReactComponent as WhiteBoardIcon } from '../../img/svg/whiteBoardIcon.s
 import { ReactComponent as PlatformIcon } from '../../img/svg/myap/logo-short.svg';
 import { ReactComponent as Warehouse } from '../../img/svg/warehouse.svg';
 import { ReactComponent as Hotel } from '../../img/svg/hotel.svg';
+import { ReactComponent as Workshop } from '../../img/svg/workshop.svg';
 import { ReactComponent as Cow } from '../../img/svg/cow.svg';
 import { ReactComponent as Pig } from '../../img/svg/pig.svg';
 import { ReactComponent as BoxSwitchUp } from '../../img/svg/btnbox-switch-up.svg';
@@ -203,6 +204,17 @@ export const WarehouseLogo = styled(Warehouse)`
 `;
 
 export const HotelLogo = styled(Hotel)`
+  width: 25px;
+  height: 25px;
+  z-index: 5;
+
+  @media screen and (min-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+export const WorkshopLogo = styled(Workshop)`
   width: 25px;
   height: 25px;
   z-index: 5;
