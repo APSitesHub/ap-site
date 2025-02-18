@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 
+import { ReactComponent as _EndCallIcon } from '../../img/svg/end-call.svg';
 import { ReactComponent as _CameraIcon } from '../../img/svg/camera.svg';
 import { ReactComponent as _DisabledCameraIcon } from '../../img/svg/camera-slash.svg';
 import { ReactComponent as _MicroIcon } from '../../img/svg/microphone.svg';
@@ -143,11 +144,25 @@ export const MediaButtonContainer = styled.div`
     background-color: rgba(0, 0, 0, 0.1);
   }
 
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
   ${({ $isPagintionButton }) =>
     $isPagintionButton &&
     `
       @media (max-width: 1024px) {
         display: none;
+      }
+    `}
+
+  ${({ $isRed }) =>
+    $isRed &&
+    `
+      background-color: rgba(190, 20, 20, 0.6);
+
+      &:hover {
+        background-color: rgba(190, 20, 20, 0.8);
       }
     `}
 `;
@@ -172,6 +187,7 @@ export const MediaSelector = styled.select`
   color: white;
   cursor: pointer;
   padding: 8px;
+  padding-left: 16px;
   max-width: 20px;
   border: none;
   outline: none;
@@ -180,6 +196,12 @@ export const MediaSelector = styled.select`
 
 export const MediaOption = styled.option`
   background-color: rgba(0, 0, 0, 0.7);
+`;
+
+export const EndCallIcon = styled(_EndCallIcon)`
+  fill: #ffffff;
+  height: 32px;
+  width: 32px;
 `;
 
 export const MicroIcon = styled(_MicroIcon)`
