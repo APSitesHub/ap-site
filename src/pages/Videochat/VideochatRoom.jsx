@@ -284,11 +284,6 @@ function VideochatRoom() {
                 <EndCallIcon />
               </MediaButton>
             </MediaButtonContainer>
-            <MediaButtonContainer>
-              <MediaButton onClick={test}>
-                <EndCallIcon />
-              </MediaButton>
-            </MediaButtonContainer>
           </ButtonsContainer>
         </MainVideoContainer>
 
