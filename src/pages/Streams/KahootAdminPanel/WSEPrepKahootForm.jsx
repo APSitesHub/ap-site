@@ -108,23 +108,23 @@ export const WSEPrepKahootForm = ({ destination }) => {
   return (
     <>
       <AdminPanelSection>
-        <FormTitle>wse Prep</FormTitle>
+        <FormTitle>WSE Prep</FormTitle>
         <Formik initialValues={initialLinksValues} onSubmit={handleLinksSubmit} validationSchema={linksSchema}>
           <LinksForm>
             <Label>
-              <AdminInput type="text" name="wse_prep_1" autoComplete="off" placeholder="Перший кахут для wse Prep" />
+              <AdminInput type="text" name="wse_prep_1" autoComplete="off" placeholder="Перший кахут для WSE Prep" />
             </Label>
             <Label>
-              <AdminInput type="text" name="wse_prep_2" autoComplete="off" placeholder="Другий кахут для wse Prep" />
+              <AdminInput type="text" name="wse_prep_2" autoComplete="off" placeholder="Другий кахут для WSE Prep" />
             </Label>
             <Label>
-              <AdminInput type="text" name="wse_prep_3" autoComplete="off" placeholder="Третій кахут для wse Prep" />
+              <AdminInput type="text" name="wse_prep_3" autoComplete="off" placeholder="Третій кахут для WSE Prep" />
             </Label>
             <Label>
-              <AdminInput type="text" name="wse_prep_4" autoComplete="off" placeholder="Четвертий кахут для wse Prep" />
+              <AdminInput type="text" name="wse_prep_4" autoComplete="off" placeholder="Четвертий кахут для WSE Prep" />
             </Label>
             <Label>
-              <AdminInput type="text" name="wse_prep_5" autoComplete="off" placeholder="П'ятий кахут для wse Prep" />
+              <AdminInput type="text" name="wse_prep_5" autoComplete="off" placeholder="П'ятий кахут для WSE Prep" />
             </Label>
             <LabelCheckBox>
               <AdminCheckbox type="checkbox" name="replace" />
