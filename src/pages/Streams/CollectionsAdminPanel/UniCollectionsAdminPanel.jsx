@@ -86,6 +86,8 @@ const UniCollectionsAdminPanel = () => {
     wssip_prep: '',
     wspa_logistics: '',
     wspa_prep: '',
+    wse_logistics: '',
+    wse_prep: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -107,6 +109,8 @@ const UniCollectionsAdminPanel = () => {
     wssip_prep: yup.string().optional(),
     wspa_logistics: yup.string().optional(),
     wspa_prep: yup.string().optional(),
+    wse_logistics: yup.string().optional(),
+    wse_prep: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -350,6 +354,27 @@ const UniCollectionsAdminPanel = () => {
                     placeholder="WSPA Preparation Course Collection"
                   />
                   <AdminInputNote component="p" name="wspa_prep" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wse_logistics"
+                    placeholder="WSE Logistics"
+                  />
+                  <AdminInputNote component="p" name="wse_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="wse_prep"
+                    placeholder="WSE Preparation Course"
+                  />
+                  <AdminInputNote component="p" name="wse_prep" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

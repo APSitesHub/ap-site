@@ -213,6 +213,10 @@ const UniTimeTableAdminPanel = () => {
       label: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
       value: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
     },
+    {
+      label: "WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)",
+      value: "WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)"
+    }
   ];
 
   const pedagogiumMarathonOptions = [
@@ -311,6 +315,13 @@ const UniTimeTableAdminPanel = () => {
     {
       label: 'Kurs Przygotowawczy (WSPA)',
       value: '84616',
+    },
+  ];
+
+  const wseMarathonOptions = [
+    {
+      label: 'Kurs Przygotowawczy (WSE)',
+      value: '84801',
     },
   ];
 
@@ -462,6 +473,9 @@ const UniTimeTableAdminPanel = () => {
                     : uniValue ===
                       'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)'
                     ? wspaMarathonOptions
+                    : uniValue ===
+                      'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)'
+                    ? wseMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -573,6 +587,9 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('WSPA') &&
                         timetable.marathon === '84616'
                       ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('WSE') &&
+                        timetable.marathon === '84801'
+                      ? `Preparation Course ${timetable.marathon}`
                       : ''}{' '}
                     <UserEditButton onClick={() => handleMarathonEdit(timetable._id)}>
                       Edit
@@ -626,6 +643,7 @@ const UniTimeTableAdminPanel = () => {
               wskmMarathonOptions={wskmMarathonOptions}
               wssipMarathonOptions={wssipMarathonOptions}
               wspaMarathonOptions={wspaMarathonOptions}
+              wseMarathonOptions={wseMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
             />
@@ -645,6 +663,7 @@ const UniTimeTableAdminPanel = () => {
               wskmMarathonOptions={wskmMarathonOptions}
               wssipMarathonOptions={wssipMarathonOptions}
               wspaMarathonOptions={wspaMarathonOptions}
+              wseMarathonOptions={wseMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>
