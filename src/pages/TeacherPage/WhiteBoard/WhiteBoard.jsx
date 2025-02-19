@@ -96,7 +96,7 @@ export const WhiteBoard = ({ page, isWhiteBoardOpen, isOpenedLast, sectionWidth 
     kidsbeg: 'https://limnu.com/d/draw.html?b=B_6vBirtPYRPWphv&',
     kidsmid: 'https://limnu.com/d/draw.html?b=B_qPq6cu5dT0ygVr&',
     kidshigh: 'https://onlineboard.eu/b/ZvCoQd73',
-    kidshigh: 'https://limnu.com/d/draw.html?b=B_fLj6VebeTkWNLi&',
+    // kidshigh: 'https://limnu.com/d/draw.html?b=B_fLj6VebeTkWNLi&',
     preschool: 'https://limnu.com/d/draw.html?b=B_HRtlAHolQT2xVA&',
     nmt_ukr: 'https://limnu.com/d/draw.html?b=B_6CEKRSdjTOiMjE&',
     nmt_en: 'https://limnu.com/d/draw.html?b=B_v9MVlnKSEe4UNz&',
