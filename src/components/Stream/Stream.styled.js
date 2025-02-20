@@ -311,7 +311,12 @@ export const KahootLogo = styled(KahootIcon)`
   }
 `;
 
-export const InputBtn = styled(ChatBtn)``;
+export const InputBtn = styled(ChatBtn)`
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.48px;
+  word-break: break-word;
+`;
 
 export const InputLogo = styled(InputIcon)`
   width: 25px;

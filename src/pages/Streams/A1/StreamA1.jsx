@@ -31,6 +31,8 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
+import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
+import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 
 const StreamA1 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -93,8 +95,8 @@ const StreamA1 = () => {
   useEffect(() => {
     document.title = 'A1 English | AP Education';
 
-    socketRef.current = io('https://ap-chat-server.onrender.com/');
-    // socketRef.current = io('http://localhost:4000/');
+    // socketRef.current = io('https://ap-chat-server.onrender.com/');
+    socketRef.current = io('http://localhost:4000/');
 
     const handleDisconnect = () => {
       socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
@@ -110,6 +112,12 @@ const StreamA1 = () => {
       console.log(howdy);
       console.log(room);
       setIsInputOpen(true);
+    });
+
+    socketRef.current.on('question:closeInput', bye => {
+      console.log(bye);
+      console.log(room);
+      setIsInputOpen(false);
     });
 
     socketRef.current.on('connected:user', (id, lvl) => {
@@ -321,6 +329,18 @@ const StreamA1 = () => {
             )}
 
             <StudentInput
+              isInputOpen={isInputOpen}
+              socket={socketRef.current}
+              toggleInput={toggleInput}
+            />
+
+             <StudentOptions
+              isInputOpen={isInputOpen}
+              socket={socketRef.current}
+              toggleInput={toggleInput}
+            />
+
+            <StudentTrueFalse
               isInputOpen={isInputOpen}
               socket={socketRef.current}
               toggleInput={toggleInput}

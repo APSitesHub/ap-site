@@ -1,12 +1,14 @@
-import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
-import {
-  TeacherInputBox
-} from './TeacherChat.styled';
+import { TeacherInputBox } from './TeacherChat.styled';
 import { TeacherInputContainer } from './TeacherInputContainer';
 
-export const TeacherInput = ({ page, isInputOpen, isOpenedLast }) => {
+export const TeacherQuizInput = ({
+  page,
+  isQuizInputOpen,
+  closeInputs,
+  isOpenedLast,
+}) => {
   const [answers, setAnswers] = useState([]);
 
   const socketRef = useRef(null);
@@ -28,23 +30,6 @@ export const TeacherInput = ({ page, isInputOpen, isOpenedLast }) => {
       setAnswers(answers => (answers = [...answers, data]));
     });
 
-    socketRef.current.on('user:ban', async (userID, userIP) => {
-      console.log('ban fired');
-      const banUser = async () => {
-        console.log('request fired');
-        console.log(userID);
-        console.log(userIP);
-        try {
-          await axios.patch(`https://ap-chat-server.onrender.com/users/${userID}`, {
-            isBanned: true,
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      await banUser();
-    });
-
     return () => {
       socketRef.current.off('connected');
       socketRef.current.off('message');
@@ -54,8 +39,12 @@ export const TeacherInput = ({ page, isInputOpen, isOpenedLast }) => {
 
   return (
     <>
-      <TeacherInputBox className={isInputOpen ? 'shown' : 'hidden'}>
-        <TeacherInputContainer socket={socketRef.current} answers={answers} />
+      <TeacherInputBox className={isQuizInputOpen ? 'shown' : 'hidden'}>
+        <TeacherInputContainer
+          socket={socketRef.current}
+          answers={answers}
+          closeInputs={closeInputs}
+        />
       </TeacherInputBox>
     </>
   );

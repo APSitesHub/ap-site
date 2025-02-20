@@ -302,7 +302,7 @@ export const InputButtonBox = styled.div`
   z-index: -1;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   gap: 20px;
   align-items: center;
   background: linear-gradient(

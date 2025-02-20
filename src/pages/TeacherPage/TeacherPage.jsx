@@ -1,13 +1,21 @@
 import useSize from '@react-hook/size';
-import { KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
+import {
+  InputBtn,
+  KahootBtn,
+  KahootLogo
+} from 'components/Stream/Stream.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HostKahoots } from './HostKahoots/HostKahoots';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
+import { TeacherQuizInput } from './TeacherInput/TeacherQuizInput';
+import { TeacherQuizOptions } from './TeacherInput/TeacherQuizOptions';
+import { TeacherQuizTrueFalse } from './TeacherInput/TeacherQuizTrueFalse';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
+  InputButtonBox,
   PlatformBtn,
   PlatformLogo,
   TeacherButtonBox,
@@ -25,13 +33,21 @@ const TeacherPage = () => {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
-  const [isInputOpen, setIsInputOpen] = useState(false);
+  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   // eslint-disable-next-line
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
   const location = useLocation().pathname.split('/teacher/')[1];
+
+  const closeInputs = () => {
+    setIsQuizInputOpen(false);
+    setIsQuizOptionsOpen(false);
+    setIsQuizTrueFalseOpen(false);
+  };
 
   const getLocation = location => {
     switch (location) {
@@ -79,7 +95,12 @@ const TeacherPage = () => {
     !isOpenedLast
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)
       : isOpenedLast === 'viewer' && setIsViewerOpen(isViewerOpen => !isViewerOpen);
-    isWhiteBoardOpen || isPlatformOpen || isKahootOpen || isInputOpen
+    isWhiteBoardOpen ||
+    isPlatformOpen ||
+    isKahootOpen ||
+    isQuizInputOpen ||
+    isQuizOptionsOpen ||
+    isQuizTrueFalseOpen
       ? setIsOpenedLast(isOpenedLast => 'viewer')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -88,7 +109,12 @@ const TeacherPage = () => {
       ? setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen)
       : isOpenedLast === 'whiteboard' &&
         setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen);
-    isViewerOpen || isPlatformOpen || isKahootOpen || isInputOpen
+    isViewerOpen ||
+    isPlatformOpen ||
+    isKahootOpen ||
+    isQuizInputOpen ||
+    isQuizOptionsOpen ||
+    isQuizTrueFalseOpen
       ? setIsOpenedLast(isOpenedLast => 'whiteboard')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -97,7 +123,12 @@ const TeacherPage = () => {
       ? setIsPlatformOpen(isPlatformOpen => !isPlatformOpen)
       : isOpenedLast === 'platform' &&
         setIsPlatformOpen(isPlatformOpen => !isPlatformOpen);
-    isViewerOpen || isWhiteBoardOpen || isKahootOpen || isInputOpen
+    isViewerOpen ||
+    isWhiteBoardOpen ||
+    isKahootOpen ||
+    isQuizInputOpen ||
+    isQuizOptionsOpen ||
+    isQuizTrueFalseOpen
       ? setIsOpenedLast(isOpenedLast => 'platform')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -105,15 +136,39 @@ const TeacherPage = () => {
     !isOpenedLast
       ? setIsKahootOpen(isKahootOpen => !isKahootOpen)
       : isOpenedLast === 'kahoot' && setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isInputOpen
+    isPlatformOpen ||
+    isWhiteBoardOpen ||
+    isViewerOpen ||
+    isQuizInputOpen ||
+    isQuizOptionsOpen ||
+    isQuizTrueFalseOpen
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
   };
   // eslint-disable-next-line
-  const toggleInput = () => {
+  const toggleQuizInput = () => {
     !isOpenedLast
-      ? setIsInputOpen(isInputOpen => !isInputOpen)
-      : isOpenedLast === 'input' && setIsInputOpen(isInputOpen => !isInputOpen);
+      ? setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen)
+      : isOpenedLast === 'input' &&
+        setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
+    isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
+      ? setIsOpenedLast(isOpenedLast => 'input')
+      : setIsOpenedLast(isOpenedLast => '');
+  };
+  const toggleQuizOptions = () => {
+    !isOpenedLast
+      ? setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen)
+      : isOpenedLast === 'input' &&
+        setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
+    isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
+      ? setIsOpenedLast(isOpenedLast => 'input')
+      : setIsOpenedLast(isOpenedLast => '');
+  };
+  const toggleQuizTrueFalse = () => {
+    !isOpenedLast
+      ? setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen)
+      : isOpenedLast === 'input' &&
+        setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
     isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
@@ -141,22 +196,14 @@ const TeacherPage = () => {
         <KahootBtn onClick={toggleKahoot}>
           <KahootLogo />
         </KahootBtn>
-        {/* <InputBtn onClick={toggleInputButtonBox}>
-          <InputLogo />
-        </InputBtn>
+        <InputBtn onClick={toggleInputButtonBox}>QUIZ</InputBtn>
         <InputButtonBox className={isInputButtonBoxOpen ? '' : 'hidden'}>
-          <InputBtn onClick={toggleInput}>
-            <InputLogo />
-          </InputBtn>
+          <InputBtn onClick={toggleQuizInput}>TEXT</InputBtn>
 
-          <InputBtn onClick={toggleInput}>
-            <InputLogo />
-          </InputBtn>
+          <InputBtn onClick={toggleQuizOptions}>A-B-C</InputBtn>
 
-          <InputBtn onClick={toggleInput}>
-            <InputLogo />
-          </InputBtn>
-        </InputButtonBox> */}
+          <InputBtn onClick={toggleQuizTrueFalse}>TRUE FALSE</InputBtn>
+        </InputButtonBox>
       </TeacherButtonBox>
       <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
@@ -189,7 +236,24 @@ const TeacherPage = () => {
         isOpenedLast={isOpenedLast}
       />
       <TeacherChat page={page} />
-      {/* <TeacherInput page={page} isInputOpen={isInputOpen} isOpenedLast={isOpenedLast} /> */}
+      <TeacherQuizInput
+        page={page}
+        isQuizInputOpen={isQuizInputOpen}
+        closeInputs={closeInputs}
+        isOpenedLast={isOpenedLast}
+      />
+      <TeacherQuizOptions
+        page={page}
+        isQuizOptionsOpen={isQuizOptionsOpen}
+        closeInputs={closeInputs}
+        isOpenedLast={isOpenedLast}
+      />
+      <TeacherQuizTrueFalse
+        page={page}
+        isQuizTrueFalseOpen={isQuizTrueFalseOpen}
+        closeInputs={closeInputs}
+        isOpenedLast={isOpenedLast}
+      />
     </>
   );
 };

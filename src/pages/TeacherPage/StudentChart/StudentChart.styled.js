@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StudentChartArea = styled.div`
   position: fixed;
+  font-family: var(--my-ap-font-family);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -80,8 +81,39 @@ export const MyAPStudentChartArea = styled(StudentChartArea)`
   }
 `;
 
+export const TeacherChartBtnBox = styled.div`
+  position: absolute;
+  bottom: 30px;
+
+  display: flex;
+  gap: 20px;
+`;
+
+export const TeacherChartBtn = styled.button`
+  width: 200px;
+
+  font-family: var(--my-ap-font-family);
+  border-radius: 50px;
+  padding: 20px 50px;
+  background: radial-gradient(70% 80% at -13.25% 26%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%), radial-gradient(70% 80% at 113.25% 74%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%), #000;
+
+  color: #fff;
+  font-family: var(--new-font-family);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: transparent;
+`;
+
+export const TeacherChartResetBtn = styled(TeacherChartBtn)`
+  background: none;
+  color: #000;
+  border: 2px solid #0f645b;
+`;
+
 export const TeacherChartArea = styled.div`
   padding: 30px;
+  padding-bottom: 110px;
 `;
 
 export const GradientBg = styled.div`
@@ -111,12 +143,33 @@ export const MyAPGradientBg = styled(GradientBg)`
   }
 `;
 
+export const ChartPlaceholder = styled.h2`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+`;
+
+export const ChartPlaceholderHighlight = styled.span`
+  color: var(--main-color);
+`;
+
 export const ChartAreaLimiter = styled.div`
   width: 100%;
   max-height: 300px;
-  aspect-ratio: 1/1;
   margin: 0 auto;
   position: relative;
+  aspect-ratio: 1/1;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--animation-global);
+
+  &.active {
+    transform: scaleY(1);
+  }
 `;
 
 export const FeedbackText = styled.p`

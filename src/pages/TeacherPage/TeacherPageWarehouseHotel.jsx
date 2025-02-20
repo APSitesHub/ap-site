@@ -12,7 +12,7 @@ import { Warehouse } from './Farm/Warehouse';
 import { HostKahoots } from './HostKahoots/HostKahoots';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
-import { TeacherInput } from './TeacherInput/TeacherInput';
+import { TeacherQuizInput } from './TeacherInput/TeacherQuizInput';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
@@ -195,7 +195,7 @@ const TeacherPageWarehouseHotel = () => {
         isOpenedLast={isOpenedLast}
       />
       <TeacherChat page={page} />
-      <TeacherInput page={page} isInputOpen={isInputOpen} isOpenedLast={isOpenedLast} />
+      <TeacherQuizInput page={page} isInputOpen={isInputOpen} isOpenedLast={isOpenedLast} />
     </>
   );
 };
