@@ -83,7 +83,7 @@ export default function useWebRTC(roomID) {
     }
   };
 
-  const toggleMicrophone = mute => {
+  const toggleMicrophone = (_event, mute) => {
     if (localMediaStream.current) {
       const audioTrack = localMediaStream.current
         .getTracks()
@@ -114,7 +114,26 @@ export default function useWebRTC(roomID) {
         audio: { deviceId: { exact: deviceId } },
         video: false,
       });
-      const audioTrack = newStream.getAudioTracks()[0];
+
+      const newAudioTrack = newStream.getAudioTracks()[0];
+
+      if (!newAudioTrack) {
+        console.warn('failed get audio from: ', deviceId);
+        return;
+      }
+
+      if (localMediaStream.current) {
+        const oldAudioTrack = localMediaStream.current.getAudioTracks()[0];
+
+        if (oldAudioTrack) {
+          localMediaStream.current.removeTrack(oldAudioTrack);
+          oldAudioTrack.stop();
+        }
+
+        localMediaStream.current.addTrack(newAudioTrack);
+      } else {
+        localMediaStream.current = newStream;
+      }
 
       if (peerConnections.current) {
         Object.keys(peerConnections.current).forEach(id => {
@@ -125,10 +144,11 @@ export default function useWebRTC(roomID) {
           );
 
           if (audioSender) {
-            audioSender.replaceTrack(audioTrack);
+            audioSender.replaceTrack(newAudioTrack);
           }
         });
       }
+      setLocalMicrophoneEnabled(true);
     } catch (error) {
       console.error('error change micro: ' + error);
     }
@@ -140,10 +160,31 @@ export default function useWebRTC(roomID) {
         audio: false,
         video: { deviceId: { exact: deviceId } },
       });
-      const videoTrack = newStream.getVideoTracks()[0];
+
+      const newVideoTrack = newStream.getVideoTracks()[0];
       const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
 
-      localVideoElement.srcObject = newStream;
+      if (!newVideoTrack) {
+        console.warn('failed get video from: ', deviceId);
+        return;
+      }
+
+      if (localMediaStream.current) {
+        const oldVideoTrack = localMediaStream.current.getVideoTracks()[0];
+
+        if (oldVideoTrack) {
+          localMediaStream.current.removeTrack(oldVideoTrack);
+          oldVideoTrack.stop();
+        }
+
+        localMediaStream.current.addTrack(newVideoTrack);
+      } else {
+        localMediaStream.current = newStream;
+      }
+
+      if (localVideoElement) {
+        localVideoElement.srcObject = localMediaStream.current;
+      }
 
       if (peerConnections.current) {
         Object.keys(peerConnections.current).forEach(id => {
@@ -154,10 +195,11 @@ export default function useWebRTC(roomID) {
           );
 
           if (videoSender) {
-            videoSender.replaceTrack(videoTrack);
+            videoSender.replaceTrack(newVideoTrack);
           }
         });
       }
+      setLocalCameraEnabled(true);
     } catch (error) {
       console.error('error change camera: ' + error);
     }
@@ -169,30 +211,62 @@ export default function useWebRTC(roomID) {
 
   async function startCapture() {
     try {
-      localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: { width: 1280, height: 720 },
-      });
-
+      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
       const devices = await navigator.mediaDevices.enumerateDevices();
       setLocalDevices(devices);
 
       const defaultCamera = devices.find(device => device.kind === 'videoinput');
       const defaultMicrophone = devices.find(device => device.kind === 'audioinput');
 
-      localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-        audio: defaultMicrophone ? { deviceId: defaultMicrophone.deviceId } : true,
-        video: defaultCamera
-          ? {
+      let audioTrack = null;
+      let videoTrack = null;
+      let audioError = false;
+      let videoError = false;
+
+      try {
+        if (defaultCamera) {
+          const videoStream = await navigator.mediaDevices.getUserMedia({
+            video: {
               deviceId: { exact: defaultCamera.deviceId },
               width: localRole === 'admin' ? 1920 : 320,
               height: localRole === 'admin' ? 1080 : 180,
-            }
-          : {
-              width: localRole === 'admin' ? 1920 : 320,
-              height: localRole === 'admin' ? 1080 : 180,
             },
-      });
+            audio: false,
+          });
+          videoTrack = videoStream.getVideoTracks()[0];
+        } else {
+          throw new Error('Video not found');
+        }
+      } catch (error) {
+        console.warn('Error video getting: ', error);
+        videoError = true;
+        setLocalCameraEnabled(false);
+      }
+
+      try {
+        if (defaultMicrophone) {
+          const audioStream = await navigator.mediaDevices.getUserMedia({
+            audio: { deviceId: defaultMicrophone.deviceId },
+            video: false,
+          });
+          audioTrack = audioStream.getAudioTracks()[0];
+        } else {
+          throw new Error('Micro not found');
+        }
+      } catch (error) {
+        console.warn('Error micro getting: ', error);
+        audioError = true;
+        setLocalMicrophoneEnabled(false);
+      }
+
+      if (videoError && audioError) {
+        console.error('devices not found');
+        return;
+      }
+
+      localMediaStream.current = new MediaStream();
+      if (videoTrack) localMediaStream.current.addTrack(videoTrack);
+      if (audioTrack) localMediaStream.current.addTrack(audioTrack);
 
       if (localRole) {
         addNewClient(LOCAL_VIDEO, localRole, () => {
