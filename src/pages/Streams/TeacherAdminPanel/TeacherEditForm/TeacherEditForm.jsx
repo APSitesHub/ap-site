@@ -32,6 +32,7 @@ export const TeacherEditForm = ({
     name: teacherToEdit.name,
     login: teacherToEdit.login,
     password: teacherToEdit.password,
+    platformId: teacherToEdit.platformId,
     lang: teacherToEdit.lang,
   };
 
@@ -39,6 +40,7 @@ export const TeacherEditForm = ({
     name: yup.string().required("Ім'я - обов'язкове поле"),
     login: yup.string().required("Логін - обов'язкове поле!"),
     password: yup.string().required("Пароль - обов'язкове поле!"),
+    platformId: yup.string().required("ID на платформі - обов'язкове поле! "),
     lang: yup.string().required("Мова - обов'язкове поле!"),
   });
 
@@ -47,6 +49,7 @@ export const TeacherEditForm = ({
     values.name = values.name.trim().trimStart();
     values.login = values.login.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
+    values.platformId = values.platformId.trim().trimStart();
     values.lang = langValue.toLowerCase().trim().trimStart();
     try {
       const response = await axios.put(
@@ -91,6 +94,10 @@ export const TeacherEditForm = ({
           <Label>
             <AdminInput type="text" name="password" placeholder="Пароль" />
             <AdminInputNote component="p" name="password" />
+          </Label>
+          <Label>
+            <AdminInput type="text" name="platformId" placeholder="ID на Платформі" />
+            <AdminInputNote component="p" name="platformId" />
           </Label>
           <SpeakingLabel>
             {langValue && langValue.value && <LabelText>Мова</LabelText>}
