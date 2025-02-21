@@ -1,20 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 import { TeacherInputBox } from './TeacherChat.styled';
-import { TeacherInputContainer } from './TeacherInputContainer';
+import { TeacherQuizContainer } from './TeacherInputContainer';
 
-export const TeacherQuizInput = ({
-  page,
-  isQuizInputOpen,
-  closeInputs,
-  isOpenedLast,
-}) => {
+export const TeacherQuizInput = ({ page, isQuizInputOpen, closeInputs }) => {
   const [answers, setAnswers] = useState([]);
+  const quizType = 'input';
 
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = io('http://localhost:4000/');
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
+    // socketRef.current = io('http://localhost:4000/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
@@ -40,7 +37,9 @@ export const TeacherQuizInput = ({
   return (
     <>
       <TeacherInputBox className={isQuizInputOpen ? 'shown' : 'hidden'}>
-        <TeacherInputContainer
+        <TeacherQuizContainer
+          page={page}
+          quizType={quizType}
           socket={socketRef.current}
           answers={answers}
           closeInputs={closeInputs}

@@ -7,20 +7,22 @@ import {
 import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
 import { TeacherChatPageContainer } from './TeacherChat.styled';
 
-export const TeacherInputContainer = ({ socket, closeInputs }) => {
+export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) => {
   const [answers, setAnswers] = useState({});
   const [isQuizActive, setIsQuizActive] = useState(false);
   console.log(7, socket);
+  console.log(8, page);
+  console.log(9, quizType);
 
   // eslint-disable-next-line
   const emitQuizStart = () => {
-    socket.emit('question:asked', { question: 'howdy' });
+    socket.emit('question:asked', { question: 'howdy', page: page, quizType: quizType });
     setIsQuizActive(true);
   };
 
   const emitQuizEnd = () => {
     setAnswers(answers => (answers = {}));
-    socket.emit('question:closed', { question: 'bye' });
+    socket.emit('question:closed', { question: 'bye', page: page, quizType: quizType });
     closeInputs();
     setIsQuizActive(false);
   };
@@ -37,7 +39,7 @@ export const TeacherInputContainer = ({ socket, closeInputs }) => {
 
   return (
     <TeacherChatPageContainer>
-      <TeacherAnswersChart answers={answers} isQuizActive={isQuizActive} />
+      <TeacherAnswersChart page={page} answers={answers} isQuizActive={isQuizActive} />
       <TeacherChartBtnBox>
         <TeacherChartBtn type="button" onClick={emitQuizStart}>
           Start
@@ -46,7 +48,6 @@ export const TeacherInputContainer = ({ socket, closeInputs }) => {
           End
         </TeacherChartResetBtn>
       </TeacherChartBtnBox>
-      {/* <TeacherChatBody socket={socket} messages={messages} room={room} /> */}
     </TeacherChatPageContainer>
   );
 };

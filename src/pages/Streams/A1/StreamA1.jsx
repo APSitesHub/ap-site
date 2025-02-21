@@ -1,6 +1,9 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
 import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
+import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
+import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
+import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 import { Support } from 'components/Stream/Support/Support';
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -30,15 +33,14 @@ import {
   SupportPointer,
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
-import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
-import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
-import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 
 const StreamA1 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
-  const [isInputOpen, setIsInputOpen] = useState(false);
+  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isAnimated, setIsAnimated] = useState(false);
@@ -51,31 +53,35 @@ const StreamA1 = () => {
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
 
+  console.log(56, room);
+
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    isChatOpen || isSupportOpen || isInputOpen
+    isChatOpen || isSupportOpen
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleChat = () => {
     setIsChatOpen(isChatOpen => !isChatOpen);
-    isKahootOpen || isSupportOpen || isInputOpen
+    isKahootOpen || isSupportOpen
       ? setIsOpenedLast(isOpenedLast => 'chat')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleSupport = () => {
     setIsSupportOpen(isSupportOpen => !isSupportOpen);
     setAnimationID('');
-    isKahootOpen || isChatOpen || isInputOpen
+    isKahootOpen || isChatOpen
       ? setIsOpenedLast(isOpenedLast => 'support')
       : setIsOpenedLast(isOpenedLast => '');
   };
-  const toggleInput = () => {
-    setIsInputOpen(isInputOpen => !isInputOpen);
-    setAnimationID('');
-    isKahootOpen || isChatOpen || isSupportOpen
-      ? setIsOpenedLast(isOpenedLast => 'input')
-      : setIsOpenedLast(isOpenedLast => '');
+  const toggleQuizInput = () => {
+    setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
+  };
+  const toggleQuizOptions = () => {
+    setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
+  };
+  const toggleQuizTrueFalse = () => {
+    setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
   };
   const toggleButtonBox = () => {
     setIsButtonBoxOpen(isOpen => !isOpen);
@@ -95,8 +101,8 @@ const StreamA1 = () => {
   useEffect(() => {
     document.title = 'A1 English | AP Education';
 
-    // socketRef.current = io('https://ap-chat-server.onrender.com/');
-    socketRef.current = io('http://localhost:4000/');
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
+    // socketRef.current = io('http://localhost:4000/');
 
     const handleDisconnect = () => {
       socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
@@ -108,16 +114,32 @@ const StreamA1 = () => {
       socketRef.current.emit('connected:user', socketRef.current.id, room);
     });
 
-    socketRef.current.on('question:input', howdy => {
-      console.log(howdy);
-      console.log(room);
-      setIsInputOpen(true);
+    // open quizzes on event
+    socketRef.current.on('question:input', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(true);
+    });
+    socketRef.current.on('question:options', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(true);
+    });
+    socketRef.current.on('question:trueFalse', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(true);
     });
 
-    socketRef.current.on('question:closeInput', bye => {
-      console.log(bye);
-      console.log(room);
-      setIsInputOpen(false);
+    // close quizzes on event
+    socketRef.current.on('question:closeInput', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
+    });
+    socketRef.current.on('question:closeOptions', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
+    });
+    socketRef.current.on('question:closeTrueFalse', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
     });
 
     socketRef.current.on('connected:user', (id, lvl) => {
@@ -329,21 +351,24 @@ const StreamA1 = () => {
             )}
 
             <StudentInput
-              isInputOpen={isInputOpen}
+              isInputOpen={isQuizInputOpen}
               socket={socketRef.current}
-              toggleInput={toggleInput}
+              toggleInput={toggleQuizInput}
+              page={room.replace('/streams/', '')}
             />
 
-             <StudentOptions
-              isInputOpen={isInputOpen}
+            <StudentOptions
+              isInputOpen={isQuizOptionsOpen}
               socket={socketRef.current}
-              toggleInput={toggleInput}
+              toggleInput={toggleQuizOptions}
+              page={room.replace('/streams/', '')}
             />
 
             <StudentTrueFalse
-              isInputOpen={isInputOpen}
+              isInputOpen={isQuizTrueFalseOpen}
               socket={socketRef.current}
-              toggleInput={toggleInput}
+              toggleInput={toggleQuizTrueFalse}
+              page={room.replace('/streams/', '')}
             />
 
             <Support

@@ -5,7 +5,7 @@ import {
   StudentQuizSubmitBtn,
 } from './StudentInput.styled';
 
-export const StudentInput = ({ isInputOpen, socket }) => {
+export const StudentInput = ({ isInputOpen, socket, page }) => {
   console.log(4, 'studentinputsocket', socket);
 
   const handleSubmit = e => {
@@ -13,6 +13,7 @@ export const StudentInput = ({ isInputOpen, socket }) => {
     console.log(document.querySelector('#answer_input').value);
     socket.emit('answer:given', {
       answer: document.querySelector('#answer_input').value,
+      page: page,
     });
   };
 
@@ -73,7 +74,7 @@ export const StudentInput = ({ isInputOpen, socket }) => {
           id="answer_input"
           placeholder="Write your answer"
         />
-        <StudentQuizSubmitBtn onClick={(e) => handleSubmit(e)}>Send</StudentQuizSubmitBtn>
+        <StudentQuizSubmitBtn onClick={e => handleSubmit(e)}>Send</StudentQuizSubmitBtn>
       </StudentQuizForm>
     </StudentQuizBox>
   );
