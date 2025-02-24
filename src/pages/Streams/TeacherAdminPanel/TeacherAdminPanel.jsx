@@ -295,6 +295,14 @@ const UserAdminPanel = () => {
                 <AdminInput type="text" name="platformId" placeholder="ID платформи" />
                 <AdminInputNote component="p" name="platformId" />
               </Label>
+              <Label>
+                <AdminInput type="text" name="crmId" placeholder="CRM ID" />
+                <AdminInputNote component="p" name="crmId" />
+              </Label>
+              <Label>
+                <AdminInput type="text" name="altegioId" placeholder="Altegio ID" />
+                <AdminInputNote component="p" name="altegioId" />
+              </Label>
               <SpeakingLabel>
                 {langValue && langValue.value && <LabelText>Мова</LabelText>}
                 <TeacherLangSelect
@@ -349,6 +357,8 @@ const UserAdminPanel = () => {
                 <UserHeadCell>Логін</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
+                <UserHeadCell>CRM ID</UserHeadCell>
+                <UserHeadCell>Altegio ID</UserHeadCell>
                 <UserHeadCell>Мова</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
                 <UserHeadCell>Відвідини з часом</UserHeadCell>
@@ -365,6 +375,8 @@ const UserAdminPanel = () => {
                     <UserCell>{teacher.login}</UserCell>
                     <UserCell>{teacher.password}</UserCell>
                     <UserCell>{teacher.platformId}</UserCell>
+                    <UserCell>{teacher.crmId}</UserCell>
+                    <UserCell>{teacher.altegioId}</UserCell>
                     <UserCell>{teacher.lang}</UserCell>
                     <UserCell>
                       {teacher.visited[teacher.visited.length - 1]}

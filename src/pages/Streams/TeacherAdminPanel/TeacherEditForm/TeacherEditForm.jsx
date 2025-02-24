@@ -33,6 +33,8 @@ export const TeacherEditForm = ({
     login: teacherToEdit.login,
     password: teacherToEdit.password,
     platformId: teacherToEdit.platformId,
+    crmId: teacherToEdit.crmId,
+    altegioId: teacherToEdit.altegioId,
     lang: teacherToEdit.lang,
   };
 
@@ -98,6 +100,14 @@ export const TeacherEditForm = ({
           <Label>
             <AdminInput type="text" name="platformId" placeholder="ID на Платформі" />
             <AdminInputNote component="p" name="platformId" />
+          </Label>
+          <Label>
+            <AdminInput type="text" name="crmId" placeholder="CRM ID" />
+            <AdminInputNote component="p" name="crmId" />
+          </Label>
+          <Label>
+            <AdminInput type="text" name="altegioId" placeholder="Altegio ID" />
+            <AdminInputNote component="p" name="altegioId" />
           </Label>
           <SpeakingLabel>
             {langValue && langValue.value && <LabelText>Мова</LabelText>}
