@@ -311,7 +311,12 @@ export const KahootLogo = styled(KahootIcon)`
   }
 `;
 
-export const InputBtn = styled(ChatBtn)``;
+export const InputBtn = styled(ChatBtn)`
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.48px;
+  word-break: break-word;
+`;
 
 export const InputLogo = styled(InputIcon)`
   width: 25px;
@@ -561,6 +566,12 @@ export const LoginFormText = styled.p`
   }
 `;
 
+export const LoginFormTextWSPA = styled(LoginFormText)`
+  @media screen and (min-width: 1280px) {
+    max-width: 600px;
+  }
+`;
+
 export const LoginLogo = styled(LogoClean)`
   width: 240px;
 
@@ -614,8 +625,7 @@ export const LoginInput = styled(Input)`
     &:focus {
       font-family: var(--new-font-family);
       -webkit-text-fill-color: var(--main-color);
-      -webkit-box-shadow: 0 0 0px 50px var(--accent-semi-transparent-color)
-        inset;
+      -webkit-box-shadow: 0 0 0px 50px var(--accent-semi-transparent-color) inset;
     }
   }
 `;

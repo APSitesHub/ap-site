@@ -104,7 +104,10 @@ const AdminPanel = () => {
     b1kidsbeginner: '',
     b2kidsbeginner: '',
     dea1kids: '',
+    dea2kids: '',
+    deb1kids: '',
     pla1kids: '',
+    pla2kids: '',
     a1kidsfree: '',
     dekidsfree: '',
     plkidsfree: '',
@@ -156,7 +159,10 @@ const AdminPanel = () => {
     b1kidsbeginner: yup.string().optional(),
     b2kidsbeginner: yup.string().optional(),
     dea1kids: yup.string().optional(),
+    dea2kids: yup.string().optional(),
+    deb1kids: yup.string().optional(),
     pla1kids: yup.string().optional(),
+    pla2kids: yup.string().optional(),
     a1kidsfree: yup.string().optional(),
     dekidsfree: yup.string().optional(),
     plkidsfree: yup.string().optional(),
@@ -203,11 +209,7 @@ const AdminPanel = () => {
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -253,19 +255,11 @@ const AdminPanel = () => {
                   <AdminInputNote component="p" name="c1" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a1free"
-                    placeholder="A1 free link"
-                  />
+                  <AdminInput type="text" name="a1free" placeholder="A1 free link" />
                   <AdminInputNote component="p" name="a1free" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a2free"
-                    placeholder="A2 free link"
-                  />
+                  <AdminInput type="text" name="a2free" placeholder="A2 free link" />
                   <AdminInputNote component="p" name="a2free" />
                 </Label>
               </LinksFieldGroup>
@@ -288,11 +282,7 @@ const AdminPanel = () => {
                   <AdminInputNote component="p" name="deutscha0_2" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="deutsch"
-                    placeholder="Deutsch A1 link"
-                  />
+                  <AdminInput type="text" name="deutsch" placeholder="Deutsch A1 link" />
                   <AdminInputNote component="p" name="deutsch" />
                 </Label>
                 <Label>
@@ -339,11 +329,7 @@ const AdminPanel = () => {
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>Polski</LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="polskia0"
-                    placeholder="Polski A0 link"
-                  />
+                  <AdminInput type="text" name="polskia0" placeholder="Polski A0 link" />
                   <AdminInputNote component="p" name="polskia0" />
                 </Label>
                 <Label>
@@ -363,35 +349,19 @@ const AdminPanel = () => {
                   <AdminInputNote component="p" name="polskia0_3" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="polski"
-                    placeholder="Polski A1 link"
-                  />
+                  <AdminInput type="text" name="polski" placeholder="Polski A1 link" />
                   <AdminInputNote component="p" name="polski" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="polskia2"
-                    placeholder="Polski A2 link"
-                  />
+                  <AdminInput type="text" name="polskia2" placeholder="Polski A2 link" />
                   <AdminInputNote component="p" name="polskia2" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="polskib1"
-                    placeholder="Polski B1 link"
-                  />
+                  <AdminInput type="text" name="polskib1" placeholder="Polski B1 link" />
                   <AdminInputNote component="p" name="polskib1" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="polskib2"
-                    placeholder="Polski B2 link"
-                  />
+                  <AdminInput type="text" name="polskib2" placeholder="Polski B2 link" />
                   <AdminInputNote component="p" name="polskib2" />
                 </Label>
                 <Label>
@@ -446,51 +416,27 @@ const AdminPanel = () => {
                   <AdminInputNote component="p" name="preschool" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a0kids"
-                    placeholder="A0 Kids link"
-                  />
+                  <AdminInput type="text" name="a0kids" placeholder="A0 Kids link" />
                   <AdminInputNote component="p" name="a0kids" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a1kids"
-                    placeholder="A1 Kids link"
-                  />
+                  <AdminInput type="text" name="a1kids" placeholder="A1 Kids link" />
                   <AdminInputNote component="p" name="a1kids" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a2kids"
-                    placeholder="A2 Kids link"
-                  />
+                  <AdminInput type="text" name="a2kids" placeholder="A2 Kids link" />
                   <AdminInputNote component="p" name="a2kids" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="b1kids"
-                    placeholder="B1 Kids link"
-                  />
+                  <AdminInput type="text" name="b1kids" placeholder="B1 Kids link" />
                   <AdminInputNote component="p" name="b1kids" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="b2kids"
-                    placeholder="B2 Kids link"
-                  />
+                  <AdminInput type="text" name="b2kids" placeholder="B2 Kids link" />
                   <AdminInputNote component="p" name="b2kids" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="c1kids"
-                    placeholder="C1 Kids link"
-                  />
+                  <AdminInput type="text" name="c1kids" placeholder="C1 Kids link" />
                   <AdminInputNote component="p" name="c1kids" />
                 </Label>
                 <Label>
@@ -536,10 +482,34 @@ const AdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
+                    name="dea2kids"
+                    placeholder="A2 Kids Deutsch link"
+                  />
+                  <AdminInputNote component="p" name="dea2kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deb1kids"
+                    placeholder="B1 Kids Deutsch link"
+                  />
+                  <AdminInputNote component="p" name="deb1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
                     name="pla1kids"
                     placeholder="A1 Kids Polski link"
                   />
                   <AdminInputNote component="p" name="pla1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="pla2kids"
+                    placeholder="A2 Kids Polski link"
+                  />
+                  <AdminInputNote component="p" name="pla2kids" />
                 </Label>
                 <Label>
                   <AdminInput
@@ -569,19 +539,11 @@ const AdminPanel = () => {
                   <AdminInputNote component="p" name="nmt_ukr" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="nmt_en"
-                    placeholder="NMT English link"
-                  />
+                  <AdminInput type="text" name="nmt_en" placeholder="NMT English link" />
                   <AdminInputNote component="p" name="nmt_en" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="nmt_math"
-                    placeholder="NMT Math link"
-                  />
+                  <AdminInput type="text" name="nmt_math" placeholder="NMT Math link" />
                   <AdminInputNote component="p" name="nmt_math" />
                 </Label>
                 <Label>
@@ -602,11 +564,7 @@ const AdminPanel = () => {
                 <AdminInputNote component="p" name="test" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="apconf"
-                  placeholder="AP Conference link"
-                />
+                <AdminInput type="text" name="apconf" placeholder="AP Conference link" />
                 <AdminInputNote component="p" name="apconf" />
               </Label>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

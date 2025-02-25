@@ -12,11 +12,11 @@ import { Warehouse } from './Farm/Warehouse';
 import { HostKahoots } from './HostKahoots/HostKahoots';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
+import { TeacherQuizInput } from './TeacherInput/TeacherQuizInput';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
   FarmBtn,
-  HotelLogo,
   PlatformBtn,
   PlatformLogo,
   TeacherFarmButtonBox,
@@ -26,10 +26,10 @@ import {
   WarehouseLogo,
   WhiteBoardBtn,
   WhiteBoardLogo,
+  WorkshopLogo,
 } from './TeacherPage.styled';
 import { Viewer } from './Viewer/Viewer';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
-import { TeacherInput } from './TeacherInput/TeacherInput';
 
 const TeacherPageWarehouseHotel = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -84,6 +84,7 @@ const TeacherPageWarehouseHotel = () => {
       ? setIsOpenedLast(isOpenedLast => 'warehouse')
       : setIsOpenedLast(isOpenedLast => '');
   };
+  // eslint-disable-next-line
   const toggleHotel = () => {
     !isOpenedLast
       ? setIsHotelOpen(isHotelOpen => !isHotelOpen)
@@ -125,7 +126,7 @@ const TeacherPageWarehouseHotel = () => {
     <>
       <TeacherFarmButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
         <FarmBtn onClick={toggleHotel}>
-          <HotelLogo />
+          <WorkshopLogo />
         </FarmBtn>
 
         <FarmBtn onClick={toggleWarehouse}>
@@ -194,7 +195,7 @@ const TeacherPageWarehouseHotel = () => {
         isOpenedLast={isOpenedLast}
       />
       <TeacherChat page={page} />
-      <TeacherInput page={page} isInputOpen={isInputOpen} isOpenedLast={isOpenedLast} />
+      <TeacherQuizInput page={page} isInputOpen={isInputOpen} isOpenedLast={isOpenedLast} />
     </>
   );
 };

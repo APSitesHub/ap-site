@@ -22,6 +22,7 @@ import { PedagogiumLogisticsKahootForm } from './PedagogiumLogisticsKahootForm';
 import { PedagogiumPrepKahootForm } from './PedagogiumPrepKahootForm';
 import { WSBMIRLogisticsKahootForm } from './WSBMIRLogisticsKahootForm';
 import { WSBMIRPrepKahootForm } from './WSBMIRPrepKahootForm';
+import { WSEPrepKahootForm } from './WSEPrepKahootForm';
 import { WSKMLogisticsKahootForm } from './WSKMLogisticsKahootForm';
 import { WSKMPrepKahootForm } from './WSKMPrepKahootForm';
 import { WSSiPLogisticsKahootForm } from './WSSiPLogisticsKahootForm';
@@ -166,6 +167,9 @@ const UniKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('wssip_prep')}>
               WSSiP Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wse_prep')}>
+              WSE Prep
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -216,6 +220,9 @@ const UniKahootAdminPanel = () => {
           )}
           {levels.includes('wssip_prep') && (
             <WSSiPPrepKahootForm destination={destination} />
+          )}
+          {levels.includes('wse_prep') && (
+            <WSEPrepKahootForm destination={destination} />
           )}
         </KahootFormBox>
         {isLoading && <Loader />}

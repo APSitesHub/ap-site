@@ -166,6 +166,10 @@ export const LessonValuesLogo = styled.div`
   background: linear-gradient(322deg, #0f645b -5.61%, #09c6cc 93.88%);
 `;
 
+export const LessonValuesLogoWSPA = styled(LessonValuesLogo)`
+  background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
+`;
+
 export const LessonValuesList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -306,8 +310,8 @@ export const PdfPreviewBackground = styled.div`
 
   transform: scaleY(0);
   transform-origin: top;
-  transition: transform 350ms linear, height 350ms linear,
-    min-height 350ms linear, opacity 350ms linear;
+  transition: transform 350ms linear, height 350ms linear, min-height 350ms linear,
+    opacity 350ms linear;
 
   &:not(:last-child) {
     margin-bottom: 3px;
@@ -430,8 +434,7 @@ export const FaqListQuestionMarkBG = styled.div`
 
     transition: opacity var(--animation-global);
 
-    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%),
-      #09c6cc;
+    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%), #09c6cc;
   }
 `;
 

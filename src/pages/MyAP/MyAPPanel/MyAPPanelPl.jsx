@@ -157,12 +157,6 @@ export const MyAPPanelPl = ({
     e.currentTarget.classList.toggle('tooltip-open');
   };
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '145px' : '129px',
-    };
-  };
-
   // const toggleTooltipTimeout = () => {
   //   const resetBtnEl = document.querySelector('#reset-btn');
 
@@ -259,7 +253,7 @@ export const MyAPPanelPl = ({
           </APPanelMarathonBtn>
         </IframeMarathonLinkPanel>
       )} */}
-      <APPanel className={isButtonBoxShown ? '' : 'hidden'} style={{ ...panelStyles() }}>
+      <APPanel className={isButtonBoxShown ? '' : 'hidden'}>
         {/* {isMultipleCourses && (
           <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
             <APPanelToggleBtn

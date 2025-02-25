@@ -291,6 +291,10 @@ const UserAdminPanel = () => {
                 <AdminInput type="text" name="password" placeholder="Пароль" />
                 <AdminInputNote component="p" name="password" />
               </Label>
+              <Label>
+                <AdminInput type="text" name="platformId" placeholder="ID платформи" />
+                <AdminInputNote component="p" name="platformId" />
+              </Label>
               <SpeakingLabel>
                 {langValue && langValue.value && <LabelText>Мова</LabelText>}
                 <TeacherLangSelect
@@ -344,6 +348,7 @@ const UserAdminPanel = () => {
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Логін</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
+                <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Мова</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
                 <UserHeadCell>Відвідини з часом</UserHeadCell>
@@ -359,6 +364,7 @@ const UserAdminPanel = () => {
                     <UserCell>{teacher.name}</UserCell>
                     <UserCell>{teacher.login}</UserCell>
                     <UserCell>{teacher.password}</UserCell>
+                    <UserCell>{teacher.platformId}</UserCell>
                     <UserCell>{teacher.lang}</UserCell>
                     <UserCell>
                       {teacher.visited[teacher.visited.length - 1]}

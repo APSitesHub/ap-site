@@ -1,11 +1,20 @@
-import { StudentInputBox } from './StudentInput.styled';
+import {
+  StudentQuizBox,
+  StudentQuizBoxInput,
+  StudentQuizForm,
+  StudentQuizSubmitBtn,
+} from './StudentInput.styled';
 
-export const StudentInput = ({ isInputOpen, socket }) => {
+export const StudentInput = ({ isInputOpen, socket, page }) => {
   console.log(4, 'studentinputsocket', socket);
 
-  const handleSubmit = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
     console.log(document.querySelector('#answer_input').value);
-    socket.emit('answer:given', {answer: document.querySelector('#answer_input').value})
+    socket.emit('answer:given', {
+      answer: document.querySelector('#answer_input').value,
+      page: page,
+    });
   };
 
   //   const handleOnDrag = e => {
@@ -53,15 +62,20 @@ export const StudentInput = ({ isInputOpen, socket }) => {
   //   };
 
   return (
-    <StudentInputBox
+    <StudentQuizBox
       className={isInputOpen ? 'shown' : 'hidden'}
       //   draggable={true}
       //   onDrag={handleOnDrag}
       //   onTouchMove={handleOnDrag}
     >
-      <div id="mydivheader">Click here to move</div>
-      <input type="text" id="answer_input" />
-      <button onClick={handleSubmit}>Відповісти</button>
-    </StudentInputBox>
+      <StudentQuizForm>
+        <StudentQuizBoxInput
+          type="text"
+          id="answer_input"
+          placeholder="Write your answer"
+        />
+        <StudentQuizSubmitBtn onClick={e => handleSubmit(e)}>Send</StudentQuizSubmitBtn>
+      </StudentQuizForm>
+    </StudentQuizBox>
   );
 };

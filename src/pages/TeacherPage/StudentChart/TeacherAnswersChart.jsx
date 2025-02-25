@@ -1,27 +1,32 @@
 import axios from 'axios';
 // import chart from '../../../img/bg/chart.png';
 import { ResponsiveBarCanvas } from '@nivo/bar';
-import { QuestionHeader } from '../TeacherPage.styled';
 import {
   ChartAreaLimiter,
+  ChartPlaceholder,
+  ChartPlaceholderHighlight,
   TeacherChartArea,
   TooltipArea,
   TooltipColorLabel,
   TooltipIdText,
-  TooltipValueText,
+  TooltipValueText
 } from './StudentChart.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const TeacherAnswersChart = ({ currentStudentChart }) => {
-  const data = [
-    {
-      schronisko: 28,
-      hotel: 34,
-      motel: 14,
-      kamping: 11,
-    },
-  ];
+export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
+  console.log(answers);
+
+  const data = [answers];
+
+  // const data = [
+  //   {
+  //     Wysoka_precyzja: 28,
+  //     Automatyzacja_procesów: 34,
+  //     Skrócenie_czasu_produkcji: 14,
+  //     Ręczne_sterowanie_każdą_operacją: 11,
+  //   },
+  // ];
 
   const MyResponsiveBar = ({ data }) => (
     <ResponsiveBarCanvas
@@ -42,7 +47,9 @@ export const TeacherAnswersChart = ({ currentStudentChart }) => {
               backgroundColor: color,
             }}
           ></TooltipColorLabel>{' '}
-          <TooltipIdText>{id}: <TooltipValueText>{value}</TooltipValueText></TooltipIdText>
+          <TooltipIdText>
+            {id.replaceAll('_', ' ')}: <TooltipValueText>{value}</TooltipValueText>
+          </TooltipIdText>
         </TooltipArea>
       )}
     />
@@ -51,12 +58,14 @@ export const TeacherAnswersChart = ({ currentStudentChart }) => {
   return (
     <>
       <TeacherChartArea>
-        <QuestionHeader id="focus">
-          Jak nazywa się budynek dla turystów?
-          <br />
-          Który znajduje się w górach.
-        </QuestionHeader>
+        {/* <QuestionHeader id="focus">Jakie są główne zalety maszyn CNC?</QuestionHeader> */}
+        {!isQuizActive && (
+          <ChartPlaceholder>
+            PAY ATTENTION, THE QUIZ IS ABOUT TO <ChartPlaceholderHighlight>START</ChartPlaceholderHighlight>
+          </ChartPlaceholder>
+        )}
         <ChartAreaLimiter
+          className={isQuizActive ? 'active' : ''}
           id="chartlimiter"
           style={{
             minWidth: `${
@@ -64,7 +73,7 @@ export const TeacherAnswersChart = ({ currentStudentChart }) => {
             }px`,
           }}
         >
-          <MyResponsiveBar data={data}></MyResponsiveBar>
+          {isQuizActive && <MyResponsiveBar data={data}></MyResponsiveBar>}
           {/* <ChartImage src={chart} alt="chart image" /> */}
         </ChartAreaLimiter>
       </TeacherChartArea>

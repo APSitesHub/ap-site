@@ -32,6 +32,8 @@ import { DeutschB2KahootForm } from '../KahootAdminPanel/DeutschB2KahootForm';
 import { DeutschFreeKahootForm } from '../KahootAdminPanel/DeutschFreeKahootForm';
 import { DeutschKahootForm } from '../KahootAdminPanel/DeutschKahootForm';
 import { DeutschKidsA0KahootForm } from '../KahootAdminPanel/DeutschKidsA0KahootForm';
+import { DeutschKidsA2KahootForm } from '../KahootAdminPanel/DeutschKidsA2KahootForm';
+import { DeutschKidsB1KahootForm } from '../KahootAdminPanel/DeutschKidsB1KahootForm';
 import { DeutschKidsFreeKahootForm } from '../KahootAdminPanel/DeutschKidsFreeKahootForm';
 import { DeutschKidsKahootForm } from '../KahootAdminPanel/DeutschKidsKahootForm';
 import {
@@ -52,12 +54,14 @@ import { NMTHistoryKahootForm } from '../KahootAdminPanel/NMTHistoryKahootForm';
 import { NMTMathKahootForm } from '../KahootAdminPanel/NMTMathKahootForm';
 import { NMTUkrKahootForm } from '../KahootAdminPanel/NMTUkrKahootForm';
 import { PolskiA02KahootForm } from '../KahootAdminPanel/PolskiA02KahootForm';
+import { PolskiA03KahootForm } from '../KahootAdminPanel/PolskiA03KahootForm';
 import { PolskiA0KahootForm } from '../KahootAdminPanel/PolskiA0KahootForm';
 import { PolskiA2KahootForm } from '../KahootAdminPanel/PolskiA2KahootForm';
 import { PolskiB1KahootForm } from '../KahootAdminPanel/PolskiB1KahootForm';
 import { PolskiB2KahootForm } from '../KahootAdminPanel/PolskiB2KahootForm';
 import { PolskiFreeKahootForm } from '../KahootAdminPanel/PolskiFreeKahootForm';
 import { PolskiKahootForm } from '../KahootAdminPanel/PolskiKahootForm';
+import { PolskiKidsA2KahootForm } from '../KahootAdminPanel/PolskiKidsA2KahootForm';
 import { PolskiKidsFreeKahootForm } from '../KahootAdminPanel/PolskiKidsFreeKahootForm';
 import { PolskiKidsKahootForm } from '../KahootAdminPanel/PolskiKidsKahootForm';
 import { PreschoolEdKahootForm } from '../KahootAdminPanel/PreschoolEdKahootForm';
@@ -68,7 +72,6 @@ import { TrialsEngKahootForm } from '../KahootAdminPanel/TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from '../KahootAdminPanel/TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from '../KahootAdminPanel/TrialsPlKahootForm';
 import { HostAdminPanelSection } from './HostKahootAdminPanel.styled';
-import { PolskiA03KahootForm } from '../KahootAdminPanel/PolskiA03KahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -265,8 +268,17 @@ export const HostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('dea1kids')}>
               De A1 Kids
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('dea2kids')}>
+              De A2 Kids
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('deb1kids')}>
+              De B1 Kids
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pla1kids')}>
               Pl A1 Kids
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('pla2kids')}>
+              Pl A2 Kids
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('dekidsfree')}>
               De Kids Free
@@ -418,8 +430,17 @@ export const HostKahootAdminPanel = () => {
           {levels.includes('dea1kids') && (
             <DeutschKidsKahootForm destination={destination} />
           )}
+           {levels.includes('dea2kids') && (
+            <DeutschKidsA2KahootForm destination={destination} />
+          )}
+           {levels.includes('deb1kids') && (
+            <DeutschKidsB1KahootForm destination={destination} />
+          )}
           {levels.includes('pla1kids') && (
             <PolskiKidsKahootForm destination={destination} />
+          )}
+          {levels.includes('pla2kids') && (
+            <PolskiKidsA2KahootForm destination={destination} />
           )}
           {levels.includes('a1kidsfree') && (
             <A1KidsFreeKahootForm destination={destination} />
