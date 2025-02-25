@@ -9,8 +9,6 @@ export const refreshToken = async () => {
       login: localStorage.getItem('login'),
     });
 
-    console.log(res.data);
-
     localStorage.setItem('token', res.data.newToken);
   } catch (error) {
     console.log(error);
