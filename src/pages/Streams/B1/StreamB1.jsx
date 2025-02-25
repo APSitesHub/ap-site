@@ -100,6 +100,7 @@ const StreamB1 = () => {
     document.title = 'B1 English | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
+    // socketRef.current = io('http://localhost:4000/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);

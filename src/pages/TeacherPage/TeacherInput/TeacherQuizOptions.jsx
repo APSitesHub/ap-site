@@ -10,7 +10,8 @@ export const TeacherQuizOptions = ({ page, isQuizOptionsOpen, closeInputs }) => 
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = io('http://localhost:4000/');
+    socketRef.current = io('https://ap-chat-server.onrender.com/');
+    // socketRef.current = io('http://localhost:4000/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);

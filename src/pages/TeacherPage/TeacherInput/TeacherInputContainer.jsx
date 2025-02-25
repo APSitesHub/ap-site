@@ -21,7 +21,7 @@ export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) =>
   };
 
   const emitQuizEnd = () => {
-    setAnswers(answers => (answers = {}));
+    setAnswers(answers => (answers = {...{}}));
     socket.emit('question:closed', { question: 'bye', page: page, quizType: quizType });
     closeInputs();
     setIsQuizActive(false);
@@ -41,9 +41,9 @@ export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) =>
     <TeacherChatPageContainer>
       <TeacherAnswersChart page={page} answers={answers} isQuizActive={isQuizActive} />
       <TeacherChartBtnBox>
-        <TeacherChartBtn type="button" onClick={emitQuizStart}>
+        {!isQuizActive && <TeacherChartBtn type="button" onClick={emitQuizStart}>
           Start
-        </TeacherChartBtn>
+        </TeacherChartBtn>}
         <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
           End
         </TeacherChartResetBtn>

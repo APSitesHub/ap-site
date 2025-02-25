@@ -90,7 +90,7 @@ export const TeacherChartBtnBox = styled.div`
 `;
 
 export const TeacherChartBtn = styled.button`
-  width: 200px;
+  min-width: 150px;
 
   font-family: var(--my-ap-font-family);
   border-radius: 50px;

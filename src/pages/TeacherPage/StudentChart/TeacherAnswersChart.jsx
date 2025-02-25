@@ -9,16 +9,17 @@ import {
   TooltipArea,
   TooltipColorLabel,
   TooltipIdText,
-  TooltipValueText
+  TooltipValueText,
 } from './StudentChart.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
-  console.log(answers);
+  const data = Object.keys(answers).map(key => {
+    return { answer: key, [key]: answers[key] };
+  });
 
-  const data = [answers];
-
+  // simple data array example
   // const data = [
   //   {
   //     Wysoka_precyzja: 28,
@@ -31,14 +32,15 @@ export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
   const MyResponsiveBar = ({ data }) => (
     <ResponsiveBarCanvas
       data={data}
-      keys={Object.keys(data[0])}
-      groupMode="grouped"
-      margin={{ top: 30, right: 30, bottom: 15, left: 30 }}
-      padding={0.05}
+      keys={data.map(dataObj => Object.keys(dataObj)[1]) || ['answer']}
+      indexBy="answer"
+      groupMode="stacked"
+      margin={{ top: 30, right: 30, bottom: 20, left: 30 }}
+      padding={0}
       colors={{ scheme: 'dark2' }}
+      axisLeft={{ tickValues: Math.max(...Object.values(answers).map(value => value)) }}
+      axisBottom={true}
       labelPosition="end"
-      axisBottom={false}
-      axisRight={true}
       labelOffset={8}
       tooltip={({ id, value, color }) => (
         <TooltipArea>
@@ -59,9 +61,11 @@ export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
     <>
       <TeacherChartArea>
         {/* <QuestionHeader id="focus">Jakie są główne zalety maszyn CNC?</QuestionHeader> */}
-        {!isQuizActive && (
+
+        {!isQuizActive && !data[0] && (
           <ChartPlaceholder>
-            PAY ATTENTION, THE QUIZ IS ABOUT TO <ChartPlaceholderHighlight>START</ChartPlaceholderHighlight>
+            PAY ATTENTION, THE QUIZ IS ABOUT TO{' '}
+            <ChartPlaceholderHighlight>START</ChartPlaceholderHighlight>
           </ChartPlaceholder>
         )}
         <ChartAreaLimiter
@@ -73,7 +77,14 @@ export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
             }px`,
           }}
         >
-          {isQuizActive && <MyResponsiveBar data={data}></MyResponsiveBar>}
+          {isQuizActive && data.length ? (
+            <MyResponsiveBar data={data}></MyResponsiveBar>
+          ) : (
+            <ChartPlaceholder>
+              QUIZ IS GO!{' '}
+              <ChartPlaceholderHighlight>ANSWER NOW!</ChartPlaceholderHighlight>
+            </ChartPlaceholder>
+          )}
           {/* <ChartImage src={chart} alt="chart image" /> */}
         </ChartAreaLimiter>
       </TeacherChartArea>
