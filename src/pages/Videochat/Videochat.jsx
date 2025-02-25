@@ -3,7 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { getRooms } from './utils/api/getRooms';
 import { createRoom } from './utils/api/createRoom';
 import { getToken } from './utils/api/getToken';
-import { Container, Title, SubTitle, Label, Input, Button, RoomList, RoomItem, JoinButton } from './Videochat.styled';
+import {
+  Container,
+  Title,
+  SubTitle,
+  Label,
+  Input,
+  Button,
+  RoomList,
+  RoomItem,
+  JoinButton,
+} from './Videochat.styled';
+import { refreshToken } from './utils/api/refreshToken';
 
 function Videochat() {
   const navigate = useNavigate();
@@ -11,12 +22,16 @@ function Videochat() {
   const newRoomName = useRef('');
 
   useEffect(() => {
-    if (!getToken()) {
-      navigate('../teacher-login');
-    }
+    const initialize = async () => {
+      if (!getToken()) {
+        navigate('../teacher-login');
+      }
 
-    updateRooms();
-    // eslint-disable-next-line
+      await refreshToken();
+      updateRooms();
+    };
+
+    initialize();
   }, []);
 
   const updateRooms = async () => {
