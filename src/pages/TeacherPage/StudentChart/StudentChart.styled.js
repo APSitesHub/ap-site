@@ -95,7 +95,8 @@ export const TeacherChartBtn = styled.button`
   font-family: var(--my-ap-font-family);
   border-radius: 50px;
   padding: 20px 50px;
-  background: radial-gradient(70% 80% at -13.25% 26%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%), radial-gradient(70% 80% at 113.25% 74%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%), #000;
+  background: radial-gradient(70% 80% at -13.25% 26%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%),
+    radial-gradient(70% 80% at 113.25% 74%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%), #000;
 
   color: #fff;
   font-family: var(--new-font-family);
@@ -157,15 +158,18 @@ export const ChartPlaceholderHighlight = styled.span`
   color: var(--main-color);
 `;
 
-export const ChartAreaLimiter = styled.div`
+export const ChartAreaMyAPLimiter = styled.div`
   width: 100%;
   max-height: 300px;
   margin: 0 auto;
   position: relative;
   aspect-ratio: 1/1;
-  transform: scaleY(0);
   transform-origin: bottom;
   transition: transform var(--animation-global);
+`;
+
+export const ChartAreaLimiter = styled(ChartAreaMyAPLimiter)`
+  transform: scaleY(0);
 
   &.active {
     transform: scaleY(1);

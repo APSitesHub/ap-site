@@ -2,10 +2,10 @@ import { ResponsiveRadar } from '@nivo/radar';
 import axios from 'axios';
 import { EditFormHeader } from '../TeacherPage.styled';
 import {
-  ChartAreaLimiter,
+  ChartAreaMyAPLimiter,
   FeedbackText,
   MyAPGradientBg,
-  MyAPStudentChartArea,
+  MyAPStudentChartArea
 } from './StudentChart.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -100,10 +100,10 @@ export const MyAPStudentChart = ({ currentStudentChart }) => {
                 : '',
           }}
         ></FeedbackText>
-        <ChartAreaLimiter id="chartlimiter">
+        <ChartAreaMyAPLimiter id="chartlimiter">
           <MyAPGradientBg id="chartbg" />
           <MyResponsiveRadar data={data}></MyResponsiveRadar>
-        </ChartAreaLimiter>
+        </ChartAreaMyAPLimiter>
       </MyAPStudentChartArea>
     </>
   );
