@@ -4,8 +4,10 @@ import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
 import { CollectionsAdminPanel } from 'pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel';
 import { StreamDeutschA0 } from 'pages/Streams/Deutsch A0/StreamDeutschA0';
+// eslint-disable-next-line
 import { StreamDeutschA2 } from 'pages/Streams/Deutsch A2/StreamDeutschA2';
 import { StreamDeutschA2Free } from 'pages/Streams/Deutsch A2/StreamDeutschA2Free';
+// eslint-disable-next-line
 import { StreamDeutschB1 } from 'pages/Streams/Deutsch B1/StreamDeutschB1';
 import { StreamDeutsch } from 'pages/Streams/Deutsch/StreamDeutsch';
 import { StreamDeutschFree } from 'pages/Streams/Deutsch/StreamDeutschFree';
@@ -39,6 +41,7 @@ import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 import { StreamDeutschB2 } from 'pages/Streams/Deutsch B2/StreamDeutschB2';
 import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
+import StreamToZoomRedirecter from 'pages/Streams/StreamToZoomRedirecter/StreamToZoomRedirecter';
 
 const NewDesign = lazy(() =>
   import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
@@ -55,12 +58,14 @@ const Streams = lazy(() =>
 const Speakings = lazy(() =>
   import(/* webpackChunkName: "Speakings teacher page" */ '../pages/Streams/Speakings')
 );
+// eslint-disable-next-line
 const StreamA0 = lazy(() =>
   import(/* webpackChunkName: "Streams A0 page" */ '../pages/Streams/A0/StreamA0')
 );
 const StreamA02 = lazy(() =>
   import(/* webpackChunkName: "Streams A0_2 page" */ '../pages/Streams/A0/StreamA02')
 );
+// eslint-disable-next-line
 const StreamA1 = lazy(() =>
   import(/* webpackChunkName: "Streams A1 page" */ '../pages/Streams/A1/StreamA1')
 );
@@ -69,6 +74,7 @@ const StreamA1Free = lazy(() =>
     /* webpackChunkName: "Free streams A1 page" */ '../pages/Streams/A1/StreamA1Free'
   )
 );
+// eslint-disable-next-line
 const StreamA2 = lazy(() =>
   import(/* webpackChunkName: "Streams A2 page" */ '../pages/Streams/A2/StreamA2')
 );
@@ -77,6 +83,7 @@ const StreamA2Free = lazy(() =>
     /* webpackChunkName: "Free streams A2 page" */ '../pages/Streams/A2/StreamA2Free'
   )
 );
+// eslint-disable-next-line
 const StreamB1 = lazy(() =>
   import(/* webpackChunkName: "Streams B1 page" */ '../pages/Streams/B1/StreamB1')
 );
@@ -501,19 +508,23 @@ export const App = () => {
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
-            <Route path="a0" element={<StreamA0 />} noindex={true} />
+            {/* <Route path="a0" element={<StreamA0 />} noindex={true} /> */}
+            <Route path="a0" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="a0sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="a0-chat" element={<WindowedChat />} noindex={true} />
             <Route path="a0_2" element={<StreamA02 />} noindex={true} />
             <Route path="a0_2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="a0_2-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="a1" element={<StreamA1 />} noindex={true} />
+            {/* <Route path="a1" element={<StreamA1 />} noindex={true} /> */}
+            <Route path="a1" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="a1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="a1-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="a2" element={<StreamA2 />} noindex={true} />
+            {/* <Route path="a2" element={<StreamA2 />} noindex={true} /> */}
+            <Route path="a2" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="a2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="a2-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="b1" element={<StreamB1 />} noindex={true} />
+            {/* <Route path="b1" element={<StreamB1 />} noindex={true} /> */}
+            <Route path="b1" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="b1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="b1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="b2" element={<StreamB2 />} noindex={true} />
@@ -535,10 +546,12 @@ export const App = () => {
             <Route path="deutsch" element={<StreamDeutsch />} noindex={true} />
             <Route path="dea1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutsch-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="deutscha2" element={<StreamDeutschA2 />} noindex={true} />
+            {/* <Route path="deutscha2" element={<StreamDeutschA2 />} noindex={true} /> */}
+            <Route path="deutscha2" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="dea2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutscha2-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="deutschb1" element={<StreamDeutschB1 />} noindex={true} />
+            {/* <Route path="deutschb1" element={<StreamDeutschB1 />} noindex={true} /> */}
+            <Route path="deutschb1" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="deb1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutschb1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="deutschb2" element={<StreamDeutschB2 />} noindex={true} />

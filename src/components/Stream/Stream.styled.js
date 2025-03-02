@@ -531,6 +531,8 @@ export const StreamPlaceHolderText = styled.p`
   font-size: 32px;
   max-width: 720px;
   line-height: 1.2;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 
   &:not(:last-child) {
     margin-bottom: 20px;
