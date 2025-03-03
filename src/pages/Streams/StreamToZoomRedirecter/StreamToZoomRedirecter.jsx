@@ -46,6 +46,18 @@ const StreamToZoomRedirecter = () => {
       // Андріяна Наконечна
       page = 'https://us04web.zoom.us/j/74122161789?pwd=L5D8nML2aBColv5NEppW1Tx2qwcaBg.1';
       break;
+    case 'polski':
+      // Христина Красногурська'
+      page = 'https://us05web.zoom.us/j/83397324158?pwd=VMjG75UO1QfEcqkEOQWREkBHOOrzJ6.1';
+      break;
+    case 'polskia2':
+      // Христина Красногурська'
+      page = 'https://us05web.zoom.us/j/83397324158?pwd=VMjG75UO1QfEcqkEOQWREkBHOOrzJ6.1';
+      break;
+    case 'polskib1':
+      // Іванна Петрикович'
+      page = 'https://us04web.zoom.us/j/2624898627?pwd=S0EwRGtaUHMxQ0wrbjc4RGowbk51dz09';
+      break;
     default:
       break;
   }

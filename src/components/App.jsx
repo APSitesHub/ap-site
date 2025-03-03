@@ -10,8 +10,11 @@ import { KahootAdminPanel } from 'pages/Streams/KahootAdminPanel/KahootAdminPane
 import { LessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/LessonsAdminPanel';
 import { TeacherLessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/TeacherLessonsAdminPanel/TeacherLessonsAdminPanel';
 import { StreamPolskiA0 } from 'pages/Streams/Polski A0/StreamPolskiA0';
+// eslint-disable-next-line
 import { StreamPolskiA2 } from 'pages/Streams/Polski A2/StreamPolskiA2';
+// eslint-disable-next-line
 import { StreamPolskiB1 } from 'pages/Streams/Polski B1/StreamPolskiB1';
+// eslint-disable-next-line
 import { StreamPolski } from 'pages/Streams/Polski/StreamPolski';
 import { StreamPolskiFree } from 'pages/Streams/Polski/StreamPolskiFree';
 import { StreamTest } from 'pages/Streams/Test/StreamTest';
@@ -639,13 +642,16 @@ export const App = () => {
             <Route path="polskia0-chat" element={<WindowedChat />} noindex={true} />
             <Route path="polskia0_2" element={<StreamPolskiA02 />} noindex={true} />
             <Route path="polskia0_2-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="polski" element={<StreamPolski />} noindex={true} />
+            {/* <Route path="polski" element={<StreamPolski />} noindex={true} /> */}
+            <Route path="polski" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="pla1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polski-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="polskia2" element={<StreamPolskiA2 />} noindex={true} />
+            {/* <Route path="polskia2" element={<StreamPolskiA2 />} noindex={true} /> */}
+            <Route path="polskia2" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="pla2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polskia2-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="polskib1" element={<StreamPolskiB1 />} noindex={true} />
+            {/* <Route path="polskib1" element={<StreamPolskiB1 />} noindex={true} /> */}
+            <Route path="polskib1" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="plb1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polskib1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="polskib2" element={<StreamPolskiB2 />} noindex={true} />
