@@ -34,6 +34,14 @@ const StreamToZoomRedirecter = () => {
     //   // Наталія Цвігун
     //   page = 'https://us05web.zoom.us/j/3059336934?pwd=YnJtcjlBYzZuR1pCTWxDREVvNi9xQT09';
     //   break;
+    case 'b2':
+      // Юлія Тонкопій
+      page = 'https://us05web.zoom.us/j/8568211931?pwd=QllQaTJMOE1KdzhRUVprUzg0WnRTUT09';
+      break;
+    case 'deutsch':
+      // Оля Долока
+      page = 'https://us04web.zoom.us/j/3792111105?pwd=n1fIzCs5xwn3Gg1AuuLqHWJIbR5GhI.1';
+      break;
     case 'deutscha0':
       // Андріяна Наконечна
       page = 'https://us04web.zoom.us/j/74122161789?pwd=L5D8nML2aBColv5NEppW1Tx2qwcaBg.1';
@@ -45,6 +53,10 @@ const StreamToZoomRedirecter = () => {
     case 'deutschb1':
       // Андріяна Наконечна
       page = 'https://us04web.zoom.us/j/74122161789?pwd=L5D8nML2aBColv5NEppW1Tx2qwcaBg.1';
+      break;
+    case 'deutschb2':
+      // Оля Долока
+      page = 'https://us04web.zoom.us/j/3792111105?pwd=n1fIzCs5xwn3Gg1AuuLqHWJIbR5GhI.1';
       break;
     case 'polski':
       // Христина Красногурська'

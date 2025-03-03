@@ -76,6 +76,7 @@ const StreamA2Free = lazy(() =>
 const StreamB1 = lazy(() =>
   import(/* webpackChunkName: "Streams B1 page" */ '../pages/Streams/B1/StreamB1')
 );
+// eslint-disable-next-line
 const StreamB2 = lazy(() =>
   import(/* webpackChunkName: "Streams B2 page" */ '../pages/Streams/B2/StreamB2')
 );
@@ -594,7 +595,8 @@ export const App = () => {
             <Route path="b1" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="b1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="b1-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="b2" element={<StreamB2 />} noindex={true} />
+            {/* <Route path="b2" element={<StreamB2 />} noindex={true} /> */}
+            <Route path="b2" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="b2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="b2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="c1" element={<StreamC1 />} noindex={true} />
@@ -611,7 +613,8 @@ export const App = () => {
             <Route path="deutscha0_2" element={<StreamDeutschA02 />} noindex={true} />
             <Route path="dea0_2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutscha0_2-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="deutsch" element={<StreamDeutsch />} noindex={true} />
+            {/* <Route path="deutsch" element={<StreamDeutsch />} noindex={true} /> */}
+            <Route path="deutsch" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="dea1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutsch-chat" element={<WindowedChat />} noindex={true} />
             {/* <Route path="deutscha2" element={<StreamDeutschA2 />} noindex={true} /> */}
@@ -622,7 +625,8 @@ export const App = () => {
             <Route path="deutschb1" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="deb1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutschb1-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="deutschb2" element={<StreamDeutschB2 />} noindex={true} />
+            {/* <Route path="deutschb2" element={<StreamDeutschB2 />} noindex={true} />  */}
+            <Route path="deutschb2" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="deb2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deb2_1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deb2_2sc" element={<StreamSpeakingClub />} noindex={true} />
