@@ -3,13 +3,7 @@ import ViberHRRedirect from 'pages/HR/ViberHRRedirect/ViberHRRedirect';
 import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
 import { CollectionsAdminPanel } from 'pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel';
-import { StreamDeutschA0 } from 'pages/Streams/Deutsch A0/StreamDeutschA0';
-// eslint-disable-next-line
-import { StreamDeutschA2 } from 'pages/Streams/Deutsch A2/StreamDeutschA2';
 import { StreamDeutschA2Free } from 'pages/Streams/Deutsch A2/StreamDeutschA2Free';
-// eslint-disable-next-line
-import { StreamDeutschB1 } from 'pages/Streams/Deutsch B1/StreamDeutschB1';
-import { StreamDeutsch } from 'pages/Streams/Deutsch/StreamDeutsch';
 import { StreamDeutschFree } from 'pages/Streams/Deutsch/StreamDeutschFree';
 import { HostKahootAdminPanel } from 'pages/Streams/HostKahootAdminPanel/HostKahootAdminPanel';
 import { KahootAdminPanel } from 'pages/Streams/KahootAdminPanel/KahootAdminPanel';
@@ -21,15 +15,9 @@ import { StreamPolskiB1 } from 'pages/Streams/Polski B1/StreamPolskiB1';
 import { StreamPolski } from 'pages/Streams/Polski/StreamPolski';
 import { StreamPolskiFree } from 'pages/Streams/Polski/StreamPolskiFree';
 import { StreamTest } from 'pages/Streams/Test/StreamTest';
-import { KidsA0 } from 'pages/StreamsKids/KidsA0/KidsA0';
-import { KidsA1 } from 'pages/StreamsKids/KidsA1/KidsA1';
 import { KidsA1Free } from 'pages/StreamsKids/KidsA1/KidsA1Free';
-import { KidsA2 } from 'pages/StreamsKids/KidsA2/KidsA2';
-import { KidsB1 } from 'pages/StreamsKids/KidsB1/KidsB1';
 import { KidsB1Beginner } from 'pages/StreamsKids/KidsB1Beginner/KidsB1Beginner';
-import { KidsB2 } from 'pages/StreamsKids/KidsB2/KidsB2';
 import { KidsB2Beginner } from 'pages/StreamsKids/KidsB2Beginner/KidsB2Beginner';
-import { KidsC1 } from 'pages/StreamsKids/KidsС1/KidsС1';
 import TeacherTrialPage from 'pages/TeacherPage/TeacherTrialPage';
 import { ThankYouPage } from 'pages/ThankYouPage/ThankYouPage';
 import { Suspense, lazy } from 'react';
@@ -39,9 +27,7 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
-import { StreamDeutschB2 } from 'pages/Streams/Deutsch B2/StreamDeutschB2';
 import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
-import StreamToZoomRedirecter from 'pages/Streams/StreamToZoomRedirecter/StreamToZoomRedirecter';
 
 const NewDesign = lazy(() =>
   import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
@@ -93,9 +79,39 @@ const StreamB2 = lazy(() =>
 const StreamC1 = lazy(() =>
   import(/* webpackChunkName: "Streams C1 page" */ '../pages/Streams/C1/StreamC1')
 );
+// eslint-disable-next-line
+const StreamDeutschA0 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Deutsch A0 page" */ '../pages/Streams/Deutsch A0/StreamDeutschA0'
+  )
+);
 const StreamDeutschA02 = lazy(() =>
   import(
     /* webpackChunkName: "Streams Deutsch A0_2 page" */ '../pages/Streams/Deutsch A0/StreamDeutschA02'
+  )
+);
+// eslint-disable-next-line
+const StreamDeutsch = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Deutsch page" */ '../pages/Streams/Deutsch/StreamDeutsch'
+  )
+);
+// eslint-disable-next-line
+const StreamDeutschA2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Deutsch A2 page" */ '../pages/Streams/Deutsch A2/StreamDeutschA2'
+  )
+);
+// eslint-disable-next-line
+const StreamDeutschB1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Deutsch B1 page" */ '../pages/Streams/Deutsch B1/StreamDeutschB1'
+  )
+);
+// eslint-disable-next-line
+const StreamDeutschB2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Deutsch B2 page" */ '../pages/Streams/Deutsch B2/StreamDeutschB2'
   )
 );
 const StreamPolskiA02 = lazy(() =>
@@ -115,6 +131,40 @@ const HR = lazy(() => import(/* webpackChunkName: "HR page" */ '../pages/HR/HR')
 const StreamsKids = lazy(() =>
   import(/* webpackChunkName: "Streams Kids page" */ '../pages/StreamsKids/StreamsKids')
 );
+const KidsA0 = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams A0 page" */ '../pages/StreamsKids/KidsA0/KidsA0'
+  )
+);
+// eslint-disable-next-line
+const KidsA1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams A1 page" */ '../pages/StreamsKids/KidsA1/KidsA1'
+  )
+);
+// eslint-disable-next-line
+const KidsA2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams A2 page" */ '../pages/StreamsKids/KidsA2/KidsA2'
+  )
+);
+// eslint-disable-next-line
+const KidsB1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams B1 page" */ '../pages/StreamsKids/KidsB1/KidsB1'
+  )
+);
+// eslint-disable-next-line
+const KidsB2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams B2 page" */ '../pages/StreamsKids/KidsB2/KidsB2'
+  )
+);
+const KidsC1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams C1 page" */ '../pages/StreamsKids/KidsC1/KidsC1'
+  )
+);
 const KidsDeA0 = lazy(() =>
   import(
     /* webpackChunkName: "Deutsch Streams A0 Kids page" */ '../pages/StreamsKids/KidsDeA0/KidsDeA0'
@@ -125,6 +175,7 @@ const KidsDeA1 = lazy(() =>
     /* webpackChunkName: "Deutsch Streams A1 Kids page" */ '../pages/StreamsKids/KidsDeA1/KidsDeA1'
   )
 );
+// eslint-disable-next-line
 const KidsDeA2 = lazy(() =>
   import(
     /* webpackChunkName: "Deutsch Streams A2 Kids page" */ '../pages/StreamsKids/KidsDeA2/KidsDeA2'
@@ -170,6 +221,7 @@ const KidsMID = lazy(() =>
     /* webpackChunkName: "English Kids MID page" */ '../pages/StreamsKids/KidsMID/KidsMID'
   )
 );
+// eslint-disable-next-line
 const KidsHIGH = lazy(() =>
   import(
     /* webpackChunkName: "English Kids HIGH page" */ '../pages/StreamsKids/KidsHIGH/KidsHIGH'
@@ -444,6 +496,18 @@ const NotFound = lazy(() =>
   import(/* webpackChunkName: "Not Found" */ '../pages/NotFound/NotFound')
 );
 
+const StreamToZoomRedirecter = lazy(() =>
+  import(
+    /* webpackChunkName: "Stream to Zoom Redirecter" */ '../pages/Streams/StreamToZoomRedirecter/StreamToZoomRedirecter'
+  )
+);
+
+const StreamToZoomRedirecterKids = lazy(() =>
+  import(
+    /* webpackChunkName: "Stream Kids to Zoom Redirecter" */ '../pages/StreamsKids/StreamToZoomRedirecterKids/StreamToZoomRedirecterKids'
+  )
+);
+
 export const App = () => {
   // eslint-disable-next-line
   const [searchParams, _] = useSearchParams();
@@ -537,7 +601,8 @@ export const App = () => {
             <Route path="a1free-chat" element={<WindowedChat />} noindex={true} />
             <Route path="a2free" element={<StreamA2Free />} noindex={true} />
             <Route path="a2free-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="deutscha0" element={<StreamDeutschA0 />} noindex={true} />
+            {/* <Route path="deutscha0" element={<StreamDeutschA0 />} noindex={true} /> */}
+            <Route path="deutscha0" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="dea0sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutscha0-chat" element={<WindowedChat />} noindex={true} />
             <Route path="deutscha0_2" element={<StreamDeutschA02 />} noindex={true} />
@@ -716,22 +781,27 @@ export const App = () => {
             <Route path="mid" element={<KidsMID />} noindex={true} />
             <Route path="midsc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="mid-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="high" element={<KidsHIGH />} noindex={true} />
+            {/* <Route path="high" element={<KidsHIGH />} noindex={true} /> */}
+            <Route path="high" element={<StreamToZoomRedirecterKids />} noindex={true} />
             <Route path="highsc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="high-chat" element={<WindowedChat />} noindex={true} />
             <Route path="a0" element={<KidsA0 />} noindex={true} />
             <Route path="a0sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="a0-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="a1" element={<KidsA1 />} noindex={true} />
+            {/* <Route path="a1" element={<KidsA1 />} noindex={true} /> */}
+            <Route path="a1" element={<StreamToZoomRedirecterKids />} noindex={true} />
             <Route path="a1sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="a1-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="a2" element={<KidsA2 />} noindex={true} />
+            {/* <Route path="a2" element={<KidsA2 />} noindex={true} /> */}
+            <Route path="a2" element={<StreamToZoomRedirecterKids />} noindex={true} />
             <Route path="a2sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="a2-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="b1" element={<KidsB1 />} noindex={true} />
+            {/* <Route path="b1" element={<KidsB1 />} noindex={true} /> */}
+            <Route path="b1" element={<StreamToZoomRedirecterKids />} noindex={true} />
             <Route path="b1sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="b1-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="b2" element={<KidsB2 />} noindex={true} />
+            {/* <Route path="b2" element={<KidsB2 />} noindex={true} /> */}
+            <Route path="b2" element={<StreamToZoomRedirecterKids />} noindex={true} />
             <Route path="b2sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="b2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="c1" element={<KidsC1 />} noindex={true} />
@@ -757,7 +827,8 @@ export const App = () => {
             <Route path="dea1" element={<KidsDeA1 />} noindex={true} />
             <Route path="dea1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="dea1sc" element={<StreamSpeakingClubKids />} noindex={true} />
-            <Route path="dea2" element={<KidsDeA2 />} noindex={true} />
+            {/* <Route path="dea2" element={<KidsDeA2 />} noindex={true} /> */}
+            <Route path="dea2" element={<StreamToZoomRedirecterKids />} noindex={true} />
             <Route path="dea2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="dea2sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="deb1" element={<KidsDeB1 />} noindex={true} />
