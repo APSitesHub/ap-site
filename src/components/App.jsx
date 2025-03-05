@@ -30,6 +30,7 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
+// eslint-disable-next-line
 import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
 
 const NewDesign = lazy(() =>
@@ -658,7 +659,8 @@ export const App = () => {
             <Route path="polskib1" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="plb1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polskib1-chat" element={<WindowedChat />} noindex={true} />
-            <Route path="polskib2" element={<StreamPolskiB2 />} noindex={true} />
+            {/* <Route path="polskib2" element={<StreamPolskiB2 />} noindex={true} /> */}
+            <Route path="polskib2" element={<StreamToZoomRedirecter />} noindex={true} />
             <Route path="plb2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polskib2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="plc1sc" element={<StreamSpeakingClub />} noindex={true} />

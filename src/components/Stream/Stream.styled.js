@@ -528,11 +528,12 @@ export const StreamPlaceHolder = styled.div`
 
 export const StreamPlaceHolderText = styled.p`
   text-align: center;
-  font-size: 32px;
-  max-width: 720px;
+  font-size: 36px;
+  max-width: 960px;
   line-height: 1.2;
   white-space: pre-wrap;
   word-wrap: break-word;
+  color: #d31313;
 
   &:not(:last-child) {
     margin-bottom: 20px;
