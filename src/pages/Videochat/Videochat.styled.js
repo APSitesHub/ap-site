@@ -301,12 +301,30 @@ export const SubTitle = styled.h3`
   margin-bottom: 10px;
 `;
 
+export const FormGroup = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+`;
+
 export const Label = styled.label`
+  flex-basis: 30%;
   font-size: 16px;
   color: #444;
+  white-space: nowrap;
 `;
 
 export const Input = styled.input`
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+`;
+
+export const Select = styled.select`
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
