@@ -569,7 +569,7 @@ export const App = () => {
           />
           <Route path="teacher-login" element={<TeacherLogin />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
-          <Route path="room/:id" element={<VideochatRoom />} noindex={true} />
+          <Route path="room/:slug/:id" element={<VideochatRoom />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />

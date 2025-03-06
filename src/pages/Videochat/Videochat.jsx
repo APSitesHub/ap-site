@@ -83,7 +83,7 @@ function Videochat() {
             {room.name}
             <JoinButton
               onClick={() => {
-                navigate(`/room/${room.id}`);
+                navigate(`/room/${room.slug}/${room.id}`);
               }}
             >
               JOIN ROOM
