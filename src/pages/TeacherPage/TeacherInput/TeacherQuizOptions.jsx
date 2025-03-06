@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 import { TeacherInputBox } from './TeacherChat.styled';
-import { TeacherQuizContainer } from './TeacherInputContainer';
+import { TeacherQuizContainer } from './TeacherQuizContainer';
 
 export const TeacherQuizOptions = ({ page, isQuizOptionsOpen, closeInputs }) => {
   const [answers, setAnswers] = useState([]);

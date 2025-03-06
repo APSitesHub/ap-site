@@ -38,7 +38,7 @@ export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
       margin={{ top: 30, right: 30, bottom: 20, left: 30 }}
       padding={0}
       colors={{ scheme: 'dark2' }}
-      axisLeft={{ tickValues: Math.max(...Object.values(answers).map(value => value)) }}
+      axisLeft={{ tickValues: Math.max(...Object.values(answers).map(value => value)) < 15 ? Math.max(...Object.values(answers).map(value => value)) : 15}}
       axisBottom={true}
       labelPosition="end"
       labelOffset={8}
