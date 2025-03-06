@@ -37,7 +37,8 @@ import {
   VideochatContainer,
 } from './Videochat.styled';
 
-const VISIBLE_USERS_COUNT = 2;
+const VISIBLE_USERS_COUNT = 4;
+const debug = false;
 
 function VideochatRoom() {
   const { id: roomID } = useParams();
@@ -124,12 +125,16 @@ function VideochatRoom() {
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
     socketRef.current.on('connected', (connected, handshake) => {
-      console.log(connected);
-      console.log(handshake.time);
+      if (debug) {
+        console.log(connected);
+        console.log(handshake.time);
+      }
     });
 
     const getMessages = async () => {
-      console.log('get');
+      if (debug) {
+        console.log('get');
+      }
       try {
         const dbMessages = await axios.get(
           `https://ap-chat-server.onrender.com/messages/room`,
@@ -166,8 +171,10 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:pinned', async (id, data) => {
-      console.log(id);
-      console.log(data);
+      if (debug) {
+        console.log(id);
+        console.log(data);
+      }
       setMessages(messages => {
         messages[messages.findIndex(message => message.id === id)].isPinned =
           data.isPinned;
@@ -176,7 +183,9 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:delete', async id => {
-      console.log('delete fired');
+      if (debug) {
+        console.log('delete fired');
+      }
       setMessages(
         messages => (messages = [...messages.filter(message => message.id !== id)])
       );
@@ -191,15 +200,19 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:deleted', async id => {
-      console.log(id);
+      if (debug) {
+        console.log(id);
+      }
       setMessages(
         messages => (messages = [...messages.filter(message => message.id !== id)])
       );
     });
 
     socketRef.current.on('user:banned', async (userID, userIP) => {
-      console.log(userID);
-      console.log(userIP);
+      if (debug) {
+        console.log(userID);
+        console.log(userIP);
+      }
     });
 
     return () => {
@@ -217,15 +230,28 @@ function VideochatRoom() {
     );
   }, [page, clients]);
 
+  useEffect(() => {
+    updateStreams();
+  }, [visibleClients]);
+
   const updateStreams = () => {
-    const videoElements = [];
+    const videoElements = document.querySelectorAll('[data-video]');
 
-    remoteStreams.forEach(str => {
-      videoElements.push(str)
+    videoElements.forEach(el => {
+      try {
+        if (el.dataset.id !== LOCAL_VIDEO) {
+          el.srcObject = remoteStreams.find(
+            stream => stream.peerID === el.dataset.id
+          ).remoteStream;
+        } else {
+          if (!el.srcObject) {
+            toggleCamera(true);
+            toggleMicrophone(true);
+          }
+        }
+      } catch {}
     });
-
-    console.log(remoteStreams);
-  }
+  };
 
   return (
     <PageContainer>
@@ -245,6 +271,8 @@ function VideochatRoom() {
                       provideMediaRef(clientId, instance);
                     }}
                     autoPlay
+                    data-video="teacher"
+                    data-id={clientId}
                     playsInline
                     muted={clientId === LOCAL_VIDEO}
                   />
@@ -262,15 +290,19 @@ function VideochatRoom() {
           <ButtonsContainer>
             {localRole === 'admin' && (
               <>
-                <MediaButtonContainer>
-                  <MediaButton onClick={updateStreams}>Update Streams</MediaButton>
-                </MediaButtonContainer>
-                <MediaButtonContainer>
-                  <MediaButton onClick={getClients}>Get clients</MediaButton>
-                </MediaButtonContainer>
-                <MediaButtonContainer>
-                  <MediaButton onClick={addMockClient}>Add client</MediaButton>
-                </MediaButtonContainer>
+                {debug && (
+                  <>
+                    <MediaButtonContainer>
+                      <MediaButton onClick={updateStreams}>Update Streams</MediaButton>
+                    </MediaButtonContainer>
+                    <MediaButtonContainer>
+                      <MediaButton onClick={getClients}>Get clients</MediaButton>
+                    </MediaButtonContainer>
+                    <MediaButtonContainer>
+                      <MediaButton onClick={addMockClient}>Add client</MediaButton>
+                    </MediaButtonContainer>
+                  </>
+                )}
                 <MediaButtonContainer>
                   <MediaButton onClick={muteAll}>Mute All</MediaButton>
                 </MediaButtonContainer>
@@ -341,11 +373,17 @@ function VideochatRoom() {
                       ref={instance => {
                         provideMediaRef(clientId, instance);
                       }}
+                      data-video="user"
+                      data-id={clientId}
                       autoPlay
                       playsInline
                       muted={clientId === LOCAL_VIDEO}
                     />
-                    <div style={{ position: 'absolute', color: 'white' }}>{clientId}</div>
+                    {debug && (
+                      <div style={{ position: 'absolute', color: 'white' }}>
+                        {clientId}
+                      </div>
+                    )}
                     {(!isCameraEnabled ||
                       (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
                       <DisabledCameraIcon $isAbsolute $isSmall />
