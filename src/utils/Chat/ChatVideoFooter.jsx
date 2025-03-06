@@ -79,7 +79,7 @@ export const ChatVideoFooter = ({ socket, theme, currentUser }) => {
           <ChatMessageLabel>
             <СhatMessageInput
               type="text"
-              placeholder="Zacznij pisać..."
+              placeholder="Введіть повідомлення..."
               maxLength={250}
               value={message}
               onChange={e => {
