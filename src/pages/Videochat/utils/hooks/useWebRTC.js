@@ -14,6 +14,7 @@ export default function useWebRTC(roomID) {
   const [isLocalMicrophoneEnabled, setLocalMicrophoneEnabled] = useState(true);
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
+  const [remoteStreams, setRemoteStreams] = useState([]);
 
   const determineRole = async () => {
     if (!getToken()) {
@@ -235,6 +236,21 @@ export default function useWebRTC(roomID) {
     peerConnection.ontrack = ({ streams: [remoteStream] }) => {
       tracksNumber++;
 
+      setRemoteStreams(prevStreams => {
+        const streamExists = prevStreams.some(stream => stream.peerID === peerID);
+        if (streamExists) {
+          return prevStreams;
+        }
+
+        return [
+          ...prevStreams,
+          {
+            peerID,
+            remoteStream,
+          },
+        ];
+      });
+
       if (tracksNumber === 2) {
         addNewClient(peerID, roles[peerID], () => {
           if (peerMediaElements.current[peerID]) {
@@ -393,6 +409,23 @@ export default function useWebRTC(roomID) {
     peerMediaElements.current[id] = node;
   }, []);
 
+  const addMockClient = () => {
+    const mockClientId = Math.random();
+    addNewClient(mockClientId, 'user', () => {
+      console.log(mockClientId);
+    });
+  };
+
+  const getClients = () => {
+    clients.forEach(cl => {
+      console.log(cl.clientId);
+      console.log(peerMediaElements.current[cl.clientId]);
+    });
+    console.log(remoteStreams);
+    console.log(peerMediaElements);
+    
+  };
+
   return {
     clients,
     provideMediaRef,
@@ -403,6 +436,9 @@ export default function useWebRTC(roomID) {
     changeCamera,
     changeMicrophone,
     muteAll,
+    addMockClient,
+    getClients,
+    remoteStreams,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   };

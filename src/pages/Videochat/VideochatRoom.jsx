@@ -37,7 +37,7 @@ import {
   VideochatContainer,
 } from './Videochat.styled';
 
-const VISIBLE_USERS_COUNT = 4;
+const VISIBLE_USERS_COUNT = 2;
 
 function VideochatRoom() {
   const { id: roomID } = useParams();
@@ -52,6 +52,9 @@ function VideochatRoom() {
     changeCamera,
     changeMicrophone,
     muteAll,
+    addMockClient,
+    getClients,
+    remoteStreams,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   } = useWebRTC(roomID);
@@ -65,6 +68,7 @@ function VideochatRoom() {
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(0);
+  const [visibleClients, setVisibleClients] = useState([]);
   const [width, height] = useSize(document.body);
   const currentUser = useMemo(
     () => ({
@@ -205,6 +209,24 @@ function VideochatRoom() {
     };
   }, [currentUser, room]);
 
+  useEffect(() => {
+    setVisibleClients(
+      clients
+        .filter(({ role }) => role !== 'admin')
+        .slice(page, page + VISIBLE_USERS_COUNT)
+    );
+  }, [page, clients]);
+
+  const updateStreams = () => {
+    const videoElements = [];
+
+    remoteStreams.forEach(str => {
+      videoElements.push(str)
+    });
+
+    console.log(remoteStreams);
+  }
+
   return (
     <PageContainer>
       <VideochatContainer>
@@ -239,9 +261,20 @@ function VideochatRoom() {
             })}
           <ButtonsContainer>
             {localRole === 'admin' && (
-              <MediaButtonContainer>
-                <MediaButton onClick={muteAll}>Mute All</MediaButton>
-              </MediaButtonContainer>
+              <>
+                <MediaButtonContainer>
+                  <MediaButton onClick={updateStreams}>Update Streams</MediaButton>
+                </MediaButtonContainer>
+                <MediaButtonContainer>
+                  <MediaButton onClick={getClients}>Get clients</MediaButton>
+                </MediaButtonContainer>
+                <MediaButtonContainer>
+                  <MediaButton onClick={addMockClient}>Add client</MediaButton>
+                </MediaButtonContainer>
+                <MediaButtonContainer>
+                  <MediaButton onClick={muteAll}>Mute All</MediaButton>
+                </MediaButtonContainer>
+              </>
             )}
             <MediaButtonContainer>
               <MediaButton onClick={toggleMicrophone}>
@@ -295,40 +328,35 @@ function VideochatRoom() {
               </MediaButton>
             </MediaButtonContainer>
             <UsersVideosContainer>
-              {clients
-                .filter(({ role }) => role !== 'admin')
-                .slice(page, page + VISIBLE_USERS_COUNT)
-                .map(({ clientId, isMicroEnabled, isCameraEnabled }) => {
-                  return (
-                    <UserVideo
-                      key={clientId}
-                      id={clientId}
-                      $isUserVideo={clientId === LOCAL_VIDEO}
-                    >
-                      <video
-                        width="100%"
-                        height="100%"
-                        ref={instance => {
-                          provideMediaRef(clientId, instance);
-                        }}
-                        autoPlay
-                        playsInline
-                        muted={clientId === LOCAL_VIDEO}
-                      />
-                      {/* <div style={{ position: 'absolute', color: 'white' }}>
-                        {clientId}
-                      </div> */}
-                      {(!isCameraEnabled ||
-                        (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
-                        <DisabledCameraIcon $isAbsolute $isSmall />
-                      )}
-                      {(!isMicroEnabled ||
-                        (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
-                        <DisabledMicroIcon $isAbsolute $isSmall />
-                      )}
-                    </UserVideo>
-                  );
-                })}
+              {visibleClients.map(({ clientId, isMicroEnabled, isCameraEnabled }) => {
+                return (
+                  <UserVideo
+                    key={clientId}
+                    id={clientId}
+                    $isUserVideo={clientId === LOCAL_VIDEO}
+                  >
+                    <video
+                      width="100%"
+                      height="100%"
+                      ref={instance => {
+                        provideMediaRef(clientId, instance);
+                      }}
+                      autoPlay
+                      playsInline
+                      muted={clientId === LOCAL_VIDEO}
+                    />
+                    <div style={{ position: 'absolute', color: 'white' }}>{clientId}</div>
+                    {(!isCameraEnabled ||
+                      (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
+                      <DisabledCameraIcon $isAbsolute $isSmall />
+                    )}
+                    {(!isMicroEnabled ||
+                      (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
+                      <DisabledMicroIcon $isAbsolute $isSmall />
+                    )}
+                  </UserVideo>
+                );
+              })}
             </UsersVideosContainer>
             <MediaButtonContainer $isPagintionButton>
               <MediaButton
