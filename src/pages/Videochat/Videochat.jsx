@@ -16,7 +16,9 @@ import {
   RoomList,
   RoomItem,
   JoinButton,
-  LogoutButton,
+  DeleteButton,
+  BackButton,
+  BackIcon,
 } from './Videochat.styled';
 import { getKahoots } from './utils/api/getKahoots';
 
@@ -39,9 +41,8 @@ function Videochat() {
     // eslint-disable-next-line
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('../teacher-login');
+  const handleBack = () => {
+    navigate('../teacher-ap');
   };
 
   const updateRooms = async () => {
@@ -58,6 +59,9 @@ function Videochat() {
   return (
     <Page>
       <Container>
+        <BackButton onClick={handleBack}>
+          <BackIcon />
+        </BackButton>
         <Title>Logined as Teacher</Title>
 
         <div>
@@ -82,20 +86,20 @@ function Videochat() {
         <Button onClick={handleCreateRoom}>Create New Room</Button>
 
         <RoomList>
-          {rooms.map(room => (
-            <RoomItem key={room.id}>
-              {room.name}
-              <JoinButton
-                onClick={() => {
-                  navigate(`/room/${room.slug}/${room.id}`);
-                }}
-              >
-                JOIN ROOM
-              </JoinButton>
-            </RoomItem>
-          ))}
+          {rooms &&
+            rooms.map(room => (
+              <RoomItem key={room.id}>
+                {room.name}
+                <JoinButton
+                  onClick={() => {
+                    navigate(`/room/${room.slug}/${room.id}`);
+                  }}
+                >
+                  JOIN ROOM
+                </JoinButton>
+              </RoomItem>
+            ))}
         </RoomList>
-        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
       </Container>
     </Page>
   );

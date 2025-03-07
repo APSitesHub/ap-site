@@ -20,7 +20,8 @@ import {
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import * as yup from 'yup';
 
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+// axios.defaults.baseURL = 'http://localhost:3001';
 
 const TeacherAP = () => {
   const [teacher, setTeacher] = useState({});
@@ -85,7 +86,7 @@ const TeacherAP = () => {
   const loginSchema = yup.object().shape({
     login: yup
       .string()
-      .required('Вкажіть логін, за якою ви зареєстровані на нашій платформі!'),
+      .required('Вкажіть логін, за яким ви зареєстровані на нашій платформі!'),
     password: yup
       .string()
       .required('Введіть пароль, який ви використовуєте для входу на нашу платформу!'),
