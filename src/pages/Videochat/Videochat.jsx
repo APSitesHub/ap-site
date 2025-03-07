@@ -28,10 +28,6 @@ function Videochat() {
   const newRoomLevel = useRef(null);
 
   useEffect(() => {
-    if (!getToken()) {
-      navigate('../teacher-login');
-    }
-
     const updateRoomLevels = async () => {
       const levels = await getKahoots();
 

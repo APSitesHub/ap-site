@@ -439,6 +439,9 @@ const TeacherFormPage = lazy(() =>
 const TeacherLogin = lazy(() =>
   import(/* webpackChunkName: "TeacherLogin" */ '../pages/TeacherLogin/TeacherLogin')
 );
+const TeacherAP = lazy(() =>
+  import(/* webpackChunkName: "TeacherAP" */ '../pages/TeacherAP/TeacherAP')
+);
 const Videochat = lazy(() =>
   import(/* webpackChunkName: "Videochat" */ '../pages/Videochat/Videochat')
 );
@@ -568,6 +571,7 @@ export const App = () => {
             noindex={true}
           />
           <Route path="teacher-login" element={<TeacherLogin />} noindex={true} />
+          <Route path="teacher-ap" element={<TeacherAP />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
           <Route path="room/:slug/:id" element={<VideochatRoom />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
