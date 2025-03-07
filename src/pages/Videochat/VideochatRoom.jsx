@@ -516,34 +516,29 @@ function VideochatRoom() {
                 <StudentInput
                   isInputOpen={isQuizInputOpen}
                   socket={socketRef.current}
-                  toggleInput={toggleQuizInput}
+                  toggleQuiz={toggleQuizInput}
                   page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  currentUser={currentUser}
                 />
 
                 <StudentOptions
                   isInputOpen={isQuizOptionsOpen}
                   socket={socketRef.current}
-                  toggleInput={toggleQuizOptions}
+                  toggleQuiz={toggleQuizOptions}
                   page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  currentUser={currentUser}
                 />
 
                 <StudentTrueFalse
                   isInputOpen={isQuizTrueFalseOpen}
                   socket={socketRef.current}
-                  toggleInput={toggleQuizTrueFalse}
+                  toggleQuiz={toggleQuizTrueFalse}
                   page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  currentUser={currentUser}
                 />
               </>
             )}
 
-            {/* <KahootsVideo
-            sectionWidth={width}
-            sectionHeight={height}
-            isKahootOpen={isKahootOpen}
-            isChatOpen={isChatOpen}
-            isOpenedLast={isOpenedLast}
-            activeKahoot={activeKahoot}
-          /> */}
           </PageContainer>
           <ChatBox
             ref={chatEl}

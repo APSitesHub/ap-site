@@ -5,8 +5,10 @@ import {
   StudentQuizSubmitBtn,
 } from './StudentInput.styled';
 
-export const StudentInput = ({ isInputOpen, socket, page, toggleQuizInput }) => {
+export const StudentInput = ({ isInputOpen, socket, page, toggleQuiz, currentUser }) => {
   console.log(4, 'studentinputsocket', socket);
+  console.log(10, 'user', currentUser);
+  
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -15,7 +17,7 @@ export const StudentInput = ({ isInputOpen, socket, page, toggleQuizInput }) => 
       answer: document.querySelector('#answer_input').value,
       page: page,
     });
-    toggleQuizInput();
+    toggleQuiz();
   };
 
   //   const handleOnDrag = e => {
