@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getRooms } from './utils/api/getRooms';
 import { createRoom } from './utils/api/createRoom';
-import { getToken } from './utils/api/getToken';
 import {
   Page,
   Container,
@@ -16,7 +15,6 @@ import {
   RoomList,
   RoomItem,
   JoinButton,
-  DeleteButton,
   BackButton,
   BackIcon,
 } from './Videochat.styled';

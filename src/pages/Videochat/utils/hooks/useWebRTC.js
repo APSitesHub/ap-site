@@ -16,7 +16,7 @@ export default function useWebRTC(roomID) {
   const [localRole, setLocalRole] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState([]);
 
-  const determineRole = async () => {
+  const determineRole = useCallback(async () => {
     if (!getToken()) {
       setLocalRole('user');
       return;
@@ -25,7 +25,7 @@ export default function useWebRTC(roomID) {
     const role = (await isRoomAdmin(roomID)) ? 'admin' : 'user';
 
     setLocalRole(role);
-  };
+  }, [roomID]);
 
   const addNewClient = useCallback(
     async (newClient, role, cb) => {
@@ -230,7 +230,7 @@ export default function useWebRTC(roomID) {
     }
   }
 
-  async function handleNewPeer({ peerID, roles, createOffer }) {
+  const handleNewPeer = useCallback(async ({ peerID, roles, createOffer }) => {
     if (peerConnections.current[peerID]) {
       return console.warn(`Already connected to peer ${peerID}`);
     }
@@ -294,7 +294,7 @@ export default function useWebRTC(roomID) {
         sessionDescription: offer,
       });
     }
-  }
+  }, [addNewClient, isLocalCameraEnabled, isLocalMicrophoneEnabled]);
 
   async function setRemoteMedia({ peerID, sessionDescription: remoteDescription }) {
     const peerConnection = peerConnections.current[peerID];
@@ -336,7 +336,7 @@ export default function useWebRTC(roomID) {
 
   useEffect(() => {
     determineRole();
-  }, []);
+  }, [determineRole]);
 
   useEffect(() => {
     socket.on(ACTIONS.ADD_PEER, handleNewPeer);
