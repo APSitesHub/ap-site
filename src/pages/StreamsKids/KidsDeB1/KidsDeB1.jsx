@@ -31,7 +31,7 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-export const KidsC1 = () => {
+const KidsDeB1 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -82,7 +82,7 @@ export const KidsC1 = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'C1 English Kids | AP Education';
+    document.title = 'A1 Deutsch Kids | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
@@ -185,7 +185,8 @@ export const KidsC1 = () => {
 
   return (
     <>
-      {(links.c1kids === undefined || links.c1kids[0] < 10) && !isLoading ? (
+      {(links.deb1kids === undefined || links.deb1kids[0] < 10) &&
+      !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
@@ -257,7 +258,7 @@ export const KidsC1 = () => {
                 }}
                 width="100%"
                 height="100vh"
-                url={links.c1kids}
+                url={links.deb1kids}
               />
             </VideoBox>
 
@@ -344,3 +345,5 @@ export const KidsC1 = () => {
     </>
   );
 };
+
+export default KidsDeB1;

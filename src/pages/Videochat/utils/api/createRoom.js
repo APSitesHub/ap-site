@@ -4,9 +4,10 @@ import { getToken } from "./getToken";
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 // axios.defaults.baseURL = 'http://localhost:3001';
 
-export const createRoom = async (name) => {
+export const createRoom = async (name, level) => {
   const options = {
     name,
+    level
   };
 
   try {

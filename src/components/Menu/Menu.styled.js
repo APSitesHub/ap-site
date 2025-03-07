@@ -22,8 +22,7 @@ export const Header = styled.header`
   padding: 0 16px;
   height: 60px;
   background-color: var(--secondary-color);
-  box-shadow: rgba(0, 0, 0, 0.06) 0px 0.5px 5px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 0.5px 5px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 0.5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -320,8 +319,7 @@ export const LeadBtn = styled.button`
   text-align: center;
   position: relative;
   outline: transparent;
-  transition: box-shadow var(--animation-global),
-    transform var(--animation-global);
+  transition: box-shadow var(--animation-global), transform var(--animation-global);
 
   @media screen and (min-width: 400px) {
     width: 250px;
@@ -433,6 +431,17 @@ export const HeaderText = styled.span`
   @media screen and (min-width: 768px) {
     font-weight: 600;
   }
+`;
+
+export const LinkText = styled.span`
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-decoration: underline;
+  text-align: center;
+
+  margin-right: 8px;
+  color: var(--main-color);
 `;
 
 export const HeaderTextNew = styled.span`

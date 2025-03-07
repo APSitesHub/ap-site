@@ -116,6 +116,10 @@ export const PointsCategoryPointer = styled.div`
   transition: transform 250ms var(--animation-global);
 `;
 
+export const PointsCategoryPointerWSPA = styled(PointsCategoryPointer)`
+  background-color: #e40521;
+`;
+
 export const PointsTableHead = styled.div`
   display: flex;
   align-items: center;
@@ -185,6 +189,10 @@ export const LeaderPlace = styled.div`
   color: var(--secondary-color);
   border-radius: 5px;
   background: linear-gradient(322deg, #0f645b -5.61%, #09c6cc 93.88%);
+`;
+
+export const LeaderPlaceWSPA = styled(LeaderPlace)`
+  background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
 `;
 
 export const UserPlace = styled(LeaderPlace)`

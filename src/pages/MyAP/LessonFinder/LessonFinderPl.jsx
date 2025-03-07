@@ -194,16 +194,10 @@ export const LessonFinderPl = ({
       ? setIsAnswerOpen(isOpen => !isOpen)
       : openAnswer(i);
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '184px' : '142px',
-    };
-  };
-
   return (
     <FinderBox
       className={lessonsFound.length === 0 && 'nothing-found'}
-      style={{ ...panelStyles() }}
+      style={{ top: '145px' }}
     >
       <FinderLabel>
         <FinderIcon />

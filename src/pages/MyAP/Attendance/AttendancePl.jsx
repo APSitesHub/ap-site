@@ -33,25 +33,19 @@ export const AttendancePl = ({ user, personalLessonsDays, isMultipleCourses }) =
   const [lessonDaysForMonth, SetLessonDaysForMonth] = useState([]);
   const [lessonDaysForYear, SetLessonDaysForYear] = useState([]);
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '184px' : '142px',
-    };
-  };
-
   const MONTHS = [
-    'Січень',
+    'Styczeń',
     'Luty',
-    'Березень',
-    'Квітень',
-    'Травень',
-    'Червень',
-    'Липень',
-    'Серпень',
-    'Вересень',
-    'Жовтень',
-    'Листопад',
-    'Грудень',
+    'Marzec',
+    'Kwiecień',
+    'Maj',
+    'Czerwiec',
+    'Lipiec',
+    'Sierpień',
+    'Wrzesień',
+    'Październik',
+    'Listopad',
+    'Grudzień',
   ];
 
   const DATES_TO_EXCLUDE = useMemo(
@@ -441,7 +435,7 @@ export const AttendancePl = ({ user, personalLessonsDays, isMultipleCourses }) =
   };
 
   return (
-    <AttendanceBox style={{ ...panelStyles() }}>
+    <AttendanceBox style={{ top: '145px' }}>
       <AttendanceHeading>
         <AttendanceIcon />
         Obecność

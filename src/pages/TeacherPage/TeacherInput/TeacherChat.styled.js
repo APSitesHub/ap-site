@@ -139,6 +139,7 @@ export const ChatLoginButton = styled.button`
 
 export const TeacherChatPageContainer = styled.div`
   position: relative;
+  font-family: var(--my-ap-font-family);
 
   width: 100%;
   height: 100%;

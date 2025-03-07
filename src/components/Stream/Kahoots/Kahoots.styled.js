@@ -46,10 +46,6 @@ export const KahootBackground = styled(StreamsBackgroundWrapper)`
     background-position: center top 0px;
   }
 
-  @media screen and (min-width: 1280px) {
-    background-position: right -215px top 0;
-  }
-
   transition: transform var(--animation-global);
 
   &.hidden {

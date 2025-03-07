@@ -4,6 +4,7 @@ import { ReactComponent as WhiteBoardIcon } from '../../img/svg/whiteBoardIcon.s
 import { ReactComponent as PlatformIcon } from '../../img/svg/myap/logo-short.svg';
 import { ReactComponent as Warehouse } from '../../img/svg/warehouse.svg';
 import { ReactComponent as Hotel } from '../../img/svg/hotel.svg';
+import { ReactComponent as Workshop } from '../../img/svg/workshop.svg';
 import { ReactComponent as Cow } from '../../img/svg/cow.svg';
 import { ReactComponent as Pig } from '../../img/svg/pig.svg';
 import { ReactComponent as BoxSwitchUp } from '../../img/svg/btnbox-switch-up.svg';
@@ -68,8 +69,8 @@ export const TeacherButtonBoxVertical = styled.div`
 
 export const TeacherButtonBoxHideSwitch = styled.div`
   position: absolute;
-  bottom: 210px;
-  /* bottom: 250px; */
+  /* bottom: 210px; */
+  bottom: 250px;
   right: 0;
 
   filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.09));
@@ -93,7 +94,9 @@ export const TeacherFarmButtonBoxHideSwitch = styled(TeacherButtonBoxHideSwitch)
   bottom: 210px;
 `;
 
-export const TeacherWarehouseHotelButtonBoxHideSwitch = styled(TeacherButtonBoxHideSwitch)`
+export const TeacherWarehouseHotelButtonBoxHideSwitch = styled(
+  TeacherButtonBoxHideSwitch
+)`
   bottom: 290px;
 `;
 
@@ -211,6 +214,17 @@ export const HotelLogo = styled(Hotel)`
   }
 `;
 
+export const WorkshopLogo = styled(Workshop)`
+  width: 25px;
+  height: 25px;
+  z-index: 5;
+
+  @media screen and (min-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
 export const PigLogo = styled(Pig)`
   width: 25px;
   height: 25px;
@@ -279,4 +293,37 @@ export const QuestionHeader = styled.h2`
   font-size: 16px;
   text-align: center;
   margin-bottom: 18px;
+`;
+
+export const InputButtonBox = styled.div`
+  position: absolute;
+  bottom: -5px;
+  right: 35px;
+  z-index: -1;
+
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 20px;
+  align-items: center;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 85%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 1;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+
+  height: 80px;
+  padding-left: 5px;
+  padding-right: 55px;
+  transition: transform var(--animation-global), opacity 125ms linear;
+  transform-origin: right;
+
+  &.hidden {
+    transform: scaleX(30%);
+    opacity: 0;
+    background: transparent;
+    pointer-events: none;
+  }
 `;

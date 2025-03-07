@@ -311,7 +311,12 @@ export const KahootLogo = styled(KahootIcon)`
   }
 `;
 
-export const InputBtn = styled(ChatBtn)``;
+export const InputBtn = styled(ChatBtn)`
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.48px;
+  word-break: break-word;
+`;
 
 export const InputLogo = styled(InputIcon)`
   width: 25px;
@@ -523,9 +528,12 @@ export const StreamPlaceHolder = styled.div`
 
 export const StreamPlaceHolderText = styled.p`
   text-align: center;
-  font-size: 32px;
-  max-width: 720px;
+  font-size: 36px;
+  max-width: 960px;
   line-height: 1.2;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #d31313;
 
   &:not(:last-child) {
     margin-bottom: 20px;
@@ -558,6 +566,12 @@ export const LoginFormText = styled.p`
   @media screen and (min-width: 1280px) {
     font-size: 24px;
     max-width: 840px;
+  }
+`;
+
+export const LoginFormTextWSPA = styled(LoginFormText)`
+  @media screen and (min-width: 1280px) {
+    max-width: 600px;
   }
 `;
 
@@ -614,8 +628,7 @@ export const LoginInput = styled(Input)`
     &:focus {
       font-family: var(--new-font-family);
       -webkit-text-fill-color: var(--main-color);
-      -webkit-box-shadow: 0 0 0px 50px var(--accent-semi-transparent-color)
-        inset;
+      -webkit-box-shadow: 0 0 0px 50px var(--accent-semi-transparent-color) inset;
     }
   }
 `;

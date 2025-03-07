@@ -1,6 +1,6 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
-import { KahootsVideo } from 'components/Stream/Kahoots/KahootsVideo';
+import { KahootsVideoChat } from 'components/Stream/Kahoots/KahootsVideoChat';
 import {
   ButtonBox,
   ChatBox,
@@ -11,7 +11,7 @@ import {
 } from 'components/Stream/Stream.styled';
 import { nanoid } from 'nanoid';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import { ChatVideo } from 'utils/Chat/ChatVideo';
 import useWebRTC, { LOCAL_VIDEO } from './utils/hooks/useWebRTC';
@@ -22,6 +22,7 @@ import {
   CameraIcon,
   DisabledCameraIcon,
   DisabledMicroIcon,
+  EndCallIcon,
   MainVideo,
   MainVideoContainer,
   MediaButton,
@@ -34,12 +35,19 @@ import {
   UsersVideosContainer,
   UserVideo,
   VideochatContainer,
+  LargeText,
+  GradientBackground,
 } from './Videochat.styled';
+import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
+import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
+import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 
 const VISIBLE_USERS_COUNT = 4;
+const debug = true;
 
 function VideochatRoom() {
   const { id: roomID } = useParams();
+  const navigate = useNavigate();
   const {
     clients,
     provideMediaRef,
@@ -50,6 +58,10 @@ function VideochatRoom() {
     changeCamera,
     changeMicrophone,
     muteAll,
+    addMockClient,
+    getClients,
+    remoteStreams,
+    localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   } = useWebRTC(roomID);
@@ -58,12 +70,23 @@ function VideochatRoom() {
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
-  const [activeKahoot, setActiveKahoot] = useState(0);
   // eslint-disable-next-line
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
+  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
+
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(0);
+  const [visibleClients, setVisibleClients] = useState([]);
   const [width, height] = useSize(document.body);
+
+  const chatEl = useRef();
+  const socketRef = useRef(null);
+
+  // eslint-disable-next-line
+  const [chatWidth, chatHeight] = useSize(chatEl);
+
   const currentUser = useMemo(
     () => ({
       username: 'User ' + nanoid(4),
@@ -74,14 +97,13 @@ function VideochatRoom() {
   );
   let location = useLocation();
 
-  const room = location.pathname;
+  const videoBoxWidth =
+    chatWidth === 0 && width > height ? width - 300 : width - chatWidth;
 
-  const chatEl = useRef();
-  const socketRef = useRef(null);
+  const room = location.pathname;
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    setActiveKahoot(1);
     isChatOpen
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
@@ -92,6 +114,16 @@ function VideochatRoom() {
     isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'chat')
       : setIsOpenedLast(isOpenedLast => '');
+  };
+
+  const toggleQuizInput = () => {
+    setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
+  };
+  const toggleQuizOptions = () => {
+    setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
+  };
+  const toggleQuizTrueFalse = () => {
+    setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
   };
 
   useEffect(() => {
@@ -109,6 +141,14 @@ function VideochatRoom() {
     }
   };
 
+  const endCall = () => {
+    if (localRole === 'admin') {
+      navigate('../../videochat');
+    } else {
+      navigate('../../call-end');
+    }
+  };
+
   useEffect(() => {
     if (!localStorage.getItem('userName')) {
       localStorage.setItem('userName', currentUser.username);
@@ -118,12 +158,16 @@ function VideochatRoom() {
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
     socketRef.current.on('connected', (connected, handshake) => {
-      console.log(connected);
-      console.log(handshake.time);
+      if (debug) {
+        console.log(connected);
+        console.log(handshake.time);
+      }
     });
 
     const getMessages = async () => {
-      console.log('get');
+      if (debug) {
+        console.log('get');
+      }
       try {
         const dbMessages = await axios.get(
           `https://ap-chat-server.onrender.com/messages/room`,
@@ -160,8 +204,10 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:pinned', async (id, data) => {
-      console.log(id);
-      console.log(data);
+      if (debug) {
+        console.log(id);
+        console.log(data);
+      }
       setMessages(messages => {
         messages[messages.findIndex(message => message.id === id)].isPinned =
           data.isPinned;
@@ -170,7 +216,9 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:delete', async id => {
-      console.log('delete fired');
+      if (debug) {
+        console.log('delete fired');
+      }
       setMessages(
         messages => (messages = [...messages.filter(message => message.id !== id)])
       );
@@ -185,15 +233,48 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:deleted', async id => {
-      console.log(id);
+      if (debug) {
+        console.log(id);
+      }
       setMessages(
         messages => (messages = [...messages.filter(message => message.id !== id)])
       );
     });
 
     socketRef.current.on('user:banned', async (userID, userIP) => {
-      console.log(userID);
-      console.log(userIP);
+      if (debug) {
+        console.log(userID);
+        console.log(userIP);
+      }
+    });
+    // open quizzes on event
+    socketRef.current.on('question:input', data => {
+      console.log(data.page);
+      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizInputOpen(true);
+    });
+    socketRef.current.on('question:options', data => {
+      console.log(data.page);
+      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizOptionsOpen(true);
+    });
+    socketRef.current.on('question:trueFalse', data => {
+      console.log(data.page);
+      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] &&
+        setIsQuizTrueFalseOpen(true);
+    });
+
+    // close quizzes on event
+    socketRef.current.on('question:closeInput', data => {
+      console.log(data);
+      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizInputOpen(false);
+    });
+    socketRef.current.on('question:closeOptions', data => {
+      console.log(data);
+      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizOptionsOpen(false);
+    });
+    socketRef.current.on('question:closeTrueFalse', data => {
+      console.log(data);
+      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] &&
+        setIsQuizTrueFalseOpen(false);
     });
 
     return () => {
@@ -203,36 +284,118 @@ function VideochatRoom() {
     };
   }, [currentUser, room]);
 
-  return (
-    <PageContainer>
-      <VideochatContainer>
-        {clients
-          .filter(({ role }) => role === 'admin')
-          .map(({ clientId, isCameraEnabled, isMicroEnabled }) => {
-            return (
-              <MainVideoContainer key={clientId} id={clientId}>
-                <MainVideo
-                  ref={instance => {
-                    provideMediaRef(clientId, instance);
-                  }}
-                  autoPlay
-                  playsInline
-                  muted={clientId === LOCAL_VIDEO}
-                />
-                {(!isCameraEnabled ||
-                  (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
-                  <DisabledCameraIcon $isAbsolute />
-                )}
-                {(!isMicroEnabled ||
-                  (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
-                  <DisabledMicroIcon $isAbsolute />
-                )}
+  useEffect(() => {
+    setVisibleClients(
+      clients
+        .filter(({ role }) => role !== 'admin')
+        .slice(page, page + VISIBLE_USERS_COUNT)
+    );
+  }, [page, clients]);
 
+  useEffect(() => {
+    if (debug) {
+      console.log('Streams Updated');
+    }
+
+    updateStreams();
+  }, [visibleClients]);
+
+  const updateStreams = () => {
+    const videoElements = document.querySelectorAll('[data-video]');
+
+    videoElements.forEach(el => {
+      try {
+        if (el.dataset.id === LOCAL_VIDEO) {
+          updateLocalStream(el);
+        } else {
+          updateRemoteStream(el);
+        }
+      } catch (error) {
+        console.error('failed streams updated: ', error);
+      }
+    });
+  };
+
+  const updateLocalStream = el => {
+    if (el.srcObject?.id !== localMediaStream.current.id) {
+      el.srcObject = localMediaStream.current;
+    }
+  };
+
+  const updateRemoteStream = el => {
+    if (
+      el.srcObject?.id !==
+      remoteStreams.find(stream => stream.peerID === el.dataset.id).remoteStream.id
+    ) {
+      el.srcObject = remoteStreams.find(
+        stream => stream.peerID === el.dataset.id
+      ).remoteStream;
+    }
+  };
+
+  return (
+    <>
+      {clients.find(({ role }) => role === 'admin') ? (
+        <>
+          <PageContainer
+            style={{
+              width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+            }}
+          >
+            <VideochatContainer>
+              <MainVideoContainer>
+                {clients
+                  .filter(({ role }) => role === 'admin')
+                  .map(({ clientId, isCameraEnabled, isMicroEnabled }) => {
+                    return (
+                      <div
+                        style={{ height: '100%', width: '100%' }}
+                        id={clientId}
+                        key={clientId}
+                      >
+                        <MainVideo
+                          ref={instance => {
+                            provideMediaRef(clientId, instance);
+                          }}
+                          data-video="teacher"
+                          data-id={clientId}
+                          autoPlay
+                          playsInline
+                          muted={clientId === LOCAL_VIDEO}
+                        />
+                        {(!isCameraEnabled ||
+                          (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
+                          <DisabledCameraIcon $isAbsolute />
+                        )}
+                        {(!isMicroEnabled ||
+                          (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
+                          <DisabledMicroIcon $isAbsolute />
+                        )}
+                      </div>
+                    );
+                  })}
                 <ButtonsContainer>
                   {localRole === 'admin' && (
-                    <MediaButtonContainer>
-                      <MediaButton onClick={muteAll}>Mute All</MediaButton>
-                    </MediaButtonContainer>
+                    <>
+                      {debug && (
+                        <>
+                          <MediaButtonContainer>
+                            <MediaButton onClick={updateStreams}>
+                              Update Streams
+                            </MediaButton>
+                          </MediaButtonContainer>
+                          <MediaButtonContainer>
+                            <MediaButton onClick={getClients}>Get clients</MediaButton>
+                          </MediaButtonContainer>
+                          <MediaButtonContainer>
+                            <MediaButton onClick={addMockClient}>Add client</MediaButton>
+                          </MediaButtonContainer>
+                        </>
+                      )}
+                      <MediaButtonContainer>
+                        <MediaButton onClick={muteAll}>Mute All</MediaButton>
+                      </MediaButtonContainer>
+                    </>
                   )}
                   <MediaButtonContainer>
                     <MediaButton onClick={toggleMicrophone}>
@@ -266,94 +429,143 @@ function VideochatRoom() {
                       ))}
                     </MediaSelector>
                   </MediaButtonContainer>
+                  <MediaButtonContainer $isRed>
+                    <MediaButton onClick={endCall}>
+                      <EndCallIcon />
+                    </MediaButton>
+                  </MediaButtonContainer>
                 </ButtonsContainer>
               </MainVideoContainer>
-            );
-          })}
 
-        {clients.filter(({ role }) => role !== 'admin').length > 0 && (
-          <SideContainer>
-            <MediaButtonContainer $isPagintionButton>
-              <MediaButton onClick={() => changePage(true)} disabled={page === 0}>
-                <ArrowUp />
-              </MediaButton>
-            </MediaButtonContainer>
-            <UsersVideosContainer>
-              {clients
-                .filter(({ role }) => role !== 'admin')
-                .slice(page, page + VISIBLE_USERS_COUNT)
-                .map(({ clientId, isMicroEnabled, isCameraEnabled }) => {
-                  return (
-                    <UserVideo
-                      key={clientId}
-                      id={clientId}
-                      $isUserVideo={clientId === LOCAL_VIDEO}
+              {clients.filter(({ role }) => role !== 'admin').length > 0 && (
+                <SideContainer>
+                  <MediaButtonContainer $isPagintionButton>
+                    <MediaButton onClick={() => changePage(true)} disabled={page === 0}>
+                      <ArrowUp />
+                    </MediaButton>
+                  </MediaButtonContainer>
+                  <UsersVideosContainer>
+                    {visibleClients.map(
+                      ({ clientId, isMicroEnabled, isCameraEnabled }) => {
+                        return (
+                          <UserVideo
+                            key={clientId}
+                            id={clientId}
+                            $isUserVideo={clientId === LOCAL_VIDEO}
+                          >
+                            <video
+                              width="100%"
+                              height="100%"
+                              ref={instance => {
+                                provideMediaRef(clientId, instance);
+                              }}
+                              data-video="user"
+                              data-id={clientId}
+                              autoPlay
+                              playsInline
+                              muted={clientId === LOCAL_VIDEO}
+                            />
+                            {debug && (
+                              <div style={{ position: 'absolute', color: 'white' }}>
+                                {clientId}
+                              </div>
+                            )}
+                            {(!isCameraEnabled ||
+                              (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
+                              <DisabledCameraIcon $isAbsolute $isSmall />
+                            )}
+                            {(!isMicroEnabled ||
+                              (clientId === LOCAL_VIDEO &&
+                                !isLocalMicrophoneEnabled)) && (
+                              <DisabledMicroIcon $isAbsolute $isSmall />
+                            )}
+                          </UserVideo>
+                        );
+                      }
+                    )}
+                  </UsersVideosContainer>
+                  <MediaButtonContainer $isPagintionButton>
+                    <MediaButton
+                      onClick={() => changePage(false)}
+                      disabled={page + VISIBLE_USERS_COUNT >= clients.length - 1}
                     >
-                      <video
-                        width="100%"
-                        height="100%"
-                        ref={instance => {
-                          provideMediaRef(clientId, instance);
-                        }}
-                        autoPlay
-                        playsInline
-                        muted={clientId === LOCAL_VIDEO}
-                      />
-                      {/* <div style={{ position: 'absolute', color: 'white' }}>
-                        {clientId}
-                      </div> */}
-                      {(!isCameraEnabled ||
-                        (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
-                        <DisabledCameraIcon $isAbsolute $isSmall />
-                      )}
-                      {(!isMicroEnabled ||
-                        (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
-                        <DisabledMicroIcon $isAbsolute $isSmall />
-                      )}
-                    </UserVideo>
-                  );
-                })}
-            </UsersVideosContainer>
-            <MediaButtonContainer $isPagintionButton>
-              <MediaButton
-                onClick={() => changePage(false)}
-                disabled={page + VISIBLE_USERS_COUNT >= clients.length - 1}
-              >
-                <ArrowDown />
-              </MediaButton>
-            </MediaButtonContainer>
-          </SideContainer>
-        )}
-      </VideochatContainer>
-      <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
-        <KahootBtn onClick={toggleKahoot}>
-          <KahootLogo />
-        </KahootBtn>
-        <ChatBtn onClick={toggleChat}>
-          <ChatLogo />
-        </ChatBtn>
-      </ButtonBox>
-      <KahootsVideo
-        sectionWidth={width}
-        sectionHeight={height}
-        isKahootOpen={isKahootOpen}
-        isChatOpen={isChatOpen}
-        isOpenedLast={isOpenedLast}
-        activeKahoot={activeKahoot}
-      />
-      <ChatBox
-        ref={chatEl}
-        className={isChatOpen ? 'shown' : 'hidden'}
-        style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
-      >
-        <ChatVideo
-          socket={socketRef.current}
-          messages={messages}
-          isChatOpen={isChatOpen}
-          currentUser={currentUser}
-        />
-      </ChatBox>
-    </PageContainer>
+                      <ArrowDown />
+                    </MediaButton>
+                  </MediaButtonContainer>
+                </SideContainer>
+              )}
+            </VideochatContainer>
+            <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
+              <KahootBtn onClick={toggleKahoot}>
+                <KahootLogo />
+              </KahootBtn>
+              <ChatBtn onClick={toggleChat}>
+                <ChatLogo />
+              </ChatBtn>
+            </ButtonBox>
+            <KahootsVideoChat
+              sectionWidth={width}
+              sectionHeight={height}
+              isKahootOpen={isKahootOpen}
+              isChatOpen={isChatOpen}
+              isOpenedLast={isOpenedLast}
+            />
+
+            {localRole !== 'admin' && (
+              <>
+                <StudentInput
+                  isInputOpen={isQuizInputOpen}
+                  socket={socketRef.current}
+                  toggleInput={toggleQuizInput}
+                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                />
+
+                <StudentOptions
+                  isInputOpen={isQuizOptionsOpen}
+                  socket={socketRef.current}
+                  toggleInput={toggleQuizOptions}
+                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                />
+
+                <StudentTrueFalse
+                  isInputOpen={isQuizTrueFalseOpen}
+                  socket={socketRef.current}
+                  toggleInput={toggleQuizTrueFalse}
+                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                />
+              </>
+            )}
+
+            {/* <KahootsVideo
+            sectionWidth={width}
+            sectionHeight={height}
+            isKahootOpen={isKahootOpen}
+            isChatOpen={isChatOpen}
+            isOpenedLast={isOpenedLast}
+            activeKahoot={activeKahoot}
+          /> */}
+          </PageContainer>
+          <ChatBox
+            ref={chatEl}
+            className={isChatOpen ? 'shown' : 'hidden'}
+            style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
+          >
+            <ChatVideo
+              socket={socketRef.current}
+              messages={messages}
+              isChatOpen={isChatOpen}
+              currentUser={currentUser}
+            />
+          </ChatBox>
+        </>
+      ) : (
+        <PageContainer>
+          <GradientBackground>
+            <LargeText>Викладача поки немає!</LargeText>
+          </GradientBackground>
+        </PageContainer>
+      )}
+    </>
   );
 }
 

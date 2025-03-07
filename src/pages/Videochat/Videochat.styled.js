@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 
+import { ReactComponent as _EndCallIcon } from '../../img/svg/end-call.svg';
 import { ReactComponent as _CameraIcon } from '../../img/svg/camera.svg';
 import { ReactComponent as _DisabledCameraIcon } from '../../img/svg/camera-slash.svg';
 import { ReactComponent as _MicroIcon } from '../../img/svg/microphone.svg';
@@ -143,11 +144,25 @@ export const MediaButtonContainer = styled.div`
     background-color: rgba(0, 0, 0, 0.1);
   }
 
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
   ${({ $isPagintionButton }) =>
     $isPagintionButton &&
     `
       @media (max-width: 1024px) {
         display: none;
+      }
+    `}
+
+  ${({ $isRed }) =>
+    $isRed &&
+    `
+      background-color: rgba(190, 20, 20, 0.6);
+
+      &:hover {
+        background-color: rgba(190, 20, 20, 0.8);
       }
     `}
 `;
@@ -172,6 +187,7 @@ export const MediaSelector = styled.select`
   color: white;
   cursor: pointer;
   padding: 8px;
+  padding-left: 16px;
   max-width: 20px;
   border: none;
   outline: none;
@@ -180,6 +196,12 @@ export const MediaSelector = styled.select`
 
 export const MediaOption = styled.option`
   background-color: rgba(0, 0, 0, 0.7);
+`;
+
+export const EndCallIcon = styled(_EndCallIcon)`
+  fill: #ffffff;
+  height: 32px;
+  width: 32px;
 `;
 
 export const MicroIcon = styled(_MicroIcon)`
@@ -260,7 +282,29 @@ export const ArrowDown = styled(_ArrowDown)`
   width: 24px;
 `;
 
+export const LargeText = styled.p`
+  font-size: 4rem;
+  font-weight: bold;
+  margin: auto;
+  color: #ffffff;
+  text-align: center;
+`;
+
+export const GradientBackground = styled.div`
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to bottom, #0f645b, black, #0f645b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 // Videochat styles
+export const Page = styled.div`
+  height: 100dvh;
+  padding-top: 4rem;
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -285,12 +329,30 @@ export const SubTitle = styled.h3`
   margin-bottom: 10px;
 `;
 
+export const FormGroup = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+`;
+
 export const Label = styled.label`
+  flex-basis: 30%;
   font-size: 16px;
   color: #444;
+  white-space: nowrap;
 `;
 
 export const Input = styled.input`
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+`;
+
+export const Select = styled.select`
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -334,5 +396,15 @@ export const JoinButton = styled(Button)`
 
   &:hover {
     background-color: #218838;
+  }
+`;
+
+export const LogoutButton = styled(Button)`
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: #a4302c;
+  &:hover {
+    background-color: #932c28;
   }
 `;

@@ -542,7 +542,7 @@ const UserAdminPanel = () => {
                 <UserHeadCell>Юзера створено</UserHeadCell>
                 <UserHeadCell>
                   <Filterable>
-                    Відвідини
+                    Вхід на урок
                     <FilterButton onClick={toggleDaysSinceLastVisitPicker}></FilterButton>
                     {isDaysPickerOpen && (
                       <FilterPicker>
@@ -573,7 +573,7 @@ const UserAdminPanel = () => {
                   </Filterable>
                 </UserHeadCell>
                 <UserHeadCell>
-                  <Filterable>Відвідини з часом</Filterable>
+                  <Filterable>Вхід на плат.</Filterable>
                 </UserHeadCell>
                 <UserHeadCell>
                   <Filterable>

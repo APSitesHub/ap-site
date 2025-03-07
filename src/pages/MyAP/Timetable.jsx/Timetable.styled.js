@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { TimetableBtnIcon } from '../MyAPPanel/MyAPPanel.styled';
 
 export const TimetableBox = styled.div`
@@ -140,8 +140,7 @@ export const TimetableLessonLink = styled.a`
 
     transition: opacity var(--animation-global);
 
-    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%),
-      #09c6cc;
+    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%), #09c6cc;
   }
 
   &:hover,
@@ -149,6 +148,14 @@ export const TimetableLessonLink = styled.a`
     &::before {
       opacity: 1;
     }
+  }
+`;
+
+export const TimetableLessonLinkWSPA = styled(TimetableLessonLink)`
+  background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #000 -31.6%, #e40521 107.95%);
   }
 `;
 
@@ -195,4 +202,87 @@ export const TimetableDaysItem = styled.tr`
 
 export const TimetableDaysCell = styled.td`
   border: none;
+`;
+
+export const pulse = keyframes`
+  0%{
+    transform: scale(0.9);
+  }
+  100%{
+    transform: scale(1.1);
+  }
+`;
+
+export const TimetableLessonPlType = styled.span`
+  display: block;
+  font-size: 18px;
+  color: var(--main-color);
+
+  filter: drop-shadow(1px -1px 1px var(--main-color));
+
+  &.animated {
+    animation: ${pulse} 500ms 5 ease-in-out alternate;
+  }
+`;
+
+export const TimetableLessonPlTypeWSPA = styled(TimetableLessonPlType)`
+  color: #000;
+
+  filter: drop-shadow(1px -1px 1px #e40521);
+`;
+
+export const TimetableChangeCourseBtn = styled.button`
+  display: block;
+  padding: 5px 0;
+  height: 36px;
+  margin-left: auto;
+  margin-right: 6px;
+
+  position: relative;
+
+  text-align: center;
+  text-decoration: none;
+  width: 110px;
+  color: #fff;
+  font-weight: 500;
+  border: 1px transparent;
+  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #09c6cc;
+
+  border-radius: 5px;
+  overflow: hidden;
+
+  transition: all var(--animation-global);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: opacity var(--animation-global);
+
+    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%), #09c6cc;
+  }
+
+  &:hover,
+  &:focus {
+    &::before {
+      opacity: 1;
+    }
+  }
+`;
+
+export const TimetableChangeCourseBtnWSPA = styled(TimetableChangeCourseBtn)`
+  background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #000 -31.6%, #e40521 107.95%);
+  }
+`;
+
+export const TimetableChangeCourseBtnText = styled(TimetableLessonLinkText)`
+  font-size: 14px;
 `;

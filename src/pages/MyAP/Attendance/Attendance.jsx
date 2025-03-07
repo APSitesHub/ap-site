@@ -33,12 +33,6 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
   const [lessonDaysForMonth, setLessonDaysForMonth] = useState([]);
   const [lessonDaysForYear, setLessonDaysForYear] = useState([]);
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '184px' : '142px',
-    };
-  };
-
   const MONTHS = [
     'Січень',
     'Лютий',
@@ -444,7 +438,7 @@ export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => 
   };
 
   return (
-    <AttendanceBox style={{ ...panelStyles() }}>
+    <AttendanceBox style={{ top: '145px' }}>
       <AttendanceHeading>
         <AttendanceIcon />
         Відвідуваність

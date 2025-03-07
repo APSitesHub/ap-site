@@ -33,7 +33,7 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
       : flatPoints.sort((a, b) => b.points - a.points);
 
   const userPlace = pointsSorted.findIndex(
-    leader => leader.name.toLowerCase() === user.name.toLowerCase()
+    leader => leader.name.toLowerCase() === 'dev acc'
   );
 
   const calculatePointerPosition = i => {
@@ -41,14 +41,8 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
     setActiveRating(i);
   };
 
-  const panelStyles = () => {
-    return {
-      top: isMultipleCourses ? '184px' : '142px',
-    };
-  };
-
   return (
-    <PointsBox style={{ ...panelStyles() }}>
+    <PointsBox style={{ top: '145px' }}>
       <PointsBoxHeading>
         <CupIcon />
         Ranking
@@ -56,9 +50,9 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
       {userPlace === -1 ? (
         <PointsPlaceHolder>
           <EyesEmoji src={eyesImg} alt="Eyes emoji" width="80" />
-          <PointsPlaceHolderText>Шукаємо вас у рейтингу.</PointsPlaceHolderText>
+          <PointsPlaceHolderText>Szukamy was w rankingu.</PointsPlaceHolderText>
           <PointsPlaceHolderText>
-            Виконайте ще кілька вправ, <br /> щоб бути в топі! 🤩
+            Proszę zrobić jeszcze kilka zadań, <br /> żeby być w topie 🤩
           </PointsPlaceHolderText>
         </PointsPlaceHolder>
       ) : (
@@ -89,9 +83,8 @@ export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourse
           </PointsTableHead>
           <PointsUser>
             <PointsUserData>
-              {pointsSorted.findIndex(
-                leader => leader.name.toLowerCase() === user.name.toLowerCase()
-              ) + 1}
+              {pointsSorted.findIndex(leader => leader.name.toLowerCase() === 'dev acc') +
+                1}
             </PointsUserData>
             <PointsUserDataWide>Student</PointsUserDataWide>
             <PointsUserData>

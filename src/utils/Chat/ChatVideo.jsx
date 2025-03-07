@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { ThemeProvider, Toggle } from 'react-hook-theme';
 import 'react-hook-theme/dist/styles/style.css';
 import {
-  ChatContainerVideoChat,
+  ChatContainer,
   ChatHeader,
   ChatHeaderLogo,
   ChatHeading,
-  ToggleContainer,
+  ToggleContainer
 } from './Chat.styled';
 import { ChatVideoBody } from './ChatVideoBody';
 import { ChatVideoFooter } from './ChatVideoFooter';
@@ -29,11 +29,11 @@ export const ChatVideo = ({ socket, messages, isChatOpen, currentUser }) => {
         save: true,
       }}
     >
-      <ChatContainerVideoChat>
+      <ChatContainer>
         <ChatHeader>
           <ChatHeading>
             <ChatHeaderLogo />
-            Chat
+            AP Chat
           </ChatHeading>
           <ToggleContainer onClick={handleThemeClick}>
             <Toggle />
@@ -46,7 +46,7 @@ export const ChatVideo = ({ socket, messages, isChatOpen, currentUser }) => {
           currentUser={currentUser}
         />
         <ChatVideoFooter socket={socket} theme={theme} currentUser={currentUser} />
-      </ChatContainerVideoChat>
+      </ChatContainer>
     </ThemeProvider>
   );
 };

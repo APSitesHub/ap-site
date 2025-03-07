@@ -30,6 +30,7 @@ import { WSTIJOLogisticsKahootForm } from '../KahootAdminPanel/WSTIJOLogisticsKa
 import { WSTIJOPrepKahootForm } from '../KahootAdminPanel/WSTIJOPrepKahootForm';
 import { WSTiHLogisticsKahootForm } from '../KahootAdminPanel/WSTiHLogisticsKahootForm';
 import { WSTiHPrepKahootForm } from '../KahootAdminPanel/WSTiHPrepKahootForm';
+import { WSEPrepKahootForm } from '../KahootAdminPanel/WSEPrepKahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -166,6 +167,9 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('wssip_prep')}>
               WSSiP Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('wse_prep')}>
+              WSE Prep
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -217,6 +221,7 @@ const UniHostKahootAdminPanel = () => {
           {levels.includes('wssip_prep') && (
             <WSSiPPrepKahootForm destination={destination} />
           )}
+          {levels.includes('wse_prep') && <WSEPrepKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>

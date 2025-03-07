@@ -1,6 +1,9 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
 import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
+import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
+import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
+import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 import { Support } from 'components/Stream/Support/Support';
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -46,6 +49,11 @@ const StreamA2 = () => {
   const [width, height] = useSize(document.body);
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
+
+  console.log(56, room);
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
@@ -75,6 +83,15 @@ const StreamA2 = () => {
       setIsAnimated(isAnimated => !isAnimated);
     }
   };
+  const toggleQuizInput = () => {
+    setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
+  };
+  const toggleQuizOptions = () => {
+    setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
+  };
+  const toggleQuizTrueFalse = () => {
+    setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
+  };
 
   const videoBoxWidth =
     chatWidth === 0 && width > height ? width - 300 : width - chatWidth;
@@ -85,6 +102,7 @@ const StreamA2 = () => {
     document.title = 'A2 English | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
+    // socketRef.current = io('http://localhost:4000/');
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
@@ -174,6 +192,34 @@ const StreamA2 = () => {
       if (userID === currentUser.userID) {
         setIsBanned(true);
       }
+    });
+
+    // open quizzes on event
+    socketRef.current.on('question:input', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/','') && setIsQuizInputOpen(true);
+    });
+    socketRef.current.on('question:options', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/','') && setIsQuizOptionsOpen(true);
+    });
+    socketRef.current.on('question:trueFalse', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/','') && setIsQuizTrueFalseOpen(true);
+    });
+
+    // close quizzes on event
+    socketRef.current.on('question:closeInput', data => {
+      console.log(data);
+      data.page === room.replace('/streams/','') && setIsQuizInputOpen(false);
+    });
+    socketRef.current.on('question:closeOptions', data => {
+      console.log(data);
+      data.page === room.replace('/streams/','') && setIsQuizOptionsOpen(false);
+    });
+    socketRef.current.on('question:closeTrueFalse', data => {
+      console.log(data);
+      data.page === room.replace('/streams/','') && setIsQuizTrueFalseOpen(false);
     });
 
     return () => {
@@ -321,6 +367,26 @@ const StreamA2 = () => {
               isKahootOpen={isKahootOpen}
               isChatOpen={isChatOpen}
               isOpenedLast={isOpenedLast}
+            />
+            <StudentInput
+              isInputOpen={isQuizInputOpen}
+              socket={socketRef.current}
+              toggleInput={toggleQuizInput}
+              page={room.replace('/streams/', '')}
+            />
+
+            <StudentOptions
+              isInputOpen={isQuizOptionsOpen}
+              socket={socketRef.current}
+              toggleInput={toggleQuizOptions}
+              page={room.replace('/streams/', '')}
+            />
+
+            <StudentTrueFalse
+              isInputOpen={isQuizTrueFalseOpen}
+              socket={socketRef.current}
+              toggleInput={toggleQuizTrueFalse}
+              page={room.replace('/streams/', '')}
             />
           </StreamSection>
           {width >= height && (

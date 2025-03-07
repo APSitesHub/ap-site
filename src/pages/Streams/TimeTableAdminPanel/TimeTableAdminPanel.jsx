@@ -552,6 +552,10 @@ const TimeTableAdminPanel = () => {
       label: 'A2',
       value: 'a2',
     },
+    {
+      label: 'B1',
+      value: 'b1',
+    },
   ];
 
   const levelOptionsForPlKids = [
@@ -566,6 +570,10 @@ const TimeTableAdminPanel = () => {
     {
       label: 'A2',
       value: 'a2',
+    },
+    {
+      label: 'B1',
+      value: 'b1',
     },
   ];
 

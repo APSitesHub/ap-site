@@ -1,9 +1,10 @@
 import axios from 'axios';
 // import chart from '../../../img/bg/chart.png';
 import { ResponsiveBarCanvas } from '@nivo/bar';
-import { QuestionHeader } from '../TeacherPage.styled';
 import {
   ChartAreaLimiter,
+  ChartPlaceholder,
+  ChartPlaceholderHighlight,
   TeacherChartArea,
   TooltipArea,
   TooltipColorLabel,
@@ -13,27 +14,33 @@ import {
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const TeacherAnswersChart = ({ currentStudentChart }) => {
-  const data = [
-    {
-      schronisko: 28,
-      hotel: 34,
-      motel: 14,
-      kamping: 11,
-    },
-  ];
+export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
+  const data = Object.keys(answers).map(key => {
+    return { answer: key, [key]: answers[key] };
+  });
+
+  // simple data array example
+  // const data = [
+  //   {
+  //     Wysoka_precyzja: 28,
+  //     Automatyzacja_procesów: 34,
+  //     Skrócenie_czasu_produkcji: 14,
+  //     Ręczne_sterowanie_każdą_operacją: 11,
+  //   },
+  // ];
 
   const MyResponsiveBar = ({ data }) => (
     <ResponsiveBarCanvas
       data={data}
-      keys={Object.keys(data[0])}
-      groupMode="grouped"
-      margin={{ top: 30, right: 30, bottom: 15, left: 30 }}
-      padding={0.05}
+      keys={data.map(dataObj => Object.keys(dataObj)[1]) || ['answer']}
+      indexBy="answer"
+      groupMode="stacked"
+      margin={{ top: 30, right: 30, bottom: 20, left: 30 }}
+      padding={0}
       colors={{ scheme: 'dark2' }}
+      axisLeft={{ tickValues: Math.max(...Object.values(answers).map(value => value)) < 15 ? Math.max(...Object.values(answers).map(value => value)) : 15}}
+      axisBottom={true}
       labelPosition="end"
-      axisBottom={false}
-      axisRight={true}
       labelOffset={8}
       tooltip={({ id, value, color }) => (
         <TooltipArea>
@@ -42,7 +49,9 @@ export const TeacherAnswersChart = ({ currentStudentChart }) => {
               backgroundColor: color,
             }}
           ></TooltipColorLabel>{' '}
-          <TooltipIdText>{id}: <TooltipValueText>{value}</TooltipValueText></TooltipIdText>
+          <TooltipIdText>
+            {id.replaceAll('_', ' ')}: <TooltipValueText>{value}</TooltipValueText>
+          </TooltipIdText>
         </TooltipArea>
       )}
     />
@@ -51,12 +60,16 @@ export const TeacherAnswersChart = ({ currentStudentChart }) => {
   return (
     <>
       <TeacherChartArea>
-        <QuestionHeader id="focus">
-          Jak nazywa się budynek dla turystów?
-          <br />
-          Który znajduje się w górach.
-        </QuestionHeader>
+        {/* <QuestionHeader id="focus">Jakie są główne zalety maszyn CNC?</QuestionHeader> */}
+
+        {!isQuizActive && !data[0] && (
+          <ChartPlaceholder>
+            PAY ATTENTION, THE QUIZ IS ABOUT TO{' '}
+            <ChartPlaceholderHighlight>START</ChartPlaceholderHighlight>
+          </ChartPlaceholder>
+        )}
         <ChartAreaLimiter
+          className={isQuizActive ? 'active' : ''}
           id="chartlimiter"
           style={{
             minWidth: `${
@@ -64,7 +77,14 @@ export const TeacherAnswersChart = ({ currentStudentChart }) => {
             }px`,
           }}
         >
-          <MyResponsiveBar data={data}></MyResponsiveBar>
+          {isQuizActive && data.length ? (
+            <MyResponsiveBar data={data}></MyResponsiveBar>
+          ) : (
+            <ChartPlaceholder>
+              QUIZ IS GO!{' '}
+              <ChartPlaceholderHighlight>ANSWER NOW!</ChartPlaceholderHighlight>
+            </ChartPlaceholder>
+          )}
           {/* <ChartImage src={chart} alt="chart image" /> */}
         </ChartAreaLimiter>
       </TeacherChartArea>
