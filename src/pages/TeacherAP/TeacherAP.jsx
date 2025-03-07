@@ -24,7 +24,6 @@ axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 // axios.defaults.baseURL = 'http://localhost:3001';
 
 const TeacherAP = () => {
-  const [teacher, setTeacher] = useState({});
   const [isTeacherLogged, setIsTeacherLogged] = useState(false);
   const [isTeacherInfoIncorrect, setIsTeacherInfoIncorrect] = useState(false);
   const [iframeLink, setIframeLink] = useState('');
@@ -35,9 +34,9 @@ const TeacherAP = () => {
         const res = await axios.post('/teachers/refresh', {
           login: localStorage.getItem('login'),
         });
-        localStorage.setItem('token', res.data.newToken)
+        localStorage.setItem('token', res.data.newToken);
         setIsTeacherLogged(isLogged => (isLogged = true));
-        setTeacher(user => (user = { ...res.data.user }));
+        setPlatformLink(res.data.teacher.platformToken);
       } catch (error) {
         console.log(error);
       }
@@ -52,11 +51,10 @@ const TeacherAP = () => {
       const response = await axios.post('/teachers/login', values);
       setAuthToken(response.data.token);
       setIsTeacherLogged(isLogged => (isLogged = true));
-      setTeacher(teacher => (teacher = { ...response.data.teacher }));
       localStorage.setItem('login', values.login);
       localStorage.setItem('token', response.data.token);
       setIsTeacherInfoIncorrect(false);
-      setPlatformLink();
+      setPlatformLink(response.data.teacher.platformToken);
       resetForm();
     } catch (error) {
       error.response.status === 401 && setIsTeacherInfoIncorrect(true);
@@ -64,11 +62,9 @@ const TeacherAP = () => {
     }
   };
 
-  const setPlatformLink = () => {
+  const setPlatformLink = token => {
     setIframeLink(
-      `https://online.ap.education/LoginByToken?token=${
-        teacher.platformToken
-      }&redirectUrl=${encodeURIComponent(
+      `https://online.ap.education/LoginByToken?token=${token}&redirectUrl=${encodeURIComponent(
         `https://https://online.ap.education/cabinet/school/marathons/list`
       )}`
     );

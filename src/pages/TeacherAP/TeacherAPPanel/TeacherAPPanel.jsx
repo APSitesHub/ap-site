@@ -34,7 +34,7 @@ const TeacherAPPanel = () => {
 
       <APPanel
         className={isButtonBoxShown ? '' : 'hidden'}
-        style={{ top: '129px', minHeight: '128px' }}
+        style={{ top: '230px' }}
       >
         <APPanelBtn
           onClick={() => {
