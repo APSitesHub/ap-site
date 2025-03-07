@@ -7,6 +7,7 @@ import { ReactComponent as _MicroIcon } from '../../img/svg/microphone.svg';
 import { ReactComponent as _DisabledMicroIcon } from '../../img/svg/microphone-slash.svg';
 import { ReactComponent as _ArrowUp } from '../../img/svg/faq-arrow-up.svg';
 import { ReactComponent as _ArrowDown } from '../../img/svg/faq-arrow-down.svg';
+import { ReactComponent as _BackIcon } from '../../img/svg/btnbox-switch-left-gray.svg';
 
 // Room styles
 export const PageContainer = styled.div`
@@ -306,6 +307,7 @@ export const Page = styled.div`
 `;
 
 export const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -399,12 +401,29 @@ export const JoinButton = styled(Button)`
   }
 `;
 
-export const LogoutButton = styled(Button)`
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
+export const DeleteButton = styled(Button)`
   background-color: #a4302c;
+
   &:hover {
     background-color: #932c28;
   }
+`;
+
+export const BackButton = styled.button`
+  position: absolute;
+  top: 1.5rem;
+  left: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+`;
+
+export const BackIcon = styled(_BackIcon)`
+  width: 16px;
+  height: 16px;
 `;

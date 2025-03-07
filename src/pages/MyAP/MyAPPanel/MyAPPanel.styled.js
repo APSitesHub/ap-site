@@ -75,6 +75,7 @@ export const APPanelBtn = styled.button`
   align-items: center;
   justify-content: center;
   position: relative;
+  cursor: pointer;
 
   background-color: transparent;
   border: none;
