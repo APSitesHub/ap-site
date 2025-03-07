@@ -32,13 +32,20 @@ const StreamToZoomRedirecter = () => {
       page = 'https://us04web.zoom.us/j/4155403535?pwd=cFpjNkVkTWdubGRIMmtIbHE3Um9Tdz09';
       break;
     case 'a1':
-      // Віка Івачевська
-      page = 'https://us04web.zoom.us/j/7472785782?pwd=mlmx1s2CYUiGOEnzqLlnnh1NCiNYvA.1';
+      // Юлія Тонкопій
+      page = 'https://us05web.zoom.us/j/8568211931?pwd=QllQaTJMOE1KdzhRUVprUzg0WnRTUT09';
       break;
+    // // Віка Івачевська
+    // page = 'https://us04web.zoom.us/j/7472785782?pwd=mlmx1s2CYUiGOEnzqLlnnh1NCiNYvA.1';
+    // break;
     case 'a2':
-      // Іра Кривуля
-      page = 'https://us04web.zoom.us/j/5650469744?pwd=aWxxaVl4aDlsTVBrNnFtSmZQeVcrdz09';
+      // Наталія Цвігун
+      page = 'https://us05web.zoom.us/j/3059336934?pwd=YnJtcjlBYzZuR1pCTWxDREVvNi9xQT09';
       break;
+    // case 'a2':
+    // // Іра Кривуля
+    // page = 'https://us04web.zoom.us/j/5650469744?pwd=aWxxaVl4aDlsTVBrNnFtSmZQeVcrdz09';
+    // break;
     // case 'a2':
     //   // Юлія Дейнека
     //   page = 'https://us04web.zoom.us/j/4155403535?pwd=cFpjNkVkTWdubGRIMmtIbHE3Um9Tdz09';
