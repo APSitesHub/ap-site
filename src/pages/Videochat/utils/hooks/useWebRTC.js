@@ -55,13 +55,17 @@ export default function useWebRTC(roomID) {
   });
 
   const toggleCamera = off => {
+    let enable = !off;
+
     if (localMediaStream.current) {
       const videoTrack = localMediaStream.current
         .getTracks()
         .find(track => track.kind === 'video');
 
       if (videoTrack) {
-        const enable = off === true ? false : !videoTrack.enabled;
+        enable = off === true ? false : !videoTrack.enabled;
+        console.log('ENABLED: ', enable);
+
         videoTrack.enabled = enable;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
@@ -69,7 +73,6 @@ export default function useWebRTC(roomID) {
           vt.track.enabled = enable;
         });
 
-        setLocalCameraEnabled(enable);
         const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
 
         if (enable) {
@@ -77,35 +80,38 @@ export default function useWebRTC(roomID) {
         } else {
           localVideoElement.srcObject = null;
         }
-
-        socket.emit(ACTIONS.TOGGLE_CAMERA, {
-          isCameraEnabled: enable,
-        });
       }
     }
+
+    setLocalCameraEnabled(enable);
+    socket.emit(ACTIONS.TOGGLE_CAMERA, {
+      isCameraEnabled: enable,
+    });
   };
 
   const toggleMicrophone = off => {
+    let enable = !off;
+
     if (localMediaStream.current) {
       const audioTrack = localMediaStream.current
         .getTracks()
         .find(track => track.kind === 'audio');
 
       if (audioTrack) {
-        const enable = off === true ? false : !audioTrack.enabled;
+        enable = off === true ? false : !audioTrack.enabled;
         audioTrack.enabled = enable;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
           const at = targetObj.getSenders().find(sender => sender.track.kind === 'audio');
           at.track.enabled = enable;
         });
-
-        setLocalMicrophoneEnabled(enable);
-        socket.emit(ACTIONS.TOGGLE_MICRO, {
-          isMicroEnabled: enable,
-        });
       }
     }
+
+    setLocalMicrophoneEnabled(enable);
+    socket.emit(ACTIONS.TOGGLE_MICRO, {
+      isMicroEnabled: enable,
+    });
   };
 
   const changeMicrophone = async deviceId => {
@@ -132,6 +138,10 @@ export default function useWebRTC(roomID) {
             audioSender.replaceTrack(audioTrack);
           }
         });
+      }
+
+      if (!isLocalMicrophoneEnabled) {
+        toggleMicrophone();
       }
     } catch (error) {
       console.error('error change micro: ' + error);
@@ -165,7 +175,9 @@ export default function useWebRTC(roomID) {
         });
       }
 
-      toggleCamera();
+      if (!isLocalCameraEnabled) {
+        toggleCamera();
+      }
     } catch (error) {
       console.error('error change camera: ' + error);
     }
@@ -440,6 +452,7 @@ export default function useWebRTC(roomID) {
     addMockClient,
     getClients,
     remoteStreams,
+    localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   };
