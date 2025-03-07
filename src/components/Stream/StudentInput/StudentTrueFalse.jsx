@@ -4,7 +4,7 @@ import {
   StudentQuizSubmitBtnOptions,
 } from './StudentInput.styled';
 
-export const StudentTrueFalse = ({ isInputOpen, socket, page }) => {
+export const StudentTrueFalse = ({ isInputOpen, socket, page, toggleQuizTrueFalse }) => {
   console.log(4, 'studentinputsocket', socket);
 
   const handleSubmit = e => {
@@ -14,6 +14,7 @@ export const StudentTrueFalse = ({ isInputOpen, socket, page }) => {
       answer: e.target.innerText,
       page: page,
     });
+    toggleQuizTrueFalse();
   };
 
   return (
