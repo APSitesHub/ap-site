@@ -276,7 +276,29 @@ export const ArrowDown = styled(_ArrowDown)`
   width: 24px;
 `;
 
+export const LargeText = styled.p`
+  font-size: 4rem;
+  font-weight: bold;
+  margin: auto;
+  color: #ffffff;
+  text-align: center;
+`;
+
+export const GradientBackground = styled.div`
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to bottom, #0f645b, black, #0f645b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 // Videochat styles
+export const Page = styled.div`
+  height: 100dvh;
+  padding-top: 4rem;
+`;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -368,5 +390,15 @@ export const JoinButton = styled(Button)`
 
   &:hover {
     background-color: #218838;
+  }
+`;
+
+export const LogoutButton = styled(Button)`
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: #a4302c;
+  &:hover {
+    background-color: #932c28;
   }
 `;

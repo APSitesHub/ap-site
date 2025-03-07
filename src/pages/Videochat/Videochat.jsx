@@ -4,6 +4,7 @@ import { getRooms } from './utils/api/getRooms';
 import { createRoom } from './utils/api/createRoom';
 import { getToken } from './utils/api/getToken';
 import {
+  Page,
   Container,
   Title,
   SubTitle,
@@ -15,6 +16,7 @@ import {
   RoomList,
   RoomItem,
   JoinButton,
+  LogoutButton,
 } from './Videochat.styled';
 import { getKahoots } from './utils/api/getKahoots';
 
@@ -41,6 +43,11 @@ function Videochat() {
     // eslint-disable-next-line
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('../teacher-login');
+  };
+
   const updateRooms = async () => {
     const rooms = await getRooms();
 
@@ -53,45 +60,48 @@ function Videochat() {
   };
 
   return (
-    <Container>
-      <Title>Logined as Teacher</Title>
+    <Page>
+      <Container>
+        <Title>Logined as Teacher</Title>
 
-      <div>
-        <SubTitle>Create Room</SubTitle>
-      </div>
+        <div>
+          <SubTitle>Create Room</SubTitle>
+        </div>
 
-      <FormGroup>
-        <Label htmlFor="room-name">Room name:</Label>
-        <Input type="text" id="room-name" ref={newRoomName} />
-      </FormGroup>
-      <FormGroup>
-        <Label htmlFor="room-level">Room level:</Label>
-        <Select id="room-level" ref={newRoomLevel}>
-          {roomLevels.map(level => (
-            <option key={level} value={level}>
-              {level}
-            </option>
+        <FormGroup>
+          <Label htmlFor="room-name">Room name:</Label>
+          <Input type="text" id="room-name" ref={newRoomName} />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="room-level">Room level:</Label>
+          <Select id="room-level" ref={newRoomLevel}>
+            {roomLevels.map(level => (
+              <option key={level} value={level}>
+                {level}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+
+        <Button onClick={handleCreateRoom}>Create New Room</Button>
+
+        <RoomList>
+          {rooms.map(room => (
+            <RoomItem key={room.id}>
+              {room.name}
+              <JoinButton
+                onClick={() => {
+                  navigate(`/room/${room.slug}/${room.id}`);
+                }}
+              >
+                JOIN ROOM
+              </JoinButton>
+            </RoomItem>
           ))}
-        </Select>
-      </FormGroup>
-
-      <Button onClick={handleCreateRoom}>Create New Room</Button>
-
-      <RoomList>
-        {rooms.map(room => (
-          <RoomItem key={room.id}>
-            {room.name}
-            <JoinButton
-              onClick={() => {
-                navigate(`/room/${room.slug}/${room.id}`);
-              }}
-            >
-              JOIN ROOM
-            </JoinButton>
-          </RoomItem>
-        ))}
-      </RoomList>
-    </Container>
+        </RoomList>
+        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+      </Container>
+    </Page>
   );
 }
 
