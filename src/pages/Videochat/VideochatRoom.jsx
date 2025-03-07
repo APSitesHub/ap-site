@@ -41,6 +41,7 @@ import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 
 const VISIBLE_USERS_COUNT = 4;
+const debug = false;
 
 function VideochatRoom() {
   const { id: roomID } = useParams();
@@ -55,6 +56,9 @@ function VideochatRoom() {
     changeCamera,
     changeMicrophone,
     muteAll,
+    addMockClient,
+    getClients,
+    remoteStreams,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   } = useWebRTC(roomID);
@@ -71,6 +75,7 @@ function VideochatRoom() {
 
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(0);
+  const [visibleClients, setVisibleClients] = useState([]);
   const [width, height] = useSize(document.body);
 
   const chatEl = useRef();
@@ -142,12 +147,16 @@ function VideochatRoom() {
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
     socketRef.current.on('connected', (connected, handshake) => {
-      console.log(connected);
-      console.log(handshake.time);
+      if (debug) {
+        console.log(connected);
+        console.log(handshake.time);
+      }
     });
 
     const getMessages = async () => {
-      console.log('get');
+      if (debug) {
+        console.log('get');
+      }
       try {
         const dbMessages = await axios.get(
           `https://ap-chat-server.onrender.com/messages/room`,
@@ -184,8 +193,10 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:pinned', async (id, data) => {
-      console.log(id);
-      console.log(data);
+      if (debug) {
+        console.log(id);
+        console.log(data);
+      }
       setMessages(messages => {
         messages[messages.findIndex(message => message.id === id)].isPinned =
           data.isPinned;
@@ -194,7 +205,9 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:delete', async id => {
-      console.log('delete fired');
+      if (debug) {
+        console.log('delete fired');
+      }
       setMessages(
         messages => (messages = [...messages.filter(message => message.id !== id)])
       );
@@ -209,17 +222,20 @@ function VideochatRoom() {
     });
 
     socketRef.current.on('message:deleted', async id => {
-      console.log(id);
+      if (debug) {
+        console.log(id);
+      }
       setMessages(
         messages => (messages = [...messages.filter(message => message.id !== id)])
       );
     });
 
     socketRef.current.on('user:banned', async (userID, userIP) => {
-      console.log(userID);
-      console.log(userIP);
+      if (debug) {
+        console.log(userID);
+        console.log(userIP);
+      }
     });
-
     // open quizzes on event
     socketRef.current.on('question:input', data => {
       console.log(data.page);
@@ -254,6 +270,37 @@ function VideochatRoom() {
       socketRef.current.disconnect();
     };
   }, [currentUser, room]);
+
+  useEffect(() => {
+    setVisibleClients(
+      clients
+        .filter(({ role }) => role !== 'admin')
+        .slice(page, page + VISIBLE_USERS_COUNT)
+    );
+  }, [page, clients]);
+
+  useEffect(() => {
+    updateStreams();
+  }, [visibleClients]);
+
+  const updateStreams = () => {
+    const videoElements = document.querySelectorAll('[data-video]');
+
+    videoElements.forEach(el => {
+      try {
+        if (el.dataset.id !== LOCAL_VIDEO) {
+          el.srcObject = remoteStreams.find(
+            stream => stream.peerID === el.dataset.id
+          ).remoteStream;
+        } else {
+          if (!el.srcObject) {
+            toggleCamera(true);
+            toggleMicrophone(true);
+          }
+        }
+      } catch {}
+    });
+  };
 
   return (
     <>

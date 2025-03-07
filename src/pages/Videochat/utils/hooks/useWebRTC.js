@@ -14,6 +14,7 @@ export default function useWebRTC(roomID) {
   const [isLocalMicrophoneEnabled, setLocalMicrophoneEnabled] = useState(true);
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
+  const [remoteStreams, setRemoteStreams] = useState([]);
 
   const determineRole = async () => {
     if (!getToken()) {
@@ -53,56 +54,55 @@ export default function useWebRTC(roomID) {
     [LOCAL_VIDEO]: null,
   });
 
-  const toggleCamera = () => {
+  const toggleCamera = off => {
     if (localMediaStream.current) {
       const videoTrack = localMediaStream.current
         .getTracks()
         .find(track => track.kind === 'video');
 
       if (videoTrack) {
-        videoTrack.enabled = !videoTrack.enabled;
+        const enable = off === true ? false : !videoTrack.enabled;
+        videoTrack.enabled = enable;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
           const vt = targetObj.getSenders().find(sender => sender.track.kind === 'video');
-          vt.track.enabled = videoTrack.enabled;
+          vt.track.enabled = enable;
         });
 
-        setLocalCameraEnabled(videoTrack.enabled);
+        setLocalCameraEnabled(enable);
         const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
 
-        if (videoTrack.enabled) {
+        if (enable) {
           localVideoElement.srcObject = localMediaStream.current;
         } else {
           localVideoElement.srcObject = null;
         }
 
         socket.emit(ACTIONS.TOGGLE_CAMERA, {
-          isCameraEnabled: videoTrack.enabled,
+          isCameraEnabled: enable,
         });
       }
     }
   };
 
-  const toggleMicrophone = mute => {
+  const toggleMicrophone = off => {
     if (localMediaStream.current) {
       const audioTrack = localMediaStream.current
         .getTracks()
         .find(track => track.kind === 'audio');
 
       if (audioTrack) {
-        if (mute === true) {
-          audioTrack.enabled = false;
-        } else {
-          audioTrack.enabled = !audioTrack.enabled;
-        }
+        const enable = off === true ? false : !audioTrack.enabled;
+        audioTrack.enabled = enable;
+
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
           const at = targetObj.getSenders().find(sender => sender.track.kind === 'audio');
-          at.track.enabled = audioTrack.enabled;
+          at.track.enabled = enable;
         });
 
-        setLocalMicrophoneEnabled(audioTrack.enabled);
+        setLocalMicrophoneEnabled(enable);
         socket.emit(ACTIONS.TOGGLE_MICRO, {
-          isMicroEnabled: audioTrack.enabled,
+          isMicroEnabled: enable,
         });
       }
     }
@@ -115,6 +115,10 @@ export default function useWebRTC(roomID) {
         video: false,
       });
       const audioTrack = newStream.getAudioTracks()[0];
+      const videoTrack = localMediaStream.current.getVideoTracks()[0];
+
+      newStream.addTrack(videoTrack);
+      localMediaStream.current = newStream;
 
       if (peerConnections.current) {
         Object.keys(peerConnections.current).forEach(id => {
@@ -141,8 +145,10 @@ export default function useWebRTC(roomID) {
         video: { deviceId: { exact: deviceId } },
       });
       const videoTrack = newStream.getVideoTracks()[0];
+      const audioTrack = localMediaStream.current.getAudioTracks()[0];
       const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
-
+      newStream.addTrack(audioTrack);
+      localMediaStream.current = newStream;
       localVideoElement.srcObject = newStream;
 
       if (peerConnections.current) {
@@ -158,6 +164,8 @@ export default function useWebRTC(roomID) {
           }
         });
       }
+
+      toggleCamera();
     } catch (error) {
       console.error('error change camera: ' + error);
     }
@@ -234,6 +242,21 @@ export default function useWebRTC(roomID) {
 
     peerConnection.ontrack = ({ streams: [remoteStream] }) => {
       tracksNumber++;
+
+      setRemoteStreams(prevStreams => {
+        const streamExists = prevStreams.some(stream => stream.peerID === peerID);
+        if (streamExists) {
+          return prevStreams;
+        }
+
+        return [
+          ...prevStreams,
+          {
+            peerID,
+            remoteStream,
+          },
+        ];
+      });
 
       if (tracksNumber === 2) {
         addNewClient(peerID, roles[peerID], () => {
@@ -393,6 +416,17 @@ export default function useWebRTC(roomID) {
     peerMediaElements.current[id] = node;
   }, []);
 
+  const addMockClient = () => {
+    const mockClientId = Math.random();
+    addNewClient(mockClientId, 'user', () => {
+      console.log(mockClientId);
+    });
+  };
+
+  const getClients = () => {
+    console.log(clients);
+  };
+
   return {
     clients,
     provideMediaRef,
@@ -403,6 +437,9 @@ export default function useWebRTC(roomID) {
     changeCamera,
     changeMicrophone,
     muteAll,
+    addMockClient,
+    getClients,
+    remoteStreams,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   };
