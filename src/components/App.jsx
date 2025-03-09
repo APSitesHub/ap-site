@@ -504,17 +504,17 @@ const NotFound = lazy(() =>
   import(/* webpackChunkName: "Not Found" */ '../pages/NotFound/NotFound')
 );
 
-const StreamToZoomRedirecter = lazy(() =>
-  import(
-    /* webpackChunkName: "Stream to Zoom Redirecter" */ '../pages/Streams/StreamToZoomRedirecter/StreamToZoomRedirecter'
-  )
-);
+// const StreamToZoomRedirecter = lazy(() =>
+//   import(
+//     /* webpackChunkName: "Stream to Zoom Redirecter" */ '../pages/Streams/StreamToZoomRedirecter/StreamToZoomRedirecter'
+//   )
+// );
 
-const StreamToZoomRedirecterKids = lazy(() =>
-  import(
-    /* webpackChunkName: "Stream Kids to Zoom Redirecter" */ '../pages/StreamsKids/StreamToZoomRedirecterKids/StreamToZoomRedirecterKids'
-  )
-);
+// const StreamToZoomRedirecterKids = lazy(() =>
+//   import(
+//     /* webpackChunkName: "Stream Kids to Zoom Redirecter" */ '../pages/StreamsKids/StreamToZoomRedirecterKids/StreamToZoomRedirecterKids'
+//   )
+// );
 
 export const App = () => {
   // eslint-disable-next-line
@@ -581,27 +581,22 @@ export const App = () => {
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
-            {/* <Route path="a0" element={<StreamA0 />} noindex={true} /> */}
-            <Route path="a0" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="a0" element={<StreamA0 />} noindex={true} />
             <Route path="a0sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="a0-chat" element={<WindowedChat />} noindex={true} />
             <Route path="a0_2" element={<StreamA02 />} noindex={true} />
             <Route path="a0_2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="a0_2-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="a1" element={<StreamA1 />} noindex={true} /> */}
-            <Route path="a1" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="a1" element={<StreamA1 />} noindex={true} />
             <Route path="a1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="a1-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="a2" element={<StreamA2 />} noindex={true} /> */}
-            <Route path="a2" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="a2" element={<StreamA2 />} noindex={true} />
             <Route path="a2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="a2-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="b1" element={<StreamB1 />} noindex={true} /> */}
-            <Route path="b1" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="b1" element={<StreamB1 />} noindex={true} />
             <Route path="b1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="b1-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="b2" element={<StreamB2 />} noindex={true} /> */}
-            <Route path="b2" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="b2" element={<StreamB2 />} noindex={true} />
             <Route path="b2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="b2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="c1" element={<StreamC1 />} noindex={true} />
@@ -611,27 +606,22 @@ export const App = () => {
             <Route path="a1free-chat" element={<WindowedChat />} noindex={true} />
             <Route path="a2free" element={<StreamA2Free />} noindex={true} />
             <Route path="a2free-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="deutscha0" element={<StreamDeutschA0 />} noindex={true} /> */}
-            <Route path="deutscha0" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="deutscha0" element={<StreamDeutschA0 />} noindex={true} />
             <Route path="dea0sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutscha0-chat" element={<WindowedChat />} noindex={true} />
             <Route path="deutscha0_2" element={<StreamDeutschA02 />} noindex={true} />
             <Route path="dea0_2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutscha0_2-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="deutsch" element={<StreamDeutsch />} noindex={true} /> */}
-            <Route path="deutsch" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="deutsch" element={<StreamDeutsch />} noindex={true} />
             <Route path="dea1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutsch-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="deutscha2" element={<StreamDeutschA2 />} noindex={true} /> */}
-            <Route path="deutscha2" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="deutscha2" element={<StreamDeutschA2 />} noindex={true} />
             <Route path="dea2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutscha2-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="deutschb1" element={<StreamDeutschB1 />} noindex={true} /> */}
-            <Route path="deutschb1" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="deutschb1" element={<StreamDeutschB1 />} noindex={true} />
             <Route path="deb1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutschb1-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="deutschb2" element={<StreamDeutschB2 />} noindex={true} />  */}
-            <Route path="deutschb2" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="deutschb2" element={<StreamDeutschB2 />} noindex={true} />
             <Route path="deb2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deb2_1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deb2_2sc" element={<StreamSpeakingClub />} noindex={true} />
@@ -651,20 +641,16 @@ export const App = () => {
             <Route path="polskia0-chat" element={<WindowedChat />} noindex={true} />
             <Route path="polskia0_2" element={<StreamPolskiA02 />} noindex={true} />
             <Route path="polskia0_2-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="polski" element={<StreamPolski />} noindex={true} /> */}
-            <Route path="polski" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="polski" element={<StreamPolski />} noindex={true} />
             <Route path="pla1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polski-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="polskia2" element={<StreamPolskiA2 />} noindex={true} /> */}
-            <Route path="polskia2" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="polskia2" element={<StreamPolskiA2 />} noindex={true} />
             <Route path="pla2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polskia2-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="polskib1" element={<StreamPolskiB1 />} noindex={true} /> */}
-            <Route path="polskib1" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="polskib1" element={<StreamPolskiB1 />} noindex={true} />
             <Route path="plb1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polskib1-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="polskib2" element={<StreamPolskiB2 />} noindex={true} /> */}
-            <Route path="polskib2" element={<StreamToZoomRedirecter />} noindex={true} />
+            <Route path="polskib2" element={<StreamPolskiB2 />} noindex={true} />
             <Route path="plb2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polskib2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="plc1sc" element={<StreamSpeakingClub />} noindex={true} />
@@ -797,27 +783,22 @@ export const App = () => {
             <Route path="mid" element={<KidsMID />} noindex={true} />
             <Route path="midsc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="mid-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="high" element={<KidsHIGH />} noindex={true} /> */}
-            <Route path="high" element={<StreamToZoomRedirecterKids />} noindex={true} />
+            <Route path="high" element={<KidsHIGH />} noindex={true} />
             <Route path="highsc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="high-chat" element={<WindowedChat />} noindex={true} />
             <Route path="a0" element={<KidsA0 />} noindex={true} />
             <Route path="a0sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="a0-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="a1" element={<KidsA1 />} noindex={true} /> */}
-            <Route path="a1" element={<StreamToZoomRedirecterKids />} noindex={true} />
+            <Route path="a1" element={<KidsA1 />} noindex={true} />
             <Route path="a1sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="a1-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="a2" element={<KidsA2 />} noindex={true} /> */}
-            <Route path="a2" element={<StreamToZoomRedirecterKids />} noindex={true} />
+            <Route path="a2" element={<KidsA2 />} noindex={true} />
             <Route path="a2sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="a2-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="b1" element={<KidsB1 />} noindex={true} /> */}
-            <Route path="b1" element={<StreamToZoomRedirecterKids />} noindex={true} />
+            <Route path="b1" element={<KidsB1 />} noindex={true} />
             <Route path="b1sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="b1-chat" element={<WindowedChat />} noindex={true} />
-            {/* <Route path="b2" element={<KidsB2 />} noindex={true} /> */}
-            <Route path="b2" element={<StreamToZoomRedirecterKids />} noindex={true} />
+            <Route path="b2" element={<KidsB2 />} noindex={true} />
             <Route path="b2sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="b2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="c1" element={<KidsC1 />} noindex={true} />
@@ -843,8 +824,7 @@ export const App = () => {
             <Route path="dea1" element={<KidsDeA1 />} noindex={true} />
             <Route path="dea1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="dea1sc" element={<StreamSpeakingClubKids />} noindex={true} />
-            {/* <Route path="dea2" element={<KidsDeA2 />} noindex={true} /> */}
-            <Route path="dea2" element={<StreamToZoomRedirecterKids />} noindex={true} />
+            <Route path="dea2" element={<KidsDeA2 />} noindex={true} />
             <Route path="dea2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="dea2sc" element={<StreamSpeakingClubKids />} noindex={true} />
             <Route path="deb1" element={<KidsDeB1 />} noindex={true} />
