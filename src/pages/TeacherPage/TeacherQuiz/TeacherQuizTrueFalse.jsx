@@ -5,8 +5,6 @@ import { TeacherQuizContainer } from './TeacherQuizContainer';
 
 export const TeacherQuizTrueFalse = ({
   page,
-  isQuizInputOpen,
-  isQuizOptionsOpen,
   isQuizTrueFalseOpen,
   closeInputs,
 }) => {
@@ -42,18 +40,17 @@ export const TeacherQuizTrueFalse = ({
 
   return (
     <>
-      <TeacherInputBox className={isQuizTrueFalseOpen ? 'shown' : 'hidden'}>
-        <TeacherQuizContainer
-          page={page}
-          quizType={quizType}
-          socket={socketRef.current}
-          answers={answers}
-          closeInputs={closeInputs}
-          isQuizInputOpen={isQuizInputOpen}
-          isQuizOptionsOpen={isQuizOptionsOpen}
-          isQuizTrueFalseOpen={isQuizTrueFalseOpen} 
-        />
-      </TeacherInputBox>
+      {isQuizTrueFalseOpen && (
+        <TeacherInputBox className={isQuizTrueFalseOpen ? 'shown' : 'hidden'}>
+          <TeacherQuizContainer
+            page={page}
+            quizType={quizType}
+            socket={socketRef.current}
+            answers={answers}
+            closeInputs={closeInputs}
+          />
+        </TeacherInputBox>
+      )}
     </>
   );
 };

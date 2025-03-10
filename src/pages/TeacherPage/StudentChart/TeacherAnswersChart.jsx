@@ -11,13 +11,22 @@ import {
   TooltipIdText,
   TooltipValueText,
 } from './StudentChart.styled';
+import { useEffect } from 'react';
+import { QuestionHeader } from '../TeacherPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
+export const TeacherAnswersChart = ({ answers, quizType, isQuizActive }) => {
   const data = Object.keys(answers).map(key => {
     return { answer: key, [key]: answers[key] };
   });
+
+  useEffect(() => {
+    return () => {
+      //eslint-disable-next-line
+      answers = [];
+    };
+  }, []);
 
   // simple data array example
   // const data = [
@@ -38,7 +47,12 @@ export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
       margin={{ top: 30, right: 30, bottom: 20, left: 30 }}
       padding={0}
       colors={{ scheme: 'dark2' }}
-      axisLeft={{ tickValues: Math.max(...Object.values(answers).map(value => value)) < 15 ? Math.max(...Object.values(answers).map(value => value)) : 15}}
+      axisLeft={{
+        tickValues:
+          Math.max(...Object.values(answers).map(value => value)) < 15
+            ? Math.max(...Object.values(answers).map(value => value))
+            : 15,
+      }}
       axisBottom={true}
       labelPosition="end"
       labelOffset={8}
@@ -60,7 +74,13 @@ export const TeacherAnswersChart = ({ answers, isQuizActive }) => {
   return (
     <>
       <TeacherChartArea>
-        {/* <QuestionHeader id="focus">Jakie są główne zalety maszyn CNC?</QuestionHeader> */}
+        <QuestionHeader>
+          {quizType === 'input'
+            ? 'Text'
+            : quizType === 'options'
+            ? 'A - B - C'
+            : 'True - False'}
+        </QuestionHeader>
 
         {!isQuizActive && !data[0] && (
           <ChartPlaceholder>

@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import {
   StudentQuizBox,
   StudentQuizBoxInput,
+  StudentQuizBoxInputNote,
   StudentQuizForm,
   StudentQuizSubmitBtn,
 } from './StudentInput.styled';
@@ -8,13 +10,21 @@ import {
 export const StudentInput = ({ isInputOpen, socket, page, toggleQuiz, currentUser }) => {
   console.log(4, 'studentinputsocket', socket);
   console.log(10, 'user', currentUser);
-  
+  const [isValid, setIsValid] = useState(true);
 
   const handleSubmit = e => {
+    if (!document.querySelector('#answer_input').value) {
+      setIsValid(false);
+      return;
+    }
     e.preventDefault();
     console.log(document.querySelector('#answer_input').value);
     socket.emit('answer:given', {
-      answer: document.querySelector('#answer_input').value.trim().trimEnd().toLowerCase(),
+      answer: document
+        .querySelector('#answer_input')
+        .value.trim()
+        .trimEnd()
+        .toLowerCase(),
       page: page,
     });
     toggleQuiz();
@@ -76,8 +86,15 @@ export const StudentInput = ({ isInputOpen, socket, page, toggleQuiz, currentUse
           type="text"
           id="answer_input"
           placeholder="Write your answer"
+          required
+          onChange={e => {            
+            return e.target.value && setIsValid(true);
+          }}
         />
         <StudentQuizSubmitBtn onClick={e => handleSubmit(e)}>Send</StudentQuizSubmitBtn>
+        {!isValid && (
+          <StudentQuizBoxInputNote>Answer is required</StudentQuizBoxInputNote>
+        )}
       </StudentQuizForm>
     </StudentQuizBox>
   );

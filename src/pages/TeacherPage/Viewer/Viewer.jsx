@@ -14,11 +14,6 @@ export const Viewer = ({ isViewerOpen, isOpenedLast, sectionWidth, page }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [collection, setCollection] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  console.log(collection);
-  console.log(page);
-  collection &&
-    collection.length &&
-    collection.map(coll => console.log(coll[page]));
 
   const supportBoxStylesHandler = () => {
     return {

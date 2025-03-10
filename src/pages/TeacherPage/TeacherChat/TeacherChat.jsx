@@ -31,7 +31,6 @@ export const TeacherChat = ({ page }) => {
     setIsChatOpen(!isChatOpen);
   };
 
-  console.log(33, page);
   const getMessagesByPage = page =>
     page.includes('dekidsfree')
       ? '/streams-kids/' + page.replace('kids', 'a1')
@@ -52,7 +51,6 @@ export const TeacherChat = ({ page }) => {
       : '/streams/' + page;
 
   const room = getMessagesByPage(page);
-  console.log(46, room);
 
   const checkLogin = e => {
     const name = localStorage.getItem('userName');
@@ -68,7 +66,7 @@ export const TeacherChat = ({ page }) => {
       setIsLoggedToChat(isLogged => (isLogged = true));
     }
   };
-  console.log('counter', counter);
+
   const handleSubmit = e => {
     e.preventDefault();
     const idGen = nanoid(8);

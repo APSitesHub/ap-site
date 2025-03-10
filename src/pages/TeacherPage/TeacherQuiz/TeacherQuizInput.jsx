@@ -6,8 +6,6 @@ import { TeacherQuizContainer } from './TeacherQuizContainer';
 export const TeacherQuizInput = ({
   page,
   isQuizInputOpen,
-  isQuizOptionsOpen,
-  isQuizTrueFalseOpen,
   closeInputs,
 }) => {
   const [answers, setAnswers] = useState([]);
@@ -35,25 +33,25 @@ export const TeacherQuizInput = ({
 
     return () => {
       socketRef.current.off('connected');
-      socketRef.current.off('message');
+      socketRef.current.off('answer');
+      socketRef.current.off('answer:get');
       socketRef.current.disconnect();
     };
   }, []);
 
   return (
     <>
-      <TeacherInputBox className={isQuizInputOpen ? 'shown' : 'hidden'}>
-        <TeacherQuizContainer
-          page={page}
-          quizType={quizType}
-          socket={socketRef.current}
-          answers={answers}
-          closeInputs={closeInputs}
-          isQuizInputOpen={isQuizInputOpen}
-          isQuizOptionsOpen={isQuizOptionsOpen}
-          isQuizTrueFalseOpen={isQuizTrueFalseOpen} 
-        />
-      </TeacherInputBox>
+      {isQuizInputOpen && (
+        <TeacherInputBox className={isQuizInputOpen ? 'shown' : 'hidden'}>
+          <TeacherQuizContainer
+            page={page}
+            quizType={quizType}
+            socket={socketRef.current}
+            answers={answers}
+            closeInputs={closeInputs}
+          />
+        </TeacherInputBox>
+      )}
     </>
   );
 };

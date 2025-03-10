@@ -5,9 +5,7 @@ import { TeacherQuizContainer } from './TeacherQuizContainer';
 
 export const TeacherQuizOptions = ({
   page,
-  isQuizInputOpen,
   isQuizOptionsOpen,
-  isQuizTrueFalseOpen,
   closeInputs,
 }) => {
   const [answers, setAnswers] = useState([]);
@@ -42,18 +40,17 @@ export const TeacherQuizOptions = ({
 
   return (
     <>
-      <TeacherInputBox className={isQuizOptionsOpen ? 'shown' : 'hidden'}>
-        <TeacherQuizContainer
-          page={page}
-          quizType={quizType}
-          socket={socketRef.current}
-          answers={answers}
-          closeInputs={closeInputs}
-          isQuizInputOpen={isQuizInputOpen}
-          isQuizOptionsOpen={isQuizOptionsOpen}
-          isQuizTrueFalseOpen={isQuizTrueFalseOpen}
-        />
-      </TeacherInputBox>
+      {isQuizOptionsOpen && (
+        <TeacherInputBox className={isQuizOptionsOpen ? 'shown' : 'hidden'}>
+          <TeacherQuizContainer
+            page={page}
+            quizType={quizType}
+            socket={socketRef.current}
+            answers={answers}
+            closeInputs={closeInputs}
+          />
+        </TeacherInputBox>
+      )}
     </>
   );
 };

@@ -61,6 +61,11 @@ export const StudentQuizSubmitBtn = styled.button`
     radial-gradient(70% 80% at 113.25% 74%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%), #000;
 `;
 
+export const StudentQuizBoxInputNote = styled.p`
+  color: red;
+  font-size: 14px;
+`;
+
 export const StudentQuizSubmitBtnOptions = styled(StudentQuizSubmitBtn)`
   background: none;
   color: #000;
