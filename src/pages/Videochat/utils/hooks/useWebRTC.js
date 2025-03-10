@@ -1,5 +1,4 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
-import freeice from 'freeice';
 import useStateWithCallback from './useStateWithCallback';
 import socket from '../socket';
 import ACTIONS from '../socket/actions';
@@ -236,7 +235,16 @@ export default function useWebRTC(roomID) {
     }
 
     const peerConnection = new RTCPeerConnection({
-      iceServers: freeice(),
+      iceServers: [
+        {
+          urls: "stun:mcu.ap.education:5349"
+        },
+        {
+          urls: "turn:mcu.ap.education:5349",
+          username: "mcuuser",
+          credential: "ExQGw3dhYfrY6PFj7FsaB92zJl"
+        }
+      ],
     });
 
     peerConnections.current[peerID] = peerConnection;
