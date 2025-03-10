@@ -203,15 +203,50 @@ export default function useWebRTC(roomID) {
         video: defaultCamera
           ? {
               deviceId: { exact: defaultCamera.deviceId },
-              width: localRole === 'admin' ? 1920 : 320,
-              height: localRole === 'admin' ? 1080 : 180,
-              frameRate: { ideal: 30 },
+              width: { min: 1280, ideal: 1920 },
+              height: { min: 720, ideal: 1080 },
+              frameRate: { min: 30, ideal: 30 },
             }
           : {
-              width: localRole === 'admin' ? 1920 : 320,
-              height: localRole === 'admin' ? 1080 : 180,
+              width: { min: 1280, ideal: 1920 },
+              height: { min: 720, ideal: 1080 },
+              frameRate: { min: 30, ideal: 30 },
             },
       });
+
+      // if (localRole === 'admin') {
+      //   localMediaStream.current = await navigator.mediaDevices.getUserMedia({
+      //     audio: defaultMicrophone ? { deviceId: defaultMicrophone.deviceId } : true,
+      //     video: defaultCamera
+      //       ? {
+      //           deviceId: { exact: defaultCamera.deviceId },
+      //           width: { min: 1280, ideal: 1920 },
+      //           height: { min: 720, ideal: 1080 },
+      //           frameRate: { min: 30, ideal: 30 },
+      //         }
+      //       : {
+      //           width: { min: 1280, ideal: 1920 },
+      //           height: { min: 720, ideal: 1080 },
+      //           frameRate: { min: 30, ideal: 30 },
+      //         },
+      //   });
+      // } else {
+      //   localMediaStream.current = await navigator.mediaDevices.getUserMedia({
+      //     audio: defaultMicrophone ? { deviceId: defaultMicrophone.deviceId } : true,
+      //     video: defaultCamera
+      //       ? {
+      //           deviceId: { exact: defaultCamera.deviceId },
+      //           width: { min: 640, ideal: 854 },
+      //           height: { min: 360, ideal: 480 },
+      //           frameRate: { ideal: 30 },
+      //         }
+      //       : {
+      //           width: { min: 640, ideal: 854 },
+      //           height: { min: 360, ideal: 480 },
+      //           frameRate: { ideal: 30 },
+      //         },
+      //   });
+      // }
 
       setIsPremissionAllowed(true);
     } catch (error) {
