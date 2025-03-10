@@ -107,7 +107,9 @@ export const UserVideo = styled.div`
         top: 24px;
         border: 1px solid #09c6cc;
         width: 180px;
+        max-height: 164px;
         height: auto;
+        object-fit: contain;
       }
     `}
 `;

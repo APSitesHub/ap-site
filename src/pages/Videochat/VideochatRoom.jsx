@@ -64,7 +64,6 @@ function VideochatRoom() {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
-    isPremissionAllowed,
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
@@ -146,7 +145,7 @@ function VideochatRoom() {
     if (localRole === 'admin') {
       navigate('../../videochat');
     } else {
-      navigate('../../call-end');
+      navigate('../../end-call');
     }
   };
 
@@ -465,6 +464,7 @@ function VideochatRoom() {
                               autoPlay
                               playsInline
                               muted={clientId === LOCAL_VIDEO}
+                              style={{ objectFit: 'contain', maxWidth: 'inherit', maxHeight: 'inherit' }}
                             />
                             {debug && (
                               <div style={{ position: 'absolute', color: 'white' }}>

@@ -448,6 +448,9 @@ const Videochat = lazy(() =>
 const VideochatRoom = lazy(() =>
   import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom')
 );
+const EndCall = lazy(() =>
+  import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/EndCall')
+);
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
 );
@@ -574,6 +577,7 @@ export const App = () => {
           <Route path="teacher-ap" element={<TeacherAP />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
           <Route path="room/:slug/:id" element={<VideochatRoom />} noindex={true} />
+          <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />
