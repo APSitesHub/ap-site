@@ -15,6 +15,7 @@ export default function useWebRTC(roomID) {
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState([]);
+  const [isPremissionAllowed, setIsPremissionAllowed] = useState(null);
 
   const determineRole = useCallback(async () => {
     if (!getToken()) {
@@ -214,87 +215,124 @@ export default function useWebRTC(roomID) {
             },
       });
 
-      if (localRole) {
-        addNewClient(LOCAL_VIDEO, localRole, () => {
-          const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
-          if (localVideoElement) {
-            localVideoElement.volume = 0;
-            localVideoElement.srcObject = localMediaStream.current;
-          }
-        });
-
-        socket.emit(ACTIONS.JOIN, { room: roomID, role: localRole });
-      }
+      setIsPremissionAllowed(true);
     } catch (error) {
       console.error('Error getting userMedia:', error);
+      if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+        setIsPremissionAllowed(false);
+        const emptyStream = new MediaStream();
+        localMediaStream.current = emptyStream;
+
+        console.log('emptystream');
+        console.log(localMediaStream.current);
+      }
+    }
+
+    if (localRole) {
+      console.log(123);
+
+      addNewClient(LOCAL_VIDEO, localRole, () => {
+        console.log('addnewCl');
+
+        const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
+        if (localVideoElement) {
+          localVideoElement.volume = 0;
+          localVideoElement.srcObject = localMediaStream.current;
+        }
+      });
+
+      socket.emit(ACTIONS.JOIN, { room: roomID, role: localRole });
     }
   }
 
-  const handleNewPeer = useCallback(async ({ peerID, roles, createOffer }) => {
-    if (peerConnections.current[peerID]) {
-      return console.warn(`Already connected to peer ${peerID}`);
-    }
+  const handleNewPeer = useCallback(
+    async ({ peerID, roles, createOffer }) => {
+      console.log('new Peer');
+      console.log({ peerID, roles, createOffer });
 
-    const peerConnection = new RTCPeerConnection({
-      iceServers: freeice(),
-    });
-
-    peerConnections.current[peerID] = peerConnection;
-
-    peerConnection.onicecandidate = event => {
-      if (event.candidate) {
-        socket.emit(ACTIONS.RELAY_ICE, {
-          peerID,
-          iceCandidate: event.candidate,
-        });
+      if (peerConnections.current[peerID]) {
+        return console.warn(`Already connected to peer ${peerID}`);
       }
-    };
 
-    let tracksNumber = 0;
-
-    peerConnection.ontrack = ({ streams: [remoteStream] }) => {
-      tracksNumber++;
-
-      setRemoteStreams(prevStreams => {
-        const streamExists = prevStreams.some(stream => stream.peerID === peerID);
-        if (streamExists) {
-          return prevStreams;
-        }
-
-        return [
-          ...prevStreams,
+      const peerConnection = new RTCPeerConnection({
+        iceServers: [
           {
-            peerID,
-            remoteStream,
+            urls: "stun:mcu.ap.education:5349"
           },
-        ];
+          {
+            urls: "turn:mcu.ap.education:5349",
+            username: "mcuuser",
+            credential: "ExQGw3dhYfrY6PFj7FsaB92zJl"
+          }
+        ],
       });
 
-      if (tracksNumber === 2) {
-        addNewClient(peerID, roles[peerID], () => {
-          if (peerMediaElements.current[peerID]) {
-            peerMediaElements.current[peerID].srcObject = remoteStream;
+      peerConnections.current[peerID] = peerConnection;
+      console.log(peerConnection);
+
+      peerConnection.onicecandidate = event => {
+        console.log('onicecandidate');
+
+        if (event.candidate) {
+          socket.emit(ACTIONS.RELAY_ICE, {
+            peerID,
+            iceCandidate: event.candidate,
+          });
+        }
+      };
+
+      let tracksNumber = 0;
+
+      peerConnection.ontrack = ({ streams: [remoteStream] }) => {
+        tracksNumber++;
+
+        setRemoteStreams(prevStreams => {
+          const streamExists = prevStreams.some(stream => stream.peerID === peerID);
+          if (streamExists) {
+            return prevStreams;
           }
+
+          return [
+            ...prevStreams,
+            {
+              peerID,
+              remoteStream,
+            },
+          ];
+        });
+
+        if (tracksNumber === 2) {
+          addNewClient(peerID, roles[peerID], () => {
+            if (peerMediaElements.current[peerID]) {
+              peerMediaElements.current[peerID].srcObject = remoteStream;
+            }
+          });
+        }
+      };
+
+      // ✅ Додаємо медіа, якщо є доступ
+      if (localMediaStream.current && localMediaStream.current.getTracks().length > 0) {
+        localMediaStream.current.getTracks().forEach(track => {
+          peerConnection.addTrack(track, localMediaStream.current);
+        });
+      } else {
+        console.warn(`Користувач ${peerID} не має медіа, створюємо пустий потік.`);
+        const emptyStream = new MediaStream();
+        peerConnection.addTrack(emptyStream);
+      }
+
+      if (createOffer) {
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+
+        socket.emit(ACTIONS.RELAY_SDP, {
+          peerID,
+          sessionDescription: offer,
         });
       }
-    };
-
-    if (localMediaStream.current) {
-      localMediaStream.current.getTracks().forEach(track => {
-        peerConnection.addTrack(track, localMediaStream.current);
-      });
-    }
-
-    if (createOffer) {
-      const offer = await peerConnection.createOffer();
-      await peerConnection.setLocalDescription(offer);
-
-      socket.emit(ACTIONS.RELAY_SDP, {
-        peerID,
-        sessionDescription: offer,
-      });
-    }
-  }, [addNewClient, isLocalCameraEnabled, isLocalMicrophoneEnabled]);
+    },
+    [addNewClient, isLocalCameraEnabled, isLocalMicrophoneEnabled]
+  );
 
   async function setRemoteMedia({ peerID, sessionDescription: remoteDescription }) {
     const peerConnection = peerConnections.current[peerID];
@@ -455,5 +493,6 @@ export default function useWebRTC(roomID) {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
+    isPremissionAllowed,
   };
 }

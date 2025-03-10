@@ -64,6 +64,7 @@ function VideochatRoom() {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
+    isPremissionAllowed,
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
@@ -333,6 +334,10 @@ function VideochatRoom() {
     }
   };
 
+  const test = () => {
+    console.log(clients);
+  };
+
   return (
     <>
       {clients.find(({ role }) => role === 'admin') ? (
@@ -538,7 +543,6 @@ function VideochatRoom() {
                 />
               </>
             )}
-
           </PageContainer>
           <ChatBox
             ref={chatEl}
