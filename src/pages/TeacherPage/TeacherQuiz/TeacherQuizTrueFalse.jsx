@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
-import { TeacherInputBox } from './TeacherChat.styled';
+import { TeacherInputBox } from './TeacherQuiz.styled';
 import { TeacherQuizContainer } from './TeacherQuizContainer';
 
-export const TeacherQuizTrueFalse = ({ page, isQuizTrueFalseOpen, closeInputs }) => {
+export const TeacherQuizTrueFalse = ({
+  page,
+  isQuizInputOpen,
+  isQuizOptionsOpen,
+  isQuizTrueFalseOpen,
+  closeInputs,
+}) => {
   const [answers, setAnswers] = useState([]);
   const quizType = 'trueFalse';
 
@@ -43,6 +49,9 @@ export const TeacherQuizTrueFalse = ({ page, isQuizTrueFalseOpen, closeInputs })
           socket={socketRef.current}
           answers={answers}
           closeInputs={closeInputs}
+          isQuizInputOpen={isQuizInputOpen}
+          isQuizOptionsOpen={isQuizOptionsOpen}
+          isQuizTrueFalseOpen={isQuizTrueFalseOpen} 
         />
       </TeacherInputBox>
     </>

@@ -12,7 +12,7 @@ import { Warehouse } from './Farm/Warehouse';
 import { HostKahoots } from './HostKahoots/HostKahoots';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
-import { TeacherQuizInput } from './TeacherInput/TeacherQuizInput';
+import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,

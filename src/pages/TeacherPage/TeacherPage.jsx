@@ -9,9 +9,9 @@ import { useLocation } from 'react-router-dom';
 import { HostKahoots } from './HostKahoots/HostKahoots';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
-import { TeacherQuizInput } from './TeacherInput/TeacherQuizInput';
-import { TeacherQuizOptions } from './TeacherInput/TeacherQuizOptions';
-import { TeacherQuizTrueFalse } from './TeacherInput/TeacherQuizTrueFalse';
+import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
+import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
+import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
@@ -154,6 +154,8 @@ const TeacherPage = () => {
     isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
+      setIsQuizOptionsOpen(false);
+      setIsQuizTrueFalseOpen(false);
   };
   const toggleQuizOptions = () => {
     !isOpenedLast
@@ -163,6 +165,8 @@ const TeacherPage = () => {
     isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
+      setIsQuizInputOpen(false);
+      setIsQuizTrueFalseOpen(false);
   };
   const toggleQuizTrueFalse = () => {
     !isOpenedLast
@@ -172,6 +176,8 @@ const TeacherPage = () => {
     isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
+      setIsQuizInputOpen(false);
+      setIsQuizOptionsOpen(false);
   };
   const toggleButtonBox = () => {
     setIsButtonBoxOpen(isOpen => !isOpen);
@@ -239,17 +245,23 @@ const TeacherPage = () => {
       <TeacherQuizInput
         page={page}
         isQuizInputOpen={isQuizInputOpen}
+        isQuizOptionsOpen={isQuizOptionsOpen}
+        isQuizTrueFalseOpen={isQuizTrueFalseOpen}
         closeInputs={closeInputs}
         isOpenedLast={isOpenedLast}
       />
       <TeacherQuizOptions
         page={page}
+        isQuizInputOpen={isQuizInputOpen}
         isQuizOptionsOpen={isQuizOptionsOpen}
+        isQuizTrueFalseOpen={isQuizTrueFalseOpen}
         closeInputs={closeInputs}
         isOpenedLast={isOpenedLast}
       />
       <TeacherQuizTrueFalse
         page={page}
+        isQuizInputOpen={isQuizInputOpen}
+        isQuizOptionsOpen={isQuizOptionsOpen}
         isQuizTrueFalseOpen={isQuizTrueFalseOpen}
         closeInputs={closeInputs}
         isOpenedLast={isOpenedLast}
