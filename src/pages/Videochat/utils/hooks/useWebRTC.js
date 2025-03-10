@@ -65,8 +65,6 @@ export default function useWebRTC(roomID) {
 
       if (videoTrack) {
         enable = off === true ? false : !videoTrack.enabled;
-        console.log('ENABLED: ', enable);
-
         videoTrack.enabled = enable;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
@@ -192,7 +190,7 @@ export default function useWebRTC(roomID) {
     try {
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: { width: 1280, height: 720 },
+        video: true,
       });
 
       const devices = await navigator.mediaDevices.enumerateDevices();
@@ -208,6 +206,7 @@ export default function useWebRTC(roomID) {
               deviceId: { exact: defaultCamera.deviceId },
               width: localRole === 'admin' ? 1920 : 320,
               height: localRole === 'admin' ? 1080 : 180,
+              frameRate: { ideal: 30 },
             }
           : {
               width: localRole === 'admin' ? 1920 : 320,
@@ -222,18 +221,11 @@ export default function useWebRTC(roomID) {
         setIsPremissionAllowed(false);
         const emptyStream = new MediaStream();
         localMediaStream.current = emptyStream;
-
-        console.log('emptystream');
-        console.log(localMediaStream.current);
       }
     }
 
     if (localRole) {
-      console.log(123);
-
       addNewClient(LOCAL_VIDEO, localRole, () => {
-        console.log('addnewCl');
-
         const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
         if (localVideoElement) {
           localVideoElement.volume = 0;
@@ -247,9 +239,6 @@ export default function useWebRTC(roomID) {
 
   const handleNewPeer = useCallback(
     async ({ peerID, roles, createOffer }) => {
-      console.log('new Peer');
-      console.log({ peerID, roles, createOffer });
-
       if (peerConnections.current[peerID]) {
         return console.warn(`Already connected to peer ${peerID}`);
       }
@@ -257,22 +246,19 @@ export default function useWebRTC(roomID) {
       const peerConnection = new RTCPeerConnection({
         iceServers: [
           {
-            urls: "stun:mcu.ap.education:5349"
+            urls: 'stun:mcu.ap.education:5349',
           },
           {
-            urls: "turn:mcu.ap.education:5349",
-            username: "mcuuser",
-            credential: "ExQGw3dhYfrY6PFj7FsaB92zJl"
-          }
+            urls: 'turn:mcu.ap.education:5349',
+            username: 'mcuuser',
+            credential: 'ExQGw3dhYfrY6PFj7FsaB92zJl',
+          },
         ],
       });
 
       peerConnections.current[peerID] = peerConnection;
-      console.log(peerConnection);
 
       peerConnection.onicecandidate = event => {
-        console.log('onicecandidate');
-
         if (event.candidate) {
           socket.emit(ACTIONS.RELAY_ICE, {
             peerID,
@@ -310,15 +296,57 @@ export default function useWebRTC(roomID) {
         }
       };
 
-      // ✅ Додаємо медіа, якщо є доступ
+      let adminKey = '';
+
+      for (const [key, value] of Object.entries(roles)) {
+        if (value === 'admin') {
+          adminKey = key;
+          break;
+        }
+      }
+
       if (localMediaStream.current && localMediaStream.current.getTracks().length > 0) {
-        localMediaStream.current.getTracks().forEach(track => {
-          peerConnection.addTrack(track, localMediaStream.current);
-        });
+        if (adminKey === peerID) {
+          localMediaStream.current.getTracks().forEach(track => {
+            const sender = peerConnection.addTrack(track, localMediaStream.current);
+
+            const params = sender.getParameters();
+
+            if (params.encodings && params.encodings.length > 0) {
+              params.encodings[0].maxBitrate = 2000000; // 2 MB/s
+              params.encodings[0].maxFramerate = 30;
+              params.encodings[0].priority = 'high';
+              params.encodings[0].networkPriority = 'high';
+              sender.setParameters(params);
+            }
+          });
+        } else {
+          localMediaStream.current.getTracks().forEach(track => {
+            peerConnection.addTrack(track, localMediaStream.current);
+          });
+        }
       } else {
-        console.warn(`Користувач ${peerID} не має медіа, створюємо пустий потік.`);
-        const emptyStream = new MediaStream();
-        peerConnection.addTrack(emptyStream);
+        const audioContext = new AudioContext();
+        const oscillator = audioContext.createOscillator();
+        const dest = audioContext.createMediaStreamDestination();
+        oscillator.connect(dest);
+        oscillator.start();
+        const fakeAudioTrack = dest.stream.getAudioTracks()[0];
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 4;
+        canvas.height = 3;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const fakeVideoStream = canvas.captureStream(1);
+        const fakeVideoTrack = fakeVideoStream.getVideoTracks()[0];
+
+        const combinedStream = new MediaStream();
+        combinedStream.addTrack(fakeAudioTrack);
+        combinedStream.addTrack(fakeVideoTrack);
+        peerConnection.addStream(combinedStream);
       }
 
       if (createOffer) {

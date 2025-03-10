@@ -334,10 +334,6 @@ function VideochatRoom() {
     }
   };
 
-  const test = () => {
-    console.log(clients);
-  };
-
   return (
     <>
       {clients.find(({ role }) => role === 'admin') ? (
