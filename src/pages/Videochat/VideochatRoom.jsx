@@ -64,6 +64,7 @@ function VideochatRoom() {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
+    isPremissionAllowed,
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
@@ -538,7 +539,6 @@ function VideochatRoom() {
                 />
               </>
             )}
-
           </PageContainer>
           <ChatBox
             ref={chatEl}

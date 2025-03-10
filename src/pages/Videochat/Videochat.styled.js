@@ -44,10 +44,6 @@ export const MainVideoContainer = styled.div`
   @media (max-width: 1024px) {
     margin: 0;
   }
-
-  @media (max-width: 768px) {
-    margin: auto;
-  }
 `;
 
 export const MainVideo = styled.video`
@@ -92,6 +88,7 @@ export const UserVideo = styled.div`
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
   z-index: 1;
   min-width: 164px;
+  max-height: 164px;
 
   ${({ $isUserVideo }) =>
     !$isUserVideo &&

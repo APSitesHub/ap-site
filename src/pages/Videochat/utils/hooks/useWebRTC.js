@@ -14,6 +14,7 @@ export default function useWebRTC(roomID) {
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState([]);
+  const [isPremissionAllowed, setIsPremissionAllowed] = useState(null);
 
   const determineRole = useCallback(async () => {
     if (!getToken()) {
@@ -63,8 +64,6 @@ export default function useWebRTC(roomID) {
 
       if (videoTrack) {
         enable = off === true ? false : !videoTrack.enabled;
-        console.log('ENABLED: ', enable);
-
         videoTrack.enabled = enable;
 
         Object.entries(peerConnections.current).forEach(([id, targetObj]) => {
@@ -190,7 +189,7 @@ export default function useWebRTC(roomID) {
     try {
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: { width: 1280, height: 720 },
+        video: true,
       });
 
       const devices = await navigator.mediaDevices.enumerateDevices();
@@ -206,6 +205,7 @@ export default function useWebRTC(roomID) {
               deviceId: { exact: defaultCamera.deviceId },
               width: localRole === 'admin' ? 1920 : 320,
               height: localRole === 'admin' ? 1080 : 180,
+              frameRate: { ideal: 30 },
             }
           : {
               width: localRole === 'admin' ? 1920 : 320,
@@ -213,96 +213,153 @@ export default function useWebRTC(roomID) {
             },
       });
 
-      if (localRole) {
-        addNewClient(LOCAL_VIDEO, localRole, () => {
-          const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
-          if (localVideoElement) {
-            localVideoElement.volume = 0;
-            localVideoElement.srcObject = localMediaStream.current;
-          }
-        });
-
-        socket.emit(ACTIONS.JOIN, { room: roomID, role: localRole });
-      }
+      setIsPremissionAllowed(true);
     } catch (error) {
       console.error('Error getting userMedia:', error);
+      if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+        setIsPremissionAllowed(false);
+        const emptyStream = new MediaStream();
+        localMediaStream.current = emptyStream;
+      }
+    }
+
+    if (localRole) {
+      addNewClient(LOCAL_VIDEO, localRole, () => {
+        const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
+        if (localVideoElement) {
+          localVideoElement.volume = 0;
+          localVideoElement.srcObject = localMediaStream.current;
+        }
+      });
+
+      socket.emit(ACTIONS.JOIN, { room: roomID, role: localRole });
     }
   }
 
-  const handleNewPeer = useCallback(async ({ peerID, roles, createOffer }) => {
-    if (peerConnections.current[peerID]) {
-      return console.warn(`Already connected to peer ${peerID}`);
-    }
-
-    const peerConnection = new RTCPeerConnection({
-      iceServers: [
-        {
-          urls: "stun:mcu.ap.education:5349"
-        },
-        {
-          urls: "turn:mcu.ap.education:5349",
-          username: "mcuuser",
-          credential: "ExQGw3dhYfrY6PFj7FsaB92zJl"
-        }
-      ],
-    });
-
-    peerConnections.current[peerID] = peerConnection;
-
-    peerConnection.onicecandidate = event => {
-      if (event.candidate) {
-        socket.emit(ACTIONS.RELAY_ICE, {
-          peerID,
-          iceCandidate: event.candidate,
-        });
+  const handleNewPeer = useCallback(
+    async ({ peerID, roles, createOffer }) => {
+      if (peerConnections.current[peerID]) {
+        return console.warn(`Already connected to peer ${peerID}`);
       }
-    };
 
-    let tracksNumber = 0;
-
-    peerConnection.ontrack = ({ streams: [remoteStream] }) => {
-      tracksNumber++;
-
-      setRemoteStreams(prevStreams => {
-        const streamExists = prevStreams.some(stream => stream.peerID === peerID);
-        if (streamExists) {
-          return prevStreams;
-        }
-
-        return [
-          ...prevStreams,
+      const peerConnection = new RTCPeerConnection({
+        iceServers: [
           {
-            peerID,
-            remoteStream,
+            urls: 'stun:mcu.ap.education:5349',
           },
-        ];
+          {
+            urls: 'turn:mcu.ap.education:5349',
+            username: 'mcuuser',
+            credential: 'ExQGw3dhYfrY6PFj7FsaB92zJl',
+          },
+        ],
       });
 
-      if (tracksNumber === 2) {
-        addNewClient(peerID, roles[peerID], () => {
-          if (peerMediaElements.current[peerID]) {
-            peerMediaElements.current[peerID].srcObject = remoteStream;
+      peerConnections.current[peerID] = peerConnection;
+
+      peerConnection.onicecandidate = event => {
+        if (event.candidate) {
+          socket.emit(ACTIONS.RELAY_ICE, {
+            peerID,
+            iceCandidate: event.candidate,
+          });
+        }
+      };
+
+      let tracksNumber = 0;
+
+      peerConnection.ontrack = ({ streams: [remoteStream] }) => {
+        tracksNumber++;
+
+        setRemoteStreams(prevStreams => {
+          const streamExists = prevStreams.some(stream => stream.peerID === peerID);
+          if (streamExists) {
+            return prevStreams;
           }
+
+          return [
+            ...prevStreams,
+            {
+              peerID,
+              remoteStream,
+            },
+          ];
+        });
+
+        if (tracksNumber === 2) {
+          addNewClient(peerID, roles[peerID], () => {
+            if (peerMediaElements.current[peerID]) {
+              peerMediaElements.current[peerID].srcObject = remoteStream;
+            }
+          });
+        }
+      };
+
+      let adminKey = '';
+
+      for (const [key, value] of Object.entries(roles)) {
+        if (value === 'admin') {
+          adminKey = key;
+          break;
+        }
+      }
+
+      if (localMediaStream.current && localMediaStream.current.getTracks().length > 0) {
+        if (adminKey === peerID) {
+          localMediaStream.current.getTracks().forEach(track => {
+            const sender = peerConnection.addTrack(track, localMediaStream.current);
+
+            const params = sender.getParameters();
+
+            if (params.encodings && params.encodings.length > 0) {
+              params.encodings[0].maxBitrate = 2000000; // 2 MB/s
+              params.encodings[0].maxFramerate = 30;
+              params.encodings[0].priority = 'high';
+              params.encodings[0].networkPriority = 'high';
+              sender.setParameters(params);
+            }
+          });
+        } else {
+          localMediaStream.current.getTracks().forEach(track => {
+            peerConnection.addTrack(track, localMediaStream.current);
+          });
+        }
+      } else {
+        const audioContext = new AudioContext();
+        const oscillator = audioContext.createOscillator();
+        const dest = audioContext.createMediaStreamDestination();
+        oscillator.connect(dest);
+        oscillator.start();
+        const fakeAudioTrack = dest.stream.getAudioTracks()[0];
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 4;
+        canvas.height = 3;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const fakeVideoStream = canvas.captureStream(1);
+        const fakeVideoTrack = fakeVideoStream.getVideoTracks()[0];
+
+        const combinedStream = new MediaStream();
+        combinedStream.addTrack(fakeAudioTrack);
+        combinedStream.addTrack(fakeVideoTrack);
+        peerConnection.addStream(combinedStream);
+      }
+
+      if (createOffer) {
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+
+        socket.emit(ACTIONS.RELAY_SDP, {
+          peerID,
+          sessionDescription: offer,
         });
       }
-    };
-
-    if (localMediaStream.current) {
-      localMediaStream.current.getTracks().forEach(track => {
-        peerConnection.addTrack(track, localMediaStream.current);
-      });
-    }
-
-    if (createOffer) {
-      const offer = await peerConnection.createOffer();
-      await peerConnection.setLocalDescription(offer);
-
-      socket.emit(ACTIONS.RELAY_SDP, {
-        peerID,
-        sessionDescription: offer,
-      });
-    }
-  }, [addNewClient, isLocalCameraEnabled, isLocalMicrophoneEnabled]);
+    },
+    [addNewClient, isLocalCameraEnabled, isLocalMicrophoneEnabled]
+  );
 
   async function setRemoteMedia({ peerID, sessionDescription: remoteDescription }) {
     const peerConnection = peerConnections.current[peerID];
@@ -463,5 +520,6 @@ export default function useWebRTC(roomID) {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
+    isPremissionAllowed,
   };
 }
