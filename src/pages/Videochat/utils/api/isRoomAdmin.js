@@ -15,5 +15,7 @@ export const isRoomAdmin = async (roomId) => {
     return response.data.isRoomAdmin;
   } catch (error) {
     console.error('Error determining user role:', error);
+
+    return false;
   }
 };

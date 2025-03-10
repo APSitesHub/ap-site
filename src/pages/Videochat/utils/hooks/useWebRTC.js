@@ -358,7 +358,7 @@ export default function useWebRTC(roomID) {
         });
       }
     },
-    [addNewClient, isLocalCameraEnabled, isLocalMicrophoneEnabled]
+    [addNewClient]
   );
 
   async function setRemoteMedia({ peerID, sessionDescription: remoteDescription }) {
@@ -409,7 +409,7 @@ export default function useWebRTC(roomID) {
     return () => {
       socket.off(ACTIONS.ADD_PEER, handleNewPeer);
     };
-  }, [addNewClient]);
+  }, [handleNewPeer]);
 
   useEffect(() => {
     socket.on(ACTIONS.SESSION_DESCRIPTION, setRemoteMedia);
@@ -502,6 +502,8 @@ export default function useWebRTC(roomID) {
 
   const getClients = () => {
     console.log(clients);
+    console.log(isPremissionAllowed);
+    
   };
 
   return {
@@ -520,6 +522,5 @@ export default function useWebRTC(roomID) {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
-    isPremissionAllowed,
   };
 }
