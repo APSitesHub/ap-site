@@ -29,7 +29,7 @@ export default function useWebRTC(roomID) {
   }, [roomID]);
 
   const addNewClient = useCallback(
-    async (newClient, role, cb) => {
+    async (newClient, clientsData, cb) => {
       updateClients(list => {
         const exists = list.some(client => client.clientId === newClient);
         if (!exists) {
@@ -37,9 +37,9 @@ export default function useWebRTC(roomID) {
             ...list,
             {
               clientId: newClient,
-              role,
-              isMicroEnabled: true,
-              isCameraEnabled: true,
+              role: clientsData.role,
+              isMicroEnabled: clientsData.isMicroEnabled,
+              isCameraEnabled: clientsData.isCameraEnabled,
             },
           ];
         }
@@ -225,7 +225,12 @@ export default function useWebRTC(roomID) {
     }
 
     if (localRole) {
-      addNewClient(LOCAL_VIDEO, localRole, () => {
+      const localClientData = {
+        role: localRole,
+        isCameraEnabled: isLocalCameraEnabled,
+        isMicroEnabled: isLocalMicrophoneEnabled,
+      }
+      addNewClient(LOCAL_VIDEO, localClientData, () => {
         const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
         if (localVideoElement) {
           localVideoElement.volume = 0;
@@ -233,12 +238,17 @@ export default function useWebRTC(roomID) {
         }
       });
 
-      socket.emit(ACTIONS.JOIN, { room: roomID, role: localRole });
+      socket.emit(ACTIONS.JOIN, {
+        room: roomID,
+        role: localRole,
+        isCameraEnabled: isLocalCameraEnabled,
+        isMicroEnabled: isLocalMicrophoneEnabled,
+      });
     }
   }
 
   const handleNewPeer = useCallback(
-    async ({ peerID, roles, createOffer }) => {
+    async ({ peerID, clients: clientsData, createOffer }) => {
       if (peerConnections.current[peerID]) {
         return console.warn(`Already connected to peer ${peerID}`);
       }
@@ -288,7 +298,7 @@ export default function useWebRTC(roomID) {
         });
 
         if (tracksNumber === 2) {
-          addNewClient(peerID, roles[peerID], () => {
+          addNewClient(peerID, clientsData[peerID], () => {
             if (peerMediaElements.current[peerID]) {
               peerMediaElements.current[peerID].srcObject = remoteStream;
             }
@@ -298,7 +308,7 @@ export default function useWebRTC(roomID) {
 
       let adminKey = '';
 
-      for (const [key, value] of Object.entries(roles)) {
+      for (const [key, value] of Object.entries(clientsData)) {
         if (value === 'admin') {
           adminKey = key;
           break;
