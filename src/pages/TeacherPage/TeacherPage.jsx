@@ -1,9 +1,5 @@
 import useSize from '@react-hook/size';
-import {
-  InputBtn,
-  KahootBtn,
-  KahootLogo
-} from 'components/Stream/Stream.styled';
+import { InputBtn, KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HostKahoots } from './HostKahoots/HostKahoots';
@@ -13,8 +9,10 @@ import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
 import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
 import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import {
+  BoxHideDownSwitch,
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
+  BoxHideUpSwitch,
   InputButtonBox,
   PlatformBtn,
   PlatformLogo,
@@ -27,6 +25,8 @@ import {
 } from './TeacherPage.styled';
 import { Viewer } from './Viewer/Viewer';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
+import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
+import { NameInput } from './NameInput/NameInput';
 
 const TeacherPage = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -42,11 +42,20 @@ const TeacherPage = () => {
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
   const location = useLocation().pathname.split('/teacher/')[1];
+  const [isNameInputOpen, setIsNameInputOpen] = useState(false);
+  const [teacherInfo, setTeacherInfo] = useState({});
 
   const closeInputs = () => {
     setIsQuizInputOpen(false);
     setIsQuizOptionsOpen(false);
     setIsQuizTrueFalseOpen(false);
+  };
+
+  const changeTeacherInfo = (nameValue, lessonValue, levelValue) => {
+    setTeacherInfo(
+      teacherInfo =>
+        (teacherInfo = { ...{ name: nameValue, lesson: lessonValue, level: levelValue } })
+    );
   };
 
   const getLocation = location => {
@@ -154,8 +163,8 @@ const TeacherPage = () => {
     isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
-      setIsQuizOptionsOpen(false);
-      setIsQuizTrueFalseOpen(false);
+    setIsQuizOptionsOpen(false);
+    setIsQuizTrueFalseOpen(false);
   };
   const toggleQuizOptions = () => {
     !isOpenedLast
@@ -165,8 +174,8 @@ const TeacherPage = () => {
     isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
-      setIsQuizInputOpen(false);
-      setIsQuizTrueFalseOpen(false);
+    setIsQuizInputOpen(false);
+    setIsQuizTrueFalseOpen(false);
   };
   const toggleQuizTrueFalse = () => {
     !isOpenedLast
@@ -176,8 +185,8 @@ const TeacherPage = () => {
     isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'input')
       : setIsOpenedLast(isOpenedLast => '');
-      setIsQuizInputOpen(false);
-      setIsQuizOptionsOpen(false);
+    setIsQuizInputOpen(false);
+    setIsQuizOptionsOpen(false);
   };
   const toggleButtonBox = () => {
     setIsButtonBoxOpen(isOpen => !isOpen);
@@ -187,8 +196,20 @@ const TeacherPage = () => {
     setIsInputButtonBoxOpen(isInputButtonBoxOpen => !isInputButtonBoxOpen);
   };
 
+  const toggleNameInput = () => {
+    setIsNameInputOpen(isNameInputOpen => !isNameInputOpen);
+  };
+
   return (
     <>
+      <NameInputBtn onClick={toggleNameInput}>
+        {isNameInputOpen ? <BoxHideDownSwitch /> : <BoxHideUpSwitch />}
+      </NameInputBtn>
+      <LessonInfoBox>
+        {teacherInfo.name} <br/>
+        {teacherInfo.level} {' '}
+        {teacherInfo.lesson}
+      </LessonInfoBox>
       <TeacherButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
         <ViewerBtn onClick={toggleViewer}>
           <ViewerLogo />
@@ -265,6 +286,10 @@ const TeacherPage = () => {
         isQuizTrueFalseOpen={isQuizTrueFalseOpen}
         closeInputs={closeInputs}
         isOpenedLast={isOpenedLast}
+      />
+      <NameInput
+        isNameInputOpen={isNameInputOpen}
+        changeTeacherInfo={changeTeacherInfo}
       />
     </>
   );
