@@ -6,6 +6,7 @@ import { getToken } from '../api/getToken';
 import { isRoomAdmin } from '../api/isRoomAdmin';
 
 export const LOCAL_VIDEO = 'LOCAL_VIDEO';
+const debug = false;
 
 export default function useWebRTC(roomID) {
   const [clients, updateClients] = useStateWithCallback([]);
@@ -28,7 +29,7 @@ export default function useWebRTC(roomID) {
   }, [roomID]);
 
   const addNewClient = useCallback(
-    async (newClient, role, cb) => {
+    async (newClient, clientsData, cb) => {
       updateClients(list => {
         const exists = list.some(client => client.clientId === newClient);
         if (!exists) {
@@ -36,9 +37,9 @@ export default function useWebRTC(roomID) {
             ...list,
             {
               clientId: newClient,
-              role,
-              isMicroEnabled: true,
-              isCameraEnabled: true,
+              role: clientsData.role,
+              isMicroEnabled: clientsData.isMicroEnabled,
+              isCameraEnabled: clientsData.isCameraEnabled,
             },
           ];
         }
@@ -224,7 +225,12 @@ export default function useWebRTC(roomID) {
     }
 
     if (localRole) {
-      addNewClient(LOCAL_VIDEO, localRole, () => {
+      const localClientData = {
+        role: localRole,
+        isCameraEnabled: isLocalCameraEnabled,
+        isMicroEnabled: isLocalMicrophoneEnabled,
+      }
+      addNewClient(LOCAL_VIDEO, localClientData, () => {
         const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
         if (localVideoElement) {
           localVideoElement.volume = 0;
@@ -232,12 +238,17 @@ export default function useWebRTC(roomID) {
         }
       });
 
-      socket.emit(ACTIONS.JOIN, { room: roomID, role: localRole });
+      socket.emit(ACTIONS.JOIN, {
+        room: roomID,
+        role: localRole,
+        isCameraEnabled: isLocalCameraEnabled,
+        isMicroEnabled: isLocalMicrophoneEnabled,
+      });
     }
   }
 
   const handleNewPeer = useCallback(
-    async ({ peerID, roles, createOffer }) => {
+    async ({ peerID, clients: clientsData, createOffer }) => {
       if (peerConnections.current[peerID]) {
         return console.warn(`Already connected to peer ${peerID}`);
       }
@@ -287,7 +298,7 @@ export default function useWebRTC(roomID) {
         });
 
         if (tracksNumber === 2) {
-          addNewClient(peerID, roles[peerID], () => {
+          addNewClient(peerID, clientsData[peerID], () => {
             if (peerMediaElements.current[peerID]) {
               peerMediaElements.current[peerID].srcObject = remoteStream;
             }
@@ -297,7 +308,7 @@ export default function useWebRTC(roomID) {
 
       let adminKey = '';
 
-      for (const [key, value] of Object.entries(roles)) {
+      for (const [key, value] of Object.entries(clientsData)) {
         if (value === 'admin') {
           adminKey = key;
           break;
@@ -348,9 +359,30 @@ export default function useWebRTC(roomID) {
         peerConnection.addStream(combinedStream);
       }
 
+      function setPreferredCodecs(sdp, preferredCodecs) {
+        return sdp.replace(/(m=video.*?\r\n)/, match => {
+          const codecLines = sdp
+            .split('\r\n')
+            .filter(line => preferredCodecs.some(codec => line.includes(` ${codec}/`)));
+
+          const payloads = codecLines
+            .map(line => line.match(/:(\d+) /)?.[1])
+            .filter(Boolean);
+          return match.replace(
+            /(m=video \d+ [A-Za-z/]+ )\d+([\s\d]*)/,
+            `$1${payloads.join(' ')}$2`
+          );
+        });
+      }
+
       if (createOffer) {
         const offer = await peerConnection.createOffer();
-        await peerConnection.setLocalDescription(offer);
+        let sdp = offer.sdp;
+        sdp = setPreferredCodecs(sdp, ['AV1', 'VP9', 'VP8', 'H264']);
+
+        await peerConnection.setLocalDescription(
+          new RTCSessionDescription({ type: 'offer', sdp })
+        );
 
         socket.emit(ACTIONS.RELAY_SDP, {
           peerID,
@@ -489,6 +521,59 @@ export default function useWebRTC(roomID) {
     });
   }, [updateClients]);
 
+  useEffect(() => {
+    if (debug) {
+      const intervalId = setInterval(() => {
+        console.log('===== WebRTC Debug Info =====');
+        if (peerConnections.current) {
+          const sendersTracks = [];
+          const receivedTracks = [];
+          const transceivers = [];
+          Object.keys(peerConnections.current).forEach(id => {
+            const rtc = peerConnections.current[id];
+
+            console.log(id);
+
+            rtc.getSenders().forEach(sender => {
+              sendersTracks.push({
+                peerId: id,
+                sender,
+                kind: sender.track?.kind,
+                track: sender.track,
+                params: sender.getParameters(),
+              });
+            });
+
+            rtc.getReceivers().forEach(receiver => {
+              receivedTracks.push({
+                peerId: id,
+                receiver,
+                kind: receiver.track?.kind,
+                track: receiver.track,
+                params: receiver.getParameters(),
+              });
+            });
+
+            rtc.getTransceivers().forEach(transceiver => {
+              transceivers.push({
+                peerId: id,
+                transceiver,
+              });
+            });
+          });
+          console.log('=== Senders Tracks ===');
+          console.log(sendersTracks);
+          console.log('=== Received Tracks ===');
+          console.log(receivedTracks);
+          console.log('=== Transceivers ===');
+          console.log(transceivers);
+        }
+      }, 5000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, []);
+
   const provideMediaRef = useCallback((id, node) => {
     peerMediaElements.current[id] = node;
   }, []);
@@ -503,7 +588,6 @@ export default function useWebRTC(roomID) {
   const getClients = () => {
     console.log(clients);
     console.log(isPremissionAllowed);
-    
   };
 
   return {
