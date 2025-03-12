@@ -24,6 +24,7 @@
     "formik-mui": "^5.0.0-alpha.0",
     "freeice": "^2.2.2",
     "html-react-parser": "^5.1.10",
+    "logrocket": "^9.0.2",
     "modern-normalize": "^2.0.0",
     "nanoid": "^5.0.4",
     "react": "^18.1.0",

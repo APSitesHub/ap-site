@@ -503,8 +503,91 @@ export default function useWebRTC(roomID) {
   const getClients = () => {
     console.log(clients);
     console.log(isPremissionAllowed);
-    
   };
+
+  useEffect(() => {
+    const logs = {
+      peerId: '',
+      pairStats: {},
+      outVideoStats: {},
+      inVideoStats: {},
+      outAudioStats: {},
+      inAudioStats: {},
+    };
+    const prevStats = {};
+
+    const logsInterval = setInterval(() => {
+      Object.keys(peerConnections.current).forEach(async id => {
+        const stats = await peerConnections.current[id].getStats();
+        logs.peerId = id;
+
+        stats.forEach(report => {
+          if (report.type === 'candidate-pair' && report.state === 'succeeded') {
+            logs.pairStats = {
+              bitrate: (report.availableOutgoingBitrate / 1000).toFixed(2) + ' kbps',
+              packetsSent: report.packetsSent,
+              packetsReceived: report.packetsReceived,
+              rtt: report.currentRoundTripTime.toFixed(3) + ' s',
+            };
+          }
+
+          if (report.type === 'outbound-rtp' && report.kind === 'video') {
+            logs.outVideoStats = calcBitrate(report, 'video_out', id);
+          }
+
+          if (report.type === 'inbound-rtp' && report.kind === 'video') {
+            logs.inVideoStats = calcBitrate(report, 'video_in', id);
+          }
+
+          if (report.type === 'outbound-rtp' && report.kind === 'audio') {
+            logs.outAudioStats = calcBitrate(report, 'audio_out', id);
+          }
+
+          if (report.type === 'inbound-rtp' && report.kind === 'audio') {
+            logs.inAudioStats = calcBitrate(report, 'audio_in', id);
+          }
+        });
+      });
+
+      if (Object.keys(logs).length > 0) {
+        console.log(logs);
+      }
+    }, 30000);
+
+    function calcBitrate(report, key, id) {
+      const now = Date.now();
+      const prev = prevStats[id]?.[key];
+      const tempBytes = report.bytesSent || report.bytesReceived;
+
+      if (prev) {
+        const timeDiff = (now - prev.timestamp) / 1000;
+        const bytesDiff = tempBytes - prev.bytes;
+        const bitrate = (bytesDiff * 8) / timeDiff;
+
+        prevStats[id][key] = { bytes: tempBytes, timestamp: now };
+
+        return {
+          bitrate: (bitrate / 1000).toFixed(2) + ' kbps',
+          packets: report.packetsSent || report.packetsReceived,
+          jitter: report.jitter,
+          frameRate: report.framesPerSecond || undefined,
+          packetsLost: report.packetsLost,
+        };
+      }
+
+      prevStats[id] = prevStats[id] || {};
+      prevStats[id][key] = { bytes: tempBytes, timestamp: now };
+
+      return {
+        bitrate: 'Calculating...',
+        packets: report.packetsSent || report.packetsReceived,
+      };
+    }
+
+    return () => {
+      clearInterval(logsInterval);
+    };
+  }, []);
 
   return {
     clients,
