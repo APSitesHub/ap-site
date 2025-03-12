@@ -1,7 +1,6 @@
 const ACTIONS = {
   JOIN: 'join',
   LEAVE: 'leave',
-  SHARE_ROOMS: 'share-rooms',
   ADD_PEER: 'add-peer',
   REMOVE_PEER: 'remove-peer',
   RELAY_SDP: 'relay-sdp',
@@ -10,8 +9,8 @@ const ACTIONS = {
   SESSION_DESCRIPTION: 'session-description',
   TOGGLE_MICRO: 'toggle-micro',
   TOGGLE_CAMERA: 'toggle-camera',
-  RECEIVE_ROLE: "receive-role",
-  SEND_ROLE: "send-role",
+  MUTE_ALL: 'mute-all',
+  CHANGE_VISIBILITY: 'change-visibility'
 };
 
 export default ACTIONS;
