@@ -15,6 +15,7 @@ export default function useWebRTC(roomID) {
   const [localRole, setLocalRole] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState([]);
   const [isPremissionAllowed, setIsPremissionAllowed] = useState(null);
+  const [mockVideosTo, setMockVideosTo] = useState([]);
 
   const determineRole = useCallback(async () => {
     if (!getToken()) {
@@ -26,6 +27,19 @@ export default function useWebRTC(roomID) {
 
     setLocalRole(role);
   }, [roomID]);
+
+  const getMockVideo = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 4;
+    canvas.height = 3;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const fakeVideoStream = canvas.captureStream(1);
+
+    return fakeVideoStream.getVideoTracks()[0];
+  };
 
   const addNewClient = useCallback(
     async (newClient, role, cb) => {
@@ -161,14 +175,16 @@ export default function useWebRTC(roomID) {
 
       if (peerConnections.current) {
         Object.keys(peerConnections.current).forEach(id => {
-          const rtc = peerConnections.current[id];
-          const senders = rtc.getSenders();
-          const videoSender = senders.find(
-            sender => sender.track && sender.track.kind === 'video'
-          );
+          if (!mockVideosTo.includes(id)) {
+            const rtc = peerConnections.current[id];
+            const senders = rtc.getSenders();
+            const videoSender = senders.find(
+              sender => sender.track && sender.track.kind === 'video'
+            );
 
-          if (videoSender) {
-            videoSender.replaceTrack(videoTrack);
+            if (videoSender) {
+              videoSender.replaceTrack(videoTrack);
+            }
           }
         });
       }
@@ -181,8 +197,15 @@ export default function useWebRTC(roomID) {
     }
   };
 
+  const changeVisibility = (client, isVisible) => {
+    socket.emit(ACTIONS.CHANGE_VISIBILITY, {
+      client,
+      isVisible,
+    });
+  };
+
   const muteAll = async () => {
-    socket.emit('mute-all');
+    socket.emit(ACTIONS.MUTE_ALL);
   };
 
   async function startCapture() {
@@ -332,16 +355,7 @@ export default function useWebRTC(roomID) {
         oscillator.start();
         const fakeAudioTrack = dest.stream.getAudioTracks()[0];
 
-        const canvas = document.createElement('canvas');
-        canvas.width = 4;
-        canvas.height = 3;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        const fakeVideoStream = canvas.captureStream(1);
-        const fakeVideoTrack = fakeVideoStream.getVideoTracks()[0];
-
+        const fakeVideoTrack = getMockVideo();
         const combinedStream = new MediaStream();
         combinedStream.addTrack(fakeAudioTrack);
         combinedStream.addTrack(fakeVideoTrack);
@@ -484,7 +498,31 @@ export default function useWebRTC(roomID) {
       });
     });
 
-    socket.on('mute-all', () => {
+    socket.on(ACTIONS.CHANGE_VISIBILITY, ({ peerID, isVisible }) => {
+      const peer = peerConnections.current[peerID];
+
+      if (peer) {
+        const videoSender = peer
+          .getSenders()
+          .find(sender => sender.track.kind === 'video');
+
+        if (videoSender) {
+          if (isVisible) {
+            videoSender.replaceTrack(localMediaStream.current.getVideoTracks()[0]);
+            setMockVideosTo(oldState => {
+              return oldState.filter(id => id !== peerID);
+            });
+          } else {
+            videoSender.replaceTrack(getMockVideo());
+            setMockVideosTo(oldState => {
+              return [peerID, [...oldState]];
+            });
+          }
+        }
+      }
+    });
+
+    socket.on(ACTIONS.MUTE_ALL, () => {
       toggleMicrophone(true);
     });
   }, [updateClients]);
@@ -503,7 +541,6 @@ export default function useWebRTC(roomID) {
   const getClients = () => {
     console.log(clients);
     console.log(isPremissionAllowed);
-    
   };
 
   return {
@@ -515,6 +552,7 @@ export default function useWebRTC(roomID) {
     toggleMicrophone,
     changeCamera,
     changeMicrophone,
+    changeVisibility,
     muteAll,
     addMockClient,
     getClients,

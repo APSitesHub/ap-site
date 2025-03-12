@@ -57,6 +57,7 @@ function VideochatRoom() {
     toggleMicrophone,
     changeCamera,
     changeMicrophone,
+    changeVisibility,
     muteAll,
     addMockClient,
     getClients,
@@ -285,11 +286,32 @@ function VideochatRoom() {
   }, [currentUser, room]);
 
   useEffect(() => {
-    setVisibleClients(
-      clients
+    setVisibleClients(prevState => {
+      const updatedVisibleClients = clients
         .filter(({ role }) => role !== 'admin')
-        .slice(page, page + VISIBLE_USERS_COUNT)
-    );
+        .slice(page, page + VISIBLE_USERS_COUNT);
+
+      const newClients = updatedVisibleClients.filter(
+        client => !prevState.some(prevClient => prevClient.clientId === client.clientId)
+      );
+
+      const removedClients = prevState.filter(
+        client =>
+          !updatedVisibleClients.some(
+            updatedClient => updatedClient.clientId === client.clientId
+          )
+      );
+
+      newClients.forEach(client => {
+        changeVisibility(client, true);
+      });
+
+      removedClients.forEach(client => {
+        changeVisibility(client, false);
+      });
+
+      return updatedVisibleClients;
+    });
   }, [page, clients]);
 
   useEffect(() => {
@@ -297,7 +319,28 @@ function VideochatRoom() {
       console.log('Streams Updated');
     }
 
+    const mediaQuery = window.matchMedia('(max-width: 1024px)');
+
+    function handleScreenResize(e) {
+      if (e.matches) {
+        hideVideos();
+      } else {
+        showVideos();
+      }
+    }
+
+    if (mediaQuery.matches) {
+      hideVideos();
+    } else {
+      showVideos();
+    }
+
+    mediaQuery.addEventListener('change', handleScreenResize);
     updateStreams();
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleScreenResize);
+    };
   }, [visibleClients]);
 
   const updateStreams = () => {
@@ -331,6 +374,20 @@ function VideochatRoom() {
         stream => stream.peerID === el.dataset.id
       ).remoteStream;
     }
+  };
+
+  const hideVideos = () => {
+    clients
+      .filter(({ role }) => role !== 'admin')
+      .forEach(client => {
+        changeVisibility(client, false);
+      });
+  };
+
+  const showVideos = () => {
+    visibleClients.forEach(client => {
+      changeVisibility(client, true);
+    });
   };
 
   return (
@@ -394,6 +451,16 @@ function VideochatRoom() {
                       )}
                       <MediaButtonContainer>
                         <MediaButton onClick={muteAll}>Mute All</MediaButton>
+                      </MediaButtonContainer>
+                    </>
+                  )}
+                  {debug && (
+                    <>
+                      <MediaButtonContainer>
+                        <MediaButton onClick={hideVideos}>hideVideos</MediaButton>
+                      </MediaButtonContainer>
+                      <MediaButtonContainer>
+                        <MediaButton onClick={showVideos}>showVideos</MediaButton>
                       </MediaButtonContainer>
                     </>
                   )}
@@ -464,7 +531,11 @@ function VideochatRoom() {
                               autoPlay
                               playsInline
                               muted={clientId === LOCAL_VIDEO}
-                              style={{ objectFit: 'contain', maxWidth: 'inherit', maxHeight: 'inherit' }}
+                              style={{
+                                objectFit: 'contain',
+                                maxWidth: 'inherit',
+                                maxHeight: 'inherit',
+                              }}
                             />
                             {debug && (
                               <div style={{ position: 'absolute', color: 'white' }}>
