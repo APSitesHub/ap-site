@@ -33,6 +33,8 @@ import { SharedLayout } from './SharedLayout/SharedLayout';
 // eslint-disable-next-line
 import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
 
+import LogRocket from 'logrocket';
+
 const NewDesign = lazy(() =>
   import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
 );
@@ -522,6 +524,7 @@ const NotFound = lazy(() =>
 export const App = () => {
   // eslint-disable-next-line
   const [searchParams, _] = useSearchParams();
+  LogRocket.init('0r7bkh/test-project-video');
 
   const utm_tags = [
     'utm_content',
