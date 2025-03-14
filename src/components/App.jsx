@@ -9,18 +9,9 @@ import { HostKahootAdminPanel } from 'pages/Streams/HostKahootAdminPanel/HostKah
 import { KahootAdminPanel } from 'pages/Streams/KahootAdminPanel/KahootAdminPanel';
 import { LessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/LessonsAdminPanel';
 import { TeacherLessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/TeacherLessonsAdminPanel/TeacherLessonsAdminPanel';
-import { StreamPolskiA0 } from 'pages/Streams/Polski A0/StreamPolskiA0';
-// eslint-disable-next-line
-import { StreamPolskiA2 } from 'pages/Streams/Polski A2/StreamPolskiA2';
-// eslint-disable-next-line
-import { StreamPolskiB1 } from 'pages/Streams/Polski B1/StreamPolskiB1';
-// eslint-disable-next-line
-import { StreamPolski } from 'pages/Streams/Polski/StreamPolski';
 import { StreamPolskiFree } from 'pages/Streams/Polski/StreamPolskiFree';
 import { StreamTest } from 'pages/Streams/Test/StreamTest';
 import { KidsA1Free } from 'pages/StreamsKids/KidsA1/KidsA1Free';
-import { KidsB1Beginner } from 'pages/StreamsKids/KidsB1Beginner/KidsB1Beginner';
-import { KidsB2Beginner } from 'pages/StreamsKids/KidsB2Beginner/KidsB2Beginner';
 import TeacherTrialPage from 'pages/TeacherPage/TeacherTrialPage';
 import { ThankYouPage } from 'pages/ThankYouPage/ThankYouPage';
 import { Suspense, lazy } from 'react';
@@ -30,8 +21,6 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
-// eslint-disable-next-line
-import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
 
 import LogRocket from 'logrocket';
 
@@ -121,9 +110,34 @@ const StreamDeutschB2 = lazy(() =>
     /* webpackChunkName: "Streams Deutsch B2 page" */ '../pages/Streams/Deutsch B2/StreamDeutschB2'
   )
 );
+const StreamPolskiA0 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski A0 page" */ '../pages/Streams/Polski A0/StreamPolskiA0'
+  )
+);
 const StreamPolskiA02 = lazy(() =>
   import(
-    /* webpackChunkName: "Streams Polski A0_2 page" */ '../pages/Streams/Polski A0/StreamPolskiA02'
+    /* webpackChunkName: "Streams Polski A0 2 page" */ '../pages/Streams/Polski A0/StreamPolskiA02'
+  )
+);
+const StreamPolski = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski A1 page" */ '../pages/Streams/Polski/StreamPolski'
+  )
+);
+const StreamPolskiA2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski A2 page" */ '../pages/Streams/Polski A2/StreamPolskiA2'
+  )
+);
+const StreamPolskiB1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski B1 page" */ '../pages/Streams/Polski B1/StreamPolskiB1'
+  )
+);
+const StreamPolskiB2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski B2 page" */ '../pages/Streams/Polski B2/StreamPolskiB2'
   )
 );
 const RecordLinkTree = lazy(() =>
@@ -161,10 +175,20 @@ const KidsB1 = lazy(() =>
     /* webpackChunkName: "Kids Streams B1 page" */ '../pages/StreamsKids/KidsB1/KidsB1'
   )
 );
+const KidsB1Beginner = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams B1 Beginner page" */ '../pages/StreamsKids/KidsB1Beginner/KidsB1Beginner'
+  )
+);
 // eslint-disable-next-line
 const KidsB2 = lazy(() =>
   import(
     /* webpackChunkName: "Kids Streams B2 page" */ '../pages/StreamsKids/KidsB2/KidsB2'
+  )
+);
+const KidsB2Beginner = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams B2 Beginner page" */ '../pages/StreamsKids/KidsB2Beginner/KidsB2Beginner'
   )
 );
 const KidsC1 = lazy(() =>

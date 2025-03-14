@@ -43,7 +43,7 @@ outline: transparent;
 export const LessonInfoBox = styled.div`
   position: absolute;
   top: 35px;
-  right: 35px;
+  right: 65px;
   z-index: 25;
   max-width: 280px;
   color: #fff;
@@ -52,6 +52,5 @@ export const LessonInfoBox = styled.div`
 
   display: flex;
   gap: 25px;
-  opacity: 0.6;
   pointer-events: none;
 `;
