@@ -348,7 +348,7 @@ export const Kahoots = ({
           className={isKahootOpen ? 'shown' : 'hidden'}
           style={{
             zIndex: isOpenedLast === 'kahoot' ? '3' : '1',
-            width: isChatOpen ? kahootWidth - 300 : kahootWidth,
+            width: isChatOpen && isFullScreen ? kahootWidth - 300 : kahootWidth,
             height: sectionHeight,
           }}
           onTransitionEnd={kahootLinksRefresher}
