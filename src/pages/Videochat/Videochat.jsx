@@ -19,6 +19,8 @@ import {
   BackIcon,
 } from './Videochat.styled';
 import { getKahoots } from './utils/api/getKahoots';
+import { getToken } from './utils/api/getToken';
+import axios from 'axios';
 
 const ROOM_TYPES = {
   TRIAL: 'trial',
@@ -36,6 +38,22 @@ function Videochat() {
   const newRoomType = useRef(ROOM_TYPES.VIDEOCHAT);
 
   useEffect(() => {
+    if (!getToken()) {
+      handleBack();
+    }
+
+    const refreshToken = async () => {
+      try {
+        const res = await axios.post('/teachers/refresh', {
+          login: localStorage.getItem('login'),
+        });
+        localStorage.setItem('token', res.data.newToken);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    refreshToken();
+
     const updateRoomLevels = async () => {
       const levels = await getKahoots();
 
