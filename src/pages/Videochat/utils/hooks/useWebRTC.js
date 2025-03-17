@@ -29,6 +29,14 @@ export default function useWebRTC(roomID) {
     setLocalRole(role);
   }, [roomID]);
 
+  const getDevice = kind => {
+    return localStorage.getItem(`default-${kind}`);
+  };
+
+  const setDevice = (kind, deviceId) => {
+    localStorage.setItem(`default-${kind}`, deviceId);
+  };
+
   const getMockVideo = () => {
     const canvas = document.createElement('canvas');
     canvas.width = 4;
@@ -156,6 +164,7 @@ export default function useWebRTC(roomID) {
       if (!isLocalMicrophoneEnabled) {
         toggleMicrophone();
       }
+      setDevice('audioinput', deviceId);
     } catch (error) {
       console.error('error change micro: ' + error);
     }
@@ -193,6 +202,7 @@ export default function useWebRTC(roomID) {
       if (!isLocalCameraEnabled) {
         toggleCamera();
       }
+      setDevice('videoinput', deviceId);
     } catch (error) {
       console.error('error change camera: ' + error);
     }
@@ -211,7 +221,7 @@ export default function useWebRTC(roomID) {
 
   async function startCapture() {
     try {
-      localMediaStream.current = await navigator.mediaDevices.getUserMedia({
+      await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: true,
       });
@@ -219,22 +229,28 @@ export default function useWebRTC(roomID) {
       const devices = await navigator.mediaDevices.enumerateDevices();
       setLocalDevices(devices);
 
-      const defaultCamera = devices.find(device => device.kind === 'videoinput');
-      const defaultMicrophone = devices.find(device => device.kind === 'audioinput');
+      const defaultCamera =
+        getDevice('videoinput') ||
+        setDevice(
+          'videoinput',
+          devices.filter(device => device.kind === 'videoinput')[0].deviceId
+        );
+
+      const defaultMicrophone =
+        getDevice('audioinput') ||
+        setDevice(
+          'audioinput',
+          devices.find(device => device.kind === 'audioinput')[0].deviceId
+        );
 
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-        audio: defaultMicrophone ? { deviceId: defaultMicrophone.deviceId } : true,
-        video: defaultCamera
-          ? {
-              deviceId: { exact: defaultCamera.deviceId },
-              width: localRole === 'admin' ? 1920 : 320,
-              height: localRole === 'admin' ? 1080 : 180,
-              frameRate: { ideal: 30 },
-            }
-          : {
-              width: localRole === 'admin' ? 1920 : 320,
-              height: localRole === 'admin' ? 1080 : 180,
-            },
+        audio: { deviceId: defaultMicrophone },
+        video: {
+          deviceId: { exact: defaultCamera },
+          width: localRole === 'admin' ? 1920 : 320,
+          height: localRole === 'admin' ? 1080 : 180,
+          frameRate: { ideal: 30 },
+        },
       });
 
       setIsPremissionAllowed(true);
@@ -252,7 +268,7 @@ export default function useWebRTC(roomID) {
         role: localRole,
         isCameraEnabled: isLocalCameraEnabled,
         isMicroEnabled: isLocalMicrophoneEnabled,
-      }
+      };
       addNewClient(LOCAL_VIDEO, localClientData, () => {
         const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
         if (localVideoElement) {

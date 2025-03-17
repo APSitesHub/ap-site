@@ -58,7 +58,7 @@ export const KahootsVideoChat = ({
   let location = useLocation();
 
   // eslint-disable-next-line
-  const page = location.pathname.match(/\/room\/([^\/]+)\/[^\/]+$/)[1];
+  const page = location.pathname.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1];
 
   const { ref, inView } = useInView({
     triggerOnce: true,

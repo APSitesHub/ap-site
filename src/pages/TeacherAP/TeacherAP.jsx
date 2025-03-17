@@ -36,6 +36,7 @@ const TeacherAP = () => {
         });
         localStorage.setItem('token', res.data.newToken);
         setIsTeacherLogged(isLogged => (isLogged = true));
+        localStorage.setItem('userName', res.data.teacher.name);
         setPlatformLink(res.data.teacher.platformToken);
       } catch (error) {
         console.log(error);
@@ -51,6 +52,7 @@ const TeacherAP = () => {
       const response = await axios.post('/teachers/login', values);
       setAuthToken(response.data.token);
       setIsTeacherLogged(isLogged => (isLogged = true));
+      localStorage.setItem('userName', response.data.teacher.name);
       localStorage.setItem('login', values.login);
       localStorage.setItem('token', response.data.token);
       setIsTeacherInfoIncorrect(false);
