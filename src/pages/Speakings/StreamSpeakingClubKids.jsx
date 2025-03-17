@@ -159,6 +159,8 @@ const StreamSpeakingClubKids = () => {
           user.name === 'Dev Acc' ||
           user.course === '10' ||
           user.course?.split('/').some(singleCourse => singleCourse === '10') ||
+          user.course === '11' ||
+          user.course?.split('/').some(singleCourse => singleCourse === '11') ||
           user.name === 'Тічер' ? (
             <StreamPlaceHolder>
               <StreamPlaceHolderText>
@@ -208,6 +210,9 @@ const StreamSpeakingClubKids = () => {
             (user.name === 'Dev Acc' && isApproved) ||
             ((user.course === '10' ||
               user.course?.split('/').some(singleCourse => singleCourse === '10')) &&
+              isApproved) ||
+            ((user.course === '11' ||
+              user.course?.split('/').some(singleCourse => singleCourse === '11')) &&
               isApproved) ||
             (user.name === 'Тічер' && isApproved)) &&
             redirectLink !== '1' &&

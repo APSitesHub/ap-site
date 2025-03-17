@@ -32,7 +32,7 @@ const C1SpeakingPanel = () => {
   const [users, setUsers] = useState([]);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState({});
-  const [date, setDate] = useState('06.01.2025');
+  const [date, setDate] = useState('17.03.2025');
 
   useEffect(() => {
     document.title = 'User Admin Panel | AP Education';
@@ -113,9 +113,7 @@ const C1SpeakingPanel = () => {
 
   const handleEdit = async id => {
     setIsEditFormOpen(true);
-    setUserToEdit(
-      userToEdit => (userToEdit = users.find(user => user._id === id))
-    );
+    setUserToEdit(userToEdit => (userToEdit = users.find(user => user._id === id)));
   };
 
   const closeEditForm = e => {
@@ -173,9 +171,7 @@ const C1SpeakingPanel = () => {
         setUsers(users => (users = [...users.filter(user => user._id !== id)]));
       } catch (error) {
         console.error(error);
-        alert(
-          'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-        );
+        alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
       } finally {
         setIsLoading(isLoading => (isLoading = false));
       }
@@ -197,11 +193,7 @@ const C1SpeakingPanel = () => {
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -216,7 +208,11 @@ const C1SpeakingPanel = () => {
               <button
                 onClick={() =>
                   setDate(date =>
-                    date === '06.01.2025' ? '05.11.2024' : '06.01.2025'
+                    date === '06.01.2025'
+                      ? '05.11.2024'
+                      : date === '17.03.2025'
+                      ? '06.01.2025'
+                      : '17.03.2025'
                   )
                 }
               >
@@ -269,8 +265,7 @@ const C1SpeakingPanel = () => {
                   <UserCell
                     style={
                       user.visited.filter(
-                        visit =>
-                          changeDateFormat(visit) >= changeDateFormat(date)
+                        visit => changeDateFormat(visit) >= changeDateFormat(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,
@@ -280,10 +275,7 @@ const C1SpeakingPanel = () => {
                     }
                   >
                     {user.visited
-                      .filter(
-                        visit =>
-                          changeDateFormat(visit) >= changeDateFormat(date)
-                      )
+                      .filter(visit => changeDateFormat(visit) >= changeDateFormat(date))
                       .map(visit => (
                         <p>{visit}</p>
                       ))}
@@ -292,8 +284,7 @@ const C1SpeakingPanel = () => {
                   <UserCell
                     style={
                       user.visited.filter(
-                        visit =>
-                          changeDateFormat(visit) >= changeDateFormat(date)
+                        visit => changeDateFormat(visit) >= changeDateFormat(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,
@@ -304,23 +295,19 @@ const C1SpeakingPanel = () => {
                   >
                     {
                       user.visited.filter(
-                        visit =>
-                          changeDateFormat(visit) >= changeDateFormat(date)
+                        visit => changeDateFormat(visit) >= changeDateFormat(date)
                       ).length
                     }
                   </UserCell>
                   <UserCell>{user.lang}</UserCell>
                   <UserCell>{user.course}</UserCell>
-                  <UserCell
-                    className={user.knowledge?.includes('а') && 'error'}
-                  >
+                  <UserCell className={user.knowledge?.includes('а') && 'error'}>
                     {user.knowledge}
                   </UserCell>
                   <UserCell
                     style={
                       user.visited.filter(
-                        visit =>
-                          changeDateFormat(visit) >= changeDateFormat(date)
+                        visit => changeDateFormat(visit) >= changeDateFormat(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,
