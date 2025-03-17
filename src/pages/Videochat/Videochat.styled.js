@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Form } from 'formik';
 
 import { ReactComponent as _EndCallIcon } from '../../img/svg/end-call.svg';
 import { ReactComponent as _CameraIcon } from '../../img/svg/camera.svg';
@@ -302,7 +303,9 @@ export const GradientBackground = styled.div`
 // Videochat styles
 export const Page = styled.div`
   height: 100dvh;
-  padding-top: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Container = styled.div`
@@ -314,8 +317,6 @@ export const Container = styled.div`
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  max-width: 600px;
-  margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
@@ -343,6 +344,8 @@ export const Label = styled.label`
   font-size: 16px;
   color: #444;
   white-space: nowrap;
+  flex-grow: 0;
+  flex-shrink: 0;
 `;
 
 export const Input = styled.input`
@@ -425,4 +428,54 @@ export const BackButton = styled.button`
 export const BackIcon = styled(_BackIcon)`
   width: 16px;
   height: 16px;
+`;
+
+// Login styles
+export const LoginPage = styled.div`
+  height: 100dvh;
+  width: 1024px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 0 auto;
+`;
+
+export const LoginMediaContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+`;
+
+export const LoginMediaFields = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+`;
+
+export const LoginForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const LoginVideo = styled.video`
+  background-color: #dddddd;
+  border-radius: 16px;
+  width: 480px;
+  height: 360px;
+  flex-shrink: 0;
+  flex-grow: 0;
+`;
+
+export const LoginSelect = styled.select`
+  width: 100%;
+  padding: 1rem;
+  outline: none;
+  border: none;
+  border-radius: 8px;
 `;

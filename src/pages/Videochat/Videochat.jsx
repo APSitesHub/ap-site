@@ -20,12 +20,20 @@ import {
 } from './Videochat.styled';
 import { getKahoots } from './utils/api/getKahoots';
 
+const ROOM_TYPES = {
+  STREAM: 'stream',
+  TRIAL: 'trial',
+  C2U: 'close2you',
+  INDIVIDUAL: 'individual',
+};
+
 function Videochat() {
   const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [roomLevels, setRoomLevels] = useState([]);
   const newRoomName = useRef('');
   const newRoomLevel = useRef(null);
+  const newRoomType = useRef(ROOM_TYPES.VIDEOCHAT);
 
   useEffect(() => {
     const updateRoomLevels = async () => {
@@ -50,7 +58,11 @@ function Videochat() {
   };
 
   const handleCreateRoom = async () => {
-    await createRoom(newRoomName.current.value, newRoomLevel.current.value);
+    await createRoom(
+      newRoomType.current.value,
+      newRoomName.current.value,
+      newRoomLevel.current.value
+    );
     await updateRooms();
   };
 
@@ -71,11 +83,18 @@ function Videochat() {
           <Input type="text" id="room-name" ref={newRoomName} />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="room-level">Room level:</Label>
+          <Label htmlFor="room-level">Room type:</Label>
           <Select id="room-level" ref={newRoomLevel}>
             {roomLevels.map(level => (
               <option key={level} value={level}>
                 {level}
+              </option>
+            ))}
+          </Select>
+          <Select id="room-type" ref={newRoomType}>
+            {Object.entries(ROOM_TYPES).map(([key, label]) => (
+              <option key={key} value={label}>
+                {label}
               </option>
             ))}
           </Select>
@@ -90,7 +109,7 @@ function Videochat() {
                 {room.name}
                 <JoinButton
                   onClick={() => {
-                    navigate(`/room/${room.slug}/${room.id}`);
+                    navigate(`/room/${room.type}/${room.slug}/${room.id}`);
                   }}
                 >
                   JOIN ROOM

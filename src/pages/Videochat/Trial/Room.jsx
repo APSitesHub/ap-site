@@ -13,7 +13,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import { ChatVideo } from 'utils/Chat/ChatVideo';
-import useWebRTC, { LOCAL_VIDEO } from './utils/hooks/useWebRTC';
+import useWebRTC, { LOCAL_VIDEO } from '../utils/hooks/useWebRTC';
 import {
   ArrowDown,
   ArrowUp,
@@ -36,7 +36,7 @@ import {
   VideochatContainer,
   LargeText,
   GradientBackground,
-} from './Videochat.styled';
+} from '../Videochat.styled';
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
@@ -44,7 +44,7 @@ import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFals
 const VISIBLE_USERS_COUNT = 4;
 const debug = false;
 
-function VideochatRoom() {
+function Room() {
   const { id: roomID } = useParams();
   const navigate = useNavigate();
   const {
@@ -629,4 +629,4 @@ function VideochatRoom() {
   );
 }
 
-export default VideochatRoom;
+export default Room;

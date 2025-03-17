@@ -450,8 +450,11 @@ const Videochat = lazy(() =>
 const VideochatRoom = lazy(() =>
   import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom')
 );
+const TrialVideoRoom = lazy(() =>
+  import(/* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain')
+);
 const EndCall = lazy(() =>
-  import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/EndCall')
+  import(/* webpackChunkName: "End Call" */ '../pages/Videochat/EndCall')
 );
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
@@ -524,7 +527,7 @@ const NotFound = lazy(() =>
 export const App = () => {
   // eslint-disable-next-line
   const [searchParams, _] = useSearchParams();
-  LogRocket.init('0r7bkh/test-project-video');
+  // LogRocket.init('0r7bkh/test-project-video');
 
   const utm_tags = [
     'utm_content',
@@ -580,6 +583,7 @@ export const App = () => {
           <Route path="teacher-ap" element={<TeacherAP />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
           <Route path="room/:slug/:id" element={<VideochatRoom />} noindex={true} />
+          <Route path="room/trial/:slug/:id" element={<TrialVideoRoom />} noindex={true} />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
