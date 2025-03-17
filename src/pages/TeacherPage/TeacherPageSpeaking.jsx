@@ -39,7 +39,9 @@ const TeacherPageSpeaking = () => {
   const changeDateFormat = dateString => {
     if (dateString) {
       const dateArray = dateString.split('.');
-      return dateArray.length > 2 ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/')) : Date.parse(dateString);
+      return dateArray.length > 2
+        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
+        : Date.parse(dateString);
     }
     return;
   };
@@ -129,12 +131,17 @@ const TeacherPageSpeaking = () => {
   };
 
   const handleStudentEdit = async id => {
-    setStudentToEdit(studentToEdit => (studentToEdit = users.find(student => student.userId === id)));
+    setStudentToEdit(
+      studentToEdit => (studentToEdit = users.find(student => student.userId === id))
+    );
     setIsEditStudentFormOpen(true);
   };
 
   const handleStudentChart = async id => {
-    setCurrentStudentChart(currentStudentChart => (currentStudentChart = users.find(student => student.userId === id)));
+    setCurrentStudentChart(
+      currentStudentChart =>
+        (currentStudentChart = users.find(student => student.userId === id))
+    );
     setIsStudentChartOpen(true);
   };
 
@@ -145,21 +152,22 @@ const TeacherPageSpeaking = () => {
         setIsLoading(isLoading => (isLoading = true));
         page === 'kids-c1sc'
           ? setCourse('10')
-          : page === 'deb2sc'
-          ? setCourse('12')
-          : setCourse((await axios.get('/timetable')).data.filter(timetable => page.includes(timetable.level) && lang === timetable.lang)[0].course);
+          : setCourse(
+              (await axios.get('/timetable')).data.filter(
+                timetable => page.includes(timetable.level) && lang === timetable.lang
+              )[0].course
+            );
         const usersToSet = await axios.get('/speakingusers');
 
         setUsers(
           users =>
-            (users =
-              page === 'deb2sc'
-                ? [
-                    ...usersToSet.data.filter(
-                      user => user.course.includes('12') || user.course.split('/').some(usersCourse => usersCourse.includes('12'))
-                    ),
-                  ]
-                : [...usersToSet.data.filter(user => user.course === course || user.course.split('/').some(usersCourse => usersCourse === course))])
+            (users = [
+              ...usersToSet.data.filter(
+                user =>
+                  user.course === course ||
+                  user.course.split('/').some(usersCourse => usersCourse === course)
+              ),
+            ])
         );
         console.log('eff');
       } catch (error) {
@@ -197,56 +205,113 @@ const TeacherPageSpeaking = () => {
         </thead>
         <tbody>
           {users
-            .filter(user =>
-              page === 'deb2sc'
-                ? new Date() - new Date(changeDateFormat(user.visited[user.visited.length - 1])) <= 4 * 86400000 &&
-                  (lang === user.lang || user.lang.split('/').some(userLang => lang === userLang)) &&
-                  (user.course.includes('12') || user.course.split('/').some(usersCourse => usersCourse.includes('12')))
-                : new Date() - new Date(changeDateFormat(user.visited[user.visited.length - 1])) <= 4 * 86400000 &&
-                  (lang === user.lang || user.lang.split('/').some(userLang => lang === userLang)) &&
-                  (course === user.course || user.course.split('/').some(userCourse => course === userCourse))
+            .filter(
+              user =>
+                new Date() -
+                  new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
+                  4 * 86400000 &&
+                (lang === user.lang ||
+                  user.lang.split('/').some(userLang => lang === userLang)) &&
+                (course === user.course ||
+                  user.course.split('/').some(userCourse => course === userCourse))
             )
             .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
             .map((user, i) => (
               <UserDBRow key={user._id}>
                 <UserCell>{i + 1}</UserCell>
                 <UserCell>
-                  <a href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`} target="_blank" rel="noreferrer">
+                  <a
+                    href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     {user.crmId}
                   </a>
                 </UserCell>
                 <UserCellLeft>{user.name}</UserCellLeft>
                 <UserCell>
-                  {user.name === 'Dev Acc' ? null : <UserEditButton onClick={() => handleStudentEdit(user.userId)}>Edit</UserEditButton>}
+                  {user.name === 'Dev Acc' ? null : (
+                    <UserEditButton onClick={() => handleStudentEdit(user.userId)}>
+                      Edit
+                    </UserEditButton>
+                  )}
                 </UserCell>
                 <UserCell>
-                  <UserChartButton onClick={() => handleStudentChart(user.userId)}>Chart</UserChartButton>
+                  <UserChartButton onClick={() => handleStudentChart(user.userId)}>
+                    Chart
+                  </UserChartButton>
                 </UserCell>
                 <UserCell>
                   {!user.visitedTime[user.visitedTime.length - 1]
                     ? ''
                     : user.visitedTime[user.visitedTime.length - 1].match('^202')
-                    ? new Date(user.visitedTime[user.visitedTime.length - 1]).toLocaleString('uk-UA')
+                    ? new Date(
+                        user.visitedTime[user.visitedTime.length - 1]
+                      ).toLocaleString('uk-UA')
                     : ''}
                 </UserCell>
                 <UserCell>{user.lang}</UserCell>
                 <UserCell>{user.course}</UserCell>
-                <UserCell>{user.temperament === 'extro' ? 'Екстраверт' : user.temperament === 'intro' ? 'Інтроверт' : ''}</UserCell>
                 <UserCell>
-                  {user.successRate === 'good' ? 'Сильний' : user.successRate === 'mid' ? 'Середній' : user.successRate === 'bad' ? 'Слабкий' : ''}
+                  {user.temperament === 'extro'
+                    ? 'Екстраверт'
+                    : user.temperament === 'intro'
+                    ? 'Інтроверт'
+                    : ''}
                 </UserCell>
                 <UserCell>
-                  {user.grammar === 3 ? 'Дуже добре' : user.grammar === 2 ? 'Добре' : user.grammar === 1 ? 'Потребує покращення' : ''}
+                  {user.successRate === 'good'
+                    ? 'Сильний'
+                    : user.successRate === 'mid'
+                    ? 'Середній'
+                    : user.successRate === 'bad'
+                    ? 'Слабкий'
+                    : ''}
                 </UserCell>
-                <UserCell>{user.lexis === 3 ? 'Дуже добре' : user.lexis === 2 ? 'Добре' : user.lexis === 1 ? 'Потребує покращення' : ''}</UserCell>
                 <UserCell>
-                  {user.speaking === 3 ? 'Дуже добре' : user.speaking === 2 ? 'Добре' : user.speaking === 1 ? 'Потребує покращення' : ''}
+                  {user.grammar === 3
+                    ? 'Дуже добре'
+                    : user.grammar === 2
+                    ? 'Добре'
+                    : user.grammar === 1
+                    ? 'Потребує покращення'
+                    : ''}
                 </UserCell>
                 <UserCell>
-                  {user.listening === 3 ? 'Дуже добре' : user.listening === 2 ? 'Добре' : user.listening === 1 ? 'Потребує покращення' : ''}
+                  {user.lexis === 3
+                    ? 'Дуже добре'
+                    : user.lexis === 2
+                    ? 'Добре'
+                    : user.lexis === 1
+                    ? 'Потребує покращення'
+                    : ''}
                 </UserCell>
                 <UserCell>
-                  {user.activity === 3 ? 'Дуже добре' : user.activity === 2 ? 'Добре' : user.activity === 1 ? 'Потребує покращення' : ''}
+                  {user.speaking === 3
+                    ? 'Дуже добре'
+                    : user.speaking === 2
+                    ? 'Добре'
+                    : user.speaking === 1
+                    ? 'Потребує покращення'
+                    : ''}
+                </UserCell>
+                <UserCell>
+                  {user.listening === 3
+                    ? 'Дуже добре'
+                    : user.listening === 2
+                    ? 'Добре'
+                    : user.listening === 1
+                    ? 'Потребує покращення'
+                    : ''}
+                </UserCell>
+                <UserCell>
+                  {user.activity === 3
+                    ? 'Дуже добре'
+                    : user.activity === 2
+                    ? 'Добре'
+                    : user.activity === 1
+                    ? 'Потребує покращення'
+                    : ''}
                 </UserCell>
                 <UserCellLeft
                   dangerouslySetInnerHTML={{
@@ -255,7 +320,10 @@ const TeacherPageSpeaking = () => {
                         ? user.feedback[user.feedback.length - 1]
                             .replace(
                               linksRegex,
-                              match => `<a href="${match}" target="_blank">${match.length > 50 ? match.slice(0, 50) + '...' : match}</a>`
+                              match =>
+                                `<a href="${match}" target="_blank">${
+                                  match.length > 50 ? match.slice(0, 50) + '...' : match
+                                }</a>`
                             )
                             .split(' ')
                             .slice(1)
@@ -281,7 +349,10 @@ const TeacherPageSpeaking = () => {
 
       {isStudentChartOpen && (
         <Backdrop onMouseDown={closeStudentChartOnClick} id="close-chart-on-click">
-          <StudentChart currentStudentChart={currentStudentChart} closeCourseLevelEditForm={closeStudentChart} />
+          <StudentChart
+            currentStudentChart={currentStudentChart}
+            closeCourseLevelEditForm={closeStudentChart}
+          />
         </Backdrop>
       )}
       {isLoading && <Loader />}
