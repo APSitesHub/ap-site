@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import * as yup from 'yup';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { LoginFormText } from 'components/Stream/Stream.styled';
 import {
@@ -6,7 +7,7 @@ import {
   AdminInput,
   AdminInputNote,
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   GradientBackground,
   LoginForm,
@@ -29,53 +30,7 @@ function Login({ logined }) {
     userName: '',
   };
 
-  useEffect(() => {
-    startCapture();
-
-    let audioContext;
-    let analyser;
-    let microphone;
-    let dataArray;
-    let animationFrameId;
-
-    const initAudio = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioContext.createAnalyser();
-        analyser.fftSize = 256;
-        const bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-
-        microphone = audioContext.createMediaStreamSource(stream);
-        microphone.connect(analyser);
-
-        const updateVolume = () => {
-          analyser.getByteFrequencyData(dataArray);
-          const avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
-          setVolume(Math.round((avg / 255) * 100));
-          animationFrameId = requestAnimationFrame(updateVolume);
-        };
-
-        updateVolume();
-      } catch (error) {
-        console.error('Помилка доступу до мікрофона:', error);
-      }
-    };
-
-    initAudio();
-
-    return () => {
-      if (audioContext) audioContext.close();
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
-  const getDevice = kind => {
-    return localStorage.getItem(`default-${kind}`);
-  };
-
-  const startCapture = async () => {
+  const startCapture = useCallback(async () => {
     await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: true,
@@ -129,6 +84,52 @@ function Login({ logined }) {
         .filter(device => device.kind === 'videoinput')
         .map(device => ({ label: device.label, value: device.deviceId }))
     );
+  }, []);
+
+  useEffect(() => {
+    startCapture();
+
+    let audioContext;
+    let analyser;
+    let microphone;
+    let dataArray;
+    let animationFrameId;
+
+    const initAudio = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+
+        microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyser);
+
+        const updateVolume = () => {
+          analyser.getByteFrequencyData(dataArray);
+          const avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
+          setVolume(Math.round((avg / 255) * 100));
+          animationFrameId = requestAnimationFrame(updateVolume);
+        };
+
+        updateVolume();
+      } catch (error) {
+        console.error('Помилка доступу до мікрофона:', error);
+      }
+    };
+
+    initAudio();
+
+    return () => {
+      if (audioContext) audioContext.close();
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+  }, [startCapture]);
+
+  const getDevice = kind => {
+    return localStorage.getItem(`default-${kind}`);
   };
 
   const handleDeviceSelect = async (deviceId, kind) => {
@@ -147,6 +148,10 @@ function Login({ logined }) {
       videoRef.current.srcObject = localMediaStream.current;
     }
   };
+
+  const loginSchema = yup.object().shape({
+    userName: yup.string().required("Введи ім'я та прізвище"),
+  });
 
   return (
     <GradientBackground>
@@ -215,7 +220,11 @@ function Login({ logined }) {
             </div>
           </LoginMediaFields>
         </LoginMediaContainer>
-        <Formik initialValues={initialLoginValues} onSubmit={logined}>
+        <Formik
+          initialValues={initialLoginValues}
+          onSubmit={logined}
+          validationSchema={loginSchema}
+        >
           <LoginForm>
             <LoginFormText style={{ color: 'white' }}>
               Привіт!
@@ -224,7 +233,7 @@ function Login({ logined }) {
             </LoginFormText>
             <Label>
               <AdminInput type="text" name="userName" placeholder="Ім'я та прізвище" />
-              <AdminInputNote component="p" name="userName" type="text" />
+              <AdminInputNote component="p" name="userName" type="text" style={{ color: 'red' }}/>
             </Label>
             <AdminFormBtn type="submit">Увійти</AdminFormBtn>
           </LoginForm>

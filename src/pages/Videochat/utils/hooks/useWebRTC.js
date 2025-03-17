@@ -77,8 +77,13 @@ export default function useWebRTC(roomID) {
     [LOCAL_VIDEO]: null,
   });
 
-  const toggleCamera = off => {
+  const toggleCamera = async off => {
     let enable = !off;
+
+    if (!isPremissionAllowed) {
+      const permissions = await navigator.permissions.query({ name: 'camera' });
+      permissions.state === 'denied' && alert('Не надано доступу до камери!');
+    }
 
     if (localMediaStream.current) {
       const videoTrack = localMediaStream.current
@@ -110,8 +115,13 @@ export default function useWebRTC(roomID) {
     });
   };
 
-  const toggleMicrophone = off => {
+  const toggleMicrophone = async off => {
     let enable = !off;
+
+    if (!isPremissionAllowed) {
+      const permissions = await navigator.permissions.query({ name: 'camera' });
+      permissions.state === 'denied' && alert('Не надано доступу до мікрофону!');
+    }
 
     if (localMediaStream.current) {
       const audioTrack = localMediaStream.current
@@ -220,6 +230,8 @@ export default function useWebRTC(roomID) {
   };
 
   async function startCapture() {
+    let premissions;
+
     try {
       await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -253,11 +265,15 @@ export default function useWebRTC(roomID) {
         },
       });
 
+      premissions = true;
       setIsPremissionAllowed(true);
     } catch (error) {
       console.error('Error getting userMedia:', error);
       if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+        premissions = false;
         setIsPremissionAllowed(false);
+        setLocalCameraEnabled(false);
+        setLocalMicrophoneEnabled(false);
         const emptyStream = new MediaStream();
         localMediaStream.current = emptyStream;
       }
@@ -266,8 +282,8 @@ export default function useWebRTC(roomID) {
     if (localRole) {
       const localClientData = {
         role: localRole,
-        isCameraEnabled: isLocalCameraEnabled,
-        isMicroEnabled: isLocalMicrophoneEnabled,
+        isCameraEnabled: premissions,
+        isMicroEnabled: premissions,
       };
       addNewClient(LOCAL_VIDEO, localClientData, () => {
         const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
@@ -280,8 +296,8 @@ export default function useWebRTC(roomID) {
       socket.emit(ACTIONS.JOIN, {
         room: roomID,
         role: localRole,
-        isCameraEnabled: isLocalCameraEnabled,
-        isMicroEnabled: isLocalMicrophoneEnabled,
+        isCameraEnabled: premissions,
+        isMicroEnabled: premissions,
       });
     }
   }
@@ -298,7 +314,17 @@ export default function useWebRTC(roomID) {
             urls: 'stun:mcu.ap.education:5349',
           },
           {
-            urls: 'turn:mcu.ap.education:5349',
+            urls: 'turn:194.44.193.50:3478?transport=udp',
+            username: 'mcuuser',
+            credential: 'ExQGw3dhYfrY6PFj7FsaB92zJl',
+          },
+          {
+            urls: 'turn:194.44.193.50:3478?transport=tcp',
+            username: 'mcuuser',
+            credential: 'ExQGw3dhYfrY6PFj7FsaB92zJl',
+          },
+          {
+            urls: 'turn:194.44.193.50:5349',
             username: 'mcuuser',
             credential: 'ExQGw3dhYfrY6PFj7FsaB92zJl',
           },
