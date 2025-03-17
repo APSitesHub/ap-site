@@ -21,10 +21,10 @@ import {
 import { getKahoots } from './utils/api/getKahoots';
 
 const ROOM_TYPES = {
-  STREAM: 'stream',
   TRIAL: 'trial',
-  C2U: 'close2you',
-  INDIVIDUAL: 'individual',
+  // STREAM: 'stream',
+  // C2U: 'close2you',
+  // INDIVIDUAL: 'individual',
 };
 
 function Videochat() {
