@@ -21,6 +21,15 @@ export const TeacherAnswersChart = ({ answers, quizType, isQuizActive }) => {
     return { answer: key, [key]: answers[key] };
   });
 
+  const theme = {
+    text: {
+      fontSize: 15,
+      fill: '#000',
+      outlineWidth: 0.4,
+      outlineColor: '#000',
+    },
+  };
+
   useEffect(() => {
     return () => {
       //eslint-disable-next-line
@@ -44,7 +53,7 @@ export const TeacherAnswersChart = ({ answers, quizType, isQuizActive }) => {
       keys={data.map(dataObj => Object.keys(dataObj)[1]) || ['answer']}
       indexBy="answer"
       groupMode="stacked"
-      margin={{ top: 30, right: 30, bottom: 20, left: 30 }}
+      margin={{ top: 30, right: 30, bottom: 25, left: 30 }}
       padding={0}
       colors={{ scheme: 'dark2' }}
       axisLeft={{
@@ -56,6 +65,7 @@ export const TeacherAnswersChart = ({ answers, quizType, isQuizActive }) => {
       axisBottom={true}
       labelPosition="end"
       labelOffset={8}
+      theme={theme}
       tooltip={({ id, value, color }) => (
         <TooltipArea>
           <TooltipColorLabel

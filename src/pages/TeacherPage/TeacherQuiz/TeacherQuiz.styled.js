@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export const TeacherInputBox = styled.div`
   position: absolute;
-  top: 50%;
-  right: 15%;
-  transform: translate(15%, -50%);
+  bottom: 110px;
+  right: 70px;
+  transform: translate(-55px, -70px);
   z-index: 8;
   width: 36%;
   /* overflow: hidden; */
