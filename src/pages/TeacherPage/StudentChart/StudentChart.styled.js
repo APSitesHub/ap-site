@@ -160,7 +160,7 @@ export const ChartPlaceholderHighlight = styled.span`
 
 export const ChartAreaMyAPLimiter = styled.div`
   width: 100%;
-  max-height: 300px;
+  max-height: 350px;
   margin: 0 auto;
   position: relative;
   aspect-ratio: 1/1;

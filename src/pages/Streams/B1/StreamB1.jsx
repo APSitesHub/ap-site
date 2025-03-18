@@ -350,21 +350,21 @@ const StreamB1 = () => {
             <StudentInput
               isInputOpen={isQuizInputOpen}
               socket={socketRef.current}
-              toggleInput={toggleQuizInput}
+              toggleQuiz={toggleQuizInput}
               page={room.replace('/streams/', '')}
             />
 
             <StudentOptions
               isInputOpen={isQuizOptionsOpen}
               socket={socketRef.current}
-              toggleInput={toggleQuizOptions}
+              toggleQuiz={toggleQuizOptions}
               page={room.replace('/streams/', '')}
             />
 
             <StudentTrueFalse
               isInputOpen={isQuizTrueFalseOpen}
               socket={socketRef.current}
-              toggleInput={toggleQuizTrueFalse}
+              toggleQuiz={toggleQuizTrueFalse}
               page={room.replace('/streams/', '')}
             />
           </StreamSection>

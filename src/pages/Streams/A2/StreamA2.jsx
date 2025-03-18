@@ -121,8 +121,7 @@ const StreamA2 = () => {
           }
         );
         const todayMessages = dbMessages.data.filter(
-          message =>
-            new Date(message.createdAt).getDate() === new Date().getDate()
+          message => new Date(message.createdAt).getDate() === new Date().getDate()
         );
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
@@ -135,10 +134,7 @@ const StreamA2 = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post(
-            'https://ap-chat-server.onrender.com/messages',
-            data
-          );
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -163,14 +159,11 @@ const StreamA2 = () => {
     socketRef.current.on('message:delete', async id => {
       console.log('delete fired');
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(
-            `https://ap-chat-server.onrender.com/messages/${id}`
-          );
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }
@@ -181,8 +174,7 @@ const StreamA2 = () => {
     socketRef.current.on('message:deleted', async id => {
       console.log(id);
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
     });
 
@@ -197,29 +189,29 @@ const StreamA2 = () => {
     // open quizzes on event
     socketRef.current.on('question:input', data => {
       console.log(data.page);
-      data.page === room.replace('/streams/','') && setIsQuizInputOpen(true);
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(true);
     });
     socketRef.current.on('question:options', data => {
       console.log(data.page);
-      data.page === room.replace('/streams/','') && setIsQuizOptionsOpen(true);
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(true);
     });
     socketRef.current.on('question:trueFalse', data => {
       console.log(data.page);
-      data.page === room.replace('/streams/','') && setIsQuizTrueFalseOpen(true);
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(true);
     });
 
     // close quizzes on event
     socketRef.current.on('question:closeInput', data => {
       console.log(data);
-      data.page === room.replace('/streams/','') && setIsQuizInputOpen(false);
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
     });
     socketRef.current.on('question:closeOptions', data => {
       console.log(data);
-      data.page === room.replace('/streams/','') && setIsQuizOptionsOpen(false);
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
     });
     socketRef.current.on('question:closeTrueFalse', data => {
       console.log(data);
-      data.page === room.replace('/streams/','') && setIsQuizTrueFalseOpen(false);
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
     });
 
     return () => {
@@ -235,24 +227,23 @@ const StreamA2 = () => {
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
-            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви
-            перейшли за правильним посиланням або спробуйте пізніше.
+            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
+            правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Хмммм, схоже що ви були нечемні! <br />
-            Вас було заблоковано за порушення правил нашої платформи. Зв'яжіться
-            зі своїм менеджером сервісу!
+            Вас було заблоковано за порушення правил нашої платформи. Зв'яжіться зі своїм
+            менеджером сервісу!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : (
         <>
           <StreamSection
             style={{
-              width:
-                isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+              width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
             }}
           >
             <VideoBox>
@@ -276,14 +267,10 @@ const StreamA2 = () => {
                 />
               </SupportMarkerLeft>
               <SupportMarkerRight
-                className={
-                  isAnimated && animatedID === 'quality' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
               >
                 <SupportPointer
-                  className={
-                    isAnimated && animatedID === 'quality' ? 'animated' : ''
-                  }
+                  className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
                 />
               </SupportMarkerRight>
               <ReactPlayer
@@ -310,18 +297,14 @@ const StreamA2 = () => {
             <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
               <KahootBtn
                 onClick={toggleKahoot}
-                className={
-                  isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''}
               >
                 <KahootLogo />
               </KahootBtn>
 
               <ChatBtn
                 onClick={toggleChat}
-                className={
-                  isAnimated && animatedID === 'chat_open' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'chat_open' ? 'animated' : ''}
               >
                 <ChatLogo />
               </ChatBtn>
@@ -339,9 +322,7 @@ const StreamA2 = () => {
               <ChatBox
                 ref={chatEl}
                 className={isChatOpen ? 'shown' : 'hidden'}
-                style={
-                  isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
-                }
+                style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
               >
                 <Chat
                   socket={socketRef.current}
@@ -371,21 +352,21 @@ const StreamA2 = () => {
             <StudentInput
               isInputOpen={isQuizInputOpen}
               socket={socketRef.current}
-              toggleInput={toggleQuizInput}
+              toggleQuiz={toggleQuizInput}
               page={room.replace('/streams/', '')}
             />
 
             <StudentOptions
               isInputOpen={isQuizOptionsOpen}
               socket={socketRef.current}
-              toggleInput={toggleQuizOptions}
+              toggleQuiz={toggleQuizOptions}
               page={room.replace('/streams/', '')}
             />
 
             <StudentTrueFalse
               isInputOpen={isQuizTrueFalseOpen}
               socket={socketRef.current}
-              toggleInput={toggleQuizTrueFalse}
+              toggleQuiz={toggleQuizTrueFalse}
               page={room.replace('/streams/', '')}
             />
           </StreamSection>
@@ -393,9 +374,7 @@ const StreamA2 = () => {
             <ChatBox
               ref={chatEl}
               className={isChatOpen ? 'shown' : 'hidden'}
-              style={
-                isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
-              }
+              style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
             >
               <Chat
                 socket={socketRef.current}
