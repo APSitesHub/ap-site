@@ -21,8 +21,8 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
-
-// import LogRocket from 'logrocket';
+// eslint-disable-next-line
+import LogRocket from 'logrocket';
 
 const NewDesign = lazy(() =>
   import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
@@ -475,7 +475,9 @@ const VideochatRoom = lazy(() =>
   import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom')
 );
 const TrialVideoRoom = lazy(() =>
-  import(/* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain')
+  import(
+    /* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain'
+  )
 );
 const EndCall = lazy(() =>
   import(/* webpackChunkName: "End Call" */ '../pages/Videochat/EndCall')
@@ -607,7 +609,11 @@ export const App = () => {
           <Route path="teacher-ap" element={<TeacherAP />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
           <Route path="room/:slug/:id" element={<VideochatRoom />} noindex={true} />
-          <Route path="room/trial/:slug/:id" element={<TrialVideoRoom />} noindex={true} />
+          <Route
+            path="room/trial/:slug/:id"
+            element={<TrialVideoRoom />}
+            noindex={true}
+          />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
@@ -742,6 +748,11 @@ export const App = () => {
             <Route path="user-admin-panel" element={<UserAdminPanel />} noindex={true} />
             <Route
               path="pl-user-admin-panel"
+              element={<UniUserAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="pedagogium-admin-panel"
               element={<UniUserAdminPanel />}
               noindex={true}
             />

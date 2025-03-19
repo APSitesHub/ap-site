@@ -43,6 +43,8 @@ const UserAdminPanel = () => {
   const [userToEdit, setUserToEdit] = useState({});
   const [uniValue, setUniValue] = useState(null);
   const [isUniEmpty, setIsUniEmpty] = useState(false);
+  const [groupValue, setGroupValue] = useState(null);
+  const [isGroupEmpty, setIsGroupEmpty] = useState(false);
   // eslint-disable-next-line
   const [daysAfterLastLogin, setDaysAfterLastLogin] = useState(7);
   const selectInputRef = useRef();
@@ -85,9 +87,52 @@ const UserAdminPanel = () => {
       value: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
     },
     {
-      label: "WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)",
-      value: "WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)"
-    }
+      label: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+      value: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+    },
+  ];
+
+  const groupOptions = [
+    {
+      label: '1',
+      value: '1',
+    },
+    {
+      label: '2',
+      value: '2',
+    },
+    {
+      label: '3',
+      value: '3',
+    },
+    {
+      label: '4',
+      value: '4',
+    },
+    {
+      label: '5',
+      value: '5',
+    },
+    {
+      label: '6',
+      value: '6',
+    },
+    {
+      label: '7',
+      value: '7',
+    },
+    {
+      label: '8',
+      value: '8',
+    },
+    {
+      label: '9',
+      value: '9',
+    },
+    {
+      label: '10',
+      value: '10',
+    },
   ];
 
   useEffect(() => {
@@ -179,6 +224,7 @@ const UserAdminPanel = () => {
     contactId: '',
     pupilId: '',
     university: '',
+    group: '',
   };
 
   const usersSchema = yup.object().shape({
@@ -210,6 +256,7 @@ const UserAdminPanel = () => {
       : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
     values.university = uniValue.value;
+    values.group = groupValue.value;
     try {
       const response = await axios.post('/uniusers/new', values);
       console.log(response.data);
@@ -249,6 +296,7 @@ const UserAdminPanel = () => {
     userToUpdate.crmId = values.crmId;
     userToUpdate.contactId = values.contactId;
     userToUpdate.university = values.university;
+    userToUpdate.group = values.group;
 
     console.log(userToUpdate);
 
@@ -387,6 +435,43 @@ const UserAdminPanel = () => {
                 />
                 {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
               </SpeakingLabel>
+              <SpeakingLabel>
+                {groupValue && groupValue.value && <LabelText>Група</LabelText>}
+                <TeacherLangSelect
+                  ref={selectInputRef}
+                  options={groupOptions}
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      border: 'none',
+                      borderRadius: '50px',
+                      minHeight: '34px',
+                    }),
+                    menu: (baseStyles, state) => ({
+                      ...baseStyles,
+                      position: 'absolute',
+                      zIndex: '2',
+                      top: '36px',
+                    }),
+                    dropdownIndicator: (baseStyles, state) => ({
+                      ...baseStyles,
+                      padding: '7px',
+                    }),
+                  }}
+                  placeholder="Група"
+                  name="group"
+                  onBlur={() => {
+                    !groupValue
+                      ? setIsGroupEmpty(empty => (empty = true))
+                      : setIsGroupEmpty(empty => (empty = false));
+                  }}
+                  onChange={group => {
+                    setGroupValue(group);
+                    group?.value && setIsGroupEmpty(empty => (empty = false));
+                  }}
+                />
+                {isGroupEmpty && <ErrorNote> Група - обов'язкове поле!</ErrorNote>}
+              </SpeakingLabel>
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
             </UsersForm>
           </Formik>
@@ -401,6 +486,7 @@ const UserAdminPanel = () => {
                 <UserHeadCell>Пошта (логін)</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>Університет</UserHeadCell>
+                <UserHeadCell>Група</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
                 <UserHeadCell>Відвідини з часом</UserHeadCell>
@@ -431,6 +517,7 @@ const UserAdminPanel = () => {
                   <UserCell>{user.mail}</UserCell>
                   <UserCell>{user.password}</UserCell>
                   <UserCell className="last-name">{user.university}</UserCell>
+                  <UserCell>{user.group ? user.group : '1'}</UserCell>
                   <UserCell>{user.pupilId}</UserCell>
                   <UserCell
                     className={
@@ -483,6 +570,7 @@ const UserAdminPanel = () => {
               updateUser={updateUser}
               closeEditForm={closeEditForm}
               uniOptions={uniOptions}
+              groupOptions={groupOptions}
             />
           </Backdrop>
         )}

@@ -26,12 +26,19 @@ export const UniUserEditForm = ({
   updateUser,
   closeEditForm,
   uniOptions,
+  groupOptions,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [uniValue, setUniValue] = useState(
     uniOptions.find(option => option.value === userToEdit.university)
   );
   const [isUniEmpty, setIsUniEmpty] = useState(false);
+  const [groupValue, setGroupValue] = useState(
+    userToEdit.group
+      ? groupOptions.find(option => option.value === userToEdit.group)
+      : '1'
+  );
+  const [isGroupEmpty, setIsGroupEmpty] = useState(false);
   const selectInputRef = useRef();
 
   console.log(userToEdit);
@@ -44,6 +51,7 @@ export const UniUserEditForm = ({
     password: userToEdit.password,
     pupilId: userToEdit.pupilId,
     university: userToEdit.university,
+    group: userToEdit.group ? userToEdit.group : '1',
   };
 
   const usersSchema = yup.object().shape({
@@ -78,6 +86,7 @@ export const UniUserEditForm = ({
         ? +values.contactId.trim().trimStart()
         : undefined;
     values.university = uniValue.value;
+    values.group = groupValue.value;
     try {
       setIsLoading(isLoading => (isLoading = true));
       const response = await axios.put(`/uniusers/${userToEdit._id}`, values);
@@ -88,9 +97,7 @@ export const UniUserEditForm = ({
       closeEditForm();
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -105,19 +112,11 @@ export const UniUserEditForm = ({
       >
         <UsersEditForm>
           <Label>
-            <AdminInput
-              type="text"
-              name="name"
-              placeholder="Прізвище та ім'я"
-            />
+            <AdminInput type="text" name="name" placeholder="Прізвище та ім'я" />
             <AdminInputNote component="p" name="name" />
           </Label>
           <Label>
-            <AdminInput
-              type="email"
-              name="mail"
-              placeholder="Електронна пошта (логін)"
-            />
+            <AdminInput type="email" name="mail" placeholder="Електронна пошта (логін)" />
             <AdminInputNote component="p" name="mail" />
           </Label>
           <Label>
@@ -129,19 +128,11 @@ export const UniUserEditForm = ({
             <AdminInputNote component="p" name="crmId" />
           </Label>
           <Label>
-            <AdminInput
-              type="text"
-              name="contactId"
-              placeholder="ID контакту в CRM"
-            />
+            <AdminInput type="text" name="contactId" placeholder="ID контакту в CRM" />
             <AdminInputNote component="p" name="contactId" />
           </Label>
           <Label>
-            <AdminInput
-              type="text"
-              name="pupilId"
-              placeholder="ID учня на платформі"
-            />
+            <AdminInput type="text" name="pupilId" placeholder="ID учня на платформі" />
             <AdminInputNote component="p" name="pupilId" />
           </Label>
           <SpeakingLabel>
@@ -182,9 +173,49 @@ export const UniUserEditForm = ({
                 uni?.value && setIsUniEmpty(empty => (empty = false));
               }}
             />
-            {isUniEmpty && (
-              <ErrorNote> Університет - обов'язкове поле!</ErrorNote>
-            )}
+            {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {groupValue && groupValue.value && <LabelText>Група</LabelText>}
+            <TeacherLangSelect
+              ref={selectInputRef}
+              options={groupOptions}
+              defaultValue={
+                userToEdit.group
+                  ? groupOptions.find(option => option.value === userToEdit.group)
+                  : groupOptions[0]
+              }
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '50px',
+                  minHeight: '34px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
+                }),
+              }}
+              placeholder="Група"
+              name="group"
+              onBlur={() => {
+                !groupValue
+                  ? setIsGroupEmpty(empty => (empty = true))
+                  : setIsGroupEmpty(empty => (empty = false));
+              }}
+              onChange={group => {
+                setGroupValue(group);
+                group?.value && setIsGroupEmpty(empty => (empty = false));
+              }}
+            />
+            {isGroupEmpty && <ErrorNote> Група - обов'язкове поле!</ErrorNote>}
           </SpeakingLabel>
           <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
         </UsersEditForm>
