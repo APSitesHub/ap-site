@@ -371,35 +371,30 @@ export default function useWebRTC(roomID) {
         }
       };
 
-      let adminKey = '';
-
-      for (const [key, value] of Object.entries(clientsData)) {
-        if (value === 'admin') {
-          adminKey = key;
-          break;
-        }
-      }
-
       if (localMediaStream.current && localMediaStream.current.getTracks().length > 0) {
-        if (adminKey === peerID) {
-          localMediaStream.current.getTracks().forEach(track => {
-            const sender = peerConnection.addTrack(track, localMediaStream.current);
+        localMediaStream.current.getTracks().forEach(track => {
+          const sender = peerConnection.addTrack(track, localMediaStream.current);
 
-            const params = sender.getParameters();
+          const params = sender.getParameters();
+          if (!params.encodings) {
+            params.encodings = [];
+          }
 
-            if (params.encodings && params.encodings.length > 0) {
-              params.encodings[0].maxBitrate = 2000000; // 2 MB/s
+          if (params.encodings && params.encodings.length > 0) {
+            if (localRole === 'admin') {
+              params.encodings[0].maxBitrate = 2000000;
               params.encodings[0].maxFramerate = 30;
               params.encodings[0].priority = 'high';
               params.encodings[0].networkPriority = 'high';
-              sender.setParameters(params);
+            } else {
+              params.encodings[0].maxBitrate = 500000;
+              params.encodings[0].maxFramerate = 20;
+              params.encodings[0].priority = 'low';
+              params.encodings[0].networkPriority = 'low';
             }
-          });
-        } else {
-          localMediaStream.current.getTracks().forEach(track => {
-            peerConnection.addTrack(track, localMediaStream.current);
-          });
-        }
+            sender.setParameters(params);
+          }
+        });
       } else {
         const audioContext = new AudioContext();
         const oscillator = audioContext.createOscillator();
@@ -446,7 +441,7 @@ export default function useWebRTC(roomID) {
         });
       }
     },
-    [addNewClient]
+    [addNewClient, localRole]
   );
 
   async function setRemoteMedia({ peerID, sessionDescription: remoteDescription }) {
@@ -666,25 +661,35 @@ export default function useWebRTC(roomID) {
   };
 
   const getClients = () => {
-    console.log(clients);
-    console.log(isPremissionAllowed);
+    console.log('clients: ', clients);
+    console.log('permissions: ', isPremissionAllowed);
+    console.log('localTracks: ', localMediaStream.current.getTracks());
+    console.log('peers: ', peerConnections);
+
+    Object.keys(peerConnections.current).forEach(id => {
+      const rtc = peerConnections.current[id];
+
+      const sender = rtc.getSenders();
+
+      console.log('sender: ', sender);
+    });
   };
 
   useEffect(() => {
-    const logs = {
-      peerId: '',
-      pairStats: {},
-      outVideoStats: {},
-      inVideoStats: {},
-      outAudioStats: {},
-      inAudioStats: {},
-    };
     const prevStats = {};
 
     const logsInterval = setInterval(() => {
       Object.keys(peerConnections.current).forEach(async id => {
+        const logs = {
+          peerId: id,
+          pairStats: {},
+          outVideoStats: {},
+          inVideoStats: {},
+          outAudioStats: {},
+          inAudioStats: {},
+        };
+
         const stats = await peerConnections.current[id].getStats();
-        logs.peerId = id;
 
         stats.forEach(report => {
           if (report.type === 'candidate-pair' && report.state === 'succeeded') {
@@ -712,11 +717,11 @@ export default function useWebRTC(roomID) {
             logs.inAudioStats = calcBitrate(report, 'audio_in', id);
           }
         });
-      });
 
-      if (Object.keys(logs).length > 0) {
-        console.log(logs);
-      }
+        if (Object.keys(logs).length > 0) {
+          console.log(logs);
+        }
+      });
     }, 30000);
 
     function calcBitrate(report, key, id) {
