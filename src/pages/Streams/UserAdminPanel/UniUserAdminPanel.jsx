@@ -29,17 +29,33 @@ import {
   UsersForm,
 } from './UserAdminPanel.styled';
 import { UniUserEditForm } from './UserEditForm/UniUserEditForm';
+import { UserVisitedEditForm } from './UserEditForm/UserVisitedEditForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-const UserAdminPanel = () => {
+const Univesitets = {
+  PEDAGOGIUM: 'Pedagogium (Wyższa Szkoła Nauk Społecznych)',
+  WSTIJO: 'WSTIJO (Wyzsza Szkoła Turystyki i Jezykow Obcych w Warszawie)',
+  WSBMIR: 'WSBMIR (Wyższa Szkoła Biznesu, Mediów i Reklamy)',
+  EWSPA: 'EWSPA (Europejska Wyższa Szkoła Prawa i Administracji w Warszawie)',
+  MERITO: 'Merito (Uniwersytet WSB Merito Warszawa)',
+  WSTIH: 'WSTiH (Wyższa Szkoła Turystyki i Hotelarstwa w Gdańsku)',
+  WSKM: 'WSKM (Wyższa Szkoła Kadr Menedżerskich)',
+  WSSIP: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
+  WSPA: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
+  WSE: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+};
+
+const UserAdminPanel = ({ uni }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [users, setUsers] = useState([]);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+  const [isVisitedEditFormOpen, setIsVisitedEditFormOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState({});
   const [uniValue, setUniValue] = useState(null);
   const [isUniEmpty, setIsUniEmpty] = useState(false);
@@ -136,7 +152,9 @@ const UserAdminPanel = () => {
   ];
 
   useEffect(() => {
-    document.title = 'Polish University Users Admin Panel | AP Education';
+    document.title = uni
+      ? `${Univesitets[uni]} Admin Panel | AP Education`
+      : 'Polish University Users Admin Panel | AP Education';
 
     const refreshToken = async () => {
       console.log('token refresher');
@@ -156,6 +174,11 @@ const UserAdminPanel = () => {
       try {
         if (isUserAdmin) {
           const response = await axios.get('/uniusers/admin/');
+          if (uni) {
+            response.data = response.data.filter(
+              user => user.university === Univesitets[uni]
+            );
+          }
           setUsers(users => (users = [...response.data.reverse()]));
         }
       } catch (error) {
@@ -175,7 +198,7 @@ const UserAdminPanel = () => {
     return () => {
       window.removeEventListener('keydown', onEscapeClose);
     };
-  }, [isUserAdmin]);
+  }, [isUserAdmin, uni]);
 
   const initialLoginValues = {
     login: '',
@@ -255,7 +278,7 @@ const UserAdminPanel = () => {
       ? +values.contactId.trim().trimStart()
       : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
-    values.university = uniValue.value;
+    values.university = uni ? Univesitets[uni] : uniValue.value;
     values.group = groupValue.value;
     try {
       const response = await axios.post('/uniusers/new', values);
@@ -277,14 +300,32 @@ const UserAdminPanel = () => {
     setUserToEdit(userToEdit => (userToEdit = users.find(user => user._id === id)));
   };
 
+  const handleVisitedEdit = async id => {
+    setIsVisitedEditFormOpen(true);
+    setUserToEdit(userToEdit => (userToEdit = users.find(user => user._id === id)));
+  };
+
   const closeEditForm = e => {
     setIsEditFormOpen(false);
+    setIsVisitedEditFormOpen(false);
   };
 
   const closeEditFormOnClick = e => {
     if (e.target.id === 'close-on-click') {
       setIsEditFormOpen(false);
+      setIsVisitedEditFormOpen(false);
     }
+  };
+
+  const updateUserVisits = (id, visits) => {
+    setUsers(
+      users =>
+        (users = users.map((user, i) =>
+          i === users.findIndex(user => user._id === id)
+            ? { ...user, visited: visits }
+            : user
+        ))
+    );
   };
 
   const updateUser = (id, values) => {
@@ -293,6 +334,7 @@ const UserAdminPanel = () => {
     userToUpdate.mail = values.mail;
     userToUpdate.password = values.password;
     userToUpdate.pupilId = values.pupilId;
+    userToUpdate.points = values.points;
     userToUpdate.crmId = values.crmId;
     userToUpdate.contactId = values.contactId;
     userToUpdate.university = values.university;
@@ -398,43 +440,45 @@ const UserAdminPanel = () => {
                 />
                 <AdminInputNote component="p" name="pupilId" />
               </Label>
-              <SpeakingLabel>
-                {uniValue && uniValue.value && <LabelText>Університет</LabelText>}
-                <TeacherLangSelect
-                  ref={selectInputRef}
-                  options={uniOptions}
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      border: 'none',
-                      borderRadius: '50px',
-                      minHeight: '34px',
-                    }),
-                    menu: (baseStyles, state) => ({
-                      ...baseStyles,
-                      position: 'absolute',
-                      zIndex: '2',
-                      top: '36px',
-                    }),
-                    dropdownIndicator: (baseStyles, state) => ({
-                      ...baseStyles,
-                      padding: '7px',
-                    }),
-                  }}
-                  placeholder="Університет"
-                  name="uni"
-                  onBlur={() => {
-                    !uniValue
-                      ? setIsUniEmpty(empty => (empty = true))
-                      : setIsUniEmpty(empty => (empty = false));
-                  }}
-                  onChange={uni => {
-                    setUniValue(uni);
-                    uni?.value && setIsUniEmpty(empty => (empty = false));
-                  }}
-                />
-                {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
-              </SpeakingLabel>
+              {!uni && (
+                <SpeakingLabel>
+                  {uniValue && uniValue.value && <LabelText>Університет</LabelText>}
+                  <TeacherLangSelect
+                    ref={selectInputRef}
+                    options={uniOptions}
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        border: 'none',
+                        borderRadius: '50px',
+                        minHeight: '34px',
+                      }),
+                      menu: (baseStyles, state) => ({
+                        ...baseStyles,
+                        position: 'absolute',
+                        zIndex: '2',
+                        top: '36px',
+                      }),
+                      dropdownIndicator: (baseStyles, state) => ({
+                        ...baseStyles,
+                        padding: '7px',
+                      }),
+                    }}
+                    placeholder="Університет"
+                    name="uni"
+                    onBlur={() => {
+                      !uniValue
+                        ? setIsUniEmpty(empty => (empty = true))
+                        : setIsUniEmpty(empty => (empty = false));
+                    }}
+                    onChange={uni => {
+                      setUniValue(uni);
+                      uni?.value && setIsUniEmpty(empty => (empty = false));
+                    }}
+                  />
+                  {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
+                </SpeakingLabel>
+              )}
               <SpeakingLabel>
                 {groupValue && groupValue.value && <LabelText>Група</LabelText>}
                 <TeacherLangSelect
@@ -487,6 +531,7 @@ const UserAdminPanel = () => {
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>Університет</UserHeadCell>
                 <UserHeadCell>Група</UserHeadCell>
+                <UserHeadCell>Бали</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
                 <UserHeadCell>Відвідини з часом</UserHeadCell>
@@ -518,8 +563,11 @@ const UserAdminPanel = () => {
                   <UserCell>{user.password}</UserCell>
                   <UserCell className="last-name">{user.university}</UserCell>
                   <UserCell>{user.group ? user.group : '1'}</UserCell>
+                  <UserCell>{user.points ? user.points : '0'}</UserCell>
                   <UserCell>{user.pupilId}</UserCell>
                   <UserCell
+                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                    onClick={() => handleVisitedEdit(user._id)}
                     className={
                       Math.floor(
                         (Date.now() -
@@ -569,8 +617,17 @@ const UserAdminPanel = () => {
               userToEdit={userToEdit}
               updateUser={updateUser}
               closeEditForm={closeEditForm}
-              uniOptions={uniOptions}
+              uniOptions={!uni ? uniOptions : []}
               groupOptions={groupOptions}
+            />
+          </Backdrop>
+        )}
+        {isVisitedEditFormOpen && (
+          <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
+            <UserVisitedEditForm
+              userToEdit={userToEdit}
+              updateUserVisits={updateUserVisits}
+              closeEditForm={closeEditForm}
             />
           </Backdrop>
         )}
