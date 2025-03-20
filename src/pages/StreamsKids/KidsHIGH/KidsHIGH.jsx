@@ -115,34 +115,34 @@ const KidsHIGH = () => {
     // open quizzes on event
     socketRef.current.on('question:input', data => {
       console.log(data.page);
-      data.page === room.replace('/streams-kids/', '') + 'kids' &&
+      data.page === 'kids' + room.replace('/streams-kids/', '') &&
         setIsQuizInputOpen(true);
     });
     socketRef.current.on('question:options', data => {
       console.log(data.page);
-      data.page === room.replace('/streams-kids/', '') + 'kids' &&
+      data.page === 'kids' + room.replace('/streams-kids/', '') &&
         setIsQuizOptionsOpen(true);
     });
     socketRef.current.on('question:trueFalse', data => {
       console.log(data.page);
-      data.page === room.replace('/streams-kids/', '') + 'kids' &&
+      data.page === 'kids' + room.replace('/streams-kids/', '') &&
         setIsQuizTrueFalseOpen(true);
     });
 
     // close quizzes on event
     socketRef.current.on('question:closeInput', data => {
       console.log(data);
-      data.page === room.replace('/streams-kids/', '') + 'kids' &&
+      data.page === 'kids' + room.replace('/streams-kids/', '') &&
         setIsQuizInputOpen(false);
     });
     socketRef.current.on('question:closeOptions', data => {
       console.log(data);
-      data.page === room.replace('/streams-kids/', '') + 'kids' &&
+      data.page === 'kids' + room.replace('/streams-kids/', '') &&
         setIsQuizOptionsOpen(false);
     });
     socketRef.current.on('question:closeTrueFalse', data => {
       console.log(data);
-      data.page === room.replace('/streams-kids/', '') + 'kids' &&
+      data.page === 'kids' + room.replace('/streams-kids/', '') &&
         setIsQuizTrueFalseOpen(false);
     });
 
@@ -357,7 +357,7 @@ const KidsHIGH = () => {
               isInputOpen={isQuizInputOpen}
               socket={socketRef.current}
               toggleQuiz={toggleQuizInput}
-              page={room.replace('/streams-kids/', '') + 'kids'}
+              page={'kids' + room.replace('/streams-kids/', '')}
               currentUser={currentUser}
             />
 
@@ -365,7 +365,7 @@ const KidsHIGH = () => {
               isInputOpen={isQuizOptionsOpen}
               socket={socketRef.current}
               toggleQuiz={toggleQuizOptions}
-              page={room.replace('/streams-kids/', '') + 'kids'}
+              page={'kids' + room.replace('/streams-kids/', '')}
               currentUser={currentUser}
             />
 
@@ -373,7 +373,7 @@ const KidsHIGH = () => {
               isInputOpen={isQuizTrueFalseOpen}
               socket={socketRef.current}
               toggleQuiz={toggleQuizTrueFalse}
-              page={room.replace('/streams-kids/', '') + 'kids'}
+              page={'kids' + room.replace('/streams-kids/', '')}
               currentUser={currentUser}
             />
 
