@@ -753,7 +753,7 @@ export const App = () => {
             />
             <Route
               path="pedagogium-admin-panel"
-              element={<UniUserAdminPanel />}
+              element={<UniUserAdminPanel uni={'PEDAGOGIUM'} />}
               noindex={true}
             />
             <Route

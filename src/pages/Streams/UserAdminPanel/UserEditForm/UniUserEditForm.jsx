@@ -50,6 +50,7 @@ export const UniUserEditForm = ({
     mail: userToEdit.mail,
     password: userToEdit.password,
     pupilId: userToEdit.pupilId,
+    points: userToEdit.points || '0',
     university: userToEdit.university,
     group: userToEdit.group ? userToEdit.group : '1',
   };
@@ -70,6 +71,7 @@ export const UniUserEditForm = ({
       .max(7, 'Не більше 7 цифр')
       .matches(/^\d{1,7}$/, 'Лише цифри')
       .required("Обов'язкове поле, дивитись на платформі"),
+    points: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
@@ -77,6 +79,7 @@ export const UniUserEditForm = ({
     values.mail = values.mail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.pupilId = values.pupilId.trim().trimStart();
+    values.points = values.points.trim().trimStart();
     values.crmId =
       values.crmId && typeof values.crmId === 'string'
         ? +values.crmId.trim().trimStart()
@@ -135,46 +138,56 @@ export const UniUserEditForm = ({
             <AdminInput type="text" name="pupilId" placeholder="ID учня на платформі" />
             <AdminInputNote component="p" name="pupilId" />
           </Label>
-          <SpeakingLabel>
-            {uniValue && uniValue.value && <LabelText>Університет</LabelText>}
-            <TeacherLangSelect
-              ref={selectInputRef}
-              options={uniOptions}
-              defaultValue={uniOptions.find(
-                option => option.value === userToEdit.university
-              )}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  border: 'none',
-                  borderRadius: '50px',
-                  minHeight: '34px',
-                }),
-                menu: (baseStyles, state) => ({
-                  ...baseStyles,
-                  position: 'absolute',
-                  zIndex: '2',
-                  top: '36px',
-                }),
-                dropdownIndicator: (baseStyles, state) => ({
-                  ...baseStyles,
-                  padding: '7px',
-                }),
-              }}
-              placeholder="Університет"
-              name="uni"
-              onBlur={() => {
-                !uniValue
-                  ? setIsUniEmpty(empty => (empty = true))
-                  : setIsUniEmpty(empty => (empty = false));
-              }}
-              onChange={uni => {
-                setUniValue(uni);
-                uni?.value && setIsUniEmpty(empty => (empty = false));
-              }}
-            />
-            {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
-          </SpeakingLabel>
+          <Label>
+            <AdminInput type="text" name="points" placeholder="Бали" />
+            <AdminInputNote component="p" name="points" />
+          </Label>
+          <Label>
+            <AdminInput type="text" name="pupilId" placeholder="ID учня на платформі" />
+            <AdminInputNote component="p" name="pupilId" />
+          </Label>
+          {uniOptions.length > 0 && (
+            <SpeakingLabel>
+              {uniValue && uniValue.value && <LabelText>Університет</LabelText>}
+              <TeacherLangSelect
+                ref={selectInputRef}
+                options={uniOptions}
+                defaultValue={uniOptions.find(
+                  option => option.value === userToEdit.university
+                )}
+                styles={{
+                  control: (baseStyles, state) => ({
+                    ...baseStyles,
+                    border: 'none',
+                    borderRadius: '50px',
+                    minHeight: '34px',
+                  }),
+                  menu: (baseStyles, state) => ({
+                    ...baseStyles,
+                    position: 'absolute',
+                    zIndex: '2',
+                    top: '36px',
+                  }),
+                  dropdownIndicator: (baseStyles, state) => ({
+                    ...baseStyles,
+                    padding: '7px',
+                  }),
+                }}
+                placeholder="Університет"
+                name="uni"
+                onBlur={() => {
+                  !uniValue
+                    ? setIsUniEmpty(empty => (empty = true))
+                    : setIsUniEmpty(empty => (empty = false));
+                }}
+                onChange={uni => {
+                  setUniValue(uni);
+                  uni?.value && setIsUniEmpty(empty => (empty = false));
+                }}
+              />
+              {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
+            </SpeakingLabel>
+          )}
           <SpeakingLabel>
             {groupValue && groupValue.value && <LabelText>Група</LabelText>}
             <TeacherLangSelect

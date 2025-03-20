@@ -54,6 +54,23 @@ export const UsersEditForm = styled(Form)`
   gap: 15px;
 `;
 
+export const DatesEditBlock = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 400px;
+
+  background-color: white;
+  padding: 24px;
+  border-radius: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
 export const AdminFormBtn = styled(FormBtn)`
   margin: 0 auto;
   height: 48px;
@@ -156,6 +173,7 @@ export const UserCellLeft = styled(UserCell)`
 `;
 
 export const UserEditButton = styled.button`
+  cursor: pointer;
   background-color: transparent;
   border: 1px solid var(--accent-color);
   border-radius: 5px;
@@ -168,6 +186,7 @@ export const UserChartButton = styled.button`
 `;
 
 export const UserDeleteButton = styled.button`
+  cursor: pointer;
   background-color: transparent;
   border: 1px solid var(--main-color);
   border-radius: 5px;
