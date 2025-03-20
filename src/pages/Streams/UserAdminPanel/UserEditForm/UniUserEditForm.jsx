@@ -88,7 +88,7 @@ export const UniUserEditForm = ({
       values.contactId && typeof values.crmId === 'string'
         ? +values.contactId.trim().trimStart()
         : undefined;
-    values.university = uniValue.value;
+    values.university = uniValue?.value || userToEdit.university;
     values.group = groupValue.value;
     try {
       setIsLoading(isLoading => (isLoading = true));

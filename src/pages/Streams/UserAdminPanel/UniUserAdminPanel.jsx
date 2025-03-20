@@ -173,12 +173,10 @@ const UserAdminPanel = ({ uni }) => {
     const getUsers = async () => {
       try {
         if (isUserAdmin) {
-          const response = await axios.get('/uniusers/admin/');
-          if (uni) {
-            response.data = response.data.filter(
-              user => user.university === Univesitets[uni]
-            );
-          }
+          const response = await axios.get(
+            `/uniusers/admin/${uni ? uni.toLowerCase() : ''}`
+          );
+
           setUsers(users => (users = [...response.data.reverse()]));
         }
       } catch (error) {
@@ -337,7 +335,9 @@ const UserAdminPanel = ({ uni }) => {
     userToUpdate.points = values.points;
     userToUpdate.crmId = values.crmId;
     userToUpdate.contactId = values.contactId;
-    userToUpdate.university = values.university;
+    if (uni) {
+      userToUpdate.university = values.university;
+    }
     userToUpdate.group = values.group;
 
     console.log(userToUpdate);
@@ -529,12 +529,12 @@ const UserAdminPanel = ({ uni }) => {
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Пошта (логін)</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
-                <UserHeadCell>Університет</UserHeadCell>
+                {!uni && <UserHeadCell>Університет</UserHeadCell>}
                 <UserHeadCell>Група</UserHeadCell>
                 <UserHeadCell>Бали</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Відвідини</UserHeadCell>
-                <UserHeadCell>Відвідини з часом</UserHeadCell>
+                {!uni && <UserHeadCell>Відвідини з часом</UserHeadCell>}
                 <UserHeadCell>Edit</UserHeadCell>
                 <UserHeadCell>Delete</UserHeadCell>
               </UserDBRow>
@@ -561,7 +561,7 @@ const UserAdminPanel = ({ uni }) => {
                   <UserCell>{user.name}</UserCell>
                   <UserCell>{user.mail}</UserCell>
                   <UserCell>{user.password}</UserCell>
-                  <UserCell className="last-name">{user.university}</UserCell>
+                  {!uni && <UserCell className="last-name">{user.university}</UserCell>}
                   <UserCell>{user.group ? user.group : '1'}</UserCell>
                   <UserCell>{user.points ? user.points : '0'}</UserCell>
                   <UserCell>{user.pupilId}</UserCell>
@@ -580,17 +580,21 @@ const UserAdminPanel = ({ uni }) => {
                   >
                     {user.visited[user.visited.length - 1]}
                   </UserCell>
-                  <UserCell>
-                    {!user.visitedTime[user.visitedTime.length - 1]
-                      ? ''
-                      : user.visitedTime[user.visitedTime.length - 1].match('^202')
-                      ? new Date(
-                          user.visitedTime[user.visitedTime.length - 1]
-                        ).toLocaleString('uk-UA')
-                      : new Date(
-                          changeDateFormat(user.visitedTime[user.visitedTime.length - 1])
-                        ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
-                  </UserCell>
+                  {!uni && (
+                    <UserCell>
+                      {!user.visitedTime[user.visitedTime.length - 1]
+                        ? ''
+                        : user.visitedTime[user.visitedTime.length - 1].match('^202')
+                        ? new Date(
+                            user.visitedTime[user.visitedTime.length - 1]
+                          ).toLocaleString('uk-UA')
+                        : new Date(
+                            changeDateFormat(
+                              user.visitedTime[user.visitedTime.length - 1]
+                            )
+                          ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
+                    </UserCell>
+                  )}
 
                   <UserCell>
                     {/* {user.name === 'Dev Acc' ? null : ( */}
