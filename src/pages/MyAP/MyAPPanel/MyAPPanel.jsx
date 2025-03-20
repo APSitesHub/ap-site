@@ -64,6 +64,12 @@ export const MyAPPanel = ({
       : timeline.lang === language && timeline.course === user.course
   );
 
+  // filter lessons with correct marathon number
+  const personalLessons =
+    language.includes('en') && user.marathonNumber
+      ? lessons.filter(lesson => lesson.marathonName.includes(user.marathonNumber))
+      : lessons;
+
   const personalLessonsDays = personalTimetable?.schedule.map(lesson => lesson.day);
 
   const toggleButtonBox = () => {
@@ -392,7 +398,7 @@ export const MyAPPanel = ({
 
       {isLessonFinderShown && (
         <LessonFinder
-          lessons={lessons}
+          lessons={personalLessons}
           user={user}
           language={language}
           setPlatformIframeLink={setPlatformIframeLink}
