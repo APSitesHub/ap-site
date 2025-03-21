@@ -21,6 +21,9 @@ import {
   CameraIcon,
   DisabledCameraIcon,
   DisabledMicroIcon,
+  SoundIcon,
+  DisabledSoundIcon,
+  VolumeRange,
   EndCallIcon,
   MainVideo,
   MainVideoContainer,
@@ -41,8 +44,8 @@ import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 
-const VISIBLE_USERS_COUNT = 4;
-const debug = false;
+const VISIBLE_USERS_COUNT = 1;
+const debug = true;
 
 function Room() {
   const { id: roomID } = useParams();
@@ -61,12 +64,15 @@ function Room() {
     addMockClient,
     getClients,
     remoteStreams,
+    mixedAudioStream,
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
+  const [audioOutputDevices, setAudioOutputDevices] = useState([]);
+  const [volume, setVolume] = useState(0.5);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
@@ -83,6 +89,7 @@ function Room() {
 
   const chatEl = useRef();
   const socketRef = useRef(null);
+  const audioRef = useRef(null);
 
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
@@ -129,8 +136,10 @@ function Room() {
   useEffect(() => {
     const video = localDevices.filter(device => device.kind === 'videoinput');
     const audio = localDevices.filter(device => device.kind === 'audioinput');
+    const audiooutput = localDevices.filter(device => device.kind === 'audiooutput');
     setAudioDevices(audio);
     setVideoDevices(video);
+    setAudioOutputDevices(audiooutput);
   }, [localDevices]);
 
   const changePage = isUp => {
@@ -341,12 +350,43 @@ function Room() {
     };
   }, [visibleClients]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.srcObject = mixedAudioStream;
+    }
+  }, [mixedAudioStream, audioRef.current]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  const toggleVolumeInput = () => {
+    const input = document.getElementById('volume-range');
+    input.style.display = input.style.display === 'block' ? 'none' : 'block';
+  };
+
+  const changeAudioOutput = async deviceId => {
+    if (audioRef.current?.setSinkId) {
+      try {
+        await audioRef.current.setSinkId(deviceId);
+        console.log(audioRef.current.sinkId);
+        console.log('changed');
+      } catch (error) {
+        console.error('Change audiootput error:', error);
+      }
+    } else {
+      console.warn('setSinkId not supported');
+    }
+  };
+
   const updateStreams = () => {
     const videoElements = document.querySelectorAll('[data-video]');
 
     videoElements.forEach(el => {
       try {
-        if (el.dataset.id === LOCAL_VIDEO) {
+        if (el?.dataset?.id === LOCAL_VIDEO) {
           updateLocalStream(el);
         } else {
           updateRemoteStream(el);
@@ -358,7 +398,7 @@ function Room() {
   };
 
   const updateLocalStream = el => {
-    if (el.srcObject?.id !== localMediaStream.current.id) {
+    if (el.srcObject?.id !== localMediaStream.current?.id) {
       el.srcObject = localMediaStream.current;
     }
   };
@@ -397,6 +437,7 @@ function Room() {
               width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
             }}
           >
+            <audio autoPlay ref={audioRef} />
             <VideochatContainer>
               <MainVideoContainer>
                 {clients
@@ -416,7 +457,7 @@ function Room() {
                           data-id={clientId}
                           autoPlay
                           playsInline
-                          muted={clientId === LOCAL_VIDEO}
+                          muted={true}
                         />
                         {(!isCameraEnabled ||
                           (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
@@ -462,6 +503,41 @@ function Room() {
                       </MediaButtonContainer>
                     </>
                   )}
+                  <MediaButtonContainer style={{ position: 'relative' }}>
+                    <div
+                      id="volume-range"
+                      style={{
+                        display: 'none',
+                        position: 'absolute',
+                        bottom: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                        padding: '5px',
+                        paddingBottom: '10px',
+                      }}
+                    >
+                      <VolumeRange
+                        min="0"
+                        max="1"
+                        step={0.01}
+                        value={volume}
+                        onChange={e => setVolume(e.target.value)}
+                      />
+                    </div>
+                    <MediaButton onClick={() => toggleVolumeInput()}>
+                      {volume !== '0' ? <SoundIcon /> : <DisabledSoundIcon />}
+                    </MediaButton>
+                    <MediaSelector
+                      name="audiooutput"
+                      id="audiooutput"
+                      onChange={e => changeAudioOutput(e.target.value)}
+                    >
+                      {audioOutputDevices.map(device => (
+                        <MediaOption key={device.deviceId} value={device.deviceId}>
+                          {device.label}
+                        </MediaOption>
+                      ))}
+                    </MediaSelector>
+                  </MediaButtonContainer>
                   <MediaButtonContainer>
                     <MediaButton onClick={toggleMicrophone}>
                       {isLocalMicrophoneEnabled ? <MicroIcon /> : <DisabledMicroIcon />}
@@ -528,7 +604,7 @@ function Room() {
                               data-id={clientId}
                               autoPlay
                               playsInline
-                              muted={clientId === LOCAL_VIDEO}
+                              muted={true}
                               style={{
                                 objectFit: 'contain',
                                 maxWidth: 'inherit',

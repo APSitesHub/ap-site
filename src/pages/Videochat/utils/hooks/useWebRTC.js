@@ -15,8 +15,17 @@ export default function useWebRTC(roomID) {
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState([]);
+  const [mixedAudioStream, setMixedAudioStream] = useState(null);
   const [isPremissionAllowed, setIsPremissionAllowed] = useState(null);
   const [mockVideosTo, setMockVideosTo] = useState([]);
+
+  const audioContextRef = useRef(null);
+  const destinationRef = useRef(null);
+  const peerConnections = useRef({});
+  const localMediaStream = useRef(null);
+  const peerMediaElements = useRef({
+    [LOCAL_VIDEO]: null,
+  });
 
   const determineRole = useCallback(async () => {
     if (!getToken()) {
@@ -35,6 +44,23 @@ export default function useWebRTC(roomID) {
 
   const setDevice = (kind, deviceId) => {
     localStorage.setItem(`default-${kind}`, deviceId);
+  };
+
+  const getDefaultDevice = (devices, kind) => {
+    let defaultDevice = getDevice(kind);
+
+    if (
+      defaultDevice &&
+      devices.filter(d => d.kind === kind && d.deviceId === defaultDevice).length > 0
+    ) {
+      return defaultDevice;
+    }
+
+    defaultDevice = devices.find(device => device.kind === kind)[0].deviceId;
+
+    setDevice(kind, defaultDevice);
+
+    return defaultDevice;
   };
 
   const getMockVideo = () => {
@@ -70,12 +96,6 @@ export default function useWebRTC(roomID) {
     },
     [updateClients]
   );
-
-  const peerConnections = useRef({});
-  const localMediaStream = useRef(null);
-  const peerMediaElements = useRef({
-    [LOCAL_VIDEO]: null,
-  });
 
   const toggleCamera = async off => {
     let enable = !off;
@@ -225,6 +245,37 @@ export default function useWebRTC(roomID) {
     });
   };
 
+  const mixAudioStreams = () => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = new AudioContext();
+      destinationRef.current = audioContextRef.current.createMediaStreamDestination();
+    }
+
+    const { current: audioContext } = audioContextRef;
+    const { current: destination } = destinationRef;
+
+    const audioTracks = [];
+
+    Object.values(peerConnections.current).forEach(rtc => {
+      const audioReceiver = rtc
+        .getReceivers()
+        .find(receiver => receiver.track.kind === 'audio');
+
+      if (audioReceiver) {
+        audioTracks.push(audioReceiver.track);
+      }
+    });
+
+    audioTracks.forEach(track => {
+      const stream = new MediaStream([track]);
+
+      const source = audioContext.createMediaStreamSource(stream);
+      source.connect(destination);
+    });
+
+    setMixedAudioStream(destination.stream);
+  };
+
   const muteAll = async () => {
     socket.emit(ACTIONS.MUTE_ALL);
   };
@@ -241,19 +292,9 @@ export default function useWebRTC(roomID) {
       const devices = await navigator.mediaDevices.enumerateDevices();
       setLocalDevices(devices);
 
-      const defaultCamera =
-        getDevice('videoinput') ||
-        setDevice(
-          'videoinput',
-          devices.filter(device => device.kind === 'videoinput')[0].deviceId
-        );
+      const defaultCamera = getDefaultDevice(devices, 'videoinput');
 
-      const defaultMicrophone =
-        getDevice('audioinput') ||
-        setDevice(
-          'audioinput',
-          devices.find(device => device.kind === 'audioinput')[0].deviceId
-        );
+      const defaultMicrophone = getDefaultDevice(devices, 'audioinput');
 
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
         audio: { deviceId: defaultMicrophone },
@@ -520,6 +561,10 @@ export default function useWebRTC(roomID) {
   }, [updateClients]);
 
   useEffect(() => {
+    mixAudioStreams();
+  }, [remoteStreams]);
+
+  useEffect(() => {
     startCapture();
 
     return () => {
@@ -773,6 +818,7 @@ export default function useWebRTC(roomID) {
     addMockClient,
     getClients,
     remoteStreams,
+    mixedAudioStream,
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,

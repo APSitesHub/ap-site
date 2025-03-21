@@ -51,7 +51,6 @@ function Login({ logined }) {
         'default-audiooutput',
         devices.filter(device => device.kind === 'audiooutput')[0].deviceId
       );
-    console.log(defaultAudioDevice);
 
     const defaultCameraDevice =
       getDevice('videoinput') ||
@@ -233,7 +232,12 @@ function Login({ logined }) {
             </LoginFormText>
             <Label>
               <AdminInput type="text" name="userName" placeholder="Ім'я та прізвище" />
-              <AdminInputNote component="p" name="userName" type="text" style={{ color: 'red' }}/>
+              <AdminInputNote
+                component="p"
+                name="userName"
+                type="text"
+                style={{ color: 'red' }}
+              />
             </Label>
             <AdminFormBtn type="submit">Увійти</AdminFormBtn>
           </LoginForm>
