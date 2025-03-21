@@ -16,6 +16,9 @@ import {
   LoginPage,
   LoginVideo,
   LoginSelect,
+  CameraIcon,
+  MicroIcon,
+  SoundIcon,
 } from '../Videochat.styled';
 
 function Login({ logined }) {
@@ -43,13 +46,6 @@ function Login({ logined }) {
       localStorage.setItem(
         'default-audioinput',
         devices.filter(device => device.kind === 'audioinput')[0].deviceId
-      );
-
-    const defaultAudioDevice =
-      getDevice('audiooutput') ||
-      localStorage.setItem(
-        'default-audiooutput',
-        devices.filter(device => device.kind === 'audiooutput')[0].deviceId
       );
 
     const defaultCameraDevice =
@@ -156,47 +152,56 @@ function Login({ logined }) {
     <GradientBackground>
       <LoginPage>
         <LoginMediaContainer>
-          <LoginVideo ref={videoRef} autoPlay></LoginVideo>
+          <LoginVideo ref={videoRef} autoPlay muted></LoginVideo>
           <LoginMediaFields>
-            <LoginSelect
-              name="micro"
-              id="micro"
-              key="micro"
-              onChange={e => handleDeviceSelect(e.target.value, 'audioinput')}
-              value={localStorage.getItem('default-audioinput')}
-            >
-              {microphoneDevices.map(device => (
-                <option key={device.value} value={device.value}>
-                  {device.label}
-                </option>
-              ))}
-            </LoginSelect>
-            <LoginSelect
-              name="audio"
-              id="audio"
-              key="audio"
-              onChange={e => handleDeviceSelect(e.target.value, 'audiooutput')}
-              value={localStorage.getItem('default-audiooutput')}
-            >
-              {audioDevices.map(device => (
-                <option key={device.value} value={device.value}>
-                  {device.label}
-                </option>
-              ))}
-            </LoginSelect>
-            <LoginSelect
-              name="camera"
-              id="camera"
-              key="camera"
-              onChange={e => handleDeviceSelect(e.target.value, 'videoinput')}
-              value={localStorage.getItem('default-videoinput')}
-            >
-              {cameraDevices.map(device => (
-                <option key={device.value} value={device.value}>
-                  {device.label}
-                </option>
-              ))}
-            </LoginSelect>
+            <LoginMediaContainer>
+              <MicroIcon />
+              <LoginSelect
+                name="micro"
+                id="micro"
+                key="micro"
+                onChange={e => handleDeviceSelect(e.target.value, 'audioinput')}
+                value={localStorage.getItem('default-audioinput') || 'default'}
+              >
+                {microphoneDevices.map(device => (
+                  <option key={device.value} value={device.value}>
+                    {device.label}
+                  </option>
+                ))}
+              </LoginSelect>
+            </LoginMediaContainer>
+            <LoginMediaContainer>
+              <SoundIcon />
+              <LoginSelect
+                name="audio"
+                id="audio"
+                key="audio"
+                onChange={e => handleDeviceSelect(e.target.value, 'audiooutput')}
+                value={localStorage.getItem('default-audiooutput') || 'default'}
+              >
+                {audioDevices.map(device => (
+                  <option key={device.value} value={device.value}>
+                    {device.label}
+                  </option>
+                ))}
+              </LoginSelect>
+            </LoginMediaContainer>
+            <LoginMediaContainer>
+              <CameraIcon />
+              <LoginSelect
+                name="camera"
+                id="camera"
+                key="camera"
+                onChange={e => handleDeviceSelect(e.target.value, 'videoinput')}
+                value={localStorage.getItem('default-videoinput')}
+              >
+                {cameraDevices.map(device => (
+                  <option key={device.value} value={device.value}>
+                    {device.label}
+                  </option>
+                ))}
+              </LoginSelect>
+            </LoginMediaContainer>
 
             <div
               style={{
@@ -206,6 +211,7 @@ function Login({ logined }) {
                 position: 'relative',
                 borderRadius: '5px',
                 overflow: 'hidden',
+                display: 'none',
               }}
             >
               <div

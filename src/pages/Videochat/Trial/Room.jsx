@@ -44,8 +44,8 @@ import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 
-const VISIBLE_USERS_COUNT = 1;
-const debug = true;
+const VISIBLE_USERS_COUNT = 4;
+const debug = false;
 
 function Room() {
   const { id: roomID } = useParams();
@@ -362,6 +362,10 @@ function Room() {
     }
   }, [volume]);
 
+  useEffect(() => {
+    changeAudioOutput(localStorage.getItem('default-audiooutput') || 'default');
+  }, [audioRef.current]);
+
   const toggleVolumeInput = () => {
     const input = document.getElementById('volume-range');
     input.style.display = input.style.display === 'block' ? 'none' : 'block';
@@ -371,8 +375,7 @@ function Room() {
     if (audioRef.current?.setSinkId) {
       try {
         await audioRef.current.setSinkId(deviceId);
-        console.log(audioRef.current.sinkId);
-        console.log('changed');
+        localStorage.setItem('default-audiooutput', deviceId);
       } catch (error) {
         console.error('Change audiootput error:', error);
       }
