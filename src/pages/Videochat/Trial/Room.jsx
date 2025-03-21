@@ -168,7 +168,7 @@ function Room() {
           `https://ap-chat-server.onrender.com/messages/room`,
           {
             params: {
-              room,
+              room: `/streams/${room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}`,
             },
           }
         );
