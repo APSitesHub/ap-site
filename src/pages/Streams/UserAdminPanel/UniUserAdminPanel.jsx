@@ -177,7 +177,12 @@ const UserAdminPanel = ({ uni }) => {
             `/uniusers/admin/${uni ? uni.toLowerCase() : ''}`
           );
 
-          setUsers(users => (users = [...response.data.reverse()]));
+          setUsers(
+            users =>
+              (users = [
+                ...response.data.reverse().sort((a, b) => a.name.localeCompare(b.name)),
+              ])
+          );
         }
       } catch (error) {
         console.error(error);
@@ -204,8 +209,8 @@ const UserAdminPanel = ({ uni }) => {
   };
 
   const loginSchema = yup.object().shape({
-    login: yup.string().required('Вкажіть логін!'),
-    password: yup.string().required('Введіть пароль!'),
+    login: yup.string().required('Podaj login!'),
+    password: yup.string().required('Podaj hasło!'),
   });
 
   const onClear = () => {
@@ -353,7 +358,7 @@ const UserAdminPanel = ({ uni }) => {
   const handleDelete = async id => {
     setIsLoading(isLoading => (isLoading = true));
     const areYouSure = window.confirm(
-      `Точно видалити ${users.find(user => user._id === id).name}?`
+      `Czy na pewno usunąć ${users.find(user => user._id === id).name}?`
     );
 
     if (!areYouSure) {
@@ -363,11 +368,13 @@ const UserAdminPanel = ({ uni }) => {
       try {
         const response = await axios.delete(`/uniusers/${id}`);
         console.log(response);
-        alert('Юзера видалено');
+        alert('Użytkownik został usunięty');
         setUsers(users => (users = [...users.filter(user => user._id !== id)]));
       } catch (error) {
         console.error(error);
-        alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
+        alert(
+          'Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila'
+        );
       } finally {
         setIsLoading(isLoading => (isLoading = false));
       }
@@ -392,12 +399,12 @@ const UserAdminPanel = ({ uni }) => {
                 <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
-              <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
+              <AdminFormBtn type="submit">Zaloguj się</AdminFormBtn>
             </LoginForm>
           </Formik>
         )}
 
-        {isUserAdmin && (
+        {/* {isUserAdmin && (
           <Formik
             initialValues={initialUserValues}
             onSubmit={handleUserSubmit}
@@ -519,22 +526,22 @@ const UserAdminPanel = ({ uni }) => {
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
             </UsersForm>
           </Formik>
-        )}
+        )} */}
         {isUserAdmin && users && (
           <UserDBTable>
-            <UserDBCaption>Список юзерів з доступом до уроків</UserDBCaption>
+            <UserDBCaption>Lista użytkowników z dostępem do lekcji</UserDBCaption>
             <thead>
               <UserDBRow>
-                <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
-                <UserHeadCell>Ім'я</UserHeadCell>
-                <UserHeadCell>Пошта (логін)</UserHeadCell>
-                <UserHeadCell>Пароль</UserHeadCell>
-                {!uni && <UserHeadCell>Університет</UserHeadCell>}
-                <UserHeadCell>Група</UserHeadCell>
-                <UserHeadCell>Бали</UserHeadCell>
-                <UserHeadCell>ID на платформі</UserHeadCell>
-                <UserHeadCell>Відвідини</UserHeadCell>
-                {!uni && <UserHeadCell>Відвідини з часом</UserHeadCell>}
+                {/* <UserHeadCell>CRM&nbsp;Lider Kontakt</UserHeadCell> */}
+                <UserHeadCell>Nazwisko i imię</UserHeadCell>
+                <UserHeadCell>Poczta (login)</UserHeadCell>
+                {/* <UserHeadCell>Hasło</UserHeadCell> */}
+                {!uni && <UserHeadCell>Uniwersytet</UserHeadCell>}
+                <UserHeadCell>Grupa</UserHeadCell>
+                <UserHeadCell>Punkty</UserHeadCell>
+                <UserHeadCell>ID na platformie</UserHeadCell>
+                <UserHeadCell>Obecność</UserHeadCell>
+                {!uni && <UserHeadCell>Odwiedziny z czasem</UserHeadCell>}
                 <UserHeadCell>Edit</UserHeadCell>
                 <UserHeadCell>Delete</UserHeadCell>
               </UserDBRow>
@@ -542,7 +549,7 @@ const UserAdminPanel = ({ uni }) => {
             <tbody>
               {users.map(user => (
                 <UserDBRow key={user._id}>
-                  <UserCell>
+                  {/* <UserCell>
                     <a
                       href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
                       target="_blank"
@@ -557,10 +564,10 @@ const UserAdminPanel = ({ uni }) => {
                     >
                       {user.contactId}
                     </a>
-                  </UserCell>
+                  </UserCell> */}
                   <UserCell>{user.name}</UserCell>
                   <UserCell>{user.mail}</UserCell>
-                  <UserCell>{user.password}</UserCell>
+                  {/* <UserCell>{user.password}</UserCell> */}
                   {!uni && <UserCell className="last-name">{user.university}</UserCell>}
                   <UserCell>{user.group ? user.group : '1'}</UserCell>
                   <UserCell>{user.points ? user.points : '0'}</UserCell>

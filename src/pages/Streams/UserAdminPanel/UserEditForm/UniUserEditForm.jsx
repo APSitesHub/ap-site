@@ -59,19 +59,19 @@ export const UniUserEditForm = ({
     name: yup
       .string()
       .required(
-        "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"
+        "Imię - pole obowiązkowe, jeśli z jakiegoś powodu nie znamy imienia, wpisz N/A"
       ),
-    mail: yup.string().required("Пошта - обов'язкове поле!"),
-    password: yup.string().required("Пароль - обов'язкове поле!"),
-    crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
-    contactId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
+    mail: yup.string().required("Poczta - pole obowiązkowe!"),
+    password: yup.string().required("Hasło - pole obowiązkowe!"),
+    crmId: yup.string().matches(/^[0-9]*$/, 'Tylko cyfry'),
+    contactId: yup.string().matches(/^[0-9]*$/, 'Tylko cyfry'),
     pupilId: yup
       .string()
-      .min(6, 'Не менше 6 цифр')
-      .max(7, 'Не більше 7 цифр')
-      .matches(/^\d{1,7}$/, 'Лише цифри')
-      .required("Обов'язкове поле, дивитись на платформі"),
-    points: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
+      .min(6, 'Nie mniej niż 6 cyfr')
+      .max(7, 'Nie więcej niż 7 cyfr')
+      .matches(/^\d{1,7}$/, 'Tylko cyfry')
+      .required("Pole obowiązkowe, patrz na platformie"),
+    points: yup.string().matches(/^[0-9]*$/, 'Tylko cyfry'),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
@@ -95,12 +95,12 @@ export const UniUserEditForm = ({
       const response = await axios.put(`/uniusers/${userToEdit._id}`, values);
       console.log(response);
       resetForm();
-      alert('Юзера відредаговано');
+      alert('Użytkownik został zaktualizowany');
       updateUser(userToEdit._id, values);
       closeEditForm();
     } catch (error) {
       console.error(error);
-      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
+      alert('Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -115,40 +115,36 @@ export const UniUserEditForm = ({
       >
         <UsersEditForm>
           <Label>
-            <AdminInput type="text" name="name" placeholder="Прізвище та ім'я" />
+            <AdminInput type="text" name="name" placeholder="Nazwisko i imię" />
             <AdminInputNote component="p" name="name" />
           </Label>
           <Label>
-            <AdminInput type="email" name="mail" placeholder="Електронна пошта (логін)" />
+            <AdminInput type="email" name="mail" placeholder="Adres e-mail (login)" />
             <AdminInputNote component="p" name="mail" />
           </Label>
-          <Label>
-            <AdminInput type="text" name="password" placeholder="Пароль" />
+          {/* <Label>
+            <AdminInput type="text" name="password" placeholder="Hasło" />
             <AdminInputNote component="p" name="password" />
-          </Label>
-          <Label>
-            <AdminInput type="text" name="crmId" placeholder="ID ліда в CRM" />
+          </Label> */}
+          {/* <Label>
+            <AdminInput type="text" name="crmId" placeholder="ID leada w CRM" />
             <AdminInputNote component="p" name="crmId" />
-          </Label>
-          <Label>
-            <AdminInput type="text" name="contactId" placeholder="ID контакту в CRM" />
+          </Label> */}
+          {/* <Label>
+            <AdminInput type="text" name="contactId" placeholder="ID kontaktu w CRM" />
             <AdminInputNote component="p" name="contactId" />
-          </Label>
+          </Label> */}
           <Label>
-            <AdminInput type="text" name="pupilId" placeholder="ID учня на платформі" />
-            <AdminInputNote component="p" name="pupilId" />
-          </Label>
-          <Label>
-            <AdminInput type="text" name="points" placeholder="Бали" />
+            <AdminInput type="text" name="points" placeholder="Punkty" />
             <AdminInputNote component="p" name="points" />
           </Label>
           <Label>
-            <AdminInput type="text" name="pupilId" placeholder="ID учня на платформі" />
+            <AdminInput type="text" name="pupilId" placeholder="ID ucznia na platformie" />
             <AdminInputNote component="p" name="pupilId" />
           </Label>
           {uniOptions.length > 0 && (
             <SpeakingLabel>
-              {uniValue && uniValue.value && <LabelText>Університет</LabelText>}
+              {uniValue && uniValue.value && <LabelText>Uniwersytet</LabelText>}
               <TeacherLangSelect
                 ref={selectInputRef}
                 options={uniOptions}
@@ -173,7 +169,7 @@ export const UniUserEditForm = ({
                     padding: '7px',
                   }),
                 }}
-                placeholder="Університет"
+                placeholder="Uniwersytet"
                 name="uni"
                 onBlur={() => {
                   !uniValue
@@ -185,11 +181,11 @@ export const UniUserEditForm = ({
                   uni?.value && setIsUniEmpty(empty => (empty = false));
                 }}
               />
-              {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
+              {isUniEmpty && <ErrorNote> Uniwersytet - pole obowiązkowe!</ErrorNote>}
             </SpeakingLabel>
           )}
           <SpeakingLabel>
-            {groupValue && groupValue.value && <LabelText>Група</LabelText>}
+            {groupValue && groupValue.value && <LabelText>Grupa</LabelText>}
             <TeacherLangSelect
               ref={selectInputRef}
               options={groupOptions}
@@ -216,7 +212,7 @@ export const UniUserEditForm = ({
                   padding: '7px',
                 }),
               }}
-              placeholder="Група"
+              placeholder="Grupa"
               name="group"
               onBlur={() => {
                 !groupValue
@@ -228,9 +224,9 @@ export const UniUserEditForm = ({
                 group?.value && setIsGroupEmpty(empty => (empty = false));
               }}
             />
-            {isGroupEmpty && <ErrorNote> Група - обов'язкове поле!</ErrorNote>}
+            {isGroupEmpty && <ErrorNote> Grupa - pole obowiązkowe!</ErrorNote>}
           </SpeakingLabel>
-          <AdminFormBtn type="submit">Підтвердити зміни</AdminFormBtn>
+          <AdminFormBtn type="submit">Zatwierdź zmiany</AdminFormBtn>
         </UsersEditForm>
       </Formik>
       {isLoading && <Loader />}

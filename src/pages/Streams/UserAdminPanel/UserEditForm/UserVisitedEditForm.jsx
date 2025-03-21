@@ -114,7 +114,9 @@ export const UserVisitedEditForm = ({ userToEdit, updateUserVisits, closeEditFor
       closeEditForm();
     } catch (error) {
       console.error(error);
-      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
+      alert(
+        'Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila'
+      );
       setIsLoading(false);
     }
   };
@@ -218,7 +220,7 @@ export const UserVisitedEditForm = ({ userToEdit, updateUserVisits, closeEditFor
           )}
         </div>
         <AdminFormBtn type="button" onClick={() => handleSubmit()}>
-          Підтвердити зміни
+          Zatwierdź zmiany
         </AdminFormBtn>
       </DatesEditBlock>
       {isLoading && <Loader />}
