@@ -76,6 +76,24 @@
           document.getElementsByTagName('head')[0].appendChild(link);
         })();
       }
+      else if (window.location.pathname.includes('my-vpu')) {
+        (function () {
+          var link = document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'shortcut icon';
+          link.href = '%PUBLIC_URL%/vpu.png';
+          document.getElementsByTagName('head')[0].appendChild(link);
+        })();
+      }
+      else if (window.location.pathname.includes('my-ismpo')) {
+        (function () {
+          var link = document.createElement('link');
+          link.type = 'image/x-icon';
+          link.rel = 'shortcut icon';
+          link.href = '%PUBLIC_URL%/ismpo.ico';
+          document.getElementsByTagName('head')[0].appendChild(link);
+        })();
+      }
     </script>
     <script>
       if (window.location.pathname.includes('/my-ap-pl')) {
