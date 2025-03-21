@@ -1,21 +1,11 @@
 import axios from 'axios';
-import { MyAPStudentChart } from 'pages/TeacherPage/StudentChart/MyAPStudentChart';
 import { useEffect, useState } from 'react';
-//eslint-disable-next-line
-import { Attendance } from '../Attendance/Attendance';
-import { LessonFinder } from '../LessonFinder/LessonFinder';
-import { Points } from '../Points/Points';
-import { Timetable } from '../Timetable.jsx/Timetable';
 import {
   APPanel,
   APPanelBtn,
-  APPanelToggleBtn,
-  //eslint-disable-next-line
   CalendarBtnIcon,
   CupBtnIcon,
   FeedbackBtnIcon,
-  IframeResetLinkButton,
-  LangIcon,
   PanelBackdrop,
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
@@ -24,26 +14,23 @@ import {
   TimetableBtnIcon,
 } from './MyAPPanel.styled';
 
-import de from '../../../img/svg/myap/langs/de.png';
-import en from '../../../img/svg/myap/langs/en.png';
-import pl from '../../../img/svg/myap/langs/pl.png';
+import { MyAPStudentChartSk } from 'pages/TeacherPage/StudentChart/MyAPStudentChartSk';
+import { AttendanceISMPO } from '../Attendance/AttendanceISMPO';
+import { LessonFinderISMPO } from '../LessonFinder/LessonFinderISMPO';
+import { PointsISMPO } from '../Points/PointsISMPO';
+import { TimetableISMPO } from '../Timetable.jsx/TimetableISMPO';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const MyAPPanel = ({
+export const MyISMPOPanel = ({
   lessons,
-  link,
   user,
   language,
   points,
   timetable,
-  marathonLink,
   montlyPoints,
   isMultipleCourses,
   setPlatformIframeLink,
-  languageIndex,
-  setLanguage,
-  setLanguageIndex,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
   const [isLessonFinderShown, setIsLessonFinderShown] = useState(false);
@@ -58,51 +45,12 @@ export const MyAPPanel = ({
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
   // const [isMarathonBtnClicked, setIsMarathonBtnClicked] = useState(false);
 
-  const personalTimetable = timetable.find(timeline =>
-    language === 'enkids' && user.knowledge.includes('beginner')
-      ? timeline.lang === language &&
-        timeline.course === user.course &&
-        timeline.level === user.knowledge
-      : timeline.lang === language && timeline.course === user.course
-  );
-
-  // filter lessons with correct marathon number
-  const personalLessons =
-    language.includes('en') && user.marathonNumber
-      ? lessons.filter(lesson => lesson.marathonName.includes(user.marathonNumber))
-      : lessons;
-
-  //eslint-disable-next-line
-  const personalLessonsDays = personalTimetable?.schedule.map(lesson => lesson.day);
+  const personalLessonsDays = timetable.map(lesson => lesson.day);
 
   const toggleButtonBox = () => {
     hideBackdrop();
     setIsButtonBoxShown(isShown => !isShown);
   };
-
-  const pointsByLang = Object.keys(points)
-    .filter(
-      key =>
-        (key.includes(language) && key.length === (language + user.knowledge).length) ||
-        (key.includes(language) && key.includes('done'))
-    )
-    .reduce((obj, key) => {
-      obj[key] = points[key];
-      return obj;
-    }, {});
-
-  const monthlyPointsByLang = Object.keys(montlyPoints)
-    .filter(
-      key =>
-        (key.includes(language) && key.length === (language + user.knowledge).length) ||
-        (key.includes(language) && key.includes('done'))
-    )
-    .reduce((obj, key) => {
-      obj[key] = montlyPoints[key];
-      return obj;
-    }, {});
-  const flatPoints = Object.values(pointsByLang).flatMap(user => user);
-  const flatMonthlyPoints = Object.values(monthlyPointsByLang).flatMap(user => user);
 
   console.log(user);
 
@@ -152,7 +100,6 @@ export const MyAPPanel = ({
     setIsRatingShown(isRatingShown => !isRatingShown);
   };
 
-  //eslint-disable-next-line
   const toggleCalendar = () => {
     !isBackdropShown &&
       (!isRatingShown || !isLessonFinderShown || !isTimetableShown || !isFeedbackShown) &&
@@ -209,44 +156,6 @@ export const MyAPPanel = ({
     e.currentTarget.classList.toggle('tooltip-open');
   };
 
-  // const toggleTooltipTimeout = () => {
-  //   const resetBtnEl = document.querySelector('#reset-btn');
-
-  //   if (isDisclaimerTimeoutActive) {
-  //     setTimeout(() => {
-  //       resetBtnEl.classList.add('tooltip-open');
-  //     }, 10000);
-
-  //     setTimeout(() => {
-  //       resetBtnEl.classList.remove('tooltip-open');
-  //       setIsDisclaimerTimeoutActive(false);
-  //     }, 20000);
-  //   }
-  // };
-
-  // const toggleLangTooltipTimeout = () => {
-  //   const resetBtnEl = document.querySelector('#toggle-btn');
-
-  //   if (isDisclaimerTimeoutActive) {
-  //     setTimeout(() => {
-  //       resetBtnEl.classList.add('tooltip-open');
-  //     }, 10000);
-
-  //     setTimeout(() => {
-  //       resetBtnEl.classList.remove('tooltip-open');
-  //       setIsDisclaimerTimeoutActive(false);
-  //     }, 20000);
-  //   }
-  // };
-
-  // const toggleMarathonButtonTimeout = () => {
-  //   if (!isMarathonBtnClicked) {
-  //     setTimeout(() => {
-  //       setIsMarathonBtnShown(true);
-  //     }, 15000);
-  //   }
-  // };
-
   useEffect(() => {
     const onEscapeClose = event => {
       if (event.code === 'Escape' && isBackdropShown) {
@@ -256,20 +165,15 @@ export const MyAPPanel = ({
 
     const getLastFeedback = async () => {
       try {
-        const userToSet = await axios.get(`/speakingusers/${user.id}`);
+        const userToSet = await axios.get(`/speakingusers/65df40854f921c8f9f40fc73`);
         console.log(258, userToSet);
         setCurrentStudentChart(user => (user = userToSet.data));
         console.log('eff');
       } catch (error) {
         console.log(error);
-      } finally {
-        // setIsLoading(isLoading => (isLoading = false));
       }
     };
     getLastFeedback();
-    // toggleTooltipTimeout();
-    // toggleLangTooltipTimeout();
-    // toggleMarathonButtonTimeout();
 
     window.addEventListener('keydown', onEscapeClose);
 
@@ -281,72 +185,10 @@ export const MyAPPanel = ({
   return (
     <>
       <PanelBackdrop onClick={hideBackdrop} className={isBackdropShown ? '' : 'hidden'} />
-
       <PanelHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
       </PanelHideSwitch>
-      {/* {isMarathonBtnShown && (
-        <IframeMarathonLinkPanel>
-          <IframeMarathonText>
-            <IframeMarathonPointerText>
-              Натисніть на цю кнопку, щоб перейти до марафону
-            </IframeMarathonPointerText>
-            <IframeMarathonPointerLinkIcon />
-          </IframeMarathonText>
-          <APPanelMarathonBtn
-            id="marathon-btn"
-            onClick={() => {
-              setIsMarathonBtnShown(false);
-              setIsMarathonBtnClicked(true);
-              setPlatformIframeLink(marathonLink + ' ');
-            }}
-          >
-            <APPanelMarathonBtnText>МАРАФОН</APPanelMarathonBtnText>
-          </APPanelMarathonBtn>
-        </IframeMarathonLinkPanel>
-      )} */}
       <APPanel className={isButtonBoxShown ? '' : 'hidden'}>
-        {isMultipleCourses && (
-          <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
-            {/* <APPanelResetBtn
-            id="reset-btn"
-            className={isMultipleCourses ? 'multiple' : ''}
-            onMouseEnter={e => toggleTooltip(e)}
-            onMouseOut={e => toggleTooltip(e)}
-            onClick={() => {
-              console.log(link);
-
-              setPlatformIframeLink(link + ' ');
-            }}
-          >
-            <IframeSetLinkIcon />
-          </APPanelResetBtn> */}
-
-            <APPanelToggleBtn
-              id="toggle-btn"
-              onMouseEnter={e => toggleTooltip(e)}
-              onMouseOut={e => toggleTooltip(e)}
-              onClick={() => {
-                console.log(link);
-                setLanguage(
-                  language =>
-                    (language =
-                      languageIndex + 1 < user.lang.split('/').length
-                        ? user.lang.split('/')[languageIndex + 1]
-                        : user.lang.split('/')[0])
-                );
-                setLanguageIndex(
-                  index =>
-                    (index = index + 1 < user.lang.split('/').length ? index + 1 : 0)
-                );
-              }}
-            >
-              <LangIcon
-                src={language.includes('de') ? de : language.includes('pl') ? pl : en}
-              />
-            </APPanelToggleBtn>
-          </IframeResetLinkButton>
-        )}
         <APPanelBtn
           onClick={toggleSearch}
           onMouseEnter={e => toggleTooltip(e)}
@@ -372,7 +214,7 @@ export const MyAPPanel = ({
             <FeedbackBtnIcon id="feedback-btn" className={isFeedbackShown && 'active'} />
           </APPanelBtn>
         )}
-        {/* {user.package !== 'online' && (
+        {user.package !== 'online' && (
           <APPanelBtn
             onClick={toggleCalendar}
             onMouseEnter={e => toggleTooltip(e)}
@@ -380,7 +222,7 @@ export const MyAPPanel = ({
           >
             <CalendarBtnIcon id="calendar-btn" className={isCalendarShown && 'active'} />
           </APPanelBtn>
-        )} */}
+        )}
         {user.package !== 'online' && (
           <APPanelBtn
             onClick={toggleTimetable}
@@ -393,16 +235,10 @@ export const MyAPPanel = ({
             />
           </APPanelBtn>
         )}
-        {/* <APPanelInstructionsPanel>
-          <APPanelBtn onClick={toggleSearch}>
-            <GuideBtnIcon className={isLessonFinderShown && 'active'} />
-          </APPanelBtn>
-        </APPanelInstructionsPanel> */}
       </APPanel>
-
       {isLessonFinderShown && (
-        <LessonFinder
-          lessons={personalLessons}
+        <LessonFinderISMPO
+          lessons={lessons}
           user={user}
           language={language}
           setPlatformIframeLink={setPlatformIframeLink}
@@ -410,23 +246,25 @@ export const MyAPPanel = ({
         />
       )}
       {isRatingShown && (
-        <Points
+        <PointsISMPO
           user={user}
-          flatPoints={flatPoints}
-          flatMonthlyPoints={flatMonthlyPoints}
+          flatPoints={points}
+          flatMonthlyPoints={montlyPoints}
           isMultipleCourses={isMultipleCourses}
         />
       )}
-      {/* {isCalendarShown && (
-        <Attendance
+      {isCalendarShown && (
+        <AttendanceISMPO
           user={user}
           personalLessonsDays={personalLessonsDays}
           isMultipleCourses={isMultipleCourses}
         />
-      )} */}
-      {isFeedbackShown && <MyAPStudentChart currentStudentChart={currentStudentChart} />}
+      )}
+      {isFeedbackShown && (
+        <MyAPStudentChartSk currentStudentChart={currentStudentChart} />
+      )}
       {isTimetableShown && (
-        <Timetable
+        <TimetableISMPO
           user={user}
           language={language}
           timetable={timetable}

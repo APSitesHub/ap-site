@@ -76,7 +76,9 @@
           document.getElementsByTagName('head')[0].appendChild(link);
         })();
       }
-      else if (window.location.pathname.includes('my-vpu')) {
+    </script>
+    <script>
+      if (window.location.pathname.includes('my-vpu')) {
         (function () {
           var link = document.createElement('link');
           link.type = 'image/x-icon';
@@ -85,12 +87,14 @@
           document.getElementsByTagName('head')[0].appendChild(link);
         })();
       }
-      else if (window.location.pathname.includes('my-ismpo')) {
+    </script>
+    <script>
+      if (window.location.pathname.includes('my-ismpo')) {
         (function () {
           var link = document.createElement('link');
           link.type = 'image/x-icon';
           link.rel = 'shortcut icon';
-          link.href = '%PUBLIC_URL%/ismpo.ico';
+          link.href = '%PUBLIC_URL%/ismpo.png';
           document.getElementsByTagName('head')[0].appendChild(link);
         })();
       }

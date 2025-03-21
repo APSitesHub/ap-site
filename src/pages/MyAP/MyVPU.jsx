@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FormBtnWSPA, Label } from 'components/LeadForm/LeadForm.styled';
+import { FormBtnVPU, Label } from 'components/LeadForm/LeadForm.styled';
 import {
   LoginErrorNote,
   LoginFormTextWSPA,
@@ -9,8 +9,8 @@ import { Formik } from 'formik';
 import { FormBtnText } from 'pages/LeadFormPage/UniversalLeadFormPage.styled';
 import {
   AdminInputNoteWSPA,
-  AdminInputWSPA,
-  LoginForm,
+  AdminInputVPU,
+  LoginForm
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -23,7 +23,7 @@ import {
   PanelHideRightSwitch,
   UniLoginLogo,
 } from './MyAPPanel/MyAPPanel.styled';
-import { MyWSPAPanel } from './MyAPPanel/MyWSPAPanel';
+import { MyVPUPanel } from './MyAPPanel/MyVPUPanel';
 
 const monthly = [
   { name: 'Adam Nowak', points: 327 },
@@ -345,7 +345,7 @@ const MyVPU = () => {
               wprowadzić swój login i hasło.
             </LoginFormTextWSPA>
             <Label>
-              <AdminInputWSPA
+              <AdminInputVPU
                 type="text"
                 name="mail"
                 placeholder="Login"
@@ -354,7 +354,7 @@ const MyVPU = () => {
               <AdminInputNoteWSPA component="p" name="mail" type="email" />
             </Label>
             <Label>
-              <AdminInputWSPA
+              <AdminInputVPU
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -362,9 +362,9 @@ const MyVPU = () => {
               />
               <AdminInputNoteWSPA component="p" name="password" />
             </Label>
-            <FormBtnWSPA type="submit">
+            <FormBtnVPU type="submit">
               <FormBtnText> Zaloguj się </FormBtnText>
-            </FormBtnWSPA>
+            </FormBtnVPU>
             <LoginErrorNote
               style={isUserInfoIncorrect ? { opacity: '1' } : { opacity: '0' }}
             >
@@ -375,7 +375,7 @@ const MyVPU = () => {
       ) : (
         <>
           {Object.values(points).length > 0 && (
-            <MyWSPAPanel
+            <MyVPUPanel
               lessons={lessons}
               user={user}
               points={points}

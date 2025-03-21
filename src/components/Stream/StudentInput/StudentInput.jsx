@@ -19,6 +19,7 @@ export const StudentInput = ({ isInputOpen, socket, page, toggleQuiz, currentUse
     }
     e.preventDefault();
     console.log(document.querySelector('#answer_input').value);
+    document.querySelector('#answer_input').value = '';
     socket.emit('answer:given', {
       answer: document
         .querySelector('#answer_input')

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FormBtnWSPA, Label } from 'components/LeadForm/LeadForm.styled';
+import { FormBtnISMPO, Label } from 'components/LeadForm/LeadForm.styled';
 import {
   LoginErrorNote,
   LoginFormTextWSPA,
@@ -8,9 +8,9 @@ import {
 import { Formik } from 'formik';
 import { FormBtnText } from 'pages/LeadFormPage/UniversalLeadFormPage.styled';
 import {
+  AdminInputISMPO,
   AdminInputNoteWSPA,
-  AdminInputWSPA,
-  LoginForm,
+  LoginForm
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -23,73 +23,73 @@ import {
   PanelHideRightSwitch,
   UniLoginLogo,
 } from './MyAPPanel/MyAPPanel.styled';
-import { MyWSPAPanel } from './MyAPPanel/MyWSPAPanel';
+import { MyISMPOPanel } from './MyAPPanel/MyISMPOPanel';
 
 const monthly = [
-  { name: 'Adam Nowak', points: 327 },
-  { name: 'Bartosz Kowalski', points: 458 },
-  { name: 'Cezary Wiśniewski', points: 783 },
-  { name: 'Damian Wójcik', points: 604 },
-  { name: 'Emil Kamiński', points: 536 },
-  { name: 'Filip Lewandowski', points: 918 },
-  { name: 'Grzegorz Zieliński', points: 629 },
-  { name: 'Hubert Szymański', points: 705 },
-  { name: 'Igor Woźniak', points: 847 },
-  { name: 'Jakub Dąbrowski', points: 509 },
-  { name: 'Kamil Kozłowski', points: 987 },
-  { name: 'Łukasz Jankowski', points: 734 },
-  { name: 'Mateusz Mazur', points: 685 },
-  { name: 'Norbert Kwiatkowski', points: 595 },
-  { name: 'Olaf Piotrowski', points: 819 },
-  { name: 'Patryk Grabowski', points: 914 },
-  { name: 'Robert Pawłowski', points: 727 },
-  { name: 'Szymon Michalski', points: 664 },
-  { name: 'Tomasz Król', points: 874 },
-  { name: 'Uriel Wieczorek', points: 765 },
-  { name: 'Wojciech Jastrzębski', points: 886 },
-  { name: 'Zbigniew Tomczak', points: 547 },
-  { name: 'Artur Jarosz', points: 924 },
-  { name: 'Borys Malinowski', points: 586 },
-  { name: 'Daniel Gajewski', points: 746 },
-  { name: 'Edward Krupa', points: 618 },
-  { name: 'Fryderyk Brzeziński', points: 674 },
-  { name: 'Gustaw Stępień', points: 758 },
-  { name: 'Henryk Wróbel', points: 879 },
-  { name: 'Ireneusz Lis', points: 995 },
+  { name: 'Adam Novák', points: 327 },
+  { name: 'Boris Kováč', points: 458 },
+  { name: 'Cyril Višňovský', points: 783 },
+  { name: 'Dušan Vojtík', points: 604 },
+  { name: 'Erik Kamenický', points: 536 },
+  { name: 'Filip Levický', points: 918 },
+  { name: 'Gabriel Zelený', points: 629 },
+  { name: 'Henrich Sýkora', points: 705 },
+  { name: 'Igor Varga', points: 847 },
+  { name: 'Jakub Dobrovodský', points: 509 },
+  { name: 'Karol Kozák', points: 987 },
+  { name: 'Lukáš Jankovič', points: 734 },
+  { name: 'Matúš Mazúr', points: 685 },
+  { name: 'Norbert Krištof', points: 595 },
+  { name: 'Oliver Pitoňák', points: 819 },
+  { name: 'Patrik Gregor', points: 914 },
+  { name: 'Róbert Pavlík', points: 727 },
+  { name: 'Samuel Michalík', points: 664 },
+  { name: 'Tomáš Kráľ', points: 874 },
+  { name: 'Urban Wičorek', points: 765 },
+  { name: 'Vladimír Jastrabský', points: 886 },
+  { name: 'Zdeno Tomčík', points: 547 },
+  { name: 'Andrej Jaroš', points: 924 },
+  { name: 'Branislav Malina', points: 586 },
+  { name: 'Daniel Gajdoš', points: 746 },
+  { name: 'Eduard Krúpa', points: 618 },
+  { name: 'František Brezina', points: 674 },
+  { name: 'Gustáv Stupka', points: 758 },
+  { name: 'Henrich Vrana', points: 879 },
+  { name: 'Ivan Liska', points: 995 },
   { name: 'Dev Acc', points: 747 },
 ];
 
 const yearly = [
-  { name: 'Adam Nowak', points: 2413 },
-  { name: 'Bartosz Kowalski', points: 3129 },
-  { name: 'Cezary Wiśniewski', points: 4217 },
-  { name: 'Damian Wójcik', points: 2728 },
-  { name: 'Emil Kamiński', points: 3514 },
-  { name: 'Filip Lewandowski', points: 4619 },
-  { name: 'Grzegorz Zieliński', points: 3012 },
-  { name: 'Hubert Szymański', points: 3716 },
-  { name: 'Igor Woźniak', points: 4328 },
-  { name: 'Jakub Dąbrowski', points: 2915 },
-  { name: 'Kamil Kozłowski', points: 4823 },
-  { name: 'Łukasz Jankowski', points: 4118 },
-  { name: 'Mateusz Mazur', points: 3611 },
-  { name: 'Norbert Kwiatkowski', points: 2832 },
-  { name: 'Olaf Piotrowski', points: 4427 },
-  { name: 'Patryk Grabowski', points: 4715 },
-  { name: 'Robert Pawłowski', points: 3936 },
-  { name: 'Szymon Michalski', points: 3421 },
-  { name: 'Tomasz Król', points: 4533 },
-  { name: 'Uriel Wieczorek', points: 4029 },
-  { name: 'Wojciech Jastrzębski', points: 4578 },
-  { name: 'Zbigniew Tomczak', points: 3219 },
-  { name: 'Artur Jarosz', points: 4832 },
-  { name: 'Borys Malinowski', points: 3134 },
-  { name: 'Daniel Gajewski', points: 4075 },
-  { name: 'Edward Krupa', points: 2931 },
-  { name: 'Fryderyk Brzeziński', points: 3562 },
-  { name: 'Gustaw Stępień', points: 3971 },
-  { name: 'Henryk Wróbel', points: 4526 },
-  { name: 'Ireneusz Lis', points: 4918 },
+  { name: 'Adam Novák', points: 2413 },
+  { name: 'Boris Kováč', points: 3129 },
+  { name: 'Cyril Višňovský', points: 4217 },
+  { name: 'Dušan Vojtík', points: 2728 },
+  { name: 'Erik Kamenický', points: 3514 },
+  { name: 'Filip Levický', points: 4619 },
+  { name: 'Gabriel Zelený', points: 3012 },
+  { name: 'Henrich Sýkora', points: 3716 },
+  { name: 'Igor Varga', points: 4328 },
+  { name: 'Jakub Dobrovodský', points: 2915 },
+  { name: 'Karol Kozák', points: 4823 },
+  { name: 'Lukáš Jankovič', points: 4118 },
+  { name: 'Matúš Mazúr', points: 3611 },
+  { name: 'Norbert Krištof', points: 2832 },
+  { name: 'Oliver Pitoňák', points: 4427 },
+  { name: 'Patrik Gregor', points: 4715 },
+  { name: 'Róbert Pavlík', points: 3936 },
+  { name: 'Samuel Michalík', points: 3421 },
+  { name: 'Tomáš Kráľ', points: 4533 },
+  { name: 'Urban Wičorek', points: 4029 },
+  { name: 'Vladimír Jastrabský', points: 4578 },
+  { name: 'Zdeno Tomčík', points: 3219 },
+  { name: 'Andrej Jaroš', points: 4832 },
+  { name: 'Branislav Malina', points: 3134 },
+  { name: 'Daniel Gajdoš', points: 4075 },
+  { name: 'Eduard Krúpa', points: 2931 },
+  { name: 'František Brezina', points: 3562 },
+  { name: 'Gustáv Stupka', points: 3971 },
+  { name: 'Henrich Vrana', points: 4526 },
+  { name: 'Ivan Liska', points: 4918 },
   { name: 'Dev Acc', points: 3178 },
 ];
 
@@ -345,7 +345,7 @@ const MyISMPO = () => {
               e-mail a heslo.
             </LoginFormTextWSPA>
             <Label>
-              <AdminInputWSPA
+              <AdminInputISMPO
                 type="text"
                 name="mail"
                 placeholder="Login"
@@ -354,7 +354,7 @@ const MyISMPO = () => {
               <AdminInputNoteWSPA component="p" name="mail" type="email" />
             </Label>
             <Label>
-              <AdminInputWSPA
+              <AdminInputISMPO
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -362,9 +362,9 @@ const MyISMPO = () => {
               />
               <AdminInputNoteWSPA component="p" name="password" />
             </Label>
-            <FormBtnWSPA type="submit">
+            <FormBtnISMPO type="submit">
               <FormBtnText> Prihlásiť sa </FormBtnText>
-            </FormBtnWSPA>
+            </FormBtnISMPO>
             <LoginErrorNote
               style={isUserInfoIncorrect ? { opacity: '1' } : { opacity: '0' }}
             >
@@ -375,7 +375,7 @@ const MyISMPO = () => {
       ) : (
         <>
           {Object.values(points).length > 0 && (
-            <MyWSPAPanel
+            <MyISMPOPanel
               lessons={lessons}
               user={user}
               points={points}
