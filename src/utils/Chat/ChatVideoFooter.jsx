@@ -57,7 +57,7 @@ export const ChatVideoFooter = ({ socket, theme, currentUser }) => {
         userIP: currentUser.ip,
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
-        roomLocation: pilotLocation || location.pathname.split('-chat')[0],
+        roomLocation: pilotLocation || `/streams/${location.pathname.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}`,
       });
     }
     console.log({
