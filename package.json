@@ -2,7 +2,7 @@
   "name": "ap-education",
   "version": "1.0.63.7",
   "private": true,
-  "homepage": "https://academy.ap.education/",
+  "homepage": "https://apsiteshub.github.io/ap-site/",
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
