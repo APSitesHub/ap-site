@@ -319,3 +319,19 @@ export const FormBtnWSPA = styled(FormBtn)`
     }
   }
 `;
+
+export const FormBtnVPU = styled(FormBtnWSPA)`
+  background: linear-gradient(90deg, #041f43 -31.6%, #a82033 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #a82033 -31.6%, #041f43 107.95%);
+  }
+`;
+
+export const FormBtnISMPO = styled(FormBtnWSPA)`
+  background: linear-gradient(90deg, #002750 -31.6%, #1e88d2 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #1e88d2 -31.6%, #002750 107.95%);
+  }
+`;

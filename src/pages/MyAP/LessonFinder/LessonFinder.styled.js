@@ -170,6 +170,14 @@ export const LessonValuesLogoWSPA = styled(LessonValuesLogo)`
   background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
 `;
 
+export const LessonValuesLogoVPU = styled(LessonValuesLogo)`
+  background: linear-gradient(90deg, #041f43 -31.6%, #a82033 107.95%);
+`;
+
+export const LessonValuesLogoISMPO = styled(LessonValuesLogo)`
+  background: linear-gradient(90deg, #002750 -31.6%, #1e88d2 107.95%);
+`;
+
 export const LessonValuesList = styled.ul`
   display: flex;
   flex-direction: column;

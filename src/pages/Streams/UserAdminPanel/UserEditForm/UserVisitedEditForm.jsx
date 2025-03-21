@@ -194,7 +194,6 @@ export const UserVisitedEditForm = ({ userToEdit, updateUserVisits, closeEditFor
                   <div
                     id={`change-${index}`}
                     style={{
-                      display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       display: 'none',
