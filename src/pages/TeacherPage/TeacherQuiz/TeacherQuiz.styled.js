@@ -46,3 +46,35 @@ export const TeacherChatPageContainer = styled.div`
   background-repeat: no-repeat;
   background-color: transparent;
 `;
+
+export const TeacherQuizConfirmation = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 80%;
+  height: 80%;
+  z-index: 15;
+
+  padding: 30px;
+
+  background-color: white;
+  border-radius: 50px;
+  overflow: hidden;
+
+  font-family: var(--streams-font-family);
+
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.25);
+
+  transition: opacity var(--animation-global);
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &.shown {
+    opacity: 1;
+  }
+`;
