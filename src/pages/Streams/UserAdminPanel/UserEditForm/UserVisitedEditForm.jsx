@@ -10,7 +10,25 @@ import {
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const UserVisitedEditForm = ({ userToEdit, updateUserVisits, closeEditForm }) => {
+const translations = {
+  pl: {
+    updateUserError:
+      'Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila',
+    submitButton: 'Zatwierdź zmiany',
+  },
+  ua: {
+    updateUserError:
+      'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу',
+    submitButton: 'Підтвердити зміни',
+  },
+};
+
+export const UserVisitedEditForm = ({
+  lang,
+  userToEdit,
+  updateUserVisits,
+  closeEditForm,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [editedVisited, setEditedVisited] = useState([]);
 
@@ -114,9 +132,7 @@ export const UserVisitedEditForm = ({ userToEdit, updateUserVisits, closeEditFor
       closeEditForm();
     } catch (error) {
       console.error(error);
-      alert(
-        'Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila'
-      );
+      alert(translations[lang]?.updateUserError);
       setIsLoading(false);
     }
   };
@@ -219,7 +235,7 @@ export const UserVisitedEditForm = ({ userToEdit, updateUserVisits, closeEditFor
           )}
         </div>
         <AdminFormBtn type="button" onClick={() => handleSubmit()}>
-          Zatwierdź zmiany
+          {translations[lang]?.submitButton}
         </AdminFormBtn>
       </DatesEditBlock>
       {isLoading && <Loader />}

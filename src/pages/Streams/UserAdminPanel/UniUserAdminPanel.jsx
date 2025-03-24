@@ -50,7 +50,86 @@ const Univesitets = {
   WSE: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
 };
 
-const UserAdminPanel = ({ uni }) => {
+const translations = {
+  pl: {
+    loginPlaceholder: 'Login',
+    passwordPlaceholder: 'Password',
+    loginRequired: 'Podaj login!',
+    passwordRequired: 'Podaj hasło!',
+    loginButton: 'Zaloguj się',
+    addUserButton: 'Dodaj użytkownika',
+    userListCaption: 'Lista użytkowników z dostępem do lekcji',
+    crmLeadContact: 'CRM&nbsp;Lider Kontakt',
+    name: 'Nazwisko i imię',
+    email: 'Poczta (login)',
+    password: 'Hasło',
+    university: 'Uniwersytet',
+    group: 'Grupa',
+    points: 'Punkty',
+    platformId: 'ID na platformie',
+    attendance: 'Obecność',
+    visitsWithTime: 'Odwiedziny z czasem',
+    deleteUserConfirmation: 'Czy na pewno usunąć',
+    userDeleted: 'Użytkownik został usunięty',
+    deleteUserError:
+      'Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila',
+    addUserError:
+      'Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila',
+    userAdded: 'Użytkownik został dodany',
+    universityRequired: 'Uniwersytet - obowiązkowe pole!',
+    groupRequired: 'Grupa - obowiązkowe pole!',
+    userNameRequired:
+      'Imię - obowiązkowe pole, jeśli imienia z jakiegoś powodu nie znamy, wpisz N/A',
+    userEmailRequired: 'Poczta - obowiązkowe pole!',
+    userPasswordRequired: 'Hasło - obowiązkowe pole!',
+    crmIdDigitsOnly: 'Tylko cyfry',
+    contactIdDigitsOnly: 'Tylko cyfry',
+    pupilIdDigitsOnly: 'Tylko cyfry',
+    pupilIdMinLength: 'Nie mniej niż 6 cyfr',
+    pupilIdMaxLength: 'Nie więcej niż 7 cyfr',
+    pupilIdRequired: 'Obowiązkowe pole, sprawdź na platformie',
+  },
+  ua: {
+    loginPlaceholder: 'Логін',
+    passwordPlaceholder: 'Пароль',
+    loginRequired: 'Введіть логін!',
+    passwordRequired: 'Введіть пароль!',
+    loginButton: 'Залогінитись',
+    addUserButton: 'Додати юзера',
+    userListCaption: 'Список юзерів з доступом до уроків',
+    crmLeadContact: 'CRM Лід Контакт',
+    name: "Прізвище та ім'я",
+    email: 'Пошта (логін)',
+    password: 'Пароль',
+    university: 'Університет',
+    group: 'Група',
+    points: 'Бали',
+    platformId: 'ID на платформі',
+    attendance: 'Відвідини',
+    visitsWithTime: 'Відвідини з часом',
+    deleteUserConfirmation: 'Точно видалити?',
+    userDeleted: 'Юзера видалено',
+    deleteUserError:
+      'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу',
+    addUserError:
+      'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу',
+    userAdded: 'Юзера додано',
+    universityRequired: "Університет - обов'язкове поле!",
+    groupRequired: "Група - обов'язкове поле!",
+    userNameRequired:
+      "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A",
+    userEmailRequired: "Пошта - обов'язкове поле!",
+    userPasswordRequired: "Пароль - обов'язкове поле!",
+    crmIdDigitsOnly: 'Тільки цифри',
+    contactIdDigitsOnly: 'Тільки цифри',
+    pupilIdDigitsOnly: 'Тільки цифри',
+    pupilIdMinLength: 'Не менше 6 цифр',
+    pupilIdMaxLength: 'Не більше 7 цифр',
+    pupilIdRequired: "Обов'язкове поле, дивитись на платформі",
+  },
+};
+
+const UserAdminPanel = ({ uni, lang = 'ua' }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [users, setUsers] = useState([]);
@@ -209,8 +288,8 @@ const UserAdminPanel = ({ uni }) => {
   };
 
   const loginSchema = yup.object().shape({
-    login: yup.string().required('Podaj login!'),
-    password: yup.string().required('Podaj hasło!'),
+    login: yup.string().required(translations[lang]?.loginRequired),
+    password: yup.string().required(translations[lang]?.passwordRequired),
   });
 
   const onClear = () => {
@@ -254,21 +333,17 @@ const UserAdminPanel = ({ uni }) => {
   };
 
   const usersSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required(
-        "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"
-      ),
-    mail: yup.string().required("Пошта - обов'язкове поле!"),
-    password: yup.string().required("Пароль - обов'язкове поле!"),
-    crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
-    contactId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
+    name: yup.string().required(translations[lang]?.userNameRequired),
+    mail: yup.string().required(translations[lang]?.userEmailRequired),
+    password: yup.string().required(translations[lang]?.userPasswordRequired),
+    crmId: yup.string().matches(/^[0-9]*$/, translations[lang]?.crmIdDigitsOnly),
+    contactId: yup.string().matches(/^[0-9]*$/, translations[lang]?.contactIdDigitsOnly),
     pupilId: yup
       .string()
-      .min(6, 'Не менше 6 цифр')
-      .max(7, 'Не більше 7 цифр')
-      .matches(/^\d{1,7}$/, 'Лише цифри')
-      .required("Обов'язкове поле, дивитись на платформі"),
+      .min(6, translations[lang]?.pupilIdMinLength)
+      .max(7, translations[lang]?.pupilIdMaxLength)
+      .matches(/^\d{1,7}$/, translations[lang]?.pupilIdDigitsOnly)
+      .required(translations[lang]?.pupilIdRequired),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
@@ -289,10 +364,10 @@ const UserAdminPanel = ({ uni }) => {
       setUsers(users => [response.data, ...users]);
       resetForm();
       onClear();
-      alert('Юзера додано');
+      alert(translations[lang]?.userAdded);
     } catch (error) {
       console.error(error);
-      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
+      alert(translations[lang]?.addUserError);
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -358,7 +433,9 @@ const UserAdminPanel = ({ uni }) => {
   const handleDelete = async id => {
     setIsLoading(isLoading => (isLoading = true));
     const areYouSure = window.confirm(
-      `Czy na pewno usunąć ${users.find(user => user._id === id).name}?`
+      `${translations[lang]?.deleteUserConfirmation} ${
+        users.find(user => user._id === id).name
+      }?`
     );
 
     if (!areYouSure) {
@@ -368,13 +445,11 @@ const UserAdminPanel = ({ uni }) => {
       try {
         const response = await axios.delete(`/uniusers/${id}`);
         console.log(response);
-        alert('Użytkownik został usunięty');
+        alert(translations[lang]?.userDeleted);
         setUsers(users => (users = [...users.filter(user => user._id !== id)]));
       } catch (error) {
         console.error(error);
-        alert(
-          'Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila'
-        );
+        alert(translations[lang]?.deleteUserError);
       } finally {
         setIsLoading(isLoading => (isLoading = false));
       }
@@ -392,19 +467,27 @@ const UserAdminPanel = ({ uni }) => {
           >
             <LoginForm>
               <Label>
-                <AdminInput type="text" name="login" placeholder="Login" />
+                <AdminInput
+                  type="text"
+                  name="login"
+                  placeholder={translations[lang]?.loginPlaceholder}
+                />
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput type="password" name="password" placeholder="Password" />
+                <AdminInput
+                  type="password"
+                  name="password"
+                  placeholder={translations[lang]?.passwordPlaceholder}
+                />
                 <AdminInputNote component="p" name="password" />
               </Label>
-              <AdminFormBtn type="submit">Zaloguj się</AdminFormBtn>
+              <AdminFormBtn type="submit">{translations[lang]?.loginButton}</AdminFormBtn>
             </LoginForm>
           </Formik>
         )}
 
-        {/* {isUserAdmin && (
+        {isUserAdmin && !uni && (
           <Formik
             initialValues={initialUserValues}
             onSubmit={handleUserSubmit}
@@ -412,30 +495,42 @@ const UserAdminPanel = ({ uni }) => {
           >
             <UsersForm>
               <Label>
-                <AdminInput type="text" name="name" placeholder="Прізвище та ім'я" />
+                <AdminInput
+                  type="text"
+                  name="name"
+                  placeholder={translations[lang]?.name}
+                />
                 <AdminInputNote component="p" name="name" />
               </Label>
               <Label>
                 <AdminInput
                   type="email"
                   name="mail"
-                  placeholder="Електронна пошта (логін)"
+                  placeholder={translations[lang]?.email}
                 />
                 <AdminInputNote component="p" name="mail" />
               </Label>
               <Label>
-                <AdminInput type="text" name="password" placeholder="Пароль" />
+                <AdminInput
+                  type="text"
+                  name="password"
+                  placeholder={translations[lang]?.password}
+                />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <Label>
-                <AdminInput type="text" name="crmId" placeholder="ID ліда в CRM" />
+                <AdminInput
+                  type="text"
+                  name="crmId"
+                  placeholder={translations[lang]?.crmLeadContact}
+                />
                 <AdminInputNote component="p" name="crmId" />
               </Label>
               <Label>
                 <AdminInput
                   type="text"
                   name="contactId"
-                  placeholder="ID контакту в CRM"
+                  placeholder={translations[lang]?.crmLeadContact}
                 />
                 <AdminInputNote component="p" name="contactId" />
               </Label>
@@ -443,13 +538,15 @@ const UserAdminPanel = ({ uni }) => {
                 <AdminInput
                   type="text"
                   name="pupilId"
-                  placeholder="ID студента на платформі"
+                  placeholder={translations[lang]?.platformId}
                 />
                 <AdminInputNote component="p" name="pupilId" />
               </Label>
               {!uni && (
                 <SpeakingLabel>
-                  {uniValue && uniValue.value && <LabelText>Університет</LabelText>}
+                  {uniValue && uniValue.value && (
+                    <LabelText>{translations[lang]?.university}</LabelText>
+                  )}
                   <TeacherLangSelect
                     ref={selectInputRef}
                     options={uniOptions}
@@ -471,7 +568,7 @@ const UserAdminPanel = ({ uni }) => {
                         padding: '7px',
                       }),
                     }}
-                    placeholder="Університет"
+                    placeholder={translations[lang]?.university}
                     name="uni"
                     onBlur={() => {
                       !uniValue
@@ -483,11 +580,15 @@ const UserAdminPanel = ({ uni }) => {
                       uni?.value && setIsUniEmpty(empty => (empty = false));
                     }}
                   />
-                  {isUniEmpty && <ErrorNote> Університет - обов'язкове поле!</ErrorNote>}
+                  {isUniEmpty && (
+                    <ErrorNote>{translations[lang]?.universityRequired}</ErrorNote>
+                  )}
                 </SpeakingLabel>
               )}
               <SpeakingLabel>
-                {groupValue && groupValue.value && <LabelText>Група</LabelText>}
+                {groupValue && groupValue.value && (
+                  <LabelText>{translations[lang]?.group}</LabelText>
+                )}
                 <TeacherLangSelect
                   ref={selectInputRef}
                   options={groupOptions}
@@ -509,7 +610,7 @@ const UserAdminPanel = ({ uni }) => {
                       padding: '7px',
                     }),
                   }}
-                  placeholder="Група"
+                  placeholder={translations[lang]?.group}
                   name="group"
                   onBlur={() => {
                     !groupValue
@@ -521,27 +622,35 @@ const UserAdminPanel = ({ uni }) => {
                     group?.value && setIsGroupEmpty(empty => (empty = false));
                   }}
                 />
-                {isGroupEmpty && <ErrorNote> Група - обов'язкове поле!</ErrorNote>}
+                {isGroupEmpty && (
+                  <ErrorNote>{translations[lang]?.groupRequired}</ErrorNote>
+                )}
               </SpeakingLabel>
-              <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
+              <AdminFormBtn type="submit">
+                {translations[lang]?.addUserButton}
+              </AdminFormBtn>
             </UsersForm>
           </Formik>
-        )} */}
+        )}
         {isUserAdmin && users && (
           <UserDBTable>
-            <UserDBCaption>Lista użytkowników z dostępem do lekcji</UserDBCaption>
+            <UserDBCaption>{translations[lang]?.userListCaption}</UserDBCaption>
             <thead>
               <UserDBRow>
-                {/* <UserHeadCell>CRM&nbsp;Lider Kontakt</UserHeadCell> */}
-                <UserHeadCell>Nazwisko i imię</UserHeadCell>
-                <UserHeadCell>Poczta (login)</UserHeadCell>
-                {/* <UserHeadCell>Hasło</UserHeadCell> */}
-                {!uni && <UserHeadCell>Uniwersytet</UserHeadCell>}
-                <UserHeadCell>Grupa</UserHeadCell>
-                <UserHeadCell>Punkty</UserHeadCell>
-                <UserHeadCell>ID na platformie</UserHeadCell>
-                <UserHeadCell>Obecność</UserHeadCell>
-                {!uni && <UserHeadCell>Odwiedziny z czasem</UserHeadCell>}
+                {!uni && (
+                  <UserHeadCell>{translations[lang]?.crmLeadContact}</UserHeadCell>
+                )}
+                <UserHeadCell>{translations[lang]?.name}</UserHeadCell>
+                <UserHeadCell>{translations[lang]?.email}</UserHeadCell>
+                {!uni && <UserHeadCell>{translations[lang]?.password}</UserHeadCell>}
+                {!uni && <UserHeadCell>{translations[lang]?.university}</UserHeadCell>}
+                <UserHeadCell>{translations[lang]?.group}</UserHeadCell>
+                <UserHeadCell>{translations[lang]?.points}</UserHeadCell>
+                <UserHeadCell>{translations[lang]?.platformId}</UserHeadCell>
+                <UserHeadCell>{translations[lang]?.attendance}</UserHeadCell>
+                {!uni && (
+                  <UserHeadCell>{translations[lang]?.visitsWithTime}</UserHeadCell>
+                )}
                 <UserHeadCell>Edit</UserHeadCell>
                 <UserHeadCell>Delete</UserHeadCell>
               </UserDBRow>
@@ -549,25 +658,27 @@ const UserAdminPanel = ({ uni }) => {
             <tbody>
               {users.map(user => (
                 <UserDBRow key={user._id}>
-                  {/* <UserCell>
-                    <a
-                      href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {user.crmId}
-                    </a>{' '}
-                    <a
-                      href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {user.contactId}
-                    </a>
-                  </UserCell> */}
+                  {!uni && (
+                    <UserCell>
+                      <a
+                        href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {user.crmId}
+                      </a>{' '}
+                      <a
+                        href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {user.contactId}
+                      </a>
+                    </UserCell>
+                  )}
                   <UserCell>{user.name}</UserCell>
                   <UserCell>{user.mail}</UserCell>
-                  {/* <UserCell>{user.password}</UserCell> */}
+                  {!uni && <UserCell>{user.password}</UserCell>}
                   {!uni && <UserCell className="last-name">{user.university}</UserCell>}
                   <UserCell>{user.group ? user.group : '1'}</UserCell>
                   <UserCell>{user.points ? user.points : '0'}</UserCell>
@@ -604,11 +715,9 @@ const UserAdminPanel = ({ uni }) => {
                   )}
 
                   <UserCell>
-                    {/* {user.name === 'Dev Acc' ? null : ( */}
                     <UserEditButton onClick={() => handleEdit(user._id)}>
                       Edit
                     </UserEditButton>
-                    {/* )} */}
                   </UserCell>
                   <UserCell>
                     {user.name === 'Dev Acc' ? null : (
@@ -625,6 +734,8 @@ const UserAdminPanel = ({ uni }) => {
         {isEditFormOpen && (
           <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
             <UniUserEditForm
+              uni={uni}
+              lang={lang}
               userToEdit={userToEdit}
               updateUser={updateUser}
               closeEditForm={closeEditForm}
@@ -636,6 +747,7 @@ const UserAdminPanel = ({ uni }) => {
         {isVisitedEditFormOpen && (
           <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
             <UserVisitedEditForm
+              lang={lang}
               userToEdit={userToEdit}
               updateUserVisits={updateUserVisits}
               closeEditForm={closeEditForm}
