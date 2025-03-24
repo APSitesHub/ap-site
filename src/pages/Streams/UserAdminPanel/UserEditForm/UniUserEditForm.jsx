@@ -21,7 +21,42 @@ import {
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
+const translations = {
+  pl: {
+    namePlaceholder: 'Nazwisko i imię',
+    emailPlaceholder: 'Adres e-mail (login)',
+    passwordPlaceholder: 'Hasło',
+    crmIdPlaceholder: 'ID leada w CRM',
+    contactIdPlaceholder: 'ID kontaktu w CRM',
+    pointsPlaceholder: 'Punkty',
+    pupilIdPlaceholder: 'ID ucznia na platformie',
+    universityPlaceholder: 'Uniwersytet',
+    groupPlaceholder: 'Grupa',
+    universityRequired: 'Uniwersytet - pole obowiązkowe!',
+    groupRequired: 'Grupa - pole obowiązkowe!',
+    userUpdated: "Użytkownik został zaktualizowany!",
+    submitButton: 'Zatwierdź zmiany',
+  },
+  ua: {
+    namePlaceholder: "Прізвище та ім'я",
+    emailPlaceholder: 'Адреса електронної пошти (логін)',
+    passwordPlaceholder: 'Пароль',
+    crmIdPlaceholder: 'ID ліда в CRM',
+    contactIdPlaceholder: 'ID контакту в CRM',
+    pointsPlaceholder: 'Бали',
+    pupilIdPlaceholder: 'ID учня на платформі',
+    universityPlaceholder: 'Університет',
+    groupPlaceholder: 'Група',
+    universityRequired: "Університет - обов'язкове поле!",
+    groupRequired: "Група - обов'язкове поле!",
+    userUpdated: "Юзера відредаговано!",
+    submitButton: 'Підтвердити зміни',
+  },
+};
+
 export const UniUserEditForm = ({
+  lang,
+  uni,
   userToEdit,
   updateUser,
   closeEditForm,
@@ -56,22 +91,18 @@ export const UniUserEditForm = ({
   };
 
   const usersSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required(
-        "Imię - pole obowiązkowe, jeśli z jakiegoś powodu nie znamy imienia, wpisz N/A"
-      ),
-    mail: yup.string().required("Poczta - pole obowiązkowe!"),
-    password: yup.string().required("Hasło - pole obowiązkowe!"),
-    crmId: yup.string().matches(/^[0-9]*$/, 'Tylko cyfry'),
-    contactId: yup.string().matches(/^[0-9]*$/, 'Tylko cyfry'),
+    name: yup.string().required(translations[lang]?.namePlaceholder),
+    mail: yup.string().required(translations[lang]?.emailPlaceholder),
+    password: yup.string().required(translations[lang]?.passwordPlaceholder),
+    crmId: yup.string().matches(/^[0-9]*$/, translations[lang]?.crmIdPlaceholder),
+    contactId: yup.string().matches(/^[0-9]*$/, translations[lang]?.contactIdPlaceholder),
     pupilId: yup
       .string()
-      .min(6, 'Nie mniej niż 6 cyfr')
-      .max(7, 'Nie więcej niż 7 cyfr')
-      .matches(/^\d{1,7}$/, 'Tylko cyfry')
-      .required("Pole obowiązkowe, patrz na platformie"),
-    points: yup.string().matches(/^[0-9]*$/, 'Tylko cyfry'),
+      .min(6, translations[lang]?.pupilIdPlaceholder)
+      .max(7, translations[lang]?.pupilIdPlaceholder)
+      .matches(/^\d{1,7}$/, translations[lang]?.pupilIdPlaceholder)
+      .required(translations[lang]?.pupilIdPlaceholder),
+    points: yup.string().matches(/^[0-9]*$/, translations[lang]?.pointsPlaceholder),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
@@ -95,12 +126,12 @@ export const UniUserEditForm = ({
       const response = await axios.put(`/uniusers/${userToEdit._id}`, values);
       console.log(response);
       resetForm();
-      alert('Użytkownik został zaktualizowany');
+      alert(translations[lang]?.userUpdated);
       updateUser(userToEdit._id, values);
       closeEditForm();
     } catch (error) {
       console.error(error);
-      alert('Wystąpił problem - naciśnij F12, zrób zrzut ekranu konsoli, wyślij do Kirila');
+      alert(translations[lang]?.universityRequired);
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -115,36 +146,72 @@ export const UniUserEditForm = ({
       >
         <UsersEditForm>
           <Label>
-            <AdminInput type="text" name="name" placeholder="Nazwisko i imię" />
+            <AdminInput
+              type="text"
+              name="name"
+              placeholder={translations[lang]?.namePlaceholder}
+            />
             <AdminInputNote component="p" name="name" />
           </Label>
           <Label>
-            <AdminInput type="email" name="mail" placeholder="Adres e-mail (login)" />
+            <AdminInput
+              type="email"
+              name="mail"
+              placeholder={translations[lang]?.emailPlaceholder}
+            />
             <AdminInputNote component="p" name="mail" />
           </Label>
-          {/* <Label>
-            <AdminInput type="text" name="password" placeholder="Hasło" />
-            <AdminInputNote component="p" name="password" />
-          </Label> */}
-          {/* <Label>
-            <AdminInput type="text" name="crmId" placeholder="ID leada w CRM" />
-            <AdminInputNote component="p" name="crmId" />
-          </Label> */}
-          {/* <Label>
-            <AdminInput type="text" name="contactId" placeholder="ID kontaktu w CRM" />
-            <AdminInputNote component="p" name="contactId" />
-          </Label> */}
+          {!uni && (
+            <Label>
+              <AdminInput
+                type="text"
+                name="password"
+                placeholder={translations[lang]?.passwordPlaceholder}
+              />
+              <AdminInputNote component="p" name="password" />
+            </Label>
+          )}
+          {!uni && (
+            <Label>
+              <AdminInput
+                type="text"
+                name="crmId"
+                placeholder={translations[lang]?.crmIdPlaceholder}
+              />
+              <AdminInputNote component="p" name="crmId" />
+            </Label>
+          )}
+          {!uni && (
+            <Label>
+              <AdminInput
+                type="text"
+                name="contactId"
+                placeholder={translations[lang]?.contactIdPlaceholder}
+              />
+              <AdminInputNote component="p" name="contactId" />
+            </Label>
+          )}
           <Label>
-            <AdminInput type="text" name="points" placeholder="Punkty" />
+            <AdminInput
+              type="text"
+              name="points"
+              placeholder={translations[lang]?.pointsPlaceholder}
+            />
             <AdminInputNote component="p" name="points" />
           </Label>
           <Label>
-            <AdminInput type="text" name="pupilId" placeholder="ID ucznia na platformie" />
+            <AdminInput
+              type="text"
+              name="pupilId"
+              placeholder={translations[lang]?.pupilIdPlaceholder}
+            />
             <AdminInputNote component="p" name="pupilId" />
           </Label>
           {uniOptions.length > 0 && (
             <SpeakingLabel>
-              {uniValue && uniValue.value && <LabelText>Uniwersytet</LabelText>}
+              {uniValue && uniValue.value && (
+                <LabelText>{translations[lang]?.universityPlaceholder}</LabelText>
+              )}
               <TeacherLangSelect
                 ref={selectInputRef}
                 options={uniOptions}
@@ -169,7 +236,7 @@ export const UniUserEditForm = ({
                     padding: '7px',
                   }),
                 }}
-                placeholder="Uniwersytet"
+                placeholder={translations[lang]?.universityPlaceholder}
                 name="uni"
                 onBlur={() => {
                   !uniValue
@@ -181,11 +248,15 @@ export const UniUserEditForm = ({
                   uni?.value && setIsUniEmpty(empty => (empty = false));
                 }}
               />
-              {isUniEmpty && <ErrorNote> Uniwersytet - pole obowiązkowe!</ErrorNote>}
+              {isUniEmpty && (
+                <ErrorNote>{translations[lang]?.universityRequired}</ErrorNote>
+              )}
             </SpeakingLabel>
           )}
           <SpeakingLabel>
-            {groupValue && groupValue.value && <LabelText>Grupa</LabelText>}
+            {groupValue && groupValue.value && (
+              <LabelText>{translations[lang]?.groupPlaceholder}</LabelText>
+            )}
             <TeacherLangSelect
               ref={selectInputRef}
               options={groupOptions}
@@ -212,7 +283,7 @@ export const UniUserEditForm = ({
                   padding: '7px',
                 }),
               }}
-              placeholder="Grupa"
+              placeholder={translations[lang]?.groupPlaceholder}
               name="group"
               onBlur={() => {
                 !groupValue
@@ -224,9 +295,9 @@ export const UniUserEditForm = ({
                 group?.value && setIsGroupEmpty(empty => (empty = false));
               }}
             />
-            {isGroupEmpty && <ErrorNote> Grupa - pole obowiązkowe!</ErrorNote>}
+            {isGroupEmpty && <ErrorNote>{translations[lang]?.groupRequired}</ErrorNote>}
           </SpeakingLabel>
-          <AdminFormBtn type="submit">Zatwierdź zmiany</AdminFormBtn>
+          <AdminFormBtn type="submit">{translations[lang]?.submitButton}</AdminFormBtn>
         </UsersEditForm>
       </Formik>
       {isLoading && <Loader />}
