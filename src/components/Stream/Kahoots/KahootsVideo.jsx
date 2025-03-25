@@ -61,7 +61,6 @@ export const KahootsVideo = ({
           className={isKahootOpen ? 'shown' : 'hidden'}
           style={{
             zIndex: isOpenedLast === 'kahoot' ? '2' : '1',
-            width: isChatOpen ? kahootWidth - 300 : kahootWidth,
             height: sectionHeight,
             right: isChatOpen ? '600px' : '0',
             transform: isChatOpen && !isKahootOpen ? 'translateX(1000%)' : '',
