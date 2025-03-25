@@ -78,12 +78,12 @@
       }
     </script>
     <script>
-      if (window.location.pathname.includes('my-vpu')) {
+      if (window.location.pathname.includes('my-vpu')) {    
         (function () {
           var link = document.createElement('link');
-          link.type = 'image/x-icon';
-          link.rel = 'shortcut icon';
+          link.rel = 'icon';
           link.href = '%PUBLIC_URL%/vpu.png';
+          document.querySelector('link[rel="icon"]').remove();
           document.getElementsByTagName('head')[0].appendChild(link);
         })();
       }
@@ -92,9 +92,9 @@
       if (window.location.pathname.includes('my-ismpo')) {
         (function () {
           var link = document.createElement('link');
-          link.type = 'image/x-icon';
-          link.rel = 'shortcut icon';
-          link.href = '%PUBLIC_URL%/ismpo.png';
+          link.rel = 'icon';
+          link.href = '%PUBLIC_URL%/ismpo.ico';
+          document.querySelector('link[rel="icon"]').remove();
           document.getElementsByTagName('head')[0].appendChild(link);
         })();
       }

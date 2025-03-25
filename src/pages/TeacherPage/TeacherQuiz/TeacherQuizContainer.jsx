@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   TeacherChartBtn,
   TeacherChartBtnBox,
   TeacherChartResetBtn,
 } from '../StudentChart/StudentChart.styled';
 import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
-import { TeacherChatPageContainer } from './TeacherQuiz.styled';
+import { TeacherChatPageContainer, TeacherQuizConfirmation } from './TeacherQuiz.styled';
 
 export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) => {
   const [answers, setAnswers] = useState({});
   const [isQuizActive, setIsQuizActive] = useState(false);
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const correctAnswer = useRef('')
 
   const emitQuizStart = () => {
     setAnswers(answers => (answers = { ...{} }));
@@ -28,6 +30,16 @@ export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) =>
     setIsQuizActive(false);
   };
 
+  const setAndSendAnswer = answer => {
+    correctAnswer.current = answer;
+    setIsConfirmationOpen(true);
+  };
+
+  const sendConfirmedAnswer = () => {
+    // add request to server to save the correct answer
+    setIsConfirmationOpen(false);
+  }
+
   useEffect(() => {
     socket &&
       socket.on('answer:acquired', (answer, answerPage) => {
@@ -40,10 +52,18 @@ export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) =>
 
   return (
     <TeacherChatPageContainer>
+      {isConfirmationOpen && (
+        <TeacherQuizConfirmation>
+          <h3>U sure that {correctAnswer.current} is the correct answer? </h3>
+          <TeacherChartBtn onClick={sendConfirmedAnswer}>Yes</TeacherChartBtn>
+          <TeacherChartResetBtn onClick={() => setIsConfirmationOpen(false)}>No</TeacherChartResetBtn>
+        </TeacherQuizConfirmation>
+      )}
       <TeacherAnswersChart
         answers={answers}
         quizType={quizType}
         isQuizActive={isQuizActive}
+        setAndSendAnswer={setAndSendAnswer}
       />
       <TeacherChartBtnBox>
         {!isQuizActive && (
