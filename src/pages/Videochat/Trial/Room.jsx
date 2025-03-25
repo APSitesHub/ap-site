@@ -21,6 +21,9 @@ import {
   CameraIcon,
   DisabledCameraIcon,
   DisabledMicroIcon,
+  SoundIcon,
+  DisabledSoundIcon,
+  VolumeRange,
   EndCallIcon,
   MainVideo,
   MainVideoContainer,
@@ -61,12 +64,15 @@ function Room() {
     addMockClient,
     getClients,
     remoteStreams,
+    mixedAudioStream,
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
+  const [audioOutputDevices, setAudioOutputDevices] = useState([]);
+  const [volume, setVolume] = useState(1);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
@@ -83,6 +89,7 @@ function Room() {
 
   const chatEl = useRef();
   const socketRef = useRef(null);
+  const audioRef = useRef(null);
 
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
@@ -129,8 +136,10 @@ function Room() {
   useEffect(() => {
     const video = localDevices.filter(device => device.kind === 'videoinput');
     const audio = localDevices.filter(device => device.kind === 'audioinput');
+    const audiooutput = localDevices.filter(device => device.kind === 'audiooutput');
     setAudioDevices(audio);
     setVideoDevices(video);
+    setAudioOutputDevices(audiooutput);
   }, [localDevices]);
 
   const changePage = isUp => {
@@ -168,7 +177,7 @@ function Room() {
           `https://ap-chat-server.onrender.com/messages/room`,
           {
             params: {
-              room,
+              room: `/streams/${room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}`,
             },
           }
         );
@@ -245,30 +254,34 @@ function Room() {
     // open quizzes on event
     socketRef.current.on('question:input', data => {
       console.log(data.page);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizInputOpen(true);
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+        setIsQuizInputOpen(true);
     });
     socketRef.current.on('question:options', data => {
       console.log(data.page);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizOptionsOpen(true);
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+        setIsQuizOptionsOpen(true);
     });
     socketRef.current.on('question:trueFalse', data => {
       console.log(data.page);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] &&
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizTrueFalseOpen(true);
     });
 
     // close quizzes on event
     socketRef.current.on('question:closeInput', data => {
       console.log(data);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizInputOpen(false);
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+        setIsQuizInputOpen(false);
     });
     socketRef.current.on('question:closeOptions', data => {
       console.log(data);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizOptionsOpen(false);
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+        setIsQuizOptionsOpen(false);
     });
     socketRef.current.on('question:closeTrueFalse', data => {
       console.log(data);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] &&
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizTrueFalseOpen(false);
     });
 
@@ -337,12 +350,46 @@ function Room() {
     };
   }, [visibleClients]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.srcObject = mixedAudioStream;
+    }
+  }, [mixedAudioStream, audioRef.current]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  useEffect(() => {
+    changeAudioOutput(localStorage.getItem('default-audiooutput') || 'default');
+  }, [audioRef.current]);
+
+  const toggleVolumeInput = () => {
+    const input = document.getElementById('volume-range');
+    input.style.display = input.style.display === 'block' ? 'none' : 'block';
+  };
+
+  const changeAudioOutput = async deviceId => {
+    if (audioRef.current?.setSinkId) {
+      try {
+        await audioRef.current.setSinkId(deviceId);
+        localStorage.setItem('default-audiooutput', deviceId);
+      } catch (error) {
+        console.error('Change audiootput error:', error);
+      }
+    } else {
+      console.warn('setSinkId not supported');
+    }
+  };
+
   const updateStreams = () => {
     const videoElements = document.querySelectorAll('[data-video]');
 
     videoElements.forEach(el => {
       try {
-        if (el.dataset.id === LOCAL_VIDEO) {
+        if (el?.dataset?.id === LOCAL_VIDEO) {
           updateLocalStream(el);
         } else {
           updateRemoteStream(el);
@@ -354,7 +401,7 @@ function Room() {
   };
 
   const updateLocalStream = el => {
-    if (el.srcObject?.id !== localMediaStream.current.id) {
+    if (el.srcObject?.id !== localMediaStream.current?.id) {
       el.srcObject = localMediaStream.current;
     }
   };
@@ -393,6 +440,7 @@ function Room() {
               width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
             }}
           >
+            <audio autoPlay ref={audioRef} />
             <VideochatContainer>
               <MainVideoContainer>
                 {clients
@@ -412,7 +460,7 @@ function Room() {
                           data-id={clientId}
                           autoPlay
                           playsInline
-                          muted={clientId === LOCAL_VIDEO}
+                          muted={true}
                         />
                         {(!isCameraEnabled ||
                           (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
@@ -458,6 +506,41 @@ function Room() {
                       </MediaButtonContainer>
                     </>
                   )}
+                  <MediaButtonContainer style={{ position: 'relative' }}>
+                    <div
+                      id="volume-range"
+                      style={{
+                        display: 'none',
+                        position: 'absolute',
+                        bottom: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                        padding: '5px',
+                        paddingBottom: '10px',
+                      }}
+                    >
+                      <VolumeRange
+                        min="0"
+                        max="1"
+                        step={0.01}
+                        value={volume}
+                        onChange={e => setVolume(e.target.value)}
+                      />
+                    </div>
+                    <MediaButton onClick={() => toggleVolumeInput()}>
+                      {volume !== '0' ? <SoundIcon /> : <DisabledSoundIcon />}
+                    </MediaButton>
+                    <MediaSelector
+                      name="audiooutput"
+                      id="audiooutput"
+                      onChange={e => changeAudioOutput(e.target.value)}
+                    >
+                      {audioOutputDevices.map(device => (
+                        <MediaOption key={device.deviceId} value={device.deviceId}>
+                          {device.label}
+                        </MediaOption>
+                      ))}
+                    </MediaSelector>
+                  </MediaButtonContainer>
                   <MediaButtonContainer>
                     <MediaButton onClick={toggleMicrophone}>
                       {isLocalMicrophoneEnabled ? <MicroIcon /> : <DisabledMicroIcon />}
@@ -524,7 +607,7 @@ function Room() {
                               data-id={clientId}
                               autoPlay
                               playsInline
-                              muted={clientId === LOCAL_VIDEO}
+                              muted={true}
                               style={{
                                 objectFit: 'contain',
                                 maxWidth: 'inherit',
@@ -583,7 +666,7 @@ function Room() {
                   isInputOpen={isQuizInputOpen}
                   socket={socketRef.current}
                   toggleQuiz={toggleQuizInput}
-                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
                 />
 
@@ -591,7 +674,7 @@ function Room() {
                   isInputOpen={isQuizOptionsOpen}
                   socket={socketRef.current}
                   toggleQuiz={toggleQuizOptions}
-                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
                 />
 
@@ -599,7 +682,7 @@ function Room() {
                   isInputOpen={isQuizTrueFalseOpen}
                   socket={socketRef.current}
                   toggleQuiz={toggleQuizTrueFalse}
-                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
                 />
               </>

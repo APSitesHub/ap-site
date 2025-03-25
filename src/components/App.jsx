@@ -21,8 +21,8 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
-
-// import LogRocket from 'logrocket';
+// eslint-disable-next-line
+import LogRocket from 'logrocket';
 
 const NewDesign = lazy(() =>
   import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
@@ -332,11 +332,6 @@ const UniUserAdminPanel = lazy(() =>
     /* webpackChunkName: "Polish University Users Admin Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAdminPanel'
   )
 );
-const UniUserAttendancePedagogium = lazy(() =>
-  import(
-    /* webpackChunkName: "Pedagogium Attendance Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAttendancePedagogium'
-  )
-);
 const C1SpeakingPanel = lazy(() =>
   import(
     /* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel'
@@ -475,7 +470,9 @@ const VideochatRoom = lazy(() =>
   import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom')
 );
 const TrialVideoRoom = lazy(() =>
-  import(/* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain')
+  import(
+    /* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain'
+  )
 );
 const EndCall = lazy(() =>
   import(/* webpackChunkName: "End Call" */ '../pages/Videochat/EndCall')
@@ -491,6 +488,12 @@ const MyAPPlTemp = lazy(() =>
 );
 const MyWSPA = lazy(() =>
   import(/* webpackChunkName: "My WSPA Page" */ '../pages/MyAP/MyWSPA')
+);
+const MyVPU = lazy(() =>
+  import(/* webpackChunkName: "My VPU Page" */ '../pages/MyAP/MyVPU')
+);
+const MyISMPO = lazy(() =>
+  import(/* webpackChunkName: "My ISMPO Page" */ '../pages/MyAP/MyISMPO')
 );
 const TrialLesson = lazy(() =>
   import(/* webpackChunkName: "Trial Lesson Page" */ '../pages/TrialLesson/TrialLesson')
@@ -607,12 +610,18 @@ export const App = () => {
           <Route path="teacher-ap" element={<TeacherAP />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
           <Route path="room/:slug/:id" element={<VideochatRoom />} noindex={true} />
-          <Route path="room/trial/:slug/:id" element={<TrialVideoRoom />} noindex={true} />
+          <Route
+            path="room/trial/:slug/:id"
+            element={<TrialVideoRoom />}
+            noindex={true}
+          />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />
           <Route path="my-wspa" element={<MyWSPA />} noindex={true} />
+          <Route path="my-vpu" element={<MyVPU />} noindex={true} />
+          <Route path="my-ismpo" element={<MyISMPO/>} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
@@ -746,8 +755,8 @@ export const App = () => {
               noindex={true}
             />
             <Route
-              path="pedagogium-attendance"
-              element={<UniUserAttendancePedagogium />}
+              path="pedagogium-admin-panel"
+              element={<UniUserAdminPanel uni={'PEDAGOGIUM'} lang={'pl'} />}
               noindex={true}
             />
             <Route

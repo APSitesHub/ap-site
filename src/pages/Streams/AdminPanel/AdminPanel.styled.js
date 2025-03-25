@@ -64,6 +64,16 @@ export const AdminInputWSPA = styled(Input)`
   max-width: 600px;
 `;
 
+export const AdminInputVPU = styled(Input)`
+  border: 2px solid #041f43;
+  max-width: 600px;
+`;
+
+export const AdminInputISMPO = styled(Input)`
+  border: 2px solid #002750;
+  max-width: 600px;
+`;
+
 export const AdminInputNoteWSPA = styled(InputNote)`
   position: static;
   color: #E40521;

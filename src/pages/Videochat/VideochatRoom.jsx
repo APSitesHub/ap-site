@@ -245,30 +245,30 @@ function VideochatRoom() {
     // open quizzes on event
     socketRef.current.on('question:input', data => {
       console.log(data.page);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizInputOpen(true);
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] && setIsQuizInputOpen(true);
     });
     socketRef.current.on('question:options', data => {
       console.log(data.page);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizOptionsOpen(true);
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] && setIsQuizOptionsOpen(true);
     });
     socketRef.current.on('question:trueFalse', data => {
       console.log(data.page);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] &&
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizTrueFalseOpen(true);
     });
 
     // close quizzes on event
     socketRef.current.on('question:closeInput', data => {
       console.log(data);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizInputOpen(false);
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] && setIsQuizInputOpen(false);
     });
     socketRef.current.on('question:closeOptions', data => {
       console.log(data);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] && setIsQuizOptionsOpen(false);
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] && setIsQuizOptionsOpen(false);
     });
     socketRef.current.on('question:closeTrueFalse', data => {
       console.log(data);
-      data.page === room.match(/\/room\/([^]+)\/[^]+$/)[1] &&
+      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizTrueFalseOpen(false);
     });
 
@@ -583,7 +583,7 @@ function VideochatRoom() {
                   isInputOpen={isQuizInputOpen}
                   socket={socketRef.current}
                   toggleQuiz={toggleQuizInput}
-                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
                 />
 
@@ -591,7 +591,7 @@ function VideochatRoom() {
                   isInputOpen={isQuizOptionsOpen}
                   socket={socketRef.current}
                   toggleQuiz={toggleQuizOptions}
-                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
                 />
 
@@ -599,7 +599,7 @@ function VideochatRoom() {
                   isInputOpen={isQuizTrueFalseOpen}
                   socket={socketRef.current}
                   toggleQuiz={toggleQuizTrueFalse}
-                  page={room.match(/\/room\/([^]+)\/[^]+$/)[1]}
+                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
                 />
               </>

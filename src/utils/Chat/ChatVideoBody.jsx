@@ -41,7 +41,7 @@ export const ChatVideoBody = ({ socket, messages, isChatOpen, currentUser }) => 
     ? '/streams-kids/a2'
     : location.pathname.includes('streams-kids/a2')
     ? '/streams-kids/b1beginner'
-    : location.pathname;
+    : `/streams/${location.pathname.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}`;
 
   const calculateHeights = () => {
     // console.log('scroll:', scroll);

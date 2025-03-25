@@ -6,6 +6,8 @@ import { ReactComponent as _CameraIcon } from '../../img/svg/camera.svg';
 import { ReactComponent as _DisabledCameraIcon } from '../../img/svg/camera-slash.svg';
 import { ReactComponent as _MicroIcon } from '../../img/svg/microphone.svg';
 import { ReactComponent as _DisabledMicroIcon } from '../../img/svg/microphone-slash.svg';
+import { ReactComponent as _SoundIcon } from '../../img/svg/sound-on.svg';
+import { ReactComponent as _DisabledSoundIcon } from '../../img/svg/sound-off.svg';
 import { ReactComponent as _ArrowUp } from '../../img/svg/faq-arrow-up.svg';
 import { ReactComponent as _ArrowDown } from '../../img/svg/faq-arrow-down.svg';
 import { ReactComponent as _BackIcon } from '../../img/svg/btnbox-switch-left-gray.svg';
@@ -89,7 +91,7 @@ export const UserVideo = styled.div`
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
   z-index: 1;
   min-width: 164px;
-  max-height: 164px;
+  flex-basis: 25%;
 
   ${({ $isUserVideo }) =>
     !$isUserVideo &&
@@ -203,6 +205,74 @@ export const EndCallIcon = styled(_EndCallIcon)`
   fill: #ffffff;
   height: 32px;
   width: 32px;
+`;
+
+export const SoundIcon = styled(_SoundIcon)`
+  stroke: #ffffff;
+  height: 28px;
+  width: 28px;
+`;
+
+export const DisabledSoundIcon = styled(_DisabledSoundIcon)`
+  stroke: #c62323;
+  height: 28px;
+  width: 28px;
+
+  ${({ $isAbsolute }) =>
+    $isAbsolute &&
+    css`
+      position: absolute;
+      bottom: 16px;
+      left: 24px;
+    `}
+
+  ${({ $isSmall }) =>
+    $isSmall &&
+    css`
+      width: 18px;
+      height: 18px;
+      bottom: 6px;
+      left: 6px;
+    `}
+`;
+
+export const VolumeRange = styled.input.attrs({ type: 'range' })`
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #0f645b, #1bad9f);
+    border-radius: 10px;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #1bad9f;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -7px;
+  }
+
+  &::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #0f645b, #1bad9f);
+    border-radius: 10px;
+  }
+
+  &::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #1bad9f;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 `;
 
 export const MicroIcon = styled(_MicroIcon)`

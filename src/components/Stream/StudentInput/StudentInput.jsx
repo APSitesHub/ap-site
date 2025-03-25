@@ -27,6 +27,7 @@ export const StudentInput = ({ isInputOpen, socket, page, toggleQuiz, currentUse
         .toLowerCase(),
       page: page,
     });
+    document.querySelector('#answer_input').value = '';
     toggleQuiz();
   };
 
