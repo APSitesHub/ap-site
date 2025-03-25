@@ -2,6 +2,7 @@ import { StreamsBackgroundWrapper } from 'components/BackgroundWrapper/Backgroun
 import styled from 'styled-components';
 
 export const PlatformBox = styled.div`
+  position: absolute;
   height: 100%;
 
   scrollbar-width: thin;

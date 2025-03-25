@@ -31,6 +31,25 @@ export const PanelBackdrop = styled.div`
   }
 `;
 
+export const PanelBackdropTrial = styled.div`
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  background-color: #00000080;
+  z-index: 14;
+  opacity: 1;
+
+  transition: opacity var(--animation-global);
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity var(--animation-global);
+  }
+`;
+
 export const APPanel = styled.div`
   width: 40px;
 

@@ -7,6 +7,7 @@ import {
   CupBtnIcon,
   FeedbackBtnIcon,
   PanelBackdrop,
+  PanelBackdropTrial,
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
   PanelHideSwitch,
@@ -228,8 +229,8 @@ export const MyAPPanelPlTemp = ({
 
   return (
     <>
-      <PanelBackdrop onClick={hideBackdrop} className={isBackdropShown ? '' : 'hidden'} />
-      <PlatformDataConcealer />
+      <PanelBackdropTrial onClick={hideBackdrop} className={isBackdropShown ? '' : 'hidden'} />
+      {/* <PlatformDataConcealer /> */}
       <PanelHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
       </PanelHideSwitch>
