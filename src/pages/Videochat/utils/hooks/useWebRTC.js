@@ -251,29 +251,25 @@ export default function useWebRTC(roomID) {
       destinationRef.current = audioContextRef.current.createMediaStreamDestination();
     }
 
-    const { current: audioContext } = audioContextRef;
-    const { current: destination } = destinationRef;
+    const mixedStream = destinationRef.current.stream;
 
-    const audioTracks = [];
+    const audioTracks = remoteStreams
+      .map(stream => stream.remoteStream.getAudioTracks()[0])
+      .filter(track => track); 
 
-    Object.values(peerConnections.current).forEach(rtc => {
-      const audioReceiver = rtc
-        .getReceivers()
-        .find(receiver => receiver.track.kind === 'audio');
-
-      if (audioReceiver) {
-        audioTracks.push(audioReceiver.track);
-      }
-    });
+    const gainNode = audioContextRef.current.createGain();
+    gainNode.gain.value = 0.8;
 
     audioTracks.forEach(track => {
-      const stream = new MediaStream([track]);
-
-      const source = audioContext.createMediaStreamSource(stream);
-      source.connect(destination);
+      const source = audioContextRef.current.createMediaStreamSource(
+        new MediaStream([track])
+      );
+      source.connect(gainNode);
     });
 
-    setMixedAudioStream(destination.stream);
+    gainNode.connect(destinationRef.current);
+
+    setMixedAudioStream(mixedStream);
   };
 
   const muteAll = async () => {
