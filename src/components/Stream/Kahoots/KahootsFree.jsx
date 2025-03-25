@@ -55,7 +55,7 @@ export const KahootsFree = ({
     localStorage.getItem('userName') || ''
   );
   const [kahoots, setKahoots] = useState({});
-  const [activeKahoot, setActiveKahoot] = useState(1);
+  const [activeKahoot, setActiveKahoot] = useState(0);
 
   let location = useLocation();
 
@@ -343,7 +343,6 @@ export const KahootsFree = ({
           className={isKahootOpen ? 'shown' : 'hidden'}
           style={{
             zIndex: isOpenedLast === 'kahoot' ? '3' : '1',
-            width: isChatOpen ? kahootWidth - 300 : kahootWidth,
             height: sectionHeight,
           }}
           onTransitionEnd={kahootLinksRefresher}
