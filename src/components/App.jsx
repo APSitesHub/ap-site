@@ -474,6 +474,9 @@ const TrialVideoRoom = lazy(() =>
     /* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain'
   )
 );
+const StreamVideoRoom = lazy(() =>
+  import(/* webpackChunkName: "Stream Videochat Room" */ '../pages/Videochat/Stream/Room')
+);
 const EndCall = lazy(() =>
   import(/* webpackChunkName: "End Call" */ '../pages/Videochat/EndCall')
 );
@@ -615,13 +618,18 @@ export const App = () => {
             element={<TrialVideoRoom />}
             noindex={true}
           />
+          <Route
+            path="room/stream/:slug/:id"
+            element={<StreamVideoRoom />}
+            noindex={true}
+          />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />
           <Route path="my-wspa" element={<MyWSPA />} noindex={true} />
           <Route path="my-vpu" element={<MyVPU />} noindex={true} />
-          <Route path="my-ismpo" element={<MyISMPO/>} noindex={true} />
+          <Route path="my-ismpo" element={<MyISMPO />} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>

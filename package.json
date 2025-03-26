@@ -6,6 +6,7 @@
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
+    "@jitsi/react-sdk": "^1.4.4",
     "@mui/base": "^5.0.0-beta.35",
     "@nivo/bar": "^0.88.0",
     "@nivo/core": "^0.88.0",
@@ -25,6 +26,7 @@
     "formik-mui": "^5.0.0-alpha.0",
     "freeice": "^2.2.2",
     "html-react-parser": "^5.1.10",
+    "lib-jitsi-meet": "https://github.com/jitsi/lib-jitsi-meet/releases/download/v1953.0.0+35068600/lib-jitsi-meet.tgz",
     "logrocket": "^9.0.2",
     "modern-normalize": "^2.0.0",
     "nanoid": "^5.0.4",
