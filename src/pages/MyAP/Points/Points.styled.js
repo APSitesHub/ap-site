@@ -48,6 +48,10 @@ export const PointsBox = styled.div`
   }
 `;
 
+export const PointsBoxTrial = styled(PointsBox)`
+  z-index: 8;
+`;
+
 export const PointsBoxHeading = styled.h3`
   padding: 9px 0;
 

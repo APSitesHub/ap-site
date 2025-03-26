@@ -40,6 +40,10 @@ export const TimetableBox = styled.div`
   }
 `;
 
+export const TimetableBoxTrial = styled(TimetableBox)`
+  z-index: 8;
+`;
+
 export const TimetableHeading = styled.h3`
   padding: 9px 0;
 

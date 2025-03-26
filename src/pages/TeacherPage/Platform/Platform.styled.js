@@ -2,6 +2,7 @@ import { StreamsBackgroundWrapper } from 'components/BackgroundWrapper/Backgroun
 import styled from 'styled-components';
 
 export const PlatformBox = styled.div`
+  position: absolute;
   height: 100%;
 
   scrollbar-width: thin;
@@ -38,6 +39,13 @@ export const PlatformBox = styled.div`
     z-index: 5;
     top: 0;
   }
+`;
+
+export const PlatformBoxTrialLesson = styled(PlatformBox)`
+  overflow: hidden;
+  border-radius: 0;
+
+  scrollbar-gutter: auto;
 `;
 
 export const PlatformBoxVertical = styled.div`

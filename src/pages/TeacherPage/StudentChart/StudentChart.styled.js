@@ -81,6 +81,10 @@ export const MyAPStudentChartArea = styled(StudentChartArea)`
   }
 `;
 
+export const MyAPStudentChartAreaTrial = styled(MyAPStudentChartArea)`
+  z-index: 8;
+`;
+
 export const TeacherChartBtnBox = styled.div`
   position: absolute;
   bottom: 30px;

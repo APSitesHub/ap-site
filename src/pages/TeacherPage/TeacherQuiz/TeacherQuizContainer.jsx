@@ -52,13 +52,13 @@ export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) =>
 
   return (
     <TeacherChatPageContainer>
-      {isConfirmationOpen && (
+      {/* {isConfirmationOpen && (
         <TeacherQuizConfirmation>
           <h3>U sure that {correctAnswer.current} is the correct answer? </h3>
           <TeacherChartBtn onClick={sendConfirmedAnswer}>Yes</TeacherChartBtn>
           <TeacherChartResetBtn onClick={() => setIsConfirmationOpen(false)}>No</TeacherChartResetBtn>
         </TeacherQuizConfirmation>
-      )}
+      )} */}
       <TeacherAnswersChart
         answers={answers}
         quizType={quizType}

@@ -1,30 +1,29 @@
 import axios from 'axios';
+import { MyAPStudentChartTrial } from 'pages/TeacherPage/StudentChart/MyAPStudentChartTrial';
 import { useEffect, useState } from 'react';
+import { AttendanceTrial } from '../Attendance/AttendanceTrial';
+import { LessonFinderTrial } from '../LessonFinder/LessonFinderTrial';
+import { PointsTrial } from '../Points/PointsTrial';
+import { TimetableTrial } from '../Timetable.jsx/TimetableTrial';
 import {
-  APPanel,
   APPanelBtn,
+  APPanelTrial,
   CalendarBtnIcon,
   CupBtnIcon,
   FeedbackBtnIcon,
-  PanelBackdrop,
+  PanelBackdropTrial,
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
   PanelHideSwitch,
-  PlatformDataConcealer,
   SearchBtnIcon,
   TimetableBtnIcon,
 } from './MyAPPanel.styled';
-
-import { MyAPStudentChartPl } from 'pages/TeacherPage/StudentChart/MyAPStudentChartPl';
-import { AttendancePl } from '../Attendance/AttendancePl';
-import { LessonFinderPl } from '../LessonFinder/LessonFinderPl';
-import { PointsPl } from '../Points/PointsPl';
-import { TimetablePlTemp } from '../Timetable.jsx/TimetablePlTemp';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 export const MyAPPanelPlTemp = ({
   lessons,
+  location,
   user,
   language,
   points,
@@ -45,8 +44,6 @@ export const MyAPPanelPlTemp = ({
   //   useState(false);
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
   // const [isMarathonBtnClicked, setIsMarathonBtnClicked] = useState(false);
-
-  const personalLessonsDays = timetable.map(lesson => lesson.day);
 
   const toggleButtonBox = () => {
     hideBackdrop();
@@ -228,8 +225,11 @@ export const MyAPPanelPlTemp = ({
 
   return (
     <>
-      <PanelBackdrop onClick={hideBackdrop} className={isBackdropShown ? '' : 'hidden'} />
-      <PlatformDataConcealer />
+      <PanelBackdropTrial
+        onClick={hideBackdrop}
+        className={isBackdropShown ? '' : 'hidden'}
+      />
+      {/* <PlatformDataConcealer /> */}
       <PanelHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
       </PanelHideSwitch>
@@ -253,7 +253,7 @@ export const MyAPPanelPlTemp = ({
           </APPanelMarathonBtn>
         </IframeMarathonLinkPanel>
       )} */}
-      <APPanel className={isButtonBoxShown ? '' : 'hidden'}>
+      <APPanelTrial className={isButtonBoxShown ? '' : 'hidden'}>
         {/* {isMultipleCourses && (
           <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
             <APPanelToggleBtn
@@ -332,9 +332,9 @@ export const MyAPPanelPlTemp = ({
             <GuideBtnIcon className={isLessonFinderShown && 'active'} />
           </APPanelBtn>
         </APPanelInstructionsPanel> */}
-      </APPanel>
+      </APPanelTrial>
       {isLessonFinderShown && (
-        <LessonFinderPl
+        <LessonFinderTrial
           lessons={lessons}
           user={user}
           language={language}
@@ -343,7 +343,7 @@ export const MyAPPanelPlTemp = ({
         />
       )}
       {isRatingShown && (
-        <PointsPl
+        <PointsTrial
           user={user}
           flatPoints={points}
           flatMonthlyPoints={montlyPoints}
@@ -351,20 +351,65 @@ export const MyAPPanelPlTemp = ({
         />
       )}
       {isCalendarShown && (
-        <AttendancePl
+        <AttendanceTrial
           user={user}
-          personalLessonsDays={personalLessonsDays}
+          personalLessonsDays={
+            location.includes('polski')
+              ? timetable
+                  .find(table => table.lang === 'pl' && table.level === 'a1')
+                  .schedule.map(lesson => lesson.day)
+              : location.includes('deutsch-a1')
+              ? timetable
+                  .find(table => table.lang === 'de' && table.level === 'a1')
+                  .schedule.map(lesson => lesson.day)
+              : location.includes('deutsch-a2')
+              ? timetable
+                  .find(table => table.lang === 'de' && table.level === 'a2')
+                  .schedule.map(lesson => lesson.day)
+              : location.includes('dekids')
+              ? timetable
+                  .find(table => table.lang === 'dekids' && table.level === 'a1')
+                  .schedule.map(lesson => lesson.day)
+              : location.includes('a2free')
+              ? timetable
+                  .find(table => table.lang === 'en' && table.level === 'a2')
+                  .schedule.map(lesson => lesson.day)
+              : location.includes('a1free')
+              ? timetable
+                  .find(table => table.lang === 'en' && table.level === 'a1')
+                  .schedule.map(lesson => lesson.day)
+              : timetable
+                  .find(table => table.lang === 'en' && table.level === 'a1')
+                  .schedule.map(lesson => lesson.day)
+          }
           isMultipleCourses={isMultipleCourses}
         />
       )}
       {isFeedbackShown && (
-        <MyAPStudentChartPl currentStudentChart={currentStudentChart} />
+        <MyAPStudentChartTrial
+          currentStudentChart={currentStudentChart}
+          location={location}
+        />
       )}
       {isTimetableShown && (
-        <TimetablePlTemp
+        <TimetableTrial
           user={user}
           language={language}
-          timetable={timetable}
+          timetable={
+            location.includes('polski')
+              ? timetable.find(table => table.lang === 'pl' && table.level === 'a1')
+              : location.includes('deutsch-a1')
+              ? timetable.find(table => table.lang === 'de' && table.level === 'a1')
+              : location.includes('deutsch-a2')
+              ? timetable.find(table => table.lang === 'de' && table.level === 'a2')
+              : location.includes('dekids')
+              ? timetable.find(table => table.lang === 'dekids' && table.level === 'a1')
+              : location.includes('a2free')
+              ? timetable.find(table => table.lang === 'en' && table.level === 'a2')
+              : location.includes('a1free')
+              ? timetable.find(table => table.lang === 'en' && table.level === 'a1')
+              : timetable.find(table => table.lang === 'en' && table.level === 'a1')
+          }
           isMultipleCourses={isMultipleCourses}
         />
       )}
