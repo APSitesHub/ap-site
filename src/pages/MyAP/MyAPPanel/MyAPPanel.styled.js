@@ -31,23 +31,8 @@ export const PanelBackdrop = styled.div`
   }
 `;
 
-export const PanelBackdropTrial = styled.div`
-  width: 100%;
-  height: 100%;
-
-  position: absolute;
-  background-color: #00000080;
-  z-index: 14;
-  opacity: 1;
-
-  transition: opacity var(--animation-global);
-
-  &.hidden {
-    opacity: 0;
-    pointer-events: none;
-
-    transition: opacity var(--animation-global);
-  }
+export const PanelBackdropTrial = styled(PanelBackdrop)`
+  z-index: 7;
 `;
 
 export const APPanel = styled.div`
@@ -87,6 +72,10 @@ export const APPanel = styled.div`
   &.multiple {
     top: 184px;
   }
+`;
+
+export const APPanelTrial = styled(APPanel)`
+  z-index: 7;
 `;
 
 export const APPanelBtn = styled.button`

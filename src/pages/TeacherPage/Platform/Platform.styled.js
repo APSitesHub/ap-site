@@ -41,6 +41,13 @@ export const PlatformBox = styled.div`
   }
 `;
 
+export const PlatformBoxTrialLesson = styled(PlatformBox)`
+  overflow: hidden;
+  border-radius: 0;
+
+  scrollbar-gutter: auto;
+`;
+
 export const PlatformBoxVertical = styled.div`
   height: 40%;
   width: 100%;

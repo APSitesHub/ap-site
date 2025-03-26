@@ -46,6 +46,10 @@ export const FinderBox = styled.div`
   }
 `;
 
+export const FinderBoxTrial = styled(FinderBox)`
+  z-index: 8;
+`;
+
 export const FinderLabel = styled.label`
   display: block;
   position: relative;

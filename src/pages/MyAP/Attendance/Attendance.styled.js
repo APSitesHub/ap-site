@@ -44,6 +44,10 @@ export const AttendanceBox = styled.div`
   }
 `;
 
+export const AttendanceBoxTrial = styled(AttendanceBox)`
+  z-index: 8;
+`;
+
 export const AttendanceHeading = styled.h3`
   padding: 9px 0;
 
