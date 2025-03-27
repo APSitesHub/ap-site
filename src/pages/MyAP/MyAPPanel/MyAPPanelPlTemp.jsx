@@ -356,7 +356,7 @@ export const MyAPPanelPlTemp = ({
           personalLessonsDays={
             location.includes('polski')
               ? timetable
-                  .find(table => table.lang === 'pl' && table.level === 'a1')
+                  .find(table => table.lang === 'pl' && table.level === 'a2')
                   .schedule.map(lesson => lesson.day)
               : location.includes('deutsch-a1')
               ? timetable
@@ -368,7 +368,7 @@ export const MyAPPanelPlTemp = ({
                   .schedule.map(lesson => lesson.day)
               : location.includes('dekids')
               ? timetable
-                  .find(table => table.lang === 'dekids' && table.level === 'a1')
+                  .find(table => table.lang === 'dekids' && table.level === 'a2')
                   .schedule.map(lesson => lesson.day)
               : location.includes('a2free')
               ? timetable
@@ -397,13 +397,13 @@ export const MyAPPanelPlTemp = ({
           language={language}
           timetable={
             location.includes('polski')
-              ? timetable.find(table => table.lang === 'pl' && table.level === 'a1')
+              ? timetable.find(table => table.lang === 'pl' && table.level === 'a2')
               : location.includes('deutsch-a1')
               ? timetable.find(table => table.lang === 'de' && table.level === 'a1')
               : location.includes('deutsch-a2')
               ? timetable.find(table => table.lang === 'de' && table.level === 'a2')
               : location.includes('dekids')
-              ? timetable.find(table => table.lang === 'dekids' && table.level === 'a1')
+              ? timetable.find(table => table.lang === 'dekids' && table.level === 'a2')
               : location.includes('a2free')
               ? timetable.find(table => table.lang === 'en' && table.level === 'a2')
               : location.includes('a1free')
