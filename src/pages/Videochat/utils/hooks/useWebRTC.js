@@ -59,7 +59,7 @@ export default function useWebRTC(roomID) {
     ) {
       return defaultDevice;
     }
-    
+
     defaultDevice = devices.find(device => device.kind === kind).deviceId;
 
     setDevice(kind, defaultDevice);
@@ -802,8 +802,26 @@ export default function useWebRTC(roomID) {
       };
     }
 
+    let wakeLock = null;
+
+    const requestWakeLock = async () => {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+      } catch (err) {
+        console.error('Error Wake Lock activation:', err);
+      }
+    };
+
+    requestWakeLock();
+
     return () => {
       clearInterval(logsInterval);
+
+      if (wakeLock) {
+        wakeLock.release().then(() => {
+          console.log('Wake Lock daleted');
+        });
+      }
     };
   }, []);
 
