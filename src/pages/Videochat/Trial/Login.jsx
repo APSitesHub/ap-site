@@ -145,7 +145,10 @@ function Login({ logined }) {
   };
 
   const loginSchema = yup.object().shape({
-    userName: yup.string().required("Введи ім'я та прізвище"),
+    userName: yup
+      .string()
+      .required("Введи ім'я та прізвище")
+      .max(40, 'Максимум 40 символів'),
   });
 
   return (

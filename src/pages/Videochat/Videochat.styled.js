@@ -32,6 +32,12 @@ export const VideochatContainer = styled.div`
   min-height: 0;
   min-width: 0;
 
+  ${({ $isTeacher }) =>
+    $isTeacher &&
+    css`
+      flex-direction: column-reverse;
+    `}
+
   @media (max-width: 1024px) {
     padding: 16px;
     gap: 0;
@@ -59,6 +65,7 @@ export const MainVideo = styled.video`
   border-radius: 16px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
+  transform: scaleX(-1);
 `;
 
 export const SideContainer = styled.div`
@@ -71,6 +78,27 @@ export const SideContainer = styled.div`
   @media (max-width: 1024px) {
     flex-basis: 0;
   }
+`;
+
+export const TopContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+`;
+
+export const FlexUserVideo = styled.div`
+  height: 180px;
+  flex: 1 1 180px;
+  max-width: 320px;
+  min-width: 240px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+  z-index: 1;
 `;
 
 export const UsersVideosContainer = styled.div`

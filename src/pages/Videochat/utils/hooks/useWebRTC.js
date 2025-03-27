@@ -38,6 +38,10 @@ export default function useWebRTC(roomID) {
     setLocalRole(role);
   }, [roomID]);
 
+  const getUserName = () => {
+    return localStorage.getItem('userName') || 'N/A';
+  };
+
   const getDevice = kind => {
     return localStorage.getItem(`default-${kind}`);
   };
@@ -55,8 +59,8 @@ export default function useWebRTC(roomID) {
     ) {
       return defaultDevice;
     }
-
-    defaultDevice = devices.find(device => device.kind === kind)[0].deviceId;
+    
+    defaultDevice = devices.find(device => device.kind === kind).deviceId;
 
     setDevice(kind, defaultDevice);
 
@@ -85,6 +89,7 @@ export default function useWebRTC(roomID) {
             ...list,
             {
               clientId: newClient,
+              userName: clientsData.userName,
               role: clientsData.role,
               isMicroEnabled: clientsData.isMicroEnabled,
               isCameraEnabled: clientsData.isCameraEnabled,
@@ -255,7 +260,7 @@ export default function useWebRTC(roomID) {
 
     const audioTracks = remoteStreams
       .map(stream => stream.remoteStream.getAudioTracks()[0])
-      .filter(track => track); 
+      .filter(track => track);
 
     const gainNode = audioContextRef.current.createGain();
     gainNode.gain.value = 0.8;
@@ -319,6 +324,7 @@ export default function useWebRTC(roomID) {
     if (localRole) {
       const localClientData = {
         role: localRole,
+        userName: getUserName(),
         isCameraEnabled: premissions,
         isMicroEnabled: premissions,
       };
@@ -332,6 +338,7 @@ export default function useWebRTC(roomID) {
 
       socket.emit(ACTIONS.JOIN, {
         room: roomID,
+        userName: getUserName(),
         role: localRole,
         isCameraEnabled: premissions,
         isMicroEnabled: premissions,
@@ -696,7 +703,7 @@ export default function useWebRTC(roomID) {
 
   const addMockClient = () => {
     const mockClientId = Math.random();
-    addNewClient(mockClientId, 'user', () => {
+    addNewClient(mockClientId, { userName: mockClientId, role: 'user' }, () => {
       console.log(mockClientId);
     });
   };
