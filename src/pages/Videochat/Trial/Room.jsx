@@ -34,6 +34,8 @@ import {
   MicroIcon,
   PageContainer,
   SideContainer,
+  TopContainer,
+  FlexUserVideo,
   UsersVideosContainer,
   UserVideo,
   VideochatContainer,
@@ -434,14 +436,19 @@ function Room() {
   return (
     <>
       {clients.find(({ role }) => role === 'admin') ? (
-        <>
+        <div
+          style={{
+            transform: localRole === 'admin' ? 'scale(1, -1)' : 'none',
+            overflow: 'hidden',
+          }}
+        >
           <PageContainer
             style={{
               width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
             }}
           >
             <audio autoPlay ref={audioRef} />
-            <VideochatContainer>
+            <VideochatContainer $isTeacher={localRole === 'admin'}>
               <MainVideoContainer>
                 {clients
                   .filter(({ role }) => role === 'admin')
@@ -582,66 +589,130 @@ function Room() {
               </MainVideoContainer>
 
               {clients.filter(({ role }) => role !== 'admin').length > 0 && (
-                <SideContainer>
-                  <MediaButtonContainer $isPagintionButton>
-                    <MediaButton onClick={() => changePage(true)} disabled={page === 0}>
-                      <ArrowUp />
-                    </MediaButton>
-                  </MediaButtonContainer>
-                  <UsersVideosContainer>
-                    {visibleClients.map(
-                      ({ clientId, isMicroEnabled, isCameraEnabled }) => {
-                        return (
-                          <UserVideo
-                            key={clientId}
-                            id={clientId}
-                            $isUserVideo={clientId === LOCAL_VIDEO}
-                          >
-                            <video
-                              width="100%"
-                              height="100%"
-                              ref={instance => {
-                                provideMediaRef(clientId, instance);
-                              }}
-                              data-video="user"
-                              data-id={clientId}
-                              autoPlay
-                              playsInline
-                              muted={true}
-                              style={{
-                                objectFit: 'contain',
-                                maxWidth: 'inherit',
-                                maxHeight: 'inherit',
-                              }}
-                            />
-                            {debug && (
-                              <div style={{ position: 'absolute', color: 'white' }}>
-                                {clientId}
-                              </div>
-                            )}
-                            {(!isCameraEnabled ||
-                              (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
-                              <DisabledCameraIcon $isAbsolute $isSmall />
-                            )}
-                            {(!isMicroEnabled ||
-                              (clientId === LOCAL_VIDEO &&
-                                !isLocalMicrophoneEnabled)) && (
-                              <DisabledMicroIcon $isAbsolute $isSmall />
-                            )}
-                          </UserVideo>
-                        );
-                      }
-                    )}
-                  </UsersVideosContainer>
-                  <MediaButtonContainer $isPagintionButton>
-                    <MediaButton
-                      onClick={() => changePage(false)}
-                      disabled={page + VISIBLE_USERS_COUNT >= clients.length - 1}
-                    >
-                      <ArrowDown />
-                    </MediaButton>
-                  </MediaButtonContainer>
-                </SideContainer>
+                <>
+                  {localRole === 'admin' ? (
+                    <TopContainer>
+                      {clients
+                        .filter(({ role }) => role !== 'admin')
+                        .map(
+                          ({ clientId, userName, isMicroEnabled, isCameraEnabled }) => {
+                            return (
+                              <FlexUserVideo
+                                key={clientId}
+                                id={clientId}
+                                $isUserVideo={clientId === LOCAL_VIDEO}
+                              >
+                                <video
+                                  width="100%"
+                                  height="100%"
+                                  ref={instance => {
+                                    provideMediaRef(clientId, instance);
+                                  }}
+                                  data-video="user"
+                                  data-id={clientId}
+                                  autoPlay
+                                  playsInline
+                                  muted={true}
+                                  style={{
+                                    objectFit: 'contain',
+                                    maxWidth: 'inherit',
+                                    maxHeight: 'inherit',
+                                  }}
+                                />
+                                <div
+                                  style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    background: 'rgba(0, 0, 0, 0.5)',
+                                    padding: '0.25rem',
+                                    borderBottomLeftRadius: '8px',
+                                  }}
+                                >
+                                  <span style={{ color: '#ccc' }}>{userName}</span>
+                                </div>
+                                {(!isCameraEnabled ||
+                                  (clientId === LOCAL_VIDEO &&
+                                    !isLocalCameraEnabled)) && (
+                                  <DisabledCameraIcon $isAbsolute $isSmall />
+                                )}
+                                {(!isMicroEnabled ||
+                                  (clientId === LOCAL_VIDEO &&
+                                    !isLocalMicrophoneEnabled)) && (
+                                  <DisabledMicroIcon $isAbsolute $isSmall />
+                                )}
+                              </FlexUserVideo>
+                            );
+                          }
+                        )}
+                    </TopContainer>
+                  ) : (
+                    <SideContainer>
+                      <MediaButtonContainer $isPagintionButton>
+                        <MediaButton
+                          onClick={() => changePage(true)}
+                          disabled={page === 0}
+                        >
+                          <ArrowUp />
+                        </MediaButton>
+                      </MediaButtonContainer>
+                      <UsersVideosContainer>
+                        {visibleClients.map(
+                          ({ clientId, isMicroEnabled, isCameraEnabled }) => {
+                            return (
+                              <UserVideo
+                                key={clientId}
+                                id={clientId}
+                                $isUserVideo={clientId === LOCAL_VIDEO}
+                              >
+                                <video
+                                  width="100%"
+                                  height="100%"
+                                  ref={instance => {
+                                    provideMediaRef(clientId, instance);
+                                  }}
+                                  data-video="user"
+                                  data-id={clientId}
+                                  autoPlay
+                                  playsInline
+                                  muted={true}
+                                  style={{
+                                    objectFit: 'contain',
+                                    maxWidth: 'inherit',
+                                    maxHeight: 'inherit',
+                                  }}
+                                />
+                                {debug && (
+                                  <div style={{ position: 'absolute', color: 'white' }}>
+                                    {clientId}
+                                  </div>
+                                )}
+                                {(!isCameraEnabled ||
+                                  (clientId === LOCAL_VIDEO &&
+                                    !isLocalCameraEnabled)) && (
+                                  <DisabledCameraIcon $isAbsolute $isSmall />
+                                )}
+                                {(!isMicroEnabled ||
+                                  (clientId === LOCAL_VIDEO &&
+                                    !isLocalMicrophoneEnabled)) && (
+                                  <DisabledMicroIcon $isAbsolute $isSmall />
+                                )}
+                              </UserVideo>
+                            );
+                          }
+                        )}
+                      </UsersVideosContainer>
+                      <MediaButtonContainer $isPagintionButton>
+                        <MediaButton
+                          onClick={() => changePage(false)}
+                          disabled={page + VISIBLE_USERS_COUNT >= clients.length - 1}
+                        >
+                          <ArrowDown />
+                        </MediaButton>
+                      </MediaButtonContainer>
+                    </SideContainer>
+                  )}
+                </>
               )}
             </VideochatContainer>
             <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
@@ -700,7 +771,7 @@ function Room() {
               currentUser={currentUser}
             />
           </ChatBox>
-        </>
+        </div>
       ) : (
         <PageContainer>
           <GradientBackground>
