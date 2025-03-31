@@ -41,6 +41,8 @@ import {
   VideochatContainer,
   LargeText,
   GradientBackground,
+  FullScreenIcon,
+  ExitFullScreenIcon,
 } from '../Videochat.styled';
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
@@ -83,6 +85,8 @@ function Room() {
   const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
   const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isButtonsShown, setIsButtonsShown] = useState(true);
 
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(0);
@@ -92,6 +96,7 @@ function Room() {
   const chatEl = useRef();
   const socketRef = useRef(null);
   const audioRef = useRef(null);
+  const inactivityTimer = useRef(null);
 
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
@@ -134,6 +139,48 @@ function Room() {
   const toggleQuizTrueFalse = () => {
     setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
   };
+
+  const toggleFullScreen = () => {
+    setIsFullScreen(isFullScreen => {
+      isFullScreen ? showVideos() : hideVideos();
+
+      const sideContainer = document.querySelector('#side-container');
+      sideContainer.style.display = isFullScreen ? 'flex' : 'none';
+
+      return !isFullScreen;
+    });
+  };
+
+  const resetInactivityTimer = () => {
+    setIsButtonsShown(true);
+    if (inactivityTimer.current) {
+      clearTimeout(inactivityTimer.current);
+    }
+
+    if (isFullScreen) {
+      inactivityTimer.current = setTimeout(() => {
+        setIsButtonsShown(false);
+      }, 3000);
+    }
+  };
+
+  useEffect(() => {
+    const handleUserActivity = () => resetInactivityTimer();
+
+    window.addEventListener('mousemove', handleUserActivity);
+    window.addEventListener('keydown', handleUserActivity);
+
+    return () => {
+      window.removeEventListener('mousemove', handleUserActivity);
+      window.removeEventListener('keydown', handleUserActivity);
+    };
+  }, [isFullScreen]);
+
+  useEffect(() => {
+    if (!isFullScreen) {
+      setIsButtonsShown(true);
+    }
+  }, [isFullScreen]);
 
   useEffect(() => {
     const video = localDevices.filter(device => device.kind === 'videoinput');
@@ -448,7 +495,10 @@ function Room() {
             }}
           >
             <audio autoPlay ref={audioRef} />
-            <VideochatContainer $isTeacher={localRole === 'admin'}>
+            <VideochatContainer
+              $isTeacher={localRole === 'admin'}
+              $isFullScreen={isFullScreen}
+            >
               <MainVideoContainer>
                 {clients
                   .filter(({ role }) => role === 'admin')
@@ -481,7 +531,7 @@ function Room() {
                       </div>
                     );
                   })}
-                <ButtonsContainer>
+                <ButtonsContainer $hidden={!isButtonsShown}>
                   {localRole === 'admin' && (
                     <>
                       {debug && (
@@ -587,6 +637,20 @@ function Room() {
                     </MediaButton>
                   </MediaButtonContainer>
                 </ButtonsContainer>
+
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '1rem',
+                    right: '1rem',
+                    opacity: isButtonsShown ? '1' : '0',
+                    transition: 'opacity 0.5s ease-in-out',
+                  }}
+                >
+                  <MediaButton onClick={toggleFullScreen}>
+                    {isFullScreen ? <ExitFullScreenIcon /> : <FullScreenIcon />}
+                  </MediaButton>
+                </div>
               </MainVideoContainer>
 
               {clients.filter(({ role }) => role !== 'admin').length > 0 && (
@@ -655,7 +719,7 @@ function Room() {
                         )}
                     </TopContainer>
                   ) : (
-                    <SideContainer>
+                    <SideContainer id="side-container">
                       <MediaButtonContainer $isPagintionButton>
                         <MediaButton
                           onClick={() => changePage(true)}
@@ -666,7 +730,7 @@ function Room() {
                       </MediaButtonContainer>
                       <UsersVideosContainer>
                         {visibleClients.map(
-                          ({ clientId, isSpeaker, isMicroEnabled, isCameraEnabled }) => {
+                          ({ clientId, isSpeaker, userName, isMicroEnabled, isCameraEnabled }) => {
                             return (
                               <UserVideo
                                 key={clientId}
@@ -691,6 +755,18 @@ function Room() {
                                     maxHeight: 'inherit',
                                   }}
                                 />
+                                <div
+                                  style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    background: 'rgba(0, 0, 0, 0.5)',
+                                    padding: '0.25rem',
+                                    borderBottomLeftRadius: '8px',
+                                  }}
+                                >
+                                  <span style={{ color: '#ccc' }}>{userName}</span>
+                                </div>
                                 {(!isCameraEnabled ||
                                   (clientId === LOCAL_VIDEO &&
                                     !isLocalCameraEnabled)) && (
@@ -719,7 +795,13 @@ function Room() {
                 </>
               )}
             </VideochatContainer>
-            <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
+            <ButtonBox
+              className={!isButtonBoxOpen ? 'hidden' : ''}
+              style={{
+                opacity: isButtonsShown ? '1' : '0',
+                transition: 'opacity 0.5s ease-in-out',
+              }}
+            >
               <KahootBtn onClick={toggleKahoot}>
                 <KahootLogo />
               </KahootBtn>

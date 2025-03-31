@@ -11,6 +11,8 @@ import { ReactComponent as _DisabledSoundIcon } from '../../img/svg/sound-off.sv
 import { ReactComponent as _ArrowUp } from '../../img/svg/faq-arrow-up.svg';
 import { ReactComponent as _ArrowDown } from '../../img/svg/faq-arrow-down.svg';
 import { ReactComponent as _BackIcon } from '../../img/svg/btnbox-switch-left-gray.svg';
+import { ReactComponent as _FullScreenIcon } from '../../img/svg/fullScreen.svg';
+import { ReactComponent as _ExitFullScreenIcon } from '../../img/svg/fullScreenExit.svg';
 
 // Room styles
 export const PageContainer = styled.div`
@@ -38,9 +40,18 @@ export const VideochatContainer = styled.div`
       flex-direction: column-reverse;
     `}
 
+  ${({ $isFullScreen }) =>
+    $isFullScreen &&
+    css`
+      padding: 0;
+    `}
+
   @media (max-width: 1024px) {
     padding: 16px;
-    gap: 0;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column-reverse;
   }
 `;
 
@@ -144,6 +155,8 @@ export const UserVideo = styled.div`
   ${({ $isUserVideo }) =>
     $isUserVideo &&
     css`
+      transform: scaleX(-1);
+
       @media (max-width: 1024px) {
         position: absolute;
         left: 24px;
@@ -152,6 +165,11 @@ export const UserVideo = styled.div`
         max-height: 164px;
         height: auto;
         object-fit: contain;
+        flex-grow: 1;
+      }
+
+      @media (max-width: 768px) {
+        align-self: end;
       }
     `}
 
@@ -178,6 +196,20 @@ export const ButtonsContainer = styled.div`
   bottom: 16px;
   right: 16px;
   padding: 8px;
+  flex-wrap: wrap;
+  justify-content: end;
+  transition: opacity 0.5s ease-in-out;
+
+  @media (max-width: 1024px) {
+    padding: 4px;
+    gap: 4px;
+  }
+
+  ${({ $hidden }) =>
+    $hidden &&
+    css`
+      opacity: 0;
+    `}
 `;
 
 export const MediaButtonContainer = styled.div`
@@ -194,6 +226,10 @@ export const MediaButtonContainer = styled.div`
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  @media (max-width: 1024px) {
+    padding: 4px;
   }
 
   ${({ $isPagintionButton }) =>
@@ -246,22 +282,58 @@ export const MediaOption = styled.option`
   background-color: rgba(0, 0, 0, 0.7);
 `;
 
+export const FullScreenIcon = styled(_FullScreenIcon)`
+  fill: #ffffff;
+  height: 32px;
+  width: 32px;
+
+  @media (max-width: 768px) {
+    height: 24px;
+    width: 24px;
+  }
+`;
+export const ExitFullScreenIcon = styled(_ExitFullScreenIcon)`
+  fill: #ffffff;
+  height: 32px;
+  width: 32px;
+
+  @media (max-width: 768px) {
+    height: 24px;
+    width: 24px;
+  }
+`;
+
 export const EndCallIcon = styled(_EndCallIcon)`
   fill: #ffffff;
   height: 32px;
   width: 32px;
+
+  @media (max-width: 768px) {
+    height: 24px;
+    width: 24px;
+  }
 `;
 
 export const SoundIcon = styled(_SoundIcon)`
   stroke: #ffffff;
   height: 28px;
   width: 28px;
+
+  @media (max-width: 768px) {
+    height: 20px;
+    width: 20px;
+  }
 `;
 
 export const DisabledSoundIcon = styled(_DisabledSoundIcon)`
   stroke: #c62323;
   height: 28px;
   width: 28px;
+
+  @media (max-width: 768px) {
+    height: 20px;
+    width: 20px;
+  }
 
   ${({ $isAbsolute }) =>
     $isAbsolute &&
@@ -324,12 +396,22 @@ export const MicroIcon = styled(_MicroIcon)`
   fill: #ffffff;
   height: 28px;
   width: 28px;
+
+  @media (max-width: 768px) {
+    height: 20px;
+    width: 20px;
+  }
 `;
 
 export const DisabledMicroIcon = styled(_DisabledMicroIcon)`
   fill: #c62323;
   height: 28px;
   width: 28px;
+
+  @media (max-width: 768px) {
+    height: 20px;
+    width: 20px;
+  }
 
   ${({ $isAbsolute }) =>
     $isAbsolute &&
@@ -354,6 +436,11 @@ export const CameraIcon = styled(_CameraIcon)`
   height: 28px;
   width: 28px;
 
+  @media (max-width: 768px) {
+    height: 20px;
+    width: 20px;
+  }
+
   ${({ $isGray }) =>
     $isGray &&
     css`
@@ -365,6 +452,11 @@ export const DisabledCameraIcon = styled(_DisabledCameraIcon)`
   fill: #c62323;
   height: 28px;
   width: 28px;
+
+  @media (max-width: 768px) {
+    height: 20px;
+    width: 20px;
+  }
 
   ${({ $isAbsolute }) =>
     $isAbsolute &&
