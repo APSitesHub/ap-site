@@ -343,8 +343,87 @@ export default function useWebRTC(roomID) {
         isCameraEnabled: premissions,
         isMicroEnabled: premissions,
       });
+
+      analyzeAudio();
     }
   }
+
+  const analyzeAudio = () => {
+    let audioContext;
+    let analyser;
+    let microphone;
+    let dataArray;
+    let animationFrameId;
+    let aboveThresholdTime = 0;
+    let belowThresholdTime = 0;
+    const THRESHOLD = 10;
+    const DURATION = 500;
+    let lastState = false;
+
+    const initAudio = async () => {
+      if (!isLocalMicrophoneEnabled) return;
+
+      try {
+        const stream = localMediaStream.current;
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyser);
+
+        const updateVolume = timestamp => {
+          analyser.getByteFrequencyData(dataArray);
+          const avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
+          const volume = Math.round((avg / 255) * 100);
+
+          if (volume > THRESHOLD) {
+            aboveThresholdTime += 16;
+            belowThresholdTime = 0;
+          } else {
+            belowThresholdTime += 16;
+            aboveThresholdTime = 0;
+          }
+
+          if (aboveThresholdTime >= DURATION && !lastState) {
+            lastState = true;
+            socket.emit(ACTIONS.CHANGE_SPEAKING, {
+              isSpeaker: true,
+            });
+          } else if (belowThresholdTime >= DURATION && lastState) {
+            lastState = false;
+            socket.emit(ACTIONS.CHANGE_SPEAKING, {
+              isSpeaker: false,
+            });
+          }
+
+          updateClients(list => {
+            return list.map(item => {
+              if (item.clientId === LOCAL_VIDEO) {
+                return {
+                  ...item,
+                  isSpeaker: lastState,
+                };
+              }
+
+              return {
+                ...item,
+              };
+            });
+          });
+
+          animationFrameId = requestAnimationFrame(updateVolume);
+        };
+
+        animationFrameId = requestAnimationFrame(updateVolume);
+      } catch (error) {
+        console.error('Помилка доступу до мікрофона:', error);
+      }
+    };
+
+    initAudio();
+  };
 
   const handleNewPeer = useCallback(
     async ({ peerID, clients: clientsData, createOffer }) => {
@@ -641,6 +720,23 @@ export default function useWebRTC(roomID) {
 
     socket.on(ACTIONS.MUTE_ALL, () => {
       toggleMicrophone(true);
+    });
+
+    socket.on(ACTIONS.CHANGE_SPEAKING, client => {
+      updateClients(list => {
+        return list.map(item => {
+          if (item.clientId === client.peerID) {
+            return {
+              ...item,
+              isSpeaker: client.isSpeaker,
+            };
+          }
+
+          return {
+            ...item,
+          };
+        });
+      });
     });
   }, [updateClients]);
 

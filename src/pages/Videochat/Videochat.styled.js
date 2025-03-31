@@ -77,6 +77,12 @@ export const MainVideo = styled.video`
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   transform: scaleX(-1);
+
+  ${({ $isSpeaker }) =>
+    $isSpeaker &&
+    css`
+      border: 1px solid #1bad9f;
+    `}
 `;
 
 export const SideContainer = styled.div`
@@ -110,6 +116,12 @@ export const FlexUserVideo = styled.div`
   overflow: hidden;
   box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
   z-index: 1;
+
+  ${({ $isSpeaker }) =>
+    $isSpeaker &&
+    css`
+      border: 1px solid #1bad9f;
+    `}
 `;
 
 export const UsersVideosContainer = styled.div`
@@ -146,7 +158,9 @@ export const UserVideo = styled.div`
       transform: scaleX(-1);
 
       @media (max-width: 1024px) {
-        border: 1px solid #09c6cc;
+        position: absolute;
+        left: 24px;
+        top: 24px;
         width: 180px;
         max-height: 164px;
         height: auto;
@@ -157,6 +171,12 @@ export const UserVideo = styled.div`
       @media (max-width: 768px) {
         align-self: end;
       }
+    `}
+
+    ${({ $isSpeaker }) =>
+    $isSpeaker &&
+    css`
+      border: 1px solid #1bad9f;
     `}
 `;
 
