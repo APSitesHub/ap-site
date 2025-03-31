@@ -421,10 +421,16 @@ function Room() {
   };
 
   const changeAudioOutput = async deviceId => {
+    let devId = deviceId;
+
+    if (audioOutputDevices.filter(d => d.deviceId === deviceId).length === 0) {
+      devId = 'default';
+    }
+
     if (audioRef.current?.setSinkId) {
       try {
-        await audioRef.current.setSinkId(deviceId);
-        localStorage.setItem('default-audiooutput', deviceId);
+        await audioRef.current.setSinkId(devId);
+        localStorage.setItem('default-audiooutput', devId);
       } catch (error) {
         console.error('Change audiootput error:', error);
       }
@@ -730,7 +736,13 @@ function Room() {
                       </MediaButtonContainer>
                       <UsersVideosContainer>
                         {visibleClients.map(
-                          ({ clientId, isSpeaker, userName, isMicroEnabled, isCameraEnabled }) => {
+                          ({
+                            clientId,
+                            isSpeaker,
+                            userName,
+                            isMicroEnabled,
+                            isCameraEnabled,
+                          }) => {
                             return (
                               <UserVideo
                                 key={clientId}

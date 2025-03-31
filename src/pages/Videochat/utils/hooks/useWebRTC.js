@@ -353,11 +353,12 @@ export default function useWebRTC(roomID) {
     let analyser;
     let microphone;
     let dataArray;
-    let animationFrameId;
+    let timeoutId;
     let aboveThresholdTime = 0;
     let belowThresholdTime = 0;
     const THRESHOLD = 10;
     const DURATION = 500;
+    const INTERVAL = 75;
     let lastState = false;
 
     const initAudio = async () => {
@@ -373,56 +374,52 @@ export default function useWebRTC(roomID) {
         microphone = audioContext.createMediaStreamSource(stream);
         microphone.connect(analyser);
 
-        const updateVolume = timestamp => {
+        const updateVolume = () => {
           analyser.getByteFrequencyData(dataArray);
           const avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
           const volume = Math.round((avg / 255) * 100);
 
           if (volume > THRESHOLD) {
-            aboveThresholdTime += 16;
+            aboveThresholdTime += INTERVAL;
             belowThresholdTime = 0;
           } else {
-            belowThresholdTime += 16;
+            belowThresholdTime += INTERVAL;
             aboveThresholdTime = 0;
           }
 
           if (aboveThresholdTime >= DURATION && !lastState) {
             lastState = true;
-            socket.emit(ACTIONS.CHANGE_SPEAKING, {
-              isSpeaker: true,
-            });
+            socket.emit(ACTIONS.CHANGE_SPEAKING, { isSpeaker: true });
+            updateClients(list =>
+              list.map(item =>
+                item.clientId === LOCAL_VIDEO ? { ...item, isSpeaker: true } : item
+              )
+            );
           } else if (belowThresholdTime >= DURATION && lastState) {
             lastState = false;
-            socket.emit(ACTIONS.CHANGE_SPEAKING, {
-              isSpeaker: false,
-            });
+            socket.emit(ACTIONS.CHANGE_SPEAKING, { isSpeaker: false });
+            updateClients(list =>
+              list.map(item =>
+                item.clientId === LOCAL_VIDEO ? { ...item, isSpeaker: false } : item
+              )
+            );
           }
 
-          updateClients(list => {
-            return list.map(item => {
-              if (item.clientId === LOCAL_VIDEO) {
-                return {
-                  ...item,
-                  isSpeaker: lastState,
-                };
-              }
-
-              return {
-                ...item,
-              };
-            });
-          });
-
-          animationFrameId = requestAnimationFrame(updateVolume);
+          timeoutId = setTimeout(updateVolume, INTERVAL);
         };
 
-        animationFrameId = requestAnimationFrame(updateVolume);
+        timeoutId = setTimeout(updateVolume, INTERVAL);
       } catch (error) {
         console.error('Помилка доступу до мікрофона:', error);
       }
     };
 
     initAudio();
+
+    return () => {
+      if (audioContext) audioContext.close();
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   };
 
   const handleNewPeer = useCallback(
