@@ -29,7 +29,7 @@ import {
 
 const MyAP = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
-  const [lessons, setLessons] = useState(false);
+  const [lessons, setLessons] = useState([]);
   const [points, setPoints] = useState({});
   const [timetable, setTimetable] = useState({});
   const [montlyPoints, setMonthlyPoints] = useState({});
@@ -208,8 +208,6 @@ const MyAP = () => {
           : language === 'enkids' && !user.marathonNumber
           ? 'enkids2'
           : '';
-
-      console.log(LINKS[marathonLink]);
 
       const FREE_LINKS = {
         kids: `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=854264`,
