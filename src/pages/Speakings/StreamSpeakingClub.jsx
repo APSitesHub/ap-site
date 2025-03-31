@@ -98,14 +98,16 @@ const StreamSpeakingClub = () => {
           )[0].course
         );
         setLevel(
-          (await axios.get('/timetable')).data.filter(
-            timetable =>
-              lang === timetable.lang &&
-              (user.course === timetable.course ||
-                user.course
-                  ?.split('/')
-                  .some(singleCourse => singleCourse === timetable.course))
-          )[0].level
+          user.course === '10' || user.course === '11'
+            ? 'c1'
+            : (await axios.get('/timetable')).data.filter(
+                timetable =>
+                  lang === timetable.lang &&
+                  (user.course === timetable.course ||
+                    user.course
+                      ?.split('/')
+                      .some(singleCourse => singleCourse === timetable.course))
+              )[0].level
         );
 
         console.log(user.userId);
