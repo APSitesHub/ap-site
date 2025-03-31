@@ -11,7 +11,7 @@ const ACTIONS = {
   TOGGLE_CAMERA: 'toggle-camera',
   MUTE_ALL: 'mute-all',
   CHANGE_VISIBILITY: 'change-visibility',
-  CHANGE_SPEACKING: 'change-speacking'
+  CHANGE_SPEAKING: 'change-speaking'
 };
 
 export default ACTIONS;

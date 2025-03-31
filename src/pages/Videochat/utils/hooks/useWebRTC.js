@@ -388,12 +388,12 @@ export default function useWebRTC(roomID) {
 
           if (aboveThresholdTime >= DURATION && !lastState) {
             lastState = true;
-            socket.emit(ACTIONS.CHANGE_SPEACKING, {
+            socket.emit(ACTIONS.CHANGE_SPEAKING, {
               isSpeaker: true,
             });
           } else if (belowThresholdTime >= DURATION && lastState) {
             lastState = false;
-            socket.emit(ACTIONS.CHANGE_SPEACKING, {
+            socket.emit(ACTIONS.CHANGE_SPEAKING, {
               isSpeaker: false,
             });
           }
@@ -722,7 +722,7 @@ export default function useWebRTC(roomID) {
       toggleMicrophone(true);
     });
 
-    socket.on(ACTIONS.CHANGE_SPEACKING, client => {
+    socket.on(ACTIONS.CHANGE_SPEAKING, client => {
       updateClients(list => {
         return list.map(item => {
           if (item.clientId === client.peerID) {
