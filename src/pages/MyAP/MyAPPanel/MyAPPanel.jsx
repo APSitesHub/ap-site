@@ -71,7 +71,7 @@ export const MyAPPanel = ({
     language.includes('en') && user.marathonNumber
       ? lessons.filter(lesson => lesson.marathonName.includes(user.marathonNumber))
       : lessons;
-
+      
   //eslint-disable-next-line
   const personalLessonsDays = personalTimetable?.schedule.map(lesson => lesson.day);
 
