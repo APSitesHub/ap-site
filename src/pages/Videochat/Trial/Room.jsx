@@ -438,7 +438,7 @@ function Room() {
       {clients.find(({ role }) => role === 'admin') ? (
         <div
           style={{
-            transform: localRole === 'admin' ? 'scale(1, -1)' : 'none',
+            transform: localRole === 'admin' && !debug ? 'scale(1, -1)' : 'none',
             overflow: 'hidden',
           }}
         >
@@ -452,7 +452,7 @@ function Room() {
               <MainVideoContainer>
                 {clients
                   .filter(({ role }) => role === 'admin')
-                  .map(({ clientId, isCameraEnabled, isMicroEnabled }) => {
+                  .map(({ clientId, isSpeaker, isCameraEnabled, isMicroEnabled }) => {
                     return (
                       <div
                         style={{ height: '100%', width: '100%' }}
@@ -468,6 +468,7 @@ function Room() {
                           autoPlay
                           playsInline
                           muted={true}
+                          $isSpeaker={isSpeaker}
                         />
                         {(!isCameraEnabled ||
                           (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
@@ -595,12 +596,19 @@ function Room() {
                       {clients
                         .filter(({ role }) => role !== 'admin')
                         .map(
-                          ({ clientId, userName, isMicroEnabled, isCameraEnabled }) => {
+                          ({
+                            clientId,
+                            userName,
+                            isSpeaker,
+                            isMicroEnabled,
+                            isCameraEnabled,
+                          }) => {
                             return (
                               <FlexUserVideo
                                 key={clientId}
                                 id={clientId}
                                 $isUserVideo={clientId === LOCAL_VIDEO}
+                                $isSpeaker={isSpeaker}
                               >
                                 <video
                                   width="100%"
@@ -658,12 +666,13 @@ function Room() {
                       </MediaButtonContainer>
                       <UsersVideosContainer>
                         {visibleClients.map(
-                          ({ clientId, isMicroEnabled, isCameraEnabled }) => {
+                          ({ clientId, isSpeaker, isMicroEnabled, isCameraEnabled }) => {
                             return (
                               <UserVideo
                                 key={clientId}
                                 id={clientId}
                                 $isUserVideo={clientId === LOCAL_VIDEO}
+                                $isSpeaker={isSpeaker}
                               >
                                 <video
                                   width="100%"
@@ -682,11 +691,6 @@ function Room() {
                                     maxHeight: 'inherit',
                                   }}
                                 />
-                                {debug && (
-                                  <div style={{ position: 'absolute', color: 'white' }}>
-                                    {clientId}
-                                  </div>
-                                )}
                                 {(!isCameraEnabled ||
                                   (clientId === LOCAL_VIDEO &&
                                     !isLocalCameraEnabled)) && (
