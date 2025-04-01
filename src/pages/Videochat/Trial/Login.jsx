@@ -25,7 +25,7 @@ function Login({ logined }) {
   const localMediaStream = useRef(null);
   const videoRef = useRef(null);
   const [microphoneDevices, setMicrophoneDevices] = useState([]);
-  const [audioDevices, setAudioDevices] = useState([]);
+  // const [audioDevices, setAudioDevices] = useState([]);
   const [cameraDevices, setCameraDevices] = useState([]);
   const [volume, setVolume] = useState(0);
 
@@ -69,11 +69,11 @@ function Login({ logined }) {
         .filter(device => device.kind === 'audioinput')
         .map(device => ({ label: device.label, value: device.deviceId }))
     );
-    setAudioDevices(
-      devices
-        .filter(device => device.kind === 'audiooutput')
-        .map(device => ({ label: device.label, value: device.deviceId }))
-    );
+    // setAudioDevices(
+    //   devices
+    //     .filter(device => device.kind === 'audiooutput')
+    //     .map(device => ({ label: device.label, value: device.deviceId }))
+    // );
     setCameraDevices(
       devices
         .filter(device => device.kind === 'videoinput')
@@ -173,7 +173,7 @@ function Login({ logined }) {
                 ))}
               </LoginSelect>
             </LoginMediaContainer>
-            <LoginMediaContainer>
+            {/* <LoginMediaContainer>
               <SoundIcon />
               <LoginSelect
                 name="audio"
@@ -188,7 +188,7 @@ function Login({ logined }) {
                   </option>
                 ))}
               </LoginSelect>
-            </LoginMediaContainer>
+            </LoginMediaContainer> */}
             <LoginMediaContainer>
               <CameraIcon />
               <LoginSelect

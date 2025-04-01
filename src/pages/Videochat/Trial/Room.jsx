@@ -21,9 +21,6 @@ import {
   CameraIcon,
   DisabledCameraIcon,
   DisabledMicroIcon,
-  SoundIcon,
-  DisabledSoundIcon,
-  VolumeRange,
   EndCallIcon,
   MainVideo,
   MainVideoContainer,
@@ -75,8 +72,8 @@ function Room() {
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
-  const [audioOutputDevices, setAudioOutputDevices] = useState([]);
-  const [volume, setVolume] = useState(1);
+  // const [audioOutputDevices, setAudioOutputDevices] = useState([]);
+  // const [volume, setVolume] = useState(1);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
@@ -185,10 +182,10 @@ function Room() {
   useEffect(() => {
     const video = localDevices.filter(device => device.kind === 'videoinput');
     const audio = localDevices.filter(device => device.kind === 'audioinput');
-    const audiooutput = localDevices.filter(device => device.kind === 'audiooutput');
+    // const audiooutput = localDevices.filter(device => device.kind === 'audiooutput');
     setAudioDevices(audio);
     setVideoDevices(video);
-    setAudioOutputDevices(audiooutput);
+    // setAudioOutputDevices(audiooutput);
   }, [localDevices]);
 
   const changePage = isUp => {
@@ -405,39 +402,33 @@ function Room() {
     }
   }, [mixedAudioStream, audioRef.current]);
 
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
+  // useEffect(() => {
+  //   if (audioRef.current) {
+  //     audioRef.current.volume = volume;
+  //   }
+  // }, [volume]);
 
-  useEffect(() => {
-    changeAudioOutput(localStorage.getItem('default-audiooutput') || 'default');
-  }, [audioRef.current]);
+  // useEffect(() => {
+  //   changeAudioOutput('default');
+  // }, [audioRef.current]);
 
-  const toggleVolumeInput = () => {
-    const input = document.getElementById('volume-range');
-    input.style.display = input.style.display === 'block' ? 'none' : 'block';
-  };
+  // const toggleVolumeInput = () => {
+  //   const input = document.getElementById('volume-range');
+  //   input.style.display = input.style.display === 'block' ? 'none' : 'block';
+  // };
 
-  const changeAudioOutput = async deviceId => {
-    let devId = deviceId;
-
-    if (audioOutputDevices.filter(d => d.deviceId === deviceId).length === 0) {
-      devId = 'default';
-    }
-
-    if (audioRef.current?.setSinkId) {
-      try {
-        await audioRef.current.setSinkId(devId);
-        localStorage.setItem('default-audiooutput', devId);
-      } catch (error) {
-        console.error('Change audiootput error:', error);
-      }
-    } else {
-      console.warn('setSinkId not supported');
-    }
-  };
+  // const changeAudioOutput = async deviceId => {
+  //   if (audioRef.current?.setSinkId) {
+  //     try {
+  //       await audioRef.current.setSinkId(deviceId);
+  //       localStorage.setItem('default-audiooutput', deviceId);
+  //     } catch (error) {
+  //       console.error('Change audiootput error:', error);
+  //     }
+  //   } else {
+  //     console.warn('setSinkId not supported');
+  //   }
+  // };
 
   const updateStreams = () => {
     const videoElements = document.querySelectorAll('[data-video]');
@@ -570,7 +561,7 @@ function Room() {
                       </MediaButtonContainer>
                     </>
                   )}
-                  <MediaButtonContainer style={{ position: 'relative' }}>
+                  {/* <MediaButtonContainer style={{ position: 'relative' }}>
                     <div
                       id="volume-range"
                       style={{
@@ -604,7 +595,7 @@ function Room() {
                         </MediaOption>
                       ))}
                     </MediaSelector>
-                  </MediaButtonContainer>
+                  </MediaButtonContainer> */}
                   <MediaButtonContainer>
                     <MediaButton onClick={toggleMicrophone}>
                       {isLocalMicrophoneEnabled ? <MicroIcon /> : <DisabledMicroIcon />}
@@ -765,6 +756,8 @@ function Room() {
                                     objectFit: 'contain',
                                     maxWidth: 'inherit',
                                     maxHeight: 'inherit',
+                                    transform:
+                                      clientId === LOCAL_VIDEO ? 'scaleX(-1)' : 'none',
                                   }}
                                 />
                                 <div

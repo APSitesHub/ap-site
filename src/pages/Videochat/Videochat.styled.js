@@ -76,7 +76,6 @@ export const MainVideo = styled.video`
   border-radius: 16px;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
-  transform: scaleX(-1);
 
   ${({ $isSpeaker }) =>
     $isSpeaker &&
@@ -155,8 +154,6 @@ export const UserVideo = styled.div`
   ${({ $isUserVideo }) =>
     $isUserVideo &&
     css`
-      transform: scaleX(-1);
-
       @media (max-width: 1024px) {
         position: absolute;
         left: 24px;
