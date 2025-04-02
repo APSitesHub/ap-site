@@ -112,7 +112,16 @@ export const UserVisitedEditForm = ({
       } else {
         newState[index] = date;
       }
-      return newState;
+
+      return sortVisits(newState);
+    });
+  };
+
+  const sortVisits = visits => {
+    return visits.sort((a, b) => {
+      const dateA = new Date(a.split(' ')[0].split('.').reverse().join('-'));
+      const dateB = new Date(b.split(' ')[0].split('.').reverse().join('-'));
+      return dateB - dateA;
     });
   };
 

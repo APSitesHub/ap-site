@@ -18,6 +18,7 @@ import {
   AdminInput,
   AdminInputNote,
   AdminPanelSection,
+  ArrowDownIcon,
   LoginForm,
   UserCell,
   UserDBCaption,
@@ -456,6 +457,16 @@ const UserAdminPanel = ({ uni, lang = 'ua' }) => {
     }
   };
 
+  const sortByGroup = () => {
+    setUsers(users => [
+      ...users.sort((a, b) => {
+        if (!a.group) return 1;
+        if (!b.group) return -1;
+        return a.group.localeCompare(b.group);
+      }),
+    ]);
+  };
+
   return (
     <>
       <AdminPanelSection>
@@ -637,6 +648,7 @@ const UserAdminPanel = ({ uni, lang = 'ua' }) => {
             <UserDBCaption>{translations[lang]?.userListCaption}</UserDBCaption>
             <thead>
               <UserDBRow>
+                <UserHeadCell>№</UserHeadCell>
                 {!uni && (
                   <UserHeadCell>{translations[lang]?.crmLeadContact}</UserHeadCell>
                 )}
@@ -644,7 +656,21 @@ const UserAdminPanel = ({ uni, lang = 'ua' }) => {
                 <UserHeadCell>{translations[lang]?.email}</UserHeadCell>
                 {!uni && <UserHeadCell>{translations[lang]?.password}</UserHeadCell>}
                 {!uni && <UserHeadCell>{translations[lang]?.university}</UserHeadCell>}
-                <UserHeadCell>{translations[lang]?.group}</UserHeadCell>
+                <UserHeadCell style={{ whiteSpace: 'nowrap' }}>
+                  {translations[lang]?.group}
+                  <button
+                    style={{
+                      padding: '0',
+                      border: 'none',
+                      background: 'transparent',
+                      cursor: 'pointer',
+                      marginLeft: '4px',
+                    }}
+                    onClick={sortByGroup}
+                  >
+                    <ArrowDownIcon />
+                  </button>
+                </UserHeadCell>
                 <UserHeadCell>{translations[lang]?.points}</UserHeadCell>
                 <UserHeadCell>{translations[lang]?.platformId}</UserHeadCell>
                 <UserHeadCell>{translations[lang]?.attendance}</UserHeadCell>
@@ -656,8 +682,9 @@ const UserAdminPanel = ({ uni, lang = 'ua' }) => {
               </UserDBRow>
             </thead>
             <tbody>
-              {users.map(user => (
+              {users.map((user, index) => (
                 <UserDBRow key={user._id}>
+                  <UserCell>{index + 1}</UserCell>
                   {!uni && (
                     <UserCell>
                       <a

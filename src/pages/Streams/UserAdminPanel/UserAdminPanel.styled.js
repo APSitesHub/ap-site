@@ -1,6 +1,7 @@
 import { FormBtn, Input, InputNote } from 'components/LeadForm/LeadForm.styled';
 import { Form } from 'formik';
 import { ReactComponent as FilterIcon } from '../../../img/svg/filter.svg';
+import { ReactComponent as _ArrowDownIcon } from '../../../img/svg/invertedDownArrow.svg';
 import styled from 'styled-components';
 
 export const AdminPanelSection = styled.section`
@@ -208,6 +209,18 @@ export const FilterButton = styled(FilterIcon)`
   color: #000;
 
   transition: color var(--animation-global);
+
+  &:hover {
+    color: var(--main-color);
+  }
+`;
+
+export const ArrowDownIcon = styled(_ArrowDownIcon)`
+  width: 12px;
+  height: 12px;
+  cursor: pointer;
+
+  color: #000;
 
   &:hover {
     color: var(--main-color);
