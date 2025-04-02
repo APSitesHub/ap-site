@@ -82,6 +82,8 @@ const SpeakingAdminPanel = () => {
     deutsch: '',
     deutscha2: '',
     deutschb1: '',
+    deutschb1_1: '',
+    deutschb1_2: '',
     deutschb2: '',
     deutschb2_1: '',
     deutschb2_2: '',
@@ -131,6 +133,8 @@ const SpeakingAdminPanel = () => {
     deutsch: yup.string().optional(),
     deutscha2: yup.string().optional(),
     deutschb1: yup.string().optional(),
+    deutschb1_1: yup.string().optional(),
+    deutschb1_2: yup.string().optional(),
     deutschb2: yup.string().optional(),
     deutschb2_1: yup.string().optional(),
     deutschb2_2: yup.string().optional(),
@@ -285,6 +289,22 @@ const SpeakingAdminPanel = () => {
                     placeholder="Deutsch B1 speaking link"
                   />
                   <AdminInputNote component="p" name="deutschb1" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutschb1_1"
+                    placeholder="Deutsch B1_1 speaking link"
+                  />
+                  <AdminInputNote component="p" name="deutschb1_1" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="deutschb1_2"
+                    placeholder="Deutsch B1_2 speaking link"
+                  />
+                  <AdminInputNote component="p" name="deutschb1_2" />
                 </Label>
                 <Label>
                   <AdminInput

@@ -41,8 +41,7 @@ const TimeTableAdminPanel = () => {
   const [lessonToEdit, setLessonToEdit] = useState({});
   const [scheduleToEdit, setScheduleToEdit] = useState('');
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-  const [isEditCourseLevelFormOpen, setIsEditCourseLevelFormOpen] =
-    useState(false);
+  const [isEditCourseLevelFormOpen, setIsEditCourseLevelFormOpen] = useState(false);
   const [langValue, setLangValue] = useState('');
   const [levelValue, setLevelValue] = useState('');
   const [courseValue, setCourseValue] = useState('');
@@ -170,9 +169,7 @@ const TimeTableAdminPanel = () => {
       alert('Урок додано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -247,6 +244,10 @@ const TimeTableAdminPanel = () => {
     },
     {
       label: '11',
+      value: '11',
+    },
+    {
+      label: '11(Спікінги)',
       value: '11',
     },
     {
@@ -369,6 +370,10 @@ const TimeTableAdminPanel = () => {
       value: '11',
     },
     {
+      label: '11(Спікінги)',
+      value: '11',
+    },
+    {
       label: '12',
       value: '12',
     },
@@ -391,6 +396,14 @@ const TimeTableAdminPanel = () => {
     {
       label: '24',
       value: '24',
+    },
+    {
+      label: '24_1',
+      value: '24_1',
+    },
+    {
+      label: '24_2',
+      value: '24_2',
     },
     {
       label: '31',
@@ -425,6 +438,10 @@ const TimeTableAdminPanel = () => {
     },
     {
       label: '11',
+      value: '11',
+    },
+    {
+      label: '11(Спікінги)',
       value: '11',
     },
     {
@@ -516,6 +533,14 @@ const TimeTableAdminPanel = () => {
     {
       label: 'B1',
       value: 'b1',
+    },
+    {
+      label: 'B1_1',
+      value: 'b1_1',
+    },
+    {
+      label: 'B1_2',
+      value: 'b1_2',
     },
     {
       label: 'B2',
@@ -719,11 +744,7 @@ const TimeTableAdminPanel = () => {
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -849,11 +870,7 @@ const TimeTableAdminPanel = () => {
                 <AdminInputNote component="p" name="time" />
               </Label>
               <Label>
-                <AdminInput
-                  type="text"
-                  name="lessonNumber"
-                  placeholder="Номер уроку"
-                />
+                <AdminInput type="text" name="lessonNumber" placeholder="Номер уроку" />
                 <AdminInputNote component="p" name="lessonNumber" />
               </Label>
               <Label>
@@ -868,16 +885,13 @@ const TimeTableAdminPanel = () => {
           {lessons &&
             lessons
               .sort(
-                (a, b) =>
-                  a.lang.localeCompare(b.lang) || a.level.localeCompare(b.level)
+                (a, b) => a.lang.localeCompare(b.lang) || a.level.localeCompare(b.level)
               )
               .map(timetable => (
                 <ScheduleItem key={timetable._id}>
                   <ScheduleHeading>
                     {timetable.lang} {timetable.level} {timetable.course}
-                    <UserEditButton
-                      onClick={() => handleCourseLevelEdit(timetable._id)}
-                    >
+                    <UserEditButton onClick={() => handleCourseLevelEdit(timetable._id)}>
                       Edit
                     </UserEditButton>
                   </ScheduleHeading>
@@ -890,33 +904,21 @@ const TimeTableAdminPanel = () => {
                           <ScheduleDataDayText>
                             {DAYS[schedule.day - 1] || DAYS[DAYS.length - 1]}
                           </ScheduleDataDayText>
-                          <ScheduleDataTypeText>
-                            {schedule.type}
-                          </ScheduleDataTypeText>
-                          <ScheduleDataTimeText>
-                            {schedule.time}
-                          </ScheduleDataTimeText>
+                          <ScheduleDataTypeText>{schedule.type}</ScheduleDataTypeText>
+                          <ScheduleDataTimeText>{schedule.time}</ScheduleDataTimeText>
                           <ScheduleDataTimeText>
                             {schedule.lessonNumber}
                           </ScheduleDataTimeText>
-                          <ScheduleDataTimeText>
-                            {schedule.teacher}
-                          </ScheduleDataTimeText>
-                          <ScheduleDataTimeText>
-                            {schedule.package}
-                          </ScheduleDataTimeText>
+                          <ScheduleDataTimeText>{schedule.teacher}</ScheduleDataTimeText>
+                          <ScheduleDataTimeText>{schedule.package}</ScheduleDataTimeText>
                           <UserEditButton
-                            onClick={() =>
-                              handleEdit(timetable._id, schedule._id)
-                            }
+                            onClick={() => handleEdit(timetable._id, schedule._id)}
                           >
                             Edit
                           </UserEditButton>
 
                           <UserDeleteButton
-                            onClick={() =>
-                              handleDelete(timetable._id, schedule._id)
-                            }
+                            onClick={() => handleDelete(timetable._id, schedule._id)}
                           >
                             Del
                           </UserDeleteButton>
@@ -946,10 +948,7 @@ const TimeTableAdminPanel = () => {
           </Backdrop>
         )}
         {isEditCourseLevelFormOpen && (
-          <Backdrop
-            onClick={closeEditCourseLevelFormOnClick}
-            id="close-on-click"
-          >
+          <Backdrop onClick={closeEditCourseLevelFormOnClick} id="close-on-click">
             <TimeTableCourseLevelEditForm
               lessonToEdit={lessonToEdit}
               languageOptions={languageOptions}

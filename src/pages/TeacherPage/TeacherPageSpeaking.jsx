@@ -152,6 +152,8 @@ const TeacherPageSpeaking = () => {
         setIsLoading(isLoading => (isLoading = true));
         page === 'kids-c1sc'
           ? setCourse('10')
+          : page === 'deb1sc'
+          ? setCourse('24')
           : setCourse(
               (await axios.get('/timetable')).data.filter(
                 timetable => page.includes(timetable.level) && lang === timetable.lang
@@ -161,13 +163,24 @@ const TeacherPageSpeaking = () => {
 
         setUsers(
           users =>
-            (users = [
-              ...usersToSet.data.filter(
-                user =>
-                  user.course === course ||
-                  user.course.split('/').some(usersCourse => usersCourse === course)
-              ),
-            ])
+            (users =
+              page === 'deb1sc'
+                ? [
+                    ...usersToSet.data.filter(
+                      user =>
+                        user.course.includes('24') ||
+                        user.course
+                          .split('/')
+                          .some(usersCourse => usersCourse.includes('24'))
+                    ),
+                  ]
+                : [
+                    ...usersToSet.data.filter(
+                      user =>
+                        user.course === course ||
+                        user.course.split('/').some(usersCourse => usersCourse === course)
+                    ),
+                  ])
         );
         console.log('eff');
       } catch (error) {
@@ -205,15 +218,24 @@ const TeacherPageSpeaking = () => {
         </thead>
         <tbody>
           {users
-            .filter(
-              user =>
-                new Date() -
-                  new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
-                  4 * 86400000 &&
-                (lang === user.lang ||
-                  user.lang.split('/').some(userLang => lang === userLang)) &&
-                (course === user.course ||
-                  user.course.split('/').some(userCourse => course === userCourse))
+            .filter(user =>
+              page === 'deb1sc'
+                ? new Date() -
+                    new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
+                    4 * 86400000 &&
+                  (lang === user.lang ||
+                    user.lang.split('/').some(userLang => lang === userLang)) &&
+                  (user.course.includes('24') ||
+                    user.course
+                      .split('/')
+                      .some(usersCourse => usersCourse.includes('24')))
+                : new Date() -
+                    new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
+                    4 * 86400000 &&
+                  (lang === user.lang ||
+                    user.lang.split('/').some(userLang => lang === userLang)) &&
+                  (course === user.course ||
+                    user.course.split('/').some(userCourse => course === userCourse))
             )
             .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
             .map((user, i) => (

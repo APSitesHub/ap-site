@@ -669,6 +669,8 @@ export const App = () => {
             <Route path="deutscha2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="deutschb1" element={<StreamDeutschB1 />} noindex={true} />
             <Route path="deb1sc" element={<StreamSpeakingClub />} noindex={true} />
+            <Route path="deb1_1sc" element={<StreamSpeakingClub />} noindex={true} />
+            <Route path="deb1_2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutschb1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="deutschb2" element={<StreamDeutschB2 />} noindex={true} />
             <Route path="deb2sc" element={<StreamSpeakingClub />} noindex={true} />
