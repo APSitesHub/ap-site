@@ -15,8 +15,17 @@ export default function useWebRTC(roomID) {
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState([]);
+  const [mixedAudioStream, setMixedAudioStream] = useState(null);
   const [isPremissionAllowed, setIsPremissionAllowed] = useState(null);
   const [mockVideosTo, setMockVideosTo] = useState([]);
+
+  const audioContextRef = useRef(null);
+  const destinationRef = useRef(null);
+  const peerConnections = useRef({});
+  const localMediaStream = useRef(null);
+  const peerMediaElements = useRef({
+    [LOCAL_VIDEO]: null,
+  });
 
   const determineRole = useCallback(async () => {
     if (!getToken()) {
@@ -28,6 +37,35 @@ export default function useWebRTC(roomID) {
 
     setLocalRole(role);
   }, [roomID]);
+
+  const getUserName = () => {
+    return localStorage.getItem('userName') || 'N/A';
+  };
+
+  const getDevice = kind => {
+    return localStorage.getItem(`default-${kind}`);
+  };
+
+  const setDevice = (kind, deviceId) => {
+    localStorage.setItem(`default-${kind}`, deviceId);
+  };
+
+  const getDefaultDevice = (devices, kind) => {
+    let defaultDevice = getDevice(kind);
+
+    if (
+      defaultDevice &&
+      devices.filter(d => d.kind === kind && d.deviceId === defaultDevice).length > 0
+    ) {
+      return defaultDevice;
+    }
+
+    defaultDevice = devices.find(device => device.kind === kind).deviceId;
+
+    setDevice(kind, defaultDevice);
+
+    return defaultDevice;
+  };
 
   const getMockVideo = () => {
     const canvas = document.createElement('canvas');
@@ -51,6 +89,7 @@ export default function useWebRTC(roomID) {
             ...list,
             {
               clientId: newClient,
+              userName: clientsData.userName,
               role: clientsData.role,
               isMicroEnabled: clientsData.isMicroEnabled,
               isCameraEnabled: clientsData.isCameraEnabled,
@@ -63,14 +102,13 @@ export default function useWebRTC(roomID) {
     [updateClients]
   );
 
-  const peerConnections = useRef({});
-  const localMediaStream = useRef(null);
-  const peerMediaElements = useRef({
-    [LOCAL_VIDEO]: null,
-  });
-
-  const toggleCamera = off => {
+  const toggleCamera = async off => {
     let enable = !off;
+
+    if (!isPremissionAllowed) {
+      const permissions = await navigator.permissions.query({ name: 'camera' });
+      permissions.state === 'denied' && alert('Не надано доступу до камери!');
+    }
 
     if (localMediaStream.current) {
       const videoTrack = localMediaStream.current
@@ -102,8 +140,13 @@ export default function useWebRTC(roomID) {
     });
   };
 
-  const toggleMicrophone = off => {
+  const toggleMicrophone = async off => {
     let enable = !off;
+
+    if (!isPremissionAllowed) {
+      const permissions = await navigator.permissions.query({ name: 'camera' });
+      permissions.state === 'denied' && alert('Не надано доступу до мікрофону!');
+    }
 
     if (localMediaStream.current) {
       const audioTrack = localMediaStream.current
@@ -156,6 +199,7 @@ export default function useWebRTC(roomID) {
       if (!isLocalMicrophoneEnabled) {
         toggleMicrophone();
       }
+      setDevice('audioinput', deviceId);
     } catch (error) {
       console.error('error change micro: ' + error);
     }
@@ -193,6 +237,7 @@ export default function useWebRTC(roomID) {
       if (!isLocalCameraEnabled) {
         toggleCamera();
       }
+      setDevice('videoinput', deviceId);
     } catch (error) {
       console.error('error change camera: ' + error);
     }
@@ -205,13 +250,42 @@ export default function useWebRTC(roomID) {
     });
   };
 
+  const mixAudioStreams = () => {
+    if (!audioContextRef.current) {
+      audioContextRef.current = new AudioContext();
+      destinationRef.current = audioContextRef.current.createMediaStreamDestination();
+    }
+
+    const mixedStream = destinationRef.current.stream;
+
+    const audioTracks = remoteStreams
+      .map(stream => stream.remoteStream.getAudioTracks()[0])
+      .filter(track => track);
+
+    const gainNode = audioContextRef.current.createGain();
+    gainNode.gain.value = 0.8;
+
+    audioTracks.forEach(track => {
+      const source = audioContextRef.current.createMediaStreamSource(
+        new MediaStream([track])
+      );
+      source.connect(gainNode);
+    });
+
+    gainNode.connect(destinationRef.current);
+
+    setMixedAudioStream(mixedStream);
+  };
+
   const muteAll = async () => {
     socket.emit(ACTIONS.MUTE_ALL);
   };
 
   async function startCapture() {
+    let premissions;
+
     try {
-      localMediaStream.current = await navigator.mediaDevices.getUserMedia({
+      await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: true,
       });
@@ -219,29 +293,29 @@ export default function useWebRTC(roomID) {
       const devices = await navigator.mediaDevices.enumerateDevices();
       setLocalDevices(devices);
 
-      const defaultCamera = devices.find(device => device.kind === 'videoinput');
-      const defaultMicrophone = devices.find(device => device.kind === 'audioinput');
+      const defaultCamera = getDefaultDevice(devices, 'videoinput');
+
+      const defaultMicrophone = getDefaultDevice(devices, 'audioinput');
 
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-        audio: defaultMicrophone ? { deviceId: defaultMicrophone.deviceId } : true,
-        video: defaultCamera
-          ? {
-              deviceId: { exact: defaultCamera.deviceId },
-              width: localRole === 'admin' ? 1920 : 320,
-              height: localRole === 'admin' ? 1080 : 180,
-              frameRate: { ideal: 30 },
-            }
-          : {
-              width: localRole === 'admin' ? 1920 : 320,
-              height: localRole === 'admin' ? 1080 : 180,
-            },
+        audio: { deviceId: defaultMicrophone },
+        video: {
+          deviceId: { exact: defaultCamera },
+          width: localRole === 'admin' ? 1920 : 320,
+          height: localRole === 'admin' ? 1080 : 180,
+          frameRate: { ideal: 30 },
+        },
       });
 
+      premissions = true;
       setIsPremissionAllowed(true);
     } catch (error) {
       console.error('Error getting userMedia:', error);
       if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+        premissions = false;
         setIsPremissionAllowed(false);
+        setLocalCameraEnabled(false);
+        setLocalMicrophoneEnabled(false);
         const emptyStream = new MediaStream();
         localMediaStream.current = emptyStream;
       }
@@ -250,9 +324,10 @@ export default function useWebRTC(roomID) {
     if (localRole) {
       const localClientData = {
         role: localRole,
-        isCameraEnabled: isLocalCameraEnabled,
-        isMicroEnabled: isLocalMicrophoneEnabled,
-      }
+        userName: getUserName(),
+        isCameraEnabled: premissions,
+        isMicroEnabled: premissions,
+      };
       addNewClient(LOCAL_VIDEO, localClientData, () => {
         const localVideoElement = peerMediaElements.current[LOCAL_VIDEO];
         if (localVideoElement) {
@@ -263,12 +338,89 @@ export default function useWebRTC(roomID) {
 
       socket.emit(ACTIONS.JOIN, {
         room: roomID,
+        userName: getUserName(),
         role: localRole,
-        isCameraEnabled: isLocalCameraEnabled,
-        isMicroEnabled: isLocalMicrophoneEnabled,
+        isCameraEnabled: premissions,
+        isMicroEnabled: premissions,
       });
+
+      analyzeAudio();
     }
   }
+
+  const analyzeAudio = () => {
+    let audioContext;
+    let analyser;
+    let microphone;
+    let dataArray;
+    let timeoutId;
+    let aboveThresholdTime = 0;
+    let belowThresholdTime = 0;
+    const THRESHOLD = 10;
+    const DURATION = 500;
+    const INTERVAL = 75;
+    let lastState = false;
+
+    const initAudio = async () => {
+      if (!isLocalMicrophoneEnabled) return;
+
+      try {
+        const stream = localMediaStream.current;
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyser);
+
+        const updateVolume = () => {
+          analyser.getByteFrequencyData(dataArray);
+          const avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
+          const volume = Math.round((avg / 255) * 100);
+
+          if (volume > THRESHOLD) {
+            aboveThresholdTime += INTERVAL;
+            belowThresholdTime = 0;
+          } else {
+            belowThresholdTime += INTERVAL;
+            aboveThresholdTime = 0;
+          }
+
+          if (aboveThresholdTime >= DURATION && !lastState) {
+            lastState = true;
+            socket.emit(ACTIONS.CHANGE_SPEAKING, { isSpeaker: true });
+            updateClients(list =>
+              list.map(item =>
+                item.clientId === LOCAL_VIDEO ? { ...item, isSpeaker: true } : item
+              )
+            );
+          } else if (belowThresholdTime >= DURATION && lastState) {
+            lastState = false;
+            socket.emit(ACTIONS.CHANGE_SPEAKING, { isSpeaker: false });
+            updateClients(list =>
+              list.map(item =>
+                item.clientId === LOCAL_VIDEO ? { ...item, isSpeaker: false } : item
+              )
+            );
+          }
+
+          timeoutId = setTimeout(updateVolume, INTERVAL);
+        };
+
+        timeoutId = setTimeout(updateVolume, INTERVAL);
+      } catch (error) {
+        console.error('Помилка доступу до мікрофона:', error);
+      }
+    };
+
+    initAudio();
+
+    return () => {
+      if (audioContext) audioContext.close();
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  };
 
   const handleNewPeer = useCallback(
     async ({ peerID, clients: clientsData, createOffer }) => {
@@ -282,7 +434,17 @@ export default function useWebRTC(roomID) {
             urls: 'stun:mcu.ap.education:5349',
           },
           {
-            urls: 'turn:mcu.ap.education:5349',
+            urls: 'turn:194.44.193.50:3478?transport=udp',
+            username: 'mcuuser',
+            credential: 'ExQGw3dhYfrY6PFj7FsaB92zJl',
+          },
+          {
+            urls: 'turn:194.44.193.50:3478?transport=tcp',
+            username: 'mcuuser',
+            credential: 'ExQGw3dhYfrY6PFj7FsaB92zJl',
+          },
+          {
+            urls: 'turn:194.44.193.50:5349',
             username: 'mcuuser',
             credential: 'ExQGw3dhYfrY6PFj7FsaB92zJl',
           },
@@ -329,35 +491,30 @@ export default function useWebRTC(roomID) {
         }
       };
 
-      let adminKey = '';
-
-      for (const [key, value] of Object.entries(clientsData)) {
-        if (value === 'admin') {
-          adminKey = key;
-          break;
-        }
-      }
-
       if (localMediaStream.current && localMediaStream.current.getTracks().length > 0) {
-        if (adminKey === peerID) {
-          localMediaStream.current.getTracks().forEach(track => {
-            const sender = peerConnection.addTrack(track, localMediaStream.current);
+        localMediaStream.current.getTracks().forEach(track => {
+          const sender = peerConnection.addTrack(track, localMediaStream.current);
 
-            const params = sender.getParameters();
+          const params = sender.getParameters();
+          if (!params.encodings) {
+            params.encodings = [];
+          }
 
-            if (params.encodings && params.encodings.length > 0) {
-              params.encodings[0].maxBitrate = 2000000; // 2 MB/s
+          if (params.encodings && params.encodings.length > 0) {
+            if (localRole === 'admin') {
+              params.encodings[0].maxBitrate = 2000000;
               params.encodings[0].maxFramerate = 30;
               params.encodings[0].priority = 'high';
               params.encodings[0].networkPriority = 'high';
-              sender.setParameters(params);
+            } else {
+              params.encodings[0].maxBitrate = 500000;
+              params.encodings[0].maxFramerate = 20;
+              params.encodings[0].priority = 'low';
+              params.encodings[0].networkPriority = 'low';
             }
-          });
-        } else {
-          localMediaStream.current.getTracks().forEach(track => {
-            peerConnection.addTrack(track, localMediaStream.current);
-          });
-        }
+            sender.setParameters(params);
+          }
+        });
       } else {
         const audioContext = new AudioContext();
         const oscillator = audioContext.createOscillator();
@@ -404,7 +561,7 @@ export default function useWebRTC(roomID) {
         });
       }
     },
-    [addNewClient]
+    [addNewClient, localRole]
   );
 
   async function setRemoteMedia({ peerID, sessionDescription: remoteDescription }) {
@@ -483,6 +640,10 @@ export default function useWebRTC(roomID) {
   }, [updateClients]);
 
   useEffect(() => {
+    mixAudioStreams();
+  }, [remoteStreams]);
+
+  useEffect(() => {
     startCapture();
 
     return () => {
@@ -557,6 +718,23 @@ export default function useWebRTC(roomID) {
     socket.on(ACTIONS.MUTE_ALL, () => {
       toggleMicrophone(true);
     });
+
+    socket.on(ACTIONS.CHANGE_SPEAKING, client => {
+      updateClients(list => {
+        return list.map(item => {
+          if (item.clientId === client.peerID) {
+            return {
+              ...item,
+              isSpeaker: client.isSpeaker,
+            };
+          }
+
+          return {
+            ...item,
+          };
+        });
+      });
+    });
   }, [updateClients]);
 
   useEffect(() => {
@@ -618,31 +796,41 @@ export default function useWebRTC(roomID) {
 
   const addMockClient = () => {
     const mockClientId = Math.random();
-    addNewClient(mockClientId, 'user', () => {
+    addNewClient(mockClientId, { userName: mockClientId, role: 'user' }, () => {
       console.log(mockClientId);
     });
   };
 
   const getClients = () => {
-    console.log(clients);
-    console.log(isPremissionAllowed);
+    console.log('clients: ', clients);
+    console.log('permissions: ', isPremissionAllowed);
+    console.log('localTracks: ', localMediaStream.current.getTracks());
+    console.log('peers: ', peerConnections);
+
+    Object.keys(peerConnections.current).forEach(id => {
+      const rtc = peerConnections.current[id];
+
+      const sender = rtc.getSenders();
+
+      console.log('sender: ', sender);
+    });
   };
 
   useEffect(() => {
-    const logs = {
-      peerId: '',
-      pairStats: {},
-      outVideoStats: {},
-      inVideoStats: {},
-      outAudioStats: {},
-      inAudioStats: {},
-    };
     const prevStats = {};
 
     const logsInterval = setInterval(() => {
       Object.keys(peerConnections.current).forEach(async id => {
+        const logs = {
+          peerId: id,
+          pairStats: {},
+          outVideoStats: {},
+          inVideoStats: {},
+          outAudioStats: {},
+          inAudioStats: {},
+        };
+
         const stats = await peerConnections.current[id].getStats();
-        logs.peerId = id;
 
         stats.forEach(report => {
           if (report.type === 'candidate-pair' && report.state === 'succeeded') {
@@ -670,11 +858,11 @@ export default function useWebRTC(roomID) {
             logs.inAudioStats = calcBitrate(report, 'audio_in', id);
           }
         });
-      });
 
-      if (Object.keys(logs).length > 0) {
-        console.log(logs);
-      }
+        if (Object.keys(logs).length > 0) {
+          console.log(logs);
+        }
+      });
     }, 30000);
 
     function calcBitrate(report, key, id) {
@@ -707,8 +895,26 @@ export default function useWebRTC(roomID) {
       };
     }
 
+    let wakeLock = null;
+
+    const requestWakeLock = async () => {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+      } catch (err) {
+        console.error('Error Wake Lock activation:', err);
+      }
+    };
+
+    requestWakeLock();
+
     return () => {
       clearInterval(logsInterval);
+
+      if (wakeLock) {
+        wakeLock.release().then(() => {
+          console.log('Wake Lock daleted');
+        });
+      }
     };
   }, []);
 
@@ -726,6 +932,7 @@ export default function useWebRTC(roomID) {
     addMockClient,
     getClients,
     remoteStreams,
+    mixedAudioStream,
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,

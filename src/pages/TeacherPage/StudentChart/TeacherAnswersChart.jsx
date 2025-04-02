@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import chart from '../../../img/bg/chart.png';
-import { ResponsiveBarCanvas } from '@nivo/bar';
+import { ResponsiveBar } from '@nivo/bar';
 import {
   ChartAreaLimiter,
   ChartPlaceholder,
@@ -16,10 +16,19 @@ import { QuestionHeader } from '../TeacherPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const TeacherAnswersChart = ({ answers, quizType, isQuizActive }) => {
+export const TeacherAnswersChart = ({ answers, quizType, isQuizActive, setAndSendAnswer }) => {
   const data = Object.keys(answers).map(key => {
     return { answer: key, [key]: answers[key] };
   });
+
+  const theme = {
+    text: {
+      fontSize: 15,
+      fill: '#000',
+      outlineWidth: 0.4,
+      outlineColor: '#000',
+    },
+  };
 
   useEffect(() => {
     return () => {
@@ -39,12 +48,13 @@ export const TeacherAnswersChart = ({ answers, quizType, isQuizActive }) => {
   // ];
 
   const MyResponsiveBar = ({ data }) => (
-    <ResponsiveBarCanvas
+    <ResponsiveBar
       data={data}
       keys={data.map(dataObj => Object.keys(dataObj)[1]) || ['answer']}
       indexBy="answer"
       groupMode="stacked"
-      margin={{ top: 30, right: 30, bottom: 20, left: 30 }}
+      layout='vertical'
+      margin={{ top: 30, right: 30, bottom: 30, left: 30 }}
       padding={0}
       colors={{ scheme: 'dark2' }}
       axisLeft={{
@@ -55,7 +65,8 @@ export const TeacherAnswersChart = ({ answers, quizType, isQuizActive }) => {
       }}
       axisBottom={true}
       labelPosition="end"
-      labelOffset={8}
+      labelOffset={12}
+      theme={theme}
       tooltip={({ id, value, color }) => (
         <TooltipArea>
           <TooltipColorLabel
@@ -68,6 +79,17 @@ export const TeacherAnswersChart = ({ answers, quizType, isQuizActive }) => {
           </TooltipIdText>
         </TooltipArea>
       )}
+      onClick={barData => {
+        console.log(barData);
+        // direct state change rerenders the chart, not the best option as for user experience
+        // setCorrectAnswer(correctAnswer => (correctAnswer = barData.data.answer));
+        
+        // variable to be used in request does not rerender the chart but maybe it is better to move it to parent component
+        // const correct = barData.data.answer;
+        // console.log(correct);
+        
+        setAndSendAnswer(barData.data.answer);
+      }}
     />
   );
 

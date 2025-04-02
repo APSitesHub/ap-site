@@ -91,7 +91,7 @@ const TeacherControlPagePl = () => {
     password: yup.string().required('Введіть пароль!'),
   });
 
-  const regex = /\d{1,}\.\d{2}\.\d{4}/;
+  const regex = /\d{1,2}\.\d{2}\.\d{4}/;
 
   // const changeDateFormat = dateString => {
   //   if (dateString) {
@@ -133,11 +133,7 @@ const TeacherControlPagePl = () => {
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -161,18 +157,14 @@ const TeacherControlPagePl = () => {
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((teacher, i) => (
                   <UserDBRow>
-                    <UserCell key={'Тічер' + teacher._id}>
-                      {teacher.name}
-                    </UserCell>
+                    <UserCell key={'Тічер' + teacher._id}>{teacher.name}</UserCell>
                     <UserCell key={`Відгук ${i} ${teacher._id}`}>
                       {reviews
                         .filter(user =>
                           user.feedback.some(
                             review =>
                               review.includes(teacher.name) ||
-                              review.includes(
-                                teacher.name.split(' ').reverse().join(' ')
-                              )
+                              review.includes(teacher.name.split(' ').reverse().join(' '))
                           )
                         )
                         .sort((a, b) => a.name.localeCompare(b.name))
@@ -191,13 +183,35 @@ const TeacherControlPagePl = () => {
                             })
                         )
                         .flatMap(user =>
-                          user.feedback.map(
-                            feedback => `для ${user.name}) ${feedback}`
-                          )
+                          user.feedback.map(feedback => `(для ${user.name}) ${feedback}`)
                         )
+                        .sort((a, b) => {
+                          const dateA = a.match(regex)?.[0];
+                          const dateB = b.match(regex)?.[0];
+
+                          if (!dateA || !dateB) return 0; // Handle cases where date is missing
+
+                          const parsedDateA = dateA
+                            .split('.')
+                            .map(value => (value.length === 1 ? '0' + value : value)) // Add leading zero if needed
+                            .reverse()
+                            .join('-'); // Convert to YYYY-MM-DD for sorting by localeCompare
+                          const parsedDateB = dateB
+                            .split('.')
+                            .map(value => (value.length === 1 ? '0' + value : value))
+                            .reverse()
+                            .join('-');
+
+                          return parsedDateB.localeCompare(parsedDateA); // Sort in descending order
+                        })
                         .map(text => (
                           <Feedback>
-                            {`Відгук від ${text.match(regex)} ${text}`}
+                            {text.length > 200
+                              ? `(Відгук від ${text.match(regex)} ${text.slice(
+                                  0,
+                                  200
+                                )}...`
+                              : `(Відгук від ${text.match(regex)} ${text}`}
                           </Feedback>
                         ))}
                     </UserCell>

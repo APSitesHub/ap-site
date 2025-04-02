@@ -40,6 +40,10 @@ export const TimetableBox = styled.div`
   }
 `;
 
+export const TimetableBoxTrial = styled(TimetableBox)`
+  z-index: 8;
+`;
+
 export const TimetableHeading = styled.h3`
   padding: 9px 0;
 
@@ -159,6 +163,22 @@ export const TimetableLessonLinkWSPA = styled(TimetableLessonLink)`
   }
 `;
 
+export const TimetableLessonLinkVPU = styled(TimetableLessonLink)`
+  background: linear-gradient(90deg, #041f43 -31.6%, #a82033 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #a82033 -31.6%, #041f43 107.95%);
+  }
+`;
+
+export const TimetableLessonLinkISMPO = styled(TimetableLessonLink)`
+  background: linear-gradient(90deg, #002750 -31.6%, #1e88d2 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #1e88d2 -31.6%, #002750 107.95%);
+  }
+`;
+
 export const TimetableLessonLinkText = styled.span`
   position: absolute;
   top: 50%;
@@ -231,6 +251,18 @@ export const TimetableLessonPlTypeWSPA = styled(TimetableLessonPlType)`
   filter: drop-shadow(1px -1px 1px #e40521);
 `;
 
+export const TimetableLessonPlTypeVPU = styled(TimetableLessonPlType)`
+  color: #000;
+
+  filter: drop-shadow(1px -1px 1px #a82033);
+`;
+
+export const TimetableLessonPlTypeISMPO = styled(TimetableLessonPlType)`
+  color: #000;
+
+  filter: drop-shadow(1px -1px 1px #1e88d2);
+`;
+
 export const TimetableChangeCourseBtn = styled.button`
   display: block;
   padding: 5px 0;
@@ -280,6 +312,22 @@ export const TimetableChangeCourseBtnWSPA = styled(TimetableChangeCourseBtn)`
 
   &::before {
     background: linear-gradient(90deg, #000 -31.6%, #e40521 107.95%);
+  }
+`;
+
+export const TimetableChangeCourseBtnVPU = styled(TimetableChangeCourseBtn)`
+  background: linear-gradient(90deg, #041f43 -31.6%, #a82033 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #a82033 -31.6%, #041f43 107.95%);
+  }
+`;
+
+export const TimetableChangeCourseBtnISMPO = styled(TimetableChangeCourseBtn)`
+  background: linear-gradient(90deg, #002750 -31.6%, #1e88d2 107.95%);
+
+  &::before {
+    background: linear-gradient(90deg, #1e88d2 -31.6%, #002750 107.95%);
   }
 `;
 

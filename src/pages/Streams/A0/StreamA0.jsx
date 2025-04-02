@@ -38,6 +38,9 @@ const StreamA0 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isAnimated, setIsAnimated] = useState(false);
@@ -49,11 +52,6 @@ const StreamA0 = () => {
   const [width, height] = useSize(document.body);
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
-  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
-  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
-
-  console.log(56, room);
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
@@ -74,15 +72,6 @@ const StreamA0 = () => {
       ? setIsOpenedLast(isOpenedLast => 'support')
       : setIsOpenedLast(isOpenedLast => '');
   };
-  const toggleButtonBox = () => {
-    setIsButtonBoxOpen(isOpen => !isOpen);
-  };
-  const handleSupportClick = data_id => {
-    setAnimationID(id => (id = data_id));
-    if (!isAnimated) {
-      setIsAnimated(isAnimated => !isAnimated);
-    }
-  };
   const toggleQuizInput = () => {
     setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
   };
@@ -91,6 +80,15 @@ const StreamA0 = () => {
   };
   const toggleQuizTrueFalse = () => {
     setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
+  };
+  const toggleButtonBox = () => {
+    setIsButtonBoxOpen(isOpen => !isOpen);
+  };
+  const handleSupportClick = data_id => {
+    setAnimationID(id => (id = data_id));
+    if (!isAnimated) {
+      setIsAnimated(isAnimated => !isAnimated);
+    }
   };
 
   const videoBoxWidth =
@@ -104,9 +102,47 @@ const StreamA0 = () => {
     socketRef.current = io('https://ap-chat-server.onrender.com/');
     // socketRef.current = io('http://localhost:4000/');
 
+    const handleDisconnect = () => {
+      socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
+    };
+
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
       console.log(handshake.time);
+      socketRef.current.emit('connected:user', socketRef.current.id, room);
+    });
+
+    // open quizzes on event
+    socketRef.current.on('question:input', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(true);
+    });
+    socketRef.current.on('question:options', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(true);
+    });
+    socketRef.current.on('question:trueFalse', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(true);
+    });
+
+    // close quizzes on event
+    socketRef.current.on('question:closeInput', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
+    });
+    socketRef.current.on('question:closeOptions', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
+    });
+    socketRef.current.on('question:closeTrueFalse', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
+    });
+
+    socketRef.current.on('connected:user', (id, lvl) => {
+      console.log(id);
+      console.log(lvl);
     });
 
     const getMessages = async () => {
@@ -121,8 +157,7 @@ const StreamA0 = () => {
           }
         );
         const todayMessages = dbMessages.data.filter(
-          message =>
-            new Date(message.createdAt).getDate() === new Date().getDate()
+          message => new Date(message.createdAt).getDate() === new Date().getDate()
         );
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
@@ -135,10 +170,7 @@ const StreamA0 = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post(
-            'https://ap-chat-server.onrender.com/messages',
-            data
-          );
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -163,14 +195,11 @@ const StreamA0 = () => {
     socketRef.current.on('message:delete', async id => {
       console.log('delete fired');
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(
-            `https://ap-chat-server.onrender.com/messages/${id}`
-          );
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }
@@ -181,8 +210,7 @@ const StreamA0 = () => {
     socketRef.current.on('message:deleted', async id => {
       console.log(id);
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
     });
 
@@ -194,37 +222,16 @@ const StreamA0 = () => {
       }
     });
 
-    // open quizzes on event
-    socketRef.current.on('question:input', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/','') && setIsQuizInputOpen(true);
-    });
-    socketRef.current.on('question:options', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/','') && setIsQuizOptionsOpen(true);
-    });
-    socketRef.current.on('question:trueFalse', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/','') && setIsQuizTrueFalseOpen(true);
-    });
-
-    // close quizzes on event
-    socketRef.current.on('question:closeInput', data => {
-      console.log(data);
-      data.page === room.replace('/streams/','') && setIsQuizInputOpen(false);
-    });
-    socketRef.current.on('question:closeOptions', data => {
-      console.log(data);
-      data.page === room.replace('/streams/','') && setIsQuizOptionsOpen(false);
-    });
-    socketRef.current.on('question:closeTrueFalse', data => {
-      console.log(data);
-      data.page === room.replace('/streams/','') && setIsQuizTrueFalseOpen(false);
-    });
+    window.addEventListener('beforeunload', handleDisconnect);
 
     return () => {
+      window.removeEventListener('beforeunload', handleDisconnect);
+
+      console.log('disconnecting');
+      handleDisconnect();
       socketRef.current.off('connected');
       socketRef.current.off('message');
+      socketRef.current.off('user');
       socketRef.current.disconnect();
     };
   }, [currentUser, room]);
@@ -235,24 +242,23 @@ const StreamA0 = () => {
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
-            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви
-            перейшли за правильним посиланням або спробуйте пізніше.
+            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
+            правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Хмммм, схоже що ви були нечемні! <br />
-            Вас було заблоковано за порушення правил нашої платформи. Зв'яжіться
-            зі своїм менеджером сервісу!
+            Вас було заблоковано за порушення правил нашої платформи. Зв'яжіться зі своїм
+            менеджером сервісу!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : (
         <>
           <StreamSection
             style={{
-              width:
-                isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+              width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
             }}
           >
             <VideoBox>
@@ -276,14 +282,10 @@ const StreamA0 = () => {
                 />
               </SupportMarkerLeft>
               <SupportMarkerRight
-                className={
-                  isAnimated && animatedID === 'quality' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
               >
                 <SupportPointer
-                  className={
-                    isAnimated && animatedID === 'quality' ? 'animated' : ''
-                  }
+                  className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
                 />
               </SupportMarkerRight>
               <ReactPlayer
@@ -310,18 +312,14 @@ const StreamA0 = () => {
             <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
               <KahootBtn
                 onClick={toggleKahoot}
-                className={
-                  isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''}
               >
                 <KahootLogo />
               </KahootBtn>
 
               <ChatBtn
                 onClick={toggleChat}
-                className={
-                  isAnimated && animatedID === 'chat_open' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'chat_open' ? 'animated' : ''}
               >
                 <ChatLogo />
               </ChatBtn>
@@ -334,14 +332,12 @@ const StreamA0 = () => {
             <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
             </BoxHideSwitch>
-
+            
             {height > width && (
               <ChatBox
                 ref={chatEl}
                 className={isChatOpen ? 'shown' : 'hidden'}
-                style={
-                  isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
-                }
+                style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
               >
                 <Chat
                   socket={socketRef.current}
@@ -351,6 +347,30 @@ const StreamA0 = () => {
                 />
               </ChatBox>
             )}
+
+            <StudentInput
+              isInputOpen={isQuizInputOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizInput}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+            />
+
+            <StudentOptions
+              isInputOpen={isQuizOptionsOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizOptions}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+            />
+
+            <StudentTrueFalse
+              isInputOpen={isQuizTrueFalseOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizTrueFalse}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+            />
 
             <Support
               sectionWidth={width}
@@ -368,34 +388,12 @@ const StreamA0 = () => {
               isChatOpen={isChatOpen}
               isOpenedLast={isOpenedLast}
             />
-            <StudentInput
-              isInputOpen={isQuizInputOpen}
-              socket={socketRef.current}
-              toggleInput={toggleQuizInput}
-              page={room.replace('/streams/', '')}
-            />
-
-            <StudentOptions
-              isInputOpen={isQuizOptionsOpen}
-              socket={socketRef.current}
-              toggleInput={toggleQuizOptions}
-              page={room.replace('/streams/', '')}
-            />
-
-            <StudentTrueFalse
-              isInputOpen={isQuizTrueFalseOpen}
-              socket={socketRef.current}
-              toggleInput={toggleQuizTrueFalse}
-              page={room.replace('/streams/', '')}
-            />
           </StreamSection>
           {width >= height && (
             <ChatBox
               ref={chatEl}
               className={isChatOpen ? 'shown' : 'hidden'}
-              style={
-                isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
-              }
+              style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
             >
               <Chat
                 socket={socketRef.current}

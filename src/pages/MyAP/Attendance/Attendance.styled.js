@@ -44,6 +44,10 @@ export const AttendanceBox = styled.div`
   }
 `;
 
+export const AttendanceBoxTrial = styled(AttendanceBox)`
+  z-index: 8;
+`;
+
 export const AttendanceHeading = styled.h3`
   padding: 9px 0;
 
@@ -90,6 +94,14 @@ export const MonthSwitchBox = styled.div`
 
 export const MonthSwitchBoxWSPA = styled(MonthSwitchBox)`
   background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
+`;
+
+export const MonthSwitchBoxVPU = styled(MonthSwitchBox)`
+  background: linear-gradient(90deg, #041f43 -31.6%, #a82033 107.95%);
+`;
+
+export const MonthSwitchBoxISMPO = styled(MonthSwitchBox)`
+  background: linear-gradient(90deg, #002750 -31.6%, #1e88d2 107.95%);
 `;
 
 export const AttendancePeriod = styled.span`

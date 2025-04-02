@@ -53,8 +53,6 @@ const StreamA1 = () => {
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
 
-  console.log(56, room);
-
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
     isChatOpen || isSupportOpen
@@ -334,7 +332,7 @@ const StreamA1 = () => {
             <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
             </BoxHideSwitch>
-            {console.log(socketRef.current)}
+            
             {height > width && (
               <ChatBox
                 ref={chatEl}

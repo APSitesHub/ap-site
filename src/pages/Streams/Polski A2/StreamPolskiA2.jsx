@@ -1,6 +1,9 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
 import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
+import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
+import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
+import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 import { Support } from 'components/Stream/Support/Support';
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
@@ -31,10 +34,13 @@ import {
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
-export const StreamPolskiA2 = () => {
+const StreamPolskiA2 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
+  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isAnimated, setIsAnimated] = useState(false);
@@ -66,6 +72,15 @@ export const StreamPolskiA2 = () => {
       ? setIsOpenedLast(isOpenedLast => 'support')
       : setIsOpenedLast(isOpenedLast => '');
   };
+  const toggleQuizInput = () => {
+    setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
+  };
+  const toggleQuizOptions = () => {
+    setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
+  };
+  const toggleQuizTrueFalse = () => {
+    setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
+  };
   const toggleButtonBox = () => {
     setIsButtonBoxOpen(isOpen => !isOpen);
   };
@@ -82,13 +97,52 @@ export const StreamPolskiA2 = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'Polski A2 | AP Education';
+    document.title = 'A2 Polski | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
+    // socketRef.current = io('http://localhost:4000/');
+
+    const handleDisconnect = () => {
+      socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
+    };
 
     socketRef.current.on('connected', (connected, handshake) => {
       console.log(connected);
       console.log(handshake.time);
+      socketRef.current.emit('connected:user', socketRef.current.id, room);
+    });
+
+    // open quizzes on event
+    socketRef.current.on('question:input', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(true);
+    });
+    socketRef.current.on('question:options', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(true);
+    });
+    socketRef.current.on('question:trueFalse', data => {
+      console.log(data.page);
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(true);
+    });
+
+    // close quizzes on event
+    socketRef.current.on('question:closeInput', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
+    });
+    socketRef.current.on('question:closeOptions', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
+    });
+    socketRef.current.on('question:closeTrueFalse', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
+    });
+
+    socketRef.current.on('connected:user', (id, lvl) => {
+      console.log(id);
+      console.log(lvl);
     });
 
     const getMessages = async () => {
@@ -103,8 +157,7 @@ export const StreamPolskiA2 = () => {
           }
         );
         const todayMessages = dbMessages.data.filter(
-          message =>
-            new Date(message.createdAt).getDate() === new Date().getDate()
+          message => new Date(message.createdAt).getDate() === new Date().getDate()
         );
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
@@ -117,10 +170,7 @@ export const StreamPolskiA2 = () => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post(
-            'https://ap-chat-server.onrender.com/messages',
-            data
-          );
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -145,14 +195,11 @@ export const StreamPolskiA2 = () => {
     socketRef.current.on('message:delete', async id => {
       console.log('delete fired');
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(
-            `https://ap-chat-server.onrender.com/messages/${id}`
-          );
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }
@@ -163,8 +210,7 @@ export const StreamPolskiA2 = () => {
     socketRef.current.on('message:deleted', async id => {
       console.log(id);
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
     });
 
@@ -176,38 +222,43 @@ export const StreamPolskiA2 = () => {
       }
     });
 
+    window.addEventListener('beforeunload', handleDisconnect);
+
     return () => {
+      window.removeEventListener('beforeunload', handleDisconnect);
+
+      console.log('disconnecting');
+      handleDisconnect();
       socketRef.current.off('connected');
       socketRef.current.off('message');
+      socketRef.current.off('user');
       socketRef.current.disconnect();
     };
   }, [currentUser, room]);
 
   return (
     <>
-      {(links.polskia2 === undefined || links.polskia2[0] < 10) &&
-      !isLoading ? (
+      {(links.polskia2 === undefined || links.polskia2[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
-            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви
-            перейшли за правильним посиланням або спробуйте пізніше.
+            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
+            правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Хмммм, схоже що ви були нечемні! <br />
-            Вас було заблоковано за порушення правил нашої платформи. Зв'яжіться
-            зі своїм менеджером сервісу!
+            Вас було заблоковано за порушення правил нашої платформи. Зв'яжіться зі своїм
+            менеджером сервісу!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : (
         <>
           <StreamSection
             style={{
-              width:
-                isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+              width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
             }}
           >
             <VideoBox>
@@ -231,14 +282,10 @@ export const StreamPolskiA2 = () => {
                 />
               </SupportMarkerLeft>
               <SupportMarkerRight
-                className={
-                  isAnimated && animatedID === 'quality' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
               >
                 <SupportPointer
-                  className={
-                    isAnimated && animatedID === 'quality' ? 'animated' : ''
-                  }
+                  className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
                 />
               </SupportMarkerRight>
               <ReactPlayer
@@ -265,18 +312,14 @@ export const StreamPolskiA2 = () => {
             <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
               <KahootBtn
                 onClick={toggleKahoot}
-                className={
-                  isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''}
               >
                 <KahootLogo />
               </KahootBtn>
 
               <ChatBtn
                 onClick={toggleChat}
-                className={
-                  isAnimated && animatedID === 'chat_open' ? 'animated' : ''
-                }
+                className={isAnimated && animatedID === 'chat_open' ? 'animated' : ''}
               >
                 <ChatLogo />
               </ChatBtn>
@@ -289,14 +332,12 @@ export const StreamPolskiA2 = () => {
             <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
             </BoxHideSwitch>
-
+            
             {height > width && (
               <ChatBox
                 ref={chatEl}
                 className={isChatOpen ? 'shown' : 'hidden'}
-                style={
-                  isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
-                }
+                style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
               >
                 <Chat
                   socket={socketRef.current}
@@ -306,6 +347,30 @@ export const StreamPolskiA2 = () => {
                 />
               </ChatBox>
             )}
+
+            <StudentInput
+              isInputOpen={isQuizInputOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizInput}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+            />
+
+            <StudentOptions
+              isInputOpen={isQuizOptionsOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizOptions}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+            />
+
+            <StudentTrueFalse
+              isInputOpen={isQuizTrueFalseOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizTrueFalse}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+            />
 
             <Support
               sectionWidth={width}
@@ -328,9 +393,7 @@ export const StreamPolskiA2 = () => {
             <ChatBox
               ref={chatEl}
               className={isChatOpen ? 'shown' : 'hidden'}
-              style={
-                isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }
-              }
+              style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
             >
               <Chat
                 socket={socketRef.current}
@@ -345,3 +408,5 @@ export const StreamPolskiA2 = () => {
     </>
   );
 };
+
+export default StreamPolskiA2;

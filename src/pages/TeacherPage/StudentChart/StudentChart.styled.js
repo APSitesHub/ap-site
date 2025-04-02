@@ -81,6 +81,10 @@ export const MyAPStudentChartArea = styled(StudentChartArea)`
   }
 `;
 
+export const MyAPStudentChartAreaTrial = styled(MyAPStudentChartArea)`
+  z-index: 8;
+`;
+
 export const TeacherChartBtnBox = styled.div`
   position: absolute;
   bottom: 30px;
@@ -170,6 +174,7 @@ export const ChartAreaMyAPLimiter = styled.div`
 
 export const ChartAreaLimiter = styled(ChartAreaMyAPLimiter)`
   transform: scaleY(0);
+  max-height: 350px;
 
   &.active {
     transform: scaleY(1);

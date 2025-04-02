@@ -31,6 +31,10 @@ export const PanelBackdrop = styled.div`
   }
 `;
 
+export const PanelBackdropTrial = styled(PanelBackdrop)`
+  z-index: 7;
+`;
+
 export const APPanel = styled.div`
   width: 40px;
 
@@ -68,6 +72,10 @@ export const APPanel = styled.div`
   &.multiple {
     top: 184px;
   }
+`;
+
+export const APPanelTrial = styled(APPanel)`
+  z-index: 7;
 `;
 
 export const APPanelBtn = styled.button`

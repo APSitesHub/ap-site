@@ -9,18 +9,9 @@ import { HostKahootAdminPanel } from 'pages/Streams/HostKahootAdminPanel/HostKah
 import { KahootAdminPanel } from 'pages/Streams/KahootAdminPanel/KahootAdminPanel';
 import { LessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/LessonsAdminPanel';
 import { TeacherLessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/TeacherLessonsAdminPanel/TeacherLessonsAdminPanel';
-import { StreamPolskiA0 } from 'pages/Streams/Polski A0/StreamPolskiA0';
-// eslint-disable-next-line
-import { StreamPolskiA2 } from 'pages/Streams/Polski A2/StreamPolskiA2';
-// eslint-disable-next-line
-import { StreamPolskiB1 } from 'pages/Streams/Polski B1/StreamPolskiB1';
-// eslint-disable-next-line
-import { StreamPolski } from 'pages/Streams/Polski/StreamPolski';
 import { StreamPolskiFree } from 'pages/Streams/Polski/StreamPolskiFree';
 import { StreamTest } from 'pages/Streams/Test/StreamTest';
 import { KidsA1Free } from 'pages/StreamsKids/KidsA1/KidsA1Free';
-import { KidsB1Beginner } from 'pages/StreamsKids/KidsB1Beginner/KidsB1Beginner';
-import { KidsB2Beginner } from 'pages/StreamsKids/KidsB2Beginner/KidsB2Beginner';
 import TeacherTrialPage from 'pages/TeacherPage/TeacherTrialPage';
 import { ThankYouPage } from 'pages/ThankYouPage/ThankYouPage';
 import { Suspense, lazy } from 'react';
@@ -31,9 +22,7 @@ import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 // eslint-disable-next-line
-import { StreamPolskiB2 } from 'pages/Streams/Polski B2/StreamPolskiB2';
-
-import LogRocket from 'logrocket';
+//import LogRocket from 'logrocket';
 
 const NewDesign = lazy(() =>
   import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
@@ -121,9 +110,34 @@ const StreamDeutschB2 = lazy(() =>
     /* webpackChunkName: "Streams Deutsch B2 page" */ '../pages/Streams/Deutsch B2/StreamDeutschB2'
   )
 );
+const StreamPolskiA0 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski A0 page" */ '../pages/Streams/Polski A0/StreamPolskiA0'
+  )
+);
 const StreamPolskiA02 = lazy(() =>
   import(
-    /* webpackChunkName: "Streams Polski A0_2 page" */ '../pages/Streams/Polski A0/StreamPolskiA02'
+    /* webpackChunkName: "Streams Polski A0 2 page" */ '../pages/Streams/Polski A0/StreamPolskiA02'
+  )
+);
+const StreamPolski = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski A1 page" */ '../pages/Streams/Polski/StreamPolski'
+  )
+);
+const StreamPolskiA2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski A2 page" */ '../pages/Streams/Polski A2/StreamPolskiA2'
+  )
+);
+const StreamPolskiB1 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski B1 page" */ '../pages/Streams/Polski B1/StreamPolskiB1'
+  )
+);
+const StreamPolskiB2 = lazy(() =>
+  import(
+    /* webpackChunkName: "Streams Polski B2 page" */ '../pages/Streams/Polski B2/StreamPolskiB2'
   )
 );
 const RecordLinkTree = lazy(() =>
@@ -161,10 +175,20 @@ const KidsB1 = lazy(() =>
     /* webpackChunkName: "Kids Streams B1 page" */ '../pages/StreamsKids/KidsB1/KidsB1'
   )
 );
+const KidsB1Beginner = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams B1 Beginner page" */ '../pages/StreamsKids/KidsB1Beginner/KidsB1Beginner'
+  )
+);
 // eslint-disable-next-line
 const KidsB2 = lazy(() =>
   import(
     /* webpackChunkName: "Kids Streams B2 page" */ '../pages/StreamsKids/KidsB2/KidsB2'
+  )
+);
+const KidsB2Beginner = lazy(() =>
+  import(
+    /* webpackChunkName: "Kids Streams B2 Beginner page" */ '../pages/StreamsKids/KidsB2Beginner/KidsB2Beginner'
   )
 );
 const KidsC1 = lazy(() =>
@@ -308,11 +332,6 @@ const UniUserAdminPanel = lazy(() =>
     /* webpackChunkName: "Polish University Users Admin Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAdminPanel'
   )
 );
-const UniUserAttendancePedagogium = lazy(() =>
-  import(
-    /* webpackChunkName: "Pedagogium Attendance Panel page" */ '../pages/Streams/UserAdminPanel/UniUserAttendancePedagogium'
-  )
-);
 const C1SpeakingPanel = lazy(() =>
   import(
     /* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel'
@@ -385,6 +404,11 @@ const Deutsch = lazy(() =>
 const TeacherPage = lazy(() =>
   import(/* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPage')
 );
+const TeacherPageTrialLesson = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Trial Lesson Page" */ '../pages/TeacherPage/TeacherPageTrialLesson'
+  )
+);
 const TeacherPageFarm = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page Farm" */ '../pages/TeacherPage/TeacherPageFarm'
@@ -450,8 +474,13 @@ const Videochat = lazy(() =>
 const VideochatRoom = lazy(() =>
   import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/VideochatRoom')
 );
+const TrialVideoRoom = lazy(() =>
+  import(
+    /* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain'
+  )
+);
 const EndCall = lazy(() =>
-  import(/* webpackChunkName: "Videochat Room" */ '../pages/Videochat/EndCall')
+  import(/* webpackChunkName: "End Call" */ '../pages/Videochat/EndCall')
 );
 const MyAP = lazy(() =>
   import(/* webpackChunkName: "My AP Page" */ '../pages/MyAP/MyAP')
@@ -464,6 +493,12 @@ const MyAPPlTemp = lazy(() =>
 );
 const MyWSPA = lazy(() =>
   import(/* webpackChunkName: "My WSPA Page" */ '../pages/MyAP/MyWSPA')
+);
+const MyVPU = lazy(() =>
+  import(/* webpackChunkName: "My VPU Page" */ '../pages/MyAP/MyVPU')
+);
+const MyISMPO = lazy(() =>
+  import(/* webpackChunkName: "My ISMPO Page" */ '../pages/MyAP/MyISMPO')
 );
 const TrialLesson = lazy(() =>
   import(/* webpackChunkName: "Trial Lesson Page" */ '../pages/TrialLesson/TrialLesson')
@@ -524,7 +559,7 @@ const NotFound = lazy(() =>
 export const App = () => {
   // eslint-disable-next-line
   const [searchParams, _] = useSearchParams();
-  LogRocket.init('0r7bkh/test-project-video');
+  // LogRocket.init('0r7bkh/test-project-video');
 
   const utm_tags = [
     'utm_content',
@@ -580,11 +615,18 @@ export const App = () => {
           <Route path="teacher-ap" element={<TeacherAP />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
           <Route path="room/:slug/:id" element={<VideochatRoom />} noindex={true} />
+          <Route
+            path="room/trial/:slug/:id"
+            element={<TrialVideoRoom />}
+            noindex={true}
+          />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />
           <Route path="my-wspa" element={<MyWSPA />} noindex={true} />
+          <Route path="my-vpu" element={<MyVPU />} noindex={true} />
+          <Route path="my-ismpo" element={<MyISMPO />} noindex={true} />
           <Route path="c-test" element={<ConferenceTest />} noindex={true} />
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
@@ -718,8 +760,8 @@ export const App = () => {
               noindex={true}
             />
             <Route
-              path="pedagogium-attendance"
-              element={<UniUserAttendancePedagogium />}
+              path="pedagogium-admin-panel"
+              element={<UniUserAdminPanel uni={'PEDAGOGIUM'} lang={'pl'} />}
               noindex={true}
             />
             <Route
@@ -939,15 +981,19 @@ export const App = () => {
             <Route path="nmt_en" element={<TeacherPage />} noindex={true} />
             <Route path="nmt_math" element={<TeacherPage />} noindex={true} />
             <Route path="nmt_history" element={<TeacherPage />} noindex={true} />
-            <Route path="a1free" element={<TeacherPage />} noindex={true} />
-            <Route path="a2free" element={<TeacherPage />} noindex={true} />
+            <Route path="a1free" element={<TeacherPageTrialLesson />} noindex={true} />
+            <Route path="a2free" element={<TeacherPageTrialLesson />} noindex={true} />
             <Route path="a0kids" element={<TeacherPage />} noindex={true} />
             <Route path="a1kids" element={<TeacherPage />} noindex={true} />
             <Route path="a2kids" element={<TeacherPage />} noindex={true} />
             <Route path="b1kids" element={<TeacherPage />} noindex={true} />
             <Route path="b2kids" element={<TeacherPage />} noindex={true} />
             <Route path="c1kids" element={<TeacherPage />} noindex={true} />
-            <Route path="a1kidsfree" element={<TeacherPage />} noindex={true} />
+            <Route
+              path="a1kidsfree"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
             <Route path="b1kidsbeginner" element={<TeacherPage />} noindex={true} />
             <Route path="b2kidsbeginner" element={<TeacherPage />} noindex={true} />
             <Route path="trendets" element={<TeacherPage />} noindex={true} />
@@ -957,13 +1003,25 @@ export const App = () => {
             <Route path="deutsch-a2" element={<TeacherPage />} noindex={true} />
             <Route path="deutsch-b1" element={<TeacherPage />} noindex={true} />
             <Route path="deutsch-b2" element={<TeacherPage />} noindex={true} />
-            <Route path="deutsch-a1free" element={<TeacherPage />} noindex={true} />
-            <Route path="deutsch-a2free" element={<TeacherPage />} noindex={true} />
+            <Route
+              path="deutsch-a1free"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
+            <Route
+              path="deutsch-a2free"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
             <Route path="dea0kids" element={<TeacherPage />} noindex={true} />
             <Route path="dea1kids" element={<TeacherPage />} noindex={true} />
             <Route path="dea2kids" element={<TeacherPage />} noindex={true} />
             <Route path="deb1kids" element={<TeacherPage />} noindex={true} />
-            <Route path="dekidsfree" element={<TeacherPage />} noindex={true} />
+            <Route
+              path="dekidsfree"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
             <Route path="polski-a0" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a0_2" element={<TeacherPageFarm />} noindex={true} />
             <Route
@@ -972,7 +1030,11 @@ export const App = () => {
               noindex={true}
             />
             <Route path="polski-a1" element={<TeacherPage />} noindex={true} />
-            <Route path="polski-a1free" element={<TeacherPage />} noindex={true} />
+            <Route
+              path="polski-a1free"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
             <Route path="polski-a2" element={<TeacherPage />} noindex={true} />
             <Route path="polski-b1" element={<TeacherPage />} noindex={true} />
             <Route path="polski-b2" element={<TeacherPage />} noindex={true} />

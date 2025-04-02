@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { MyAPStudentChart } from 'pages/TeacherPage/StudentChart/MyAPStudentChart';
 import { useEffect, useState } from 'react';
+//eslint-disable-next-line
 import { Attendance } from '../Attendance/Attendance';
 import { LessonFinder } from '../LessonFinder/LessonFinder';
 import { Points } from '../Points/Points';
@@ -9,6 +10,7 @@ import {
   APPanel,
   APPanelBtn,
   APPanelToggleBtn,
+  //eslint-disable-next-line
   CalendarBtnIcon,
   CupBtnIcon,
   FeedbackBtnIcon,
@@ -64,6 +66,13 @@ export const MyAPPanel = ({
       : timeline.lang === language && timeline.course === user.course
   );
 
+  // filter lessons with correct marathon number
+  const personalLessons =
+    language.includes('en') && user.marathonNumber
+      ? lessons.filter(lesson => lesson.marathonName.includes(user.marathonNumber))
+      : lessons;
+      
+  //eslint-disable-next-line
   const personalLessonsDays = personalTimetable?.schedule.map(lesson => lesson.day);
 
   const toggleButtonBox = () => {
@@ -143,6 +152,7 @@ export const MyAPPanel = ({
     setIsRatingShown(isRatingShown => !isRatingShown);
   };
 
+  //eslint-disable-next-line
   const toggleCalendar = () => {
     !isBackdropShown &&
       (!isRatingShown || !isLessonFinderShown || !isTimetableShown || !isFeedbackShown) &&
@@ -362,7 +372,7 @@ export const MyAPPanel = ({
             <FeedbackBtnIcon id="feedback-btn" className={isFeedbackShown && 'active'} />
           </APPanelBtn>
         )}
-        {user.package !== 'online' && (
+        {/* {user.package !== 'online' && (
           <APPanelBtn
             onClick={toggleCalendar}
             onMouseEnter={e => toggleTooltip(e)}
@@ -370,7 +380,7 @@ export const MyAPPanel = ({
           >
             <CalendarBtnIcon id="calendar-btn" className={isCalendarShown && 'active'} />
           </APPanelBtn>
-        )}
+        )} */}
         {user.package !== 'online' && (
           <APPanelBtn
             onClick={toggleTimetable}
@@ -392,7 +402,7 @@ export const MyAPPanel = ({
 
       {isLessonFinderShown && (
         <LessonFinder
-          lessons={lessons}
+          lessons={personalLessons}
           user={user}
           language={language}
           setPlatformIframeLink={setPlatformIframeLink}
@@ -407,13 +417,13 @@ export const MyAPPanel = ({
           isMultipleCourses={isMultipleCourses}
         />
       )}
-      {isCalendarShown && (
+      {/* {isCalendarShown && (
         <Attendance
           user={user}
           personalLessonsDays={personalLessonsDays}
           isMultipleCourses={isMultipleCourses}
         />
-      )}
+      )} */}
       {isFeedbackShown && <MyAPStudentChart currentStudentChart={currentStudentChart} />}
       {isTimetableShown && (
         <Timetable

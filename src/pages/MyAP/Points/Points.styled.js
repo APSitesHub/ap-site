@@ -48,6 +48,10 @@ export const PointsBox = styled.div`
   }
 `;
 
+export const PointsBoxTrial = styled(PointsBox)`
+  z-index: 8;
+`;
+
 export const PointsBoxHeading = styled.h3`
   padding: 9px 0;
 
@@ -118,6 +122,14 @@ export const PointsCategoryPointer = styled.div`
 
 export const PointsCategoryPointerWSPA = styled(PointsCategoryPointer)`
   background-color: #e40521;
+`;
+
+export const PointsCategoryPointerVPU = styled(PointsCategoryPointer)`
+  background-color: #041f43;
+`;
+
+export const PointsCategoryPointerISMPO = styled(PointsCategoryPointer)`
+  background-color: #1e88d2;
 `;
 
 export const PointsTableHead = styled.div`
@@ -193,6 +205,14 @@ export const LeaderPlace = styled.div`
 
 export const LeaderPlaceWSPA = styled(LeaderPlace)`
   background: linear-gradient(90deg, #e40521 -31.6%, #000 107.95%);
+`;
+
+export const LeaderPlaceVPU = styled(LeaderPlace)`
+  background: linear-gradient(90deg, #041f43 -31.6%, #a82033 107.95%);
+`;
+
+export const LeaderPlaceISMPO = styled(LeaderPlace)`
+  background: linear-gradient(90deg, #002750 -31.6%, #1e88d2 107.95%);
 `;
 
 export const UserPlace = styled(LeaderPlace)`

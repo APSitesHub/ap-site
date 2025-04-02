@@ -19,6 +19,15 @@ import {
   BackIcon,
 } from './Videochat.styled';
 import { getKahoots } from './utils/api/getKahoots';
+import { getToken } from './utils/api/getToken';
+import axios from 'axios';
+
+const ROOM_TYPES = {
+  TRIAL: 'trial',
+  // STREAM: 'stream',
+  // C2U: 'close2you',
+  // INDIVIDUAL: 'individual',
+};
 
 function Videochat() {
   const navigate = useNavigate();
@@ -26,8 +35,25 @@ function Videochat() {
   const [roomLevels, setRoomLevels] = useState([]);
   const newRoomName = useRef('');
   const newRoomLevel = useRef(null);
+  const newRoomType = useRef(ROOM_TYPES.VIDEOCHAT);
 
   useEffect(() => {
+    if (!getToken()) {
+      handleBack();
+    }
+
+    const refreshToken = async () => {
+      try {
+        const res = await axios.post('/teachers/refresh', {
+          login: localStorage.getItem('login'),
+        });
+        localStorage.setItem('token', res.data.newToken);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    refreshToken();
+
     const updateRoomLevels = async () => {
       const levels = await getKahoots();
 
@@ -50,7 +76,11 @@ function Videochat() {
   };
 
   const handleCreateRoom = async () => {
-    await createRoom(newRoomName.current.value, newRoomLevel.current.value);
+    await createRoom(
+      newRoomType.current.value,
+      newRoomName.current.value,
+      newRoomLevel.current.value
+    );
     await updateRooms();
   };
 
@@ -71,11 +101,18 @@ function Videochat() {
           <Input type="text" id="room-name" ref={newRoomName} />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="room-level">Room level:</Label>
+          <Label htmlFor="room-level">Room type:</Label>
           <Select id="room-level" ref={newRoomLevel}>
             {roomLevels.map(level => (
               <option key={level} value={level}>
                 {level}
+              </option>
+            ))}
+          </Select>
+          <Select id="room-type" ref={newRoomType}>
+            {Object.entries(ROOM_TYPES).map(([key, label]) => (
+              <option key={key} value={label}>
+                {label}
               </option>
             ))}
           </Select>
@@ -90,7 +127,7 @@ function Videochat() {
                 {room.name}
                 <JoinButton
                   onClick={() => {
-                    navigate(`/room/${room.slug}/${room.id}`);
+                    navigate(`/room/${room.type}/${room.slug}/${room.id}`);
                   }}
                 >
                   JOIN ROOM
