@@ -130,7 +130,7 @@ const translations = {
   },
 };
 
-const UserAdminPanel = ({ uni, lang = 'ua' }) => {
+const UniUserAdminPanel = ({ uni, lang = 'ua' }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [users, setUsers] = useState([]);
@@ -787,4 +787,4 @@ const UserAdminPanel = ({ uni, lang = 'ua' }) => {
   );
 };
 
-export default UserAdminPanel;
+export default UniUserAdminPanel;

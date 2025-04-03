@@ -174,7 +174,7 @@ const Streams = () => {
 
   return (
     <>
-      <StreamsBackgroundWrapper>
+      <StreamsBackgroundWrapper className={location.pathname.includes('pedagogium') && 'pedagogium'}>
         {!isUserLogged &&
         !location.pathname.includes('admin-panel') &&
         !location.pathname.includes('teamlead-panel') &&
