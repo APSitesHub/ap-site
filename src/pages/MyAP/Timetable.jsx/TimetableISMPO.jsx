@@ -20,10 +20,10 @@ import {
   TimetableLessonPlTypeISMPO,
   TimetableTable,
   TimetableWebinars,
-  TimetableWebinarsHead
+  TimetableWebinarsHead,
 } from './Timetable.styled';
 
-export const TimetableISMPO = ({ user, language, timetable, isMultipleCourses }) => {
+export const TimetableISMPO = ({ user, language, timetable, isMultipleLanguages }) => {
   const [course, setCourse] = useState('logistics');
   const [isAnimated, setIsAnimated] = useState(false);
 

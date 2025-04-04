@@ -21,7 +21,7 @@ import {
   TimetableWebinarsHead,
 } from './Timetable.styled';
 
-export const TimetableTrial = ({ user, language, timetable, isMultipleCourses }) => {
+export const TimetableTrial = ({ user, language, timetable, isMultipleLanguages }) => {
   console.log(25, timetable);
 
   const getLink = () => {

@@ -23,7 +23,12 @@ import {
   UserPlace,
 } from './Points.styled';
 
-export const PointsPl = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourses }) => {
+export const PointsPl = ({
+  user,
+  flatPoints,
+  flatMonthlyPoints,
+  isMultipleLanguages,
+}) => {
   const [position, setPosition] = useState('0%');
   const [activeRating, setActiveRating] = useState(0);
 

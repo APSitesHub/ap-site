@@ -29,7 +29,7 @@ export const MyAPPanelPlTemp = ({
   points,
   timetable,
   montlyPoints,
-  isMultipleCourses,
+  isMultipleLanguages,
   setPlatformIframeLink,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
@@ -254,8 +254,8 @@ export const MyAPPanelPlTemp = ({
         </IframeMarathonLinkPanel>
       )} */}
       <APPanelTrial className={isButtonBoxShown ? '' : 'hidden'}>
-        {/* {isMultipleCourses && (
-          <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
+        {/* {isMultipleLanguages && (
+          <IframeResetLinkButton className={isMultipleLanguages ? 'multiple' : ''}>
             <APPanelToggleBtn
               id="toggle-btn"
               onMouseEnter={e => toggleTooltip(e)}
@@ -339,7 +339,7 @@ export const MyAPPanelPlTemp = ({
           user={user}
           language={language}
           setPlatformIframeLink={setPlatformIframeLink}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isRatingShown && (
@@ -347,7 +347,7 @@ export const MyAPPanelPlTemp = ({
           user={user}
           flatPoints={points}
           flatMonthlyPoints={montlyPoints}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isCalendarShown && (
@@ -382,7 +382,7 @@ export const MyAPPanelPlTemp = ({
                   .find(table => table.lang === 'en' && table.level === 'a1')
                   .schedule.map(lesson => lesson.day)
           }
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isFeedbackShown && (
@@ -410,7 +410,7 @@ export const MyAPPanelPlTemp = ({
               ? timetable.find(table => table.lang === 'en' && table.level === 'a1')
               : timetable.find(table => table.lang === 'en' && table.level === 'a1')
           }
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
     </>

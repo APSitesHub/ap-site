@@ -161,7 +161,7 @@ export const PointsUser = styled(PointsTableHead)`
 export const PointsUserData = styled(PointsTableHeadItem)`
   flex-shrink: 0;
 
-  width: 33px;
+  min-width: 33px;
   font-size: 14px;
   text-align: center;
   color: #525266;

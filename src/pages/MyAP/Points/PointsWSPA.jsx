@@ -27,7 +27,7 @@ export const PointsWSPA = ({
   user,
   flatPoints,
   flatMonthlyPoints,
-  isMultipleCourses,
+  isMultipleLanguages,
 }) => {
   const [position, setPosition] = useState('0%');
   const [activeRating, setActiveRating] = useState(0);

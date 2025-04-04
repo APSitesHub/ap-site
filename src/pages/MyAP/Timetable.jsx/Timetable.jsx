@@ -31,14 +31,14 @@ import {
 //   'pro',
 // ];
 
-export const Timetable = ({ user, language, timetable, isMultipleCourses }) => {
+export const Timetable = ({ user, course, language, timetable, isMultipleLanguages }) => {
   const userPackage = useRef(user.package === undefined ? 'pro' : user.package);
   const personalTimetable = timetable.find(timeline =>
     language === 'enkids' && user.knowledge.includes('beginner')
       ? timeline.lang === language &&
-        timeline.course === user.course &&
+        timeline.course === course &&
         timeline.level === user.knowledge
-      : timeline.lang === language && timeline.course === user.course
+      : timeline.lang === language && timeline.course === course
   );
 
   const getLink = () => {

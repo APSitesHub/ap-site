@@ -10,7 +10,7 @@ import { FormBtnText } from 'pages/LeadFormPage/UniversalLeadFormPage.styled';
 import {
   AdminInputNoteWSPA,
   AdminInputVPU,
-  LoginForm
+  LoginForm,
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -190,7 +190,7 @@ const MyVPU = () => {
   const [languageIndex, setLanguageIndex] = useState(0);
   const [language, setLanguage] = useState('pl');
   const [platformLink, setPlatformLink] = useState(`https://online.ap.education/`);
-  const [isMultipleCourses, setIsMultipleCourses] = useState(false);
+  const [isMultipleLanguages, setIsMultipleLanguages] = useState(false);
   axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
   const location = useLocation();
 
@@ -312,7 +312,7 @@ const MyVPU = () => {
       const lang = response.data.user.lang.split('/');
       if (lang.length > 1) {
         setLanguage(lang[0]);
-        setIsMultipleCourses(true);
+        setIsMultipleLanguages(true);
       }
       localStorage.setItem('mail', values.mail);
       setIsUserInfoIncorrect(false);
@@ -381,7 +381,7 @@ const MyVPU = () => {
               points={points}
               montlyPoints={montlyPoints}
               link={platformLink}
-              isMultipleCourses={isMultipleCourses}
+              isMultipleLanguages={isMultipleLanguages}
               setPlatformIframeLink={setPlatformIframeLink}
               language={language}
               setLanguage={setLanguage}

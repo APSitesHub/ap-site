@@ -20,14 +20,14 @@ import {
   PointsUser,
   PointsUserData,
   PointsUserDataWide,
-  UserPlace
+  UserPlace,
 } from './Points.styled';
 
 export const PointsISMPO = ({
   user,
   flatPoints,
   flatMonthlyPoints,
-  isMultipleCourses,
+  isMultipleLanguages,
 }) => {
   const [position, setPosition] = useState('0%');
   const [activeRating, setActiveRating] = useState(0);
@@ -63,7 +63,9 @@ export const PointsISMPO = ({
       ) : (
         <>
           <PointsCategoryPicker>
-            <PointsCategoryPointerISMPO style={{ transform: `translateX(${position})` }} />
+            <PointsCategoryPointerISMPO
+              style={{ transform: `translateX(${position})` }}
+            />
             <PointsCategory
               onClick={() => {
                 calculatePointerPosition(0);
@@ -78,7 +80,7 @@ export const PointsISMPO = ({
               }}
               className={activeRating === 1 && 'active'}
             >
-              Mesačný 
+              Mesačný
             </PointsCategory>
           </PointsCategoryPicker>
           <PointsTableHead>

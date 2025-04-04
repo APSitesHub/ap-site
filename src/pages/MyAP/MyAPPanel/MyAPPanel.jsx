@@ -35,15 +35,18 @@ export const MyAPPanel = ({
   link,
   user,
   language,
+  course,
   points,
   timetable,
   marathonLink,
   montlyPoints,
+  isMultipleLanguages,
   isMultipleCourses,
   setPlatformIframeLink,
   languageIndex,
   setLanguage,
   setLanguageIndex,
+  setCourse,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
   const [isLessonFinderShown, setIsLessonFinderShown] = useState(false);
@@ -61,9 +64,9 @@ export const MyAPPanel = ({
   const personalTimetable = timetable.find(timeline =>
     language === 'enkids' && user.knowledge.includes('beginner')
       ? timeline.lang === language &&
-        timeline.course === user.course &&
+        timeline.course === course &&
         timeline.level === user.knowledge
-      : timeline.lang === language && timeline.course === user.course
+      : timeline.lang === language && timeline.course === course
   );
 
   // filter lessons with correct marathon number
@@ -71,7 +74,7 @@ export const MyAPPanel = ({
     language.includes('en') && user.marathonNumber
       ? lessons.filter(lesson => lesson.marathonName.includes(user.marathonNumber))
       : lessons;
-      
+
   //eslint-disable-next-line
   const personalLessonsDays = personalTimetable?.schedule.map(lesson => lesson.day);
 
@@ -91,6 +94,15 @@ export const MyAPPanel = ({
       return obj;
     }, {});
 
+  const pointsByLangAndMail = Object.values(pointsByLang).filter(value =>
+    value.find(userObj => userObj.mail.toLowerCase() === user.mail.toLowerCase())
+  );
+
+  const flatPoints =
+    pointsByLangAndMail.length > 1
+      ? pointsByLangAndMail.flat().filter(user => user.course === +course)
+      : pointsByLangAndMail.flat();
+
   const monthlyPointsByLang = Object.keys(montlyPoints)
     .filter(
       key =>
@@ -101,10 +113,15 @@ export const MyAPPanel = ({
       obj[key] = montlyPoints[key];
       return obj;
     }, {});
-  const flatPoints = Object.values(pointsByLang).flatMap(user => user);
-  const flatMonthlyPoints = Object.values(monthlyPointsByLang).flatMap(user => user);
 
-  console.log(user);
+  const monthlyPointsByLangAndMail = Object.values(monthlyPointsByLang).filter(value =>
+    value.find(userObj => userObj.mail.toLowerCase() === user.mail.toLowerCase())
+  );
+
+  const flatMonthlyPoints =
+    monthlyPointsByLangAndMail.length > 1
+      ? monthlyPointsByLangAndMail.flat().filter(user => user.course === +course)
+      : monthlyPointsByLangAndMail.flat();
 
   const hideBackdrop = () => {
     setIsBackdropShown(false);
@@ -306,11 +323,11 @@ export const MyAPPanel = ({
         </IframeMarathonLinkPanel>
       )} */}
       <APPanel className={isButtonBoxShown ? '' : 'hidden'}>
-        {isMultipleCourses && (
-          <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
+        {isMultipleLanguages && (
+          <IframeResetLinkButton className={isMultipleLanguages ? 'multiple' : ''}>
             {/* <APPanelResetBtn
             id="reset-btn"
-            className={isMultipleCourses ? 'multiple' : ''}
+            className={isMultipleLanguages ? 'multiple' : ''}
             onMouseEnter={e => toggleTooltip(e)}
             onMouseOut={e => toggleTooltip(e)}
             onClick={() => {
@@ -334,6 +351,13 @@ export const MyAPPanel = ({
                       languageIndex + 1 < user.lang.split('/').length
                         ? user.lang.split('/')[languageIndex + 1]
                         : user.lang.split('/')[0])
+                );
+                setCourse(
+                  course =>
+                    (course =
+                      languageIndex + 1 < user.course.split('/').length
+                        ? user.course.split('/')[languageIndex + 1]
+                        : user.course.split('/')[0])
                 );
                 setLanguageIndex(
                   index =>
@@ -406,7 +430,7 @@ export const MyAPPanel = ({
           user={user}
           language={language}
           setPlatformIframeLink={setPlatformIframeLink}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isRatingShown && (
@@ -414,14 +438,13 @@ export const MyAPPanel = ({
           user={user}
           flatPoints={flatPoints}
           flatMonthlyPoints={flatMonthlyPoints}
-          isMultipleCourses={isMultipleCourses}
         />
       )}
       {/* {isCalendarShown && (
         <Attendance
           user={user}
           personalLessonsDays={personalLessonsDays}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )} */}
       {isFeedbackShown && <MyAPStudentChart currentStudentChart={currentStudentChart} />}
@@ -429,8 +452,9 @@ export const MyAPPanel = ({
         <Timetable
           user={user}
           language={language}
+          course={course}
           timetable={timetable}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
     </>
