@@ -20,14 +20,14 @@ import {
   PointsUser,
   PointsUserData,
   PointsUserDataWide,
-  UserPlace
+  UserPlace,
 } from './Points.styled';
 
 export const PointsVPU = ({
   user,
   flatPoints,
   flatMonthlyPoints,
-  isMultipleCourses,
+  isMultipleLanguages,
 }) => {
   const [position, setPosition] = useState('0%');
   const [activeRating, setActiveRating] = useState(0);

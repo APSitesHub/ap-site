@@ -42,7 +42,7 @@ import {
   PdfBox,
   PdfPreview,
   PdfPreviewBackground,
-  PdfWrapper
+  PdfWrapper,
 } from './LessonFinder.styled';
 
 export const LessonFinderVPU = ({
@@ -50,7 +50,7 @@ export const LessonFinderVPU = ({
   language,
   user,
   setPlatformIframeLink,
-  isMultipleCourses,
+  isMultipleLanguages,
 }) => {
   const [lessonsFound, setLessonsFound] = useState([]);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);

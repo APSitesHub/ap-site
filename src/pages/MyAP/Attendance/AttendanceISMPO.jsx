@@ -22,10 +22,10 @@ import {
   VisitedList,
   VisitedText,
   VisitedTotal,
-  VisitedYearBox
+  VisitedYearBox,
 } from './Attendance.styled';
 
-export const AttendanceISMPO = ({ user, personalLessonsDays, isMultipleCourses }) => {
+export const AttendanceISMPO = ({ user, personalLessonsDays, isMultipleLanguages }) => {
   const [week, setWeek] = useState(new Date().getDate() - new Date().getDay());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());

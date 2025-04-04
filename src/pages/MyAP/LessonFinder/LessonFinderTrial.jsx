@@ -50,7 +50,7 @@ export const LessonFinderTrial = ({
   language,
   user,
   setPlatformIframeLink,
-  isMultipleCourses,
+  isMultipleLanguages,
 }) => {
   const [lessonsFound, setLessonsFound] = useState([]);
   const [visibleLessons, setVisibleLessons] = useState([]);
