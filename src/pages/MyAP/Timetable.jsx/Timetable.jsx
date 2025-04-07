@@ -108,7 +108,11 @@ export const Timetable = ({
             <LangIcon
               src={language.includes('de') ? de : language.includes('pl') ? pl : en}
             />
-            {personalTimetable?.level}
+            {personalTimetable?.level === 'b1_1' && language === 'de'
+              ? 'B1 ранкові'
+              : personalTimetable?.level === 'b1' && language === 'de'
+              ? 'B1 вечірні'
+              : personalTimetable?.level}
           </TimetableCourseMemo>
           <TimetableChangeCourseBtn
             className="my-ap-change-course"
