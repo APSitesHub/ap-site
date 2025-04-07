@@ -34,6 +34,7 @@ const MyAP = () => {
   const [timetable, setTimetable] = useState({});
   const [montlyPoints, setMonthlyPoints] = useState({});
   const [user, setUser] = useState({});
+  const [courseIndex, setCourseIndex] = useState(0);
   const [languageIndex, setLanguageIndex] = useState(0);
   const [language, setLanguage] = useState('');
   const [course, setCourse] = useState('');
@@ -352,6 +353,8 @@ const MyAP = () => {
               setCourse={setCourse}
               languageIndex={languageIndex}
               setLanguageIndex={setLanguageIndex}
+              courseIndex={courseIndex}
+              setCourseIndex={setCourseIndex}
               timetable={timetable}
             />
           )}

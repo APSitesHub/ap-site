@@ -47,6 +47,8 @@ export const MyAPPanel = ({
   setLanguage,
   setLanguageIndex,
   setCourse,
+  courseIndex,
+  setCourseIndex,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
   const [isLessonFinderShown, setIsLessonFinderShown] = useState(false);
@@ -454,7 +456,11 @@ export const MyAPPanel = ({
           language={language}
           course={course}
           timetable={timetable}
+          setCourse={setCourse}
+          courseIndex={courseIndex}
+          setCourseIndex={setCourseIndex}
           isMultipleLanguages={isMultipleLanguages}
+          isMultipleCourses={isMultipleCourses}
         />
       )}
     </>
