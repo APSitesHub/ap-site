@@ -664,3 +664,28 @@ export const UniLoginLogo = styled.img`
     width: 320px;
   }
 `;
+
+export const LangInfoWrapper = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 25px;
+
+  border-radius: 20px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+  background-color: #fff;
+  padding: 12px;
+  z-index: 11;
+  opacity: 0;
+
+  pointer-events: none;
+  transition: all var(--animation-global);
+
+  &.shown {
+    opacity: 1;
+    pointer-events: auto;
+  }
+`;
+
+export const LangInfoText = styled.p`
+  font-size: 16px;
+`;
