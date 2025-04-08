@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { MyAPStudentChart } from 'pages/TeacherPage/StudentChart/MyAPStudentChart';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 //eslint-disable-next-line
 import { Attendance } from '../Attendance/Attendance';
 import { LessonFinder } from '../LessonFinder/LessonFinder';
@@ -16,6 +16,8 @@ import {
   FeedbackBtnIcon,
   IframeResetLinkButton,
   LangIcon,
+  LangInfoText,
+  LangInfoWrapper,
   PanelBackdrop,
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
@@ -27,6 +29,7 @@ import {
 import de from '../../../img/svg/myap/langs/de.png';
 import en from '../../../img/svg/myap/langs/en.png';
 import pl from '../../../img/svg/myap/langs/pl.png';
+import enkids from '../../../img/svg/myap/langs/enkids.png';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -57,7 +60,10 @@ export const MyAPPanel = ({
   const [isTimetableShown, setIsTimetableShown] = useState(false);
   const [isFeedbackShown, setIsFeedbackShown] = useState(false);
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
+  const [isLangInfoShown, setIsLangInfoShown] = useState(false);
   const [currentStudentChart, setCurrentStudentChart] = useState({});
+  const timeoutRef = useRef(null); // useRef to store the timeout ID to prevent timeout stacking
+
   // const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
   //   useState(false);
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
@@ -228,6 +234,19 @@ export const MyAPPanel = ({
     e.currentTarget.classList.toggle('tooltip-open');
   };
 
+  const toggleLangInfo = () => {
+    setIsLangInfoShown(true);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setIsLangInfoShown(false);
+      timeoutRef.current = null;
+    }, 3000);
+  };
+
   // const toggleTooltipTimeout = () => {
   //   const resetBtnEl = document.querySelector('#reset-btn');
 
@@ -304,6 +323,19 @@ export const MyAPPanel = ({
       <PanelHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
       </PanelHideSwitch>
+
+      <LangInfoWrapper className={isLangInfoShown ? 'shown' : ''}>
+        <LangInfoText>
+          Обрана мова:{' '}
+          {language.includes('de')
+            ? 'Німецька'
+            : language.includes('pl')
+            ? 'Польська'
+            : language.includes('enkids')
+            ? 'Англійська для дітей'
+            : 'Англійська'}
+        </LangInfoText>
+      </LangInfoWrapper>
       {/* {isMarathonBtnShown && (
         <IframeMarathonLinkPanel>
           <IframeMarathonText>
@@ -365,10 +397,20 @@ export const MyAPPanel = ({
                   index =>
                     (index = index + 1 < user.lang.split('/').length ? index + 1 : 0)
                 );
+
+                toggleLangInfo();
               }}
             >
               <LangIcon
-                src={language.includes('de') ? de : language.includes('pl') ? pl : en}
+                src={
+                  language.includes('de')
+                    ? de
+                    : language.includes('pl')
+                    ? pl
+                    : language.includes('enkids')
+                    ? enkids
+                    : en
+                }
               />
             </APPanelToggleBtn>
           </IframeResetLinkButton>
