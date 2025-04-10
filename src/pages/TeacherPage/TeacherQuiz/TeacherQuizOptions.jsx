@@ -7,6 +7,8 @@ export const TeacherQuizOptions = ({
   page,
   isQuizOptionsOpen,
   closeInputs,
+  questionID,
+  changeQuestionID,
 }) => {
   const [answers, setAnswers] = useState([]);
   const quizType = 'options';
@@ -48,6 +50,8 @@ export const TeacherQuizOptions = ({
             socket={socketRef.current}
             answers={answers}
             closeInputs={closeInputs}
+            questionID={questionID}
+            changeQuestionID={changeQuestionID}
           />
         </TeacherInputBox>
       )}

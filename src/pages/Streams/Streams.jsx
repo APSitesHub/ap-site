@@ -23,6 +23,7 @@ const Streams = () => {
   let location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [links, setLinks] = useState({});
+  const [user, setUser] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [isUserLogged, setIsUserLogged] = useState(false);
   const [isUserInfoIncorrect, setIsUserInfoIncorrect] = useState(false);
@@ -87,6 +88,7 @@ const Streams = () => {
       setAuthToken(response.data.token);
       setIsUserLogged(isLogged => (isLogged = true));
       setCurrentUser(currentUser => (currentUser = response.data.user));
+      setUser(user => (user = response.data.user));
       localStorage.setItem('userID', nanoid(8));
       localStorage.setItem('mail', values.mail);
       localStorage.setItem('userName', response.data.user.name);
@@ -138,6 +140,7 @@ const Streams = () => {
       console.log('token refresher');
       try {
         const res = await axios.post('https://ap-server-8qi1.onrender.com/users/refresh', { mail: localStorage.getItem('mail') });
+        setUser(user => (user = res.data.user));
         setIsUserLogged(isLogged => (isLogged = true));
         const id = nanoid(8);
         if (!localStorage.getItem('userID')) {
@@ -220,7 +223,7 @@ const Streams = () => {
         ) : location.pathname === '/streams' || location.pathname === '/streams/' ? (
           <StreamNav />
         ) : (
-          <Outlet context={[links, isLoading, currentUser, room]} />
+          <Outlet context={[links, isLoading, currentUser, room, user]} />
         )}
 
         {isLoading && (
