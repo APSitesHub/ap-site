@@ -44,6 +44,12 @@ import {
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
+import { PlatformWhiteBoard } from 'pages/TeacherPage/Platform/PlatformWhiteBoard/PlatformWhiteBoard';
+import {
+  PanelHideLeftSwitch,
+  PanelHideRightSwitch,
+  PanelHideSwitch,
+} from 'pages/MyAP/MyAPPanel/MyAPPanel.styled';
 
 const VISIBLE_USERS_COUNT = 4;
 const debug = false;
@@ -62,6 +68,7 @@ function Room() {
     changeMicrophone,
     changeVisibility,
     muteAll,
+    toggleBoardAll,
     addMockClient,
     getClients,
     remoteStreams,
@@ -69,11 +76,13 @@ function Room() {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
+    isBoardOpen,
   } = useWebRTC(roomID);
   const [videoDevices, setVideoDevices] = useState([]);
   const [audioDevices, setAudioDevices] = useState([]);
   // const [audioOutputDevices, setAudioOutputDevices] = useState([]);
   // const [volume, setVolume] = useState(1);
+  const [isLocalBoardOpen, setIsLocalBoardOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
@@ -125,6 +134,18 @@ function Room() {
     isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'chat')
       : setIsOpenedLast(isOpenedLast => '');
+  };
+
+  const toggleButtonBox = () => {
+    setIsButtonBoxOpen(isButtonBoxOpen => !isButtonBoxOpen);
+  };
+
+  const toggleBoard = () => {
+    setIsLocalBoardOpen(isBoardOpen => {
+      toggleBoardAll(!isBoardOpen);
+
+      return !isBoardOpen;
+    });
   };
 
   const toggleQuizInput = () => {
@@ -402,6 +423,12 @@ function Room() {
     }
   }, [mixedAudioStream, audioRef.current]);
 
+  useEffect(() => {
+    console.log('localBoardOpen', isLocalBoardOpen);
+
+    setIsLocalBoardOpen(isBoardOpen);
+  }, [isBoardOpen]);
+
   // useEffect(() => {
   //   const handleDeviceChange = () => {
   //     console.log('🔄 Device list changed. Retrying output assignment...');
@@ -495,7 +522,6 @@ function Room() {
       {clients.find(({ role }) => role === 'admin') ? (
         <div
           style={{
-            transform: localRole === 'admin' && !debug ? 'scale(1, -1)' : 'none',
             overflow: 'hidden',
           }}
         >
@@ -519,6 +545,14 @@ function Room() {
                         id={clientId}
                         key={clientId}
                       >
+                        {isLocalBoardOpen && (
+                          <div zIndex={1000} maxWidth="100%" maxHeight="100%">
+                            <PlatformWhiteBoard
+                              page={'test'}
+                              isPlatformWhiteBoardOpen={true}
+                            />
+                          </div>
+                        )}
                         <MainVideo
                           ref={instance => {
                             provideMediaRef(clientId, instance);
@@ -529,6 +563,9 @@ function Room() {
                           playsInline
                           muted={true}
                           $isSpeaker={isSpeaker}
+                          style={{
+                            transform:'scaleX(-1)',
+                          }}
                         />
                         {(!isCameraEnabled ||
                           (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
@@ -813,6 +850,15 @@ function Room() {
                 </>
               )}
             </VideochatContainer>
+            <PanelHideSwitch
+              onClick={toggleButtonBox}
+              style={{
+                left: 0,
+                top: '136px',
+              }}
+            >
+              {isButtonBoxOpen ? <PanelHideLeftSwitch /> : <PanelHideRightSwitch />}
+            </PanelHideSwitch>
             <ButtonBox
               className={!isButtonBoxOpen ? 'hidden' : ''}
               style={{
@@ -826,6 +872,7 @@ function Room() {
               <ChatBtn onClick={toggleChat}>
                 <ChatLogo />
               </ChatBtn>
+              {localRole === 'admin' && <ChatBtn onClick={toggleBoard}>BOARD</ChatBtn>}
             </ButtonBox>
             <KahootsVideoChat
               sectionWidth={width}
