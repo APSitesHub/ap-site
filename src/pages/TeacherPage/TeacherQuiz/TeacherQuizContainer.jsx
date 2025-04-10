@@ -7,20 +7,33 @@ import {
 import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
 import { TeacherChatPageContainer, TeacherQuizConfirmation } from './TeacherQuiz.styled';
 
-export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) => {
+export const TeacherQuizContainer = ({
+  page,
+  quizType,
+  socket,
+  closeInputs,
+  questionID,
+  changeQuestionID,
+}) => {
   const [answers, setAnswers] = useState({});
   const [isQuizActive, setIsQuizActive] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const correctAnswer = useRef('')
+  const correctAnswer = useRef('');
 
   const emitQuizStart = () => {
     setAnswers(answers => (answers = { ...{} }));
+    console.log(socket.id, 'socket.id');
+    console.log(questionID, 'questionID.current');
+
     socket.emit('question:asked', {
-      question: `howdy ${quizType}`,
+      іd: socket.id,
+      question: questionID,
       page: page,
       quizType: quizType,
     });
     setIsQuizActive(true);
+    changeQuestionID();
+    console.log(questionID, 'questionID.current after emitQuizStart');
   };
 
   const emitQuizEnd = () => {
@@ -38,7 +51,7 @@ export const TeacherQuizContainer = ({ page, quizType, socket, closeInputs }) =>
   const sendConfirmedAnswer = () => {
     // add request to server to save the correct answer
     setIsConfirmationOpen(false);
-  }
+  };
 
   useEffect(() => {
     socket &&
