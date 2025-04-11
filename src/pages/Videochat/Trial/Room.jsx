@@ -46,10 +46,11 @@ import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 
 const VISIBLE_USERS_COUNT = 4;
-const debug = false;
+const debug = true;
 
 function Room() {
   const { id: roomID } = useParams();
+  const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
   const navigate = useNavigate();
   const {
     clients,
@@ -644,9 +645,13 @@ function Room() {
                     transition: 'opacity 0.5s ease-in-out',
                   }}
                 >
-                  <MediaButton onClick={toggleFullScreen}>
-                    {isFullScreen ? <ExitFullScreenIcon /> : <FullScreenIcon />}
-                  </MediaButton>
+                  {localRole !== 'admin' && (
+                    <MediaButtonContainer onClick={toggleFullScreen}>
+                      <MediaButton>
+                        {isFullScreen ? <ExitFullScreenIcon /> : <FullScreenIcon />}
+                      </MediaButton>
+                    </MediaButtonContainer>
+                  )}
                 </div>
               </MainVideoContainer>
 
@@ -866,7 +871,7 @@ function Room() {
       ) : (
         <PageContainer>
           <GradientBackground>
-            <LargeText>Викладача поки немає!</LargeText>
+            <LargeText>{lang === 'pl' ? 'Nauczyciel jeszcze nie przyszedł!' : 'Викладача поки немає!'}</LargeText>
           </GradientBackground>
         </PageContainer>
       )}

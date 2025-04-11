@@ -20,8 +20,11 @@ import {
   MicroIcon,
   SoundIcon,
 } from '../Videochat.styled';
+import { useParams } from 'react-router-dom';
 
 function Login({ logined }) {
+  const { id: roomID } = useParams();
+  const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
   const localMediaStream = useRef(null);
   const videoRef = useRef(null);
   const [microphoneDevices, setMicrophoneDevices] = useState([]);
@@ -147,8 +150,8 @@ function Login({ logined }) {
   const loginSchema = yup.object().shape({
     userName: yup
       .string()
-      .required("Введи ім'я та прізвище")
-      .max(40, 'Максимум 40 символів'),
+      .required(lang === 'pl' ? 'Wpisz swoje imię i nazwisko.' : "Введи ім'я та прізвище")
+      .max(40, lang === 'pl' ? 'Maksymalnie 40 znaków' : 'Максимум 40 символів'),
   });
 
   return (
@@ -235,12 +238,26 @@ function Login({ logined }) {
         >
           <LoginForm>
             <LoginFormText style={{ color: 'white' }}>
-              Привіт!
-              <br />
-              Введи своє ім'я та прізвище для доступу до заняття
+              {lang === 'pl' ? (
+                <>
+                  Pozdrowienia!
+                  <br />
+                  Wprowadź swoje imię i nazwisko, aby uzyskać dostęp do klasy
+                </>
+              ) : (
+                <>
+                  Привіт!
+                  <br />
+                  Введи своє ім'я та прізвище для доступу до заняття
+                </>
+              )}
             </LoginFormText>
             <Label>
-              <AdminInput type="text" name="userName" placeholder="Ім'я та прізвище" />
+              <AdminInput
+                type="text"
+                name="userName"
+                placeholder={lang === 'pl' ? 'Imię i nazwisko' : "Ім'я та прізвище"}
+              />
               <AdminInputNote
                 component="p"
                 name="userName"
@@ -248,7 +265,9 @@ function Login({ logined }) {
                 style={{ color: 'red' }}
               />
             </Label>
-            <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+            <AdminFormBtn type="submit">
+              {lang === 'pl' ? 'Zalogować się' : 'Увійти'}
+            </AdminFormBtn>
           </LoginForm>
         </Formik>
       </LoginPage>
