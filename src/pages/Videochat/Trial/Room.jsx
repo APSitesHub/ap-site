@@ -46,7 +46,7 @@ import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 
 const VISIBLE_USERS_COUNT = 4;
-const debug = true;
+const debug = false;
 
 function Room() {
   const { id: roomID } = useParams();
