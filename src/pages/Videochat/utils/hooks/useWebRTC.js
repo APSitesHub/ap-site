@@ -12,6 +12,7 @@ export default function useWebRTC(roomID) {
   const [clients, updateClients] = useStateWithCallback([]);
   const [isLocalCameraEnabled, setLocalCameraEnabled] = useState(true);
   const [isLocalMicrophoneEnabled, setLocalMicrophoneEnabled] = useState(true);
+  const [isBoardOpen, setIsBoardOpen] = useState(false);
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState([]);
@@ -252,7 +253,10 @@ export default function useWebRTC(roomID) {
 
   const mixAudioStreams = () => {
     if (!audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
+      audioContextRef.current = new AudioContext({
+        latencyHint: 'interactive',
+        sampleRate: 48000,
+      });
       destinationRef.current = audioContextRef.current.createMediaStreamDestination();
     }
 
@@ -281,6 +285,12 @@ export default function useWebRTC(roomID) {
     socket.emit(ACTIONS.MUTE_ALL);
   };
 
+  const toggleBoardAll = async isOpen => {
+    socket.emit('toggle-board-all', {
+      isBoardOpen: isOpen,
+    });
+  };
+
   async function startCapture() {
     let premissions;
 
@@ -298,7 +308,12 @@ export default function useWebRTC(roomID) {
       const defaultMicrophone = getDefaultDevice(devices, 'audioinput');
 
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-        audio: { deviceId: defaultMicrophone },
+        audio: {
+          deviceId: { exact: defaultMicrophone },
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 48000,
+        },
         video: {
           deviceId: { exact: defaultCamera },
           width: localRole === 'admin' ? 1920 : 320,
@@ -735,6 +750,10 @@ export default function useWebRTC(roomID) {
         });
       });
     });
+
+    socket.on('toggle-board-all', ({ isBoardOpen }) => {
+      setIsBoardOpen(isBoardOpen);
+    });
   }, [updateClients]);
 
   useEffect(() => {
@@ -929,6 +948,7 @@ export default function useWebRTC(roomID) {
     changeMicrophone,
     changeVisibility,
     muteAll,
+    toggleBoardAll,
     addMockClient,
     getClients,
     remoteStreams,
@@ -936,5 +956,6 @@ export default function useWebRTC(roomID) {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
+    isBoardOpen,
   };
 }
