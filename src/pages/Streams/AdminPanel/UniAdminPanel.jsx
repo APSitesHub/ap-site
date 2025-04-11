@@ -89,6 +89,7 @@ const UniAdminPanel = () => {
     wspa_logistics: '',
     wspa_prep: '',
     wse_prep: '',
+    eu: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -111,6 +112,7 @@ const UniAdminPanel = () => {
     wspa_logistics: yup.string().optional(),
     wspa_prep: yup.string().optional(),
     wse_prep: yup.string().optional(),
+    eu: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -359,6 +361,13 @@ const UniAdminPanel = () => {
                     placeholder="WSE Preparation Course"
                   />
                   <AdminInputNote component="p" name="wse_prep" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>EU (Education Union)</LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="eu" placeholder="Education Union" />
+                  <AdminInputNote component="p" name="eu" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
