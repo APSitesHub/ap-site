@@ -4,6 +4,7 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { EUKahootForm } from './EUKahootForm';
 import { EWSPALogisticsKahootForm } from './EWSPALogisticsKahootForm';
 import { EWSPAPrepKahootForm } from './EWSPAPrepKahootForm';
 import {
@@ -170,6 +171,9 @@ const UniKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('wse_prep')}>
               WSE Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('eu')}>
+              Education Union
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -221,9 +225,8 @@ const UniKahootAdminPanel = () => {
           {levels.includes('wssip_prep') && (
             <WSSiPPrepKahootForm destination={destination} />
           )}
-          {levels.includes('wse_prep') && (
-            <WSEPrepKahootForm destination={destination} />
-          )}
+          {levels.includes('wse_prep') && <WSEPrepKahootForm destination={destination} />}
+          {levels.includes('eu') && <EUKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>

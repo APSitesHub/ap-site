@@ -4,6 +4,7 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { EUKahootForm } from '../KahootAdminPanel/EUKahootForm';
 import { EWSPALogisticsKahootForm } from '../KahootAdminPanel/EWSPALogisticsKahootForm';
 import { EWSPAPrepKahootForm } from '../KahootAdminPanel/EWSPAPrepKahootForm';
 import {
@@ -22,6 +23,7 @@ import { PedagogiumLogisticsKahootForm } from '../KahootAdminPanel/PedagogiumLog
 import { PedagogiumPrepKahootForm } from '../KahootAdminPanel/PedagogiumPrepKahootForm';
 import { WSBMIRLogisticsKahootForm } from '../KahootAdminPanel/WSBMIRLogisticsKahootForm';
 import { WSBMIRPrepKahootForm } from '../KahootAdminPanel/WSBMIRPrepKahootForm';
+import { WSEPrepKahootForm } from '../KahootAdminPanel/WSEPrepKahootForm';
 import { WSKMLogisticsKahootForm } from '../KahootAdminPanel/WSKMLogisticsKahootForm';
 import { WSKMPrepKahootForm } from '../KahootAdminPanel/WSKMPrepKahootForm';
 import { WSSiPLogisticsKahootForm } from '../KahootAdminPanel/WSSiPLogisticsKahootForm';
@@ -30,7 +32,6 @@ import { WSTIJOLogisticsKahootForm } from '../KahootAdminPanel/WSTIJOLogisticsKa
 import { WSTIJOPrepKahootForm } from '../KahootAdminPanel/WSTIJOPrepKahootForm';
 import { WSTiHLogisticsKahootForm } from '../KahootAdminPanel/WSTiHLogisticsKahootForm';
 import { WSTiHPrepKahootForm } from '../KahootAdminPanel/WSTiHPrepKahootForm';
-import { WSEPrepKahootForm } from '../KahootAdminPanel/WSEPrepKahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -170,6 +171,9 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('wse_prep')}>
               WSE Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('eu')}>
+              Education Union
+            </KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -222,6 +226,7 @@ const UniHostKahootAdminPanel = () => {
             <WSSiPPrepKahootForm destination={destination} />
           )}
           {levels.includes('wse_prep') && <WSEPrepKahootForm destination={destination} />}
+          {levels.includes('eu') && <EUKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>
