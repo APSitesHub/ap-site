@@ -479,6 +479,11 @@ const TrialVideoRoom = lazy(() =>
     /* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain'
   )
 );
+
+const StreamVideoRoom = lazy(() =>
+  import(/* webpackChunkName: "Stream Videochat Room" */ '../pages/Videochat/Stream/Room')
+);
+
 const IndividualVideoRoom = lazy(() =>
   import(
     /* webpackChunkName: "Individual Videochat Room" */ '../pages/Videochat/Individual/IndividualMain'
@@ -623,6 +628,11 @@ export const App = () => {
           <Route
             path="room/trial/:slug/:id"
             element={<TrialVideoRoom />}
+            noindex={true}
+          />
+          <Route
+            path="room/stream/:slug/:id"
+            element={<StreamVideoRoom />}
             noindex={true}
           />
           <Route
