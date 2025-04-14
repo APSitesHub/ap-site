@@ -20,10 +20,10 @@ import {
   TimetableLessonPlTypeVPU,
   TimetableTable,
   TimetableWebinars,
-  TimetableWebinarsHead
+  TimetableWebinarsHead,
 } from './Timetable.styled';
 
-export const TimetableVPU = ({ user, language, timetable, isMultipleCourses }) => {
+export const TimetableVPU = ({ user, language, timetable, isMultipleLanguages }) => {
   const [course, setCourse] = useState('logistics');
   const [isAnimated, setIsAnimated] = useState(false);
 

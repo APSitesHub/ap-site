@@ -29,7 +29,7 @@ export const MyISMPOPanel = ({
   points,
   timetable,
   montlyPoints,
-  isMultipleCourses,
+  isMultipleLanguages,
   setPlatformIframeLink,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
@@ -242,7 +242,7 @@ export const MyISMPOPanel = ({
           user={user}
           language={language}
           setPlatformIframeLink={setPlatformIframeLink}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isRatingShown && (
@@ -250,14 +250,14 @@ export const MyISMPOPanel = ({
           user={user}
           flatPoints={points}
           flatMonthlyPoints={montlyPoints}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isCalendarShown && (
         <AttendanceISMPO
           user={user}
           personalLessonsDays={personalLessonsDays}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isFeedbackShown && (
@@ -268,7 +268,7 @@ export const MyISMPOPanel = ({
           user={user}
           language={language}
           timetable={timetable}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
     </>

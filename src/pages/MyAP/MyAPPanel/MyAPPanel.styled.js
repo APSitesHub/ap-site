@@ -31,6 +31,10 @@ export const PanelBackdrop = styled.div`
   }
 `;
 
+export const PanelBackdropTrial = styled(PanelBackdrop)`
+  z-index: 7;
+`;
+
 export const APPanel = styled.div`
   width: 40px;
 
@@ -68,6 +72,10 @@ export const APPanel = styled.div`
   &.multiple {
     top: 184px;
   }
+`;
+
+export const APPanelTrial = styled(APPanel)`
+  z-index: 7;
 `;
 
 export const APPanelBtn = styled.button`
@@ -655,4 +663,29 @@ export const UniLoginLogo = styled.img`
   @media screen and (min-width: 1280px) {
     width: 320px;
   }
+`;
+
+export const LangInfoWrapper = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 25px;
+
+  border-radius: 20px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+  background-color: #fff;
+  padding: 12px;
+  z-index: 11;
+  opacity: 0;
+
+  pointer-events: none;
+  transition: all var(--animation-global);
+
+  &.shown {
+    opacity: 1;
+    pointer-events: auto;
+  }
+`;
+
+export const LangInfoText = styled.p`
+  font-size: 16px;
 `;

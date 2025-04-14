@@ -46,6 +46,10 @@ export const FinderBox = styled.div`
   }
 `;
 
+export const FinderBoxTrial = styled(FinderBox)`
+  z-index: 8;
+`;
+
 export const FinderLabel = styled.label`
   display: block;
   position: relative;
@@ -89,6 +93,7 @@ export const FinderInput = styled.input`
 `;
 
 export const FinderLessons = styled.div`
+z-index: 14;
   height: 394px;
   width: 100%;
   padding: 0 20px 13px 20px;

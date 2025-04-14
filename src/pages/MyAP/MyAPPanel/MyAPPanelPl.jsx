@@ -30,7 +30,7 @@ export const MyAPPanelPl = ({
   points,
   timetable,
   montlyPoints,
-  isMultipleCourses,
+  isMultipleLanguages,
   setPlatformIframeLink,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
@@ -254,8 +254,8 @@ export const MyAPPanelPl = ({
         </IframeMarathonLinkPanel>
       )} */}
       <APPanel className={isButtonBoxShown ? '' : 'hidden'}>
-        {/* {isMultipleCourses && (
-          <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
+        {/* {isMultipleLanguages && (
+          <IframeResetLinkButton className={isMultipleLanguages ? 'multiple' : ''}>
             <APPanelToggleBtn
               id="toggle-btn"
               onMouseEnter={e => toggleTooltip(e)}
@@ -339,7 +339,7 @@ export const MyAPPanelPl = ({
           user={user}
           language={language}
           setPlatformIframeLink={setPlatformIframeLink}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isRatingShown && (
@@ -347,14 +347,14 @@ export const MyAPPanelPl = ({
           user={user}
           flatPoints={points}
           flatMonthlyPoints={montlyPoints}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isCalendarShown && (
         <AttendancePl
           user={user}
           personalLessonsDays={personalLessonsDays}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isFeedbackShown && (
@@ -365,7 +365,7 @@ export const MyAPPanelPl = ({
           user={user}
           language={language}
           timetable={timetable}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
     </>

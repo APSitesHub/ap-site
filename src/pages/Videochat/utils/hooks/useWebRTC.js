@@ -12,6 +12,7 @@ export default function useWebRTC(roomID) {
   const [clients, updateClients] = useStateWithCallback([]);
   const [isLocalCameraEnabled, setLocalCameraEnabled] = useState(true);
   const [isLocalMicrophoneEnabled, setLocalMicrophoneEnabled] = useState(true);
+  const [isBoardOpen, setIsBoardOpen] = useState(false);
   const [localDevices, setLocalDevices] = useState([]);
   const [localRole, setLocalRole] = useState(null);
   const [remoteStreams, setRemoteStreams] = useState([]);
@@ -38,6 +39,10 @@ export default function useWebRTC(roomID) {
     setLocalRole(role);
   }, [roomID]);
 
+  const getUserName = () => {
+    return localStorage.getItem('userName') || 'N/A';
+  };
+
   const getDevice = kind => {
     return localStorage.getItem(`default-${kind}`);
   };
@@ -56,7 +61,7 @@ export default function useWebRTC(roomID) {
       return defaultDevice;
     }
 
-    defaultDevice = devices.find(device => device.kind === kind)[0].deviceId;
+    defaultDevice = devices.find(device => device.kind === kind).deviceId;
 
     setDevice(kind, defaultDevice);
 
@@ -85,6 +90,7 @@ export default function useWebRTC(roomID) {
             ...list,
             {
               clientId: newClient,
+              userName: clientsData.userName,
               role: clientsData.role,
               isMicroEnabled: clientsData.isMicroEnabled,
               isCameraEnabled: clientsData.isCameraEnabled,
@@ -247,7 +253,10 @@ export default function useWebRTC(roomID) {
 
   const mixAudioStreams = () => {
     if (!audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
+      audioContextRef.current = new AudioContext({
+        latencyHint: 'interactive',
+        sampleRate: 48000,
+      });
       destinationRef.current = audioContextRef.current.createMediaStreamDestination();
     }
 
@@ -255,7 +264,7 @@ export default function useWebRTC(roomID) {
 
     const audioTracks = remoteStreams
       .map(stream => stream.remoteStream.getAudioTracks()[0])
-      .filter(track => track); 
+      .filter(track => track);
 
     const gainNode = audioContextRef.current.createGain();
     gainNode.gain.value = 0.8;
@@ -276,6 +285,12 @@ export default function useWebRTC(roomID) {
     socket.emit(ACTIONS.MUTE_ALL);
   };
 
+  const toggleBoardAll = async isOpen => {
+    socket.emit('toggle-board-all', {
+      isBoardOpen: isOpen,
+    });
+  };
+
   async function startCapture() {
     let premissions;
 
@@ -293,7 +308,12 @@ export default function useWebRTC(roomID) {
       const defaultMicrophone = getDefaultDevice(devices, 'audioinput');
 
       localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-        audio: { deviceId: defaultMicrophone },
+        audio: {
+          deviceId: { exact: defaultMicrophone },
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 48000,
+        },
         video: {
           deviceId: { exact: defaultCamera },
           width: localRole === 'admin' ? 1920 : 320,
@@ -319,6 +339,7 @@ export default function useWebRTC(roomID) {
     if (localRole) {
       const localClientData = {
         role: localRole,
+        userName: getUserName(),
         isCameraEnabled: premissions,
         isMicroEnabled: premissions,
       };
@@ -332,12 +353,89 @@ export default function useWebRTC(roomID) {
 
       socket.emit(ACTIONS.JOIN, {
         room: roomID,
+        userName: getUserName(),
         role: localRole,
         isCameraEnabled: premissions,
         isMicroEnabled: premissions,
       });
+
+      analyzeAudio();
     }
   }
+
+  const analyzeAudio = () => {
+    let audioContext;
+    let analyser;
+    let microphone;
+    let dataArray;
+    let timeoutId;
+    let aboveThresholdTime = 0;
+    let belowThresholdTime = 0;
+    const THRESHOLD = 10;
+    const DURATION = 500;
+    const INTERVAL = 75;
+    let lastState = false;
+
+    const initAudio = async () => {
+      if (!isLocalMicrophoneEnabled) return;
+
+      try {
+        const stream = localMediaStream.current;
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyser);
+
+        const updateVolume = () => {
+          analyser.getByteFrequencyData(dataArray);
+          const avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
+          const volume = Math.round((avg / 255) * 100);
+
+          if (volume > THRESHOLD) {
+            aboveThresholdTime += INTERVAL;
+            belowThresholdTime = 0;
+          } else {
+            belowThresholdTime += INTERVAL;
+            aboveThresholdTime = 0;
+          }
+
+          if (aboveThresholdTime >= DURATION && !lastState) {
+            lastState = true;
+            socket.emit(ACTIONS.CHANGE_SPEAKING, { isSpeaker: true });
+            updateClients(list =>
+              list.map(item =>
+                item.clientId === LOCAL_VIDEO ? { ...item, isSpeaker: true } : item
+              )
+            );
+          } else if (belowThresholdTime >= DURATION && lastState) {
+            lastState = false;
+            socket.emit(ACTIONS.CHANGE_SPEAKING, { isSpeaker: false });
+            updateClients(list =>
+              list.map(item =>
+                item.clientId === LOCAL_VIDEO ? { ...item, isSpeaker: false } : item
+              )
+            );
+          }
+
+          timeoutId = setTimeout(updateVolume, INTERVAL);
+        };
+
+        timeoutId = setTimeout(updateVolume, INTERVAL);
+      } catch (error) {
+        console.error('Помилка доступу до мікрофона:', error);
+      }
+    };
+
+    initAudio();
+
+    return () => {
+      if (audioContext) audioContext.close();
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  };
 
   const handleNewPeer = useCallback(
     async ({ peerID, clients: clientsData, createOffer }) => {
@@ -635,6 +733,27 @@ export default function useWebRTC(roomID) {
     socket.on(ACTIONS.MUTE_ALL, () => {
       toggleMicrophone(true);
     });
+
+    socket.on(ACTIONS.CHANGE_SPEAKING, client => {
+      updateClients(list => {
+        return list.map(item => {
+          if (item.clientId === client.peerID) {
+            return {
+              ...item,
+              isSpeaker: client.isSpeaker,
+            };
+          }
+
+          return {
+            ...item,
+          };
+        });
+      });
+    });
+
+    socket.on('toggle-board-all', ({ isBoardOpen }) => {
+      setIsBoardOpen(isBoardOpen);
+    });
   }, [updateClients]);
 
   useEffect(() => {
@@ -696,7 +815,7 @@ export default function useWebRTC(roomID) {
 
   const addMockClient = () => {
     const mockClientId = Math.random();
-    addNewClient(mockClientId, 'user', () => {
+    addNewClient(mockClientId, { userName: mockClientId, role: 'user' }, () => {
       console.log(mockClientId);
     });
   };
@@ -795,8 +914,26 @@ export default function useWebRTC(roomID) {
       };
     }
 
+    let wakeLock = null;
+
+    const requestWakeLock = async () => {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen');
+      } catch (err) {
+        console.error('Error Wake Lock activation:', err);
+      }
+    };
+
+    requestWakeLock();
+
     return () => {
       clearInterval(logsInterval);
+
+      if (wakeLock) {
+        wakeLock.release().then(() => {
+          console.log('Wake Lock daleted');
+        });
+      }
     };
   }, []);
 
@@ -811,6 +948,7 @@ export default function useWebRTC(roomID) {
     changeMicrophone,
     changeVisibility,
     muteAll,
+    toggleBoardAll,
     addMockClient,
     getClients,
     remoteStreams,
@@ -818,5 +956,6 @@ export default function useWebRTC(roomID) {
     localMediaStream,
     isLocalCameraEnabled,
     isLocalMicrophoneEnabled,
+    isBoardOpen,
   };
 }

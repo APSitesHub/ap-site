@@ -26,7 +26,7 @@ const ROOM_TYPES = {
   TRIAL: 'trial',
   // STREAM: 'stream',
   // C2U: 'close2you',
-  // INDIVIDUAL: 'individual',
+  INDIVIDUAL: 'individual',
 };
 
 function Videochat() {

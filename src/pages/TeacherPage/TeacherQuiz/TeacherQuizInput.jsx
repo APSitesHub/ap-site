@@ -3,7 +3,13 @@ import { io } from 'socket.io-client';
 import { TeacherInputBox } from './TeacherQuiz.styled';
 import { TeacherQuizContainer } from './TeacherQuizContainer';
 
-export const TeacherQuizInput = ({ page, isQuizInputOpen, closeInputs }) => {
+export const TeacherQuizInput = ({
+  page,
+  isQuizInputOpen,
+  closeInputs,
+  questionID,
+  changeQuestionID,
+}) => {
   const [answers, setAnswers] = useState([]);
   const quizType = 'input';
 
@@ -47,6 +53,8 @@ export const TeacherQuizInput = ({ page, isQuizInputOpen, closeInputs }) => {
             socket={socketRef.current}
             answers={answers}
             closeInputs={closeInputs}
+            questionID={questionID}
+            changeQuestionID={changeQuestionID}
           />
         </TeacherInputBox>
       )}

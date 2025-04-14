@@ -23,7 +23,7 @@ import {
   TimetableWebinarsHead,
 } from './Timetable.styled';
 
-export const TimetableWSPA = ({ user, language, timetable, isMultipleCourses }) => {
+export const TimetableWSPA = ({ user, language, timetable, isMultipleLanguages }) => {
   const [course, setCourse] = useState('logistics');
   const [isAnimated, setIsAnimated] = useState(false);
 

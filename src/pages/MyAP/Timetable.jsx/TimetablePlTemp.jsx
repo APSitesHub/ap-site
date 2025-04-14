@@ -20,7 +20,7 @@ import {
   TimetableWebinarsHead,
 } from './Timetable.styled';
 
-export const TimetablePlTemp = ({ user, language, timetable, isMultipleCourses }) => {
+export const TimetablePlTemp = ({ user, language, timetable, isMultipleLanguages }) => {
   const getLink = () => {
     const baseStreamUrl = 'https://academy.ap.education/streams/';
 

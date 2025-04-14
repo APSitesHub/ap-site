@@ -23,18 +23,14 @@ import {
   UserPlace,
 } from './Points.styled';
 
-export const Points = ({ user, flatPoints, flatMonthlyPoints, isMultipleCourses }) => {
+export const Points = ({ user, flatPoints, flatMonthlyPoints, isMultipleLanguages }) => {
   const [position, setPosition] = useState('0%');
   const [activeRating, setActiveRating] = useState(0);
 
   const pointsSorted =
     activeRating > 0
-      ? flatMonthlyPoints
-          .filter(student => `${student.course}` === user.course)
-          .sort((a, b) => b.points - a.points)
-      : flatPoints
-          .filter(student => `${student.course}`[0] === user.course[0])
-          .sort((a, b) => b.points - a.points);
+      ? flatMonthlyPoints.sort((a, b) => b.points - a.points)
+      : flatPoints.sort((a, b) => b.points - a.points);
 
   const userPlace = pointsSorted.findIndex(
     leader => leader.mail.toLowerCase() === user.mail.toLowerCase()

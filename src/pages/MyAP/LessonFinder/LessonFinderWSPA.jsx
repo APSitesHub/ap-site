@@ -50,7 +50,7 @@ export const LessonFinderWSPA = ({
   language,
   user,
   setPlatformIframeLink,
-  isMultipleCourses,
+  isMultipleLanguages,
 }) => {
   const [lessonsFound, setLessonsFound] = useState([]);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);

@@ -192,7 +192,7 @@ const MyAPPl = () => {
   const [languageIndex, setLanguageIndex] = useState(0);
   const [language, setLanguage] = useState('');
   const [platformLink, setPlatformLink] = useState(`https://online.ap.education/`);
-  const [isMultipleCourses, setIsMultipleCourses] = useState(false);
+  const [isMultipleLanguages, setIsMultipleLanguages] = useState(false);
   axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
   const location = useLocation();
 
@@ -220,7 +220,7 @@ const MyAPPl = () => {
         setUser(user => (user = { ...res.data.user }));
         const lang = res.data.user.lang.split('/');
         if (lang.length > 1 && !language) {
-          setIsMultipleCourses(true);
+          setIsMultipleLanguages(true);
           setLanguage(lang[languageIndex]);
         } else if (lang.length <= 1) {
           setLanguage(res.data.user.lang);
@@ -321,7 +321,7 @@ const MyAPPl = () => {
       const lang = response.data.user.lang.split('/');
       if (lang.length > 1) {
         setLanguage(lang[0]);
-        setIsMultipleCourses(true);
+        setIsMultipleLanguages(true);
       }
       localStorage.setItem('mail', values.mail);
       setIsUserInfoIncorrect(false);
@@ -390,7 +390,7 @@ const MyAPPl = () => {
               points={points}
               montlyPoints={montlyPoints}
               link={platformLink}
-              isMultipleCourses={isMultipleCourses}
+              isMultipleLanguages={isMultipleLanguages}
               setPlatformIframeLink={setPlatformIframeLink}
               language={language}
               setLanguage={setLanguage}

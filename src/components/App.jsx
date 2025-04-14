@@ -22,7 +22,7 @@ import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
 // eslint-disable-next-line
-import LogRocket from 'logrocket';
+//import LogRocket from 'logrocket';
 
 const NewDesign = lazy(() =>
   import(/* webpackChunkName: "New Design Homepage" */ '../pages/Home/NewDesign')
@@ -404,6 +404,11 @@ const Deutsch = lazy(() =>
 const TeacherPage = lazy(() =>
   import(/* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPage')
 );
+const TeacherPageTrialLesson = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Trial Lesson Page" */ '../pages/TeacherPage/TeacherPageTrialLesson'
+  )
+);
 const TeacherPageFarm = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page Farm" */ '../pages/TeacherPage/TeacherPageFarm'
@@ -474,8 +479,15 @@ const TrialVideoRoom = lazy(() =>
     /* webpackChunkName: "Trial Videochat Room" */ '../pages/Videochat/Trial/TrialMain'
   )
 );
+
 const StreamVideoRoom = lazy(() =>
   import(/* webpackChunkName: "Stream Videochat Room" */ '../pages/Videochat/Stream/Room')
+);
+
+const IndividualVideoRoom = lazy(() =>
+  import(
+    /* webpackChunkName: "Individual Videochat Room" */ '../pages/Videochat/Individual/IndividualMain'
+  )
 );
 const EndCall = lazy(() =>
   import(/* webpackChunkName: "End Call" */ '../pages/Videochat/EndCall')
@@ -623,6 +635,11 @@ export const App = () => {
             element={<StreamVideoRoom />}
             noindex={true}
           />
+          <Route
+            path="room/individual/:slug/:id"
+            element={<IndividualVideoRoom />}
+            noindex={true}
+          />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
@@ -672,6 +689,8 @@ export const App = () => {
             <Route path="deutscha2-chat" element={<WindowedChat />} noindex={true} />
             <Route path="deutschb1" element={<StreamDeutschB1 />} noindex={true} />
             <Route path="deb1sc" element={<StreamSpeakingClub />} noindex={true} />
+            <Route path="deb1_1sc" element={<StreamSpeakingClub />} noindex={true} />
+            <Route path="deb1_2sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="deutschb1-chat" element={<WindowedChat />} noindex={true} />
             <Route path="deutschb2" element={<StreamDeutschB2 />} noindex={true} />
             <Route path="deb2sc" element={<StreamSpeakingClub />} noindex={true} />
@@ -984,15 +1003,19 @@ export const App = () => {
             <Route path="nmt_en" element={<TeacherPage />} noindex={true} />
             <Route path="nmt_math" element={<TeacherPage />} noindex={true} />
             <Route path="nmt_history" element={<TeacherPage />} noindex={true} />
-            <Route path="a1free" element={<TeacherPage />} noindex={true} />
-            <Route path="a2free" element={<TeacherPage />} noindex={true} />
+            <Route path="a1free" element={<TeacherPageTrialLesson />} noindex={true} />
+            <Route path="a2free" element={<TeacherPageTrialLesson />} noindex={true} />
             <Route path="a0kids" element={<TeacherPage />} noindex={true} />
             <Route path="a1kids" element={<TeacherPage />} noindex={true} />
             <Route path="a2kids" element={<TeacherPage />} noindex={true} />
             <Route path="b1kids" element={<TeacherPage />} noindex={true} />
             <Route path="b2kids" element={<TeacherPage />} noindex={true} />
             <Route path="c1kids" element={<TeacherPage />} noindex={true} />
-            <Route path="a1kidsfree" element={<TeacherPage />} noindex={true} />
+            <Route
+              path="a1kidsfree"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
             <Route path="b1kidsbeginner" element={<TeacherPage />} noindex={true} />
             <Route path="b2kidsbeginner" element={<TeacherPage />} noindex={true} />
             <Route path="trendets" element={<TeacherPage />} noindex={true} />
@@ -1002,13 +1025,25 @@ export const App = () => {
             <Route path="deutsch-a2" element={<TeacherPage />} noindex={true} />
             <Route path="deutsch-b1" element={<TeacherPage />} noindex={true} />
             <Route path="deutsch-b2" element={<TeacherPage />} noindex={true} />
-            <Route path="deutsch-a1free" element={<TeacherPage />} noindex={true} />
-            <Route path="deutsch-a2free" element={<TeacherPage />} noindex={true} />
+            <Route
+              path="deutsch-a1free"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
+            <Route
+              path="deutsch-a2free"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
             <Route path="dea0kids" element={<TeacherPage />} noindex={true} />
             <Route path="dea1kids" element={<TeacherPage />} noindex={true} />
             <Route path="dea2kids" element={<TeacherPage />} noindex={true} />
             <Route path="deb1kids" element={<TeacherPage />} noindex={true} />
-            <Route path="dekidsfree" element={<TeacherPage />} noindex={true} />
+            <Route
+              path="dekidsfree"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
             <Route path="polski-a0" element={<TeacherPage />} noindex={true} />
             <Route path="polski-a0_2" element={<TeacherPageFarm />} noindex={true} />
             <Route
@@ -1017,7 +1052,11 @@ export const App = () => {
               noindex={true}
             />
             <Route path="polski-a1" element={<TeacherPage />} noindex={true} />
-            <Route path="polski-a1free" element={<TeacherPage />} noindex={true} />
+            <Route
+              path="polski-a1free"
+              element={<TeacherPageTrialLesson />}
+              noindex={true}
+            />
             <Route path="polski-a2" element={<TeacherPage />} noindex={true} />
             <Route path="polski-b1" element={<TeacherPage />} noindex={true} />
             <Route path="polski-b2" element={<TeacherPage />} noindex={true} />

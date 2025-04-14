@@ -45,13 +45,16 @@ const StreamA1 = () => {
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isAnimated, setIsAnimated] = useState(false);
   const [animatedID, setAnimationID] = useState('');
-  const [links, isLoading, currentUser, room] = useOutletContext();
+  const [links, isLoading, currentUser, room, user] = useOutletContext();
   const chatEl = useRef();
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
   const [width, height] = useSize(document.body);
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
+  const questionID = useRef('');
+
+  console.log(56, user);
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
@@ -114,16 +117,22 @@ const StreamA1 = () => {
 
     // open quizzes on event
     socketRef.current.on('question:input', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(true);
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizInputOpen(true);
+      }
     });
     socketRef.current.on('question:options', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(true);
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizOptionsOpen(true);
+      }
     });
     socketRef.current.on('question:trueFalse', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(true);
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizTrueFalseOpen(true);
+      }
     });
 
     // close quizzes on event
@@ -332,7 +341,7 @@ const StreamA1 = () => {
             <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
             </BoxHideSwitch>
-            
+
             {height > width && (
               <ChatBox
                 ref={chatEl}
@@ -354,6 +363,8 @@ const StreamA1 = () => {
               toggleQuiz={toggleQuizInput}
               page={room.replace('/streams/', '')}
               currentUser={currentUser}
+              user={user}
+              questionID={questionID.current}
             />
 
             <StudentOptions
@@ -362,6 +373,8 @@ const StreamA1 = () => {
               toggleQuiz={toggleQuizOptions}
               page={room.replace('/streams/', '')}
               currentUser={currentUser}
+              user={user}
+              questionID={questionID.current}
             />
 
             <StudentTrueFalse
@@ -370,6 +383,8 @@ const StreamA1 = () => {
               toggleQuiz={toggleQuizTrueFalse}
               page={room.replace('/streams/', '')}
               currentUser={currentUser}
+              user={user}
+              questionID={questionID.current}
             />
 
             <Support

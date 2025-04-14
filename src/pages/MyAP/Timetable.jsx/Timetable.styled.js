@@ -40,6 +40,10 @@ export const TimetableBox = styled.div`
   }
 `;
 
+export const TimetableBoxTrial = styled(TimetableBox)`
+  z-index: 8;
+`;
+
 export const TimetableHeading = styled.h3`
   padding: 9px 0;
 
@@ -182,6 +186,11 @@ export const TimetableLessonLinkText = styled.span`
   z-index: 1;
 
   transform: translate(-50%, -50%);
+
+  &.my-ap-change-course {
+    font-size: 14px;
+    width: 100%;
+  }
 `;
 
 export const TimetableTable = styled.table`
@@ -229,6 +238,17 @@ export const pulse = keyframes`
   }
 `;
 
+export const TimetableCourseMemo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-transform: capitalize;
+  gap: 8px;
+
+  font-size: 16px;
+`;
+
 export const TimetableLessonPlType = styled.span`
   display: block;
   font-size: 18px;
@@ -259,6 +279,18 @@ export const TimetableLessonPlTypeISMPO = styled(TimetableLessonPlType)`
   filter: drop-shadow(1px -1px 1px #1e88d2);
 `;
 
+export const TimetableChangeCourseBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 6px;
+
+  color: #525266;
+  border-bottom: 1px solid #0000000d;
+  margin-bottom: -1px;
+`;
+
 export const TimetableChangeCourseBtn = styled.button`
   display: block;
   padding: 5px 0;
@@ -280,6 +312,10 @@ export const TimetableChangeCourseBtn = styled.button`
   overflow: hidden;
 
   transition: all var(--animation-global);
+
+  &.my-ap-change-course {
+    margin: 0;
+  }
 
   &::before {
     content: '';

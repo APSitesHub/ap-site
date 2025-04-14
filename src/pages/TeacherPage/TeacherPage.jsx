@@ -1,6 +1,6 @@
 import useSize from '@react-hook/size';
 import { InputBtn, KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HostKahoots } from './HostKahoots/HostKahoots';
 import { Platform } from './Platform/Platform';
@@ -27,6 +27,7 @@ import { Viewer } from './Viewer/Viewer';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
 import { NameInput } from './NameInput/NameInput';
+import { nanoid } from 'nanoid';
 
 const TeacherPage = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -44,11 +45,16 @@ const TeacherPage = () => {
   const location = useLocation().pathname.split('/teacher/')[1];
   const [isNameInputOpen, setIsNameInputOpen] = useState(false);
   const [teacherInfo, setTeacherInfo] = useState({});
+  const questionID = useRef(nanoid(5));
 
   const closeInputs = () => {
     setIsQuizInputOpen(false);
     setIsQuizOptionsOpen(false);
     setIsQuizTrueFalseOpen(false);
+  };
+
+  const changeQuestionID = () => {    
+    questionID.current = nanoid(5);
   };
 
   const changeTeacherInfo = (nameValue, lessonValue, levelValue) => {
@@ -206,9 +212,8 @@ const TeacherPage = () => {
         {isNameInputOpen ? <BoxHideDownSwitch /> : <BoxHideUpSwitch />}
       </NameInputBtn>
       <LessonInfoBox>
-        {teacherInfo.name} <br/>
-        {teacherInfo.level} {' '}
-        {teacherInfo.lesson}
+        {teacherInfo.name} <br />
+        {teacherInfo.level} {teacherInfo.lesson}
       </LessonInfoBox>
       <TeacherButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
         <ViewerBtn onClick={toggleViewer}>
@@ -270,6 +275,8 @@ const TeacherPage = () => {
         isQuizTrueFalseOpen={isQuizTrueFalseOpen}
         closeInputs={closeInputs}
         isOpenedLast={isOpenedLast}
+        questionID={questionID.current}
+        changeQuestionID={changeQuestionID}
       />
       <TeacherQuizOptions
         page={page}
@@ -278,6 +285,8 @@ const TeacherPage = () => {
         isQuizTrueFalseOpen={isQuizTrueFalseOpen}
         closeInputs={closeInputs}
         isOpenedLast={isOpenedLast}
+        questionID={questionID.current}
+        changeQuestionID={changeQuestionID}
       />
       <TeacherQuizTrueFalse
         page={page}
@@ -286,6 +295,8 @@ const TeacherPage = () => {
         isQuizTrueFalseOpen={isQuizTrueFalseOpen}
         closeInputs={closeInputs}
         isOpenedLast={isOpenedLast}
+        questionID={questionID.current}
+        changeQuestionID={changeQuestionID}
       />
       <NameInput
         isNameInputOpen={isNameInputOpen}

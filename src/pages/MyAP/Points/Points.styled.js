@@ -48,6 +48,10 @@ export const PointsBox = styled.div`
   }
 `;
 
+export const PointsBoxTrial = styled(PointsBox)`
+  z-index: 8;
+`;
+
 export const PointsBoxHeading = styled.h3`
   padding: 9px 0;
 
@@ -157,7 +161,7 @@ export const PointsUser = styled(PointsTableHead)`
 export const PointsUserData = styled(PointsTableHeadItem)`
   flex-shrink: 0;
 
-  width: 33px;
+  min-width: 33px;
   font-size: 14px;
   text-align: center;
   color: #525266;

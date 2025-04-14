@@ -20,12 +20,15 @@ import {
   MicroIcon,
   SoundIcon,
 } from '../Videochat.styled';
+import { useParams } from 'react-router-dom';
 
 function Login({ logined }) {
+  const { id: roomID } = useParams();
+  const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
   const localMediaStream = useRef(null);
   const videoRef = useRef(null);
   const [microphoneDevices, setMicrophoneDevices] = useState([]);
-  const [audioDevices, setAudioDevices] = useState([]);
+  // const [audioDevices, setAudioDevices] = useState([]);
   const [cameraDevices, setCameraDevices] = useState([]);
   const [volume, setVolume] = useState(0);
 
@@ -69,11 +72,11 @@ function Login({ logined }) {
         .filter(device => device.kind === 'audioinput')
         .map(device => ({ label: device.label, value: device.deviceId }))
     );
-    setAudioDevices(
-      devices
-        .filter(device => device.kind === 'audiooutput')
-        .map(device => ({ label: device.label, value: device.deviceId }))
-    );
+    // setAudioDevices(
+    //   devices
+    //     .filter(device => device.kind === 'audiooutput')
+    //     .map(device => ({ label: device.label, value: device.deviceId }))
+    // );
     setCameraDevices(
       devices
         .filter(device => device.kind === 'videoinput')
@@ -145,7 +148,10 @@ function Login({ logined }) {
   };
 
   const loginSchema = yup.object().shape({
-    userName: yup.string().required("Введи ім'я та прізвище"),
+    userName: yup
+      .string()
+      .required(lang === 'pl' ? 'Wpisz swoje imię i nazwisko.' : "Введи ім'я та прізвище")
+      .max(40, lang === 'pl' ? 'Maksymalnie 40 znaków' : 'Максимум 40 символів'),
   });
 
   return (
@@ -170,7 +176,7 @@ function Login({ logined }) {
                 ))}
               </LoginSelect>
             </LoginMediaContainer>
-            <LoginMediaContainer>
+            {/* <LoginMediaContainer>
               <SoundIcon />
               <LoginSelect
                 name="audio"
@@ -185,7 +191,7 @@ function Login({ logined }) {
                   </option>
                 ))}
               </LoginSelect>
-            </LoginMediaContainer>
+            </LoginMediaContainer> */}
             <LoginMediaContainer>
               <CameraIcon />
               <LoginSelect
@@ -232,12 +238,26 @@ function Login({ logined }) {
         >
           <LoginForm>
             <LoginFormText style={{ color: 'white' }}>
-              Привіт!
-              <br />
-              Введи своє ім'я та прізвище для доступу до заняття
+              {lang === 'pl' ? (
+                <>
+                  Pozdrowienia!
+                  <br />
+                  Wprowadź swoje imię i nazwisko, aby uzyskać dostęp do klasy
+                </>
+              ) : (
+                <>
+                  Привіт!
+                  <br />
+                  Введи своє ім'я та прізвище для доступу до заняття
+                </>
+              )}
             </LoginFormText>
             <Label>
-              <AdminInput type="text" name="userName" placeholder="Ім'я та прізвище" />
+              <AdminInput
+                type="text"
+                name="userName"
+                placeholder={lang === 'pl' ? 'Imię i nazwisko' : "Ім'я та прізвище"}
+              />
               <AdminInputNote
                 component="p"
                 name="userName"
@@ -245,7 +265,9 @@ function Login({ logined }) {
                 style={{ color: 'red' }}
               />
             </Label>
-            <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+            <AdminFormBtn type="submit">
+              {lang === 'pl' ? 'Zalogować się' : 'Увійти'}
+            </AdminFormBtn>
           </LoginForm>
         </Formik>
       </LoginPage>

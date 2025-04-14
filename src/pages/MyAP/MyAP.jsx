@@ -29,19 +29,18 @@ import {
 
 const MyAP = () => {
   const [isUserLogged, setIsUserLogged] = useState(false);
-  const [lessons, setLessons] = useState(false);
+  const [lessons, setLessons] = useState([]);
   const [points, setPoints] = useState({});
   const [timetable, setTimetable] = useState({});
   const [montlyPoints, setMonthlyPoints] = useState({});
   const [user, setUser] = useState({});
+  const [courseIndex, setCourseIndex] = useState(0);
   const [languageIndex, setLanguageIndex] = useState(0);
   const [language, setLanguage] = useState('');
-  const [platformLink, setPlatformLink] = useState(
-    `https://online.ap.education/`
-  );
-  const [marathonLink, setMarathonLink] = useState(
-    `https://online.ap.education/`
-  );
+  const [course, setCourse] = useState('');
+  const [platformLink, setPlatformLink] = useState(`https://online.ap.education/`);
+  const [marathonLink, setMarathonLink] = useState(`https://online.ap.education/`);
+  const [isMultipleLanguages, setIsMultipleLanguages] = useState(false);
   const [isMultipleCourses, setIsMultipleCourses] = useState(false);
   axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
   const location = useLocation();
@@ -78,11 +77,18 @@ const MyAP = () => {
         console.log(73, res.data.user.platformToken);
         setUser(user => (user = { ...res.data.user }));
         const lang = res.data.user.lang.split('/');
+        const courses = res.data.user.course.split('/');
         if (lang.length > 1 && !language) {
-          setIsMultipleCourses(true);
+          setIsMultipleLanguages(true);
           setLanguage(lang[languageIndex]);
         } else if (lang.length <= 1) {
           setLanguage(res.data.user.lang);
+        }
+        if (courses.length > 1 && !course) {
+          setIsMultipleCourses(true);
+          setCourse(courses[languageIndex]);
+        } else if (courses.length <= 1) {
+          setCourse(res.data.user.course);
         }
       } catch (error) {
         console.log(error);
@@ -209,8 +215,6 @@ const MyAP = () => {
           ? 'enkids2'
           : '';
 
-      console.log(LINKS[marathonLink]);
-
       const FREE_LINKS = {
         kids: `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=854264`,
         ena1: `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=854277`,
@@ -225,6 +229,7 @@ const MyAP = () => {
 
     setIframeLinks();
   }, [
+    course,
     language,
     languageIndex,
     isChatButtonShown,
@@ -248,9 +253,7 @@ const MyAP = () => {
       .required('Вкажіть пошту, за якою ви зареєстровані на нашій платформі!'),
     password: yup
       .string()
-      .required(
-        'Введіть пароль, який ви використовуєте для входу на нашу платформу!'
-      ),
+      .required('Введіть пароль, який ви використовуєте для входу на нашу платформу!'),
   });
 
   const handleLoginSubmit = async (values, { resetForm }) => {
@@ -264,9 +267,14 @@ const MyAP = () => {
       setIsUserLogged(isLogged => (isLogged = true));
       setUser(user => (user = { ...response.data.user }));
       const lang = response.data.user.lang.split('/');
+      const courses = response.data.user.course.split('/');
       if (lang.length > 1) {
         setLanguage(lang[0]);
+        setIsMultipleLanguages(true);
+      }
+      if (courses.length > 1) {
         setIsMultipleCourses(true);
+        setCourse(courses[0]);
       }
       localStorage.setItem('mail', values.mail);
       setIsUserInfoIncorrect(false);
@@ -296,9 +304,9 @@ const MyAP = () => {
             <LoginFormText>
               Привіт!
               <br />
-              Ця сторінка недоступна для неавторизованих користувачів. Але якщо
-              ви маєте доступ до нашої платформи, то й до цієї сторінки теж.
-              Введіть дані, які ви використовуєте для входу на платформу.
+              Ця сторінка недоступна для неавторизованих користувачів. Але якщо ви маєте
+              доступ до нашої платформи, то й до цієї сторінки теж. Введіть дані, які ви
+              використовуєте для входу на платформу.
             </LoginFormText>
             <Label>
               <AdminInput
@@ -336,22 +344,23 @@ const MyAP = () => {
               montlyPoints={montlyPoints}
               link={platformLink}
               marathonLink={marathonLink}
+              isMultipleLanguages={isMultipleLanguages}
               isMultipleCourses={isMultipleCourses}
               setPlatformIframeLink={setPlatformIframeLink}
               language={language}
+              course={course}
               setLanguage={setLanguage}
+              setCourse={setCourse}
               languageIndex={languageIndex}
               setLanguageIndex={setLanguageIndex}
+              courseIndex={courseIndex}
+              setCourseIndex={setCourseIndex}
               timetable={timetable}
             />
           )}
           <MyPlatform platformLink={platformLink} />
           <ChatButtonHideSwitch id="no-transform" onClick={toggleChatButton}>
-            {isChatButtonShown ? (
-              <PanelHideRightSwitch />
-            ) : (
-              <PanelHideLeftSwitch />
-            )}
+            {isChatButtonShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
           </ChatButtonHideSwitch>
         </>
       )}

@@ -23,6 +23,8 @@ import desktop2xBGWebp from '../../img/bg/desktop-bg@2x.webp';
 // import desktop2xBGPng from '../../img/bg/ny-desktop-bg@2x.png';
 // import desktop1xBGWebp from '../../img/bg/ny-desktop-bg@1x.webp';
 // import desktop2xBGWebp from '../../img/bg/ny-desktop-bg@2x.webp';
+import pedagogium1xBGPng from '../../img/bg/pedagogium-bg.png';
+import pedagogium1xBGWebp from '../../img/bg/pedagogium-bg.webp';
 
 export const BackgroundWrapper = styled.div`
   background-position: right -70px top 640px;
@@ -33,9 +35,7 @@ export const BackgroundWrapper = styled.div`
   background-size: 364px 359px;
   background-repeat: no-repeat;
 
-  @media (min-device-pixel-ratio: 2),
-    (min-resolution: 192dpi),
-    (min-resolution: 2dppx) {
+  @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
     background-image: image-set(
       url(${mobile2xBGWebp}) type('image/webp'),
       url(${mobile2xBGPng}) type('image/png')
@@ -91,9 +91,7 @@ export const StreamsBackgroundWrapper = styled.div`
   background-size: auto 50%;
   background-repeat: no-repeat;
 
-  @media (min-device-pixel-ratio: 2),
-    (min-resolution: 192dpi),
-    (min-resolution: 2dppx) {
+  @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
     background-image: image-set(
       url(${mobile2xBGWebp}) type('image/webp'),
       url(${mobile2xBGPng}) type('image/png')
@@ -135,6 +133,61 @@ export const StreamsBackgroundWrapper = styled.div`
       );
     }
   }
+
+  &.pedagogium {
+    background-position: center top 20%;
+    background-image: image-set(
+      url(${pedagogium1xBGWebp}) type('image/webp'),
+      url(${pedagogium1xBGPng}) type('image/png')
+    );
+    background-size: 240px 240px;
+    background-repeat: no-repeat;
+
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: image-set(
+        url(${pedagogium1xBGWebp}) type('image/webp'),
+        url(${pedagogium1xBGPng}) type('image/png')
+      );
+    }
+
+    @media screen and (min-width: 768px) {
+      background-position: center top 20%;
+      background-image: image-set(
+        url(${pedagogium1xBGWebp}) type('image/webp'),
+        url(${pedagogium1xBGPng}) type('image/png')
+      );
+      background-size: 240px 240px;
+
+      @media (min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi),
+        (min-resolution: 2dppx) {
+        background-image: image-set(
+          url(${pedagogium1xBGWebp}) type('image/webp'),
+          url(${pedagogium1xBGPng}) type('image/png')
+        );
+      }
+    }
+
+    @media screen and (min-width: 1280px) {
+      background-position: center top 20%;
+      background-image: image-set(
+        url(${pedagogium1xBGWebp}) type('image/webp'),
+        url(${pedagogium1xBGPng}) type('image/png')
+      );
+      background-size: 240px 240px;
+
+      @media (min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi),
+        (min-resolution: 2dppx) {
+        background-image: image-set(
+          url(${pedagogium1xBGWebp}) type('image/webp'),
+          url(${pedagogium1xBGPng}) type('image/png')
+        );
+      }
+    }
+  }
 `;
 
 export const LinkTreeBackgroundWrapper = styled.div`
@@ -151,9 +204,7 @@ export const LinkTreeBackgroundWrapper = styled.div`
   background-size: auto 50%;
   background-repeat: no-repeat;
 
-  @media (min-device-pixel-ratio: 2),
-    (min-resolution: 192dpi),
-    (min-resolution: 2dppx) {
+  @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
     background-image: image-set(
       url(${mobile2xBGWebp}) type('image/webp'),
       url(${mobile2xBGPng}) type('image/png')

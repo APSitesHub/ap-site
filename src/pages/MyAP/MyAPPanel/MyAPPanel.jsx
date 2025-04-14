@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { MyAPStudentChart } from 'pages/TeacherPage/StudentChart/MyAPStudentChart';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 //eslint-disable-next-line
 import { Attendance } from '../Attendance/Attendance';
 import { LessonFinder } from '../LessonFinder/LessonFinder';
@@ -16,6 +16,8 @@ import {
   FeedbackBtnIcon,
   IframeResetLinkButton,
   LangIcon,
+  LangInfoText,
+  LangInfoWrapper,
   PanelBackdrop,
   PanelHideLeftSwitch,
   PanelHideRightSwitch,
@@ -27,6 +29,7 @@ import {
 import de from '../../../img/svg/myap/langs/de.png';
 import en from '../../../img/svg/myap/langs/en.png';
 import pl from '../../../img/svg/myap/langs/pl.png';
+import enkids from '../../../img/svg/myap/langs/enkids.png';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
@@ -35,15 +38,20 @@ export const MyAPPanel = ({
   link,
   user,
   language,
+  course,
   points,
   timetable,
   marathonLink,
   montlyPoints,
+  isMultipleLanguages,
   isMultipleCourses,
   setPlatformIframeLink,
   languageIndex,
   setLanguage,
   setLanguageIndex,
+  setCourse,
+  courseIndex,
+  setCourseIndex,
 }) => {
   const [isBackdropShown, setIsBackdropShown] = useState(false);
   const [isLessonFinderShown, setIsLessonFinderShown] = useState(false);
@@ -52,7 +60,10 @@ export const MyAPPanel = ({
   const [isTimetableShown, setIsTimetableShown] = useState(false);
   const [isFeedbackShown, setIsFeedbackShown] = useState(false);
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
+  const [isLangInfoShown, setIsLangInfoShown] = useState(false);
   const [currentStudentChart, setCurrentStudentChart] = useState({});
+  const timeoutRef = useRef(null); // useRef to store the timeout ID to prevent timeout stacking
+
   // const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
   //   useState(false);
   // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
@@ -61,9 +72,9 @@ export const MyAPPanel = ({
   const personalTimetable = timetable.find(timeline =>
     language === 'enkids' && user.knowledge.includes('beginner')
       ? timeline.lang === language &&
-        timeline.course === user.course &&
+        timeline.course === course &&
         timeline.level === user.knowledge
-      : timeline.lang === language && timeline.course === user.course
+      : timeline.lang === language && timeline.course === course
   );
 
   // filter lessons with correct marathon number
@@ -91,6 +102,15 @@ export const MyAPPanel = ({
       return obj;
     }, {});
 
+  const pointsByLangAndMail = Object.values(pointsByLang).filter(value =>
+    value.find(userObj => userObj.mail.toLowerCase() === user.mail.toLowerCase())
+  );
+
+  const flatPoints =
+    pointsByLangAndMail.length > 1
+      ? pointsByLangAndMail.flat().filter(user => user.course === +course)
+      : pointsByLangAndMail.flat();
+
   const monthlyPointsByLang = Object.keys(montlyPoints)
     .filter(
       key =>
@@ -101,10 +121,15 @@ export const MyAPPanel = ({
       obj[key] = montlyPoints[key];
       return obj;
     }, {});
-  const flatPoints = Object.values(pointsByLang).flatMap(user => user);
-  const flatMonthlyPoints = Object.values(monthlyPointsByLang).flatMap(user => user);
 
-  console.log(user);
+  const monthlyPointsByLangAndMail = Object.values(monthlyPointsByLang).filter(value =>
+    value.find(userObj => userObj.mail.toLowerCase() === user.mail.toLowerCase())
+  );
+
+  const flatMonthlyPoints =
+    monthlyPointsByLangAndMail.length > 1
+      ? monthlyPointsByLangAndMail.flat().filter(user => user.course === +course)
+      : monthlyPointsByLangAndMail.flat();
 
   const hideBackdrop = () => {
     setIsBackdropShown(false);
@@ -209,6 +234,19 @@ export const MyAPPanel = ({
     e.currentTarget.classList.toggle('tooltip-open');
   };
 
+  const toggleLangInfo = () => {
+    setIsLangInfoShown(true);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setIsLangInfoShown(false);
+      timeoutRef.current = null;
+    }, 3000);
+  };
+
   // const toggleTooltipTimeout = () => {
   //   const resetBtnEl = document.querySelector('#reset-btn');
 
@@ -285,6 +323,19 @@ export const MyAPPanel = ({
       <PanelHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
       </PanelHideSwitch>
+
+      <LangInfoWrapper className={isLangInfoShown ? 'shown' : ''}>
+        <LangInfoText>
+          Обрана мова:{' '}
+          {language.includes('de')
+            ? 'Німецька'
+            : language.includes('pl')
+            ? 'Польська'
+            : language.includes('enkids')
+            ? 'Англійська для дітей'
+            : 'Англійська'}
+        </LangInfoText>
+      </LangInfoWrapper>
       {/* {isMarathonBtnShown && (
         <IframeMarathonLinkPanel>
           <IframeMarathonText>
@@ -306,11 +357,11 @@ export const MyAPPanel = ({
         </IframeMarathonLinkPanel>
       )} */}
       <APPanel className={isButtonBoxShown ? '' : 'hidden'}>
-        {isMultipleCourses && (
-          <IframeResetLinkButton className={isMultipleCourses ? 'multiple' : ''}>
+        {isMultipleLanguages && (
+          <IframeResetLinkButton className={isMultipleLanguages ? 'multiple' : ''}>
             {/* <APPanelResetBtn
             id="reset-btn"
-            className={isMultipleCourses ? 'multiple' : ''}
+            className={isMultipleLanguages ? 'multiple' : ''}
             onMouseEnter={e => toggleTooltip(e)}
             onMouseOut={e => toggleTooltip(e)}
             onClick={() => {
@@ -335,14 +386,31 @@ export const MyAPPanel = ({
                         ? user.lang.split('/')[languageIndex + 1]
                         : user.lang.split('/')[0])
                 );
+                setCourse(
+                  course =>
+                    (course =
+                      languageIndex + 1 < user.course.split('/').length
+                        ? user.course.split('/')[languageIndex + 1]
+                        : user.course.split('/')[0])
+                );
                 setLanguageIndex(
                   index =>
                     (index = index + 1 < user.lang.split('/').length ? index + 1 : 0)
                 );
+
+                toggleLangInfo();
               }}
             >
               <LangIcon
-                src={language.includes('de') ? de : language.includes('pl') ? pl : en}
+                src={
+                  language.includes('de')
+                    ? de
+                    : language.includes('pl')
+                    ? pl
+                    : language.includes('enkids')
+                    ? enkids
+                    : en
+                }
               />
             </APPanelToggleBtn>
           </IframeResetLinkButton>
@@ -406,7 +474,7 @@ export const MyAPPanel = ({
           user={user}
           language={language}
           setPlatformIframeLink={setPlatformIframeLink}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )}
       {isRatingShown && (
@@ -414,14 +482,13 @@ export const MyAPPanel = ({
           user={user}
           flatPoints={flatPoints}
           flatMonthlyPoints={flatMonthlyPoints}
-          isMultipleCourses={isMultipleCourses}
         />
       )}
       {/* {isCalendarShown && (
         <Attendance
           user={user}
           personalLessonsDays={personalLessonsDays}
-          isMultipleCourses={isMultipleCourses}
+          isMultipleLanguages={isMultipleLanguages}
         />
       )} */}
       {isFeedbackShown && <MyAPStudentChart currentStudentChart={currentStudentChart} />}
@@ -429,7 +496,12 @@ export const MyAPPanel = ({
         <Timetable
           user={user}
           language={language}
+          course={course}
           timetable={timetable}
+          setCourse={setCourse}
+          courseIndex={courseIndex}
+          setCourseIndex={setCourseIndex}
+          isMultipleLanguages={isMultipleLanguages}
           isMultipleCourses={isMultipleCourses}
         />
       )}

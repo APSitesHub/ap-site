@@ -25,7 +25,7 @@ import {
   VisitedYearBox,
 } from './Attendance.styled';
 
-export const Attendance = ({ user, personalLessonsDays, isMultipleCourses }) => {
+export const Attendance = ({ user, personalLessonsDays, isMultipleLanguages }) => {
   const [week, setWeek] = useState(new Date().getDate() - new Date().getDay());
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
