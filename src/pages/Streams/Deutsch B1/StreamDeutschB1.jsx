@@ -241,9 +241,9 @@ const StreamDeutschB1 = () => {
       {(links.deutschb1 === undefined || links.deutschb1[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Привіт! <br />
-            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
-            правильним посиланням або спробуйте пізніше.
+            Христос воскрес! <br />
+            AP Education Center на канікулах з 17 по 23 квітня. <br />
+            Побачимось після свят!
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
@@ -332,7 +332,7 @@ const StreamDeutschB1 = () => {
             <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
             </BoxHideSwitch>
-            
+
             {height > width && (
               <ChatBox
                 ref={chatEl}
