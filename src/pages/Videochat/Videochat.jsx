@@ -24,7 +24,7 @@ import axios from 'axios';
 
 const ROOM_TYPES = {
   TRIAL: 'trial',
-  // STREAM: 'stream',
+  STREAM: 'stream',
   // C2U: 'close2you',
   INDIVIDUAL: 'individual',
 };
