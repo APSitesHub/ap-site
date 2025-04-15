@@ -214,15 +214,19 @@ const UniTimeTableAdminPanel = () => {
       value: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
     },
     {
-      label: "WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)",
-      value: "WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)"
-    }
+      label: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+      value: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
     {
       label: 'Logistics (Pedagogium)',
       value: '72421',
+    },
+    {
+      label: 'Logistics 2 (Pedagogium)',
+      value: '72421-2',
     },
     {
       label: 'Kurs Przygotowawczy (Pedagogium)',
@@ -473,8 +477,7 @@ const UniTimeTableAdminPanel = () => {
                     : uniValue ===
                       'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)'
                     ? wspaMarathonOptions
-                    : uniValue ===
-                      'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)'
+                    : uniValue === 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)'
                     ? wseMarathonOptions
                     : pedagogiumMarathonOptions
                 }
@@ -536,6 +539,9 @@ const UniTimeTableAdminPanel = () => {
                     {timetable.university.includes('Pedagogium') &&
                     timetable.marathon === '72421'
                       ? `Logistics ${timetable.marathon}`
+                      : timetable.university.includes('Pedagogium') &&
+                        timetable.marathon === '72421-2'
+                      ? `Logistics 2 ${timetable.marathon.split('-')[0]}`
                       : timetable.university.includes('Pedagogium') &&
                         timetable.marathon === '79231'
                       ? `Preparation Course ${timetable.marathon}`

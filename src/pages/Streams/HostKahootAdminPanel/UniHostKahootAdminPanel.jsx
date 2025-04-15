@@ -32,6 +32,7 @@ import { WSTIJOLogisticsKahootForm } from '../KahootAdminPanel/WSTIJOLogisticsKa
 import { WSTIJOPrepKahootForm } from '../KahootAdminPanel/WSTIJOPrepKahootForm';
 import { WSTiHLogisticsKahootForm } from '../KahootAdminPanel/WSTiHLogisticsKahootForm';
 import { WSTiHPrepKahootForm } from '../KahootAdminPanel/WSTiHPrepKahootForm';
+import { PedagogiumLogistics2KahootForm } from '../KahootAdminPanel/PedagogiumLogistics2KahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -123,6 +124,9 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_logistics')}>
               Pedagogium Logistics
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_logistics_2')}>
+              Pedagogium Logistics 2
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_prep')}>
               Pedagogium Prep
             </KahootLvlBtn>
@@ -179,6 +183,9 @@ const UniHostKahootAdminPanel = () => {
         <KahootFormBox>
           {levels.includes('pedagogium_logistics') && (
             <PedagogiumLogisticsKahootForm destination={destination} />
+          )}
+          {levels.includes('pedagogium_logistics_2') && (
+            <PedagogiumLogistics2KahootForm destination={destination} />
           )}
           {levels.includes('pedagogium_prep') && (
             <PedagogiumPrepKahootForm destination={destination} />

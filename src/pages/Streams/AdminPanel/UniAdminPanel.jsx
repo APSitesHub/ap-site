@@ -171,7 +171,15 @@ const UniAdminPanel = () => {
                     name="pedagogium_logistics"
                     placeholder="Pedagogium Logistics"
                   />
-                  <AdminInputNote component="p" name="pedagogium" />
+                  <AdminInputNote component="p" name="pedagogium_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="pedagogium_logistics_2"
+                    placeholder="Pedagogium Logistics 2"
+                  />
+                  <AdminInputNote component="p" name="pedagogium_logistics_2" />
                 </Label>
                 <Label>
                   <AdminInput
@@ -179,7 +187,7 @@ const UniAdminPanel = () => {
                     name="pedagogium_prep"
                     placeholder="Pedagogium Przygotowawczy Kurs"
                   />
-                  <AdminInputNote component="p" name="pedagogium" />
+                  <AdminInputNote component="p" name="pedagogium_prep" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>

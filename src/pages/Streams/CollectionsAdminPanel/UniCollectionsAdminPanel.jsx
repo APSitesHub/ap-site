@@ -177,7 +177,15 @@ const UniCollectionsAdminPanel = () => {
                     name="pedagogium_logistics"
                     placeholder="Pedagogium Logistics Collection"
                   />
-                  <AdminInputNote component="p" name="pedagogium" />
+                  <AdminInputNote component="p" name="pedagogium_logistics" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="pedagogium_logistics_2"
+                    placeholder="Pedagogium Logistics 2 Collection"
+                  />
+                  <AdminInputNote component="p" name="pedagogium_logistics_2" />
                 </Label>
                 <Label>
                   <AdminInput
@@ -185,7 +193,7 @@ const UniCollectionsAdminPanel = () => {
                     name="pedagogium_prep"
                     placeholder="Pedagogium Preparation Course Collection"
                   />
-                  <AdminInputNote component="p" name="pedagogium" />
+                  <AdminInputNote component="p" name="pedagogium_prep" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
