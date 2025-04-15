@@ -19,6 +19,7 @@ import {
 } from './KahootAdminPanel.styled';
 import { MeritoLogisticsKahootForm } from './MeritoLogisticsKahootForm';
 import { MeritoPrepKahootForm } from './MeritoPrepKahootForm';
+import { PedagogiumLogistics2KahootForm } from './PedagogiumLogistics2KahootForm';
 import { PedagogiumLogisticsKahootForm } from './PedagogiumLogisticsKahootForm';
 import { PedagogiumPrepKahootForm } from './PedagogiumPrepKahootForm';
 import { WSBMIRLogisticsKahootForm } from './WSBMIRLogisticsKahootForm';
@@ -123,6 +124,9 @@ const UniKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_logistics')}>
               Pedagogium Logistics
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_logistics_2')}>
+              Pedagogium Logistics 2
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('pedagogium_prep')}>
               Pedagogium Prep
             </KahootLvlBtn>
@@ -179,6 +183,9 @@ const UniKahootAdminPanel = () => {
         <KahootFormBox>
           {levels.includes('pedagogium_logistics') && (
             <PedagogiumLogisticsKahootForm destination={destination} />
+          )}
+          {levels.includes('pedagogium_logistics_2') && (
+            <PedagogiumLogistics2KahootForm destination={destination} />
           )}
           {levels.includes('pedagogium_prep') && (
             <PedagogiumPrepKahootForm destination={destination} />
