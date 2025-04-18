@@ -13,68 +13,18 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import { ChatVideo } from 'utils/Chat/ChatVideo';
-import useWebRTC, { LOCAL_VIDEO } from '../utils/hooks/useWebRTC';
-import {
-  ArrowDown,
-  ArrowUp,
-  ButtonsContainer,
-  CameraIcon,
-  DisabledCameraIcon,
-  DisabledMicroIcon,
-  EndCallIcon,
-  MainVideo,
-  MainVideoContainer,
-  MediaButton,
-  MediaButtonContainer,
-  MediaOption,
-  MediaSelector,
-  MicroIcon,
-  PageContainer,
-  SideContainer,
-  TopContainer,
-  FlexUserVideo,
-  UsersVideosContainer,
-  UserVideo,
-  VideochatContainer,
-  LargeText,
-  GradientBackground,
-  FullScreenIcon,
-  ExitFullScreenIcon,
-} from '../Videochat.styled';
+import { PageContainer } from '../Videochat.styled';
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
+import { JitsiMeeting } from '@jitsi/react-sdk';
 
-const VISIBLE_USERS_COUNT = 4;
-const debug = false;
+const debug = true;
 
-function Room() {
-  const { id: roomID } = useParams();
-  const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
+function Room({ isAdmin }) {
   const navigate = useNavigate();
-  const {
-    clients,
-    provideMediaRef,
-    localRole,
-    localDevices,
-    toggleCamera,
-    toggleMicrophone,
-    changeCamera,
-    changeMicrophone,
-    changeVisibility,
-    muteAll,
-    addMockClient,
-    getClients,
-    remoteStreams,
-    mixedAudioStream,
-    localMediaStream,
-    isLocalCameraEnabled,
-    isLocalMicrophoneEnabled,
-  } = useWebRTC(roomID);
-  const [videoDevices, setVideoDevices] = useState([]);
-  const [audioDevices, setAudioDevices] = useState([]);
-  // const [audioOutputDevices, setAudioOutputDevices] = useState([]);
-  // const [volume, setVolume] = useState(1);
+  const { id: roomID } = useParams();
+  // const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
@@ -83,18 +33,12 @@ function Room() {
   const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
   const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [isButtonsShown, setIsButtonsShown] = useState(true);
 
   const [messages, setMessages] = useState([]);
-  const [page, setPage] = useState(0);
-  const [visibleClients, setVisibleClients] = useState([]);
   const [width, height] = useSize(document.body);
 
   const chatEl = useRef();
   const socketRef = useRef(null);
-  const audioRef = useRef(null);
-  const inactivityTimer = useRef(null);
 
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
@@ -136,73 +80,6 @@ function Room() {
   };
   const toggleQuizTrueFalse = () => {
     setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
-  };
-
-  const toggleFullScreen = () => {
-    setIsFullScreen(isFullScreen => {
-      isFullScreen ? showVideos() : hideVideos();
-
-      const sideContainer = document.querySelector('#side-container');
-      sideContainer.style.display = isFullScreen ? 'flex' : 'none';
-
-      return !isFullScreen;
-    });
-  };
-
-  const resetInactivityTimer = () => {
-    setIsButtonsShown(true);
-    if (inactivityTimer.current) {
-      clearTimeout(inactivityTimer.current);
-    }
-
-    if (isFullScreen) {
-      inactivityTimer.current = setTimeout(() => {
-        setIsButtonsShown(false);
-      }, 3000);
-    }
-  };
-
-  useEffect(() => {
-    const handleUserActivity = () => resetInactivityTimer();
-
-    window.addEventListener('mousemove', handleUserActivity);
-    window.addEventListener('keydown', handleUserActivity);
-
-    return () => {
-      window.removeEventListener('mousemove', handleUserActivity);
-      window.removeEventListener('keydown', handleUserActivity);
-    };
-  }, [isFullScreen]);
-
-  useEffect(() => {
-    if (!isFullScreen) {
-      setIsButtonsShown(true);
-    }
-  }, [isFullScreen]);
-
-  useEffect(() => {
-    const video = localDevices.filter(device => device.kind === 'videoinput');
-    const audio = localDevices.filter(device => device.kind === 'audioinput');
-    // const audiooutput = localDevices.filter(device => device.kind === 'audiooutput');
-    setAudioDevices(audio);
-    setVideoDevices(video);
-    // setAudioOutputDevices(audiooutput);
-  }, [localDevices]);
-
-  const changePage = isUp => {
-    if (isUp) {
-      setPage(prevPage => prevPage - 1);
-    } else {
-      setPage(prevPage => prevPage + 1);
-    }
-  };
-
-  const endCall = () => {
-    if (localRole === 'admin') {
-      navigate('../../videochat');
-    } else {
-      navigate('../../end-call');
-    }
   };
 
   useEffect(() => {
@@ -339,555 +216,187 @@ function Room() {
     };
   }, [currentUser, room]);
 
-  useEffect(() => {
-    setVisibleClients(prevState => {
-      const updatedVisibleClients = clients
-        .filter(({ role }) => role !== 'admin')
-        .slice(page, page + VISIBLE_USERS_COUNT);
-
-      const newClients = updatedVisibleClients.filter(
-        client => !prevState.some(prevClient => prevClient.clientId === client.clientId)
-      );
-
-      const removedClients = prevState.filter(
-        client =>
-          !updatedVisibleClients.some(
-            updatedClient => updatedClient.clientId === client.clientId
-          )
-      );
-
-      newClients.forEach(client => {
-        changeVisibility(client, true);
-      });
-
-      removedClients.forEach(client => {
-        changeVisibility(client, false);
-      });
-
-      return updatedVisibleClients;
-    });
-  }, [page, clients]);
-
-  useEffect(() => {
-    if (debug) {
-      console.log('Streams Updated');
-    }
-
-    const mediaQuery = window.matchMedia('(max-width: 1024px)');
-
-    function handleScreenResize(e) {
-      if (e.matches) {
-        hideVideos();
-      } else {
-        showVideos();
-      }
-    }
-
-    if (mediaQuery.matches) {
-      hideVideos();
-    } else {
-      showVideos();
-    }
-
-    mediaQuery.addEventListener('change', handleScreenResize);
-    updateStreams();
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleScreenResize);
-    };
-  }, [visibleClients]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.srcObject = mixedAudioStream;
-    }
-  }, [mixedAudioStream, audioRef.current]);
-
-  // useEffect(() => {
-  //   const handleDeviceChange = () => {
-  //     console.log('🔄 Device list changed. Retrying output assignment...');
-  //     setOutputDeviceSafe(audioRef, mixedAudioStream);
-  //   };
-
-  //   navigator.mediaDevices.addEventListener('devicechange', handleDeviceChange);
-
-  //   return () => {
-  //     navigator.mediaDevices.removeEventListener('devicechange', handleDeviceChange);
-  //   };
-  // }, [mixedAudioStream]);
-
-  // useEffect(() => {
-  //   if (audioRef.current) {
-  //     audioRef.current.volume = volume;
-  //   }
-  // }, [volume]);
-
-  // useEffect(() => {
-  //   changeAudioOutput('default');
-  // }, [audioRef.current]);
-
-  // const toggleVolumeInput = () => {
-  //   const input = document.getElementById('volume-range');
-  //   input.style.display = input.style.display === 'block' ? 'none' : 'block';
-  // };
-
-  // const changeAudioOutput = async deviceId => {
-  //   if (audioRef.current?.setSinkId) {
-  //     try {
-  //       await audioRef.current.setSinkId(deviceId);
-  //       localStorage.setItem('default-audiooutput', deviceId);
-  //     } catch (error) {
-  //       console.error('Change audiootput error:', error);
-  //     }
-  //   } else {
-  //     console.warn('setSinkId not supported');
-  //   }
-  // };
-
-  const updateStreams = () => {
-    const videoElements = document.querySelectorAll('[data-video]');
-
-    videoElements.forEach(el => {
-      try {
-        if (el?.dataset?.id === LOCAL_VIDEO) {
-          updateLocalStream(el);
-        } else {
-          updateRemoteStream(el);
-        }
-      } catch (error) {
-        console.error('failed streams updated: ', error);
-      }
-    });
-  };
-
-  const updateLocalStream = el => {
-    if (el.srcObject?.id !== localMediaStream.current?.id) {
-      el.srcObject = localMediaStream.current;
-    }
-  };
-
-  const updateRemoteStream = el => {
-    if (
-      el.srcObject?.id !==
-      remoteStreams.find(stream => stream.peerID === el.dataset.id).remoteStream.id
-    ) {
-      el.srcObject = remoteStreams.find(
-        stream => stream.peerID === el.dataset.id
-      ).remoteStream;
-    }
-  };
-
-  const hideVideos = () => {
-    clients
-      .filter(({ role }) => role !== 'admin')
-      .forEach(client => {
-        changeVisibility(client, false);
-      });
-  };
-
-  const showVideos = () => {
-    visibleClients.forEach(client => {
-      changeVisibility(client, true);
-    });
-  };
-
   return (
     <>
-      {clients.find(({ role }) => role === 'admin') ? (
-        <div
+      <div
+        style={{
+          transform: isAdmin && !debug ? 'scale(1, -1)' : 'none',
+          overflow: 'hidden',
+        }}
+      >
+        <PageContainer
           style={{
-            transform: localRole === 'admin' && !debug ? 'scale(1, -1)' : 'none',
-            overflow: 'hidden',
+            width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
           }}
         >
-          <PageContainer
-            style={{
-              width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+          <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
+            <KahootBtn onClick={toggleKahoot}>
+              <KahootLogo />
+            </KahootBtn>
+            <ChatBtn onClick={toggleChat}>
+              <ChatLogo />
+            </ChatBtn>
+          </ButtonBox>
+          <KahootsVideoChat
+            sectionWidth={width}
+            sectionHeight={height}
+            isKahootOpen={isKahootOpen}
+            isChatOpen={isChatOpen}
+            isOpenedLast={isOpenedLast}
+          />
+
+          <JitsiMeeting
+            domain="videohost.ap.education"
+            roomName={roomID}
+            configOverwrite={{
+              startWithVideoMuted: !isAdmin,
+              followMeEnabled: isAdmin,
+              disableDeepLinking: true,
+              startWithAudioMuted: true,
+              disableModeratorIndicator: true,
+              disableReactions: true,
+              startScreenSharing: false,
+              enableEmailInStats: false,
+              disableSelfViewSettings: true,
+              constraints: {
+                video: {
+                  height: {
+                    ideal: 1080,
+                    max: 1080,
+                    min: 240,
+                  },
+                },
+              },
+              prejoinConfig: {
+                enabled: true,
+                hideDisplayName: false,
+                // hideExtraJoinButtons: ['no-audio', 'by-phone'],
+                preCallTestEnabled: true,
+                preCallTestICEUrl: '',
+              },
+              readOnlyName: true,
+              defaultLanguage: navigator.language.split('-')[0],
+              toolbarButtons: [
+                'camera',
+                // 'chat',
+                // 'closedcaptions',
+                // 'desktop',
+                // 'download',
+                // 'embedmeeting',
+                // 'etherpad',
+                // 'feedback',
+                'filmstrip',
+                'fullscreen',
+                'hangup',
+                // 'help',
+                // 'highlight',
+                // 'invite',
+                // 'linktosalesforce',
+                // 'livestreaming',
+                'microphone',
+                // 'noisesuppression',
+                'participants-pane',
+                // 'profile',
+                'raisehand',
+                // 'recording',
+                // 'security',
+                'select-background',
+                'settings',
+                // 'shareaudio',
+                // 'sharedvideo',
+                // 'shortcuts',
+                // 'stats',
+                // 'tileview',
+                'toggle-camera',
+                'videoquality',
+                // 'whiteboard',
+              ],
+              disabledSounds: [
+                'ASKED_TO_UNMUTE_SOUND',
+                'E2EE_OFF_SOUND',
+                'E2EE_ON_SOUND',
+                'INCOMING_MSG_SOUND',
+                'KNOCKING_PARTICIPANT_SOUND',
+                'LIVE_STREAMING_OFF_SOUND',
+                'LIVE_STREAMING_ON_SOUND',
+                'NO_AUDIO_SIGNAL_SOUND',
+                'NOISY_AUDIO_INPUT_SOUND',
+                'OUTGOING_CALL_EXPIRED_SOUND',
+                'OUTGOING_CALL_REJECTED_SOUND',
+                'OUTGOING_CALL_RINGING_SOUND',
+                'OUTGOING_CALL_START_SOUND',
+                'PARTICIPANT_JOINED_SOUND',
+                'PARTICIPANT_LEFT_SOUND',
+                'RAISE_HAND_SOUND',
+                'REACTION_SOUND',
+                'RECORDING_OFF_SOUND',
+                'RECORDING_ON_SOUND',
+                'TALK_WHILE_MUTED_SOUND',
+              ],
+              hideConferenceSubject: true,
+              hideConferenceTimer: true,
+              hideRecordingLabel: false,
+              hideParticipantsStats: true,
+              notifications: [],
             }}
-          >
-            <audio autoPlay ref={audioRef} />
-            <VideochatContainer
-              $isTeacher={localRole === 'admin'}
-              $isFullScreen={isFullScreen}
-            >
-              <MainVideoContainer>
-                {clients
-                  .filter(({ role }) => role === 'admin')
-                  .map(({ clientId, isSpeaker, isCameraEnabled, isMicroEnabled }) => {
-                    return (
-                      <div
-                        style={{ height: '100%', width: '100%' }}
-                        id={clientId}
-                        key={clientId}
-                      >
-                        <MainVideo
-                          ref={instance => {
-                            provideMediaRef(clientId, instance);
-                          }}
-                          data-video="teacher"
-                          data-id={clientId}
-                          autoPlay
-                          playsInline
-                          muted={true}
-                          $isSpeaker={isSpeaker}
-                        />
-                        {(!isCameraEnabled ||
-                          (clientId === LOCAL_VIDEO && !isLocalCameraEnabled)) && (
-                          <DisabledCameraIcon $isAbsolute />
-                        )}
-                        {(!isMicroEnabled ||
-                          (clientId === LOCAL_VIDEO && !isLocalMicrophoneEnabled)) && (
-                          <DisabledMicroIcon $isAbsolute />
-                        )}
-                      </div>
-                    );
-                  })}
-                <ButtonsContainer $hidden={!isButtonsShown}>
-                  {localRole === 'admin' && (
-                    <>
-                      {debug && (
-                        <>
-                          <MediaButtonContainer>
-                            <MediaButton onClick={updateStreams}>
-                              Update Streams
-                            </MediaButton>
-                          </MediaButtonContainer>
-                          <MediaButtonContainer>
-                            <MediaButton onClick={getClients}>Get clients</MediaButton>
-                          </MediaButtonContainer>
-                          <MediaButtonContainer>
-                            <MediaButton onClick={addMockClient}>Add client</MediaButton>
-                          </MediaButtonContainer>
-                        </>
-                      )}
-                      <MediaButtonContainer>
-                        <MediaButton onClick={muteAll}>Mute All</MediaButton>
-                      </MediaButtonContainer>
-                    </>
-                  )}
-                  {debug && (
-                    <>
-                      <MediaButtonContainer>
-                        <MediaButton onClick={hideVideos}>hideVideos</MediaButton>
-                      </MediaButtonContainer>
-                      <MediaButtonContainer>
-                        <MediaButton onClick={showVideos}>showVideos</MediaButton>
-                      </MediaButtonContainer>
-                    </>
-                  )}
-                  {/* <MediaButtonContainer style={{ position: 'relative' }}>
-                    <div
-                      id="volume-range"
-                      style={{
-                        display: 'none',
-                        position: 'absolute',
-                        bottom: '100%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                        padding: '5px',
-                        paddingBottom: '10px',
-                      }}
-                    >
-                      <VolumeRange
-                        min="0"
-                        max="1"
-                        step={0.01}
-                        value={volume}
-                        onChange={e => setVolume(e.target.value)}
-                      />
-                    </div>
-                    <MediaButton onClick={() => toggleVolumeInput()}>
-                      {volume !== '0' ? <SoundIcon /> : <DisabledSoundIcon />}
-                    </MediaButton>
-                    <MediaSelector
-                      name="audiooutput"
-                      id="audiooutput"
-                      onChange={e => changeAudioOutput(e.target.value)}
-                    >
-                      {audioOutputDevices.map(device => (
-                        <MediaOption key={device.deviceId} value={device.deviceId}>
-                          {device.label}
-                        </MediaOption>
-                      ))}
-                    </MediaSelector>
-                  </MediaButtonContainer> */}
-                  <MediaButtonContainer>
-                    <MediaButton onClick={toggleMicrophone}>
-                      {isLocalMicrophoneEnabled ? <MicroIcon /> : <DisabledMicroIcon />}
-                    </MediaButton>
-                    <MediaSelector
-                      name="micro"
-                      id="micro"
-                      onChange={e => changeMicrophone(e.target.value)}
-                    >
-                      {audioDevices.map(device => (
-                        <MediaOption key={device.deviceId} value={device.deviceId}>
-                          {device.label}
-                        </MediaOption>
-                      ))}
-                    </MediaSelector>
-                  </MediaButtonContainer>
-                  <MediaButtonContainer>
-                    <MediaButton onClick={toggleCamera}>
-                      {isLocalCameraEnabled ? <CameraIcon /> : <DisabledCameraIcon />}
-                    </MediaButton>
-                    <MediaSelector
-                      name="camera"
-                      id="camera"
-                      onChange={e => changeCamera(e.target.value)}
-                    >
-                      {videoDevices.map(device => (
-                        <MediaOption key={device.deviceId} value={device.deviceId}>
-                          {device.label}
-                        </MediaOption>
-                      ))}
-                    </MediaSelector>
-                  </MediaButtonContainer>
-                  <MediaButtonContainer $isRed>
-                    <MediaButton onClick={endCall}>
-                      <EndCallIcon />
-                    </MediaButton>
-                  </MediaButtonContainer>
-                </ButtonsContainer>
+            interfaceConfigOverwrite={{
+              MOBILE_APP_PROMO: false,
+              SETTINGS_SECTIONS: ['devices', 'more', 'language', 'moderator'],
+              SHOW_CHROME_EXTENSION_BANNER: false,
+            }}
+            userInfo={{
+              displayName: localStorage.getItem('userName'),
+            }}
+            getIFrameRef={iframeRef => {
+              iframeRef.style.height = '100%';
+              iframeRef.style.width = '100%';
+            }}
+            onReadyToClose={() => {
+              isAdmin ? navigate('../../videochat') : navigate('../../end-call');
+            }}
+          />
 
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '1rem',
-                    right: '1rem',
-                    opacity: isButtonsShown ? '1' : '0',
-                    transition: 'opacity 0.5s ease-in-out',
-                  }}
-                >
-                  {localRole !== 'admin' && (
-                    <MediaButtonContainer onClick={toggleFullScreen}>
-                      <MediaButton>
-                        {isFullScreen ? <ExitFullScreenIcon /> : <FullScreenIcon />}
-                      </MediaButton>
-                    </MediaButtonContainer>
-                  )}
-                </div>
-              </MainVideoContainer>
+          {!isAdmin && (
+            <>
+              <StudentInput
+                isInputOpen={isQuizInputOpen}
+                socket={socketRef.current}
+                toggleQuiz={toggleQuizInput}
+                page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
+                currentUser={currentUser}
+              />
 
-              {clients.filter(({ role }) => role !== 'admin').length > 0 && (
-                <>
-                  {localRole === 'admin' ? (
-                    <TopContainer>
-                      {clients
-                        .filter(({ role }) => role !== 'admin')
-                        .map(
-                          ({
-                            clientId,
-                            userName,
-                            isSpeaker,
-                            isMicroEnabled,
-                            isCameraEnabled,
-                          }) => {
-                            return (
-                              <FlexUserVideo
-                                key={clientId}
-                                id={clientId}
-                                $isUserVideo={clientId === LOCAL_VIDEO}
-                                $isSpeaker={isSpeaker}
-                              >
-                                <video
-                                  width="100%"
-                                  height="100%"
-                                  ref={instance => {
-                                    provideMediaRef(clientId, instance);
-                                  }}
-                                  data-video="user"
-                                  data-id={clientId}
-                                  autoPlay
-                                  playsInline
-                                  muted={true}
-                                  style={{
-                                    objectFit: 'contain',
-                                    maxWidth: 'inherit',
-                                    maxHeight: 'inherit',
-                                  }}
-                                />
-                                <div
-                                  style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 0,
-                                    background: 'rgba(0, 0, 0, 0.5)',
-                                    padding: '0.25rem',
-                                    borderBottomLeftRadius: '8px',
-                                  }}
-                                >
-                                  <span style={{ color: '#ccc' }}>{userName}</span>
-                                </div>
-                                {(!isCameraEnabled ||
-                                  (clientId === LOCAL_VIDEO &&
-                                    !isLocalCameraEnabled)) && (
-                                  <DisabledCameraIcon $isAbsolute $isSmall />
-                                )}
-                                {(!isMicroEnabled ||
-                                  (clientId === LOCAL_VIDEO &&
-                                    !isLocalMicrophoneEnabled)) && (
-                                  <DisabledMicroIcon $isAbsolute $isSmall />
-                                )}
-                              </FlexUserVideo>
-                            );
-                          }
-                        )}
-                    </TopContainer>
-                  ) : (
-                    <SideContainer id="side-container">
-                      <MediaButtonContainer $isPagintionButton>
-                        <MediaButton
-                          onClick={() => changePage(true)}
-                          disabled={page === 0}
-                        >
-                          <ArrowUp />
-                        </MediaButton>
-                      </MediaButtonContainer>
-                      <UsersVideosContainer>
-                        {visibleClients.map(
-                          ({
-                            clientId,
-                            isSpeaker,
-                            userName,
-                            isMicroEnabled,
-                            isCameraEnabled,
-                          }) => {
-                            return (
-                              <UserVideo
-                                key={clientId}
-                                id={clientId}
-                                $isUserVideo={clientId === LOCAL_VIDEO}
-                                $isSpeaker={isSpeaker}
-                              >
-                                <video
-                                  width="100%"
-                                  height="100%"
-                                  ref={instance => {
-                                    provideMediaRef(clientId, instance);
-                                  }}
-                                  data-video="user"
-                                  data-id={clientId}
-                                  autoPlay
-                                  playsInline
-                                  muted={true}
-                                  style={{
-                                    objectFit: 'contain',
-                                    maxWidth: 'inherit',
-                                    maxHeight: 'inherit',
-                                    transform:
-                                      clientId === LOCAL_VIDEO ? 'scaleX(-1)' : 'none',
-                                  }}
-                                />
-                                <div
-                                  style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 0,
-                                    background: 'rgba(0, 0, 0, 0.5)',
-                                    padding: '0.25rem',
-                                    borderBottomLeftRadius: '8px',
-                                  }}
-                                >
-                                  <span style={{ color: '#ccc' }}>{userName}</span>
-                                </div>
-                                {(!isCameraEnabled ||
-                                  (clientId === LOCAL_VIDEO &&
-                                    !isLocalCameraEnabled)) && (
-                                  <DisabledCameraIcon $isAbsolute $isSmall />
-                                )}
-                                {(!isMicroEnabled ||
-                                  (clientId === LOCAL_VIDEO &&
-                                    !isLocalMicrophoneEnabled)) && (
-                                  <DisabledMicroIcon $isAbsolute $isSmall />
-                                )}
-                              </UserVideo>
-                            );
-                          }
-                        )}
-                      </UsersVideosContainer>
-                      <MediaButtonContainer $isPagintionButton>
-                        <MediaButton
-                          onClick={() => changePage(false)}
-                          disabled={page + VISIBLE_USERS_COUNT >= clients.length - 1}
-                        >
-                          <ArrowDown />
-                        </MediaButton>
-                      </MediaButtonContainer>
-                    </SideContainer>
-                  )}
-                </>
-              )}
-            </VideochatContainer>
-            <ButtonBox
-              className={!isButtonBoxOpen ? 'hidden' : ''}
-              style={{
-                opacity: isButtonsShown ? '1' : '0',
-                transition: 'opacity 0.5s ease-in-out',
-              }}
-            >
-              <KahootBtn onClick={toggleKahoot}>
-                <KahootLogo />
-              </KahootBtn>
-              <ChatBtn onClick={toggleChat}>
-                <ChatLogo />
-              </ChatBtn>
-            </ButtonBox>
-            <KahootsVideoChat
-              sectionWidth={width}
-              sectionHeight={height}
-              isKahootOpen={isKahootOpen}
-              isChatOpen={isChatOpen}
-              isOpenedLast={isOpenedLast}
-            />
+              <StudentOptions
+                isInputOpen={isQuizOptionsOpen}
+                socket={socketRef.current}
+                toggleQuiz={toggleQuizOptions}
+                page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
+                currentUser={currentUser}
+              />
 
-            {localRole !== 'admin' && (
-              <>
-                <StudentInput
-                  isInputOpen={isQuizInputOpen}
-                  socket={socketRef.current}
-                  toggleQuiz={toggleQuizInput}
-                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
-                  currentUser={currentUser}
-                />
-
-                <StudentOptions
-                  isInputOpen={isQuizOptionsOpen}
-                  socket={socketRef.current}
-                  toggleQuiz={toggleQuizOptions}
-                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
-                  currentUser={currentUser}
-                />
-
-                <StudentTrueFalse
-                  isInputOpen={isQuizTrueFalseOpen}
-                  socket={socketRef.current}
-                  toggleQuiz={toggleQuizTrueFalse}
-                  page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
-                  currentUser={currentUser}
-                />
-              </>
-            )}
-          </PageContainer>
-          <ChatBox
-            ref={chatEl}
-            className={isChatOpen ? 'shown' : 'hidden'}
-            style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
-          >
-            <ChatVideo
-              socket={socketRef.current}
-              messages={messages}
-              isChatOpen={isChatOpen}
-              currentUser={currentUser}
-            />
-          </ChatBox>
-        </div>
-      ) : (
-        <PageContainer>
-          <GradientBackground>
-            <LargeText>{lang === 'pl' ? 'Nauczyciel jeszcze nie przyszedł!' : 'Викладача поки немає!'}</LargeText>
-          </GradientBackground>
+              <StudentTrueFalse
+                isInputOpen={isQuizTrueFalseOpen}
+                socket={socketRef.current}
+                toggleQuiz={toggleQuizTrueFalse}
+                page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
+                currentUser={currentUser}
+              />
+            </>
+          )}
         </PageContainer>
-      )}
+        <ChatBox
+          ref={chatEl}
+          className={isChatOpen ? 'shown' : 'hidden'}
+          style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
+        >
+          <ChatVideo
+            socket={socketRef.current}
+            messages={messages}
+            isChatOpen={isChatOpen}
+            currentUser={currentUser}
+          />
+        </ChatBox>
+      </div>
     </>
   );
 }
