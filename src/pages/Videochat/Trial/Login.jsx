@@ -22,7 +22,14 @@ function Login({ logined }) {
     userName: yup
       .string()
       .required(lang === 'pl' ? 'Wpisz swoje imię i nazwisko.' : "Введи ім'я та прізвище")
-      .max(40, lang === 'pl' ? 'Maksymalnie 40 znaków' : 'Максимум 40 символів'),
+      .max(40, lang === 'pl' ? 'Maksymalnie 40 znaków' : 'Максимум 40 символів')
+      .test(
+        'no-teacher-suffix',
+        lang === 'pl'
+          ? 'Nie może kończyć się na "(teacher)"'
+          : 'Не може закінчуватись на "(teacher)"',
+        value => !value?.toLowerCase().endsWith('(teacher)')
+      ),
   });
 
   return (
