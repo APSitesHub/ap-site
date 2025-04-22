@@ -13,7 +13,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import { ChatVideo } from 'utils/Chat/ChatVideo';
-import { PageContainer } from '../Videochat.styled';
+import { GradientBackground, LargeText, PageContainer } from '../Videochat.styled';
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
@@ -25,6 +25,7 @@ function Room({ isAdmin }) {
   const navigate = useNavigate();
   const { id: roomID } = useParams();
   // const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
+  const [isIframeOpen, setIsIframeOpen] = useState(isAdmin);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
@@ -80,6 +81,23 @@ function Room({ isAdmin }) {
   };
   const toggleQuizTrueFalse = () => {
     setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
+  };
+
+  const handleApiReady = async externalApi => {
+    const participants = await externalApi.getParticipantsInfo();
+
+    participants.find(participant => participant.name.endsWith('(teacher)')) &&
+      setIsIframeOpen(true);
+
+    externalApi.addListener('participantJoined', participant => {
+      if (participant.displayName.endsWith('(teacher)')) {
+        setIsIframeOpen(true);
+      }
+    });
+
+    return () => {
+      externalApi.removeAllListeners();
+    };
   };
 
   useEffect(() => {
@@ -245,116 +263,131 @@ function Room({ isAdmin }) {
             isOpenedLast={isOpenedLast}
           />
 
-          <JitsiMeeting
-            domain="videohost.ap.education"
-            roomName={roomID}
-            configOverwrite={{
-              startWithVideoMuted: !isAdmin,
-              followMeEnabled: isAdmin,
-              disableDeepLinking: true,
-              startWithAudioMuted: true,
-              disableModeratorIndicator: true,
-              disableReactions: true,
-              startScreenSharing: false,
-              enableEmailInStats: false,
-              disableSelfViewSettings: true,
-              constraints: {
-                video: {
-                  height: {
-                    ideal: 1080,
-                    max: 1080,
-                    min: 240,
+          <GradientBackground>
+            <LargeText>Викладача поки немає!</LargeText>
+          </GradientBackground>
+          <div
+            style={{
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%',
+              transform: isIframeOpen ? 'translateX(0)' : 'translateX(100%)',
+            }}
+          >
+            <JitsiMeeting
+              domain="videohost.ap.education"
+              roomName={roomID}
+              configOverwrite={{
+                startWithVideoMuted: !isAdmin,
+                followMeEnabled: isAdmin,
+                disableDeepLinking: true,
+                startWithAudioMuted: true,
+                disableModeratorIndicator: true,
+                disableReactions: true,
+                startScreenSharing: false,
+                enableEmailInStats: false,
+                disableSelfViewSettings: true,
+                constraints: {
+                  video: {
+                    height: {
+                      ideal: 1080,
+                      max: 1080,
+                      min: 240,
+                    },
                   },
                 },
-              },
-              prejoinConfig: {
-                enabled: true,
-                hideDisplayName: false,
-                // hideExtraJoinButtons: ['no-audio', 'by-phone'],
-                preCallTestEnabled: true,
-                preCallTestICEUrl: '',
-              },
-              readOnlyName: true,
-              defaultLanguage: navigator.language.split('-')[0],
-              toolbarButtons: [
-                'camera',
-                // 'chat',
-                // 'closedcaptions',
-                // 'desktop',
-                // 'download',
-                // 'embedmeeting',
-                // 'etherpad',
-                // 'feedback',
-                'filmstrip',
-                'fullscreen',
-                'hangup',
-                // 'help',
-                // 'highlight',
-                // 'invite',
-                // 'linktosalesforce',
-                // 'livestreaming',
-                'microphone',
-                // 'noisesuppression',
-                'participants-pane',
-                // 'profile',
-                'raisehand',
-                // 'recording',
-                // 'security',
-                'select-background',
-                'settings',
-                // 'shareaudio',
-                // 'sharedvideo',
-                // 'shortcuts',
-                // 'stats',
-                // 'tileview',
-                'toggle-camera',
-                'videoquality',
-                // 'whiteboard',
-              ],
-              disabledSounds: [
-                'ASKED_TO_UNMUTE_SOUND',
-                'E2EE_OFF_SOUND',
-                'E2EE_ON_SOUND',
-                'INCOMING_MSG_SOUND',
-                'KNOCKING_PARTICIPANT_SOUND',
-                'LIVE_STREAMING_OFF_SOUND',
-                'LIVE_STREAMING_ON_SOUND',
-                'NO_AUDIO_SIGNAL_SOUND',
-                'NOISY_AUDIO_INPUT_SOUND',
-                'OUTGOING_CALL_EXPIRED_SOUND',
-                'OUTGOING_CALL_REJECTED_SOUND',
-                'OUTGOING_CALL_RINGING_SOUND',
-                'OUTGOING_CALL_START_SOUND',
-                'PARTICIPANT_JOINED_SOUND',
-                'PARTICIPANT_LEFT_SOUND',
-                'RAISE_HAND_SOUND',
-                'REACTION_SOUND',
-                'RECORDING_OFF_SOUND',
-                'RECORDING_ON_SOUND',
-                'TALK_WHILE_MUTED_SOUND',
-              ],
-              hideConferenceSubject: true,
-              hideConferenceTimer: true,
-              hideRecordingLabel: false,
-              hideParticipantsStats: true,
-              notifications: [],
-            }}
-            interfaceConfigOverwrite={{
-              MOBILE_APP_PROMO: false,
-              SETTINGS_SECTIONS: ['devices', 'more', 'language', 'moderator'],
-              SHOW_CHROME_EXTENSION_BANNER: false,
-            }}
-            userInfo={{
-              displayName: localStorage.getItem('userName'),
-            }}
-            getIFrameRef={iframeRef => {
-              iframeRef.style.height = '100%';
-              iframeRef.style.width = '100%';
-            }}
-            onReadyToClose={() => {
-              isAdmin ? navigate('../../videochat') : navigate('../../end-call');
-            }}
-          />
+                prejoinConfig: {
+                  enabled: false,
+                  hideDisplayName: false,
+                  // hideExtraJoinButtons: ['no-audio', 'by-phone'],
+                  preCallTestEnabled: true,
+                  preCallTestICEUrl: '',
+                },
+                readOnlyName: true,
+                defaultLanguage: navigator.language.split('-')[0],
+                toolbarButtons: [
+                  'camera',
+                  // 'chat',
+                  // 'closedcaptions',
+                  // 'desktop',
+                  // 'download',
+                  // 'embedmeeting',
+                  // 'etherpad',
+                  // 'feedback',
+                  'filmstrip',
+                  'fullscreen',
+                  'hangup',
+                  // 'help',
+                  // 'highlight',
+                  // 'invite',
+                  // 'linktosalesforce',
+                  // 'livestreaming',
+                  'microphone',
+                  // 'noisesuppression',
+                  'participants-pane',
+                  // 'profile',
+                  'raisehand',
+                  // 'recording',
+                  // 'security',
+                  'select-background',
+                  'settings',
+                  // 'shareaudio',
+                  // 'sharedvideo',
+                  // 'shortcuts',
+                  // 'stats',
+                  // 'tileview',
+                  'toggle-camera',
+                  'videoquality',
+                  // 'whiteboard',
+                ],
+                disabledSounds: [
+                  'ASKED_TO_UNMUTE_SOUND',
+                  'E2EE_OFF_SOUND',
+                  'E2EE_ON_SOUND',
+                  'INCOMING_MSG_SOUND',
+                  'KNOCKING_PARTICIPANT_SOUND',
+                  'LIVE_STREAMING_OFF_SOUND',
+                  'LIVE_STREAMING_ON_SOUND',
+                  'NO_AUDIO_SIGNAL_SOUND',
+                  'NOISY_AUDIO_INPUT_SOUND',
+                  'OUTGOING_CALL_EXPIRED_SOUND',
+                  'OUTGOING_CALL_REJECTED_SOUND',
+                  'OUTGOING_CALL_RINGING_SOUND',
+                  'OUTGOING_CALL_START_SOUND',
+                  'PARTICIPANT_JOINED_SOUND',
+                  'PARTICIPANT_LEFT_SOUND',
+                  'RAISE_HAND_SOUND',
+                  'REACTION_SOUND',
+                  'RECORDING_OFF_SOUND',
+                  'RECORDING_ON_SOUND',
+                  'TALK_WHILE_MUTED_SOUND',
+                ],
+                hideConferenceSubject: true,
+                hideConferenceTimer: true,
+                hideRecordingLabel: false,
+                hideParticipantsStats: true,
+                notifications: [],
+              }}
+              interfaceConfigOverwrite={{
+                MOBILE_APP_PROMO: false,
+                SETTINGS_SECTIONS: ['devices', 'more', 'language', 'moderator'],
+                SHOW_CHROME_EXTENSION_BANNER: false,
+              }}
+              userInfo={{
+                displayName: localStorage.getItem('userName'),
+              }}
+              getIFrameRef={iframeRef => {
+                iframeRef.style.height = '100%';
+                iframeRef.style.width = '100%';
+              }}
+              onReadyToClose={() => {
+                isAdmin ? navigate('../../videochat') : navigate('../../end-call');
+              }}
+              onApiReady={handleApiReady}
+            />
+          </div>
 
           {!isAdmin && (
             <>
