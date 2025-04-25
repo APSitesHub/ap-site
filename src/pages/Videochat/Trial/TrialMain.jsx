@@ -20,13 +20,24 @@ function TrialMain() {
     fetchRole();
   };
 
+  const setTeacherLabel = () => {
+    const userName = localStorage.getItem('userName');
+
+    if (!userName.endsWith('(teacher)')) {
+      localStorage.setItem('userName', userName + ' (teacher)');
+    }
+  };
+
   const fetchRole = async () => {
     const isAdmin = await isRoomAdmin(roomID);
     setIsAdmin(isAdmin);
     setIsUserLogined(true);
+    isAdmin && setTeacherLabel();
   };
 
-  return <>{isUserLogined ? <Room isAdmin={isAdmin} /> : <Login logined={handleLogin} />}</>;
+  return (
+    <>{isUserLogined ? <Room isAdmin={isAdmin} /> : <Login logined={handleLogin} />}</>
+  );
 }
 
 export default TrialMain;
