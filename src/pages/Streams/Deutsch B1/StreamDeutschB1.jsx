@@ -38,20 +38,21 @@ const StreamDeutschB1 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
-  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
-  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
-  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isAnimated, setIsAnimated] = useState(false);
   const [animatedID, setAnimationID] = useState('');
-  const [links, isLoading, currentUser, room] = useOutletContext();
+  const [links, isLoading, currentUser, room, user] = useOutletContext();
   const chatEl = useRef();
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
   const [width, height] = useSize(document.body);
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
+  const questionID = useRef('');
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
@@ -72,15 +73,6 @@ const StreamDeutschB1 = () => {
       ? setIsOpenedLast(isOpenedLast => 'support')
       : setIsOpenedLast(isOpenedLast => '');
   };
-  const toggleQuizInput = () => {
-    setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
-  };
-  const toggleQuizOptions = () => {
-    setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
-  };
-  const toggleQuizTrueFalse = () => {
-    setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
-  };
   const toggleButtonBox = () => {
     setIsButtonBoxOpen(isOpen => !isOpen);
   };
@@ -89,6 +81,15 @@ const StreamDeutschB1 = () => {
     if (!isAnimated) {
       setIsAnimated(isAnimated => !isAnimated);
     }
+  };
+  const toggleQuizInput = () => {
+    setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
+  };
+  const toggleQuizOptions = () => {
+    setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
+  };
+  const toggleQuizTrueFalse = () => {
+    setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
   };
 
   const videoBoxWidth =
@@ -100,7 +101,6 @@ const StreamDeutschB1 = () => {
     document.title = 'B1 Deutsch | AP Education';
 
     socketRef.current = io('https://ap-chat-server.onrender.com/');
-    // socketRef.current = io('http://localhost:4000/');
 
     const handleDisconnect = () => {
       socketRef.current.emit('connected:disconnect', socketRef.current.id, room);
@@ -110,39 +110,6 @@ const StreamDeutschB1 = () => {
       console.log(connected);
       console.log(handshake.time);
       socketRef.current.emit('connected:user', socketRef.current.id, room);
-    });
-
-    // open quizzes on event
-    socketRef.current.on('question:input', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(true);
-    });
-    socketRef.current.on('question:options', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(true);
-    });
-    socketRef.current.on('question:trueFalse', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(true);
-    });
-
-    // close quizzes on event
-    socketRef.current.on('question:closeInput', data => {
-      console.log(data);
-      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
-    });
-    socketRef.current.on('question:closeOptions', data => {
-      console.log(data);
-      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
-    });
-    socketRef.current.on('question:closeTrueFalse', data => {
-      console.log(data);
-      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
-    });
-
-    socketRef.current.on('connected:user', (id, lvl) => {
-      console.log(id);
-      console.log(lvl);
     });
 
     const getMessages = async () => {
@@ -222,6 +189,37 @@ const StreamDeutschB1 = () => {
       }
     });
 
+    // open quizzes on event
+    socketRef.current.on('question:input', data => {
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizInputOpen(true);
+      }
+    });
+    socketRef.current.on('question:options', data => {
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizOptionsOpen(true);
+      }
+    });
+    socketRef.current.on('question:trueFalse', data => {
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizTrueFalseOpen(true);
+      }
+    });
+
+    // close quizzes on event
+    socketRef.current.on('question:closeInput', data => {
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
+    });
+    socketRef.current.on('question:closeOptions', data => {
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
+    });
+    socketRef.current.on('question:closeTrueFalse', data => {
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
+    });
+
     window.addEventListener('beforeunload', handleDisconnect);
 
     return () => {
@@ -231,7 +229,6 @@ const StreamDeutschB1 = () => {
       handleDisconnect();
       socketRef.current.off('connected');
       socketRef.current.off('message');
-      socketRef.current.off('user');
       socketRef.current.disconnect();
     };
   }, [currentUser, room]);
@@ -241,9 +238,9 @@ const StreamDeutschB1 = () => {
       {(links.deutschb1 === undefined || links.deutschb1[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Христос воскрес! <br />
-            AP Education Center на канікулах з 17 по 23 квітня. <br />
-            Побачимось після свят!
+            Привіт! <br />
+            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
+            правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
@@ -348,30 +345,6 @@ const StreamDeutschB1 = () => {
               </ChatBox>
             )}
 
-            <StudentInput
-              isInputOpen={isQuizInputOpen}
-              socket={socketRef.current}
-              toggleQuiz={toggleQuizInput}
-              page={room.replace('/streams/', '')}
-              currentUser={currentUser}
-            />
-
-            <StudentOptions
-              isInputOpen={isQuizOptionsOpen}
-              socket={socketRef.current}
-              toggleQuiz={toggleQuizOptions}
-              page={room.replace('/streams/', '')}
-              currentUser={currentUser}
-            />
-
-            <StudentTrueFalse
-              isInputOpen={isQuizTrueFalseOpen}
-              socket={socketRef.current}
-              toggleQuiz={toggleQuizTrueFalse}
-              page={room.replace('/streams/', '')}
-              currentUser={currentUser}
-            />
-
             <Support
               sectionWidth={width}
               isSupportOpen={isSupportOpen}
@@ -387,6 +360,36 @@ const StreamDeutschB1 = () => {
               isKahootOpen={isKahootOpen}
               isChatOpen={isChatOpen}
               isOpenedLast={isOpenedLast}
+            />
+
+            <StudentInput
+              isInputOpen={isQuizInputOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizInput}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+              user={user}
+              questionID={questionID.current}
+            />
+
+            <StudentOptions
+              isInputOpen={isQuizOptionsOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizOptions}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+              user={user}
+              questionID={questionID.current}
+            />
+
+            <StudentTrueFalse
+              isInputOpen={isQuizTrueFalseOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizTrueFalse}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+              user={user}
+              questionID={questionID.current}
             />
           </StreamSection>
           {width >= height && (

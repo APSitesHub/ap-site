@@ -21,6 +21,7 @@ import { WindowedChat } from 'utils/Chat/ChatWindowed/WindowedChat';
 import ScrollToTop from 'utils/ScrollToTop/ScrollToTop';
 import { Loader } from './SharedLayout/Loaders/Loader';
 import { SharedLayout } from './SharedLayout/SharedLayout';
+import TestChatBot from 'pages/Streams/TestChatBot/TestChatBot';
 // eslint-disable-next-line
 //import LogRocket from 'logrocket';
 
@@ -914,6 +915,7 @@ export const App = () => {
             <Route path="pla1free" element={<KidsPlA1Free />} noindex={true} />
             <Route path="pla1free-chat" element={<WindowedChat />} noindex={true} />
           </Route>
+          <Route path="chatbot" element={<TestChatBot />} noindex={true} />
           <Route path="record" element={<RecordLinkTree />} noindex={true} />
           <Route path="service" element={<Service />} noindex={true}>
             <Route path="viber" element={<ViberRedirect />} noindex={true} />

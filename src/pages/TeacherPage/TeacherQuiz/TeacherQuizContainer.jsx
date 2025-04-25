@@ -49,6 +49,8 @@ export const TeacherQuizContainer = ({
   };
 
   const sendConfirmedAnswer = () => {
+    console.log(answers, 'answers before sendConfirmedAnswer');
+    
     // add request to server to save the correct answer
     setIsConfirmationOpen(false);
   };
@@ -65,13 +67,24 @@ export const TeacherQuizContainer = ({
 
   return (
     <TeacherChatPageContainer>
-      {/* {isConfirmationOpen && (
+      {isConfirmationOpen && (
         <TeacherQuizConfirmation>
-          <h3>U sure that {correctAnswer.current} is the correct answer? </h3>
+          <h3>{correctAnswer.current}? </h3>
           <TeacherChartBtn onClick={sendConfirmedAnswer}>Yes</TeacherChartBtn>
-          <TeacherChartResetBtn onClick={() => setIsConfirmationOpen(false)}>No</TeacherChartResetBtn>
+          <TeacherChartResetBtn
+            onClick={() => {
+              setAnswers(answers => {
+                delete answers[correctAnswer.current];
+                return answers;
+              });
+
+              setIsConfirmationOpen(false);
+            }}
+          >
+            Delete
+          </TeacherChartResetBtn>
         </TeacherQuizConfirmation>
-      )} */}
+      )}
       <TeacherAnswersChart
         answers={answers}
         quizType={quizType}
