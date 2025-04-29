@@ -29,7 +29,7 @@ export const TimetableVPU = ({ user, language, timetable, isMultipleLanguages })
 
   const changeTimetable = () => {
     setIsAnimated(true);
-    setCourse(course => (course === 'logistics' ? 'prep' : 'logistics'));
+    setCourse(course => (course === 'logistics' ? 'cnc' : 'logistics'));
     setTimeout(() => {
       setIsAnimated(false);
     }, 3000);
@@ -69,7 +69,7 @@ export const TimetableVPU = ({ user, language, timetable, isMultipleLanguages })
           <TimetableWebinars>
             <TimetableWebinarsHead>
               <TimetableLessonPlTypeVPU className={isAnimated ? 'animated' : undefined}>
-                {course === 'logistics' ? 'Logistics' : 'Preparation Course'}
+                {course === 'logistics' ? 'Logistics' : 'CNC'}
               </TimetableLessonPlTypeVPU>
               <TimetableLessonLinkVPU href={link} target="_blank">
                 <TimetableLessonLinkText>Przejść do</TimetableLessonLinkText>

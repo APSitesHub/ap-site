@@ -234,6 +234,14 @@ export const ButtonBox = styled.div`
   }
 `;
 
+export const ButtonBoxUni = styled(ButtonBox)`
+  top: 125px;
+
+  @media screen and (min-width: 768px) {
+    top: 150px;
+  }
+`;
+
 export const ButtonBoxFree = styled(ButtonBox)`
   top: 50%;
   transform: translateY(-50%);

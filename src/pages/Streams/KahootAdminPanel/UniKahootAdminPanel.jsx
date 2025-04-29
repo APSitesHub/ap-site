@@ -17,6 +17,7 @@ import {
   KahootLvlBtnBox,
   LoginForm,
 } from './KahootAdminPanel.styled';
+import { MeritoAutomationKahootForm } from './MeritoAutomationKahootForm';
 import { MeritoLogisticsKahootForm } from './MeritoLogisticsKahootForm';
 import { MeritoPrepKahootForm } from './MeritoPrepKahootForm';
 import { PedagogiumLogistics2KahootForm } from './PedagogiumLogistics2KahootForm';
@@ -154,6 +155,9 @@ const UniKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('merito_prep')}>
               Merito Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('merito_automation')}>
+              Merito Automation
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('wstih_logistics')}>
               WSTiH Logistics
             </KahootLvlBtn>
@@ -213,6 +217,9 @@ const UniKahootAdminPanel = () => {
           )}
           {levels.includes('merito_prep') && (
             <MeritoPrepKahootForm destination={destination} />
+          )}
+          {levels.includes('merito_automation') && (
+            <MeritoAutomationKahootForm destination={destination} />
           )}
           {levels.includes('wstih_logistics') && (
             <WSTiHLogisticsKahootForm destination={destination} />

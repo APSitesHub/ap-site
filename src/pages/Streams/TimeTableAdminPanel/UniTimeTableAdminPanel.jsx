@@ -217,6 +217,10 @@ const UniTimeTableAdminPanel = () => {
       label: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
       value: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
     },
+    {
+      label: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
+      value: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -276,6 +280,10 @@ const UniTimeTableAdminPanel = () => {
       label: 'Kurs Przygotowawczy (Merito)',
       value: '82850',
     },
+    {
+      label: 'Industrial Automation (Merito)',
+      value: '91576',
+    },
   ];
 
   const wstihMarathonOptions = [
@@ -320,6 +328,11 @@ const UniTimeTableAdminPanel = () => {
       label: 'Kurs Przygotowawczy (WSPA)',
       value: '84616',
     },
+  ];
+
+  const answpMarathonOptions = [
+    { label: 'Logistics (ANSWP)', value: '87841' },
+    { label: 'CNC (ANSWP)', value: '87845' },
   ];
 
   const wseMarathonOptions = [
@@ -479,6 +492,9 @@ const UniTimeTableAdminPanel = () => {
                     ? wspaMarathonOptions
                     : uniValue === 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)'
                     ? wseMarathonOptions
+                    : uniValue ===
+                      'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)'
+                    ? answpMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -569,6 +585,9 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('Merito') &&
                         timetable.marathon === '82850'
                       ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('Merito') &&
+                        timetable.marathon === '91576'
+                      ? `Industrial Automation ${timetable.marathon}`
                       : timetable.university.includes('WSTiH') &&
                         timetable.marathon === '83530'
                       ? `Logistics ${timetable.marathon}`
@@ -593,6 +612,12 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('WSPA') &&
                         timetable.marathon === '84616'
                       ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('ANSWP') &&
+                        timetable.marathon === '87841'
+                      ? `Logistics Course ${timetable.marathon}`
+                      : timetable.university.includes('ANSWP') &&
+                        timetable.marathon === '87845'
+                      ? `CNC Course ${timetable.marathon}`
                       : timetable.university.includes('WSE') &&
                         timetable.marathon === '84801'
                       ? `Preparation Course ${timetable.marathon}`
@@ -649,6 +674,7 @@ const UniTimeTableAdminPanel = () => {
               wskmMarathonOptions={wskmMarathonOptions}
               wssipMarathonOptions={wssipMarathonOptions}
               wspaMarathonOptions={wspaMarathonOptions}
+              answpMarathonOptions={answpMarathonOptions}
               wseMarathonOptions={wseMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
@@ -669,6 +695,7 @@ const UniTimeTableAdminPanel = () => {
               wskmMarathonOptions={wskmMarathonOptions}
               wssipMarathonOptions={wssipMarathonOptions}
               wspaMarathonOptions={wspaMarathonOptions}
+              answpMarathonOptions={answpMarathonOptions}
               wseMarathonOptions={wseMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />

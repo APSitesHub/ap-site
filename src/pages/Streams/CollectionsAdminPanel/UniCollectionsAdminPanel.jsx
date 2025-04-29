@@ -78,6 +78,7 @@ const UniCollectionsAdminPanel = () => {
     ewspa_prep: '',
     merito_logistics: '',
     merito_prep: '',
+    merito_automation: '',
     wstih_logistics: '',
     wstih_prep: '',
     wskm_logistics: '',
@@ -101,6 +102,7 @@ const UniCollectionsAdminPanel = () => {
     ewspa_prep: yup.string().optional(),
     merito_logistics: yup.string().optional(),
     merito_prep: yup.string().optional(),
+    merito_automation: yup.string().optional(),
     wstih_logistics: yup.string().optional(),
     wstih_prep: yup.string().optional(),
     wskm_logistics: yup.string().optional(),
@@ -278,6 +280,14 @@ const UniCollectionsAdminPanel = () => {
                     placeholder="Merito Preparation Course Collection"
                   />
                   <AdminInputNote component="p" name="merito_prep" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="merito_automation"
+                    placeholder="Merito Industrial Automation Collection"
+                  />
+                  <AdminInputNote component="p" name="merito_automation" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>

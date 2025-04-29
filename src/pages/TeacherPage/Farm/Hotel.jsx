@@ -31,7 +31,9 @@ export const Hotel = ({ isHotelOpen, isOpenedLast, sectionWidth }) => {
         <iframe
           id="hotel"
           title="hotel"
-          src="https://pxlbake.com/published/673b1ac298ec661fe05f4a9c"
+          src="https://starship.mobile.my3ideas.com/"
+          // src="https://my.matterport.com/show/?m=eeu3PmqYSue&play=1&brand=0"
+          // src="https://pxlbake.com/published/673b1ac298ec661fe05f4a9c"
           // src="https://k2wirtualnespacery.pl/hotelpodroza/"
         ></iframe>
       </FarmBox>
