@@ -17,8 +17,10 @@ import {
   KahootLvlBtnBox,
   LoginForm,
 } from '../KahootAdminPanel/KahootAdminPanel.styled';
+import { MeritoAutomationKahootForm } from '../KahootAdminPanel/MeritoAutomationKahootForm';
 import { MeritoLogisticsKahootForm } from '../KahootAdminPanel/MeritoLogisticsKahootForm';
 import { MeritoPrepKahootForm } from '../KahootAdminPanel/MeritoPrepKahootForm';
+import { PedagogiumLogistics2KahootForm } from '../KahootAdminPanel/PedagogiumLogistics2KahootForm';
 import { PedagogiumLogisticsKahootForm } from '../KahootAdminPanel/PedagogiumLogisticsKahootForm';
 import { PedagogiumPrepKahootForm } from '../KahootAdminPanel/PedagogiumPrepKahootForm';
 import { WSBMIRLogisticsKahootForm } from '../KahootAdminPanel/WSBMIRLogisticsKahootForm';
@@ -32,7 +34,6 @@ import { WSTIJOLogisticsKahootForm } from '../KahootAdminPanel/WSTIJOLogisticsKa
 import { WSTIJOPrepKahootForm } from '../KahootAdminPanel/WSTIJOPrepKahootForm';
 import { WSTiHLogisticsKahootForm } from '../KahootAdminPanel/WSTiHLogisticsKahootForm';
 import { WSTiHPrepKahootForm } from '../KahootAdminPanel/WSTiHPrepKahootForm';
-import { PedagogiumLogistics2KahootForm } from '../KahootAdminPanel/PedagogiumLogistics2KahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -154,6 +155,9 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('merito_prep')}>
               Merito Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('merito_automation')}>
+              Merito Automation
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('wstih_logistics')}>
               WSTiH Logistics
             </KahootLvlBtn>
@@ -213,6 +217,9 @@ const UniHostKahootAdminPanel = () => {
           )}
           {levels.includes('merito_prep') && (
             <MeritoPrepKahootForm destination={destination} />
+          )}
+          {levels.includes('merito_automation') && (
+            <MeritoAutomationKahootForm destination={destination} />
           )}
           {levels.includes('wstih_logistics') && (
             <WSTiHLogisticsKahootForm destination={destination} />

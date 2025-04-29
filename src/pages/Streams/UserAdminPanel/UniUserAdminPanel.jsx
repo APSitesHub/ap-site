@@ -49,6 +49,7 @@ const Univesitets = {
   WSSIP: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
   WSPA: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
   WSE: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+  ANSWP: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
 };
 
 const translations = {
@@ -185,6 +186,10 @@ const UniUserAdminPanel = ({ uni, lang = 'ua' }) => {
     {
       label: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
       value: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+    },
+    {
+      label: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
+      value: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
     },
   ];
 

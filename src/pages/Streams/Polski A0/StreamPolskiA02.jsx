@@ -1,10 +1,8 @@
 import useSize from '@react-hook/size';
 import axios from 'axios';
-import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
-import { Support } from 'components/Stream/Support/Support';
 import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useOutletContext } from 'react-router-dom';
@@ -14,37 +12,24 @@ import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
   BoxHideSwitch,
-  ButtonBox,
+  ButtonBoxUni,
   ChatBox,
   ChatBtn,
   ChatLogo,
-  KahootBtn,
-  KahootLogo,
   MoldingNoClick,
   MoldingNoClickSecondary,
   StreamPlaceHolder,
   StreamPlaceHolderText,
   StreamSection,
-  SupportArrow,
-  SupportBtn,
-  SupportLogo,
-  SupportMarkerLeft,
-  SupportMarkerRight,
-  SupportPointer,
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
 
 const StreamPolskiA02 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isKahootOpen, setIsKahootOpen] = useState(false);
-  const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
   const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
-  const [isOpenedLast, setIsOpenedLast] = useState('');
-  const [isAnimated, setIsAnimated] = useState(false);
-  const [animatedID, setAnimationID] = useState('');
   const [links, isLoading, currentUser, room] = useOutletContext();
   const chatEl = useRef();
   // eslint-disable-next-line
@@ -53,24 +38,8 @@ const StreamPolskiA02 = () => {
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
 
-  const toggleKahoot = e => {
-    setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    isChatOpen || isSupportOpen
-      ? setIsOpenedLast(isOpenedLast => 'kahoot')
-      : setIsOpenedLast(isOpenedLast => '');
-  };
   const toggleChat = () => {
     setIsChatOpen(isChatOpen => !isChatOpen);
-    isKahootOpen || isSupportOpen
-      ? setIsOpenedLast(isOpenedLast => 'chat')
-      : setIsOpenedLast(isOpenedLast => '');
-  };
-  const toggleSupport = () => {
-    setIsSupportOpen(isSupportOpen => !isSupportOpen);
-    setAnimationID('');
-    isKahootOpen || isChatOpen
-      ? setIsOpenedLast(isOpenedLast => 'support')
-      : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleQuizInput = () => {
     setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
@@ -83,12 +52,6 @@ const StreamPolskiA02 = () => {
   };
   const toggleButtonBox = () => {
     setIsButtonBoxOpen(isOpen => !isOpen);
-  };
-  const handleSupportClick = data_id => {
-    setAnimationID(id => (id = data_id));
-    if (!isAnimated) {
-      setIsAnimated(isAnimated => !isAnimated);
-    }
   };
 
   const videoBoxWidth =
@@ -264,30 +227,7 @@ const StreamPolskiA02 = () => {
             <VideoBox>
               <MoldingNoClick />
               <MoldingNoClickSecondary />
-              <SupportMarkerLeft
-                className={
-                  (isAnimated && animatedID === 'sound') ||
-                  (isAnimated && animatedID === 'live')
-                    ? 'animated'
-                    : ''
-                }
-              >
-                <SupportArrow
-                  className={
-                    (isAnimated && animatedID === 'sound') ||
-                    (isAnimated && animatedID === 'live')
-                      ? 'animated'
-                      : ''
-                  }
-                />
-              </SupportMarkerLeft>
-              <SupportMarkerRight
-                className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
-              >
-                <SupportPointer
-                  className={isAnimated && animatedID === 'quality' ? 'animated' : ''}
-                />
-              </SupportMarkerRight>
+
               <ReactPlayer
                 playing={true}
                 muted={true}
@@ -309,25 +249,11 @@ const StreamPolskiA02 = () => {
               />
             </VideoBox>
 
-            <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
-              <KahootBtn
-                onClick={toggleKahoot}
-                className={isAnimated && animatedID === 'kahoot_open' ? 'animated' : ''}
-              >
-                <KahootLogo />
-              </KahootBtn>
-
-              <ChatBtn
-                onClick={toggleChat}
-                className={isAnimated && animatedID === 'chat_open' ? 'animated' : ''}
-              >
+            <ButtonBoxUni className={!isButtonBoxOpen ? 'hidden' : ''}>
+              <ChatBtn onClick={toggleChat}>
                 <ChatLogo />
               </ChatBtn>
-
-              <SupportBtn onClick={toggleSupport}>
-                <SupportLogo />
-              </SupportBtn>
-            </ButtonBox>
+            </ButtonBoxUni>
 
             <BoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
               {isButtonBoxOpen ? <BoxHideLeftSwitch /> : <BoxHideRightSwitch />}
@@ -337,7 +263,7 @@ const StreamPolskiA02 = () => {
               <ChatBox
                 ref={chatEl}
                 className={isChatOpen ? 'shown' : 'hidden'}
-                style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
+                style={{ zIndex: '2' }}
               >
                 <Chat
                   socket={socketRef.current}
@@ -371,29 +297,12 @@ const StreamPolskiA02 = () => {
               page={room.replace('/streams/', '')}
               currentUser={currentUser}
             />
-
-            <Support
-              sectionWidth={width}
-              isSupportOpen={isSupportOpen}
-              isOpenedLast={isOpenedLast}
-              handleSupport={handleSupportClick}
-              openKahoot={toggleKahoot}
-              isKahootOpen={isKahootOpen}
-            />
-
-            <Kahoots
-              sectionWidth={width}
-              sectionHeight={height}
-              isKahootOpen={isKahootOpen}
-              isChatOpen={isChatOpen}
-              isOpenedLast={isOpenedLast}
-            />
           </StreamSection>
           {width >= height && (
             <ChatBox
               ref={chatEl}
               className={isChatOpen ? 'shown' : 'hidden'}
-              style={isOpenedLast === 'chat' ? { zIndex: '2' } : { zIndex: '1' }}
+              style={{ zIndex: '2' }}
             >
               <Chat
                 socket={socketRef.current}
