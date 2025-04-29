@@ -99,6 +99,7 @@ export const ChatContainer = styled.div`
     url(${chat1xBGWebp}) type('image/webp'),
     url(${chat1xBGPng}) type('image/png')
   );
+
   background-size: 35%;
   background-position: top 65px left 35px;
   background-repeat: no-repeat;
@@ -117,6 +118,10 @@ export const ChatContainer = styled.div`
 
     background-size: calc(100% - 64px);
     background-position: top 120px center;
+  }
+
+  &.nologo {
+    background-image: none;
   }
 `;
 

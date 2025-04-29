@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { ThemeProvider, Toggle } from 'react-hook-theme';
 import 'react-hook-theme/dist/styles/style.css';
+import { useLocation } from 'react-router-dom';
 import {
   ChatContainer,
   ChatHeader,
@@ -9,10 +11,10 @@ import {
 } from './Chat.styled';
 import { ChatBody } from './ChatBody';
 import { ChatFooter } from './ChatFooter';
-import { useState } from 'react';
 
 export const Chat = ({ socket, messages, isChatOpen, currentUser }) => {
   const [theme, setTheme] = useState('auto');
+  const location = useLocation();
 
   const handleThemeClick = () => {
     const themeFromStorage = localStorage.getItem('rht-theme');
@@ -27,10 +29,11 @@ export const Chat = ({ socket, messages, isChatOpen, currentUser }) => {
         save: true,
       }}
     >
-      <ChatContainer>
+      <ChatContainer className={location.pathname.includes('polskia0_2') && 'nologo'}>
         <ChatHeader>
           <ChatHeading>
-            <ChatHeaderLogo /> AP Open Chat
+            <ChatHeaderLogo />{' '}
+            {location.pathname.includes('polskia0_2') ? 'Lesson Chat' : 'AP Open Chat'}
           </ChatHeading>
           <ToggleContainer onClick={handleThemeClick}>
             <Toggle />

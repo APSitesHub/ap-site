@@ -713,6 +713,7 @@ export const App = () => {
             <Route path="polskia0-chat" element={<WindowedChat />} noindex={true} />
             <Route path="polskia0_2" element={<StreamPolskiA02 />} noindex={true} />
             <Route path="polskia0_2-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="polskia0_3-chat" element={<WindowedChat />} noindex={true} />
             <Route path="polski" element={<StreamPolski />} noindex={true} />
             <Route path="pla1sc" element={<StreamSpeakingClub />} noindex={true} />
             <Route path="polski-chat" element={<WindowedChat />} noindex={true} />

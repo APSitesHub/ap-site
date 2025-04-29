@@ -72,7 +72,11 @@ export const ChatFooter = ({ socket, theme, currentUser }) => {
           <ChatMessageLabel>
             <СhatMessageInput
               type="text"
-              placeholder="Введіть повідомлення..."
+              placeholder={
+                location.pathname.includes('polskia0_2')
+                  ? 'Write a message...'
+                  : 'Введіть повідомлення...'
+              }
               maxLength={250}
               value={message}
               onChange={e => {
