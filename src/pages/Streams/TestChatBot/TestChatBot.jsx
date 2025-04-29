@@ -16,11 +16,19 @@ export default function HeyGenEmbed() {
 
     const stylesheet = document.createElement('style');
     stylesheet.innerHTML = `
+      html, body {
+        background-color: black; /* Чорний фон */
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
       #heygen-streaming-embed {
         z-index: 9999;
         position: fixed;
-        left: 40px;
-        bottom: 40px;
+        top: 50%; /* Центрування по вертикалі */
+        left: 50%; /* Центрування по горизонталі */
+        transform: translate(-50%, -50%); /* Вирівнювання по центру */
         width: 200px;
         height: 200px;
         border-radius: 50%;
@@ -36,8 +44,9 @@ export default function HeyGenEmbed() {
         visibility: visible;
       }
       #heygen-streaming-embed.expand {
+        top: 0;
         left: 0;
-        bottom: 0;
+        transform: none;
         ${
           clientWidth < 540
             ? 'height: 100%; width: 96%; left: 50%; transform: translateX(-50%);'
@@ -55,6 +64,43 @@ export default function HeyGenEmbed() {
         height: 100%;
         border: 0;
       }
+      .gradient-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .gradient-overlay .top-gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 320px;
+        height: 320px;
+        background: linear-gradient(to bottom right, #0F645B, #09C6CC);
+        border-radius: 50%;
+        opacity: 0.7;
+        filter: blur(48px);
+      }
+      .gradient-overlay .bottom-gradient {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 320px;
+        height: 320px;
+        background: linear-gradient(to bottom right, #0F645B, #09C6CC);
+        border-radius: 50%;
+        opacity: 0.7;
+        filter: blur(48px);
+      }
+      .logo-container {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        width: 150px;
+        height: auto;
+      }
     `;
 
     const iframe = document.createElement('iframe');
@@ -63,6 +109,24 @@ export default function HeyGenEmbed() {
     iframe.role = 'dialog';
     iframe.allow = 'microphone';
     iframe.src = url;
+
+    const gradientOverlay = document.createElement('div');
+    gradientOverlay.className = 'gradient-overlay';
+
+    const topGradient = document.createElement('div');
+    topGradient.className = 'top-gradient';
+
+    const bottomGradient = document.createElement('div');
+    bottomGradient.className = 'bottom-gradient';
+
+    gradientOverlay.appendChild(topGradient);
+    gradientOverlay.appendChild(bottomGradient);
+    document.body.appendChild(gradientOverlay);
+
+    const logoContainer = document.createElement('img');
+    logoContainer.className = 'logo-container';
+    logoContainer.src = 'https://academy.ap.education/static/media/logoNewWhite.2955fac49a99ffedd2a4847ee003052f.svg';
+    document.body.appendChild(logoContainer);
 
     let visible = false;
     let initial = false;
