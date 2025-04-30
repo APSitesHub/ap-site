@@ -38,6 +38,10 @@ export const MoldingNoClick = styled.div`
   @media screen and (min-height: 1200px) {
     height: 65%;
   }
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const MoldingNoClickSecondary = styled.div`

@@ -10,7 +10,7 @@ import {
   UserEditButton,
   UserHeadCell,
 } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useOutletContext } from 'react-router-dom';
 import { TeacherSpeakingDBSection, TeacherSpeakingDBTable } from './TeacherPage.styled';
 import { TeacherPageSpeakingEditForm } from './TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm';
@@ -20,7 +20,8 @@ const TeacherPageSpeaking = () => {
   const location = useLocation().pathname.split('/speakings/')[1];
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [course, setCourse] = useState('');
+  const course = useRef('');
+  const lang = useRef('');
   const [studentToEdit, setStudentToEdit] = useState({});
   const [currentStudentChart, setCurrentStudentChart] = useState({});
   const [isEditStudentFormOpen, setIsEditStudentFormOpen] = useState(false);
@@ -102,7 +103,7 @@ const TeacherPageSpeaking = () => {
     }
   };
   const page = getLocation(location);
-  const lang = getLanguageFromLocation(location);
+  lang.current = getLanguageFromLocation(location);
 
   const closeEditStudentFormOnClick = e => {
     if (e.target.id === 'close-on-click') {
@@ -151,15 +152,17 @@ const TeacherPageSpeaking = () => {
       try {
         setIsLoading(isLoading => (isLoading = true));
         page === 'kids-c1sc'
-          ? setCourse('10')
+          ? (course.current = '10')
           : page === 'deb1sc'
-          ? setCourse('24')
-          : setCourse(
-              (await axios.get('/timetable')).data.filter(
-                timetable => page.includes(timetable.level) && lang === timetable.lang
-              )[0].course
-            );
-        const usersToSet = await axios.get('/speakingusers');
+          ? (course.current = '24')
+          : (course.current = (await axios.get('/timetable')).data.filter(
+              timetable =>
+                page.includes(timetable.level) && lang.current === timetable.lang
+            )[0].course);
+
+        const usersToSet = await axios.get(
+          `/speakingusers?course=${course.current}&lang=${lang.current}`
+        );
 
         setUsers(
           users =>
@@ -177,12 +180,13 @@ const TeacherPageSpeaking = () => {
                 : [
                     ...usersToSet.data.filter(
                       user =>
-                        user.course === course ||
-                        user.course.split('/').some(usersCourse => usersCourse === course)
+                        user.course === course.current ||
+                        user.course
+                          .split('/')
+                          .some(usersCourse => usersCourse === course.current)
                     ),
                   ])
         );
-        console.log('eff');
       } catch (error) {
         console.log(error);
       } finally {
@@ -190,7 +194,7 @@ const TeacherPageSpeaking = () => {
       }
     };
     getSpeakingUsersRequest();
-  }, [course, page, lang]);
+  }, [page]);
 
   return (
     <TeacherSpeakingDBSection>
@@ -223,8 +227,8 @@ const TeacherPageSpeaking = () => {
                 ? new Date() -
                     new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
                     4 * 86400000 &&
-                  (lang === user.lang ||
-                    user.lang.split('/').some(userLang => lang === userLang)) &&
+                  (lang.current === user.lang ||
+                    user.lang.split('/').some(userLang => lang.current === userLang)) &&
                   (user.course.includes('24') ||
                     user.course
                       .split('/')
@@ -233,9 +237,11 @@ const TeacherPageSpeaking = () => {
                     new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
                     4 * 86400000 &&
                   (lang === user.lang ||
-                    user.lang.split('/').some(userLang => lang === userLang)) &&
-                  (course === user.course ||
-                    user.course.split('/').some(userCourse => course === userCourse))
+                    user.lang.split('/').some(userLang => lang.current === userLang)) &&
+                  (course.current === user.course ||
+                    user.course
+                      .split('/')
+                      .some(userCourse => course.current === userCourse))
             )
             .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
             .map((user, i) => (
