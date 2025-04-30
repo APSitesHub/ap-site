@@ -71,6 +71,7 @@ const UniAdminPanel = () => {
 
   const initialLinksValues = {
     pedagogium_logistics: '',
+    pedagogium_logistics_2: '',
     pedagogium_prep: '',
     wstijo_logistics: '',
     wstijo_prep: '',
@@ -95,6 +96,7 @@ const UniAdminPanel = () => {
 
   const linksSchema = yup.object().shape({
     pedagogium_logistics: yup.string().optional(),
+    pedagogium_logistics_2: yup.string().optional(),
     pedagogium_prep: yup.string().optional(),
     wstijo_logistics: yup.string().optional(),
     wstijo_prep: yup.string().optional(),
