@@ -17,12 +17,14 @@ import {
   KahootLvlBtnBox,
   LoginForm,
 } from '../KahootAdminPanel/KahootAdminPanel.styled';
+import { MANSKahootForm } from '../KahootAdminPanel/MANSKahootForm';
 import { MeritoAutomationKahootForm } from '../KahootAdminPanel/MeritoAutomationKahootForm';
 import { MeritoLogisticsKahootForm } from '../KahootAdminPanel/MeritoLogisticsKahootForm';
 import { MeritoPrepKahootForm } from '../KahootAdminPanel/MeritoPrepKahootForm';
 import { PedagogiumLogistics2KahootForm } from '../KahootAdminPanel/PedagogiumLogistics2KahootForm';
 import { PedagogiumLogisticsKahootForm } from '../KahootAdminPanel/PedagogiumLogisticsKahootForm';
 import { PedagogiumPrepKahootForm } from '../KahootAdminPanel/PedagogiumPrepKahootForm';
+import { SSWKahootForm } from '../KahootAdminPanel/SSWKahootForm';
 import { WSBMIRLogisticsKahootForm } from '../KahootAdminPanel/WSBMIRLogisticsKahootForm';
 import { WSBMIRPrepKahootForm } from '../KahootAdminPanel/WSBMIRPrepKahootForm';
 import { WSEPrepKahootForm } from '../KahootAdminPanel/WSEPrepKahootForm';
@@ -182,6 +184,8 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('eu')}>
               Education Union
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('ssw')}>SSW</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('mans')}>MANS</KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -241,6 +245,8 @@ const UniHostKahootAdminPanel = () => {
           )}
           {levels.includes('wse_prep') && <WSEPrepKahootForm destination={destination} />}
           {levels.includes('eu') && <EUKahootForm destination={destination} />}
+          {levels.includes('ssw') && <SSWKahootForm destination={destination} />}
+          {levels.includes('mans') && <MANSKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>

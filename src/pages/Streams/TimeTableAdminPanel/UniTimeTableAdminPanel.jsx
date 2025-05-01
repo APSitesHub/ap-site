@@ -221,6 +221,14 @@ const UniTimeTableAdminPanel = () => {
       label: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
       value: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
     },
+    {
+      label: 'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)',
+      value: 'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)',
+    },
+    {
+      label: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+      value: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -339,6 +347,20 @@ const UniTimeTableAdminPanel = () => {
     {
       label: 'Kurs Przygotowawczy (WSE)',
       value: '84801',
+    },
+  ];
+
+  const sswMarathonOptions = [
+    {
+      label: 'SSW',
+      value: '92196',
+    },
+  ];
+
+  const mansMarathonOptions = [
+    {
+      label: 'MANS',
+      value: '92197',
     },
   ];
 
@@ -495,6 +517,12 @@ const UniTimeTableAdminPanel = () => {
                     : uniValue ===
                       'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)'
                     ? answpMarathonOptions
+                    : uniValue ===
+                      'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)'
+                    ? sswMarathonOptions
+                    : uniValue ===
+                      'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)'
+                    ? mansMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -621,6 +649,12 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('WSE') &&
                         timetable.marathon === '84801'
                       ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('SSW') &&
+                        timetable.marathon === '92196'
+                      ? `Online Course ${timetable.marathon}`
+                      : timetable.university.includes('MANS') &&
+                        timetable.marathon === '92197'
+                      ? `Online Course ${timetable.marathon}`
                       : ''}{' '}
                     <UserEditButton onClick={() => handleMarathonEdit(timetable._id)}>
                       Edit
@@ -676,6 +710,8 @@ const UniTimeTableAdminPanel = () => {
               wspaMarathonOptions={wspaMarathonOptions}
               answpMarathonOptions={answpMarathonOptions}
               wseMarathonOptions={wseMarathonOptions}
+              sswMarathonOptions={sswMarathonOptions}
+              mansMarathonOptions={mansMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
             />
@@ -697,6 +733,8 @@ const UniTimeTableAdminPanel = () => {
               wspaMarathonOptions={wspaMarathonOptions}
               answpMarathonOptions={answpMarathonOptions}
               wseMarathonOptions={wseMarathonOptions}
+              sswMarathonOptions={sswMarathonOptions}
+              mansMarathonOptions={mansMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>

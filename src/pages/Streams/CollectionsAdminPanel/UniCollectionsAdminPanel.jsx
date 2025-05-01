@@ -89,6 +89,8 @@ const UniCollectionsAdminPanel = () => {
     wspa_prep: '',
     wse_prep: '',
     eu: '',
+    ssw: '',
+    mans: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -113,6 +115,8 @@ const UniCollectionsAdminPanel = () => {
     wspa_prep: yup.string().optional(),
     wse_prep: yup.string().optional(),
     eu: yup.string().optional(),
+    ssw: yup.string().optional(),
+    mans: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -396,6 +400,24 @@ const UniCollectionsAdminPanel = () => {
                     placeholder="Education Union Collection"
                   />
                   <AdminInputNote component="p" name="eu" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="ssw" placeholder="SSW Collection" />
+                  <AdminInputNote component="p" name="ssw" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="mans" placeholder="MANS Collection" />
+                  <AdminInputNote component="p" name="mans" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
