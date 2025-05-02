@@ -357,7 +357,7 @@ function Room({ isAdmin }) {
                   // 'security',
                   isAdmin && 'select-background',
                   isAdmin && 'settings',
-                  // 'shareaudio',
+                  isAdmin && 'shareaudio',
                   // 'sharedvideo',
                   // 'shortcuts',
                   // 'stats',
