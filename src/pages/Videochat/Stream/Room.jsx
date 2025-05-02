@@ -304,7 +304,7 @@ function Room({ isAdmin }) {
                 followMeEnabled: isAdmin,
                 disableDeepLinking: true,
                 startWithAudioMuted: true,
-                startSilent: !isAdmin,
+                disableInitialGUM: !isAdmin,
                 disableModeratorIndicator: true,
                 disableReactions: true,
                 startScreenSharing: false,
