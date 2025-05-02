@@ -482,7 +482,7 @@ const TrialVideoRoom = lazy(() =>
 );
 
 const StreamVideoRoom = lazy(() =>
-  import(/* webpackChunkName: "Stream Videochat Room" */ '../pages/Videochat/Stream/Room')
+  import(/* webpackChunkName: "Stream Videochat Room" */ '../pages/Videochat/Stream/StreamMain')
 );
 
 const IndividualVideoRoom = lazy(() =>

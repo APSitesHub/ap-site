@@ -25,6 +25,7 @@ function Room({ isAdmin }) {
   const navigate = useNavigate();
   const { id: roomID } = useParams();
   // const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
+  const [adminId, setAdminId] = useState(null);
   const [isIframeOpen, setIsIframeOpen] = useState(isAdmin);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -83,6 +84,15 @@ function Room({ isAdmin }) {
     setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
   };
 
+  const findTeacherId = participants => {
+    for (const id in participants) {
+      if (participants[id].displayName.endsWith('(teacher)')) {
+        return id;
+      }
+    }
+    return null;
+  };
+
   const handleApiReady = async externalApi => {
     const participants = await externalApi.getParticipantsInfo();
 
@@ -90,6 +100,16 @@ function Room({ isAdmin }) {
       setIsIframeOpen(true);
 
     externalApi.addListener('participantJoined', participant => {
+      if (!adminId) {
+        const fidedAdminId = findTeacherId(externalApi._participants);
+        setAdminId(() => {
+          externalApi.pinParticipant(fidedAdminId);
+          setAdminId(fidedAdminId);
+
+          return fidedAdminId;
+        });
+      }
+
       if (participant.displayName.endsWith('(teacher)')) {
         setIsIframeOpen(true);
       }
