@@ -11,7 +11,7 @@ import { AdminFormBtn } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { GradientBackground, LoginForm, LoginPage } from '../Videochat.styled';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Login({ logined }) {
   const { id: roomID } = useParams();
@@ -53,6 +53,23 @@ function Login({ logined }) {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      console.log('token refresher');
+      try {
+        const res = await axios.post(
+          'https://ap-server-8qi1.onrender.com/users/refresh',
+          { mail: localStorage.getItem('mail') }
+        );
+        logined();
+        localStorage.setItem('userName', res.data.user.name);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    refreshToken();
+  }, [logined]);
 
   return (
     <GradientBackground>

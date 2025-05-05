@@ -57,7 +57,21 @@ export const Timetable = ({
       : timeline.lang === language && timeline.course === course
   );
 
+  const getRoomId = roomLevel => {
+    const roomMapping = {
+      b2: '2505c0a8-9136-4c13-8a5d-272a33a2d87b',
+    };
+
+    return roomMapping[roomLevel] || null;
+  };
+
   const getLink = () => {
+    const roomId = getRoomId(personalTimetable?.level);
+
+    if (roomId) {
+      return `https://academy.ap.education/room/stream/${personalTimetable?.level}/${roomId}`;
+    }
+
     const baseStreamUrl = 'https://academy.ap.education/streams/';
     const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';
 
