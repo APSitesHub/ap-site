@@ -1,226 +1,235 @@
-import useSize from '@react-hook/size';
-import axios from 'axios';
-import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
-import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
-import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
-import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
-import { Support } from 'components/Stream/Support/Support';
-import { useEffect, useRef, useState } from 'react';
-import ReactPlayer from 'react-player';
-import { useOutletContext } from 'react-router-dom';
-import { io } from 'socket.io-client';
-import { Chat } from 'utils/Chat/Chat';
-import {
-  BoxHideLeftSwitch,
-  BoxHideRightSwitch,
-  BoxHideSwitch,
-  ButtonBox,
-  ChatBox,
-  ChatBtn,
-  ChatLogo,
-  KahootBtn,
-  KahootLogo,
-  MoldingNoClick,
-  MoldingNoClickSecondary,
-  StreamPlaceHolder,
-  StreamPlaceHolderText,
-  StreamSection,
-  SupportArrow,
-  SupportBtn,
-  SupportLogo,
-  SupportMarkerLeft,
-  SupportMarkerRight,
-  SupportPointer,
-  VideoBox,
-} from '../../../components/Stream/Stream.styled';
+// import useSize from '@react-hook/size';
+// import axios from 'axios';
+// import { Kahoots } from 'components/Stream/Kahoots/Kahoots';
+// import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
+// import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
+// import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
+// import { Support } from 'components/Stream/Support/Support';
+// import { useEffect, useRef, useState } from 'react';
+// import ReactPlayer from 'react-player';
+// import { useNavigate, useOutletContext } from 'react-router-dom';
+// import { io } from 'socket.io-client';
+// import { Chat } from 'utils/Chat/Chat';
+// import {
+//   BoxHideLeftSwitch,
+//   BoxHideRightSwitch,
+//   BoxHideSwitch,
+//   ButtonBox,
+//   ChatBox,
+//   ChatBtn,
+//   ChatLogo,
+//   KahootBtn,
+//   KahootLogo,
+//   MoldingNoClick,
+//   MoldingNoClickSecondary,
+//   StreamPlaceHolder,
+//   StreamPlaceHolderText,
+//   StreamSection,
+//   SupportArrow,
+//   SupportBtn,
+//   SupportLogo,
+//   SupportMarkerLeft,
+//   SupportMarkerRight,
+//   SupportPointer,
+//   VideoBox,
+// } from '../../../components/Stream/Stream.styled';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const StreamB2 = () => {
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isKahootOpen, setIsKahootOpen] = useState(false);
-  const [isSupportOpen, setIsSupportOpen] = useState(false);
-  const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
-  const [isOpenedLast, setIsOpenedLast] = useState('');
-  const [isAnimated, setIsAnimated] = useState(false);
-  const [animatedID, setAnimationID] = useState('');
-  const [links, isLoading, currentUser, room] = useOutletContext();
-  const chatEl = useRef();
-  // eslint-disable-next-line
-  const [chatWidth, chatHeight] = useSize(chatEl);
-  const [width, height] = useSize(document.body);
-  const [isBanned, setIsBanned] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
-  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
-  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
+  // const [isChatOpen, setIsChatOpen] = useState(false);
+  // const [isKahootOpen, setIsKahootOpen] = useState(false);
+  // const [isSupportOpen, setIsSupportOpen] = useState(false);
+  // const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
+  // const [isOpenedLast, setIsOpenedLast] = useState('');
+  // const [isAnimated, setIsAnimated] = useState(false);
+  // const [animatedID, setAnimationID] = useState('');
+  // const [links, isLoading, currentUser, room] = useOutletContext();
+  // const chatEl = useRef();
+  // // eslint-disable-next-line
+  // const [chatWidth, chatHeight] = useSize(chatEl);
+  // const [width, height] = useSize(document.body);
+  // const [isBanned, setIsBanned] = useState(false);
+  // const [messages, setMessages] = useState([]);
+  // const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  // const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  // const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
 
-  const toggleKahoot = e => {
-    setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    isChatOpen || isSupportOpen
-      ? setIsOpenedLast(isOpenedLast => 'kahoot')
-      : setIsOpenedLast(isOpenedLast => '');
-  };
-  const toggleChat = () => {
-    setIsChatOpen(isChatOpen => !isChatOpen);
-    isKahootOpen || isSupportOpen
-      ? setIsOpenedLast(isOpenedLast => 'chat')
-      : setIsOpenedLast(isOpenedLast => '');
-  };
-  const toggleSupport = () => {
-    setIsSupportOpen(isSupportOpen => !isSupportOpen);
-    setAnimationID('');
-    isKahootOpen || isChatOpen
-      ? setIsOpenedLast(isOpenedLast => 'support')
-      : setIsOpenedLast(isOpenedLast => '');
-  };
-  const toggleButtonBox = () => {
-    setIsButtonBoxOpen(isOpen => !isOpen);
-  };
-  const handleSupportClick = data_id => {
-    setAnimationID(id => (id = data_id));
-    if (!isAnimated) {
-      setIsAnimated(isAnimated => !isAnimated);
-    }
-  };
-  const toggleQuizInput = () => {
-    setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
-  };
-  const toggleQuizOptions = () => {
-    setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
-  };
-  const toggleQuizTrueFalse = () => {
-    setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
-  };
+  // const toggleKahoot = e => {
+  //   setIsKahootOpen(isKahootOpen => !isKahootOpen);
+  //   isChatOpen || isSupportOpen
+  //     ? setIsOpenedLast(isOpenedLast => 'kahoot')
+  //     : setIsOpenedLast(isOpenedLast => '');
+  // };
+  // const toggleChat = () => {
+  //   setIsChatOpen(isChatOpen => !isChatOpen);
+  //   isKahootOpen || isSupportOpen
+  //     ? setIsOpenedLast(isOpenedLast => 'chat')
+  //     : setIsOpenedLast(isOpenedLast => '');
+  // };
+  // const toggleSupport = () => {
+  //   setIsSupportOpen(isSupportOpen => !isSupportOpen);
+  //   setAnimationID('');
+  //   isKahootOpen || isChatOpen
+  //     ? setIsOpenedLast(isOpenedLast => 'support')
+  //     : setIsOpenedLast(isOpenedLast => '');
+  // };
+  // const toggleButtonBox = () => {
+  //   setIsButtonBoxOpen(isOpen => !isOpen);
+  // };
+  // const handleSupportClick = data_id => {
+  //   setAnimationID(id => (id = data_id));
+  //   if (!isAnimated) {
+  //     setIsAnimated(isAnimated => !isAnimated);
+  //   }
+  // };
+  // const toggleQuizInput = () => {
+  //   setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
+  // };
+  // const toggleQuizOptions = () => {
+  //   setIsQuizOptionsOpen(isQuizOptionsOpen => !isQuizOptionsOpen);
+  // };
+  // const toggleQuizTrueFalse = () => {
+  //   setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
+  // };
 
-  const videoBoxWidth =
-    chatWidth === 0 && width > height ? width - 300 : width - chatWidth;
+  // const videoBoxWidth =
+  //   chatWidth === 0 && width > height ? width - 300 : width - chatWidth;
 
-  const socketRef = useRef(null);
+  // const socketRef = useRef(null);
+
+  // useEffect(() => {
+  //   document.title = 'B2 English | AP Education';
+
+  //   socketRef.current = io('https://ap-chat-server.onrender.com/');
+
+  //   socketRef.current.on('connected', (connected, handshake) => {
+  //     console.log(connected);
+  //     console.log(handshake.time);
+  //   });
+
+  //   const getMessages = async () => {
+  //     console.log('get');
+  //     try {
+  //       const dbMessages = await axios.get(
+  //         `https://ap-chat-server.onrender.com/messages/room`,
+  //         {
+  //           params: {
+  //             room,
+  //           },
+  //         }
+  //       );
+  //       const todayMessages = dbMessages.data.filter(
+  //         message => new Date(message.createdAt).getDate() === new Date().getDate()
+  //       );
+  //       setMessages(messages => (messages = todayMessages));
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getMessages();
+
+  //   socketRef.current.on('message', async data => {
+  //     setMessages(messages => (messages = [...messages, data]));
+  //     const updateMessages = async () => {
+  //       try {
+  //         await axios.post('https://ap-chat-server.onrender.com/messages', data);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     };
+  //     await updateMessages();
+  //   });
+
+  //   socketRef.current.on('message:get', async data => {
+  //     setMessages(messages => (messages = [...messages, data]));
+  //   });
+
+  //   socketRef.current.on('message:pinned', async (id, data) => {
+  //     console.log(id);
+  //     console.log(data);
+  //     setMessages(messages => {
+  //       messages[messages.findIndex(message => message.id === id)].isPinned =
+  //         data.isPinned;
+  //       return [...messages];
+  //     });
+  //   });
+
+  //   socketRef.current.on('message:delete', async id => {
+  //     console.log('delete fired');
+  //     setMessages(
+  //       messages => (messages = [...messages.filter(message => message.id !== id)])
+  //     );
+  //     const deleteMessage = async () => {
+  //       try {
+  //         await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     };
+  //     await deleteMessage();
+  //   });
+
+  //   socketRef.current.on('message:deleted', async id => {
+  //     console.log(id);
+  //     setMessages(
+  //       messages => (messages = [...messages.filter(message => message.id !== id)])
+  //     );
+  //   });
+
+  //   socketRef.current.on('user:banned', async (userID, userIP) => {
+  //     console.log(userID);
+  //     console.log(userIP);
+  //     if (userID === currentUser.userID) {
+  //       setIsBanned(true);
+  //     }
+  //   });
+
+  //   // open quizzes on event
+  //   socketRef.current.on('question:input', data => {
+  //     console.log(data.page);
+  //     data.page === room.replace('/streams/', '') && setIsQuizInputOpen(true);
+  //   });
+  //   socketRef.current.on('question:options', data => {
+  //     console.log(data.page);
+  //     data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(true);
+  //   });
+  //   socketRef.current.on('question:trueFalse', data => {
+  //     console.log(data.page);
+  //     data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(true);
+  //   });
+
+  //   // close quizzes on event
+  //   socketRef.current.on('question:closeInput', data => {
+  //     console.log(data);
+  //     data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
+  //   });
+  //   socketRef.current.on('question:closeOptions', data => {
+  //     console.log(data);
+  //     data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
+  //   });
+  //   socketRef.current.on('question:closeTrueFalse', data => {
+  //     console.log(data);
+  //     data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
+  //   });
+
+  //   return () => {
+  //     socketRef.current.off('connected');
+  //     socketRef.current.off('message');
+  //     socketRef.current.disconnect();
+  //   };
+  // }, [currentUser, room]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = 'B2 English | AP Education';
-
-    socketRef.current = io('https://ap-chat-server.onrender.com/');
-
-    socketRef.current.on('connected', (connected, handshake) => {
-      console.log(connected);
-      console.log(handshake.time);
-    });
-
-    const getMessages = async () => {
-      console.log('get');
-      try {
-        const dbMessages = await axios.get(
-          `https://ap-chat-server.onrender.com/messages/room`,
-          {
-            params: {
-              room,
-            },
-          }
-        );
-        const todayMessages = dbMessages.data.filter(
-          message => new Date(message.createdAt).getDate() === new Date().getDate()
-        );
-        setMessages(messages => (messages = todayMessages));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getMessages();
-
-    socketRef.current.on('message', async data => {
-      setMessages(messages => (messages = [...messages, data]));
-      const updateMessages = async () => {
-        try {
-          await axios.post('https://ap-chat-server.onrender.com/messages', data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      await updateMessages();
-    });
-
-    socketRef.current.on('message:get', async data => {
-      setMessages(messages => (messages = [...messages, data]));
-    });
-
-    socketRef.current.on('message:pinned', async (id, data) => {
-      console.log(id);
-      console.log(data);
-      setMessages(messages => {
-        messages[messages.findIndex(message => message.id === id)].isPinned =
-          data.isPinned;
-        return [...messages];
-      });
-    });
-
-    socketRef.current.on('message:delete', async id => {
-      console.log('delete fired');
-      setMessages(
-        messages => (messages = [...messages.filter(message => message.id !== id)])
-      );
-      const deleteMessage = async () => {
-        try {
-          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      await deleteMessage();
-    });
-
-    socketRef.current.on('message:deleted', async id => {
-      console.log(id);
-      setMessages(
-        messages => (messages = [...messages.filter(message => message.id !== id)])
-      );
-    });
-
-    socketRef.current.on('user:banned', async (userID, userIP) => {
-      console.log(userID);
-      console.log(userIP);
-      if (userID === currentUser.userID) {
-        setIsBanned(true);
-      }
-    });
-
-    // open quizzes on event
-    socketRef.current.on('question:input', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(true);
-    });
-    socketRef.current.on('question:options', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(true);
-    });
-    socketRef.current.on('question:trueFalse', data => {
-      console.log(data.page);
-      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(true);
-    });
-
-    // close quizzes on event
-    socketRef.current.on('question:closeInput', data => {
-      console.log(data);
-      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
-    });
-    socketRef.current.on('question:closeOptions', data => {
-      console.log(data);
-      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
-    });
-    socketRef.current.on('question:closeTrueFalse', data => {
-      console.log(data);
-      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
-    });
-
-    return () => {
-      socketRef.current.off('connected');
-      socketRef.current.off('message');
-      socketRef.current.disconnect();
-    };
-  }, [currentUser, room]);
+    navigate('/room/stream/b2/2505c0a8-9136-4c13-8a5d-272a33a2d87b');
+  }, []);
 
   return (
     <>
-      {(links.b2 === undefined || links.b2[0] < 10) && !isLoading ? (
+    <div></div>
+      {/* {(links.b2 === undefined || links.b2[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Христос воскрес! <br />
@@ -382,7 +391,7 @@ const StreamB2 = () => {
             </ChatBox>
           )}
         </>
-      )}
+      )} */}
     </>
   );
 };

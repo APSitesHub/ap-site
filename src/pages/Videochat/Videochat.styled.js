@@ -533,6 +533,7 @@ export const SubTitle = styled.h3`
   font-size: 20px;
   color: #555;
   margin-bottom: 10px;
+  text-align: center;
 `;
 
 export const FormGroup = styled.div`
@@ -583,6 +584,12 @@ export const Button = styled.button`
   }
 `;
 
+export const RoomListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+`;
+
 export const RoomList = styled.ul`
   list-style: none;
   padding: 0;
@@ -597,6 +604,18 @@ export const RoomItem = styled.li`
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-bottom: 10px;
+  gap: 1rem;
+`;
+
+export const RoomTitle = styled.div`
+  padding-bottom: 4px;
+  border-bottom: 1px solid lightgray;
+`;
+
+export const RoomInfo = styled.div`
+  padding-top: 4px;
+  font-size: 0.8rem;
+  color: gray;
 `;
 
 export const JoinButton = styled(Button)`
