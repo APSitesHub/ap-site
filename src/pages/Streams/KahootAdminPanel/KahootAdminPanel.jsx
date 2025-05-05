@@ -72,6 +72,13 @@ import { TrialsDeKahootForm } from './TrialsDeKahootForm';
 import { TrialsEngKahootForm } from './TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from './TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from './TrialsPlKahootForm';
+import { KubrakKahootForm } from './KubrakKahootForm';
+import { BulavkaKahootForm } from './BulavkaKahootForm';
+import { IvachevskaKahootForm } from './IvachevskaKahootForm';
+import { DeinekaKahootForm } from './DeinekaKahootForm';
+import { NakonechnaKahootForm } from './NakonechnaKahootForm';
+import { HeinzKahootForm } from './HeinzKahootForm';
+import { DolokaKahootForm } from './DolokaKahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -268,6 +275,17 @@ export const KahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('apconf')}>
               AP Conference
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('kubrak')}>Кубрак</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('bulavka')}>Булавка</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('ivachevska')}>
+              Івачевська
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('deineka')}>Дейнека</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('nakonechna')}>
+              Наконечна
+            </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('heinz')}>Хайнц</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('doloka')}>Долока</KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -381,6 +399,17 @@ export const KahootAdminPanel = () => {
           {levels.includes('apconf') && (
             <APConferenceKahootForm destination={destination} />
           )}
+          {levels.includes('kubrak') && <KubrakKahootForm destination={destination} />}
+          {levels.includes('bulavka') && <BulavkaKahootForm destination={destination} />}
+          {levels.includes('ivachevska') && (
+            <IvachevskaKahootForm destination={destination} />
+          )}
+          {levels.includes('deineka') && <DeinekaKahootForm destination={destination} />}
+          {levels.includes('nakonechna') && (
+            <NakonechnaKahootForm destination={destination} />
+          )}
+          {levels.includes('heinz') && <HeinzKahootForm destination={destination} />}
+          {levels.includes('doloka') && <DolokaKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>
