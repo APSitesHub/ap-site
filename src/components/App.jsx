@@ -405,6 +405,11 @@ const Deutsch = lazy(() =>
 const TeacherPage = lazy(() =>
   import(/* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPage')
 );
+const TeacherPageIndividual = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page for Individual Lessons" */ '../pages/TeacherPage/TeacherPageIndividual'
+  )
+);
 const TeacherPageTrialLesson = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Trial Lesson Page" */ '../pages/TeacherPage/TeacherPageTrialLesson'
@@ -482,7 +487,9 @@ const TrialVideoRoom = lazy(() =>
 );
 
 const StreamVideoRoom = lazy(() =>
-  import(/* webpackChunkName: "Stream Videochat Room" */ '../pages/Videochat/Stream/StreamMain')
+  import(
+    /* webpackChunkName: "Stream Videochat Room" */ '../pages/Videochat/Stream/StreamMain'
+  )
 );
 
 const IndividualVideoRoom = lazy(() =>
@@ -747,6 +754,13 @@ export const App = () => {
             <Route path="record-chat" element={<WindowedChat />} noindex={true} />
             <Route path="apconf" element={<APConf />} noindex={true} />
             <Route path="apconf-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="kubrak-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="bulavka-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="ivachevska-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="deineka-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="nakonechna-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="heinz-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="doloka-chat" element={<WindowedChat />} noindex={true} />
             <Route path="stream-admin-panel" element={<AdminPanel />} noindex={true} />
             <Route
               path="uni-stream-admin-panel"
@@ -1077,6 +1091,13 @@ export const App = () => {
             <Route path="pedagogium" element={<TeacherPage />} noindex={true} />
             <Route path="wstijo" element={<TeacherPage />} noindex={true} />
             <Route path="wsbmir" element={<TeacherPage />} noindex={true} />
+            <Route path="kubrak" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="bulavka" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="ivachevska" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="deineka" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="nakonechna" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="heinz" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="doloka" element={<TeacherPageIndividual />} noindex={true} />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route
