@@ -115,6 +115,14 @@ function Room({ isAdmin }) {
       }
     });
 
+    externalApi.addListener('participantRoleChanged', participant => {
+      if (participant.role === 'moderator') {
+        setIsIframeOpen(true);
+        externalApi.pinParticipant(participant.id);
+        setAdminId(participant.id);
+      }
+    });
+
     return () => {
       externalApi.removeAllListeners();
     };
@@ -292,8 +300,7 @@ function Room({ isAdmin }) {
               top: '0',
               left: '0',
               width: '100%',
-              height: '100%',
-              transform: isIframeOpen ? 'translateX(0)' : 'translateX(100%)',
+              height: isIframeOpen ? '100%' : '0',
             }}
           >
             <JitsiMeeting
