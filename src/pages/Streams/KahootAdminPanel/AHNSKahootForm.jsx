@@ -21,25 +21,25 @@ import {
   WarningText,
 } from './KahootAdminPanel.styled';
 
-export const MANSKahootForm = ({ destination }) => {
+export const AHNSahootForm = ({ destination }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
 
   const initialLinksValues = {
-    mans_1: '',
-    mans_2: '',
-    mans_3: '',
-    mans_4: '',
-    mans_5: '',
+    ahns_1: '',
+    ahns_2: '',
+    ahns_3: '',
+    ahns_4: '',
+    ahns_5: '',
     replace: true,
   };
 
   const linksSchema = yup.object().shape({
-    mans_1: yup.string().optional(),
-    mans_2: yup.string().optional(),
-    mans_3: yup.string().optional(),
-    mans_4: yup.string().optional(),
-    mans_5: yup.string().optional(),
+    ahns_1: yup.string().optional(),
+    ahns_2: yup.string().optional(),
+    ahns_3: yup.string().optional(),
+    ahns_4: yup.string().optional(),
+    ahns_5: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
@@ -81,16 +81,16 @@ export const MANSKahootForm = ({ destination }) => {
       );
 
     if (!emptyValues || confirmation) {
-      const manslinks = { mans: { links: {} } };
+      const ahnslinks = { ahns: { links: {} } };
       for (const [key, value] of Object.entries(values)) {
         if (value && key !== 'replace') {
-          manslinks.mans.links[key] = value;
+          ahnslinks.ahns.links[key] = value;
         } else {
-          manslinks.mans.replace = value;
+          ahnslinks.ahns.replace = value;
         }
       }
       try {
-        const response = await axios.patch(destination, manslinks);
+        const response = await axios.patch(destination, ahnslinks);
         console.log(response);
         resetForm();
         alert('Лінки замінилися, молодець');
@@ -109,7 +109,7 @@ export const MANSKahootForm = ({ destination }) => {
   return (
     <>
       <AdminPanelSection>
-        <FormTitle>MANS</FormTitle>
+        <FormTitle>AHNS</FormTitle>
         <Formik
           initialValues={initialLinksValues}
           onSubmit={handleLinksSubmit}
@@ -119,41 +119,41 @@ export const MANSKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="mans_1"
+                name="ahns_1"
                 autoComplete="off"
-                placeholder="Перший кахут для MANS"
+                placeholder="Перший кахут для AHNS"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="mans_2"
+                name="ahns_2"
                 autoComplete="off"
-                placeholder="Другий кахут для MANS"
+                placeholder="Другий кахут для AHNS"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="mans_3"
+                name="ahns_3"
                 autoComplete="off"
-                placeholder="Третій кахут для MANS"
+                placeholder="Третій кахут для AHNS"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="mans_4"
+                name="ahns_4"
                 autoComplete="off"
-                placeholder="Четвертий кахут для MANS"
+                placeholder="Четвертий кахут для AHNS"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="mans_5"
+                name="ahns_5"
                 autoComplete="off"
-                placeholder="П'ятий кахут для MANS"
+                placeholder="П'ятий кахут для AHNS"
               />
             </Label>
             <LabelCheckBox>

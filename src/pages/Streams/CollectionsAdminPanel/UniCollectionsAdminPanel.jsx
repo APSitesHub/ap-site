@@ -91,6 +91,7 @@ const UniCollectionsAdminPanel = () => {
     eu: '',
     ssw: '',
     mans: '',
+    ahns: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -117,6 +118,7 @@ const UniCollectionsAdminPanel = () => {
     eu: yup.string().optional(),
     ssw: yup.string().optional(),
     mans: yup.string().optional(),
+    ahns: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -418,6 +420,15 @@ const UniCollectionsAdminPanel = () => {
                 <Label>
                   <AdminInput type="text" name="mans" placeholder="MANS Collection" />
                   <AdminInputNote component="p" name="mans" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="ahns" placeholder="AHNS Collection" />
+                  <AdminInputNote component="p" name="ahns" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

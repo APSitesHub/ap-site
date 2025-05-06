@@ -52,6 +52,7 @@ const Univesitets = {
   ANSWP: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
   SSW: 'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)',
   MANS: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+  AHNS: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
 };
 
 const translations = {
@@ -200,6 +201,10 @@ const UniUserAdminPanel = ({ uni, lang = 'ua' }) => {
     {
       label: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
       value: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+    },
+    {
+      label: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
+      value: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
     },
   ];
 

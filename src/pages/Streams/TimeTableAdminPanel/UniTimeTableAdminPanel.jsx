@@ -229,6 +229,10 @@ const UniTimeTableAdminPanel = () => {
       label: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
       value: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
     },
+    {
+      label: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
+      value: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -361,6 +365,13 @@ const UniTimeTableAdminPanel = () => {
     {
       label: 'MANS',
       value: '92197',
+    },
+  ];
+
+  const ahnsMarathonOptions = [
+    {
+      label: 'AHNS',
+      value: '92768',
     },
   ];
 
@@ -523,6 +534,8 @@ const UniTimeTableAdminPanel = () => {
                     : uniValue ===
                       'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)'
                     ? mansMarathonOptions
+                    : uniValue === 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)'
+                    ? ahnsMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -655,6 +668,9 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('MANS') &&
                         timetable.marathon === '92197'
                       ? `Online Course ${timetable.marathon}`
+                      : timetable.university.includes('AHNS') &&
+                        timetable.marathon === '92768'
+                      ? `Online Course ${timetable.marathon}`
                       : ''}{' '}
                     <UserEditButton onClick={() => handleMarathonEdit(timetable._id)}>
                       Edit
@@ -712,6 +728,7 @@ const UniTimeTableAdminPanel = () => {
               wseMarathonOptions={wseMarathonOptions}
               sswMarathonOptions={sswMarathonOptions}
               mansMarathonOptions={mansMarathonOptions}
+              ahnsMarathonOptions={ahnsMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
             />
@@ -735,6 +752,7 @@ const UniTimeTableAdminPanel = () => {
               wseMarathonOptions={wseMarathonOptions}
               sswMarathonOptions={sswMarathonOptions}
               mansMarathonOptions={mansMarathonOptions}
+              ahnsMarathonOptions={ahnsMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>
