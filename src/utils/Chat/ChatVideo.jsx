@@ -6,12 +6,12 @@ import {
   ChatHeader,
   ChatHeaderLogo,
   ChatHeading,
-  ToggleContainer
+  ToggleContainer,
 } from './Chat.styled';
 import { ChatVideoBody } from './ChatVideoBody';
 import { ChatVideoFooter } from './ChatVideoFooter';
 
-export const ChatVideo = ({ socket, messages, isChatOpen, currentUser }) => {
+export const ChatVideo = ({ socket, messages, isChatOpen, currentUser, lang }) => {
   const [theme, setTheme] = useState('auto');
 
   console.log(17, socket);
@@ -45,7 +45,12 @@ export const ChatVideo = ({ socket, messages, isChatOpen, currentUser }) => {
           isChatOpen={isChatOpen}
           currentUser={currentUser}
         />
-        <ChatVideoFooter socket={socket} theme={theme} currentUser={currentUser} />
+        <ChatVideoFooter
+          socket={socket}
+          theme={theme}
+          currentUser={currentUser}
+          lang={lang}
+        />
       </ChatContainer>
     </ThemeProvider>
   );

@@ -21,10 +21,9 @@ import { JitsiMeeting } from '@jitsi/react-sdk';
 
 const debug = true;
 
-function Room({ isAdmin }) {
+function Room({ isAdmin, lang }) {
   const navigate = useNavigate();
   const { id: roomID } = useParams();
-  // const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
   const [adminId, setAdminId] = useState(null);
   const [isIframeOpen, setIsIframeOpen] = useState(isAdmin);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
@@ -281,10 +280,15 @@ function Room({ isAdmin }) {
             isKahootOpen={isKahootOpen}
             isChatOpen={isChatOpen}
             isOpenedLast={isOpenedLast}
+            lang={lang}
           />
 
           <GradientBackground>
-            <LargeText>Викладача поки немає!</LargeText>
+            <LargeText>
+              {lang === 'pl'
+                ? 'Nauczyciel jeszcze nie przyszedł!'
+                : 'Викладача поки немає!'}
+            </LargeText>
           </GradientBackground>
           <div
             style={{
@@ -403,7 +407,9 @@ function Room({ isAdmin }) {
                 iframeRef.style.width = '100%';
               }}
               onReadyToClose={() => {
-                isAdmin ? navigate('../../videochat') : navigate('../../end-call');
+                isAdmin
+                  ? navigate('../../videochat')
+                  : navigate(lang === 'pl' ? '../../end-call-pl' : '../../end-call');
               }}
               onApiReady={handleApiReady}
             />
@@ -447,6 +453,7 @@ function Room({ isAdmin }) {
             messages={messages}
             isChatOpen={isChatOpen}
             currentUser={currentUser}
+            lang={lang}
           />
         </ChatBox>
       </div>

@@ -10,10 +10,7 @@ import {
 import { GradientBackground, LoginForm, LoginPage } from '../Videochat.styled';
 import { useParams } from 'react-router-dom';
 
-function Login({ logined }) {
-  const { id: roomID } = useParams();
-  const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
-
+function Login({ logined, lang }) {
   const initialLoginValues = {
     userName: localStorage.getItem('userName') || '',
   };

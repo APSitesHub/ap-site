@@ -8,6 +8,7 @@ function TrialMain() {
   const { id: roomID } = useParams();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isUserLogined, setIsUserLogined] = useState(false);
+  const lang = roomID === '8f1364fe-9f59-4408-ba81-417a6a45ac5b' ? 'pl' : 'ua';
 
   useEffect(() => {
     if (localStorage.getItem('userName')) {
@@ -36,7 +37,13 @@ function TrialMain() {
   };
 
   return (
-    <>{isUserLogined ? <Room isAdmin={isAdmin} /> : <Login logined={handleLogin} />}</>
+    <>
+      {isUserLogined ? (
+        <Room isAdmin={isAdmin} lang={lang} />
+      ) : (
+        <Login logined={handleLogin} lang={lang} />
+      )}
+    </>
   );
 }
 
