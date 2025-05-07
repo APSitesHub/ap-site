@@ -13,7 +13,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import { ChatVideo } from 'utils/Chat/ChatVideo';
-import { GradientBackground, LargeText, PageContainer } from '../Videochat.styled';
+import {
+  GradientBackground,
+  JitsiContainer,
+  LargeText,
+  PageContainer,
+} from '../Videochat.styled';
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
@@ -253,6 +258,18 @@ function Room({ isAdmin, lang }) {
     };
   }, [currentUser, room]);
 
+  useEffect(() => {
+    const setAppHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    setAppHeight();
+    window.addEventListener('resize', setAppHeight);
+
+    return () => window.removeEventListener('resize', setAppHeight);
+  }, []);
+
   return (
     <>
       <div
@@ -290,24 +307,21 @@ function Room({ isAdmin, lang }) {
                 : 'Викладача поки немає!'}
             </LargeText>
           </GradientBackground>
-          <div
+          <JitsiContainer
             style={{
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: '100%',
-              transform: isIframeOpen ? 'translateX(0)' : 'translateX(100%)',
+              height: isIframeOpen ? 'calc(var(--vh, 1vh) * 100)' : '0',
             }}
           >
             <JitsiMeeting
               domain="videohost.ap.education"
               roomName={roomID}
               configOverwrite={{
+                disableTileEnlargement: true,
                 startWithVideoMuted: !isAdmin,
                 followMeEnabled: isAdmin,
                 disableDeepLinking: true,
                 startWithAudioMuted: true,
+                disableInitialGUM: !isAdmin,
                 disableModeratorIndicator: true,
                 disableReactions: true,
                 startScreenSharing: false,
@@ -392,10 +406,89 @@ function Room({ isAdmin, lang }) {
                 hideConferenceTimer: true,
                 hideRecordingLabel: false,
                 hideParticipantsStats: true,
-                notifications: [],
+                disabledNotifications: [
+                  'connection.CONNFAIL', // shown when the connection fails,
+                  'dialog.cameraConstraintFailedError', // shown when the camera failed
+                  'dialog.cameraNotSendingData', // shown when there's no feed from user's camera
+                  'dialog.kickTitle', // shown when user has been kicked
+                  'dialog.liveStreaming', // livestreaming notifications (pending, on, off, limits)
+                  'dialog.lockTitle', // shown when setting conference password fails
+                  'dialog.maxUsersLimitReached', // shown when maximmum users limit has been reached
+                  'dialog.micNotSendingData', // shown when user's mic is not sending any audio
+                  'dialog.passwordNotSupportedTitle', // shown when setting conference password fails due to password format
+                  'dialog.recording', // recording notifications (pending, on, off, limits)
+                  'dialog.remoteControlTitle', // remote control notifications (allowed, denied, start, stop, error)
+                  'dialog.reservationError',
+                  'dialog.screenSharingFailedTitle', // shown when the screen sharing failed
+                  'dialog.serviceUnavailable', // shown when server is not reachable
+                  'dialog.sessTerminated', // shown when there is a failed conference session
+                  'dialog.sessionRestarted', // show when a client reload is initiated because of bridge migration
+                  'dialog.tokenAuthFailed', // show when an invalid jwt is used
+                  'dialog.tokenAuthFailedWithReasons', // show when an invalid jwt is used with the reason behind the error
+                  'dialog.transcribing', // transcribing notifications (pending, off)
+                  'dialOut.statusMessage', // shown when dial out status is updated.
+                  'liveStreaming.busy', // shown when livestreaming service is busy
+                  'liveStreaming.failedToStart', // shown when livestreaming fails to start
+                  'liveStreaming.unavailableTitle', // shown when livestreaming service is not reachable
+                  'lobby.joinRejectedMessage', // shown when while in a lobby, user's request to join is rejected
+                  'lobby.notificationTitle', // shown when lobby is toggled and when join requests are allowed / denied
+                  'notify.audioUnmuteBlockedTitle', // shown when mic unmute blocked
+                  'notify.chatMessages', // shown when receiving chat messages while the chat window is closed
+                  'notify.connectedOneMember', // show when a participant joined
+                  'notify.connectedThreePlusMembers', // show when more than 2 participants joined simultaneously
+                  'notify.connectedTwoMembers', // show when two participants joined simultaneously
+                  'notify.dataChannelClosed', // shown when the bridge channel has been disconnected
+                  'notify.hostAskedUnmute', // shown to participant when host asks them to unmute
+                  'notify.invitedOneMember', // shown when 1 participant has been invited
+                  'notify.invitedThreePlusMembers', // shown when 3+ participants have been invited
+                  'notify.invitedTwoMembers', // shown when 2 participants have been invited
+                  'notify.kickParticipant', // shown when a participant is kicked
+                  'notify.leftOneMember', // show when a participant left
+                  'notify.leftThreePlusMembers', // show when more than 2 participants left simultaneously
+                  'notify.leftTwoMembers', // show when two participants left simultaneously
+                  'notify.linkToSalesforce', // shown when joining a meeting with salesforce integration
+                  'notify.localRecordingStarted', // shown when the local recording has been started
+                  'notify.localRecordingStopped', // shown when the local recording has been stopped
+                  'notify.moderationInEffectCSTitle', // shown when user attempts to share content during AV moderation
+                  'notify.moderationInEffectTitle', // shown when user attempts to unmute audio during AV moderation
+                  'notify.moderationInEffectVideoTitle', // shown when user attempts to enable video during AV moderation
+                  'notify.moderator', // shown when user gets moderator privilege
+                  'notify.mutedRemotelyTitle', // shown when user is muted by a remote party
+                  'notify.mutedTitle', // shown when user has been muted upon joining,
+                  'notify.newDeviceAudioTitle', // prompts the user to use a newly detected audio device
+                  'notify.newDeviceCameraTitle', // prompts the user to use a newly detected camera
+                  'notify.noiseSuppressionFailedTitle', // shown when failed to start noise suppression
+                  'notify.participantWantsToJoin', // shown when lobby is enabled and participant requests to join meeting
+                  'notify.participantsWantToJoin', // shown when lobby is enabled and participants request to join meeting
+                  'notify.passwordRemovedRemotely', // shown when a password has been removed remotely
+                  'notify.passwordSetRemotely', // shown when a password has been set remotely
+                  'notify.raisedHand', // shown when a participant used raise hand,
+                  'notify.screenShareNoAudio', // shown when the audio could not be shared for the selected screen
+                  'notify.screenSharingAudioOnlyTitle', // shown when the best performance has been affected by screen sharing
+                  'notify.selfViewTitle', // show "You can always un-hide the self-view from settings"
+                  'notify.startSilentTitle', // shown when user joined with no audio
+                  'notify.suboptimalExperienceTitle', // show the browser warning
+                  'notify.unmute', // shown to moderator when user raises hand during AV moderation
+                  'notify.videoMutedRemotelyTitle', // shown when user's video is muted by a remote party,
+                  'notify.videoUnmuteBlockedTitle', // shown when camera unmute and desktop sharing are blocked
+                  'prejoin.errorDialOut',
+                  'prejoin.errorDialOutDisconnected',
+                  'prejoin.errorDialOutFailed',
+                  'prejoin.errorDialOutStatus',
+                  'prejoin.errorStatusCode',
+                  'prejoin.errorValidation',
+                  'recording.busy', // shown when recording service is busy
+                  'recording.failedToStart', // shown when recording fails to start
+                  'recording.unavailableTitle', // shown when recording service is not reachable
+                  'toolbar.noAudioSignalTitle', // shown when a broken mic is detected
+                  'toolbar.noisyAudioInputTitle', // shown when noise is detected for the current microphone
+                  'toolbar.talkWhileMutedPopup', // shown when user tries to speak while muted
+                  'transcribing.failed', // shown when transcribing fails
+                ],
               }}
               interfaceConfigOverwrite={{
                 MOBILE_APP_PROMO: false,
+                MAXIMUM_ZOOMING_COEFFICIENT: 1,
                 SETTINGS_SECTIONS: ['devices', 'more', 'language', 'moderator'],
                 SHOW_CHROME_EXTENSION_BANNER: false,
               }}
@@ -413,7 +506,7 @@ function Room({ isAdmin, lang }) {
               }}
               onApiReady={handleApiReady}
             />
-          </div>
+          </JitsiContainer>
 
           {!isAdmin && (
             <>

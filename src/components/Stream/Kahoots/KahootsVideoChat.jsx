@@ -352,7 +352,7 @@ export const KahootsVideoChat = ({
 
   return (
     <>
-      {Object.keys(kahoots).length && (
+      {!!Object.keys(kahoots).length && (
         <KahootBox
           ref={ref}
           className={isKahootOpen ? 'shown' : 'hidden'}
