@@ -13,7 +13,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import { ChatVideo } from 'utils/Chat/ChatVideo';
-import { GradientBackground, LargeText, PageContainer } from '../Videochat.styled';
+import {
+  GradientBackground,
+  JitsiContainer,
+  LargeText,
+  PageContainer,
+} from '../Videochat.styled';
 import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
@@ -262,6 +267,18 @@ function Room({ isAdmin }) {
     };
   }, [currentUser, room]);
 
+  useEffect(() => {
+    const setAppHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    };
+
+    setAppHeight();
+    window.addEventListener('resize', setAppHeight);
+
+    return () => window.removeEventListener('resize', setAppHeight);
+  }, []);
+
   return (
     <>
       <div
@@ -294,23 +311,22 @@ function Room({ isAdmin }) {
           <GradientBackground>
             <LargeText>Викладача поки немає!</LargeText>
           </GradientBackground>
-          <div
+          <JitsiContainer
             style={{
-              position: 'absolute',
-              top: '0',
-              left: '0',
-              width: '100%',
-              height: isIframeOpen ? '100%' : '0',
+              height: isIframeOpen ? 'calc(var(--vh, 1vh) * 100)' : '0',
             }}
           >
             <JitsiMeeting
               domain="videohost.ap.education"
               roomName={roomID}
               configOverwrite={{
+                disableTileEnlargement: true,
+                channelLastN: 1,
                 startWithVideoMuted: !isAdmin,
                 followMeEnabled: isAdmin,
                 disableDeepLinking: true,
                 startWithAudioMuted: true,
+                disableTileView: true,
                 disableInitialGUM: !isAdmin,
                 disableModeratorIndicator: true,
                 disableReactions: true,
@@ -403,6 +419,7 @@ function Room({ isAdmin }) {
               }}
               interfaceConfigOverwrite={{
                 MOBILE_APP_PROMO: false,
+                MAXIMUM_ZOOMING_COEFFICIENT: 1,
                 SETTINGS_SECTIONS: ['devices', 'more', 'language', 'moderator'],
                 SHOW_CHROME_EXTENSION_BANNER: false,
               }}
@@ -418,7 +435,7 @@ function Room({ isAdmin }) {
               }}
               onApiReady={handleApiReady}
             />
-          </div>
+          </JitsiContainer>
 
           {!isAdmin && (
             <>

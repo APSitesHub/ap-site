@@ -55,6 +55,14 @@ export const VideochatContainer = styled.div`
   }
 `;
 
+export const JitsiContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border: none;
+`;
+
 export const MainVideoContainer = styled.div`
   position: relative;
   flex-grow: 1;
