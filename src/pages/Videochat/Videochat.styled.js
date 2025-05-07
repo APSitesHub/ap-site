@@ -501,6 +501,10 @@ export const LargeText = styled.p`
   margin: auto;
   color: #ffffff;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 export const GradientBackground = styled.div`
