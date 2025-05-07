@@ -23,6 +23,7 @@ import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 import { JitsiMeeting } from '@jitsi/react-sdk';
+import { ColorRing } from 'react-loader-spinner';
 
 const debug = true;
 
@@ -30,6 +31,7 @@ function Room({ isAdmin, lang }) {
   const navigate = useNavigate();
   const { id: roomID } = useParams();
   const [adminId, setAdminId] = useState(null);
+  const [isLoading, setisLoading] = useState(true);
   const [isIframeOpen, setIsIframeOpen] = useState(isAdmin);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -118,6 +120,31 @@ function Room({ isAdmin, lang }) {
         setIsIframeOpen(true);
       }
     });
+
+    externalApi.addListener('participantRoleChanged', participant => {
+      if (participant.role === 'moderator') {
+        setIsIframeOpen(true);
+        externalApi.pinParticipant(participant.id);
+        setAdminId(participant.id);
+      }
+    });
+
+    setTimeout(() => {
+      externalApi.getRoomsInfo().then(rooms => {
+        rooms.rooms.forEach(room => {
+          if (room.isMainRoom) {
+            console.log(
+              room.participants.indexOf(
+                participant => participant.role === 'moderator'
+              ) === -1
+            );
+
+            room.participants.indexOf(participant => participant.role === 'moderator') ===
+              -1 && setisLoading(false);
+          }
+        });
+      });
+    }, 5000);
 
     return () => {
       externalApi.removeAllListeners();
@@ -301,11 +328,33 @@ function Room({ isAdmin, lang }) {
           />
 
           <GradientBackground>
-            <LargeText>
-              {lang === 'pl'
-                ? 'Nauczyciel jeszcze nie przyszedł!'
-                : 'Викладача поки немає!'}
-            </LargeText>
+            {isLoading ? (
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '20px',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <LargeText>{lang === 'pl' ? 'Loading' : 'Завантаження'}</LargeText>
+                <ColorRing
+                  visible={true}
+                  height="120"
+                  width="120"
+                  ariaLabel="blocks-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="blocks-wrapper"
+                  colors={['#fff', '#fff', '#fff', '#fff', '#fff']}
+                />
+              </div>
+            ) : (
+              <LargeText>
+                {lang === 'pl'
+                  ? 'Nauczyciel jeszcze nie przyszedł!'
+                  : 'Викладача поки немає!'}
+              </LargeText>
+            )}
           </GradientBackground>
           <JitsiContainer
             style={{
@@ -330,9 +379,9 @@ function Room({ isAdmin, lang }) {
                 constraints: {
                   video: {
                     height: {
-                      ideal: 1080,
+                      ideal: isAdmin ? 1080 : 720,
                       max: 1080,
-                      min: 240,
+                      min: 480,
                     },
                   },
                 },

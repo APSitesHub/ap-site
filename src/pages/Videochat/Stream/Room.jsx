@@ -23,6 +23,7 @@ import { StudentInput } from 'components/Stream/StudentInput/StudentInput';
 import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 import { JitsiMeeting } from '@jitsi/react-sdk';
+import { ColorRing } from 'react-loader-spinner';
 
 const debug = true;
 
@@ -31,6 +32,7 @@ function Room({ isAdmin }) {
   const { id: roomID } = useParams();
   // const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
   const [adminId, setAdminId] = useState(null);
+  const [isLoading, setisLoading] = useState(true);
   const [isIframeOpen, setIsIframeOpen] = useState(isAdmin);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -127,6 +129,23 @@ function Room({ isAdmin }) {
         setAdminId(participant.id);
       }
     });
+
+    setTimeout(() => {
+      externalApi.getRoomsInfo().then(rooms => {
+        rooms.rooms.forEach(room => {
+          if (room.isMainRoom) {
+            console.log(
+              room.participants.indexOf(
+                participant => participant.role === 'moderator'
+              ) === -1
+            );
+
+            room.participants.indexOf(participant => participant.role === 'moderator') ===
+              -1 && setisLoading(false);
+          }
+        });
+      });
+    }, 5000);
 
     return () => {
       externalApi.removeAllListeners();
@@ -309,7 +328,29 @@ function Room({ isAdmin }) {
           />
 
           <GradientBackground>
-            <LargeText>Викладача поки немає!</LargeText>
+            {isLoading ? (
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '20px',
+                  justifyContent: 'center',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <LargeText>Завантаження</LargeText>
+                <ColorRing
+                  visible={true}
+                  height="120"
+                  width="120"
+                  ariaLabel="blocks-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="blocks-wrapper"
+                  colors={['#fff', '#fff', '#fff', '#fff', '#fff']}
+                />
+              </div>
+            ) : (
+              <LargeText>Викладача поки немає!</LargeText>
+            )}
           </GradientBackground>
           <JitsiContainer
             style={{
@@ -341,7 +382,7 @@ function Room({ isAdmin }) {
                     height: {
                       ideal: 1080,
                       max: 1080,
-                      min: 240,
+                      min: 480,
                     },
                   },
                 },
