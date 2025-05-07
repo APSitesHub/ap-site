@@ -32,7 +32,7 @@ function Room({ isAdmin, lang }) {
   const { id: roomID } = useParams();
   const [adminId, setAdminId] = useState(null);
   const [isLoading, setisLoading] = useState(true);
-  const [isIframeOpen, setIsIframeOpen] = useState(isAdmin);
+  const [isIframeOpen, setIsIframeOpen] = useState(true);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
@@ -129,22 +129,12 @@ function Room({ isAdmin, lang }) {
       }
     });
 
-    setTimeout(() => {
-      externalApi.getRoomsInfo().then(rooms => {
-        rooms.rooms.forEach(room => {
-          if (room.isMainRoom) {
-            console.log(
-              room.participants.indexOf(
-                participant => participant.role === 'moderator'
-              ) === -1
-            );
-
-            room.participants.indexOf(participant => participant.role === 'moderator') ===
-              -1 && setisLoading(false);
-          }
-        });
-      });
-    }, 5000);
+    externalApi.addListener('errorOccurred', error => {
+      if (error.error.name === 'conference.authenticationRequired') {
+        setIsIframeOpen(false);
+        setisLoading(false);
+      }
+    });
 
     return () => {
       externalApi.removeAllListeners();
@@ -386,7 +376,7 @@ function Room({ isAdmin, lang }) {
                   },
                 },
                 prejoinConfig: {
-                  enabled: false,
+                  enabled: true,
                   hideDisplayName: false,
                   // hideExtraJoinButtons: ['no-audio', 'by-phone'],
                   preCallTestEnabled: true,
