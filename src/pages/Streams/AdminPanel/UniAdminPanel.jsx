@@ -95,6 +95,7 @@ const UniAdminPanel = () => {
     ssw: '',
     mans: '',
     ahns: '',
+    answp: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -123,6 +124,7 @@ const UniAdminPanel = () => {
     ssw: yup.string().optional(),
     mans: yup.string().optional(),
     ahns: yup.string().optional(),
+    answp: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -421,6 +423,15 @@ const UniAdminPanel = () => {
                 <Label>
                   <AdminInput type="text" name="ahns" placeholder="AHNS" />
                   <AdminInputNote component="p" name="ahns" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="answp" placeholder="ANSWP Collection" />
+                  <AdminInputNote component="p" name="answp" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>
