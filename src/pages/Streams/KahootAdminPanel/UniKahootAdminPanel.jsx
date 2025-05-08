@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { AHNSahootForm } from './AHNSKahootForm';
+import { ANSWPKahootForm } from './ANSWPKahootForm';
 import { EUKahootForm } from './EUKahootForm';
 import { EWSPALogisticsKahootForm } from './EWSPALogisticsKahootForm';
 import { EWSPAPrepKahootForm } from './EWSPAPrepKahootForm';
@@ -188,6 +189,7 @@ const UniKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('ssw')}>SSW</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('mans')}>MANS</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('ahns')}>AHNS</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('answp')}>ANSWP</KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -250,6 +252,7 @@ const UniKahootAdminPanel = () => {
           {levels.includes('ssw') && <SSWKahootForm destination={destination} />}
           {levels.includes('mans') && <MANSKahootForm destination={destination} />}
           {levels.includes('ahns') && <AHNSahootForm destination={destination} />}
+          {levels.includes('answp') && <ANSWPKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>

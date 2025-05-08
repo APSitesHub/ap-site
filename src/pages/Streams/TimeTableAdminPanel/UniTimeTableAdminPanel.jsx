@@ -345,6 +345,8 @@ const UniTimeTableAdminPanel = () => {
   const answpMarathonOptions = [
     { label: 'Logistics (ANSWP)', value: '87841' },
     { label: 'CNC (ANSWP)', value: '87845' },
+    { label: 'Management (ANSWP)', value: '92260' },
+    { label: 'Online (ANSWP)', value: '92264' },
   ];
 
   const wseMarathonOptions = [
@@ -659,6 +661,12 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('ANSWP') &&
                         timetable.marathon === '87845'
                       ? `CNC Course ${timetable.marathon}`
+                      : timetable.university.includes('ANSWP') &&
+                        timetable.marathon === '92260'
+                      ? `Management Course ${timetable.marathon}`
+                      : timetable.university.includes('ANSWP') &&
+                        timetable.marathon === '92264'
+                      ? `Online Course ${timetable.marathon}`
                       : timetable.university.includes('WSE') &&
                         timetable.marathon === '84801'
                       ? `Preparation Course ${timetable.marathon}`
