@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { CloseIcon, FormCloseBtn } from 'components/LeadForm/LeadForm.styled';
 import { useEffect, useRef, useState } from 'react';
 import {
   TeacherChartBtn,
@@ -5,7 +7,20 @@ import {
   TeacherChartResetBtn,
 } from '../StudentChart/StudentChart.styled';
 import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
-import { TeacherChatPageContainer, TeacherQuizConfirmation } from './TeacherQuiz.styled';
+import {
+  TeacherChatPageContainer,
+  TeacherQuizConfirmation,
+  TeacherQuizConfirmationBtnBox,
+  TeacherQuizConfirmationHighlight,
+  TeacherQuizConfirmationText,
+  TeacherQuizCorrectList,
+  TeacherQuizCorrectListEndQuizBtnBox,
+  TeacherQuizCorrectListHeading,
+  TeacherQuizCorrectListUser,
+  TeacherQuizCorrectListUserInfo,
+  TeacherQuizCorrectListUserNumber,
+  TeacherQuizCorrectListUsers
+} from './TeacherQuiz.styled';
 
 export const TeacherQuizContainer = ({
   page,
@@ -18,7 +33,9 @@ export const TeacherQuizContainer = ({
   const [answers, setAnswers] = useState({});
   const [isQuizActive, setIsQuizActive] = useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(false);
   const correctAnswer = useRef('');
+  const list = useRef([]);
 
   const emitQuizStart = () => {
     setAnswers(answers => (answers = { ...{} }));
@@ -48,9 +65,18 @@ export const TeacherQuizContainer = ({
     setIsConfirmationOpen(true);
   };
 
-  const sendConfirmedAnswer = () => {
+  const sendConfirmedAnswer = async () => {
     console.log(answers, 'answers before sendConfirmedAnswer');
-    
+    console.log(correctAnswer.current, 'correctAnswer.current');
+    list.current = await axios.get(`http://localhost:5000/answers/${questionID}`);
+    console.log(
+      list.current.data.filter(
+        item => item.answer.toLowerCase() === correctAnswer.current.toLowerCase()
+      ),
+      'list.current.data'
+    );
+    setIsListOpen(true);
+
     // add request to server to save the correct answer
     setIsConfirmationOpen(false);
   };
@@ -69,21 +95,75 @@ export const TeacherQuizContainer = ({
     <TeacherChatPageContainer>
       {isConfirmationOpen && (
         <TeacherQuizConfirmation>
-          <h3>{correctAnswer.current}? </h3>
-          <TeacherChartBtn onClick={sendConfirmedAnswer}>Yes</TeacherChartBtn>
-          <TeacherChartResetBtn
-            onClick={() => {
-              setAnswers(answers => {
-                delete answers[correctAnswer.current];
-                return answers;
-              });
+          <FormCloseBtn onClick={() => setIsConfirmationOpen(false)}>
+            {' '}
+            <CloseIcon />
+          </FormCloseBtn>
+          <TeacherQuizConfirmationText>
+            Чи відповідь{' '}
+            <TeacherQuizConfirmationHighlight>
+              "{correctAnswer.current}"
+            </TeacherQuizConfirmationHighlight>{' '}
+            правильна чи її необхідно видалити?{' '}
+          </TeacherQuizConfirmationText>
+          <TeacherQuizConfirmationBtnBox>
+            <TeacherChartBtn onClick={sendConfirmedAnswer}>Правильна</TeacherChartBtn>
+            <TeacherChartResetBtn
+              onClick={() => {
+                setAnswers(answers => {
+                  delete answers[correctAnswer.current];
+                  return answers;
+                });
 
-              setIsConfirmationOpen(false);
-            }}
-          >
-            Delete
-          </TeacherChartResetBtn>
+                setIsConfirmationOpen(false);
+              }}
+            >
+              Видалити
+            </TeacherChartResetBtn>
+          </TeacherQuizConfirmationBtnBox>
         </TeacherQuizConfirmation>
+      )}
+      {isListOpen && (
+        <TeacherQuizCorrectList>
+          <TeacherQuizCorrectListHeading>
+            Правильно відповіли:
+          </TeacherQuizCorrectListHeading>
+          <TeacherQuizCorrectListUsers>
+            {list.current.data
+              .filter(
+                item => item.answer.toLowerCase() === correctAnswer.current.toLowerCase()
+              )
+              .map((item, index) => (
+                <TeacherQuizCorrectListUser key={index}>
+                  <TeacherQuizCorrectListUserNumber
+                    className={
+                      index + 1 === 1
+                        ? 'gold'
+                        : index + 1 === 2
+                        ? 'silver'
+                        : index + 1 === 3
+                        ? 'bronze'
+                        : null
+                    }
+                  >{`${index + 1}`}</TeacherQuizCorrectListUserNumber>
+                  <TeacherQuizCorrectListUserInfo>
+                    {item.username}
+                  </TeacherQuizCorrectListUserInfo>
+                  <TeacherQuizCorrectListUserInfo>
+                    {new Date(item.createdAt).toTimeString().slice(0,8)}
+                    {/* {new Date(item.createdAt).toTimeString().slice(0,8)+'.'+new Date(item.createdAt).getMilliseconds()} */}
+                  </TeacherQuizCorrectListUserInfo>
+                </TeacherQuizCorrectListUser>
+              ))}
+          </TeacherQuizCorrectListUsers>
+          {isQuizActive && (
+            <TeacherQuizCorrectListEndQuizBtnBox>
+              <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
+                End
+              </TeacherChartResetBtn>
+            </TeacherQuizCorrectListEndQuizBtnBox>
+          )}
+        </TeacherQuizCorrectList>
       )}
       <TeacherAnswersChart
         answers={answers}

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { TeacherChartBtnBox } from '../StudentChart/StudentChart.styled';
 
 export const TeacherInputBox = styled.div`
   position: absolute;
@@ -53,8 +54,8 @@ export const TeacherQuizConfirmation = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: 80%;
-  height: 80%;
+  width: 60%;
+  height: 45%;
   z-index: 15;
 
   padding: 30px;
@@ -77,4 +78,96 @@ export const TeacherQuizConfirmation = styled.div`
   &.shown {
     opacity: 1;
   }
+`;
+
+export const TeacherQuizConfirmationText = styled.h2`
+  padding-top: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+`;
+
+export const TeacherQuizConfirmationHighlight = styled.span`
+  color: #ff9800;
+  font-weight: 700;
+`;
+
+export const TeacherQuizConfirmationBtnBox = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all var(--animation-global);
+`;
+
+export const TeacherQuizCorrectList = styled.div`
+  position: absolute;
+  left: 0%;
+  background-color: white;
+  padding: 20px 30px;
+  height: 100%;
+  width: 100%;
+  z-index: 16;
+`;
+
+export const TeacherQuizCorrectListHeading = styled.h3`
+  font-size: 22px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 8px;
+`;
+
+export const TeacherQuizCorrectListUsers = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+`;
+
+export const TeacherQuizCorrectListUser = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+`;
+
+export const TeacherQuizCorrectListUserNumber = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  font-size: 16px;
+  font-weight: 500;
+  border: 0.5px solid #c0c0c0;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+
+  &.gold {
+    background: linear-gradient(135deg, #fff8dc, #ffd700, #ffa500, #fff8dc);
+  }
+  &.silver {
+    background: linear-gradient(135deg, #ffffff, #dcdcdc, #c0c0c0, #a9a9a9, #ffffff);
+  }
+  &.bronze {
+    background: linear-gradient(135deg, #f8f1e7, #cd7f32, #8f5024, #f8f1e7);
+  }
+`;
+
+export const TeacherQuizCorrectListUserInfo = styled.span`
+  font-weight: 700;
+`;
+
+export const TeacherQuizCorrectListEndQuizBtnBox = styled(TeacherChartBtnBox)`
+  right: 30px;
 `;

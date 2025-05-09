@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   StudentQuizBox,
   StudentQuizForm,
@@ -9,17 +10,27 @@ export const StudentTrueFalse = ({
   socket,
   page,
   toggleQuiz,
-  currentUser,
+  user,
+  questionID,
 }) => {
-  console.log(4, 'studentinputsocket', socket);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     console.log(e.target);
     socket.emit('answer:given', {
       answer: e.target.innerText,
       page: page,
     });
+
+    await axios.post('/answers', {
+      answer: e.target.innerText,
+      username: user.name,
+      page: page,
+      socketID: socket.id,
+      questionID: questionID,
+      userID: user.id,
+    });
+
     toggleQuiz();
   };
 
