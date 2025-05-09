@@ -8,11 +8,7 @@ import {
 } from 'components/Stream/Kahoots/Kahoots.styled';
 import parse from 'html-react-parser';
 import { useEffect, useRef, useState } from 'react';
-import {
-  ViewerBox,
-  ViewerChooseLevelBtn,
-  ViewerChooseLevelContainer,
-} from './Viewer.styled';
+import { ViewerBox, ViewerChooseLevelBtn, ViewerChooseLevelContainer } from './Viewer.styled';
 
 export const ViewerIndividual = ({ isViewerOpen, isOpenedLast, sectionWidth, page }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);

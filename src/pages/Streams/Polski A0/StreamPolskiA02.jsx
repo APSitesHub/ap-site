@@ -26,6 +26,9 @@ import {
 
 const StreamPolskiA02 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
+  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
+  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [links, isLoading, currentUser, room, user] = useOutletContext();
   const chatEl = useRef();
@@ -34,19 +37,10 @@ const StreamPolskiA02 = () => {
   const [width, height] = useSize(document.body);
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
-  const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
-  const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const questionID = useRef('');
 
   const toggleChat = () => {
     setIsChatOpen(isChatOpen => !isChatOpen);
-  };
-  const handleSupportClick = data_id => {
-    setAnimationID(id => (id = data_id));
-    if (!isAnimated) {
-      setIsAnimated(isAnimated => !isAnimated);
-    }
   };
   const toggleQuizInput = () => {
     setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
@@ -79,6 +73,37 @@ const StreamPolskiA02 = () => {
       console.log(connected);
       console.log(handshake.time);
       socketRef.current.emit('connected:user', socketRef.current.id, room);
+    });
+
+    // open quizzes on event
+    socketRef.current.on('question:input', data => {
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizInputOpen(true);
+      }
+    });
+    socketRef.current.on('question:options', data => {
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizOptionsOpen(true);
+      }
+    });
+    socketRef.current.on('question:trueFalse', data => {
+      if (data.page === room.replace('/streams/', '')) {
+        questionID.current = data.question;
+        setIsQuizTrueFalseOpen(true);
+      }
+    });
+
+    // close quizzes on event
+    socketRef.current.on('question:closeInput', data => {
+      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
+    });
+    socketRef.current.on('question:closeOptions', data => {
+      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
+    });
+    socketRef.current.on('question:closeTrueFalse', data => {
+      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
     });
 
     const getMessages = async () => {
@@ -158,37 +183,6 @@ const StreamPolskiA02 = () => {
       }
     });
 
-    // open quizzes on event
-    socketRef.current.on('question:input', data => {
-      if (data.page === room.replace('/streams/', '')) {
-        questionID.current = data.question;
-        setIsQuizInputOpen(true);
-      }
-    });
-    socketRef.current.on('question:options', data => {
-      if (data.page === room.replace('/streams/', '')) {
-        questionID.current = data.question;
-        setIsQuizOptionsOpen(true);
-      }
-    });
-    socketRef.current.on('question:trueFalse', data => {
-      if (data.page === room.replace('/streams/', '')) {
-        questionID.current = data.question;
-        setIsQuizTrueFalseOpen(true);
-      }
-    });
-
-    // close quizzes on event
-    socketRef.current.on('question:closeInput', data => {
-      data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
-    });
-    socketRef.current.on('question:closeOptions', data => {
-      data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
-    });
-    socketRef.current.on('question:closeTrueFalse', data => {
-      data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
-    });
-
     window.addEventListener('beforeunload', handleDisconnect);
 
     return () => {
@@ -198,6 +192,7 @@ const StreamPolskiA02 = () => {
       handleDisconnect();
       socketRef.current.off('connected');
       socketRef.current.off('message');
+      socketRef.current.off('user');
       socketRef.current.disconnect();
     };
   }, [currentUser, room]);
