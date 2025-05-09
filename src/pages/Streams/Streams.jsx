@@ -17,14 +17,6 @@ import {
   StreamAuthText,
   StreamAuthTextHello,
 } from '../../components/Stream/Stream.styled';
-import {
-  LoginErrorNote,
-  LoginInput,
-  LoginInputNote,
-  LoginLogo,
-  StreamAuthText,
-  StreamAuthTextHello,
-} from '../../components/Stream/Stream.styled';
 import { AdminFormBtn, LoginForm } from './AdminPanel/AdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -168,10 +160,6 @@ const Streams = () => {
           'https://ap-server-8qi1.onrender.com/users/refresh',
           { mail: localStorage.getItem('mail') }
         );
-        const res = await axios.post(
-          'https://ap-server-8qi1.onrender.com/users/refresh',
-          { mail: localStorage.getItem('mail') }
-        );
         setUser(user => (user = res.data.user));
         setIsUserLogged(isLogged => (isLogged = true));
         const id = nanoid(8);
@@ -212,9 +200,6 @@ const Streams = () => {
       <StreamsBackgroundWrapper
         className={location.pathname.includes('pedagogium') && 'pedagogium'}
       >
-      <StreamsBackgroundWrapper
-        className={location.pathname.includes('pedagogium') && 'pedagogium'}
-      >
         {!isUserLogged &&
         !location.pathname.includes('admin-panel') &&
         !location.pathname.includes('teamlead-panel') &&
@@ -222,11 +207,6 @@ const Streams = () => {
         !location.pathname.includes('tcp') &&
         !location.pathname.includes('speaking-panel') &&
         !location.pathname.includes('free') ? (
-          <Formik
-            initialValues={initialLoginValues}
-            onSubmit={handleLoginSubmit}
-            validationSchema={loginSchema}
-          >
           <Formik
             initialValues={initialLoginValues}
             onSubmit={handleLoginSubmit}
@@ -249,25 +229,14 @@ const Streams = () => {
                   placeholder="Login"
                   onBlur={() => setIsUserInfoIncorrect(false)}
                 />
-                <LoginInput
-                  type="text"
-                  name="mail"
-                  placeholder="Login"
-                  onBlur={() => setIsUserInfoIncorrect(false)}
-                />
                 <LoginInputNote component="p" name="mail" type="email" />
               </Label>
               <Label>
                 <LoginInput
-                 
                   type="password"
-                 
                   name="password"
-                 
                   placeholder="Password"
-                 
                   onBlur={() => setIsUserInfoIncorrect(false)}
-               
                 />
                 <LoginInputNote component="p" name="password" />
               </Label>
@@ -283,14 +252,6 @@ const Streams = () => {
               </LoginErrorNote>
             </LoginForm>
           </Formik>
-        ) : !isUserLogged &&
-          location.pathname.includes('free') &&
-          !location.pathname.includes('-chat') ? (
-          <Formik
-            initialValues={initialLoginByNameValues}
-            onSubmit={handleLoginByNameSubmit}
-            validationSchema={loginByNameSchema}
-          >
         ) : !isUserLogged &&
           location.pathname.includes('free') &&
           !location.pathname.includes('-chat') ? (

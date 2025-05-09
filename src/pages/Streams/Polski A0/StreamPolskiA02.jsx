@@ -42,9 +42,6 @@ const StreamPolskiA02 = () => {
   const toggleChat = () => {
     setIsChatOpen(isChatOpen => !isChatOpen);
   };
-  const toggleButtonBox = () => {
-    setIsButtonBoxOpen(isOpen => !isOpen);
-  };
   const handleSupportClick = data_id => {
     setAnimationID(id => (id = data_id));
     if (!isAnimated) {
