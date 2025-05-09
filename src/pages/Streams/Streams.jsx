@@ -83,6 +83,12 @@ const Streams = () => {
     password: yup
       .string()
       .required('Введіть пароль, який ви використовуєте для входу на нашу платформу!'),
+    mail: yup
+      .string()
+      .required('Вкажіть пошту, за якою ви зареєстровані на нашій платформі!'),
+    password: yup
+      .string()
+      .required('Введіть пароль, який ви використовуєте для входу на нашу платформу!'),
   });
 
   const loginByNameSchema = yup.object().shape({
@@ -257,6 +263,11 @@ const Streams = () => {
             <LoginForm>
               <LoginLogo />
               <StreamAuthText>
+                <StreamAuthTextHello>
+                  Вітаємо вас на сторінці пробних занять!
+                </StreamAuthTextHello>
+                Для отримання доступу, будь ласка, введіть своє ім'я та прізвище у
+                відповідне поле та натисніть кнопку "Увійти".
                 <StreamAuthTextHello>
                   Вітаємо вас на сторінці пробних занять!
                 </StreamAuthTextHello>

@@ -137,15 +137,12 @@ const StreamA1 = () => {
 
     // close quizzes on event
     socketRef.current.on('question:closeInput', data => {
-      console.log(data);
       data.page === room.replace('/streams/', '') && setIsQuizInputOpen(false);
     });
     socketRef.current.on('question:closeOptions', data => {
-      console.log(data);
       data.page === room.replace('/streams/', '') && setIsQuizOptionsOpen(false);
     });
     socketRef.current.on('question:closeTrueFalse', data => {
-      console.log(data);
       data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
     });
 
@@ -250,9 +247,9 @@ const StreamA1 = () => {
       {(links.a1 === undefined || links.a1[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
-            Христос воскрес! <br />
-            AP Education Center на канікулах з 17 по 23 квітня. <br />
-            Побачимось після свят!
+            Привіт! <br />
+                Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
+                правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (

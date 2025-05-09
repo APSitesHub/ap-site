@@ -8,14 +8,21 @@ import {
 } from './StudentInput.styled';
 import axios from 'axios';
 
-export const StudentInput = ({ isInputOpen, socket, page, toggleQuiz, currentUser, user, questionID }) => {
+export const StudentInput = ({
+  isInputOpen,
+  socket,
+  page,
+  toggleQuiz,
+  currentUser,
+  user,
+  questionID,
+}) => {
   console.log(4, 'studentinputsocket', socket);
   console.log(10, 'user', currentUser);
   const [isValid, setIsValid] = useState(true);
   console.log(questionID, 'questionID');
-  
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     if (!document.querySelector('#answer_input').value) {
       setIsValid(false);
       return;
@@ -30,15 +37,17 @@ export const StudentInput = ({ isInputOpen, socket, page, toggleQuiz, currentUse
         .toLowerCase(),
       page: page,
     });
-    
-    // await axios.post('http://localhost:5000/answers', {
-    //   answer: document.querySelector('#answer_input').value.trim(),
-    //   username: user.name,
-    //   page: page,
-    //   socketID: socket.id,
-    //   questionID: questionID,
-    //   userID: user.id,
-    // });
+
+    console.log(axios.defaults.baseURL, 'axios.defaults.baseURL');
+
+    await axios.post('/answers', {
+      answer: document.querySelector('#answer_input').value.trim(),
+      username: user.name,
+      page: page,
+      socketID: socket.id,
+      questionID: questionID,
+      userID: user.id,
+    });
     document.querySelector('#answer_input').value = '';
     toggleQuiz();
   };
