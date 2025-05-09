@@ -50,38 +50,6 @@ export const ViewerBoxVertical = styled.div`
   }
 `;
 
-export const ViewerFullScreenBtn = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 20px;
-  border-radius: 50%;
-  border: none;
-  margin: 0 auto;
-
-  position: absolute;
-  top: 48px;
-  right: 36px;
-  width: 48px;
-  height: 48px;
-  background-color: white;
-  cursor: pointer;
-  box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.5);
-  transition: background-color var(--animation-global);
-
-  &.fullscreen-on {
-    top: calc(60% + 48px);
-  }
-
-  &:focus,
-  &:hover,
-  &:active {
-    background-color: var(--accent-color);
-    box-shadow: -10px -10px 30px 0px rgba(0, 0, 0, 0.25);
-  }
-`;
-
 export const ViewerChooseLevelContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -111,5 +79,37 @@ export const ViewerChooseLevelBtn = styled.button`
   &:hover,
   &:active {
     border: 2px solid var(--main-color);
+  }
+`;
+
+export const ViewerFullScreenBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  border-radius: 50%;
+  border: none;
+  margin: 0 auto;
+
+  position: absolute;
+  top: 48px;
+  right: 36px;
+  width: 48px;
+  height: 48px;
+  background-color: white;
+  cursor: pointer;
+  box-shadow: 2px 2px 12px 0px rgba(0, 0, 0, 0.5);
+  transition: background-color var(--animation-global);
+
+  &.fullscreen-on {
+    top: calc(60% + 48px);
+  }
+
+  &:focus,
+  &:hover,
+  &:active {
+    background-color: var(--accent-color);
+    box-shadow: -10px -10px 30px 0px rgba(0, 0, 0, 0.25);
   }
 `;

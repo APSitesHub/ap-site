@@ -83,12 +83,6 @@ const Streams = () => {
     password: yup
       .string()
       .required('Введіть пароль, який ви використовуєте для входу на нашу платформу!'),
-    mail: yup
-      .string()
-      .required('Вкажіть пошту, за якою ви зареєстровані на нашій платформі!'),
-    password: yup
-      .string()
-      .required('Введіть пароль, який ви використовуєте для входу на нашу платформу!'),
   });
 
   const loginByNameSchema = yup.object().shape({
