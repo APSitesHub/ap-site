@@ -99,7 +99,6 @@ const StreamB2 = () => {
 
   useEffect(() => {
     document.title = 'B2 English | AP Education';
-
     socketRef.current = io('https://ap-chat-server.onrender.com/');
 
     const handleDisconnect = () => {
@@ -181,6 +180,7 @@ const StreamB2 = () => {
       );
     });
 
+
     socketRef.current.on('user:banned', async (userID, userIP) => {
       console.log(userID);
       console.log(userIP);
@@ -236,6 +236,7 @@ const StreamB2 = () => {
   return (
     <>
       {(links.b2 === undefined || links.b2[0] < 10) && !isLoading ? (
+
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />

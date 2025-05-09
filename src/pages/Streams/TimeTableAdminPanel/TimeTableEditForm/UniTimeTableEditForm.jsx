@@ -27,7 +27,11 @@ export const UniTimeTableEditForm = ({
   wskmMarathonOptions,
   wssipMarathonOptions,
   wspaMarathonOptions,
+  answpMarathonOptions,
   wseMarathonOptions,
+  sswMarathonOptions,
+  mansMarathonOptions,
+  ahnsMarathonOptions,
   daysOptions,
   closeEditForm,
 }) => {
@@ -132,8 +136,16 @@ export const UniTimeTableEditForm = ({
                 ? wssipMarathonOptions
                 : uniValue.includes('WSPA')
                 ? wspaMarathonOptions
+                : uniValue.includes('ANSWP')
+                ? answpMarathonOptions
                 : uniValue.includes('WSE')
                 ? wseMarathonOptions
+                : uniValue.includes('SSW')
+                ? sswMarathonOptions
+                : uniValue.includes('MANS')
+                ? mansMarathonOptions
+                : uniValue.includes('AHNS')
+                ? ahnsMarathonOptions
                 : pedagogiumMarathonOptions
             }
             styles={{
@@ -173,7 +185,15 @@ export const UniTimeTableEditForm = ({
               wspaMarathonOptions.find(
                 option => option.value === lessonToEdit.marathon
               ) ||
-              wseMarathonOptions.find(option => option.value === lessonToEdit.marathon)
+              answpMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              wseMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              sswMarathonOptions.find(option => option.value === lessonToEdit.marathon) ||
+              mansMarathonOptions.find(
+                option => option.value === lessonToEdit.marathon
+              ) ||
+              ahnsMarathonOptions.find(option => option.value === lessonToEdit.marathon)
             }
             isDisabled
             onChange={marathon => {

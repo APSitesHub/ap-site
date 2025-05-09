@@ -81,3 +81,35 @@ export const ViewerFullScreenBtn = styled.button`
     box-shadow: -10px -10px 30px 0px rgba(0, 0, 0, 0.25);
   }
 `;
+
+export const ViewerChooseLevelContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+export const ViewerChooseLevelBtn = styled.button`
+  width: 150px;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: white;
+  border: 2px solid var(--accent-color);
+  cursor: pointer;
+  transition: all var(--animation-global);
+
+  &:focus,
+  &:hover,
+  &:active {
+    border: 2px solid var(--main-color);
+  }
+`;

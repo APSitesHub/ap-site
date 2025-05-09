@@ -4,6 +4,8 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
+import { AHNSahootForm } from '../KahootAdminPanel/AHNSKahootForm';
+import { ANSWPKahootForm } from '../KahootAdminPanel/ANSWPKahootForm';
 import { EUKahootForm } from '../KahootAdminPanel/EUKahootForm';
 import { EWSPALogisticsKahootForm } from '../KahootAdminPanel/EWSPALogisticsKahootForm';
 import { EWSPAPrepKahootForm } from '../KahootAdminPanel/EWSPAPrepKahootForm';
@@ -17,10 +19,14 @@ import {
   KahootLvlBtnBox,
   LoginForm,
 } from '../KahootAdminPanel/KahootAdminPanel.styled';
+import { MANSKahootForm } from '../KahootAdminPanel/MANSKahootForm';
+import { MeritoAutomationKahootForm } from '../KahootAdminPanel/MeritoAutomationKahootForm';
 import { MeritoLogisticsKahootForm } from '../KahootAdminPanel/MeritoLogisticsKahootForm';
 import { MeritoPrepKahootForm } from '../KahootAdminPanel/MeritoPrepKahootForm';
+import { PedagogiumLogistics2KahootForm } from '../KahootAdminPanel/PedagogiumLogistics2KahootForm';
 import { PedagogiumLogisticsKahootForm } from '../KahootAdminPanel/PedagogiumLogisticsKahootForm';
 import { PedagogiumPrepKahootForm } from '../KahootAdminPanel/PedagogiumPrepKahootForm';
+import { SSWKahootForm } from '../KahootAdminPanel/SSWKahootForm';
 import { WSBMIRLogisticsKahootForm } from '../KahootAdminPanel/WSBMIRLogisticsKahootForm';
 import { WSBMIRPrepKahootForm } from '../KahootAdminPanel/WSBMIRPrepKahootForm';
 import { WSEPrepKahootForm } from '../KahootAdminPanel/WSEPrepKahootForm';
@@ -32,7 +38,6 @@ import { WSTIJOLogisticsKahootForm } from '../KahootAdminPanel/WSTIJOLogisticsKa
 import { WSTIJOPrepKahootForm } from '../KahootAdminPanel/WSTIJOPrepKahootForm';
 import { WSTiHLogisticsKahootForm } from '../KahootAdminPanel/WSTiHLogisticsKahootForm';
 import { WSTiHPrepKahootForm } from '../KahootAdminPanel/WSTiHPrepKahootForm';
-import { PedagogiumLogistics2KahootForm } from '../KahootAdminPanel/PedagogiumLogistics2KahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -154,6 +159,9 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('merito_prep')}>
               Merito Prep
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('merito_automation')}>
+              Merito Automation
+            </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('wstih_logistics')}>
               WSTiH Logistics
             </KahootLvlBtn>
@@ -178,6 +186,10 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('eu')}>
               Education Union
             </KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('ssw')}>SSW</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('mans')}>MANS</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('ahns')}>AHNS</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('answp')}>ANSWP</KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -214,6 +226,9 @@ const UniHostKahootAdminPanel = () => {
           {levels.includes('merito_prep') && (
             <MeritoPrepKahootForm destination={destination} />
           )}
+          {levels.includes('merito_automation') && (
+            <MeritoAutomationKahootForm destination={destination} />
+          )}
           {levels.includes('wstih_logistics') && (
             <WSTiHLogisticsKahootForm destination={destination} />
           )}
@@ -234,6 +249,10 @@ const UniHostKahootAdminPanel = () => {
           )}
           {levels.includes('wse_prep') && <WSEPrepKahootForm destination={destination} />}
           {levels.includes('eu') && <EUKahootForm destination={destination} />}
+          {levels.includes('ssw') && <SSWKahootForm destination={destination} />}
+          {levels.includes('mans') && <MANSKahootForm destination={destination} />}
+          {levels.includes('ahns') && <AHNSahootForm destination={destination} />}
+          {levels.includes('answp') && <ANSWPKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>

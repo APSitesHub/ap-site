@@ -78,6 +78,7 @@ const UniCollectionsAdminPanel = () => {
     ewspa_prep: '',
     merito_logistics: '',
     merito_prep: '',
+    merito_automation: '',
     wstih_logistics: '',
     wstih_prep: '',
     wskm_logistics: '',
@@ -88,6 +89,10 @@ const UniCollectionsAdminPanel = () => {
     wspa_prep: '',
     wse_prep: '',
     eu: '',
+    ssw: '',
+    mans: '',
+    ahns: '',
+    answp: '',
   };
 
   const linksSchema = yup.object().shape({
@@ -101,6 +106,7 @@ const UniCollectionsAdminPanel = () => {
     ewspa_prep: yup.string().optional(),
     merito_logistics: yup.string().optional(),
     merito_prep: yup.string().optional(),
+    merito_automation: yup.string().optional(),
     wstih_logistics: yup.string().optional(),
     wstih_prep: yup.string().optional(),
     wskm_logistics: yup.string().optional(),
@@ -111,6 +117,10 @@ const UniCollectionsAdminPanel = () => {
     wspa_prep: yup.string().optional(),
     wse_prep: yup.string().optional(),
     eu: yup.string().optional(),
+    ssw: yup.string().optional(),
+    mans: yup.string().optional(),
+    ahns: yup.string().optional(),
+    answp: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -279,6 +289,14 @@ const UniCollectionsAdminPanel = () => {
                   />
                   <AdminInputNote component="p" name="merito_prep" />
                 </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="merito_automation"
+                    placeholder="Merito Industrial Automation Collection"
+                  />
+                  <AdminInputNote component="p" name="merito_automation" />
+                </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>
@@ -386,6 +404,42 @@ const UniCollectionsAdminPanel = () => {
                     placeholder="Education Union Collection"
                   />
                   <AdminInputNote component="p" name="eu" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="ssw" placeholder="SSW Collection" />
+                  <AdminInputNote component="p" name="ssw" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="mans" placeholder="MANS Collection" />
+                  <AdminInputNote component="p" name="mans" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="ahns" placeholder="AHNS Collection" />
+                  <AdminInputNote component="p" name="ahns" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="answp" placeholder="ANSWP Collection" />
+                  <AdminInputNote component="p" name="answp" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

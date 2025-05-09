@@ -14,7 +14,7 @@ import {
   СhatSendMessageButton,
 } from './Chat.styled';
 
-export const ChatVideoFooter = ({ socket, theme, currentUser }) => {
+export const ChatVideoFooter = ({ socket, theme, currentUser, lang }) => {
   const [message, setMessage] = useState('');
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const location = useLocation();
@@ -57,7 +57,9 @@ export const ChatVideoFooter = ({ socket, theme, currentUser }) => {
         userIP: currentUser.ip,
         id: `${socket.id}${Math.random()}`,
         socketID: socket.id,
-        roomLocation: pilotLocation || `/streams/${location.pathname.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}`,
+        roomLocation:
+          pilotLocation ||
+          `/streams/${location.pathname.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}`,
       });
     }
     console.log({
@@ -79,7 +81,7 @@ export const ChatVideoFooter = ({ socket, theme, currentUser }) => {
           <ChatMessageLabel>
             <СhatMessageInput
               type="text"
-              placeholder="Введіть повідомлення..."
+              placeholder={lang === 'pl' ? 'Wpisz wiadomość' : 'Введіть повідомлення...'}
               maxLength={250}
               value={message}
               onChange={e => {

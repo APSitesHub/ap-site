@@ -56,15 +56,9 @@ export const Viewer = ({ isViewerOpen, isOpenedLast, sectionWidth, page }) => {
         onTransitionEnd={collectionRefresher}
       >
         <KahootFullScreenBtn onClick={toggleFullScreen}>
-          {isFullScreen ? (
-            <KahootExitFullScreenIcon />
-          ) : (
-            <KahootFullScreenIcon />
-          )}
+          {isFullScreen ? <KahootExitFullScreenIcon /> : <KahootFullScreenIcon />}
         </KahootFullScreenBtn>
-        {collection &&
-          collection.length &&
-          collection.map(coll => parse(coll[page]))}
+        {collection && collection.length && collection.map(coll => parse(coll[page]))}
       </ViewerBox>
       {isLoading && (
         <LoaderWrapper>

@@ -49,6 +49,10 @@ const Univesitets = {
   WSSIP: 'WSSiP (Wyższa Szkoła Sztuki i Projektowania)',
   WSPA: 'WSPA (Wyższa Szkoła Przedsiębiorczości i Administracji)',
   WSE: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+  ANSWP: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
+  SSW: 'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)',
+  MANS: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+  AHNS: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
 };
 
 const translations = {
@@ -185,6 +189,22 @@ const UniUserAdminPanel = ({ uni, lang = 'ua' }) => {
     {
       label: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
       value: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
+    },
+    {
+      label: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
+      value: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
+    },
+    {
+      label: 'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)',
+      value: 'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)',
+    },
+    {
+      label: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+      value: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+    },
+    {
+      label: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
+      value: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
     },
   ];
 

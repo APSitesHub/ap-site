@@ -17,6 +17,9 @@ import {
   JoinButton,
   BackButton,
   BackIcon,
+  RoomListContainer,
+  RoomTitle,
+  RoomInfo,
 } from './Videochat.styled';
 import { getKahoots } from './utils/api/getKahoots';
 import { getToken } from './utils/api/getToken';
@@ -120,21 +123,32 @@ function Videochat() {
 
         <Button onClick={handleCreateRoom}>Create New Room</Button>
 
-        <RoomList>
-          {rooms &&
-            rooms.map(room => (
-              <RoomItem key={room.id}>
-                {room.name}
-                <JoinButton
-                  onClick={() => {
-                    navigate(`/room/${room.type}/${room.slug}/${room.id}`);
-                  }}
-                >
-                  JOIN ROOM
-                </JoinButton>
-              </RoomItem>
-            ))}
-        </RoomList>
+        <RoomListContainer>
+          {Object.values(ROOM_TYPES).map(type => (
+            <>
+              <RoomList>
+                <SubTitle>{type}</SubTitle>
+                {rooms
+                  .filter(room => room.type === type)
+                  .map(room => (
+                    <RoomItem key={room.id}>
+                      <div>
+                        <RoomTitle>{room.name}</RoomTitle>
+                        <RoomInfo>{room.slug}</RoomInfo>
+                      </div>
+                      <JoinButton
+                        onClick={() => {
+                          navigate(`/room/${room.type}/${room.slug}/${room.id}`);
+                        }}
+                      >
+                        JOIN ROOM
+                      </JoinButton>
+                    </RoomItem>
+                  ))}
+              </RoomList>
+            </>
+          ))}
+        </RoomListContainer>
       </Container>
     </Page>
   );

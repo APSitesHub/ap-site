@@ -9,8 +9,6 @@ import {
 import {
   TimetableBody,
   TimetableBox,
-  TimetableChangeCourseBtn,
-  TimetableChangeCourseBtnText,
   TimetableDaysCell,
   TimetableDaysItem,
   TimetableHead,
@@ -50,9 +48,9 @@ export const TimetablePl = ({ user, language, timetable, isMultipleLanguages }) 
       <TimetableHeading>
         <CalendarIcon />
         Harmonogram zajęć
-        <TimetableChangeCourseBtn onClick={changeTimetable}>
+        {/* <TimetableChangeCourseBtn onClick={changeTimetable}>
           <TimetableChangeCourseBtnText>Zmienić kurs</TimetableChangeCourseBtnText>
-        </TimetableChangeCourseBtn>
+        </TimetableChangeCourseBtn> */}
       </TimetableHeading>
       {!timetable ? (
         <PointsPlaceHolder>
@@ -69,7 +67,8 @@ export const TimetablePl = ({ user, language, timetable, isMultipleLanguages }) 
           <TimetableWebinars>
             <TimetableWebinarsHead>
               <TimetableLessonPlType className={isAnimated ? 'animated' : undefined}>
-                {course === 'logistics' ? 'Logistics' : 'Preparation Course'}
+                {/* {course === 'logistics' ? 'Logistics' : 'Preparation Course'} */}
+                Kurs online
               </TimetableLessonPlType>
               <TimetableLessonLink href={link} target="_blank">
                 <TimetableLessonLinkText>Przejść do</TimetableLessonLinkText>

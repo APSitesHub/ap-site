@@ -217,6 +217,22 @@ const UniTimeTableAdminPanel = () => {
       label: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
       value: 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)',
     },
+    {
+      label: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
+      value: 'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)',
+    },
+    {
+      label: 'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)',
+      value: 'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)',
+    },
+    {
+      label: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+      value: 'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)',
+    },
+    {
+      label: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
+      value: 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)',
+    },
   ];
 
   const pedagogiumMarathonOptions = [
@@ -276,6 +292,10 @@ const UniTimeTableAdminPanel = () => {
       label: 'Kurs Przygotowawczy (Merito)',
       value: '82850',
     },
+    {
+      label: 'Industrial Automation (Merito)',
+      value: '91576',
+    },
   ];
 
   const wstihMarathonOptions = [
@@ -322,10 +342,38 @@ const UniTimeTableAdminPanel = () => {
     },
   ];
 
+  const answpMarathonOptions = [
+    { label: 'Logistics (ANSWP)', value: '87841' },
+    { label: 'CNC (ANSWP)', value: '87845' },
+    { label: 'Management (ANSWP)', value: '92260' },
+    { label: 'Online (ANSWP)', value: '92264' },
+  ];
+
   const wseMarathonOptions = [
     {
       label: 'Kurs Przygotowawczy (WSE)',
       value: '84801',
+    },
+  ];
+
+  const sswMarathonOptions = [
+    {
+      label: 'SSW',
+      value: '92196',
+    },
+  ];
+
+  const mansMarathonOptions = [
+    {
+      label: 'MANS',
+      value: '92197',
+    },
+  ];
+
+  const ahnsMarathonOptions = [
+    {
+      label: 'AHNS',
+      value: '92768',
     },
   ];
 
@@ -479,6 +527,17 @@ const UniTimeTableAdminPanel = () => {
                     ? wspaMarathonOptions
                     : uniValue === 'WSE (Wyższa Szkoła Ekonomiczna w Stalowej Woli)'
                     ? wseMarathonOptions
+                    : uniValue ===
+                      'ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)'
+                    ? answpMarathonOptions
+                    : uniValue ===
+                      'SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)'
+                    ? sswMarathonOptions
+                    : uniValue ===
+                      'MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)'
+                    ? mansMarathonOptions
+                    : uniValue === 'AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)'
+                    ? ahnsMarathonOptions
                     : pedagogiumMarathonOptions
                 }
                 styles={{
@@ -569,6 +628,9 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('Merito') &&
                         timetable.marathon === '82850'
                       ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('Merito') &&
+                        timetable.marathon === '91576'
+                      ? `Industrial Automation ${timetable.marathon}`
                       : timetable.university.includes('WSTiH') &&
                         timetable.marathon === '83530'
                       ? `Logistics ${timetable.marathon}`
@@ -593,9 +655,30 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('WSPA') &&
                         timetable.marathon === '84616'
                       ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('ANSWP') &&
+                        timetable.marathon === '87841'
+                      ? `Logistics Course ${timetable.marathon}`
+                      : timetable.university.includes('ANSWP') &&
+                        timetable.marathon === '87845'
+                      ? `CNC Course ${timetable.marathon}`
+                      : timetable.university.includes('ANSWP') &&
+                        timetable.marathon === '92260'
+                      ? `Management Course ${timetable.marathon}`
+                      : timetable.university.includes('ANSWP') &&
+                        timetable.marathon === '92264'
+                      ? `Online Course ${timetable.marathon}`
                       : timetable.university.includes('WSE') &&
                         timetable.marathon === '84801'
                       ? `Preparation Course ${timetable.marathon}`
+                      : timetable.university.includes('SSW') &&
+                        timetable.marathon === '92196'
+                      ? `Online Course ${timetable.marathon}`
+                      : timetable.university.includes('MANS') &&
+                        timetable.marathon === '92197'
+                      ? `Online Course ${timetable.marathon}`
+                      : timetable.university.includes('AHNS') &&
+                        timetable.marathon === '92768'
+                      ? `Online Course ${timetable.marathon}`
                       : ''}{' '}
                     <UserEditButton onClick={() => handleMarathonEdit(timetable._id)}>
                       Edit
@@ -649,7 +732,11 @@ const UniTimeTableAdminPanel = () => {
               wskmMarathonOptions={wskmMarathonOptions}
               wssipMarathonOptions={wssipMarathonOptions}
               wspaMarathonOptions={wspaMarathonOptions}
+              answpMarathonOptions={answpMarathonOptions}
               wseMarathonOptions={wseMarathonOptions}
+              sswMarathonOptions={sswMarathonOptions}
+              mansMarathonOptions={mansMarathonOptions}
+              ahnsMarathonOptions={ahnsMarathonOptions}
               daysOptions={daysOptions}
               closeEditForm={closeEditForm}
             />
@@ -669,7 +756,11 @@ const UniTimeTableAdminPanel = () => {
               wskmMarathonOptions={wskmMarathonOptions}
               wssipMarathonOptions={wssipMarathonOptions}
               wspaMarathonOptions={wspaMarathonOptions}
+              answpMarathonOptions={answpMarathonOptions}
               wseMarathonOptions={wseMarathonOptions}
+              sswMarathonOptions={sswMarathonOptions}
+              mansMarathonOptions={mansMarathonOptions}
+              ahnsMarathonOptions={ahnsMarathonOptions}
               closeMarathonEditForm={closeMarathonEditForm}
             />
           </Backdrop>

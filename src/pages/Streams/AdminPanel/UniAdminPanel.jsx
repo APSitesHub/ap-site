@@ -71,6 +71,7 @@ const UniAdminPanel = () => {
 
   const initialLinksValues = {
     pedagogium_logistics: '',
+    pedagogium_logistics_2: '',
     pedagogium_prep: '',
     wstijo_logistics: '',
     wstijo_prep: '',
@@ -80,6 +81,7 @@ const UniAdminPanel = () => {
     ewspa_prep: '',
     merito_logistics: '',
     merito_prep: '',
+    merito_automation: '',
     wstih_logistics: '',
     wstih_prep: '',
     wskm_logistics: '',
@@ -90,10 +92,15 @@ const UniAdminPanel = () => {
     wspa_prep: '',
     wse_prep: '',
     eu: '',
+    ssw: '',
+    mans: '',
+    ahns: '',
+    answp: '',
   };
 
   const linksSchema = yup.object().shape({
     pedagogium_logistics: yup.string().optional(),
+    pedagogium_logistics_2: yup.string().optional(),
     pedagogium_prep: yup.string().optional(),
     wstijo_logistics: yup.string().optional(),
     wstijo_prep: yup.string().optional(),
@@ -103,6 +110,7 @@ const UniAdminPanel = () => {
     ewspa_prep: yup.string().optional(),
     merito_logistics: yup.string().optional(),
     merito_prep: yup.string().optional(),
+    merito_automation: yup.string().optional(),
     wstih_logistics: yup.string().optional(),
     wstih_prep: yup.string().optional(),
     wskm_logistics: yup.string().optional(),
@@ -113,6 +121,10 @@ const UniAdminPanel = () => {
     wspa_prep: yup.string().optional(),
     wse_prep: yup.string().optional(),
     eu: yup.string().optional(),
+    ssw: yup.string().optional(),
+    mans: yup.string().optional(),
+    ahns: yup.string().optional(),
+    answp: yup.string().optional(),
   });
 
   const handleLinksSubmit = async (values, { resetForm }) => {
@@ -273,6 +285,14 @@ const UniAdminPanel = () => {
                   />
                   <AdminInputNote component="p" name="merito_prep" />
                 </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
+                    name="merito_automation"
+                    placeholder="Merito Industrial Automation"
+                  />
+                  <AdminInputNote component="p" name="merito_automation" />
+                </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>
@@ -376,6 +396,42 @@ const UniAdminPanel = () => {
                 <Label>
                   <AdminInput type="text" name="eu" placeholder="Education Union" />
                   <AdminInputNote component="p" name="eu" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  SSW (Świętokrzyska Szkoła Wyższa im. św. Jana Pawła II)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="ssw" placeholder="SSW" />
+                  <AdminInputNote component="p" name="ssw" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  MANS (Międzynarodowa Akademia Nauk Stosowanych w Łomży)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="mans" placeholder="MANS" />
+                  <AdminInputNote component="p" name="mans" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  AHNS (Akademia Handlowa Nauk Stosowanych w Radomiu)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="ahns" placeholder="AHNS" />
+                  <AdminInputNote component="p" name="ahns" />
+                </Label>
+              </LinksFieldGroup>
+              <LinksFieldGroup>
+                <LinksFieldGroupTitle>
+                  ANSWP (Akademia Nauk Stosowanych Wincentego Pola w Lublinie)
+                </LinksFieldGroupTitle>
+                <Label>
+                  <AdminInput type="text" name="answp" placeholder="ANSWP Collection" />
+                  <AdminInputNote component="p" name="answp" />
                 </Label>
               </LinksFieldGroup>
               <AdminFormBtn type="submit">Замінити лінки</AdminFormBtn>

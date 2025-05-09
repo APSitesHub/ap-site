@@ -38,6 +38,10 @@ export const MoldingNoClick = styled.div`
   @media screen and (min-height: 1200px) {
     height: 65%;
   }
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const MoldingNoClickSecondary = styled.div`
@@ -231,6 +235,14 @@ export const ButtonBox = styled.div`
 
   &.hidden {
     transform: translateX(calc(-100% - 30px));
+  }
+`;
+
+export const ButtonBoxUni = styled(ButtonBox)`
+  top: 125px;
+
+  @media screen and (min-width: 768px) {
+    top: 150px;
   }
 `;
 

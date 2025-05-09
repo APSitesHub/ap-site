@@ -41,12 +41,93 @@ import {
   NameReverseBtn,
 } from './Kahoots.styled';
 
+const translations = {
+  ua: {
+    kahootDisclaimerHeader: 'Привіт! Це вікно Кахутів.',
+    kahootDisclaimerText:
+      'Ми постійно працюємо над розширенням функціоналу нашого сайту, щоб ваші заняття залишалися для вас приємним досвідом, тому внесли декілька важливих змін:',
+    kahootDisclaimerItem1: [
+      'Вводити код Кахуту тепер не потрібно, адже ми вже ввели його за вас. Просто тисніть кнопку',
+      'у правому верхньому кутку цього вікна і обирайте номер Кахуту. Почніть з першого. 😉',
+    ],
+    kahootDisclaimerItem2: [
+      "Ім'я вводити кожного разу тепер теж не обов'язково. Тисніть кнопку",
+      "та вводьте в невеличке віконце ваше ім'я (не забувайте про наші рекомендації). Ви можете вводити своє ім'я повністю (наприклад: Володимир Зеленський), Кахут обріже зайві літери автоматично (вийде: Володимир Зелен). Коли введете, клікніть кнопку \"Зберегти\" і ваше ім'я збережеться у буфер обміну, а кнопка буде виглядати так:",
+    ],
+    kahootDisclaimerItem3: [
+      "Тепер при кліку на цю кнопку ви зможете швидко копіювати своє ім'я і просто вставляти його у поле Кахуту. Якщо ви припустилися помилки, вводячи своє ім'я, ви можете в будь-який момент натиснути кнопку",
+      ', а у віконці, що відкриється, кнопку "Виправити", після чого введіть ім\'я заново.',
+    ],
+    kahootDisclaimerItem4: [
+      'У разі, якщо вас за якоїсь причини викинуло з Кахуту і не пускає назад з тим же іменем, тисніть кнопку',
+      ', вона збереже ваше ім\'я та прізвище у зворотньому порядку, що дасть вам змогу швидко зайти до Кахуту під "новим" ім\'ям.',
+    ],
+
+    clipboardName:
+      "Введіть ваше ім'я в це поле, щоб вам не доводилося вводити його декілька разів під час уроку.",
+    clipboardNameValidation:
+      "Будь ласка, вводьте повне ім'я без скорочень, щоб ми могли правильно зарахувати ваші бали!",
+    saveButton: 'Зберегти',
+
+    clipboardNameError: "Ім'я та прізвище обов'язкові!",
+    clipboardNameErrorNotEnoughWords: "Прізвище та ім'я, будь ласка, 2 слова!",
+    clipboardNameSuccess:
+      ", ваше ім'я додано в буфер обміну, можете вставити його у відповідне поле!",
+    clipboardNameErrorText: 'Випадково помилились? Натисніть на цю кнопку: ',
+    clipboardNameSuccessReverseButton: 'Виправити помилку',
+
+    clipboardNameSuccessReverse:
+      ", ваші ім'я та прізвище додані до буферу обміну в зворотньому порядку, можете вставити їх у відповідне поле і спробувати підключитись до Кахуту знов!",
+    clipboardNameSuccessReverseText: 'Треба виправити помилку? Натисніть на цю кнопку:',
+  },
+
+  pl: {
+    kahootDisclaimerHeader: 'Cześć! To okno Kahootów.',
+    kahootDisclaimerText:
+      'Stale pracujemy nad rozszerzeniem funkcjonalności naszej strony, aby Twoje zajęcia były przyjemnym doświadczeniem, dlatego wprowadziliśmy kilka ważnych zmian:',
+    kahootDisclaimerItem1: [
+      'Nie musisz już wprowadzać kodu Kahoota, ponieważ zrobiliśmy to za Ciebie. Po prostu kliknij przycisk',
+      'w prawym górnym rogu tego okna i wybierz numer Kahoota. Zacznij od pierwszego. 😉',
+    ],
+    kahootDisclaimerItem2: [
+      'Nie musisz już za każdym razem wprowadzać swojego imienia. Kliknij przycisk',
+      'i wprowadź swoje imię w małym okienku (pamiętaj o naszych zaleceniach). Możesz wpisać swoje pełne imię (np. Jan Kowalski), a Kahoot automatycznie obetnie zbędne litery (np. Jan Kowal). Po wprowadzeniu kliknij przycisk "Zapisz", a Twoje imię zostanie zapisane w schowku, a przycisk będzie wyglądał tak:',
+    ],
+    kahootDisclaimerItem3: [
+      'Teraz, klikając ten przycisk, możesz szybko skopiować swoje imię i wkleić je w odpowiednie pole Kahoota. Jeśli popełniłeś błąd podczas wprowadzania swojego imienia, w każdej chwili możesz kliknąć przycisk',
+      ', a w otwartym okienku przycisk "Popraw", po czym wprowadź imię ponownie.',
+    ],
+    kahootDisclaimerItem4: [
+      'Jeśli z jakiegoś powodu zostałeś wyrzucony z Kahoota i nie możesz wrócić z tym samym imieniem, kliknij przycisk',
+      ', który zapisze Twoje imię i nazwisko w odwrotnej kolejności, co pozwoli Ci szybko dołączyć do Kahoota pod "nowym" imieniem.',
+    ],
+
+    clipboardName:
+      'Wprowadź swoje imię w to pole, aby nie musieć go wprowadzać kilka razy podczas lekcji.',
+    clipboardNameValidation:
+      'Proszę, wprowadź pełne imię bez skrótów, abyśmy mogli poprawnie naliczyć Twoje punkty!',
+    saveButton: 'Zapisz',
+
+    clipboardNameError: 'Imię i nazwisko są wymagane!',
+    clipboardNameErrorNotEnoughWords: 'Imię i nazwisko, proszę, 2 słowa!',
+    clipboardNameSuccess:
+      'Twoje imię zostało dodane do schowka, możesz je wkleić w odpowiednie pole!',
+    clipboardNameErrorText: 'Popełniłeś błąd? Kliknij ten przycisk:',
+    clipboardNameSuccessReverseButton: 'Popraw błąd',
+
+    clipboardNameSuccessReverse:
+      'Twoje imię i nazwisko zostały dodane do schowka w odwrotnej kolejności, możesz je wkleić w odpowiednie pole i spróbować ponownie dołączyć do Kahoota!',
+    clipboardNameSuccessReverseText: 'Musisz poprawić błąd? Kliknij ten przycisk:',
+  },
+};
+
 export const KahootsVideoChat = ({
   sectionWidth,
   sectionHeight,
   isKahootOpen,
   isChatOpen,
   isOpenedLast,
+  lang,
 }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
@@ -56,6 +137,7 @@ export const KahootsVideoChat = ({
   const [activeKahoot, setActiveKahoot] = useState(0);
 
   let location = useLocation();
+  const t = translations[lang] || translations.ua;
 
   // eslint-disable-next-line
   const page = location.pathname.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1];
@@ -149,14 +231,8 @@ export const KahootsVideoChat = ({
           >
             <DismissIcon />
           </ClipBoardFormDismissBtn>
-          <ClipBoardFormText>
-            Введіть ваше ім'я в це поле, щоб вам не доводилося вводити його декілька разів
-            під час уроку.
-          </ClipBoardFormText>
-          <ClipBoardFormText>
-            Будь ласка, вводьте повне ім'я без скорочень, щоб ми могли правильно
-            зарахувати ваші бали!
-          </ClipBoardFormText>
+          <ClipBoardFormText>{t.clipboardName}</ClipBoardFormText>
+          <ClipBoardFormText>{t.clipboardNameValidation}</ClipBoardFormText>
           <ClipBoardInput
             name="username"
             placeholder="Ім'я"
@@ -167,7 +243,7 @@ export const KahootsVideoChat = ({
               }
             }}
           />
-          <ClipBoardSubmitBtn>Зберегти</ClipBoardSubmitBtn>
+          <ClipBoardSubmitBtn>{t.saveButton}</ClipBoardSubmitBtn>
         </ClipBoardInputForm>
       ),
       { duration: Infinity }
@@ -196,7 +272,7 @@ export const KahootsVideoChat = ({
             <DismissIcon />
           </ClipBoardFormDismissBtn>
           <KahootNameValidation>
-            Прізвище та ім'я, будь ласка, 2 слова!
+            {t.clipboardNameErrorNotEnoughWords}
           </KahootNameValidation>
         </>
       ),
@@ -213,20 +289,18 @@ export const KahootsVideoChat = ({
             <ClipBoardFormDismissBtn onClick={() => toast.dismiss(t.id)}>
               <DismissIcon />
             </ClipBoardFormDismissBtn>
-            {`${localStorage.getItem('userName')}`}, ваше ім'я додано в буфер обміну,
-            можете вставити його у відповідне поле!
+            {`${localStorage.getItem('userName')}`}
+            {t.clipboardNameSuccess}
           </ClipBoardFormText>
 
-          <ClipBoardFormText>
-            Випадково помилились? Натисніть на цю кнопку:{' '}
-          </ClipBoardFormText>
+          <ClipBoardFormText>{t.clipboardNameErrorText} </ClipBoardFormText>
           <ClipBoardSubmitBtn
             onClick={() => {
               toast.dismiss(t.id);
               createNameInput(btn);
             }}
           >
-            Виправити помилку
+            {t.clipboardNameSuccessReverseButton}
           </ClipBoardSubmitBtn>
         </ClipBoardNotification>
       ),
@@ -244,14 +318,11 @@ export const KahootsVideoChat = ({
             <ClipBoardFormDismissBtn onClick={() => toast.dismiss(t.id)}>
               <DismissIcon />
             </ClipBoardFormDismissBtn>
-            {`${localStorage.getItem('userName')}`}, ваші ім'я та прізвище додані до
-            буферу обміну в зворотньому порядку, можете вставити їх у відповідне поле і
-            спробувати підключитись до Кахуту знов!
+            {`${localStorage.getItem('userName')}`}
+            {t.clipboardNameSuccessReverse}
           </ClipBoardFormText>
 
-          <ClipBoardFormText>
-            Треба виправити помилку? Натисніть на цю кнопку:{' '}
-          </ClipBoardFormText>
+          <ClipBoardFormText>{t.clipboardNameSuccessReverseText} </ClipBoardFormText>
 
           <ClipBoardSubmitBtn
             onClick={() => {
@@ -259,7 +330,7 @@ export const KahootsVideoChat = ({
               createNameInput(btn);
             }}
           >
-            Виправити помилку
+            {t.clipboardNameSuccessReverseButton}
           </ClipBoardSubmitBtn>
         </ClipBoardNotification>
       ),
@@ -281,7 +352,7 @@ export const KahootsVideoChat = ({
 
   return (
     <>
-      {Object.keys(kahoots).length && (
+      {!!Object.keys(kahoots).length && (
         <KahootBox
           ref={ref}
           className={isKahootOpen ? 'shown' : 'hidden'}
@@ -351,47 +422,34 @@ export const KahootsVideoChat = ({
               }
             >
               <KahootDisclaimerBox>
-                <KahootDisclaimerHeader>Привіт! Це вікно Кахутів.</KahootDisclaimerHeader>
-                <KahootDisclaimerText>
-                  Ми постійно працюємо над розширенням функціоналу нашого сайту, щоб ваші
-                  заняття залишалися для вас приємним досвідом, тому внесли декілька
-                  важливих змін:
-                </KahootDisclaimerText>
+                <KahootDisclaimerHeader>
+                  {t.kahootDisclaimerHeader}
+                </KahootDisclaimerHeader>
+                <KahootDisclaimerText>{t.kahootDisclaimerText}</KahootDisclaimerText>
                 <KahootDisclaimerList>
                   <KahootDisclaimerItem>
                     <KahootDisclaimerText>
-                      Вводити код Кахуту тепер не потрібно, адже ми вже ввели його за вас.
-                      Просто тисніть кнопку <SupportKahootPickerIcon /> у правому
-                      верхньому кутку цього вікна і обирайте номер Кахуту. Почніть з
-                      першого. 😉
+                      {t.kahootDisclaimerItem1[0]} <SupportKahootPickerIcon />{' '}
+                      {t.kahootDisclaimerItem1[1]}
                     </KahootDisclaimerText>
                   </KahootDisclaimerItem>
                   <KahootDisclaimerItem>
                     <KahootDisclaimerText>
-                      Ім'я вводити кожного разу тепер теж не обов'язково. Тисніть кнопку{' '}
-                      <SupportClipBoardAdd /> та вводьте в невеличке віконце ваше ім'я (не
-                      забувайте про наші рекомендації). Ви можете вводити своє ім'я
-                      повністю (наприклад: Володимир Зеленський), Кахут обріже зайві
-                      літери автоматично (вийде: Володимир Зелен). Коли введете, клікніть
-                      кнопку "Зберегти" і ваше ім'я збережеться у буфер обміну, а кнопка
-                      буде виглядати так: <SupportClipBoardCopy />.
+                      {t.kahootDisclaimerItem2[0]} <SupportClipBoardAdd />{' '}
+                      {t.kahootDisclaimerItem2[1]}
+                      <SupportClipBoardCopy />.
                     </KahootDisclaimerText>
                   </KahootDisclaimerItem>{' '}
                   <KahootDisclaimerItem>
                     <KahootDisclaimerText>
-                      Тепер при кліку на цю кнопку ви зможете швидко копіювати своє ім'я і
-                      просто вставляти його у поле Кахуту. Якщо ви припустилися помилки,
-                      вводячи своє ім'я, ви можете в будь-який момент натиснути кнопку{' '}
-                      <SupportClipBoardCopy />, а у віконці, що відкриється, кнопку
-                      "Виправити", після чого введіть ім'я заново.
+                      {t.kahootDisclaimerItem3[0]} <SupportClipBoardCopy />{' '}
+                      {t.kahootDisclaimerItem3[1]}
                     </KahootDisclaimerText>
                   </KahootDisclaimerItem>
                   <KahootDisclaimerItem>
                     <KahootDisclaimerText>
-                      У разі, якщо вас за якоїсь причини викинуло з Кахуту і не пускає
-                      назад з тим же іменем, тисніть кнопку <SupportNameReverse />, вона
-                      збереже ваше ім'я та прізвище у зворотньому порядку, що дасть вам
-                      змогу швидко зайти до Кахуту під "новим" ім'ям.
+                      {t.kahootDisclaimerItem4[0]} <SupportNameReverse />{' '}
+                      {t.kahootDisclaimerItem4[1]}
                     </KahootDisclaimerText>
                   </KahootDisclaimerItem>
                 </KahootDisclaimerList>
