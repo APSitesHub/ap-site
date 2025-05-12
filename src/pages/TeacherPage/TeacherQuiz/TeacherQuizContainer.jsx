@@ -19,7 +19,7 @@ import {
   TeacherQuizCorrectListUser,
   TeacherQuizCorrectListUserInfo,
   TeacherQuizCorrectListUserNumber,
-  TeacherQuizCorrectListUsers
+  TeacherQuizCorrectListUsers,
 } from './TeacherQuiz.styled';
 
 export const TeacherQuizContainer = ({
@@ -68,7 +68,9 @@ export const TeacherQuizContainer = ({
   const sendConfirmedAnswer = async () => {
     console.log(answers, 'answers before sendConfirmedAnswer');
     console.log(correctAnswer.current, 'correctAnswer.current');
-    list.current = await axios.get(`http://localhost:5000/answers/${questionID}`);
+    list.current = await axios.get(
+      `https://ap-server-8qi1.onrender.com/answers/${questionID}`
+    );
     console.log(
       list.current.data.filter(
         item => item.answer.toLowerCase() === correctAnswer.current.toLowerCase()
@@ -93,36 +95,39 @@ export const TeacherQuizContainer = ({
 
   return (
     <TeacherChatPageContainer>
-      {isConfirmationOpen && (
-        <TeacherQuizConfirmation>
-          <FormCloseBtn onClick={() => setIsConfirmationOpen(false)}>
-            {' '}
-            <CloseIcon />
-          </FormCloseBtn>
-          <TeacherQuizConfirmationText>
-            Чи відповідь{' '}
-            <TeacherQuizConfirmationHighlight>
-              "{correctAnswer.current}"
-            </TeacherQuizConfirmationHighlight>{' '}
-            правильна чи її необхідно видалити?{' '}
-          </TeacherQuizConfirmationText>
-          <TeacherQuizConfirmationBtnBox>
-            <TeacherChartBtn onClick={sendConfirmedAnswer}>Правильна</TeacherChartBtn>
-            <TeacherChartResetBtn
-              onClick={() => {
-                setAnswers(answers => {
-                  delete answers[correctAnswer.current];
-                  return answers;
-                });
+      {isConfirmationOpen &&
+        page.includes('kids') &&
+        !page.includes('de') &&
+        !page.includes('pl') && (
+          <TeacherQuizConfirmation>
+            <FormCloseBtn onClick={() => setIsConfirmationOpen(false)}>
+              {' '}
+              <CloseIcon />
+            </FormCloseBtn>
+            <TeacherQuizConfirmationText>
+              Чи відповідь{' '}
+              <TeacherQuizConfirmationHighlight>
+                "{correctAnswer.current}"
+              </TeacherQuizConfirmationHighlight>{' '}
+              правильна чи її необхідно видалити?{' '}
+            </TeacherQuizConfirmationText>
+            <TeacherQuizConfirmationBtnBox>
+              <TeacherChartBtn onClick={sendConfirmedAnswer}>Правильна</TeacherChartBtn>
+              <TeacherChartResetBtn
+                onClick={() => {
+                  setAnswers(answers => {
+                    delete answers[correctAnswer.current];
+                    return answers;
+                  });
 
-                setIsConfirmationOpen(false);
-              }}
-            >
-              Видалити
-            </TeacherChartResetBtn>
-          </TeacherQuizConfirmationBtnBox>
-        </TeacherQuizConfirmation>
-      )}
+                  setIsConfirmationOpen(false);
+                }}
+              >
+                Видалити
+              </TeacherChartResetBtn>
+            </TeacherQuizConfirmationBtnBox>
+          </TeacherQuizConfirmation>
+        )}
       {isListOpen && (
         <TeacherQuizCorrectList>
           <TeacherQuizCorrectListHeading>
@@ -150,7 +155,7 @@ export const TeacherQuizContainer = ({
                     {item.username}
                   </TeacherQuizCorrectListUserInfo>
                   <TeacherQuizCorrectListUserInfo>
-                    {new Date(item.createdAt).toTimeString().slice(0,8)}
+                    {new Date(item.createdAt).toTimeString().slice(0, 8)}
                     {/* {new Date(item.createdAt).toTimeString().slice(0,8)+'.'+new Date(item.createdAt).getMilliseconds()} */}
                   </TeacherQuizCorrectListUserInfo>
                 </TeacherQuizCorrectListUser>
