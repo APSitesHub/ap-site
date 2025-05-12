@@ -1,19 +1,36 @@
+import axios from 'axios';
 import {
   StudentQuizBox,
   StudentQuizForm,
-  StudentQuizSubmitBtnOptions
+  StudentQuizSubmitBtnOptions,
 } from './StudentInput.styled';
 
-export const StudentOptions = ({ isInputOpen, socket, page, toggleQuiz, currentUser }) => {
-  console.log(4, 'studentoptionssocket', socket);
+export const StudentOptions = ({
+  isInputOpen,
+  socket,
+  page,
+  toggleQuiz,
+  user,
+  questionID,
+}) => {
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     console.log(e.target);
     socket.emit('answer:given', {
       answer: e.target.innerText,
       page: page,
     });
+
+    await axios.post('/answers', {
+      answer: e.target.innerText,
+      username: user.name,
+      page: page,
+      socketID: socket.id,
+      questionID: questionID,
+      userID: user.id,
+    });
+
     toggleQuiz();
   };
 
@@ -25,9 +42,15 @@ export const StudentOptions = ({ isInputOpen, socket, page, toggleQuiz, currentU
       //   onTouchMove={handleOnDrag}
     >
       <StudentQuizForm>
-        <StudentQuizSubmitBtnOptions onClick={(e) => handleSubmit(e)}>A</StudentQuizSubmitBtnOptions>
-        <StudentQuizSubmitBtnOptions onClick={(e) => handleSubmit(e)}>B</StudentQuizSubmitBtnOptions>
-        <StudentQuizSubmitBtnOptions onClick={(e) => handleSubmit(e)}>C</StudentQuizSubmitBtnOptions>
+        <StudentQuizSubmitBtnOptions onClick={e => handleSubmit(e)}>
+          A
+        </StudentQuizSubmitBtnOptions>
+        <StudentQuizSubmitBtnOptions onClick={e => handleSubmit(e)}>
+          B
+        </StudentQuizSubmitBtnOptions>
+        <StudentQuizSubmitBtnOptions onClick={e => handleSubmit(e)}>
+          C
+        </StudentQuizSubmitBtnOptions>
         {/* <StudentQuizSubmitBtnOptions onClick={(e) => handleSubmit(e)}>D</StudentQuizSubmitBtnOptions> */}
       </StudentQuizForm>
     </StudentQuizBox>

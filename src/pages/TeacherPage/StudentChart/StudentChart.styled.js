@@ -97,8 +97,9 @@ export const TeacherChartBtn = styled.button`
   min-width: 150px;
 
   font-family: var(--my-ap-font-family);
+  font-size: 16px;
   border-radius: 50px;
-  padding: 20px 50px;
+  padding: 20px 20px;
   background: radial-gradient(70% 80% at -13.25% 26%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%),
     radial-gradient(70% 80% at 113.25% 74%, #0f645b 6.9%, rgba(0, 0, 0, 0) 100%), #000;
 

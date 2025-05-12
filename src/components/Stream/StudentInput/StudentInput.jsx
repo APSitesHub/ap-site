@@ -13,14 +13,12 @@ export const StudentInput = ({
   socket,
   page,
   toggleQuiz,
-  currentUser,
   user,
   questionID,
 }) => {
-  console.log(4, 'studentinputsocket', socket);
-  console.log(10, 'user', currentUser);
+
   const [isValid, setIsValid] = useState(true);
-  console.log(questionID, 'questionID');
+
 
   const handleSubmit = async e => {
     if (!document.querySelector('#answer_input').value) {
@@ -28,7 +26,7 @@ export const StudentInput = ({
       return;
     }
     e.preventDefault();
-    console.log(document.querySelector('#answer_input').value);
+
     socket.emit('answer:given', {
       answer: document
         .querySelector('#answer_input')
@@ -37,8 +35,6 @@ export const StudentInput = ({
         .toLowerCase(),
       page: page,
     });
-
-    console.log(axios.defaults.baseURL, 'axios.defaults.baseURL');
 
     await axios.post('/answers', {
       answer: document.querySelector('#answer_input').value.trim(),
