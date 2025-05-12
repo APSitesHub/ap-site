@@ -25,6 +25,9 @@ import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFals
 import { JitsiMeeting } from '@jitsi/react-sdk';
 import { ColorRing } from 'react-loader-spinner';
 
+const supportedLanguages = ['uk', 'en', 'pl', 'de'];
+const browserLanguage = navigator.language.split('-')[0];
+
 const debug = true;
 
 function Room({ isAdmin }) {
@@ -344,7 +347,7 @@ function Room({ isAdmin }) {
           </GradientBackground>
           <JitsiContainer
             style={{
-              height: isIframeOpen ? 'calc(var(--vh, 1vh) * 100)' : '0',
+              height: isIframeOpen || isAdmin ? 'calc(var(--vh, 1vh) * 100)' : '0',
             }}
           >
             <JitsiMeeting
@@ -384,7 +387,9 @@ function Room({ isAdmin }) {
                   preCallTestICEUrl: '',
                 },
                 readOnlyName: true,
-                defaultLanguage: navigator.language.split('-')[0],
+                defaultLanguage: supportedLanguages.includes(browserLanguage)
+                  ? browserLanguage
+                  : 'en',
                 toolbarButtons: [
                   isAdmin && 'camera',
                   // 'chat',
