@@ -13,6 +13,20 @@ function StreamMain() {
     if (localStorage.getItem('userName')) {
       fetchRole();
     }
+
+    const html = document.documentElement;
+    const body = document.body;
+    const root = document.getElementById('root');
+
+    html.style.height = '100%';
+    body.style.height = '100%';
+    root.style.height = '100%';
+
+    return () => {
+      html.style.height = '';
+      body.style.height = '';
+      root.style.height = '';
+    };
   }, []);
 
   const handleLogin = () => {

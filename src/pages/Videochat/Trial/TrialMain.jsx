@@ -19,6 +19,7 @@ function TrialMain() {
   const handleLogin = values => {
     localStorage.setItem('userName', values.userName);
     fetchRole();
+    setIsUserLogined(true);
   };
 
   const setTeacherLabel = () => {
@@ -32,9 +33,27 @@ function TrialMain() {
   const fetchRole = async () => {
     const isAdmin = await isRoomAdmin(roomID);
     setIsAdmin(isAdmin);
-    setIsUserLogined(true);
+    if (isAdmin) {
+      setIsUserLogined(true);
+    }
     isAdmin && setTeacherLabel();
   };
+
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const root = document.getElementById('root');
+
+    html.style.height = '100%';
+    body.style.height = '100%';
+    root.style.height = '100%';
+
+    return () => {
+      html.style.height = '';
+      body.style.height = '';
+      root.style.height = '';
+    };
+  }, []);
 
   return (
     <>

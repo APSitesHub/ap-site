@@ -267,7 +267,12 @@ export const ChatBtn = styled.button`
   margin: 0 auto;
   transition: all var(--animation-global);
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1024px) {
+    width: 70px;
+    height: 70px;
+  }
+
+  @media screen and (min-width: 768px) and (orientation: portrait) {
     width: 70px;
     height: 70px;
   }
@@ -317,7 +322,12 @@ export const KahootLogo = styled(KahootIcon)`
   height: 25px;
   z-index: 5;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1024px) {
+    width: 40px;
+    height: 40px;
+  }
+
+  @media screen and (min-width: 768px) and (orientation: portrait) {
     width: 40px;
     height: 40px;
   }
@@ -346,7 +356,12 @@ export const ChatLogo = styled(ChatIcon)`
   height: 25px;
   z-index: 5;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1024px) {
+    width: 40px;
+    height: 40px;
+  }
+
+  @media screen and (min-width: 768px) and (orientation: portrait) {
     width: 40px;
     height: 40px;
   }

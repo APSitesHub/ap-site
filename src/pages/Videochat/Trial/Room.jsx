@@ -14,6 +14,7 @@ import { useLocation, useNavigate, useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import { ChatVideo } from 'utils/Chat/ChatVideo';
 import {
+  FullScreenIcon,
   GradientBackground,
   JitsiContainer,
   LargeText,
@@ -81,6 +82,14 @@ function Room({ isAdmin, lang }) {
     isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'chat')
       : setIsOpenedLast(isOpenedLast => '');
+  };
+
+  const toggleFullScreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
   };
 
   const toggleQuizInput = () => {
@@ -278,29 +287,19 @@ function Room({ isAdmin, lang }) {
     };
   }, [currentUser, room]);
 
-  useEffect(() => {
-    const setAppHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    };
-
-    setAppHeight();
-    window.addEventListener('resize', setAppHeight);
-
-    return () => window.removeEventListener('resize', setAppHeight);
-  }, []);
-
   return (
     <>
       <div
         style={{
           transform: isAdmin && !debug ? 'scale(1, -1)' : 'none',
           overflow: 'hidden',
+          height: '100%',
         }}
       >
         <PageContainer
           style={{
             width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+            overflowY: adminId ? 'hidden' : 'auto',
           }}
         >
           <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
@@ -310,6 +309,9 @@ function Room({ isAdmin, lang }) {
             <ChatBtn onClick={toggleChat}>
               <ChatLogo />
             </ChatBtn>
+            <KahootBtn onClick={toggleFullScreen}>
+              <FullScreenIcon />
+            </KahootBtn>
           </ButtonBox>
           <KahootsVideoChat
             sectionWidth={width}
@@ -351,7 +353,10 @@ function Room({ isAdmin, lang }) {
           </GradientBackground>
           <JitsiContainer
             style={{
-              height: isIframeOpen || isAdmin ? 'calc(var(--vh, 1vh) * 100)' : '0',
+              height: '100%',
+              opacity: isIframeOpen || isAdmin ? '1' : '0',
+              pointerEvents: isIframeOpen || isAdmin ? 'all' : 'none',
+              minHeight: adminId ? 'auto' : '400px',
             }}
           >
             <JitsiMeeting
@@ -399,7 +404,7 @@ function Room({ isAdmin, lang }) {
                   // 'etherpad',
                   // 'feedback',
                   'filmstrip',
-                  'fullscreen',
+                  // 'fullscreen',
                   'hangup',
                   // 'help',
                   // 'highlight',
