@@ -216,7 +216,7 @@ export const Timetable = ({
                 </TimetableTable>
               </TimetableWebinars>
             )}
-            {!user.package.includes('t') && (
+            {!user.package.match(/(?<=\d)t/) && (
               <TimetableSpeakings>
                 <TimetableWebinarsHead>
                   <TimetableLessonType>Практичні заняття</TimetableLessonType>
