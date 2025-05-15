@@ -102,6 +102,8 @@ export const Timetable = ({
       ? baseStreamUrl + personalTimetable?.level + 'sc'
       : language === 'enkids'
       ? baseKidsStreamUrl + personalTimetable?.level + 'sc'
+      : language.includes('kids')
+      ? baseKidsStreamUrl + language.replace('kids', '') + personalTimetable?.level + 'sc'
       : baseStreamUrl + language + personalTimetable?.level + 'sc';
   };
 
@@ -214,52 +216,54 @@ export const Timetable = ({
                 </TimetableTable>
               </TimetableWebinars>
             )}
-            <TimetableSpeakings>
-              <TimetableWebinarsHead>
-                <TimetableLessonType>Практичні заняття</TimetableLessonType>
-                <TimetableLessonLink href={speakingLink} target="_blank">
-                  <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
-                </TimetableLessonLink>
-              </TimetableWebinarsHead>
-              <TimetableTable>
-                <thead>
-                  <tr>
-                    <TimetableHead className="day">День</TimetableHead>
-                    <TimetableHead className="time">Час</TimetableHead>
-                    <TimetableHead className="lessonNumber">№ уроку</TimetableHead>
-                    <TimetableHead className="teacher">Викладач</TimetableHead>
-                  </tr>
-                </thead>
-                <tbody>
-                  {personalTimetable.schedule
-                    .filter(lesson => lesson.type === 'speaking')
-                    .sort((a, b) => a.day - b.day)
-                    .map((lesson, i) => (
-                      <TimetableDaysItem
-                        key={i}
-                        style={
-                          lesson.day === new Date().getDay()
-                            ? { backgroundColor: '#F9C838' }
-                            : {}
-                        }
-                      >
-                        <TimetableDaysCell className="day">
-                          {DAYS[lesson.day - 1]}
-                        </TimetableDaysCell>
-                        <TimetableDaysCell className="time">
-                          {lesson.time}
-                        </TimetableDaysCell>
-                        <TimetableDaysCell className="lessonNumber">
-                          {lesson.lessonNumber}
-                        </TimetableDaysCell>
-                        <TimetableDaysCell className="teacher">
-                          {lesson.teacher}
-                        </TimetableDaysCell>
-                      </TimetableDaysItem>
-                    ))}
-                </tbody>
-              </TimetableTable>
-            </TimetableSpeakings>
+            {!user.package.includes('t') && (
+              <TimetableSpeakings>
+                <TimetableWebinarsHead>
+                  <TimetableLessonType>Практичні заняття</TimetableLessonType>
+                  <TimetableLessonLink href={speakingLink} target="_blank">
+                    <TimetableLessonLinkText>Перейти</TimetableLessonLinkText>
+                  </TimetableLessonLink>
+                </TimetableWebinarsHead>
+                <TimetableTable>
+                  <thead>
+                    <tr>
+                      <TimetableHead className="day">День</TimetableHead>
+                      <TimetableHead className="time">Час</TimetableHead>
+                      <TimetableHead className="lessonNumber">№ уроку</TimetableHead>
+                      <TimetableHead className="teacher">Викладач</TimetableHead>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {personalTimetable.schedule
+                      .filter(lesson => lesson.type === 'speaking')
+                      .sort((a, b) => a.day - b.day)
+                      .map((lesson, i) => (
+                        <TimetableDaysItem
+                          key={i}
+                          style={
+                            lesson.day === new Date().getDay()
+                              ? { backgroundColor: '#F9C838' }
+                              : {}
+                          }
+                        >
+                          <TimetableDaysCell className="day">
+                            {DAYS[lesson.day - 1]}
+                          </TimetableDaysCell>
+                          <TimetableDaysCell className="time">
+                            {lesson.time}
+                          </TimetableDaysCell>
+                          <TimetableDaysCell className="lessonNumber">
+                            {lesson.lessonNumber}
+                          </TimetableDaysCell>
+                          <TimetableDaysCell className="teacher">
+                            {lesson.teacher}
+                          </TimetableDaysCell>
+                        </TimetableDaysItem>
+                      ))}
+                  </tbody>
+                </TimetableTable>
+              </TimetableSpeakings>
+            )}
             {/* {userPackage.current !== 'simple' && userPackage.current !== 'student' && (
             <TimetableSpeakings>
               <TimetableWebinarsHead>
