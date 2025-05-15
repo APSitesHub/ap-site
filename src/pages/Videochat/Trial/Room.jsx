@@ -31,6 +31,9 @@ const browserLanguage = navigator.language.split('-')[0];
 const debug = true;
 
 function Room({ isAdmin, lang }) {
+  const [isConnected, setIsConnected] = useState(false);
+  const [scrollOn, setScrollOn] = useState(false);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const navigate = useNavigate();
   const { id: roomID } = useParams();
   const [adminId, setAdminId] = useState(null);
@@ -121,6 +124,9 @@ function Room({ isAdmin, lang }) {
 
       if (participant.displayName.endsWith('(teacher)')) {
         setIsIframeOpen(true);
+        setWindowHeight(window.innerHeight);
+        setScrollOn(false);
+        setIsConnected(true);
       }
     });
 
@@ -129,6 +135,10 @@ function Room({ isAdmin, lang }) {
         setIsIframeOpen(true);
         externalApi.pinParticipant(participant.id);
         setAdminId(participant.id);
+
+        setWindowHeight(window.innerHeight);
+        setScrollOn(false);
+        setIsConnected(true);
       }
     });
 
@@ -280,27 +290,34 @@ function Room({ isAdmin, lang }) {
 
   useEffect(() => {
     const setAppHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      if (window.innerHeight < 400 && !isConnected) {
+        setWindowHeight(400);
+        setScrollOn(true);
+      } else {
+        setWindowHeight(window.innerHeight);
+        setScrollOn(false);
+      }
     };
 
     setAppHeight();
     window.addEventListener('resize', setAppHeight);
 
     return () => window.removeEventListener('resize', setAppHeight);
-  }, []);
+  }, [isConnected]);
 
   return (
     <>
       <div
         style={{
           transform: isAdmin && !debug ? 'scale(1, -1)' : 'none',
-          overflow: 'hidden',
+          overflow: scrollOn ? 'scroll' : 'hidden',
+          height: '100%',
         }}
       >
         <PageContainer
           style={{
             width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+            height: isIframeOpen || isAdmin ? windowHeight : '100%',
           }}
         >
           <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
@@ -309,6 +326,9 @@ function Room({ isAdmin, lang }) {
             </KahootBtn>
             <ChatBtn onClick={toggleChat}>
               <ChatLogo />
+            </ChatBtn>
+            <ChatBtn>
+              <span>{windowHeight}</span>
             </ChatBtn>
           </ButtonBox>
           <KahootsVideoChat
@@ -351,7 +371,7 @@ function Room({ isAdmin, lang }) {
           </GradientBackground>
           <JitsiContainer
             style={{
-              height: isIframeOpen || isAdmin ? 'calc(var(--vh, 1vh) * 100)' : '0',
+              height: isIframeOpen || isAdmin ? windowHeight : '0',
             }}
           >
             <JitsiMeeting
