@@ -78,8 +78,6 @@ export const TeacherQuizContainer = ({
       'list.current.data'
     );
     setIsListOpen(true);
-
-    // add request to server to save the correct answer
     setIsConfirmationOpen(false);
   };
 
@@ -95,39 +93,36 @@ export const TeacherQuizContainer = ({
 
   return (
     <TeacherChatPageContainer>
-      {isConfirmationOpen &&
-        page.includes('kids') &&
-        !page.includes('de') &&
-        !page.includes('pl') && (
-          <TeacherQuizConfirmation>
-            <FormCloseBtn onClick={() => setIsConfirmationOpen(false)}>
-              {' '}
-              <CloseIcon />
-            </FormCloseBtn>
-            <TeacherQuizConfirmationText>
-              Чи відповідь{' '}
-              <TeacherQuizConfirmationHighlight>
-                "{correctAnswer.current}"
-              </TeacherQuizConfirmationHighlight>{' '}
-              правильна чи її необхідно видалити?{' '}
-            </TeacherQuizConfirmationText>
-            <TeacherQuizConfirmationBtnBox>
-              <TeacherChartBtn onClick={sendConfirmedAnswer}>Правильна</TeacherChartBtn>
-              <TeacherChartResetBtn
-                onClick={() => {
-                  setAnswers(answers => {
-                    delete answers[correctAnswer.current];
-                    return answers;
-                  });
+      {isConfirmationOpen && (
+        <TeacherQuizConfirmation>
+          <FormCloseBtn onClick={() => setIsConfirmationOpen(false)}>
+            {' '}
+            <CloseIcon />
+          </FormCloseBtn>
+          <TeacherQuizConfirmationText>
+            Чи відповідь{' '}
+            <TeacherQuizConfirmationHighlight>
+              "{correctAnswer.current}"
+            </TeacherQuizConfirmationHighlight>{' '}
+            правильна чи її необхідно видалити?{' '}
+          </TeacherQuizConfirmationText>
+          <TeacherQuizConfirmationBtnBox>
+            <TeacherChartBtn onClick={sendConfirmedAnswer}>Правильна</TeacherChartBtn>
+            <TeacherChartResetBtn
+              onClick={() => {
+                setAnswers(answers => {
+                  delete answers[correctAnswer.current];
+                  return answers;
+                });
 
-                  setIsConfirmationOpen(false);
-                }}
-              >
-                Видалити
-              </TeacherChartResetBtn>
-            </TeacherQuizConfirmationBtnBox>
-          </TeacherQuizConfirmation>
-        )}
+                setIsConfirmationOpen(false);
+              }}
+            >
+              Видалити
+            </TeacherChartResetBtn>
+          </TeacherQuizConfirmationBtnBox>
+        </TeacherQuizConfirmation>
+      )}
       {isListOpen && (
         <TeacherQuizCorrectList>
           <TeacherQuizCorrectListHeading>

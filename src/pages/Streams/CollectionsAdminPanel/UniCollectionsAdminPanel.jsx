@@ -218,14 +218,14 @@ const UniCollectionsAdminPanel = () => {
                   />
                   <AdminInputNote component="p" name="wstijo_logistics" />
                 </Label>
-                <Label>
+                {/* <Label>
                   <AdminInput
                     type="text"
                     name="wstijo_prep"
                     placeholder="WSTIJO Preparation Course Collection"
                   />
                   <AdminInputNote component="p" name="wstijo_prep" />
-                </Label>
+                </Label> */}
               </LinksFieldGroup>
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>

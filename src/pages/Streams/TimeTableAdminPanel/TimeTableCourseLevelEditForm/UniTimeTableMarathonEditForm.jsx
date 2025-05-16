@@ -96,7 +96,7 @@ export const UniTimeTableMarathonEditForm = ({
           />
           <FormSelect
             options={
-              uniValue.includes('WSTJIO')
+              uniValue.includes('WSTIJO')
                 ? wstijoMarathonOptions
                 : uniValue.includes('WSBMIR')
                 ? wsbmirMarathonOptions

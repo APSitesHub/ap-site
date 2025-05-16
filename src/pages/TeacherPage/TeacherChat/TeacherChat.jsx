@@ -48,6 +48,8 @@ export const TeacherChat = ({ page }) => {
       ? '/streams-kids/' + page.split('kids')[0]
       : page.includes('trendets') || page.includes('preschool')
       ? '/streams-kids/' + page
+      : page.includes('wstijo')
+      ? page
       : '/streams/' + page;
 
   const room = getMessagesByPage(page);
@@ -147,8 +149,7 @@ export const TeacherChat = ({ page }) => {
           ? [...dbMessages.data, ...addedMessages]
           : [...dbMessages.data];
         const todayMessages = allMessages.filter(
-          message =>
-            new Date(message.createdAt).getDate() === new Date().getDate()
+          message => new Date(message.createdAt).getDate() === new Date().getDate()
         );
         setMessages(messages => (messages = todayMessages));
       } catch (error) {
@@ -161,10 +162,7 @@ export const TeacherChat = ({ page }) => {
       setMessages(messages => (messages = [...messages, data]));
       const updateMessages = async () => {
         try {
-          await axios.post(
-            'https://ap-chat-server.onrender.com/messages',
-            data
-          );
+          await axios.post('https://ap-chat-server.onrender.com/messages', data);
         } catch (error) {
           console.log(error);
         }
@@ -185,10 +183,7 @@ export const TeacherChat = ({ page }) => {
       });
       const editMessage = async () => {
         try {
-          await axios.patch(
-            `https://ap-chat-server.onrender.com/messages/${id}`,
-            data
-          );
+          await axios.patch(`https://ap-chat-server.onrender.com/messages/${id}`, data);
         } catch (error) {
           console.log(error);
         }
@@ -199,14 +194,11 @@ export const TeacherChat = ({ page }) => {
     socketRef.current.on('message:delete', async id => {
       console.log('delete fired');
       setMessages(
-        messages =>
-          (messages = [...messages.filter(message => message.id !== id)])
+        messages => (messages = [...messages.filter(message => message.id !== id)])
       );
       const deleteMessage = async () => {
         try {
-          await axios.delete(
-            `https://ap-chat-server.onrender.com/messages/${id}`
-          );
+          await axios.delete(`https://ap-chat-server.onrender.com/messages/${id}`);
         } catch (error) {
           console.log(error);
         }
@@ -221,12 +213,9 @@ export const TeacherChat = ({ page }) => {
         console.log(userID);
         console.log(userIP);
         try {
-          await axios.patch(
-            `https://ap-chat-server.onrender.com/users/${userID}`,
-            {
-              isBanned: true,
-            }
-          );
+          await axios.patch(`https://ap-chat-server.onrender.com/users/${userID}`, {
+            isBanned: true,
+          });
         } catch (error) {
           console.log(error);
         }

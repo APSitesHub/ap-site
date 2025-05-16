@@ -10,28 +10,28 @@ export const StudentOptions = ({
   socket,
   page,
   toggleQuiz,
+  currentUser,
   user,
   questionID,
 }) => {
-
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log(e.target);
+    const answer = e.target.innerText;
+    toggleQuiz();
+
     socket.emit('answer:given', {
-      answer: e.target.innerText,
+      answer: answer,
       page: page,
     });
 
     await axios.post('/answers', {
-      answer: e.target.innerText,
-      username: user.name,
+      answer: answer,
+      username: user?.name || currentUser.username,
       page: page,
       socketID: socket.id,
       questionID: questionID,
-      userID: user.id,
+      userID: user?.id || currentUser.userID,
     });
-
-    toggleQuiz();
   };
 
   return (

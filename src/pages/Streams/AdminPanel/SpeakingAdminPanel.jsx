@@ -104,6 +104,7 @@ const SpeakingAdminPanel = () => {
     c1kids: '',
     b1kidsbeginner: '',
     b2kidsbeginner: '',
+    dea0kids: '',
     dea1kids: '',
     dea2kids: '',
     deb1kids: '',
@@ -155,6 +156,7 @@ const SpeakingAdminPanel = () => {
     c1kids: yup.string().optional(),
     b1kidsbeginner: yup.string().optional(),
     b2kidsbeginner: yup.string().optional(),
+    dea0kids: yup.string().optional(),
     dea1kids: yup.string().optional(),
     dea2kids: yup.string().optional(),
     deb1kids: yup.string().optional(),
@@ -523,8 +525,16 @@ const SpeakingAdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
+                    name="dea1kids"
+                    placeholder="A1 Kids Deutsch speaking link"
+                  />
+                  <AdminInputNote component="p" name="dea1kids" />
+                </Label>
+                <Label>
+                  <AdminInput
+                    type="text"
                     name="dea2kids"
-                    placeholder="A2 Kids Deutsch link"
+                    placeholder="A2 Kids Deutsch speaking link"
                   />
                   <AdminInputNote component="p" name="dea2kids" />
                 </Label>
@@ -532,7 +542,7 @@ const SpeakingAdminPanel = () => {
                   <AdminInput
                     type="text"
                     name="deb1kids"
-                    placeholder="B1 Kids Deutsch link"
+                    placeholder="B1 Kids Deutsch speaking link"
                   />
                   <AdminInputNote component="p" name="deb1kids" />
                 </Label>
@@ -540,7 +550,7 @@ const SpeakingAdminPanel = () => {
                   <AdminInput
                     type="text"
                     name="pla1kids"
-                    placeholder="A1 Kids Polski link"
+                    placeholder="A1 Kids Polski speaking link"
                   />
                   <AdminInputNote component="p" name="pla1kids" />
                 </Label>
@@ -548,7 +558,7 @@ const SpeakingAdminPanel = () => {
                   <AdminInput
                     type="text"
                     name="pla2kids"
-                    placeholder="A2 Kids Polski link"
+                    placeholder="A2 Kids Polski speaking link"
                   />
                   <AdminInputNote component="p" name="pla2kids" />
                 </Label>

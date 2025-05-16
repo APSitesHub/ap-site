@@ -103,6 +103,7 @@ function Room() {
   const socketRef = useRef(null);
   const audioRef = useRef(null);
   const inactivityTimer = useRef(null);
+  const questionID = useRef('');
 
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
@@ -112,6 +113,7 @@ function Room() {
       username: localStorage.getItem('userName'),
       isBanned: false,
       userIP: 'no ip',
+      userID: localStorage.getItem('userId'),
     }),
     []
   );
@@ -320,34 +322,34 @@ function Room() {
     });
     // open quizzes on event
     socketRef.current.on('question:input', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizInputOpen(true);
+        questionID.current = data.question;
+      }
     });
     socketRef.current.on('question:options', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizOptionsOpen(true);
+        questionID.current = data.question;
+      }
     });
     socketRef.current.on('question:trueFalse', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizTrueFalseOpen(true);
+        questionID.current = data.question;
+      }
     });
 
     // close quizzes on event
     socketRef.current.on('question:closeInput', data => {
-      console.log(data);
       data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizInputOpen(false);
     });
     socketRef.current.on('question:closeOptions', data => {
-      console.log(data);
       data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizOptionsOpen(false);
     });
     socketRef.current.on('question:closeTrueFalse', data => {
-      console.log(data);
       data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizTrueFalseOpen(false);
     });
@@ -564,7 +566,7 @@ function Room() {
                           muted={true}
                           $isSpeaker={isSpeaker}
                           style={{
-                            transform:'scaleX(-1)',
+                            transform: 'scaleX(-1)',
                           }}
                         />
                         {(!isCameraEnabled ||
@@ -890,6 +892,7 @@ function Room() {
                   toggleQuiz={toggleQuizInput}
                   page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
+                  questionID={questionID.current}
                 />
 
                 <StudentOptions
@@ -898,6 +901,7 @@ function Room() {
                   toggleQuiz={toggleQuizOptions}
                   page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
+                  questionID={questionID.current}
                 />
 
                 <StudentTrueFalse
@@ -906,6 +910,7 @@ function Room() {
                   toggleQuiz={toggleQuizTrueFalse}
                   page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                   currentUser={currentUser}
+                  questionID={questionID.current}
                 />
               </>
             )}

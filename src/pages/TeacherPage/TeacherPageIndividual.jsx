@@ -1,13 +1,13 @@
 import useSize from '@react-hook/size';
 import { InputBtn, KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
+import { nanoid } from 'nanoid';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { HostKahoots } from './HostKahoots/HostKahoots';
+import { NameInput } from './NameInput/NameInput';
+import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
-import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
-import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
-import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import {
   BoxHideDownSwitch,
   BoxHideLeftSwitch,
@@ -23,11 +23,11 @@ import {
   WhiteBoardBtn,
   WhiteBoardLogo,
 } from './TeacherPage.styled';
+import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
+import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
+import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { ViewerIndividual } from './Viewer/ViewerIndividual';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
-import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
-import { NameInput } from './NameInput/NameInput';
-import { nanoid } from 'nanoid';
 
 const TeacherPageIndividual = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);

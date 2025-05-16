@@ -3,60 +3,49 @@ import { InputBtn, KahootBtn, KahootLogo } from 'components/Stream/Stream.styled
 import { nanoid } from 'nanoid';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Hotel } from './Farm/Hotel';
-import { Warehouse } from './Farm/Warehouse';
-import { HostKahoots } from './HostKahoots/HostKahoots';
+import { HostKahootsUni } from './HostKahoots/HostKahootsUni';
+import { NameInput } from './NameInput/NameInput';
+import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
 import {
+  BoxHideDownSwitch,
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
-  FarmBtn,
+  BoxHideUpSwitch,
   InputButtonBox,
   PlatformBtn,
   PlatformLogo,
-  TeacherFarmButtonBox,
-  TeacherWarehouseHotelButtonBoxHideSwitch,
+  TeacherButtonBox,
+  TeacherButtonBoxHideSwitch,
   ViewerBtn,
   ViewerLogo,
-  WarehouseLogo,
   WhiteBoardBtn,
   WhiteBoardLogo,
-  WorkshopLogo,
 } from './TeacherPage.styled';
 import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
 import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
 import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
-import { Viewer } from './Viewer/Viewer';
+import { ViewerUni } from './Viewer/ViewerUni';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 
-const TeacherPageWarehouseHotel = () => {
+const TeacherPageUni = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
-  const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
-  const [isWarehouseOpen, setIsWarehouseOpen] = useState(false);
-  const [isHotelOpen, setIsHotelOpen] = useState(false);
   const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
   const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
+  const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   // eslint-disable-next-line
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
   const location = useLocation().pathname.split('/teacher/')[1];
+  const [isNameInputOpen, setIsNameInputOpen] = useState(false);
+  const [teacherInfo, setTeacherInfo] = useState({});
   const questionID = useRef(nanoid(5));
-
-  const getLocation = location => {
-    switch (location) {
-      case 'polski-a0_3':
-        return 'polskia0_3';
-      default:
-        return location;
-    }
-  };
-  const page = getLocation(location);
 
   const closeInputs = () => {
     setIsQuizInputOpen(false);
@@ -68,8 +57,25 @@ const TeacherPageWarehouseHotel = () => {
     questionID.current = nanoid(5);
   };
 
+  const changeTeacherInfo = (nameValue, lessonValue, levelValue) => {
+    setTeacherInfo(
+      teacherInfo =>
+        (teacherInfo = { ...{ name: nameValue, lesson: lessonValue, level: levelValue } })
+    );
+  };
+
+  const getLocation = location => {
+    switch (location) {
+      case 'wstijo':
+        return 'wstijo_logistics';
+      default:
+        return location;
+    }
+  };
+  const page = getLocation(location);
+
   useEffect(() => {
-    document.title = `Teacher ${page.toLocaleUpperCase()} | AP Education`;
+    document.title = `Teacher ${page.toLocaleUpperCase()}`;
   }, [page]);
 
   const toggleViewer = () => {
@@ -126,24 +132,7 @@ const TeacherPageWarehouseHotel = () => {
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
   };
-  const toggleWarehouse = () => {
-    !isOpenedLast
-      ? setIsWarehouseOpen(isWarehouseOpen => !isWarehouseOpen)
-      : isOpenedLast === 'warehouse' &&
-        setIsWarehouseOpen(isWarehouseOpen => !isWarehouseOpen);
-    isViewerOpen || isPlatformOpen || isKahootOpen || isWhiteBoardOpen || isHotelOpen
-      ? setIsOpenedLast(isOpenedLast => 'warehouse')
-      : setIsOpenedLast(isOpenedLast => '');
-  };
   // eslint-disable-next-line
-  const toggleHotel = () => {
-    !isOpenedLast
-      ? setIsHotelOpen(isHotelOpen => !isHotelOpen)
-      : isOpenedLast === 'hotel' && setIsHotelOpen(isHotelOpen => !isHotelOpen);
-    isViewerOpen || isPlatformOpen || isKahootOpen || isWhiteBoardOpen || isWarehouseOpen
-      ? setIsOpenedLast(isOpenedLast => 'hotel')
-      : setIsOpenedLast(isOpenedLast => '');
-  };
   const toggleQuizInput = () => {
     !isOpenedLast
       ? setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen)
@@ -180,37 +169,37 @@ const TeacherPageWarehouseHotel = () => {
   const toggleButtonBox = () => {
     setIsButtonBoxOpen(isOpen => !isOpen);
   };
+  // eslint-disable-next-line
   const toggleInputButtonBox = () => {
     setIsInputButtonBoxOpen(isInputButtonBoxOpen => !isInputButtonBoxOpen);
   };
 
+  const toggleNameInput = () => {
+    setIsNameInputOpen(isNameInputOpen => !isNameInputOpen);
+  };
+
   return (
     <>
-      <TeacherFarmButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
-        <FarmBtn onClick={toggleHotel}>
-          <WorkshopLogo />
-        </FarmBtn>
-
-        <FarmBtn onClick={toggleWarehouse}>
-          <WarehouseLogo />
-        </FarmBtn>
-
+      <NameInputBtn onClick={toggleNameInput}>
+        {isNameInputOpen ? <BoxHideDownSwitch /> : <BoxHideUpSwitch />}
+      </NameInputBtn>
+      <LessonInfoBox>
+        {teacherInfo.name} <br />
+        {teacherInfo.level} {teacherInfo.lesson}
+      </LessonInfoBox>
+      <TeacherButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
         <ViewerBtn onClick={toggleViewer}>
           <ViewerLogo />
         </ViewerBtn>
-
         <WhiteBoardBtn onClick={toggleWhiteBoard}>
           <WhiteBoardLogo />
         </WhiteBoardBtn>
-
         <PlatformBtn onClick={togglePlatform}>
           <PlatformLogo />
         </PlatformBtn>
-
         <KahootBtn onClick={toggleKahoot}>
           <KahootLogo />
         </KahootBtn>
-
         <InputBtn onClick={toggleInputButtonBox}>QUIZ</InputBtn>
         <InputButtonBox className={isInputButtonBoxOpen ? '' : 'hidden'}>
           <InputBtn onClick={toggleQuizInput}>TEXT</InputBtn>
@@ -219,24 +208,12 @@ const TeacherPageWarehouseHotel = () => {
 
           <InputBtn onClick={toggleQuizTrueFalse}>TRUE FALSE</InputBtn>
         </InputButtonBox>
-      </TeacherFarmButtonBox>
-
-      <TeacherWarehouseHotelButtonBoxHideSwitch
-        id="no-transform"
-        onClick={toggleButtonBox}
-      >
+      </TeacherButtonBox>
+      <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
-      </TeacherWarehouseHotelButtonBoxHideSwitch>
+      </TeacherButtonBoxHideSwitch>
 
-      <Warehouse
-        sectionWidth={width}
-        isWarehouseOpen={isWarehouseOpen}
-        isOpenedLast={isOpenedLast}
-      />
-
-      <Hotel sectionWidth={width} isHotelOpen={isHotelOpen} isOpenedLast={isOpenedLast} />
-
-      <Viewer
+      <ViewerUni
         page={page}
         sectionWidth={width}
         isViewerOpen={isViewerOpen}
@@ -255,7 +232,7 @@ const TeacherPageWarehouseHotel = () => {
         isPlatformOpen={isPlatformOpen}
         isOpenedLast={isOpenedLast}
       />
-      <HostKahoots
+      <HostKahootsUni
         page={page}
         sectionWidth={width}
         sectionHeight={height}
@@ -293,8 +270,12 @@ const TeacherPageWarehouseHotel = () => {
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
       />
+      <NameInput
+        isNameInputOpen={isNameInputOpen}
+        changeTeacherInfo={changeTeacherInfo}
+      />
     </>
   );
 };
 
-export default TeacherPageWarehouseHotel;
+export default TeacherPageUni;

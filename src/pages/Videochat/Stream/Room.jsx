@@ -55,6 +55,7 @@ function Room({ isAdmin }) {
 
   const chatEl = useRef();
   const socketRef = useRef(null);
+  const questionID = useRef('');
 
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
@@ -62,11 +63,13 @@ function Room({ isAdmin }) {
   const currentUser = useMemo(
     () => ({
       username: localStorage.getItem('userName'),
+      userID: localStorage.getItem('userId'),
       isBanned: false,
       userIP: 'no ip',
     }),
     []
   );
+
   let location = useLocation();
 
   const videoBoxWidth =
@@ -259,34 +262,34 @@ function Room({ isAdmin }) {
     });
     // open quizzes on event
     socketRef.current.on('question:input', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizInputOpen(true);
+        questionID.current = data.question;
+      }
     });
     socketRef.current.on('question:options', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizOptionsOpen(true);
+        questionID.current = data.question;
+      }
     });
     socketRef.current.on('question:trueFalse', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizTrueFalseOpen(true);
+        questionID.current = data.question;
+      }
     });
 
     // close quizzes on event
     socketRef.current.on('question:closeInput', data => {
-      console.log(data);
       data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizInputOpen(false);
     });
     socketRef.current.on('question:closeOptions', data => {
-      console.log(data);
       data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizOptionsOpen(false);
     });
     socketRef.current.on('question:closeTrueFalse', data => {
-      console.log(data);
       data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
         setIsQuizTrueFalseOpen(false);
     });
@@ -296,7 +299,7 @@ function Room({ isAdmin }) {
       socketRef.current.off('message');
       socketRef.current.disconnect();
     };
-  }, [currentUser, room]);
+  }, [room]);
 
   useEffect(() => {
     const setAppHeight = () => {
@@ -510,6 +513,7 @@ function Room({ isAdmin }) {
                 toggleQuiz={toggleQuizInput}
                 page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                 currentUser={currentUser}
+                questionID={questionID.current}
               />
 
               <StudentOptions
@@ -518,6 +522,7 @@ function Room({ isAdmin }) {
                 toggleQuiz={toggleQuizOptions}
                 page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                 currentUser={currentUser}
+                questionID={questionID.current}
               />
 
               <StudentTrueFalse
@@ -526,6 +531,7 @@ function Room({ isAdmin }) {
                 toggleQuiz={toggleQuizTrueFalse}
                 page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                 currentUser={currentUser}
+                questionID={questionID.current}
               />
             </>
           )}
