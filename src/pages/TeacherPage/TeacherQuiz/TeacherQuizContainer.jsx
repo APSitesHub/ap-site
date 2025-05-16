@@ -29,6 +29,7 @@ export const TeacherQuizContainer = ({
   closeInputs,
   questionID,
   changeQuestionID,
+  uni,
 }) => {
   const [answers, setAnswers] = useState({});
   const [isQuizActive, setIsQuizActive] = useState(false);
@@ -100,14 +101,16 @@ export const TeacherQuizContainer = ({
             <CloseIcon />
           </FormCloseBtn>
           <TeacherQuizConfirmationText>
-            Чи відповідь{' '}
+            {uni ? 'Set answer' : 'Чи відповідь'}{' '}
             <TeacherQuizConfirmationHighlight>
               "{correctAnswer.current}"
             </TeacherQuizConfirmationHighlight>{' '}
-            правильна чи її необхідно видалити?{' '}
+            {uni ? 'as correct or delete it?' : 'правильна чи її необхідно видалити?'}{' '}
           </TeacherQuizConfirmationText>
           <TeacherQuizConfirmationBtnBox>
-            <TeacherChartBtn onClick={sendConfirmedAnswer}>Правильна</TeacherChartBtn>
+            <TeacherChartBtn onClick={sendConfirmedAnswer}>
+              {uni ? 'Correct' : 'Правильна'}
+            </TeacherChartBtn>
             <TeacherChartResetBtn
               onClick={() => {
                 setAnswers(answers => {
@@ -118,7 +121,7 @@ export const TeacherQuizContainer = ({
                 setIsConfirmationOpen(false);
               }}
             >
-              Видалити
+              {uni ? 'Delete' : 'Видалити'}
             </TeacherChartResetBtn>
           </TeacherQuizConfirmationBtnBox>
         </TeacherQuizConfirmation>
@@ -126,7 +129,7 @@ export const TeacherQuizContainer = ({
       {isListOpen && (
         <TeacherQuizCorrectList>
           <TeacherQuizCorrectListHeading>
-            Правильно відповіли:
+            {uni ? 'Correct answers' : 'Правильно відповіли'}
           </TeacherQuizCorrectListHeading>
           <TeacherQuizCorrectListUsers>
             {list.current.data

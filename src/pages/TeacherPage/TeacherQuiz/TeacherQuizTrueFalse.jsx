@@ -9,6 +9,7 @@ export const TeacherQuizTrueFalse = ({
   closeInputs,
   questionID,
   changeQuestionID,
+  uni,
 }) => {
   const [answers, setAnswers] = useState([]);
   const quizType = 'trueFalse';
@@ -52,6 +53,7 @@ export const TeacherQuizTrueFalse = ({
             closeInputs={closeInputs}
             questionID={questionID}
             changeQuestionID={changeQuestionID}
+            uni={uni}
           />
         </TeacherInputBox>
       )}

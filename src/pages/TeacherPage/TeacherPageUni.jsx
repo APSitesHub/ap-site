@@ -249,6 +249,7 @@ const TeacherPageUni = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <TeacherQuizOptions
         page={page}
@@ -259,6 +260,7 @@ const TeacherPageUni = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <TeacherQuizTrueFalse
         page={page}
@@ -269,6 +271,7 @@ const TeacherPageUni = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <NameInput
         isNameInputOpen={isNameInputOpen}
