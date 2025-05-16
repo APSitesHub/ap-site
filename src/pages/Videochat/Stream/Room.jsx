@@ -14,6 +14,7 @@ import { useLocation, useNavigate, useParams } from 'react-router';
 import { io } from 'socket.io-client';
 import { ChatVideo } from 'utils/Chat/ChatVideo';
 import {
+  FullScreenIcon,
   GradientBackground,
   JitsiContainer,
   LargeText,
@@ -34,6 +35,9 @@ function Room({ isAdmin }) {
   const navigate = useNavigate();
   const { id: roomID } = useParams();
   // const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
+  const [isConnected, setIsConnected] = useState(false);
+  const [scrollOn, setScrollOn] = useState(false);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [adminId, setAdminId] = useState(null);
   const [isLoading, setisLoading] = useState(true);
   const [isIframeOpen, setIsIframeOpen] = useState(true);
@@ -87,6 +91,14 @@ function Room({ isAdmin }) {
       : setIsOpenedLast(isOpenedLast => '');
   };
 
+  const toggleFullScreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
+  };
+
   const toggleQuizInput = () => {
     setIsQuizInputOpen(isQuizInputOpen => !isQuizInputOpen);
   };
@@ -125,6 +137,9 @@ function Room({ isAdmin }) {
 
       if (participant.displayName.endsWith('(teacher)')) {
         setIsIframeOpen(true);
+        setWindowHeight(window.innerHeight);
+        setScrollOn(false);
+        setIsConnected(true);
       }
     });
 
@@ -133,6 +148,10 @@ function Room({ isAdmin }) {
         setIsIframeOpen(true);
         externalApi.pinParticipant(participant.id);
         setAdminId(participant.id);
+
+        setWindowHeight(window.innerHeight);
+        setScrollOn(false);
+        setIsConnected(true);
       }
     });
 
@@ -284,27 +303,34 @@ function Room({ isAdmin }) {
 
   useEffect(() => {
     const setAppHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      if (window.innerHeight < 400 && !isConnected) {
+        setWindowHeight(400);
+        setScrollOn(true);
+      } else {
+        setWindowHeight(window.innerHeight);
+        setScrollOn(false);
+      }
     };
 
     setAppHeight();
     window.addEventListener('resize', setAppHeight);
 
     return () => window.removeEventListener('resize', setAppHeight);
-  }, []);
+  }, [isConnected]);
 
   return (
     <>
       <div
         style={{
           transform: isAdmin && !debug ? 'scale(1, -1)' : 'none',
-          overflow: 'hidden',
+          overflow: scrollOn ? 'scroll' : 'hidden',
+          height: '100%',
         }}
       >
         <PageContainer
           style={{
             width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+            height: isIframeOpen || isAdmin ? windowHeight : '100%',
           }}
         >
           <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
@@ -314,6 +340,9 @@ function Room({ isAdmin }) {
             <ChatBtn onClick={toggleChat}>
               <ChatLogo />
             </ChatBtn>
+            <KahootBtn onClick={toggleFullScreen}>
+              <FullScreenIcon />
+            </KahootBtn>
           </ButtonBox>
           <KahootsVideoChat
             sectionWidth={width}
@@ -350,7 +379,7 @@ function Room({ isAdmin }) {
           </GradientBackground>
           <JitsiContainer
             style={{
-              height: isIframeOpen || isAdmin ? 'calc(var(--vh, 1vh) * 100)' : '0',
+              height: isIframeOpen || isAdmin ? windowHeight : '0',
             }}
           >
             <JitsiMeeting
