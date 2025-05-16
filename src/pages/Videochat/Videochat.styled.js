@@ -17,7 +17,7 @@ import { ReactComponent as _ExitFullScreenIcon } from '../../img/svg/fullScreenE
 // Room styles
 export const PageContainer = styled.div`
   display: flex;
-  height: 100vh;
+  height: 100%;
   position: relative;
   overflow: hidden;
 `;
@@ -289,14 +289,20 @@ export const MediaOption = styled.option`
 
 export const FullScreenIcon = styled(_FullScreenIcon)`
   fill: #ffffff;
-  height: 32px;
-  width: 32px;
+  height: 24px;
+  width: 24px;
 
-  @media (max-width: 768px) {
-    height: 24px;
-    width: 24px;
+  @media screen and (min-width: 1024px) {
+    width: 32px;
+    height: 32px;
+  }
+
+  @media screen and (min-width: 768px) and (orientation: portrait) {
+    width: 32px;
+    height: 32px;
   }
 `;
+
 export const ExitFullScreenIcon = styled(_ExitFullScreenIcon)`
   fill: #ffffff;
   height: 32px;
@@ -667,7 +673,7 @@ export const BackIcon = styled(_BackIcon)`
 
 // Login styles
 export const LoginPage = styled.div`
-  height: 100dvh;
+  height: 100%;
   width: 1024px;
   display: flex;
   flex-direction: column;
