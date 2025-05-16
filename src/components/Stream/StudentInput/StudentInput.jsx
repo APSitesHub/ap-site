@@ -13,39 +13,41 @@ export const StudentInput = ({
   socket,
   page,
   toggleQuiz,
+  currentUser,
   user,
   questionID,
 }) => {
-
   const [isValid, setIsValid] = useState(true);
-
 
   const handleSubmit = async e => {
     if (!document.querySelector('#answer_input').value) {
       setIsValid(false);
       return;
     }
+
+    const answer = document
+      .querySelector('#answer_input')
+      .value.trim()
+      .trimEnd()
+      .toLowerCase();
     e.preventDefault();
 
+    document.querySelector('#answer_input').value = '';
+    toggleQuiz();
+
     socket.emit('answer:given', {
-      answer: document
-        .querySelector('#answer_input')
-        .value.trim()
-        .trimEnd()
-        .toLowerCase(),
+      answer: answer,
       page: page,
     });
 
     await axios.post('/answers', {
-      answer: document.querySelector('#answer_input').value.trim(),
-      username: user.name,
+      answer: answer,
+      username: user?.name || currentUser.username,
       page: page,
       socketID: socket.id,
       questionID: questionID,
-      userID: user.id,
+      userID: user?.id || currentUser.userID,
     });
-    document.querySelector('#answer_input').value = '';
-    toggleQuiz();
   };
 
   //   const handleOnDrag = e => {

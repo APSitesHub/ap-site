@@ -1,6 +1,7 @@
-import Room from './Room';
-import Login from './Login';
+import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
+import Login from './Login';
+import Room from './Room';
 
 function IndividualMain() {
   const [isUserLogined, setIsUserLogined] = useState(false);
@@ -13,6 +14,7 @@ function IndividualMain() {
 
   const handleLogin = values => {
     localStorage.setItem('userName', values.userName);
+    localStorage.setItem('userID', nanoid(6));
     setIsUserLogined(true);
   };
 

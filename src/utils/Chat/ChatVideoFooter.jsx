@@ -19,8 +19,6 @@ export const ChatVideoFooter = ({ socket, theme, currentUser, lang }) => {
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const location = useLocation();
 
-  console.log(22, socket);
-
   const toggleEmojiPicker = () => {
     setIsPickerOpen(isOpen => !isOpen);
   };

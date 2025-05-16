@@ -255,10 +255,6 @@ const UniTimeTableAdminPanel = () => {
       label: 'Logistics (WSTIJO)',
       value: '78737',
     },
-    {
-      label: 'Kurs Przygotowawczy (WSTIJO)',
-      value: '72468',
-    },
   ];
 
   const wsbmirMarathonOptions = [
@@ -416,7 +412,7 @@ const UniTimeTableAdminPanel = () => {
 
   const closeEditMarathonFormOnClick = e => {
     if (e.target.id === 'close-on-click') {
-      isEditMarathonFormOpen(false);
+      setIsEditMarathonFormOpen(false);
     }
   };
 
@@ -607,9 +603,6 @@ const UniTimeTableAdminPanel = () => {
                       : timetable.university.includes('WSTIJO') &&
                         timetable.marathon === '78737'
                       ? `Logistics ${timetable.marathon}`
-                      : timetable.university.includes('WSTIJO') &&
-                        timetable.marathon === '72468'
-                      ? `Preparation Course ${timetable.marathon}`
                       : timetable.university.includes('WSBMIR') &&
                         timetable.marathon === '80641'
                       ? `Logistics ${timetable.marathon}`

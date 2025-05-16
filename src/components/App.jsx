@@ -405,6 +405,9 @@ const Deutsch = lazy(() =>
 const TeacherPage = lazy(() =>
   import(/* webpackChunkName: "Teacher Page" */ '../pages/TeacherPage/TeacherPage')
 );
+const TeacherPageUni = lazy(() =>
+  import(/* webpackChunkName: "Uni Teacher Page" */ '../pages/TeacherPage/TeacherPageUni')
+);
 const TeacherPageIndividual = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page for Individual Lessons" */ '../pages/TeacherPage/TeacherPageIndividual'
@@ -1093,7 +1096,7 @@ export const App = () => {
             <Route path="trials-pl" element={<TeacherTrialPage />} noindex={true} />
             <Route path="trials-de" element={<TeacherTrialPage />} noindex={true} />
             <Route path="pedagogium" element={<TeacherPage />} noindex={true} />
-            <Route path="wstijo" element={<TeacherPage />} noindex={true} />
+            <Route path="wstijo" element={<TeacherPageUni />} noindex={true} />
             <Route path="wsbmir" element={<TeacherPage />} noindex={true} />
             <Route path="kubrak" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="bulavka" element={<TeacherPageIndividual />} noindex={true} />

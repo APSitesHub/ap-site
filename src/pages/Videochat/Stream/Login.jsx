@@ -45,6 +45,7 @@ function Login({ logined }) {
       setAuthToken(response.data.token);
       localStorage.setItem('mail', values.mail);
       localStorage.setItem('userName', response.data.user.name);
+      localStorage.setItem('userId', response.data.user.id);
       setIsUserInfoIncorrect(false);
       logined();
       resetForm();

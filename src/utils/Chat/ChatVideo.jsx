@@ -14,8 +14,6 @@ import { ChatVideoFooter } from './ChatVideoFooter';
 export const ChatVideo = ({ socket, messages, isChatOpen, currentUser, lang }) => {
   const [theme, setTheme] = useState('auto');
 
-  console.log(17, socket);
-
   const handleThemeClick = () => {
     const themeFromStorage = localStorage.getItem('rht-theme');
     console.log(themeFromStorage);

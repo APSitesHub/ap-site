@@ -1,8 +1,9 @@
-import Room from './Room';
-import Login from './Login';
+import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
-import { isRoomAdmin } from '../utils/api/isRoomAdmin';
 import { useParams } from 'react-router-dom';
+import { isRoomAdmin } from '../utils/api/isRoomAdmin';
+import Login from './Login';
+import Room from './Room';
 
 function TrialMain() {
   const { id: roomID } = useParams();
@@ -18,6 +19,7 @@ function TrialMain() {
 
   const handleLogin = values => {
     localStorage.setItem('userName', values.userName);
+    localStorage.setItem('userID', nanoid(6));
     fetchRole();
   };
 

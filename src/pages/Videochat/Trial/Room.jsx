@@ -50,6 +50,7 @@ function Room({ isAdmin, lang }) {
 
   const chatEl = useRef();
   const socketRef = useRef(null);
+  const questionID = useRef('');
 
   // eslint-disable-next-line
   const [chatWidth, chatHeight] = useSize(chatEl);
@@ -59,6 +60,7 @@ function Room({ isAdmin, lang }) {
       username: localStorage.getItem('userName'),
       isBanned: false,
       userIP: 'no ip',
+      userID: localStorage.getItem('userId'),
     }),
     []
   );
@@ -239,19 +241,24 @@ function Room({ isAdmin, lang }) {
     });
     // open quizzes on event
     socketRef.current.on('question:input', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      console.log(data);
+
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizInputOpen(true);
+        questionID.current = data.question;
+      }
     });
     socketRef.current.on('question:options', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizOptionsOpen(true);
+        questionID.current = data.question;
+      }
     });
     socketRef.current.on('question:trueFalse', data => {
-      console.log(data.page);
-      data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1] &&
+      if (data.page === room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]) {
         setIsQuizTrueFalseOpen(true);
+        questionID.current = data.question;
+      }
     });
 
     // close quizzes on event
@@ -560,6 +567,7 @@ function Room({ isAdmin, lang }) {
                 toggleQuiz={toggleQuizInput}
                 page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                 currentUser={currentUser}
+                questionID={questionID.current}
               />
 
               <StudentOptions
@@ -568,6 +576,7 @@ function Room({ isAdmin, lang }) {
                 toggleQuiz={toggleQuizOptions}
                 page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                 currentUser={currentUser}
+                questionID={questionID.current}
               />
 
               <StudentTrueFalse
@@ -576,6 +585,7 @@ function Room({ isAdmin, lang }) {
                 toggleQuiz={toggleQuizTrueFalse}
                 page={room.match(/\/room\/[^/]+\/(.+)\/[^/]+$/)[1]}
                 currentUser={currentUser}
+                questionID={questionID.current}
               />
             </>
           )}

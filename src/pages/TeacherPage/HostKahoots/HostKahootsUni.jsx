@@ -14,7 +14,7 @@ import {
   KahootEnlargeButton,
 } from './HostKahoots.styled';
 
-export const HostKahoots = ({
+export const HostKahootsUni = ({
   page,
   sectionWidth,
   sectionHeight,
@@ -41,13 +41,13 @@ export const HostKahoots = ({
 
   const kahootLinksRefresher = async e => {
     if (e.target === e.currentTarget) {
-      setKahoots((await axios.get('/host-kahoots')).data);
+      setKahoots((await axios.get('/unihostkahoots')).data);
     }
   };
 
   const setKahootNumber = async e => {
     const kahootNumber = parseInt(e.currentTarget.innerText);
-    setKahoots((await axios.get('/host-kahoots')).data);
+    setKahoots((await axios.get('/unihostkahoots')).data);
     setActiveKahoot(kahootNumber);
   };
 
@@ -65,7 +65,7 @@ export const HostKahoots = ({
   useLayoutEffect(() => {
     const getLinksRequest = async () => {
       try {
-        setKahoots((await axios.get('/host-kahoots')).data);
+        setKahoots((await axios.get('/unihostkahoots')).data);
       } catch (error) {
         console.log(error);
       }
