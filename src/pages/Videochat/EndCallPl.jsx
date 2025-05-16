@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { PageContainer, LargeText, GradientBackground } from './Videochat.styled';
 import { useEffect } from 'react';
 

@@ -8,7 +8,6 @@ import {
   AdminInputNote,
 } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import { GradientBackground, LoginForm, LoginPage } from '../Videochat.styled';
-import { useParams } from 'react-router-dom';
 
 function Login({ logined, lang }) {
   const initialLoginValues = {

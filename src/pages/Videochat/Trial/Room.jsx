@@ -32,11 +32,11 @@ const browserLanguage = navigator.language.split('-')[0];
 const debug = true;
 
 function Room({ isAdmin, lang }) {
+  const navigate = useNavigate();
+  const { id: roomID } = useParams();
   const [isConnected, setIsConnected] = useState(false);
   const [scrollOn, setScrollOn] = useState(false);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const navigate = useNavigate();
-  const { id: roomID } = useParams();
   const [adminId, setAdminId] = useState(null);
   const [isLoading, setisLoading] = useState(true);
   const [isIframeOpen, setIsIframeOpen] = useState(true);
@@ -299,27 +299,34 @@ function Room({ isAdmin, lang }) {
 
   useEffect(() => {
     const setAppHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      if (window.innerHeight < 400 && !isConnected) {
+        setWindowHeight(400);
+        setScrollOn(true);
+      } else {
+        setWindowHeight(window.innerHeight);
+        setScrollOn(false);
+      }
     };
 
     setAppHeight();
     window.addEventListener('resize', setAppHeight);
 
     return () => window.removeEventListener('resize', setAppHeight);
-  }, []);
+  }, [isConnected]);
 
   return (
     <>
       <div
         style={{
           transform: isAdmin && !debug ? 'scale(1, -1)' : 'none',
-          overflow: 'hidden',
+          overflow: scrollOn ? 'scroll' : 'hidden',
+          height: '100%',
         }}
       >
         <PageContainer
           style={{
             width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
+            height: isIframeOpen || isAdmin ? windowHeight : '100%',
           }}
         >
           <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
@@ -329,6 +336,9 @@ function Room({ isAdmin, lang }) {
             <ChatBtn onClick={toggleChat}>
               <ChatLogo />
             </ChatBtn>
+            <KahootBtn onClick={toggleFullScreen}>
+              <FullScreenIcon />
+            </KahootBtn>
           </ButtonBox>
           <KahootsVideoChat
             sectionWidth={width}
@@ -370,7 +380,7 @@ function Room({ isAdmin, lang }) {
           </GradientBackground>
           <JitsiContainer
             style={{
-              height: isIframeOpen || isAdmin ? 'calc(var(--vh, 1vh) * 100)' : '0',
+              height: isIframeOpen || isAdmin ? windowHeight : '0',
             }}
           >
             <JitsiMeeting

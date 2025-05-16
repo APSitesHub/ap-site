@@ -236,6 +236,11 @@ export const ButtonBox = styled.div`
   &.hidden {
     transform: translateX(calc(-100% - 30px));
   }
+
+  @media screen and (max-height: 300px) {
+    top: 30px;
+    gap: 15px;
+  }
 `;
 
 export const ButtonBoxUni = styled(ButtonBox)`

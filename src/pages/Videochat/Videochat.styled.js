@@ -17,7 +17,7 @@ import { ReactComponent as _ExitFullScreenIcon } from '../../img/svg/fullScreenE
 // Room styles
 export const PageContainer = styled.div`
   display: flex;
-  height: 100%;
+  height: 100vh;
   position: relative;
   overflow: hidden;
 `;

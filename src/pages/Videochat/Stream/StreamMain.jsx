@@ -45,8 +45,11 @@ function StreamMain() {
   const fetchRole = async () => {
     const isAdmin = await isRoomAdmin(roomID);
     setIsAdmin(isAdmin);
-    setIsUserLogined(true);
-    isAdmin && setTeacherLabel();
+
+    if (isAdmin) {
+      setIsUserLogined(true);
+      setTeacherLabel();
+    }
   };
 
   return (
