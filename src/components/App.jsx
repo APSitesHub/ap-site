@@ -650,7 +650,7 @@ export const App = () => {
             noindex={true}
           />
           <Route
-            path="room/individual/:slug/:id"
+            path="room/individual/:id"
             element={<IndividualVideoRoom />}
             noindex={true}
           />
