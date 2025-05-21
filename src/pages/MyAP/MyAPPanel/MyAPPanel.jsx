@@ -294,10 +294,8 @@ export const MyAPPanel = ({
 
     const getLastFeedback = async () => {
       try {
-        const userToSet = await axios.get(`/speakingusers/${user.id}`);
-        console.log(258, userToSet);
-        setCurrentStudentChart(user => (user = userToSet.data));
-        console.log('eff');
+        const userToSet = await axios.get(`/speakingusers/feedback/${user.id}`);
+        setCurrentStudentChart(user => (user = userToSet.data[0]));
       } catch (error) {
         console.log(error);
       } finally {

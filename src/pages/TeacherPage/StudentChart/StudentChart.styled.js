@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { ReactComponent as ArrowPrevious } from '../../../img/svg/arrow-left.svg';
+import { ReactComponent as ArrowNext } from '../../../img/svg/arrow-right.svg';
 
 export const StudentChartArea = styled.div`
   position: fixed;
@@ -216,4 +218,92 @@ export const TooltipIdText = styled.span``;
 
 export const TooltipValueText = styled.span`
   font-weight: 700;
+`;
+
+export const FeedbackButtonsBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const PreviousFeedbackButton = styled(ArrowPrevious)`
+  width: 24px;
+  height: 24px;
+`;
+
+export const NextFeedbackButton = styled(ArrowNext)`
+  width: 24px;
+  height: 24px;
+`;
+
+export const FeedbackButton = styled.button`
+  position: relative;
+  background-color: transparent;
+  border: 1px solid var(--main-color);
+  border-radius: 50px;
+  color: var(--main-color);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--animation-global);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  transition: all ease-in-out 0.3s;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  & svg {
+    transition: all var(--animation-global);
+  }
+
+  &.prev:hover {
+    width: 100px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &.next:hover {
+    width: 100px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  &.prev:hover svg {
+    position: absolute;
+    transform: scale(0);
+  }
+
+  &.next:hover svg {
+    position: absolute;
+    transform: scale(0);
+  }
+
+  &.prev::before {
+    content: '';
+    opacity: 0;
+    transition: all var(--animation-global);
+  }
+
+  &.next::before {
+    content: '';
+    opacity: 0;
+    transition: all var(--animation-global);
+  }
+
+  &.prev:hover::before {
+    content: 'Попередній відгук';
+    opacity: 1;
+    color: #000000;
+    font-weight: 500;
+  }
+
+  &.next:hover::before {
+    content: 'Наступний відгук';
+    opacity: 1;
+    color: #000000;
+    font-weight: 500;
+  }
 `;

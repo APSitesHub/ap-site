@@ -3,16 +3,33 @@ import axios from 'axios';
 import { EditFormHeader } from '../TeacherPage.styled';
 import {
   ChartAreaMyAPLimiter,
+  FeedbackButton,
+  FeedbackButtonsBox,
   FeedbackText,
   MyAPGradientBg,
-  MyAPStudentChartArea
+  MyAPStudentChartArea,
+  NextFeedbackButton,
+  PreviousFeedbackButton,
 } from './StudentChart.styled';
+import { useState } from 'react';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const regex = /\d{2}\.\d{2}\.\d{4}, \d{2}:\d{2}:\d{2}:/g;
 const linksRegex = /\b(?:https?|ftp):\/\/\S+\b/g;
 
 export const MyAPStudentChart = ({ currentStudentChart }) => {
+  const [feedbackIndex, setFeedbackIndex] = useState(
+    currentStudentChart.feedback.length - 1
+  );
+
+  const getPreviousFeedback = async () => {
+    setFeedbackIndex(feedbackIndex => feedbackIndex - 1);
+  };
+
+  const getNextFeedback = async () => {
+    setFeedbackIndex(feedbackIndex => feedbackIndex + 1);
+  };
+
   const data = [
     {
       area: 'Активність',
@@ -76,15 +93,27 @@ export const MyAPStudentChart = ({ currentStudentChart }) => {
     <>
       <MyAPStudentChartArea>
         <EditFormHeader id="focus">{currentStudentChart.name}</EditFormHeader>
+        <FeedbackButtonsBox>
+          <FeedbackButton
+            onClick={getPreviousFeedback}
+            disabled={feedbackIndex === 0}
+            className="prev"
+          >
+            <PreviousFeedbackButton />
+          </FeedbackButton>
+          <FeedbackButton
+            onClick={getNextFeedback}
+            disabled={feedbackIndex === currentStudentChart.feedback.length - 1}
+            className="next"
+          >
+            <NextFeedbackButton />
+          </FeedbackButton>
+        </FeedbackButtonsBox>
         <FeedbackText
           dangerouslySetInnerHTML={{
             __html:
-              typeof currentStudentChart.feedback[
-                currentStudentChart.feedback.length - 1
-              ] === 'string'
-                ? currentStudentChart.feedback[
-                    currentStudentChart.feedback.length - 1
-                  ]
+              typeof currentStudentChart.feedback[feedbackIndex] === 'string'
+                ? currentStudentChart.feedback[feedbackIndex]
                     .replace(
                       linksRegex,
                       match =>
