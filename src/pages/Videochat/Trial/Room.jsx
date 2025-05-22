@@ -39,7 +39,7 @@ function Room({ isAdmin, lang }) {
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [adminId, setAdminId] = useState(null);
   const [isLoading, setisLoading] = useState(true);
-  const [isIframeOpen, setIsIframeOpen] = useState(true);
+  const [isConferenceStarted, setIsConferenceStarted] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
@@ -120,7 +120,7 @@ function Room({ isAdmin, lang }) {
     const participants = await externalApi.getParticipantsInfo();
 
     participants.find(participant => participant.name.endsWith('(teacher)')) &&
-      setIsIframeOpen(true);
+      setIsConferenceStarted(true);
 
     externalApi.addListener('participantJoined', participant => {
       if (!adminId) {
@@ -134,7 +134,7 @@ function Room({ isAdmin, lang }) {
       }
 
       if (participant.displayName.endsWith('(teacher)')) {
-        setIsIframeOpen(true);
+        setIsConferenceStarted(true);
         setWindowHeight(window.innerHeight);
         setScrollOn(false);
         setIsConnected(true);
@@ -143,7 +143,7 @@ function Room({ isAdmin, lang }) {
 
     externalApi.addListener('participantRoleChanged', participant => {
       if (participant.role === 'moderator') {
-        setIsIframeOpen(true);
+        setIsConferenceStarted(true);
         externalApi.pinParticipant(participant.id);
         setAdminId(participant.id);
 
@@ -155,8 +155,16 @@ function Room({ isAdmin, lang }) {
 
     externalApi.addListener('errorOccurred', error => {
       if (error.error.name === 'conference.authenticationRequired') {
-        setIsIframeOpen(false);
+        setIsConferenceStarted(false);
         setisLoading(false);
+      }
+    });
+
+    externalApi.addEventListener('videoConferenceLeft', () => {
+      if (isConferenceStarted) {
+        navigate(lang === 'pl' ? '../../end-call-pl' : '../../end-call');
+      } else {
+        window.location.reload();
       }
     });
 
@@ -333,7 +341,7 @@ function Room({ isAdmin, lang }) {
         <PageContainer
           style={{
             width: isChatOpen && width > height ? `${videoBoxWidth}px` : '100%',
-            height: isIframeOpen || isAdmin ? windowHeight : '100%',
+            height: '100%',
           }}
         >
           <ButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
@@ -387,7 +395,7 @@ function Room({ isAdmin, lang }) {
           </GradientBackground>
           <JitsiContainer
             style={{
-              height: isIframeOpen || isAdmin ? windowHeight : '0',
+              height: windowHeight,
             }}
           >
             <JitsiMeeting
