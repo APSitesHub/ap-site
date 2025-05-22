@@ -1,258 +1,128 @@
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { Label } from 'components/LeadForm/LeadForm.styled';
-import { LoginFormText } from 'components/Stream/Stream.styled';
+import {
+  Label,
+  LeftFormBackgroundStar,
+  RightFormBackgroundStar,
+} from 'components/LeadForm/LeadForm.styled';
+import { LoginErrorNote, LoginFormText } from 'components/Stream/Stream.styled';
 import {
   AdminFormBtn,
   AdminInput,
   AdminInputNote,
-} from 'pages/Streams/AdminPanel/AdminPanel.styled';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  GradientBackground,
   LoginForm,
-  LoginMediaContainer,
-  LoginMediaFields,
-  LoginPage,
-  LoginVideo,
-  LoginSelect,
-  CameraIcon,
-  MicroIcon,
-  SoundIcon,
-} from '../Videochat.styled';
+} from 'pages/Streams/AdminPanel/AdminPanel.styled';
+import { useState } from 'react';
+import axios from 'axios';
 
 function Login({ logined }) {
-  const localMediaStream = useRef(null);
-  const videoRef = useRef(null);
-  const [microphoneDevices, setMicrophoneDevices] = useState([]);
-  // const [audioDevices, setAudioDevices] = useState([]);
-  const [cameraDevices, setCameraDevices] = useState([]);
-  const [volume, setVolume] = useState(0);
+  const [isUserInfoIncorrect, setIsUserInfoIncorrect] = useState(false);
 
   const initialLoginValues = {
-    userName: '',
+    login: '',
+    password: '',
   };
 
-  const startCapture = useCallback(async () => {
-    await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: true,
-    });
+  const teacherLogin = async (login, password) => {
+    try {
+      const response = await axios.post('/teachers/login', {
+        login: login.toLowerCase().trim().trimStart(),
+        password: password.trim().trimStart(),
+      });
 
-    const devices = await navigator.mediaDevices.enumerateDevices();
+      localStorage.setItem('userName', response.data.teacher.name);
+      localStorage.setItem('login', response.data.teacher.login);
+      localStorage.setItem('token', response.data.token);
 
-    const defaultMicrophoneDevice =
-      getDevice('audioinput') ||
-      localStorage.setItem(
-        'default-audioinput',
-        devices.filter(device => device.kind === 'audioinput')[0].deviceId
-      );
-
-    const defaultCameraDevice =
-      getDevice('videoinput') ||
-      localStorage.setItem(
-        'default-videoinput',
-        devices.filter(device => device.kind === 'videoinput')[0].deviceId
-      );
-
-    localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-      audio: { deviceId: { exact: defaultMicrophoneDevice } },
-      video: { deviceId: { exact: defaultCameraDevice } },
-    });
-
-    if (videoRef.current && localMediaStream.current) {
-      videoRef.current.srcObject = localMediaStream.current;
+      logined(true);
+    } catch (error) {
+      console.error('Teacher login failed:', error);
+      throw error;
     }
+  };
 
-    setMicrophoneDevices(
-      devices
-        .filter(device => device.kind === 'audioinput')
-        .map(device => ({ label: device.label, value: device.deviceId }))
-    );
-    // setAudioDevices(
-    //   devices
-    //     .filter(device => device.kind === 'audiooutput')
-    //     .map(device => ({ label: device.label, value: device.deviceId }))
-    // );
-    setCameraDevices(
-      devices
-        .filter(device => device.kind === 'videoinput')
-        .map(device => ({ label: device.label, value: device.deviceId }))
-    );
-  }, []);
+  const userLogin = async (login, password) => {
+    try {
+      const response = await axios.post('/users/login', {
+        mail: login.toLowerCase().trim().trimStart(),
+        password: password.trim().trimStart(),
+      });
 
-  useEffect(() => {
-    startCapture();
+      localStorage.setItem('userName', response.data.user.name);
+      localStorage.setItem('mail', response.data.user.mail);
+      localStorage.setItem('token', response.data.token);
 
-    let audioContext;
-    let analyser;
-    let microphone;
-    let dataArray;
-    let animationFrameId;
+      logined(false);
+    } catch (error) {
+      console.error('User login failed:', error);
+      throw error;
+    }
+  };
 
-    const initAudio = async () => {
+  const handleLoginSubmit = async (values, { resetForm }) => {
+    try {
+      await teacherLogin(values.login, values.password);
+      resetForm();
+    } catch {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioContext.createAnalyser();
-        analyser.fftSize = 256;
-        const bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-
-        microphone = audioContext.createMediaStreamSource(stream);
-        microphone.connect(analyser);
-
-        const updateVolume = () => {
-          analyser.getByteFrequencyData(dataArray);
-          const avg = dataArray.reduce((a, b) => a + b, 0) / bufferLength;
-          setVolume(Math.round((avg / 255) * 100));
-          animationFrameId = requestAnimationFrame(updateVolume);
-        };
-
-        updateVolume();
+        await userLogin(values.login, values.password);
+        resetForm();
       } catch (error) {
-        console.error('Помилка доступу до мікрофона:', error);
+        error.response.status === 401 && setIsUserInfoIncorrect(true);
+        console.error(error);
       }
-    };
-
-    initAudio();
-
-    return () => {
-      if (audioContext) audioContext.close();
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-    };
-  }, [startCapture]);
-
-  const getDevice = kind => {
-    return localStorage.getItem(`default-${kind}`);
-  };
-
-  const handleDeviceSelect = async (deviceId, kind) => {
-    localStorage.setItem(`default-${kind}`, deviceId);
-
-    if (kind === 'audiooutput') {
-      return;
-    }
-
-    localMediaStream.current = await navigator.mediaDevices.getUserMedia({
-      audio: { deviceId: { exact: getDevice('audioinput') } },
-      video: { deviceId: { exact: getDevice('videoinput') } },
-    });
-
-    if (videoRef.current && localMediaStream.current) {
-      videoRef.current.srcObject = localMediaStream.current;
     }
   };
 
   const loginSchema = yup.object().shape({
-    userName: yup
+    login: yup
       .string()
-      .required("Введи ім'я та прізвище")
-      .max(40, 'Максимум 40 символів'),
+      .required('Вкажіть логін, за яким ви зареєстровані на нашій платформі!'),
+    password: yup
+      .string()
+      .required('Введіть пароль, який ви використовуєте для входу на нашу платформу!'),
   });
 
   return (
-    <GradientBackground>
-      <LoginPage>
-        <LoginMediaContainer>
-          <LoginVideo ref={videoRef} autoPlay muted></LoginVideo>
-          <LoginMediaFields>
-            <LoginMediaContainer>
-              <MicroIcon />
-              <LoginSelect
-                name="micro"
-                id="micro"
-                key="micro"
-                onChange={e => handleDeviceSelect(e.target.value, 'audioinput')}
-                value={localStorage.getItem('default-audioinput') || 'default'}
-              >
-                {microphoneDevices.map(device => (
-                  <option key={device.value} value={device.value}>
-                    {device.label}
-                  </option>
-                ))}
-              </LoginSelect>
-            </LoginMediaContainer>
-            {/* <LoginMediaContainer>
-              <SoundIcon />
-              <LoginSelect
-                name="audio"
-                id="audio"
-                key="audio"
-                onChange={e => handleDeviceSelect(e.target.value, 'audiooutput')}
-                value={localStorage.getItem('default-audiooutput') || 'default'}
-              >
-                {audioDevices.map(device => (
-                  <option key={device.value} value={device.value}>
-                    {device.label}
-                  </option>
-                ))}
-              </LoginSelect>
-            </LoginMediaContainer> */}
-            <LoginMediaContainer>
-              <CameraIcon />
-              <LoginSelect
-                name="camera"
-                id="camera"
-                key="camera"
-                onChange={e => handleDeviceSelect(e.target.value, 'videoinput')}
-                value={localStorage.getItem('default-videoinput')}
-              >
-                {cameraDevices.map(device => (
-                  <option key={device.value} value={device.value}>
-                    {device.label}
-                  </option>
-                ))}
-              </LoginSelect>
-            </LoginMediaContainer>
-
-            <div
-              style={{
-                width: '100%',
-                height: '20px',
-                background: '#ddd',
-                position: 'relative',
-                borderRadius: '5px',
-                overflow: 'hidden',
-                display: 'none',
-              }}
-            >
-              <div
-                style={{
-                  width: `${volume}%`,
-                  height: '100%',
-                  background: '#0f645b',
-                  transition: 'width 0.1s',
-                }}
-              ></div>
-            </div>
-          </LoginMediaFields>
-        </LoginMediaContainer>
-        <Formik
-          initialValues={initialLoginValues}
-          onSubmit={logined}
-          validationSchema={loginSchema}
-        >
-          <LoginForm>
-            <LoginFormText style={{ color: 'white' }}>
-              Привіт!
-              <br />
-              Введи своє ім'я та прізвище для доступу до заняття
-            </LoginFormText>
-            <Label>
-              <AdminInput type="text" name="userName" placeholder="Ім'я та прізвище" />
-              <AdminInputNote
-                component="p"
-                name="userName"
-                type="text"
-                style={{ color: 'red' }}
-              />
-            </Label>
-            <AdminFormBtn type="submit">Увійти</AdminFormBtn>
-          </LoginForm>
-        </Formik>
-      </LoginPage>
-    </GradientBackground>
+    <Formik
+      initialValues={initialLoginValues}
+      onSubmit={handleLoginSubmit}
+      validationSchema={loginSchema}
+    >
+      <LoginForm>
+        <LeftFormBackgroundStar />
+        <RightFormBackgroundStar />
+        <LoginFormText>
+          Привіт!
+          <br />
+          Ця сторінка недоступна для неавторизованих користувачів. Але якщо ви маєте
+          доступ до нашої платформи, то й до цієї сторінки теж. Введіть дані, які ви
+          використовуєте для входу на платформу.
+        </LoginFormText>
+        <Label>
+          <AdminInput
+            type="text"
+            name="login"
+            placeholder="Login"
+            onBlur={() => setIsUserInfoIncorrect(false)}
+          />
+          <AdminInputNote component="p" name="login" type="text" />
+        </Label>
+        <Label>
+          <AdminInput
+            type="password"
+            name="password"
+            placeholder="Password"
+            onBlur={() => setIsUserInfoIncorrect(false)}
+          />
+          <AdminInputNote component="p" name="password" />
+        </Label>
+        <AdminFormBtn type="submit">Увійти</AdminFormBtn>
+        <LoginErrorNote style={isUserInfoIncorrect ? { opacity: '1' } : { opacity: '0' }}>
+          Логін або пароль введено неправильно!
+        </LoginErrorNote>
+      </LoginForm>
+    </Formik>
   );
 }
 
