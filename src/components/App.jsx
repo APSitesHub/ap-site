@@ -768,6 +768,7 @@ export const App = () => {
             <Route path="nakonechna-chat" element={<WindowedChat />} noindex={true} />
             <Route path="heinz-chat" element={<WindowedChat />} noindex={true} />
             <Route path="doloka-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="lyasota-chat" element={<WindowedChat />} noindex={true} />
             <Route path="stream-admin-panel" element={<AdminPanel />} noindex={true} />
             <Route
               path="uni-stream-admin-panel"
@@ -1105,6 +1106,7 @@ export const App = () => {
             <Route path="nakonechna" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="heinz" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="doloka" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="lyasota" element={<TeacherPageIndividual />} noindex={true} />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route

@@ -40,6 +40,15 @@ export const StudentInput = ({
       page: page,
     });
 
+    console.log(43, 'answer:given', {
+      answer: answer,
+      username: user?.name || currentUser.username,
+      page: page,
+      socketID: socket.id,
+      questionID: questionID,
+      userID: user?.id || currentUser.userID,
+    });
+
     await axios.post('/answers', {
       answer: answer,
       username: user?.name || currentUser.username,

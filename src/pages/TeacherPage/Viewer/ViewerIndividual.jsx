@@ -8,7 +8,11 @@ import {
 } from 'components/Stream/Kahoots/Kahoots.styled';
 import parse from 'html-react-parser';
 import { useEffect, useRef, useState } from 'react';
-import { ViewerBox, ViewerChooseLevelBtn, ViewerChooseLevelContainer } from './Viewer.styled';
+import {
+  ViewerBox,
+  ViewerChooseLevelBtn,
+  ViewerChooseLevelContainer,
+} from './Viewer.styled';
 
 export const ViewerIndividual = ({ isViewerOpen, isOpenedLast, sectionWidth, page }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -16,7 +20,9 @@ export const ViewerIndividual = ({ isViewerOpen, isOpenedLast, sectionWidth, pag
   const [isLoading, setIsLoading] = useState(false);
   const [level, setLevel] = useState('');
   const lang = useRef(
-    page === 'heinz' || page === 'doloka' || page === 'nakonechna' ? 'de' : 'en'
+    page === 'heinz' || page === 'doloka' || page === 'nakonechna' || page === 'lyasota'
+      ? 'de'
+      : 'en'
   );
 
   const supportBoxStylesHandler = () => {
