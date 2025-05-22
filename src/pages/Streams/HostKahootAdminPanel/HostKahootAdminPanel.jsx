@@ -21,8 +21,10 @@ import { B1KidsKahootForm } from '../KahootAdminPanel/B1KidsKahootForm';
 import { B2KahootForm } from '../KahootAdminPanel/B2KahootForm';
 import { B2KidsBeginnerKahootForm } from '../KahootAdminPanel/B2KidsBeginnerKahootForm';
 import { B2KidsKahootForm } from '../KahootAdminPanel/B2KidsKahootForm';
+import { BulavkaKahootForm } from '../KahootAdminPanel/BulavkaKahootForm';
 import { C1KahootForm } from '../KahootAdminPanel/C1KahootForm';
 import { C1KidsKahootForm } from '../KahootAdminPanel/C1KidsKahootForm';
+import { DeinekaKahootForm } from '../KahootAdminPanel/DeinekaKahootForm';
 import { DeutschA02KahootForm } from '../KahootAdminPanel/DeutschA02KahootForm';
 import { DeutschA0KahootForm } from '../KahootAdminPanel/DeutschA0KahootForm';
 import { DeutschA2FreeKahootForm } from '../KahootAdminPanel/DeutschA2FreeKahootForm';
@@ -36,6 +38,9 @@ import { DeutschKidsA2KahootForm } from '../KahootAdminPanel/DeutschKidsA2Kahoot
 import { DeutschKidsB1KahootForm } from '../KahootAdminPanel/DeutschKidsB1KahootForm';
 import { DeutschKidsFreeKahootForm } from '../KahootAdminPanel/DeutschKidsFreeKahootForm';
 import { DeutschKidsKahootForm } from '../KahootAdminPanel/DeutschKidsKahootForm';
+import { DolokaKahootForm } from '../KahootAdminPanel/DolokaKahootForm';
+import { HeinzKahootForm } from '../KahootAdminPanel/HeinzKahootForm';
+import { IvachevskaKahootForm } from '../KahootAdminPanel/IvachevskaKahootForm';
 import {
   AdminFormBtn,
   AdminInput,
@@ -49,6 +54,9 @@ import { KidsBEGKahootForm } from '../KahootAdminPanel/KidsBEGKahootForm';
 import { KidsHIGHKahootForm } from '../KahootAdminPanel/KidsHIGHKahootForm';
 import { KidsMIDKahootForm } from '../KahootAdminPanel/KidsMIDKahootForm';
 import { KidsPREKahootForm } from '../KahootAdminPanel/KidsPREKahootForm';
+import { KubrakKahootForm } from '../KahootAdminPanel/KubrakKahootForm';
+import { LyasotaKahootForm } from '../KahootAdminPanel/LyasotaKahootForm';
+import { NakonechnaKahootForm } from '../KahootAdminPanel/NakonechnaKahootForm';
 import { NMTEnKahootForm } from '../KahootAdminPanel/NMTEnKahootForm';
 import { NMTHistoryKahootForm } from '../KahootAdminPanel/NMTHistoryKahootForm';
 import { NMTMathKahootForm } from '../KahootAdminPanel/NMTMathKahootForm';
@@ -72,13 +80,6 @@ import { TrialsEngKahootForm } from '../KahootAdminPanel/TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from '../KahootAdminPanel/TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from '../KahootAdminPanel/TrialsPlKahootForm';
 import { HostAdminPanelSection } from './HostKahootAdminPanel.styled';
-import { KubrakKahootForm } from '../KahootAdminPanel/KubrakKahootForm';
-import { BulavkaKahootForm } from '../KahootAdminPanel/BulavkaKahootForm';
-import { IvachevskaKahootForm } from '../KahootAdminPanel/IvachevskaKahootForm';
-import { DeinekaKahootForm } from '../KahootAdminPanel/DeinekaKahootForm';
-import { NakonechnaKahootForm } from '../KahootAdminPanel/NakonechnaKahootForm';
-import { HeinzKahootForm } from '../KahootAdminPanel/HeinzKahootForm';
-import { DolokaKahootForm } from '../KahootAdminPanel/DolokaKahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -286,6 +287,7 @@ export const HostKahootAdminPanel = () => {
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('heinz')}>Хайнц</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('doloka')}>Долока</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('lyasota')}>Лясота</KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -410,6 +412,7 @@ export const HostKahootAdminPanel = () => {
           )}
           {levels.includes('heinz') && <HeinzKahootForm destination={destination} />}
           {levels.includes('doloka') && <DolokaKahootForm destination={destination} />}
+          {levels.includes('lyasota') && <LyasotaKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </HostAdminPanelSection>

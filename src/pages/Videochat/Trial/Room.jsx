@@ -64,7 +64,7 @@ function Room({ isAdmin, lang }) {
       username: localStorage.getItem('userName'),
       isBanned: false,
       userIP: 'no ip',
-      userID: localStorage.getItem('userId'),
+      userID: localStorage.getItem('userID'),
     }),
     []
   );

@@ -21,8 +21,10 @@ import { B1KidsKahootForm } from './B1KidsKahootForm';
 import { B2KahootForm } from './B2KahootForm';
 import { B2KidsBeginnerKahootForm } from './B2KidsBeginnerKahootForm';
 import { B2KidsKahootForm } from './B2KidsKahootForm';
+import { BulavkaKahootForm } from './BulavkaKahootForm';
 import { C1KahootForm } from './C1KahootForm';
 import { C1KidsKahootForm } from './C1KidsKahootForm';
+import { DeinekaKahootForm } from './DeinekaKahootForm';
 import { DeutschA02KahootForm } from './DeutschA02KahootForm';
 import { DeutschA0KahootForm } from './DeutschA0KahootForm';
 import { DeutschA2FreeKahootForm } from './DeutschA2FreeKahootForm';
@@ -36,6 +38,9 @@ import { DeutschKidsA2KahootForm } from './DeutschKidsA2KahootForm';
 import { DeutschKidsB1KahootForm } from './DeutschKidsB1KahootForm';
 import { DeutschKidsFreeKahootForm } from './DeutschKidsFreeKahootForm';
 import { DeutschKidsKahootForm } from './DeutschKidsKahootForm';
+import { DolokaKahootForm } from './DolokaKahootForm';
+import { HeinzKahootForm } from './HeinzKahootForm';
+import { IvachevskaKahootForm } from './IvachevskaKahootForm';
 import {
   AdminFormBtn,
   AdminInput,
@@ -50,6 +55,9 @@ import { KidsBEGKahootForm } from './KidsBEGKahootForm';
 import { KidsHIGHKahootForm } from './KidsHIGHKahootForm';
 import { KidsMIDKahootForm } from './KidsMIDKahootForm';
 import { KidsPREKahootForm } from './KidsPREKahootForm';
+import { KubrakKahootForm } from './KubrakKahootForm';
+import { LyasotaKahootForm } from './LyasotaKahootForm';
+import { NakonechnaKahootForm } from './NakonechnaKahootForm';
 import { NMTEnKahootForm } from './NMTEnKahootForm';
 import { NMTHistoryKahootForm } from './NMTHistoryKahootForm';
 import { NMTMathKahootForm } from './NMTMathKahootForm';
@@ -72,13 +80,6 @@ import { TrialsDeKahootForm } from './TrialsDeKahootForm';
 import { TrialsEngKahootForm } from './TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from './TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from './TrialsPlKahootForm';
-import { KubrakKahootForm } from './KubrakKahootForm';
-import { BulavkaKahootForm } from './BulavkaKahootForm';
-import { IvachevskaKahootForm } from './IvachevskaKahootForm';
-import { DeinekaKahootForm } from './DeinekaKahootForm';
-import { NakonechnaKahootForm } from './NakonechnaKahootForm';
-import { HeinzKahootForm } from './HeinzKahootForm';
-import { DolokaKahootForm } from './DolokaKahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -286,6 +287,7 @@ export const KahootAdminPanel = () => {
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('heinz')}>Хайнц</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('doloka')}>Долока</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('lyasota')}>Лясота</KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -410,6 +412,7 @@ export const KahootAdminPanel = () => {
           )}
           {levels.includes('heinz') && <HeinzKahootForm destination={destination} />}
           {levels.includes('doloka') && <DolokaKahootForm destination={destination} />}
+          {levels.includes('lyasota') && <LyasotaKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </AdminPanelSection>
