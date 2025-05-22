@@ -34,7 +34,7 @@ const debug = true;
 function Room({ isAdmin }) {
   const navigate = useNavigate();
   const { id: roomID } = useParams();
-  // const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
+  const lang = roomID === '446390d3-10c9-47f4-8880-8d9043219ccd' ? 'pl' : 'ua';
   const [isConnected, setIsConnected] = useState(false);
   const [scrollOn, setScrollOn] = useState(false);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
