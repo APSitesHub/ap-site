@@ -39,7 +39,6 @@ const MyAP = () => {
   const [language, setLanguage] = useState('');
   const [course, setCourse] = useState('');
   const [platformLink, setPlatformLink] = useState(`https://online.ap.education/`);
-  const [marathonLink, setMarathonLink] = useState(`https://online.ap.education/`);
   const [isMultipleLanguages, setIsMultipleLanguages] = useState(false);
   const [isMultipleCourses, setIsMultipleCourses] = useState(false);
   axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -74,7 +73,6 @@ const MyAP = () => {
           mail: localStorage.getItem('mail'),
         });
         setIsUserLogged(isLogged => (isLogged = true));
-        console.log(73, res.data.user.platformToken);
         setUser(user => (user = { ...res.data.user }));
         const lang = res.data.user.lang.split('/');
         const courses = res.data.user.course.split('/');
@@ -133,110 +131,19 @@ const MyAP = () => {
     getTimetable();
 
     const setIframeLinks = async () => {
-      const LINKS = {
-        en1: user.platformToken
-          ? `https://online.ap.education/Account/LoginByToken?token=${
-              user.platformToken
-            }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=621674`
-            )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=37835&pupilId=${user.pupilId}&marathonLessonId=621674`,
-        en2: user.platformToken
-          ? `https://online.ap.education/Account/LoginByToken?token=${
-              user.platformToken
-            }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=847031`
-            )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=847031`,
-        pl: user.platformToken
-          ? `https://online.ap.education/Account/LoginByToken?token=${
-              user.platformToken
-            }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=41057&pupilId=${user.pupilId}&marathonLessonId=629354`
-            )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=41057&pupilId=${user.pupilId}&marathonLessonId=629354`,
-        de: user.platformToken
-          ? `https://online.ap.education/Account/LoginByToken?token=${
-              user.platformToken
-            }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=629357`
-            )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=629357`,
-        enkids1: user.platformToken
-          ? `https://online.ap.education/Account/LoginByToken?token=${
-              user.platformToken
-            }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673`
-            )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=40552&pupilId=${user.pupilId}&marathonLessonId=621673`,
-        enkids2: user.platformToken
-          ? `https://online.ap.education/Account/LoginByToken?token=${
-              user.platformToken
-            }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=847034`
-            )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=847034`,
-        dekids: user.platformToken
-          ? `https://online.ap.education/Account/LoginByToken?token=${
-              user.platformToken
-            }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=65423&pupilId=${user.pupilId}&marathonLessonId=968639`
-            )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=65423&pupilId=${user.pupilId}&marathonLessonId=968639`,
-        plkids: user.platformToken
-          ? `https://online.ap.education/Account/LoginByToken?token=${
-              user.platformToken
-            }&redirectUrl=${encodeURIComponent(
-              `https://online.ap.education/MarathonClass/?marathonId=64039&pupilId=${user.pupilId}&marathonLessonId=952360`
-            )}`
-          : `https://online.ap.education/MarathonClass/?marathonId=64039&pupilId=${user.pupilId}&marathonLessonId=952360`,
-      };
+      const authLink = user.platformToken
+        ? `https://online.ap.education/Account/LoginByToken?token=${
+            user.platformToken
+          }&redirectUrl=${encodeURIComponent(
+            `https://online.ap.education/cabinet/student/lessons`
+          )}`
+        : `https://online.ap.education/cabinet/student/lessons`;
 
-      const marathonLink =
-        language === 'en' && user.marathonNumber === '1'
-          ? 'en1'
-          : language === 'en' && user.marathonNumber === '2'
-          ? 'en2'
-          : language === 'en' && !user.marathonNumber
-          ? 'en2'
-          : language === 'pl'
-          ? 'pl'
-          : language === 'de'
-          ? 'de'
-          : language === 'plkids'
-          ? 'plkids'
-          : language === 'dekids'
-          ? 'dekids'
-          : language === 'enkids' && user.marathonNumber === '1'
-          ? 'enkids1'
-          : language === 'enkids' && user.marathonNumber === '2'
-          ? 'enkids2'
-          : language === 'enkids' && !user.marathonNumber
-          ? 'enkids2'
-          : '';
-
-      const FREE_LINKS = {
-        kids: `https://online.ap.education/MarathonClass/?marathonId=50784&pupilId=${user.pupilId}&marathonLessonId=854264`,
-        ena1: `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=854277`,
-        ena2: `https://online.ap.education/MarathonClass/?marathonId=49509&pupilId=${user.pupilId}&marathonLessonId=854278`,
-        pl: `https://online.ap.education/MarathonClass/?marathonId=41057&pupilId=${user.pupilId}&marathonLessonId=853147`,
-        de: `https://online.ap.education/MarathonClass/?marathonId=41534&pupilId=${user.pupilId}&marathonLessonId=854256`,
-      };
-
-      setPlatformLink(link => (link = LINKS[marathonLink]));
-      setMarathonLink(link => (link = FREE_LINKS[marathonLink]));
+      setPlatformLink(link => (link = authLink));
     };
 
     setIframeLinks();
-  }, [
-    course,
-    language,
-    languageIndex,
-    isChatButtonShown,
-    user.pupilId,
-    user.marathonNumber,
-    user.platformToken,
-  ]);
+  }, [course, language, languageIndex, isChatButtonShown, user.platformToken]);
 
   const setAuthToken = token => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -261,8 +168,6 @@ const MyAP = () => {
     values.password = values.password.trim().trimStart();
     try {
       const response = await axios.post('/users/login', values);
-      console.log(response);
-
       setAuthToken(response.data.token);
       setIsUserLogged(isLogged => (isLogged = true));
       setUser(user => (user = { ...response.data.user }));
@@ -343,7 +248,6 @@ const MyAP = () => {
               points={points}
               montlyPoints={montlyPoints}
               link={platformLink}
-              marathonLink={marathonLink}
               isMultipleLanguages={isMultipleLanguages}
               isMultipleCourses={isMultipleCourses}
               setPlatformIframeLink={setPlatformIframeLink}
