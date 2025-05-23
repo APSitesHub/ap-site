@@ -41,7 +41,6 @@ export const MyAPPanel = ({
   course,
   points,
   timetable,
-  marathonLink,
   montlyPoints,
   isMultipleLanguages,
   isMultipleCourses,
