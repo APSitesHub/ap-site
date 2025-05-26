@@ -77,6 +77,8 @@ export const Timetable = ({
 
     return language === 'en'
       ? baseStreamUrl + personalTimetable?.level
+      : language === 'enkids' && personalTimetable?.course.includes('high')
+      ? baseKidsStreamUrl + 'high'
       : language === 'enkids'
       ? baseKidsStreamUrl + personalTimetable?.level
       : language === 'de' && personalTimetable?.level.includes('b1')
@@ -100,6 +102,8 @@ export const Timetable = ({
     const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';
     return language === 'en'
       ? baseStreamUrl + personalTimetable?.level + 'sc'
+      : language === 'enkids' && personalTimetable?.course.includes('high')
+      ? baseKidsStreamUrl + 'highsc'
       : language === 'enkids'
       ? baseKidsStreamUrl + personalTimetable?.level + 'sc'
       : language.includes('kids')
