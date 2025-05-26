@@ -657,6 +657,7 @@ export const App = () => {
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="end-call-pl" element={<EndCallPl />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
+          <Route path="my-ap-hl" element={<MyAP />} noindex={true} />
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />
           <Route path="my-wspa" element={<MyWSPA />} noindex={true} />
