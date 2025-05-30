@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import QRCode from 'react-qr-code';
+import { QRPedagogiumLogistics2 } from './TeacherQuiz.styled';
+import { TeacherChartBtn } from '../StudentChart/StudentChart.styled';
 
 // Стилі для модального вікна
 const ModalOverlay = styled.div`
@@ -9,7 +10,6 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,6 +25,8 @@ const ModalContent = styled.div`
   align-items: center;
   gap: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  height: 65%;
+  width: 50%;
 `;
 
 const CloseButtonWrapper = styled.div`
@@ -34,16 +36,16 @@ const CloseButtonWrapper = styled.div`
 `;
 
 export const QRCodeModal = ({ qrValue, onClose, isOpen }) => {
-  return isOpen && (
-    <ModalOverlay>
-      <ModalContent>
-        <QRCode value={qrValue} size={200} />
-        <CloseButtonWrapper>
-          <button onClick={onClose}>
-            Close
-          </button>
-        </CloseButtonWrapper>
-      </ModalContent>
-    </ModalOverlay>
+  return (
+    isOpen && (
+      <ModalOverlay>
+        <ModalContent>
+          <QRPedagogiumLogistics2 />
+          <CloseButtonWrapper>
+            <TeacherChartBtn onClick={onClose}>Close</TeacherChartBtn>
+          </CloseButtonWrapper>
+        </ModalContent>
+      </ModalOverlay>
+    )
   );
 };

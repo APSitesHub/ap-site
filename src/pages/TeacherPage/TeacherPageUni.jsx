@@ -8,7 +8,6 @@ import { NameInput } from './NameInput/NameInput';
 import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
-import QRCode from 'react-qr-code';
 import {
   BoxHideDownSwitch,
   BoxHideLeftSwitch,
@@ -88,7 +87,7 @@ const TeacherPageUni = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()}`;
-    if(page ==='pedagogium_logistics_2') {
+    if (page === 'pedagogium_logistics_2') {
       setQRValue('https://pedagogium.ap.education/lesson/logistics_2?isOffline=true');
     }
   }, [page]);
@@ -193,7 +192,7 @@ const TeacherPageUni = () => {
     setIsNameInputOpen(isNameInputOpen => !isNameInputOpen);
   };
 
- const toggleQROPen = () => {
+  const toggleQROPen = () => {
     setIsQROpen(isQROpen => !isQROpen);
   };
   return (
@@ -297,8 +296,7 @@ const TeacherPageUni = () => {
         changeTeacherInfo={changeTeacherInfo}
       />
 
-      <QRCodeModal qrValue={''} onClose={toggleQROPen} isOpen={isQROpen}/>
-
+      <QRCodeModal qrValue={''} onClose={toggleQROPen} isOpen={isQROpen} />
     </>
   );
 };
