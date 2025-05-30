@@ -23,8 +23,6 @@ export const ViewerUni = ({ isViewerOpen, isOpenedLast, sectionWidth, page }) =>
   };
 
   useEffect(() => {
-    document.title = `Teacher ${page.toLocaleUpperCase()} | AP Education`;
-
     const getCollectionsRequest = async () => {
       try {
         setIsLoading(isLoading => (isLoading = true));
@@ -44,7 +42,7 @@ export const ViewerUni = ({ isViewerOpen, isOpenedLast, sectionWidth, page }) =>
 
   const collectionRefresher = async e => {
     if (e.target === e.currentTarget) {
-      setCollection((await axios.get('uni/collections')).data);
+      setCollection((await axios.get('/unicollections')).data);
     }
   };
 

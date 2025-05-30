@@ -105,6 +105,8 @@ export const WhiteBoard = ({ page, isWhiteBoardOpen, isOpenedLast, sectionWidth 
     nmt_math: 'https://limnu.com/d/draw.html?b=B_bRKEU5EjQHq9Kl&',
     nmt_history: 'https://limnu.com/d/draw.html?b=B_4fa5cLnBRnSI9N&',
 
+    pedagogium_logistics: 'https://limnu.com/d/draw.html?b=B_k4R7KNVpSaSCYa&',
+    pedagogium_logistics_2: 'https://limnu.com/d/draw.html?b=B_k4R7KNVpSaSCYa&',
     wstijo_logistics: 'https://limnu.com/d/draw.html?b=B_0CvDJykXTq9LiI&',
 
     kubrak: 'https://limnu.com/d/draw.html?b=B_yIF60R3CSKuMRj&',
