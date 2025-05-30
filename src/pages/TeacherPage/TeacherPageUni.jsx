@@ -22,12 +22,14 @@ import {
   ViewerLogo,
   WhiteBoardBtn,
   WhiteBoardLogo,
+  QRBtn,
 } from './TeacherPage.styled';
 import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
 import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
 import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { ViewerUni } from './Viewer/ViewerUni';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
+import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 
 const TeacherPageUni = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -39,6 +41,7 @@ const TeacherPageUni = () => {
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
+  const [isQROpen, setIsQROpen] = useState(false);
   // eslint-disable-next-line
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
@@ -182,6 +185,9 @@ const TeacherPageUni = () => {
     setIsNameInputOpen(isNameInputOpen => !isNameInputOpen);
   };
 
+  const toggleQROPen = () => {
+    setIsQROpen(isQROpen => !isQROpen);
+  };
   return (
     <>
       <NameInputBtn onClick={toggleNameInput}>
@@ -211,6 +217,7 @@ const TeacherPageUni = () => {
           <InputBtn onClick={toggleQuizOptions}>A-B-C</InputBtn>
 
           <InputBtn onClick={toggleQuizTrueFalse}>TRUE FALSE</InputBtn>
+          <QRBtn onClick={toggleQROPen}>QR</QRBtn>
         </InputButtonBox>
       </TeacherButtonBox>
       <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
@@ -281,6 +288,8 @@ const TeacherPageUni = () => {
         isNameInputOpen={isNameInputOpen}
         changeTeacherInfo={changeTeacherInfo}
       />
+
+      <QRCodeModal onClose={toggleQROPen} isOpen={isQROpen} />
     </>
   );
 };

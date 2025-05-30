@@ -1,6 +1,6 @@
 {
   "name": "ap-education",
-  "version": "1.0.63.53",
+  "version": "1.0.63.54",
   "private": true,
   "homepage": "https://academy.ap.education/",
   "dependencies": {
@@ -42,6 +42,7 @@
     "react-intersection-observer": "^9.5.2",
     "react-loader-spinner": "^5.3.4",
     "react-player": "^2.12.0",
+    "react-qr-code": "^2.0.15",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",

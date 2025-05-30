@@ -1,9 +1,4 @@
-import {
-  FormBtn,
-  Input,
-  InputNote,
-  Label,
-} from 'components/LeadForm/LeadForm.styled';
+import { FormBtn, Input, InputNote, Label } from 'components/LeadForm/LeadForm.styled';
 import {
   ClipBoardFormDismissBtn,
   ClipBoardFormText,
@@ -14,7 +9,7 @@ import styled from 'styled-components';
 
 export const AdminPanelSection = styled.section`
   height: max-content;
-  padding: 30px 0;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

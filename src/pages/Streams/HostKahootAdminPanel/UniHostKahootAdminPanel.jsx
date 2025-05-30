@@ -13,7 +13,6 @@ import {
   AdminFormBtn,
   AdminInput,
   AdminInputNote,
-  AdminPanelSection,
   KahootFormBox,
   KahootLvlBtn,
   KahootLvlBtnBox,
@@ -38,6 +37,7 @@ import { WSTIJOLogisticsKahootForm } from '../KahootAdminPanel/WSTIJOLogisticsKa
 import { WSTIJOPrepKahootForm } from '../KahootAdminPanel/WSTIJOPrepKahootForm';
 import { WSTiHLogisticsKahootForm } from '../KahootAdminPanel/WSTiHLogisticsKahootForm';
 import { WSTiHPrepKahootForm } from '../KahootAdminPanel/WSTiHPrepKahootForm';
+import { HostAdminPanelSection } from './HostKahootAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -103,7 +103,7 @@ const UniHostKahootAdminPanel = () => {
 
   return (
     <>
-      <AdminPanelSection>
+      <HostAdminPanelSection>
         {!isUserAdmin && (
           <Formik
             initialValues={initialLoginValues}
@@ -255,7 +255,7 @@ const UniHostKahootAdminPanel = () => {
           {levels.includes('answp') && <ANSWPKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
-      </AdminPanelSection>
+      </HostAdminPanelSection>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { TeacherChartBtnBox } from '../StudentChart/StudentChart.styled';
+import { ReactComponent as _QR_pedagogium_logistics_2 } from '../../../img/qr/pedagogium-logistics_2.svg';
 
 export const TeacherInputBox = styled.div`
   position: absolute;
@@ -170,4 +171,9 @@ export const TeacherQuizCorrectListUserInfo = styled.span`
 
 export const TeacherQuizCorrectListEndQuizBtnBox = styled(TeacherChartBtnBox)`
   right: 30px;
+`;
+
+export const QRPedagogiumLogistics2 = styled(_QR_pedagogium_logistics_2)`
+  flex: 1;
+  width: 100%;
 `;

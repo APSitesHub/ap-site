@@ -263,7 +263,7 @@ export const WhiteBoardLogo = styled(WhiteBoardIcon)`
 `;
 
 export const PlatformBtn = styled(ChatBtn)``;
-
+export const QRBtn = styled(ChatBtn)``;
 export const PlatformLogo = styled(PlatformIcon)`
   z-index: 5;
   width: 48px;

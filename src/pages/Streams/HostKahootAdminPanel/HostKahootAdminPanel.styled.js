@@ -3,7 +3,7 @@ import hostKahootBG from '../../../img/bg/host-kahoot-panel.png';
 
 export const HostAdminPanelSection = styled.section`
   height: max-content;
-  padding: 30px 0;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
