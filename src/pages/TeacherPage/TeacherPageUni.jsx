@@ -42,7 +42,6 @@ const TeacherPageUni = () => {
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isQROpen, setIsQROpen] = useState(false);
-  const [QRvalue, setQRValue] = useState('');
   // eslint-disable-next-line
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
@@ -51,9 +50,6 @@ const TeacherPageUni = () => {
   const [teacherInfo, setTeacherInfo] = useState({});
   const questionID = useRef(nanoid(5));
 
-  useEffect(() => {
-    setQRValue('https://pedagogium.ap.education/lesson/logistics_2?isOffline=true');
-  }, []);
   const closeInputs = () => {
     setIsQuizInputOpen(false);
     setIsQuizOptionsOpen(false);
@@ -87,9 +83,6 @@ const TeacherPageUni = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()}`;
-    if (page === 'pedagogium_logistics_2') {
-      setQRValue('https://pedagogium.ap.education/lesson/logistics_2?isOffline=true');
-    }
   }, [page]);
 
   const toggleViewer = () => {
@@ -296,7 +289,7 @@ const TeacherPageUni = () => {
         changeTeacherInfo={changeTeacherInfo}
       />
 
-      <QRCodeModal qrValue={''} onClose={toggleQROPen} isOpen={isQROpen} />
+      <QRCodeModal onClose={toggleQROPen} isOpen={isQROpen} />
     </>
   );
 };

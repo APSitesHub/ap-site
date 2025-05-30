@@ -35,7 +35,7 @@ const CloseButtonWrapper = styled.div`
   justify-content: center;
 `;
 
-export const QRCodeModal = ({ qrValue, onClose, isOpen }) => {
+export const QRCodeModal = ({ onClose, isOpen }) => {
   return (
     isOpen && (
       <ModalOverlay>
