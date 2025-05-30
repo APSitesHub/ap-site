@@ -8,6 +8,7 @@ import { NameInput } from './NameInput/NameInput';
 import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
 import { Platform } from './Platform/Platform';
 import { TeacherChat } from './TeacherChat/TeacherChat';
+import QRCode from 'react-qr-code';
 import {
   BoxHideDownSwitch,
   BoxHideLeftSwitch,
@@ -22,12 +23,14 @@ import {
   ViewerLogo,
   WhiteBoardBtn,
   WhiteBoardLogo,
+  QRBtn,
 } from './TeacherPage.styled';
 import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
 import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
 import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { ViewerUni } from './Viewer/ViewerUni';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
+import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 
 const TeacherPageUni = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -39,6 +42,8 @@ const TeacherPageUni = () => {
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
+  const [isQROpen, setIsQROpen] = useState(false);
+  const [QRvalue, setQRValue] = useState('');
   // eslint-disable-next-line
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
@@ -47,6 +52,9 @@ const TeacherPageUni = () => {
   const [teacherInfo, setTeacherInfo] = useState({});
   const questionID = useRef(nanoid(5));
 
+  useEffect(() => {
+    setQRValue('https://pedagogium.ap.education/lesson/logistics_2?isOffline=true');
+  }, []);
   const closeInputs = () => {
     setIsQuizInputOpen(false);
     setIsQuizOptionsOpen(false);
@@ -80,6 +88,9 @@ const TeacherPageUni = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()}`;
+    if(page ==='pedagogium_logistics_2') {
+      setQRValue('https://pedagogium.ap.education/lesson/logistics_2?isOffline=true');
+    }
   }, [page]);
 
   const toggleViewer = () => {
@@ -182,6 +193,9 @@ const TeacherPageUni = () => {
     setIsNameInputOpen(isNameInputOpen => !isNameInputOpen);
   };
 
+ const toggleQROPen = () => {
+    setIsQROpen(isQROpen => !isQROpen);
+  };
   return (
     <>
       <NameInputBtn onClick={toggleNameInput}>
@@ -211,6 +225,7 @@ const TeacherPageUni = () => {
           <InputBtn onClick={toggleQuizOptions}>A-B-C</InputBtn>
 
           <InputBtn onClick={toggleQuizTrueFalse}>TRUE FALSE</InputBtn>
+          <QRBtn onClick={toggleQROPen}>QR</QRBtn>
         </InputButtonBox>
       </TeacherButtonBox>
       <TeacherButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
@@ -281,6 +296,9 @@ const TeacherPageUni = () => {
         isNameInputOpen={isNameInputOpen}
         changeTeacherInfo={changeTeacherInfo}
       />
+
+      <QRCodeModal qrValue={''} onClose={toggleQROPen} isOpen={isQROpen}/>
+
     </>
   );
 };
