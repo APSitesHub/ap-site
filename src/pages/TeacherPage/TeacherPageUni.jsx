@@ -66,6 +66,10 @@ const TeacherPageUni = () => {
 
   const getLocation = location => {
     switch (location) {
+      case 'pedagogium-1':
+        return 'pedagogium_logistics';
+      case 'pedagogium-2':
+        return 'pedagogium_logistics_2';
       case 'wstijo':
         return 'wstijo_logistics';
       default:
