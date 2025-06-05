@@ -413,12 +413,14 @@ function Room({ isAdmin, lang }) {
                 startScreenSharing: false,
                 enableEmailInStats: false,
                 disableSelfViewSettings: true,
+                channelLastN: 3,
+                enableOpusRed: true,
                 constraints: {
                   video: {
                     height: {
-                      ideal: isAdmin ? 1080 : 720,
-                      max: 1080,
-                      min: 480,
+                      ideal: 720,
+                      max: 720,
+                      min: 180,
                     },
                   },
                 },
