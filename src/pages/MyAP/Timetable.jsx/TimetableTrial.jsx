@@ -27,7 +27,7 @@ export const TimetableTrial = ({ user, language, timetable, isMultipleLanguages 
   const getLink = () => {
     const baseStreamUrl = 'https://academy.ap.education/streams/';
 
-    return baseStreamUrl + 'polskia0_2';
+    return baseStreamUrl + 'polskia0_3';
   };
 
   const link = getLink();

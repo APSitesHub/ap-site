@@ -10,7 +10,7 @@ export const FinderBox = styled.div`
   position: absolute;
   top: 30px;
   right: 60px;
-  z-index: 5;
+  z-index: 8;
 
   margin-left: 5px;
   display: flex;

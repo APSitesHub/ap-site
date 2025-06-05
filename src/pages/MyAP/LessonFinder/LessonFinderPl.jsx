@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { ReactComponent as PdfIcon } from '../../../img/svg/pdf-icon.svg';
 
@@ -53,6 +53,7 @@ export const LessonFinderPl = ({
   isMultipleLanguages,
 }) => {
   const [lessonsFound, setLessonsFound] = useState([]);
+  const [visibleLessons, setVisibleLessons] = useState([]);
   const [isPdfPreviewOpen, setIsPdfPreviewOpen] = useState(false);
   const [openedPdf, setOpenedPdf] = useState('');
   const [isFaqListOpen, setIsFaqListOpen] = useState(false);
@@ -62,6 +63,7 @@ export const LessonFinderPl = ({
   const [isAnswerOpen, setIsAnswerOpen] = useState(false);
   const [openedAnswer, setOpenedAnswer] = useState(0);
   const [isInputEmpty, setIsInputEmpty] = useState(true);
+  const loadMoreRef = useRef(null);
 
   const path = window.location.origin + window.location.pathname;
 
@@ -193,6 +195,45 @@ export const LessonFinderPl = ({
       : isAnswerOpen && i === openedAnswer
       ? setIsAnswerOpen(isOpen => !isOpen)
       : openAnswer(i);
+
+  useEffect(() => {
+    setVisibleLessons(lessonsFound.slice(0, 5));
+  }, [lessonsFound]);
+
+  useEffect(() => {
+    const loadMoreLessons = () => {
+      setVisibleLessons(prev => {
+        const nextIndex = prev.length;
+        return [...prev, ...lessonsFound.slice(nextIndex, nextIndex + 5)];
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          loadMoreLessons();
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    // added to prevent loading non-exisiting lessons when scrolled to the end of the list
+    if (loadMoreRef.current && lessonsFound.length === visibleLessons.length) {
+      observer.unobserve(loadMoreRef.current);
+    }
+
+    const observerRef = loadMoreRef.current;
+
+    return () => {
+      if (observerRef) {
+        observer.unobserve(observerRef);
+      }
+    };
+  }, [visibleLessons, lessonsFound]);
 
   return (
     <FinderBox
@@ -388,6 +429,7 @@ export const LessonFinderPl = ({
                 </LessonBoxItem>
               ))}
             </LessonBox>
+            <div ref={loadMoreRef} style={{ height: '10px' }}></div>
           </FinderLessons>
           <FinderMolding />
         </>

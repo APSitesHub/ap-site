@@ -53,7 +53,7 @@ export const MyAPStudentChartArea = styled(StudentChartArea)`
   top: 30px;
   left: unset;
   right: 60px;
-  z-index: 5;
+  z-index: 8;
   transform: translate(0, 0);
   width: calc(100% - 65px);
   max-height: 556px;

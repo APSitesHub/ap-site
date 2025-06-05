@@ -21,7 +21,7 @@ import {
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const MyAPPanelPlTemp = ({
+export const MyAPPanelPlMERITO = ({
   lessons,
   location,
   user,
@@ -351,38 +351,11 @@ export const MyAPPanelPlTemp = ({
         />
       )}
       {console.log(353, timetable)}
+      {console.log(354, timetable.map(lesson => lesson.day))}
       {isCalendarShown && (
         <AttendanceTrialPl
           user={user}
-          personalLessonsDays={
-            location.includes('polski')
-              ? timetable
-                  .find(table => table.lang === 'pl' && table.level === 'a2')
-                  .schedule.map(lesson => lesson.day)
-              : location.includes('deutsch-a1')
-              ? timetable
-                  .find(table => table.lang === 'de' && table.level === 'a1')
-                  .schedule.map(lesson => lesson.day)
-              : location.includes('deutsch-a2')
-              ? timetable
-                  .find(table => table.lang === 'de' && table.level === 'a2')
-                  .schedule.map(lesson => lesson.day)
-              : location.includes('dekids')
-              ? timetable
-                  .find(table => table.lang === 'dekids' && table.level === 'a2')
-                  .schedule.map(lesson => lesson.day)
-              : location.includes('a2free')
-              ? timetable
-                  .find(table => table.lang === 'en' && table.level === 'a2')
-                  .schedule.map(lesson => lesson.day)
-              : location.includes('a1free')
-              ? timetable
-                  .find(table => table.lang === 'en' && table.level === 'a1')
-                  .schedule.map(lesson => lesson.day)
-              : timetable
-                  .find(table => table.lang === 'en' && table.level === 'a1')
-                  .schedule.map(lesson => lesson.day)
-          }
+          personalLessonsDays={timetable.map(lesson => lesson.day)}
           isMultipleLanguages={isMultipleLanguages}
         />
       )}
