@@ -535,6 +535,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 90%;
   gap: 20px;
   padding: 20px;
   background-color: #f9f9f9;
@@ -606,6 +607,7 @@ export const RoomListContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 2rem;
+  overflow: auto;
 `;
 
 export const RoomList = styled.ul`
