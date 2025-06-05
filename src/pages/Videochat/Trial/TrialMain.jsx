@@ -1,15 +1,32 @@
 import { nanoid } from 'nanoid';
 import { useEffect, useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { isRoomAdmin } from '../utils/api/isRoomAdmin';
 import Login from './Login';
 import Room from './Room';
 
 function TrialMain() {
   const { id: roomID } = useParams();
+  const location = useLocation();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isUserLogined, setIsUserLogined] = useState(false);
-  const lang = roomID === '8f1364fe-9f59-4408-ba81-417a6a45ac5b' ? 'pl' : 'ua';
+
+  const determineLang = path => {
+    if (roomID === '8f1364fe-9f59-4408-ba81-417a6a45ac5b') {
+      return 'pl';
+    }
+
+    const match = path.match(/^\/room\/[^/]+\/([^/]+)\//);
+    const roomtype = match?.[1];
+
+    if (roomtype === 'polskia0_3') {
+      return 'pl';
+    }
+
+    return 'ua';
+  };
+
+  const lang = determineLang(location.pathname);
 
   const fetchRole = useCallback(async () => {
     const isAdmin = await isRoomAdmin(roomID);

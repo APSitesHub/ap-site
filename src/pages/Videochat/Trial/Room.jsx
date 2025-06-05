@@ -430,9 +430,12 @@ function Room({ isAdmin, lang }) {
                   preCallTestICEUrl: '',
                 },
                 readOnlyName: true,
-                defaultLanguage: supportedLanguages.includes(browserLanguage)
-                  ? browserLanguage
-                  : 'en',
+                defaultLanguage:
+                  lang === 'pl'
+                    ? 'pl'
+                    : supportedLanguages.includes(browserLanguage)
+                    ? browserLanguage
+                    : 'en',
                 toolbarButtons: [
                   'camera',
                   // 'chat',
