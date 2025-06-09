@@ -33,6 +33,7 @@ import {
   SupportPointer,
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
+import { StudentFeedback } from 'components/Stream/StudentInput/StudentFeedback';
 
 const StreamA0 = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -52,7 +53,10 @@ const StreamA0 = () => {
   const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
   const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
+  const [isQuizFeedbackOpen, setIsQuizFeedbackOpen] = useState(false);
+
   const questionID = useRef('');
+  const feedbackID = useRef('');
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
@@ -90,6 +94,9 @@ const StreamA0 = () => {
   };
   const toggleQuizTrueFalse = () => {
     setIsQuizTrueFalseOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
+  };
+  const toggleQuizFeedback = () => {
+    setIsQuizFeedbackOpen(isQuizTrueFalseOpen => !isQuizTrueFalseOpen);
   };
 
   const videoBoxWidth =
@@ -208,6 +215,15 @@ const StreamA0 = () => {
         setIsQuizTrueFalseOpen(true);
       }
     });
+    socketRef.current.on('question:feedback', data => {
+      console.log(data);
+
+      if (data.page === room.replace('/streams/', '')) {
+        setIsQuizFeedbackOpen(true);
+        questionID.current = data.question;
+        feedbackID.current = data.feedbackId;
+      }
+    });
 
     // close quizzes on event
     socketRef.current.on('question:closeInput', data => {
@@ -218,6 +234,10 @@ const StreamA0 = () => {
     });
     socketRef.current.on('question:closeTrueFalse', data => {
       data.page === room.replace('/streams/', '') && setIsQuizTrueFalseOpen(false);
+    });
+    socketRef.current.on('question:closeFeedback', data => {
+      console.log(data);
+      data.page === room.replace('/streams/', '') && setIsQuizFeedbackOpen(false);
     });
 
     window.addEventListener('beforeunload', handleDisconnect);
@@ -390,6 +410,16 @@ const StreamA0 = () => {
               currentUser={currentUser}
               user={user}
               questionID={questionID.current}
+            />
+            <StudentFeedback
+              isInputOpen={isQuizFeedbackOpen}
+              socket={socketRef.current}
+              toggleQuiz={toggleQuizFeedback}
+              page={room.replace('/streams/', '')}
+              currentUser={currentUser}
+              user={user}
+              questionID={questionID.current}
+              feedbackID={feedbackID.current}
             />
           </StreamSection>
           {width >= height && (
