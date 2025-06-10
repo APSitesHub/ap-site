@@ -73,6 +73,7 @@ import { PolskiKidsA2KahootForm } from '../KahootAdminPanel/PolskiKidsA2KahootFo
 import { PolskiKidsFreeKahootForm } from '../KahootAdminPanel/PolskiKidsFreeKahootForm';
 import { PolskiKidsKahootForm } from '../KahootAdminPanel/PolskiKidsKahootForm';
 import { PreschoolEdKahootForm } from '../KahootAdminPanel/PreschoolEdKahootForm';
+import { ShvetsKahootForm } from '../KahootAdminPanel/ShvetsKahootForm';
 import { TestKahootForm } from '../KahootAdminPanel/TestKahootForm';
 import { TrendetsKahootForm } from '../KahootAdminPanel/TrendetsKahootForm';
 import { TrialsDeKahootForm } from '../KahootAdminPanel/TrialsDeKahootForm';
@@ -288,6 +289,7 @@ export const HostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('heinz')}>Хайнц</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('doloka')}>Долока</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('lyasota')}>Лясота</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('shvets')}>Швець</KahootLvlBtn>
           </KahootLvlBtnBox>
         )}
         <KahootFormBox>
@@ -413,6 +415,7 @@ export const HostKahootAdminPanel = () => {
           {levels.includes('heinz') && <HeinzKahootForm destination={destination} />}
           {levels.includes('doloka') && <DolokaKahootForm destination={destination} />}
           {levels.includes('lyasota') && <LyasotaKahootForm destination={destination} />}
+          {levels.includes('shvets') && <ShvetsKahootForm destination={destination} />}
         </KahootFormBox>
         {isLoading && <Loader />}
       </HostAdminPanelSection>
