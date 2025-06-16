@@ -710,6 +710,32 @@ const TimeTableAdminPanel = () => {
     );
   };
 
+  const handleTimetableDelete = async id => {
+    setIsLoading(isLoading => (isLoading = true));
+    const timetableToDelete = lessons.find(timetable => timetable._id === id);
+    const areYouSure = window.confirm(
+      `Точно видалити ${timetableToDelete.lang.toUpperCase()} ${timetableToDelete.level.toUpperCase()} ${
+        timetableToDelete.course
+      }?`
+    );
+
+    if (!areYouSure) {
+      setIsLoading(isLoading => (isLoading = false));
+      return;
+    } else {
+      try {
+        const response = await axios.delete(`/timetable/${id}`);
+        console.log(response);
+        alert('Розклад видалено');
+      } catch (error) {
+        console.error(error);
+        alert('Десь якась проблема - роби скрін консолі, відправляй Кирилу');
+      } finally {
+        setIsLoading(isLoading => (isLoading = false));
+      }
+    }
+  };
+
   const handleDelete = async (parentId, scheduleId) => {
     setIsLoading(isLoading => (isLoading = true));
     console.log(parentId);
@@ -894,6 +920,11 @@ const TimeTableAdminPanel = () => {
                     <UserEditButton onClick={() => handleCourseLevelEdit(timetable._id)}>
                       Edit
                     </UserEditButton>
+                    <UserDeleteButton
+                      onClick={() => handleTimetableDelete(timetable._id)}
+                    >
+                      Del
+                    </UserDeleteButton>
                   </ScheduleHeading>
 
                   <ScheduleInfo>

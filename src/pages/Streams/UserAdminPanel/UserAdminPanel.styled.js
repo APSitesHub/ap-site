@@ -189,7 +189,7 @@ export const UserChartButton = styled.button`
 export const UserDeleteButton = styled.button`
   cursor: pointer;
   background-color: transparent;
-  border: 1px solid var(--main-color);
+  border: 1px solid #d40000;
   border-radius: 5px;
 `;
 
@@ -198,7 +198,7 @@ export const UserBanButton = styled(UserDeleteButton)`
     border-color: #023020;
   }
   &.not_banned {
-    border-color: #8b0000;
+    border-color: #d40000;
   }
 `;
 
