@@ -388,6 +388,11 @@ const SpeakingAdminPanel = lazy(() =>
     /* webpackChunkName: "Speaking Admin Panel page" */ '../pages/Streams/AdminPanel/SpeakingAdminPanel'
   )
 );
+const WebinarsRatings = lazy(() =>
+  import(
+    /* webpackChunkName: "Webinar Rating Admin page" */ '../pages/Streams/WebinarsRatings'
+  )
+);
 const SpeakingsRatings = lazy(() =>
   import(
     /* webpackChunkName: "Speaking Rating Admin page" */ '../pages/Streams/SpeakingsRatings'
@@ -868,6 +873,7 @@ export const App = () => {
               element={<UniCollectionsAdminPanel />}
               noindex={true}
             />
+            <Route path="ratings" element={<WebinarsRatings />} noindex={true} />
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>
             <Route path="preschool" element={<Preschool />} noindex={true} />

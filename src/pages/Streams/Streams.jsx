@@ -6,7 +6,7 @@ import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
 import { StreamNav } from 'components/Stream/StreamNav/StreamNav';
 import { Formik } from 'formik';
 import { nanoid } from 'nanoid';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -64,6 +64,60 @@ const Streams = () => {
     }
   };
 
+  const wbUserTrack = useCallback(
+    async body => {
+      try {
+        if (!room.match(/sc$/) && body.id) {
+          const wbUser = await axios.get('/webinarusers/', {
+            params: { userId: body.id },
+          });
+          const visitDate = `${new Date().toLocaleDateString('uk-UA')}`;
+          const visitTimeDate = `${new Date().toISOString()}`;
+          const wbUserToSaveOrUpdate = {
+            userId: body.id,
+            name: body.name,
+            mail: body.mail,
+            crmId: body.crmId,
+            contactId: body.contactId,
+            lang: body.lang,
+            knowledge: body.knowledge,
+            course: body.course,
+            package: body.package,
+          };
+          const existingUser = wbUser?.data;
+          if (existingUser) {
+            await axios.put(`/webinarusers/${existingUser._id}`, {
+              ...wbUserToSaveOrUpdate,
+              visited: existingUser.visited.includes(visitDate)
+                ? existingUser.visited
+                : existingUser.visited.length === 365
+                ? existingUser.visited.shift() && [...existingUser.visited, visitDate]
+                : [...existingUser.visited, visitDate],
+              visitedTime: existingUser.visitedTime.includes(visitTimeDate)
+                ? existingUser.visitedTime
+                : existingUser.visitedTime.length === 365
+                ? existingUser.visitedTime.shift() && [
+                    ...existingUser.visitedTime,
+                    visitTimeDate,
+                  ]
+                : [...existingUser.visitedTime, visitTimeDate],
+            });
+          } else {
+            await axios.post(`/webinarusers/new`, {
+              ...wbUserToSaveOrUpdate,
+              visited: [visitDate],
+              visitedTime: [visitTimeDate],
+            });
+          }
+        }
+      } catch (error) {
+        console.error('WbUser Error');
+        console.error(error);
+      }
+    },
+    [room]
+  );
+
   const initialLoginValues = {
     mail: '',
     password: '',
@@ -96,6 +150,7 @@ const Streams = () => {
       const response = await axios.post('/users/login', values);
       console.log(values);
       console.log(response);
+      await wbUserTrack(response.data.user);
       setAuthToken(response.data.token);
       setIsUserLogged(isLogged => (isLogged = true));
       setCurrentUser(currentUser => (currentUser = response.data.user));
@@ -154,6 +209,7 @@ const Streams = () => {
           'https://ap-server-8qi1.onrender.com/users/refresh',
           { mail: localStorage.getItem('mail') }
         );
+        await wbUserTrack(res.data.user);
         setUser(user => (user = res.data.user));
         setIsUserLogged(isLogged => (isLogged = true));
         const id = nanoid(8);
@@ -183,7 +239,7 @@ const Streams = () => {
       }
     };
     room.includes('free') && refreshTrialToken();
-  }, [room]);
+  }, [room, wbUserTrack]);
 
   useEffect(() => {
     detectUser();
