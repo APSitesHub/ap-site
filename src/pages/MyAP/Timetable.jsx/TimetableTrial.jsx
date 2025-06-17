@@ -22,7 +22,9 @@ import {
 } from './Timetable.styled';
 
 export const TimetableTrial = ({ user, language, timetable, isMultipleLanguages }) => {
-  console.log(25, timetable);
+  const personalTimetable = timetable.find(
+    timeline => timeline.lang === language && timeline.level === 'b1'
+  );
 
   const getLink = () => {
     const baseStreamUrl = 'https://academy.ap.education/streams/';
@@ -40,7 +42,7 @@ export const TimetableTrial = ({ user, language, timetable, isMultipleLanguages 
         <CalendarIcon />
         Розклад занять
       </TimetableHeading>
-      {!timetable ? (
+      {!personalTimetable ? (
         <PointsPlaceHolder>
           <EyesEmoji src={eyesImg} alt="Eyes emoji" width="80" />
           <PointsPlaceHolderText>
@@ -69,7 +71,8 @@ export const TimetableTrial = ({ user, language, timetable, isMultipleLanguages 
                 </tr>
               </thead>
               <tbody>
-                {timetable.schedule
+                {personalTimetable.schedule
+                  .filter(lesson => lesson.type !== 'speaking')
                   .sort((a, b) => a.day - b.day)
                   .map((lesson, i) => (
                     <TimetableDaysItem
@@ -114,7 +117,7 @@ export const TimetableTrial = ({ user, language, timetable, isMultipleLanguages 
                 </tr>
               </thead>
               <tbody>
-                {timetable.schedule
+                {personalTimetable.schedule
                   .filter(lesson => lesson.type === 'speaking')
                   .sort((a, b) => a.day - b.day)
                   .map((lesson, i) => (

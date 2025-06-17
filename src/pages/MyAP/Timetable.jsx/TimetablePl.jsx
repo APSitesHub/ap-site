@@ -9,6 +9,8 @@ import {
 import {
   TimetableBody,
   TimetableBox,
+  TimetableChangeCourseBtn,
+  TimetableChangeCourseBtnText,
   TimetableDaysCell,
   TimetableDaysItem,
   TimetableHead,
@@ -48,9 +50,9 @@ export const TimetablePl = ({ user, language, timetable, isMultipleLanguages }) 
       <TimetableHeading>
         <CalendarIcon />
         Harmonogram zajęć
-        {/* <TimetableChangeCourseBtn onClick={changeTimetable}>
+        <TimetableChangeCourseBtn onClick={changeTimetable}>
           <TimetableChangeCourseBtnText>Zmienić kurs</TimetableChangeCourseBtnText>
-        </TimetableChangeCourseBtn> */}
+        </TimetableChangeCourseBtn>
       </TimetableHeading>
       {!timetable ? (
         <PointsPlaceHolder>

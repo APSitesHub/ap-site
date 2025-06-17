@@ -81,6 +81,7 @@ import { TrialsDeKahootForm } from './TrialsDeKahootForm';
 import { TrialsEngKahootForm } from './TrialsEngKahootForm';
 import { TrialsKidsKahootForm } from './TrialsKidsKahootForm';
 import { TrialsPlKahootForm } from './TrialsPlKahootForm';
+import { TsvihunKahootForm } from './TsvihunKahootForm';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -283,6 +284,7 @@ export const KahootAdminPanel = () => {
               Івачевська
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('deineka')}>Дейнека</KahootLvlBtn>
+            <KahootLvlBtn onClick={() => handleBtnClick('tsvihun')}>Цвігун</KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('nakonechna')}>
               Наконечна
             </KahootLvlBtn>
@@ -409,6 +411,7 @@ export const KahootAdminPanel = () => {
             <IvachevskaKahootForm destination={destination} />
           )}
           {levels.includes('deineka') && <DeinekaKahootForm destination={destination} />}
+          {levels.includes('tsvihun') && <TsvihunKahootForm destination={destination} />}
           {levels.includes('nakonechna') && (
             <NakonechnaKahootForm destination={destination} />
           )}

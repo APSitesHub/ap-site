@@ -42,7 +42,7 @@ const TeacherPageIndividual = () => {
   // eslint-disable-next-line
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
-  const location = useLocation().pathname.split('/teacher/')[1];
+  const page = useLocation().pathname.split('/teacher/')[1];
   const [isNameInputOpen, setIsNameInputOpen] = useState(false);
   const [teacherInfo, setTeacherInfo] = useState({});
   const questionID = useRef(nanoid(5));
@@ -63,44 +63,6 @@ const TeacherPageIndividual = () => {
         (teacherInfo = { ...{ name: nameValue, lesson: lessonValue, level: levelValue } })
     );
   };
-
-  const getLocation = location => {
-    switch (location) {
-      case 'deutsch-a0':
-        return 'deutscha0';
-      case 'deutsch-a0_2':
-        return 'deutscha0_2';
-      case 'deutsch-a1':
-        return 'deutsch';
-      case 'deutsch-a1free':
-        return 'deutschfree';
-      case 'deutsch-a2':
-        return 'deutscha2';
-      case 'deutsch-a2free':
-        return 'deutscha2free';
-      case 'deutsch-b1':
-        return 'deutschb1';
-      case 'deutsch-b2':
-        return 'deutschb2';
-      case 'polski-a0':
-        return 'polskia0';
-      case 'polski-a0_2':
-        return 'polskia0_2';
-      case 'polski-a1':
-        return 'polski';
-      case 'polski-a1free':
-        return 'polskifree';
-      case 'polski-a2':
-        return 'polskia2';
-      case 'polski-b1':
-        return 'polskib1';
-      case 'polski-b2':
-        return 'polskib2';
-      default:
-        return location;
-    }
-  };
-  const page = getLocation(location);
 
   useEffect(() => {
     document.title = `Teacher ${

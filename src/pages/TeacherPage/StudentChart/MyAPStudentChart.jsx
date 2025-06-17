@@ -1,5 +1,12 @@
 import { ResponsiveRadar } from '@nivo/radar';
 import axios from 'axios';
+import {
+  EyesEmoji,
+  PointsPlaceHolder,
+  PointsPlaceHolderText,
+} from 'pages/MyAP/Points/Points.styled';
+import { useState } from 'react';
+import eyesImg from '../../../img/quiz/eyes.png';
 import { EditFormHeader } from '../TeacherPage.styled';
 import {
   ChartAreaMyAPLimiter,
@@ -11,7 +18,6 @@ import {
   NextFeedbackButton,
   PreviousFeedbackButton,
 } from './StudentChart.styled';
-import { useState } from 'react';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const regex = /\d{2}\.\d{2}\.\d{4}, \d{2}:\d{2}:\d{2}:/g;
@@ -92,47 +98,60 @@ export const MyAPStudentChart = ({ currentStudentChart }) => {
   return (
     <>
       <MyAPStudentChartArea>
-        <EditFormHeader id="focus">{currentStudentChart.name}</EditFormHeader>
-        <FeedbackButtonsBox>
-          <FeedbackButton
-            onClick={getPreviousFeedback}
-            disabled={feedbackIndex === 0}
-            className="prev"
-          >
-            <PreviousFeedbackButton />
-          </FeedbackButton>
-          <FeedbackButton
-            onClick={getNextFeedback}
-            disabled={feedbackIndex === currentStudentChart.feedback.length - 1}
-            className="next"
-          >
-            <NextFeedbackButton />
-          </FeedbackButton>
-        </FeedbackButtonsBox>
-        <FeedbackText
-          dangerouslySetInnerHTML={{
-            __html:
-              typeof currentStudentChart.feedback[feedbackIndex] === 'string'
-                ? currentStudentChart.feedback[feedbackIndex]
-                    .replace(
-                      linksRegex,
-                      match =>
-                        `<a href="${match}" target="_blank">${
-                          match.length > 50 ? match.slice(0, 50) + '...' : match
-                        }</a>`
-                    )
-                    .replace(regex, '')
-                    .trim()
-                    .split(' ')
-                    .slice(1)
-                    .join(' ')
-                : '',
-          }}
-        ></FeedbackText>
-        <ChartAreaMyAPLimiter id="chartlimiter">
-          <MyAPGradientBg id="chartbg" />
-          <MyResponsiveRadar data={data}></MyResponsiveRadar>
-        </ChartAreaMyAPLimiter>
+        {!currentStudentChart.feedback.length ? (
+          <PointsPlaceHolder>
+            <EyesEmoji src={eyesImg} alt="Eyes emoji" width="80" />
+            <PointsPlaceHolderText>Схоже, поки що відгуків немає.</PointsPlaceHolderText>
+            <PointsPlaceHolderText>
+              Ваш перший відгук залишить вам викладач після практичного заняття.
+            </PointsPlaceHolderText>
+            <PointsPlaceHolderText>Бажаємо успіху!</PointsPlaceHolderText>
+          </PointsPlaceHolder>
+        ) : (
+          <>
+            <EditFormHeader id="focus">{currentStudentChart.name}</EditFormHeader>
+            <FeedbackButtonsBox>
+              <FeedbackButton
+                onClick={getPreviousFeedback}
+                disabled={feedbackIndex === 0}
+                className="prev"
+              >
+                <PreviousFeedbackButton />
+              </FeedbackButton>
+              <FeedbackButton
+                onClick={getNextFeedback}
+                disabled={feedbackIndex === currentStudentChart.feedback.length - 1}
+                className="next"
+              >
+                <NextFeedbackButton />
+              </FeedbackButton>
+            </FeedbackButtonsBox>
+            <FeedbackText
+              dangerouslySetInnerHTML={{
+                __html:
+                  typeof currentStudentChart.feedback[feedbackIndex] === 'string'
+                    ? currentStudentChart.feedback[feedbackIndex]
+                        .replace(
+                          linksRegex,
+                          match =>
+                            `<a href="${match}" target="_blank">${
+                              match.length > 50 ? match.slice(0, 50) + '...' : match
+                            }</a>`
+                        )
+                        .replace(regex, '')
+                        .trim()
+                        .split(' ')
+                        .slice(1)
+                        .join(' ')
+                    : '',
+              }}
+            ></FeedbackText>
+            <ChartAreaMyAPLimiter id="chartlimiter">
+              <MyAPGradientBg id="chartbg" />
+              <MyResponsiveRadar data={data}></MyResponsiveRadar>
+            </ChartAreaMyAPLimiter>
+          </>
+        )}
       </MyAPStudentChartArea>
     </>
   );

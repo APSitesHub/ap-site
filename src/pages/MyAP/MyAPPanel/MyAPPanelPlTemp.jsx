@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { MyAPStudentChartPl } from 'pages/TeacherPage/StudentChart/MyAPStudentChartPl';
+import { MyAPStudentChartTrial } from 'pages/TeacherPage/StudentChart/MyAPStudentChartTrial';
 import { useEffect, useState } from 'react';
-import { AttendanceTrialPl } from '../Attendance/AttendanceTrialPl';
-import { LessonFinderPl } from '../LessonFinder/LessonFinderPl';
-import { PointsPl } from '../Points/PointsPl';
-import { TimetablePl } from '../Timetable.jsx/TimetablePl';
+import { AttendanceTrial } from '../Attendance/AttendanceTrial';
+import { LessonFinderTrial } from '../LessonFinder/LessonFinderTrial';
+import { PointsTrial } from '../Points/PointsTrial';
+import { TimetableTrial } from '../Timetable.jsx/TimetableTrial';
 import {
   APPanelBtn,
   APPanelTrial,
@@ -40,10 +40,6 @@ export const MyAPPanelPlTemp = ({
   const [isFeedbackShown, setIsFeedbackShown] = useState(false);
   const [isButtonBoxShown, setIsButtonBoxShown] = useState(true);
   const [currentStudentChart, setCurrentStudentChart] = useState({});
-  // const [isDisclaimerTimeoutActive, setIsDisclaimerTimeoutActive] =
-  //   useState(false);
-  // const [isMarathonBtnShown, setIsMarathonBtnShown] = useState(false);
-  // const [isMarathonBtnClicked, setIsMarathonBtnClicked] = useState(false);
 
   const toggleButtonBox = () => {
     hideBackdrop();
@@ -150,47 +146,8 @@ export const MyAPPanelPlTemp = ({
   };
 
   const toggleTooltip = e => {
-    // !isDisclaimerTimeoutActive &&
     e.currentTarget.classList.toggle('tooltip-open');
   };
-
-  // const toggleTooltipTimeout = () => {
-  //   const resetBtnEl = document.querySelector('#reset-btn');
-
-  //   if (isDisclaimerTimeoutActive) {
-  //     setTimeout(() => {
-  //       resetBtnEl.classList.add('tooltip-open');
-  //     }, 10000);
-
-  //     setTimeout(() => {
-  //       resetBtnEl.classList.remove('tooltip-open');
-  //       setIsDisclaimerTimeoutActive(false);
-  //     }, 20000);
-  //   }
-  // };
-
-  // const toggleLangTooltipTimeout = () => {
-  //   const resetBtnEl = document.querySelector('#toggle-btn');
-
-  //   if (isDisclaimerTimeoutActive) {
-  //     setTimeout(() => {
-  //       resetBtnEl.classList.add('tooltip-open');
-  //     }, 10000);
-
-  //     setTimeout(() => {
-  //       resetBtnEl.classList.remove('tooltip-open');
-  //       setIsDisclaimerTimeoutActive(false);
-  //     }, 20000);
-  //   }
-  // };
-
-  // const toggleMarathonButtonTimeout = () => {
-  //   if (!isMarathonBtnClicked) {
-  //     setTimeout(() => {
-  //       setIsMarathonBtnShown(true);
-  //     }, 15000);
-  //   }
-  // };
 
   useEffect(() => {
     const onEscapeClose = event => {
@@ -207,14 +164,9 @@ export const MyAPPanelPlTemp = ({
         console.log('eff');
       } catch (error) {
         console.log(error);
-      } finally {
-        // setIsLoading(isLoading => (isLoading = false));
       }
     };
     getLastFeedback();
-    // toggleTooltipTimeout();
-    // toggleLangTooltipTimeout();
-    // toggleMarathonButtonTimeout();
 
     window.addEventListener('keydown', onEscapeClose);
 
@@ -229,58 +181,10 @@ export const MyAPPanelPlTemp = ({
         onClick={hideBackdrop}
         className={isBackdropShown ? '' : 'hidden'}
       />
-      {/* <PlatformDataConcealer /> */}
       <PanelHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxShown ? <PanelHideRightSwitch /> : <PanelHideLeftSwitch />}
       </PanelHideSwitch>
-      {/* {isMarathonBtnShown && (
-        <IframeMarathonLinkPanel>
-          <IframeMarathonText>
-            <IframeMarathonPointerText>
-              Натисніть на цю кнопку, щоб перейти до марафону
-            </IframeMarathonPointerText>
-            <IframeMarathonPointerLinkIcon />
-          </IframeMarathonText>
-          <APPanelMarathonBtn
-            id="marathon-btn"
-            onClick={() => {
-              setIsMarathonBtnShown(false);
-              setIsMarathonBtnClicked(true);
-              setPlatformIframeLink(marathonLink + ' ');
-            }}
-          >
-            <APPanelMarathonBtnText>МАРАФОН</APPanelMarathonBtnText>
-          </APPanelMarathonBtn>
-        </IframeMarathonLinkPanel>
-      )} */}
       <APPanelTrial className={isButtonBoxShown ? '' : 'hidden'}>
-        {/* {isMultipleLanguages && (
-          <IframeResetLinkButton className={isMultipleLanguages ? 'multiple' : ''}>
-            <APPanelToggleBtn
-              id="toggle-btn"
-              onMouseEnter={e => toggleTooltip(e)}
-              onMouseOut={e => toggleTooltip(e)}
-              onClick={() => {
-                console.log(link);
-                setLanguage(
-                  language =>
-                    (language =
-                      languageIndex + 1 < user.lang.split('/').length
-                        ? user.lang.split('/')[languageIndex + 1]
-                        : user.lang.split('/')[0])
-                );
-                setLanguageIndex(
-                  index =>
-                    (index = index + 1 < user.lang.split('/').length ? index + 1 : 0)
-                );
-              }}
-            >
-              <LangIcon
-                src={language.includes('de') ? de : language.includes('pl') ? pl : en}
-              />
-            </APPanelToggleBtn>
-          </IframeResetLinkButton>)} 
-        */}
         <APPanelBtn
           onClick={toggleSearch}
           onMouseEnter={e => toggleTooltip(e)}
@@ -334,7 +238,7 @@ export const MyAPPanelPlTemp = ({
         </APPanelInstructionsPanel> */}
       </APPanelTrial>
       {isLessonFinderShown && (
-        <LessonFinderPl
+        <LessonFinderTrial
           lessons={lessons}
           user={user}
           language={language}
@@ -343,7 +247,7 @@ export const MyAPPanelPlTemp = ({
         />
       )}
       {isRatingShown && (
-        <PointsPl
+        <PointsTrial
           user={user}
           flatPoints={points}
           flatMonthlyPoints={montlyPoints}
@@ -352,7 +256,7 @@ export const MyAPPanelPlTemp = ({
       )}
       {console.log(353, timetable)}
       {isCalendarShown && (
-        <AttendanceTrialPl
+        <AttendanceTrial
           user={user}
           personalLessonsDays={
             location.includes('polski')
@@ -387,13 +291,13 @@ export const MyAPPanelPlTemp = ({
         />
       )}
       {isFeedbackShown && (
-        <MyAPStudentChartPl
+        <MyAPStudentChartTrial
           currentStudentChart={currentStudentChart}
           location={location}
         />
       )}
       {isTimetableShown && (
-        <TimetablePl
+        <TimetableTrial
           user={user}
           language={language}
           timetable={timetable}

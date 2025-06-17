@@ -781,6 +781,7 @@ export const App = () => {
             <Route path="doloka-chat" element={<WindowedChat />} noindex={true} />
             <Route path="lyasota-chat" element={<WindowedChat />} noindex={true} />
             <Route path="shvets-chat" element={<WindowedChat />} noindex={true} />
+            <Route path="tsvihun-chat" element={<WindowedChat />} noindex={true} />
             <Route path="stream-admin-panel" element={<AdminPanel />} noindex={true} />
             <Route
               path="uni-stream-admin-panel"
@@ -1117,6 +1118,7 @@ export const App = () => {
             <Route path="bulavka" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="ivachevska" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="deineka" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="tsvihun" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="nakonechna" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="heinz" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="doloka" element={<TeacherPageIndividual />} noindex={true} />
