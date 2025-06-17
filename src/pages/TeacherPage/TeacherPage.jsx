@@ -62,6 +62,7 @@ const TeacherPage = () => {
       teacherInfo =>
         (teacherInfo = { ...{ name: nameValue, lesson: lessonValue, level: levelValue } })
     );
+    setIsNameInputOpen(isOpen => (isOpen = false));
   };
 
   const getLocation = location => {

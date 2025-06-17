@@ -22,10 +22,22 @@ export const NameInputBox = styled(TeacherButtonBox)`
   left: 50%;
   right: unset;
   bottom: unset;
-  transform: translate(-50%, -200px);
+  background-color: black;
+  transform: translate(-50%, 30px);
+
+  z-index: 9;
+
+  background-color: var(--secondary-color);
+  padding: 10px;
+  padding-top: 30px;
+  padding-bottom: 6px;
+  transform: translate(-50%, 0);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.18);
 
   &.hidden {
-    transform: translate(-50%, 30px);
+    transform: translate(-50%, -200px);
   }
 `;
 
@@ -35,7 +47,7 @@ export const TeacherInfoInput = styled.input`
   border: 1.5px solid var(--main-color);
   border-radius: 5px;
 
-outline: transparent;
+  outline: transparent;
 
   font-size: 18px;
 `;
