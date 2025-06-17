@@ -118,6 +118,7 @@ export const WhiteBoard = ({ page, isWhiteBoardOpen, isOpenedLast, sectionWidth 
     doloka: 'https://limnu.com/d/draw.html?b=B_cwRrr1TvRNGFES&',
     lyasota: 'https://limnu.com/d/draw.html?b=B_qRQx5t1SyyzhYf&',
     shvets: 'https://limnu.com/d/draw.html?b=B_qPq6cu5dT0ygVr&',
+    tsvihun: 'https://limnu.com/d/draw.html?b=B_hGfXGmNCQYibK1&',
   };
 
   const supportBoxStylesHandler = () => {

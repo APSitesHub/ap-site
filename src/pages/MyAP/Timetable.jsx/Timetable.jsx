@@ -129,9 +129,9 @@ export const Timetable = ({
               src={language.includes('de') ? de : language.includes('pl') ? pl : en}
             />
             {personalTimetable?.level === 'b2_1' && language === 'de'
-              ? 'B1 ранкові'
+              ? 'B2 ранкові'
               : personalTimetable?.level === 'b2' && language === 'de'
-              ? 'B1 вечірні'
+              ? 'B2 вечірні'
               : personalTimetable?.level}
           </TimetableCourseMemo>
           <TimetableChangeCourseBtn
@@ -169,7 +169,8 @@ export const Timetable = ({
       ) : (
         <>
           <TimetableBody>
-            {!user.package.includes('sc') && (
+            {(!user.package.includes('sc') ||
+              !user.package.includes(`${language}_sc`)) && (
               <TimetableWebinars>
                 <TimetableWebinarsHead>
                   <TimetableLessonType>Теоретичні заняття</TimetableLessonType>
