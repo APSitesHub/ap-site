@@ -81,8 +81,8 @@ export const Timetable = ({
       ? baseKidsStreamUrl + 'high'
       : language === 'enkids'
       ? baseKidsStreamUrl + personalTimetable?.level
-      : language === 'de' && personalTimetable?.level.includes('b1')
-      ? baseStreamUrl + 'deutschb1'
+      : language === 'de' && personalTimetable?.level.includes('b2')
+      ? baseStreamUrl + 'deutschb2'
       : language === 'de' && personalTimetable?.level !== 'a1'
       ? baseStreamUrl + 'deutsch' + personalTimetable?.level
       : language === 'de' && personalTimetable?.level === 'a1'
@@ -128,9 +128,9 @@ export const Timetable = ({
             <LangIcon
               src={language.includes('de') ? de : language.includes('pl') ? pl : en}
             />
-            {personalTimetable?.level === 'b1_1' && language === 'de'
+            {personalTimetable?.level === 'b2_1' && language === 'de'
               ? 'B1 ранкові'
-              : personalTimetable?.level === 'b1' && language === 'de'
+              : personalTimetable?.level === 'b2' && language === 'de'
               ? 'B1 вечірні'
               : personalTimetable?.level}
           </TimetableCourseMemo>

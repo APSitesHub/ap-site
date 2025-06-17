@@ -13,9 +13,21 @@ export const NameInput = ({ isNameInputOpen, changeTeacherInfo }) => {
 
   return (
     <NameInputBox className={isNameInputOpen ? 'shown' : 'hidden'}>
-      <TeacherInfoInput type="text" name="nameValue" placeholder="Ім'я викладача"></TeacherInfoInput>
-      <TeacherInfoInput type="text" name="levelValue" placeholder="Рівень"></TeacherInfoInput>
-      <TeacherInfoInput type="text" name="lessonValue" placeholder="Номер уроку"></TeacherInfoInput>
+      <TeacherInfoInput
+        type="text"
+        name="nameValue"
+        placeholder="Ім'я викладача"
+      ></TeacherInfoInput>
+      <TeacherInfoInput
+        type="text"
+        name="levelValue"
+        placeholder="Рівень"
+      ></TeacherInfoInput>
+      <TeacherInfoInput
+        type="text"
+        name="lessonValue"
+        placeholder="Номер уроку"
+      ></TeacherInfoInput>
       <button onClick={setValuesAndUpdateTeacherInfo}>OK</button>
     </NameInputBox>
   );
