@@ -6,7 +6,7 @@ import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
 import { StreamNavKids } from 'components/Stream/StreamNavKids/StreamNavKids';
 import { Formik } from 'formik';
 import { nanoid } from 'nanoid';
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import {
@@ -41,24 +41,6 @@ const StreamsKids = () => {
     try {
       const wake = await axios.get('/');
       console.log(wake.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const detectUser = async () => {
-    try {
-      const id = localStorage.getItem('userID');
-      const user = await axios.get(`https://ap-chat-server.onrender.com/users/${id}`);
-      console.log(user.data, 'detect');
-      setCurrentUser(
-        currentUser =>
-          (currentUser = user.data || {
-            username: 'User Is Not Logged In',
-            isBanned: false,
-            userIP: 'no ip',
-          })
-      );
     } catch (error) {
       console.log(error);
     }
@@ -239,10 +221,6 @@ const StreamsKids = () => {
     };
     room.includes('free') && refreshTrialToken();
   }, [room, wbUserTrack]);
-
-  useEffect(() => {
-    detectUser();
-  }, [isLoading]);
 
   return (
     <>

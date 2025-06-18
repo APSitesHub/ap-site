@@ -153,7 +153,7 @@ const TeacherPageSpeaking = () => {
         setIsLoading(isLoading => (isLoading = true));
         page === 'kids-c1sc'
           ? (course.current = '10')
-          : page === 'deb1sc'
+          : page === 'deb2sc'
           ? (course.current = '24')
           : (course.current = (await axios.get('/timetable')).data.filter(
               timetable =>
@@ -167,7 +167,7 @@ const TeacherPageSpeaking = () => {
         setUsers(
           users =>
             (users =
-              page === 'deb1sc'
+              page === 'deb2sc'
                 ? [
                     ...usersToSet.data.filter(
                       user =>
@@ -223,7 +223,7 @@ const TeacherPageSpeaking = () => {
         <tbody>
           {users
             .filter(user =>
-              page === 'deb1sc'
+              page === 'deb2sc'
                 ? new Date() -
                     new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
                     4 * 86400000 &&
