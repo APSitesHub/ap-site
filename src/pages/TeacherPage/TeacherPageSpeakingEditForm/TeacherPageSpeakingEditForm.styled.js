@@ -120,6 +120,10 @@ export const LabelDatePickerText = styled(LabelText)`
 
 export const SpeakingSelect = styled(FormSelect)`
   font-size: 16px;
+
+  &.wrong {
+    border: 4px solid red;
+  }
 `;
 
 export const SpeakingFormBtn = styled(FormBtn)`

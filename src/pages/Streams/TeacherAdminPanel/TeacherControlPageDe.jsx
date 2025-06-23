@@ -163,8 +163,10 @@ const TeacherControlPageDe = () => {
                         .filter(user =>
                           user.feedback.some(
                             review =>
-                              review.includes(teacher.name) ||
-                              review.includes(teacher.name.split(' ').reverse().join(' '))
+                              review.text.includes(teacher.name) ||
+                              review.text.includes(
+                                teacher.name.split(' ').reverse().join(' ')
+                              )
                           )
                         )
                         .sort((a, b) => a.name.localeCompare(b.name))
@@ -174,16 +176,18 @@ const TeacherControlPageDe = () => {
                               _id: user._id,
                               name: user.name,
                               feedback: user.feedback.filter(
-                                text =>
-                                  text.includes(teacher.name) ||
-                                  text.includes(
+                                feedbackObj =>
+                                  feedbackObj.text.includes(teacher.name) ||
+                                  feedbackObj.text.includes(
                                     teacher.name.split(' ').reverse().join(' ')
                                   )
                               ),
                             })
                         )
                         .flatMap(user =>
-                          user.feedback.map(feedback => `для ${user.name}) ${feedback}`)
+                          user.feedback.map(
+                            feedbackObj => `для ${user.name}) ${feedbackObj.text}`
+                          )
                         )
                         .sort((a, b) => {
                           const dateA = a.match(regex)?.[0];

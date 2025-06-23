@@ -22,7 +22,7 @@ import {
   UserCell,
   UserDBCaption,
   UserDBRow,
-  UserHeadCell
+  UserHeadCell,
 } from './TeacherAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -140,7 +140,7 @@ const TeacherControlPage = () => {
       setIsLoading(isLoading => (isLoading = true));
       try {
         if (isUserAdmin) {
-          const response = await axios.get('/speakingusers/admin');
+          const response = await axios.get('speakingusers/admin');
           setReviews(reviews => (reviews = [...response.data]));
         }
       } catch (error) {
@@ -204,11 +204,7 @@ const TeacherControlPage = () => {
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -245,7 +241,7 @@ const TeacherControlPage = () => {
               }}
             />
           </DateInputLabel>
-          <SpeakingLabel>            
+          <SpeakingLabel>
             {yearFilter.value && <LabelText>Рік</LabelText>}
             <DateInputSelect
               options={yearOptions}
@@ -298,16 +294,14 @@ const TeacherControlPage = () => {
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((teacher, i) => (
                   <UserDBRow>
-                    <UserCell key={'Тічер' + teacher._id}>
-                      {teacher.name}
-                    </UserCell>
+                    <UserCell key={'Тічер' + teacher._id}>{teacher.name}</UserCell>
                     <UserCell key={`Відгук ${i} ${teacher._id}`}>
                       {reviews
                         .filter(user =>
                           user.feedback.some(
                             review =>
-                              review.includes(teacher.name) ||
-                              review.includes(
+                              review.text.includes(teacher.name) ||
+                              review.text.includes(
                                 teacher.name.split(' ').reverse().join(' ')
                               )
                           )
@@ -318,18 +312,21 @@ const TeacherControlPage = () => {
                             (user = {
                               _id: user._id,
                               name: user.name,
-                              feedback: user.feedback.filter(
-                                text =>
-                                  (text.includes(teacher.name) ||
-                                  text.includes(
-                                    teacher.name.split(' ').reverse().join(' ')
-                                  )) && (text.includes(`${monthFilter}.${yearFilter}`))
+                              feedback: user.feedback.text.filter(
+                                feedbackObj =>
+                                  (feedbackObj.text.includes(teacher.name) ||
+                                    feedbackObj.text.includes(
+                                      teacher.name.split(' ').reverse().join(' ')
+                                    )) &&
+                                  feedbackObj.text.includes(
+                                    `${monthFilter}.${yearFilter}`
+                                  )
                               ),
                             })
                         )
                         .flatMap(user =>
                           user.feedback.map(
-                            feedback => `для ${user.name}) ${feedback}`
+                            feedbackObj => `для ${user.name}) ${feedbackObj.text}`
                           )
                         )
                         .map(text => (

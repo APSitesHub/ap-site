@@ -121,12 +121,13 @@ const TeacherPageSpeaking = () => {
     const userToUpdate = users.find(user => user._id === id);
     userToUpdate.successRate = values.successRate;
     userToUpdate.temperament = values.temperament;
-    userToUpdate.grammar = values.grammar;
-    userToUpdate.lexis = values.lexis;
-    userToUpdate.speaking = values.speaking;
-    userToUpdate.listening = values.listening;
-    userToUpdate.activity = values.activity;
-    userToUpdate.feedback[0] = values.feedback;
+    userToUpdate.feedback[0].grammar = values.feedback.grammar;
+    userToUpdate.feedback[0].lexis = values.feedback.lexis;
+    userToUpdate.feedback[0].speaking = values.feedback.speaking;
+    userToUpdate.feedback[0].listening = values.feedback.listening;
+    userToUpdate.feedback[0].activity = values.feedback.activity;
+    userToUpdate.feedback[0].text = values.feedback.text;
+    userToUpdate.feedback[0].grade = values.feedback.grade;
 
     setUsers(users => (users = [...users.filter(user => user._id !== id), userToUpdate]));
   };
@@ -161,7 +162,7 @@ const TeacherPageSpeaking = () => {
             )[0].course);
 
         const usersToSet = await axios.get(
-          `/speakingusers?course=${course.current}&lang=${lang.current}`
+          `speakingusers?course=${course.current}&lang=${lang.current}`
         );
 
         setUsers(
@@ -217,6 +218,7 @@ const TeacherPageSpeaking = () => {
             <UserHeadCell>Говоріння</UserHeadCell>
             <UserHeadCell>Слухання</UserHeadCell>
             <UserHeadCell>Активність</UserHeadCell>
+            <UserHeadCell>Оцінка</UserHeadCell>
             <UserHeadCell>Фідбек</UserHeadCell>
           </UserDBRow>
         </thead>
@@ -297,55 +299,58 @@ const TeacherPageSpeaking = () => {
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.grammar === 3
+                  {user.feedback[user.feedback.length - 1]?.grammar === 3
                     ? 'Дуже добре'
-                    : user.grammar === 2
+                    : user.feedback[user.feedback.length - 1]?.grammar === 2
                     ? 'Добре'
-                    : user.grammar === 1
+                    : user.feedback[user.feedback.length - 1]?.grammar === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.lexis === 3
+                  {user.feedback[user.feedback.length - 1]?.lexis === 3
                     ? 'Дуже добре'
-                    : user.lexis === 2
+                    : user.feedback[user.feedback.length - 1]?.lexis === 2
                     ? 'Добре'
-                    : user.lexis === 1
+                    : user.feedback[user.feedback.length - 1]?.lexis === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.speaking === 3
+                  {user.feedback[user.feedback.length - 1]?.speaking === 3
                     ? 'Дуже добре'
-                    : user.speaking === 2
+                    : user.feedback[user.feedback.length - 1]?.speaking === 2
                     ? 'Добре'
-                    : user.speaking === 1
+                    : user.feedback[user.feedback.length - 1]?.speaking === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.listening === 3
+                  {user.feedback[user.feedback.length - 1]?.listening === 3
                     ? 'Дуже добре'
-                    : user.listening === 2
+                    : user.feedback[user.feedback.length - 1]?.listening === 2
                     ? 'Добре'
-                    : user.listening === 1
+                    : user.feedback[user.feedback.length - 1]?.listening === 1
                     ? 'Потребує покращення'
                     : ''}
                 </UserCell>
                 <UserCell>
-                  {user.activity === 3
+                  {user.feedback[user.feedback.length - 1]?.activity === 3
                     ? 'Дуже добре'
-                    : user.activity === 2
+                    : user.feedback[user.feedback.length - 1]?.activity === 2
                     ? 'Добре'
-                    : user.activity === 1
+                    : user.feedback[user.feedback.length - 1]?.activity === 1
                     ? 'Потребує покращення'
                     : ''}
+                </UserCell>
+                <UserCell>
+                  {user.feedback[user.feedback.length - 1]?.grade || ''}
                 </UserCell>
                 <UserCellLeft
                   dangerouslySetInnerHTML={{
                     __html:
-                      typeof user.feedback[user.feedback.length - 1] === 'string'
-                        ? user.feedback[user.feedback.length - 1]
+                      typeof user.feedback[user.feedback.length - 1]?.text === 'string'
+                        ? user.feedback[user.feedback.length - 1]?.text
                             .replace(
                               linksRegex,
                               match =>

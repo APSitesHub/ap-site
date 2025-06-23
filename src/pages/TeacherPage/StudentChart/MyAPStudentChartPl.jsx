@@ -16,20 +16,28 @@ export const MyAPStudentChartPl = ({ currentStudentChart }) => {
   const data = [
     {
       area: 'Aktywność',
-      [currentStudentChart.name]: currentStudentChart.activity,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.activity || currentStudentChart.activity || 0,
     },
     {
       area: 'Gramatyka',
-      [currentStudentChart.name]: currentStudentChart.grammar,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.grammar || currentStudentChart.grammar || 0,
     },
     {
       area: 'Mówienie',
-      [currentStudentChart.name]: currentStudentChart.speaking,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.speaking || currentStudentChart.speaking || 0,
     },
-    { area: 'Słownictwo', [currentStudentChart.name]: currentStudentChart.lexis },
+    {
+      area: 'Słownictwo',
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.lexis || currentStudentChart.lexis || 0,
+    },
     {
       area: 'Słuchanie',
-      [currentStudentChart.name]: currentStudentChart.listening,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.listening || currentStudentChart.listening || 0,
     },
   ];
 
@@ -80,9 +88,11 @@ export const MyAPStudentChartPl = ({ currentStudentChart }) => {
           dangerouslySetInnerHTML={{
             __html:
               typeof currentStudentChart.feedback[
-                currentStudentChart.feedback.length - 1
-              ] === 'string'
-                ? currentStudentChart.feedback[currentStudentChart.feedback.length - 1]
+                currentStudentChart.feedback?.length - 1
+              ].text === 'string'
+                ? currentStudentChart.feedback[
+                    currentStudentChart.feedback?.length - 1
+                  ].text
                     .replace(
                       linksRegex,
                       match =>

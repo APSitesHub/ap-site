@@ -1,30 +1,35 @@
 import { ResponsiveRadar } from '@nivo/radar';
-import axios from 'axios';
 import { EditFormHeader } from '../TeacherPage.styled';
 import { GradientBg, StudentChartArea } from './StudentChart.styled';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
-
 export const StudentChart = ({ currentStudentChart }) => {
   const data = [
     {
       area: 'Активність',
-      [currentStudentChart.name]: currentStudentChart.activity,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.activity || currentStudentChart.activity || 0,
     },
     {
       area: 'Граматика',
-      [currentStudentChart.name]: currentStudentChart.grammar,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.grammar || currentStudentChart.grammar || 0,
     },
     {
       area: 'Говоріння',
-      [currentStudentChart.name]: currentStudentChart.speaking,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.speaking || currentStudentChart.speaking || 0,
     },
-    { area: 'Лексика', [currentStudentChart.name]: currentStudentChart.lexis },
+    {
+      area: 'Лексика',
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.lexis || currentStudentChart.lexis || 0,
+    },
     {
       area: 'Слухання',
-      [currentStudentChart.name]: currentStudentChart.listening,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.listening || currentStudentChart.listening || 0,
     },
   ];
 

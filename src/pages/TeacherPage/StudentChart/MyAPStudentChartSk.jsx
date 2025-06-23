@@ -16,20 +16,28 @@ export const MyAPStudentChartSk = ({ currentStudentChart }) => {
   const data = [
     {
       area: 'Aktivita',
-      [currentStudentChart.name]: currentStudentChart.activity,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.activity || currentStudentChart.activity || 0,
     },
     {
       area: 'Gramatika',
-      [currentStudentChart.name]: currentStudentChart.grammar,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.grammar || currentStudentChart.grammar || 0,
     },
     {
       area: 'Hovorenie',
-      [currentStudentChart.name]: currentStudentChart.speaking,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.speaking || currentStudentChart.speaking || 0,
     },
-    { area: 'Slovník', [currentStudentChart.name]: currentStudentChart.lexis },
+    {
+      area: 'Slovník',
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.lexis || currentStudentChart.lexis || 0,
+    },
     {
       area: 'Počúvanie',
-      [currentStudentChart.name]: currentStudentChart.listening,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.listening || currentStudentChart.listening || 0,
     },
   ];
 
@@ -77,26 +85,26 @@ export const MyAPStudentChartSk = ({ currentStudentChart }) => {
       <MyAPStudentChartArea>
         <EditFormHeader id="focus">Študent</EditFormHeader>
         <FeedbackText
-          // dangerouslySetInnerHTML={{
-          //   __html:
-          //     typeof currentStudentChart.feedback[
-          //       currentStudentChart.feedback.length - 1
-          //     ] === 'string'
-          //       ? currentStudentChart.feedback[currentStudentChart.feedback.length - 1]
-          //           .replace(
-          //             linksRegex,
-          //             match =>
-          //               `<a href="${match}" target="_blank">${
-          //                 match.length > 50 ? match.slice(0, 50) + '...' : match
-          //               }</a>`
-          //           )
-          //           .replace(regex, '')
-          //           .trim()
-          //           .split(' ')
-          //           .slice(1)
-          //           .join(' ')
-          //       : '',
-          // }}
+        // dangerouslySetInnerHTML={{
+        //   __html:
+        //     typeof currentStudentChart.feedback[
+        //       currentStudentChart.feedback.length - 1
+        //     ] === 'string'
+        //       ? currentStudentChart.feedback[currentStudentChart.feedback.length - 1]
+        //           .replace(
+        //             linksRegex,
+        //             match =>
+        //               `<a href="${match}" target="_blank">${
+        //                 match.length > 50 ? match.slice(0, 50) + '...' : match
+        //               }</a>`
+        //           )
+        //           .replace(regex, '')
+        //           .trim()
+        //           .split(' ')
+        //           .slice(1)
+        //           .join(' ')
+        //       : '',
+        // }}
         >
           Solomiia zanecháva tvoj názor: Študent dobre pochopil tému. Naučil sa všetky
           slová súvisiace s témou. Kľudne zvláda tvorenie viet. Odporúčam však ešte raz
