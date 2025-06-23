@@ -30,6 +30,7 @@
     "logrocket": "^9.0.2",
     "modern-normalize": "^2.0.0",
     "nanoid": "^5.0.4",
+    "qrcode.react": "^4.2.0",
     "react": "^18.1.0",
     "react-cookie-consent": "^8.0.1",
     "react-datepicker": "^7.5.0",

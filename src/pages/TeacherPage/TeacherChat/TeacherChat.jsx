@@ -48,7 +48,9 @@ export const TeacherChat = ({ page }) => {
       ? '/streams-kids/' + page.split('kids')[0]
       : page.includes('trendets') || page.includes('preschool')
       ? '/streams-kids/' + page
-      : page.includes('wstijo') || page.includes('pedagogium')
+      : page.includes('wstijo') ||
+        page.includes('pedagogium') ||
+        page.includes('logistics')
       ? page
       : '/streams/' + page;
 
