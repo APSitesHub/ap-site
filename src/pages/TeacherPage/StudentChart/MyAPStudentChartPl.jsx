@@ -90,7 +90,7 @@ export const MyAPStudentChartPl = ({ currentStudentChart }) => {
               typeof currentStudentChart.feedback?.[
                 currentStudentChart.feedback?.length - 1
               ].text === 'string'
-                ? currentStudentChart.feedback[
+                ? currentStudentChart.feedback?.[
                     currentStudentChart.feedback?.length - 1
                   ].text
                     .replace(
