@@ -418,6 +418,11 @@ const TeacherPageIndividual = lazy(() =>
     /* webpackChunkName: "Teacher Page for Individual Lessons" */ '../pages/TeacherPage/TeacherPageIndividual'
   )
 );
+const TeacherPagePedagogium = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page for Pedagogium" */ '../pages/TeacherPage/TeacherPagePedagogium'
+  )
+);
 const TeacherPageTrialLesson = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Trial Lesson Page" */ '../pages/TeacherPage/TeacherPageTrialLesson'
@@ -1110,8 +1115,7 @@ export const App = () => {
             <Route path="trials-kids" element={<TeacherTrialPage />} noindex={true} />
             <Route path="trials-pl" element={<TeacherTrialPage />} noindex={true} />
             <Route path="trials-de" element={<TeacherTrialPage />} noindex={true} />
-            <Route path="pedagogium-1" element={<TeacherPageUni />} noindex={true} />
-            <Route path="pedagogium-2" element={<TeacherPageUni />} noindex={true} />
+            <Route path="pedagogium-2" element={<TeacherPagePedagogium />} noindex={true} />
             <Route path="wstijo" element={<TeacherPageUni />} noindex={true} />
             <Route path="wsbmir" element={<TeacherPage />} noindex={true} />
             <Route path="kubrak" element={<TeacherPageIndividual />} noindex={true} />
