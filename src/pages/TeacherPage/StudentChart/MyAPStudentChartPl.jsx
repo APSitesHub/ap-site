@@ -87,7 +87,7 @@ export const MyAPStudentChartPl = ({ currentStudentChart }) => {
         <FeedbackText
           dangerouslySetInnerHTML={{
             __html:
-              typeof currentStudentChart.feedback[
+              typeof currentStudentChart.feedback?.[
                 currentStudentChart.feedback?.length - 1
               ].text === 'string'
                 ? currentStudentChart.feedback[
