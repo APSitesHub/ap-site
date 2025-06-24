@@ -2,7 +2,6 @@ import useSize from '@react-hook/size';
 import { InputBtn, KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
 import { nanoid } from 'nanoid';
 import { useEffect, useRef, useState } from 'react';
-import { HostKahoots } from './HostKahoots/HostKahoots';
 import { NameInput } from './NameInput/NameInput';
 import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
 import { Platform } from './Platform/Platform';
@@ -25,12 +24,8 @@ import {
 import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
 import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
 import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
-import { WhiteBoard } from './WhiteBoard/WhiteBoard';
-import axios from 'axios';
-import NotFound from 'pages/NotFound/NotFound';
 import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 import { ViewerUni } from './Viewer/ViewerUni';
-import { HostKahootsUni } from './HostKahoots/HostKahootsUni';
 import { HostKahootsPedagogium } from './HostKahoots/HostKahootsPedagogium';
 
 const group = 'logistics_2';
@@ -78,7 +73,7 @@ const TeacherPagePedagogium = () => {
 
   useEffect(() => {
     document.title = `Teacher ${group.toLocaleUpperCase()} | AP Education`;
-  }, [group]);
+  }, []);
 
   const toggleViewer = () => {
     !isOpenedLast
@@ -203,7 +198,7 @@ const TeacherPagePedagogium = () => {
       </NameInputBtn>
       <LessonInfoBox
         className={
-          !teacherInfo.name + teacherInfo.level + teacherInfo.lesson ? '' : 'no-info'
+          teacherInfo.name || teacherInfo.level || teacherInfo.lesson ? '' : 'no-info'
         }
       >
         {teacherInfo.name} <br />
