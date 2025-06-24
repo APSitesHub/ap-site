@@ -177,3 +177,40 @@ export const QRPedagogiumLogistics2 = styled(_QR_pedagogium_logistics_2)`
   flex: 1;
   width: 100%;
 `;
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalContent = styled.div`
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  height: 65%;
+  width: 50%;
+`;
+
+export const CloseButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+export const QRContainer = styled.div`
+  flex: 1;
+  max-width: 100%;
+  max-height: 100%;
+`;
