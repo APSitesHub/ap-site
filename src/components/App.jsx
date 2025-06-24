@@ -556,6 +556,10 @@ const TelegramMarathonRedirect = lazy(() =>
   )
 );
 
+const WebinarFeedback = lazy(() =>
+  import(/* webpackChunkName: "WebinarFeedback" */ '../pages/Feedback/WebinarFeedback')
+);
+
 const WhatsAppRedirect = lazy(() =>
   import(
     /* webpackChunkName: "Marathon redirect page to WhatsApp chat" */ '../pages/Service/WhatsAppRedirect/WhatsAppRedirect'
@@ -643,6 +647,11 @@ export const App = () => {
           <Route
             path="trial-lesson/:language/:crmId"
             element={<TrialLesson />}
+            noindex={true}
+          />
+          <Route
+            path="feedback/:lessonId/:userId"
+            element={<WebinarFeedback />}
             noindex={true}
           />
           <Route path="teacher-login" element={<TeacherLogin />} noindex={true} />

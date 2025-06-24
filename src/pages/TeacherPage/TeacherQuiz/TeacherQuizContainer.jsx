@@ -21,6 +21,7 @@ import {
   TeacherQuizCorrectListUserNumber,
   TeacherQuizCorrectListUsers,
 } from './TeacherQuiz.styled';
+import { nanoid } from 'nanoid';
 
 export const TeacherQuizContainer = ({
   page,
@@ -30,6 +31,7 @@ export const TeacherQuizContainer = ({
   questionID,
   changeQuestionID,
   uni,
+  teacherName,
 }) => {
   const [answers, setAnswers] = useState({});
   const [isQuizActive, setIsQuizActive] = useState(false);
@@ -43,12 +45,25 @@ export const TeacherQuizContainer = ({
     console.log(socket.id, 'socket.id');
     console.log(questionID, 'questionID.current');
 
-    socket.emit('question:asked', {
-      іd: socket.id,
-      question: questionID,
-      page: page,
-      quizType: quizType,
-    });
+    console.log(teacherName);
+
+    if (quizType === 'feedback') {
+      socket.emit('question:asked', {
+        id: socket.id,
+        feedbackId: nanoid(),
+        question: questionID,
+        page: page,
+        quizType: quizType,
+        teacherName: teacherName,
+      });
+    } else {
+      socket.emit('question:asked', {
+        id: socket.id,
+        question: questionID,
+        page: page,
+        quizType: quizType,
+      });
+    }
     setIsQuizActive(true);
     changeQuestionID();
     console.log(questionID, 'questionID.current after emitQuizStart');
