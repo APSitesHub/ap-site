@@ -140,7 +140,7 @@ const TeacherControlPage = () => {
       setIsLoading(isLoading => (isLoading = true));
       try {
         if (isUserAdmin) {
-          const response = await axios.get('speakingusers/admin');
+          const response = await axios.get('/speakingusers/admin');
           setReviews(reviews => (reviews = [...response.data]));
         }
       } catch (error) {
