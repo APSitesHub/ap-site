@@ -29,24 +29,25 @@ export const TeacherPageSpeakingEditForm = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [startDate, setStartDate] = useState(undefined);
-  const [isDateWrong, setIsDateWrong] = useState(false);
-  const [temperamentValue, setTemperamentValue] = useState(
-    studentToEdit.temperament || ''
-  );
-  const [successRateValue, setSuccessRateValue] = useState(
-    studentToEdit.successRate || ''
-  );
-  const [grammarValue, setGrammarValue] = useState(studentToEdit.grammar || '');
-  const [lexisValue, setLexisValue] = useState(studentToEdit.lexis || '');
-  const [speakingValue, setSpeakingValue] = useState(
-    studentToEdit.speaking || ''
-  );
-  const [listeningValue, setListeningValue] = useState(
-    studentToEdit.listening || ''
-  );
-  const [activityValue, setActivityValue] = useState(
-    studentToEdit.activity || ''
-  );
+  const [temperamentValue, setTemperamentValue] = useState('');
+  const [successRateValue, setSuccessRateValue] = useState('');
+  const [grammarValue, setGrammarValue] = useState('');
+  const [lexisValue, setLexisValue] = useState('');
+  const [speakingValue, setSpeakingValue] = useState('');
+  const [listeningValue, setListeningValue] = useState('');
+  const [activityValue, setActivityValue] = useState('');
+  const [gradeValue, setGradeValue] = useState('');
+  const [errors, setErrors] = useState({
+    startDate: false,
+    temperament: false,
+    successRate: false,
+    grammar: false,
+    lexis: false,
+    speaking: false,
+    listening: false,
+    activity: false,
+    grade: false,
+  });
 
   const successRateOptions = [
     {
@@ -145,15 +146,21 @@ export const TeacherPageSpeakingEditForm = ({
     },
   ];
 
+  const gradesOptions = Array.from({ length: 10 }, (_, i) => i + 1).map(i => ({
+    label: i,
+    value: i,
+  }));
+
   const initialEditStudentValues = {
-    temperament: studentToEdit.temperament || '',
-    successRate: studentToEdit.successRate || '',
-    grammar: studentToEdit.grammar || '',
-    lexis: studentToEdit.lexis || '',
-    speaking: studentToEdit.speaking || '',
-    listening: studentToEdit.listening || '',
-    activity: studentToEdit.activity || '',
+    temperament: '',
+    successRate: '',
+    grammar: '',
+    lexis: '',
+    speaking: '',
+    listening: '',
+    activity: '',
     feedback: '',
+    grade: '',
   };
 
   const studentSchema = yup.object().shape({
@@ -164,58 +171,78 @@ export const TeacherPageSpeakingEditForm = ({
     speaking: yup.number(),
     listening: yup.number(),
     activity: yup.number(),
-    feedback: yup
-      .string()
-      .required("Фідбек - обов'язкове поле, без нього ніяк"),
+    feedback: yup.string().required("Фідбек - обов'язкове поле, без нього ніяк"),
+    grade: yup.number(),
   });
 
+  const validations = [
+    { key: 'startDate', value: startDate },
+    { key: 'temperament', value: temperamentValue },
+    { key: 'successRate', value: successRateValue },
+    { key: 'grammar', value: grammarValue },
+    { key: 'lexis', value: lexisValue },
+    { key: 'speaking', value: speakingValue },
+    { key: 'listening', value: listeningValue },
+    { key: 'activity', value: activityValue },
+    { key: 'grade', value: gradeValue },
+  ];
+
   const handleEditStudentSubmit = async values => {
-    console.log(values);
+    console.log(169, values);
     console.log(startDate);
 
-    if (!startDate) {
-      setIsDateWrong(true);
+    const hasErrors = validations
+      .map(field => {
+        if (!field.value) {
+          setErrors(errors => ({ ...errors, [field.key]: true }));
+          return true;
+        }
+        return false;
+      })
+      .some(error => error);
+
+    if (hasErrors) {
       return;
     }
 
-    values.temperament = temperamentValue;
-    values.successRate = successRateValue;
-    values.grammar = grammarValue;
-    values.lexis = lexisValue;
-    values.speaking = speakingValue;
-    values.listening = listeningValue;
-    values.activity = activityValue;
-    values.feedback = `${
-      currentUser.name
-    } залишає відгук за заняття ${startDate.getDate()}.${
-      startDate.getMonth() + 1 < 10
-        ? '0' + (startDate.getMonth() + 1)
-        : startDate.getMonth() + 1
-    }.${startDate.getFullYear()}:
+    const scValues = {
+      crmId: studentToEdit.crmId,
+      temperament: temperamentValue,
+      successRate: successRateValue,
+      feedback: {
+        text: `${currentUser.name} залишає відгук за заняття ${startDate.getDate()}.${
+          startDate.getMonth() + 1 < 10
+            ? '0' + (startDate.getMonth() + 1)
+            : startDate.getMonth() + 1
+        }.${startDate.getFullYear()}:
 ${new Date().toLocaleString('uk-UA', { timeZone: '+02:00' })}:
-${values.feedback}`;
-    const scValues = { ...values, crmId: studentToEdit.crmId };
+${values.feedback}`,
+        date: startDate,
+        activity: activityValue,
+        grammar: grammarValue,
+        lexis: lexisValue,
+        speaking: speakingValue,
+        listening: listeningValue,
+        grade: gradeValue,
+      },
+    };
+    console.log('scValues', scValues);
 
     setIsLoading(isLoading => (isLoading = true));
     try {
       const response = await axios.patch(
-        `/speakingusers/${studentToEdit.userId}`,
+        `speakingusers/${studentToEdit.userId}`,
         scValues
       );
-      const userResponse = await axios.patch(
-        `/users/sc/${studentToEdit.userId}`,
-        values
-      );
+      // const userResponse = await axios.patch(`/users/sc/${studentToEdit.userId}`, values);
       console.log(response);
-      console.log(userResponse);
+      // console.log(userResponse);
       closeStudentEditForm();
       alert('Відредаговано');
-      updateFeedback(studentToEdit._id, values);
+      updateFeedback(studentToEdit._id, scValues);
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -237,19 +264,19 @@ ${values.feedback}`;
             <LabelDatePickerText>Оберіть дату заняття</LabelDatePickerText>
           </SpeakingLabel>
           <StyledDatePicker
-            className={isDateWrong ? 'error' : undefined}
+            className={errors.startDate ? 'error' : undefined}
             selected={startDate}
             dateFormat="dd.MM.yyyy"
             onChange={date => {
               setStartDate(date);
-              date && setIsDateWrong(false);
+              date && setErrors(errors => (errors = { ...errors, startDate: false }));
             }}
             calendarStartDay={1}
             shouldCloseOnSelect={true}
-            maxDate={(new Date())}
+            maxDate={new Date()}
           />
-          {isDateWrong && (
-            <StudentDateInputNote> А дату? </StudentDateInputNote>
+          {errors.startDate && (
+            <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
           )}
           <SpeakingLabel>
             {successRateValue && <LabelText>Успішність</LabelText>}
@@ -275,13 +302,16 @@ ${values.feedback}`;
               }}
               placeholder="Успішність"
               name="successRate"
-              defaultValue={successRateOptions.find(
-                option => option.value === studentToEdit.successRate
-              )}
+              className={errors.successRate ? 'wrong' : undefined}
               onChange={successRate => {
                 setSuccessRateValue(successRate.value);
+                successRate.value &&
+                  setErrors(errors => (errors = { ...errors, successRate: false }));
               }}
             />
+            {errors.successRate && (
+              <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+            )}
           </SpeakingLabel>
           <SpeakingLabel>
             {temperamentValue && <LabelText>Темперамент</LabelText>}
@@ -307,13 +337,16 @@ ${values.feedback}`;
               }}
               placeholder="Темперамент"
               name="temperament"
-              defaultValue={temperamentOptions.find(
-                option => option.value === studentToEdit.temperament
-              )}
+              className={errors.temperament ? 'wrong' : undefined}
               onChange={temperament => {
                 setTemperamentValue(temperament.value);
+                temperament.value &&
+                  setErrors(errors => (errors = { ...errors, temperament: false }));
               }}
             />
+            {errors.temperament && (
+              <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+            )}
           </SpeakingLabel>
           <SpeakingLabel>
             {grammarValue && <LabelText>Граматика</LabelText>}
@@ -339,13 +372,16 @@ ${values.feedback}`;
               }}
               placeholder="Граматика"
               name="grammar"
-              defaultValue={grammarOptions.find(
-                option => option.value === studentToEdit.grammar
-              )}
+              className={errors.grammar ? 'wrong' : undefined}
               onChange={grammar => {
                 setGrammarValue(grammar.value);
+                grammar.value &&
+                  setErrors(errors => (errors = { ...errors, grammar: false }));
               }}
             />
+            {errors.grammar && (
+              <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+            )}
           </SpeakingLabel>
           <SpeakingLabel>
             {lexisValue && <LabelText>Лексика</LabelText>}
@@ -371,13 +407,16 @@ ${values.feedback}`;
               }}
               placeholder="Лексика"
               name="lexis"
-              defaultValue={lexisOptions.find(
-                option => option.value === studentToEdit.lexis
-              )}
+              className={errors.lexis ? 'wrong' : undefined}
               onChange={lexis => {
                 setLexisValue(lexis.value);
+                lexis.value &&
+                  setErrors(errors => (errors = { ...errors, lexis: false }));
               }}
             />
+            {errors.lexis && (
+              <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+            )}
           </SpeakingLabel>
           <SpeakingLabel>
             {speakingValue && <LabelText>Говоріння/вимова</LabelText>}
@@ -403,13 +442,16 @@ ${values.feedback}`;
               }}
               placeholder="Говоріння/вимова"
               name="speaking"
-              defaultValue={speakingOptions.find(
-                option => option.value === studentToEdit.speaking
-              )}
+              className={errors.speaking ? 'wrong' : undefined}
               onChange={speaking => {
                 setSpeakingValue(speaking.value);
+                speaking.value &&
+                  setErrors(errors => (errors = { ...errors, speaking: false }));
               }}
             />
+            {errors.speaking && (
+              <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+            )}
           </SpeakingLabel>
           <SpeakingLabel>
             {listeningValue && <LabelText>Слухання</LabelText>}
@@ -435,13 +477,16 @@ ${values.feedback}`;
               }}
               placeholder="Слухання"
               name="listening"
-              defaultValue={listeningOptions.find(
-                option => option.value === studentToEdit.listening
-              )}
+              className={errors.listening ? 'wrong' : undefined}
               onChange={listening => {
                 setListeningValue(listening.value);
+                listening.value &&
+                  setErrors(errors => (errors = { ...errors, listening: false }));
               }}
             />
+            {errors.listening && (
+              <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+            )}
           </SpeakingLabel>
           <SpeakingLabel>
             {activityValue && <LabelText>Активність</LabelText>}
@@ -467,13 +512,51 @@ ${values.feedback}`;
               }}
               placeholder="Активність на уроці"
               name="activity"
-              defaultValue={activityOptions.find(
-                option => option.value === studentToEdit.activity
-              )}
+              className={errors.activity ? 'wrong' : undefined}
               onChange={activity => {
                 setActivityValue(activity.value);
+                activity.value &&
+                  setErrors(errors => (errors = { ...errors, activity: false }));
               }}
             />
+            {errors.activity && (
+              <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+            )}
+          </SpeakingLabel>
+          <SpeakingLabel>
+            {gradeValue && <LabelText>Оцінка</LabelText>}
+            <SpeakingSelect
+              options={gradesOptions}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  border: 'none',
+                  borderRadius: '0px',
+                  minHeight: '34px',
+                }),
+                menu: (baseStyles, state) => ({
+                  ...baseStyles,
+                  position: 'absolute',
+                  zIndex: '2',
+                  top: '36px',
+                }),
+                dropdownIndicator: (baseStyles, state) => ({
+                  ...baseStyles,
+                  padding: '7px',
+                }),
+              }}
+              placeholder="Оцінка за урок"
+              name="grade"
+              className={errors.grade ? 'wrong' : undefined}
+              onChange={grade => {
+                setGradeValue(grade.value);
+                grade.value &&
+                  setErrors(errors => (errors = { ...errors, grade: false }));
+              }}
+            />
+            {errors.grade && (
+              <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+            )}
           </SpeakingLabel>
           <Label>
             <StudentTextArea
