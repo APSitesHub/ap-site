@@ -27,6 +27,7 @@ import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 import { ViewerUni } from './Viewer/ViewerUni';
 import { HostKahootsPedagogium } from './HostKahoots/HostKahootsPedagogium';
+import axios from 'axios';
 
 const group = 'logistics_2';
 
@@ -61,7 +62,7 @@ const TeacherPagePedagogium = () => {
     questionID.current = nanoid(5);
   };
 
-  const changeTeacherInfo = (nameValue, lessonValue, levelValue) => {
+  const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
     setTeacherInfo(
       teacherInfo =>
         (teacherInfo = {
@@ -69,6 +70,23 @@ const TeacherPagePedagogium = () => {
         })
     );
     setIsNameInputOpen(isOpen => (isOpen = false));
+
+    try {
+      const response = await axios.post(
+        'https://ap-server-8qi1.onrender.com/pedagogium-lessons',
+        {
+          page: group,
+          teacherName: nameValue,
+          lessonName: levelValue,
+          lessonNumber: lessonValue,
+        }
+      );
+
+      localStorage.setItem('lessonId', response.data.lessonId);
+    } catch (e) {
+      alert('Помилка створення уроку: ' + e.response.data);
+      console.error(e.response.data);
+    }
   };
 
   useEffect(() => {
@@ -234,12 +252,12 @@ const TeacherPagePedagogium = () => {
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
       </TeacherButtonBoxHideSwitch>
 
-      <ViewerUni
+      {/* <ViewerUni
         page={`pedagogium_${group}`}
         sectionWidth={width}
         isViewerOpen={isViewerOpen}
         isOpenedLast={isOpenedLast}
-      />
+      /> */}
 
       <Platform
         page={group}
