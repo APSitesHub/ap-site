@@ -39,20 +39,38 @@ export const MyAPStudentChart = ({ currentStudentChart }) => {
   const data = [
     {
       area: 'Активність',
-      [currentStudentChart.name]: currentStudentChart.activity,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[feedbackIndex]?.activity ||
+        currentStudentChart.activity ||
+        0,
     },
     {
       area: 'Граматика',
-      [currentStudentChart.name]: currentStudentChart.grammar,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[feedbackIndex]?.grammar ||
+        currentStudentChart.grammar ||
+        0,
     },
     {
       area: 'Говоріння',
-      [currentStudentChart.name]: currentStudentChart.speaking,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[feedbackIndex]?.speaking ||
+        currentStudentChart.speaking ||
+        0,
     },
-    { area: 'Лексика', [currentStudentChart.name]: currentStudentChart.lexis },
+    {
+      area: 'Лексика',
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[feedbackIndex]?.lexis ||
+        currentStudentChart.lexis ||
+        0,
+    },
     {
       area: 'Слухання',
-      [currentStudentChart.name]: currentStudentChart.listening,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[feedbackIndex]?.listening ||
+        currentStudentChart.listening ||
+        0,
     },
   ];
 
@@ -120,7 +138,7 @@ export const MyAPStudentChart = ({ currentStudentChart }) => {
               </FeedbackButton>
               <FeedbackButton
                 onClick={getNextFeedback}
-                disabled={feedbackIndex === currentStudentChart.feedback.length - 1}
+                disabled={feedbackIndex === currentStudentChart.feedback?.length - 1}
                 className="next"
               >
                 <NextFeedbackButton />
@@ -129,8 +147,8 @@ export const MyAPStudentChart = ({ currentStudentChart }) => {
             <FeedbackText
               dangerouslySetInnerHTML={{
                 __html:
-                  typeof currentStudentChart.feedback[feedbackIndex] === 'string'
-                    ? currentStudentChart.feedback[feedbackIndex]
+                  typeof currentStudentChart.feedback[feedbackIndex].text === 'string'
+                    ? currentStudentChart.feedback[feedbackIndex].text
                         .replace(
                           linksRegex,
                           match =>

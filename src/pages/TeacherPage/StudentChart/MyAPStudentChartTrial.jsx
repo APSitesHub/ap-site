@@ -16,20 +16,28 @@ export const MyAPStudentChartTrial = ({ currentStudentChart, location }) => {
   const data = [
     {
       area: 'Активність',
-      [currentStudentChart.name]: currentStudentChart.activity,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.activity || currentStudentChart.activity || 0,
     },
     {
       area: 'Граматика',
-      [currentStudentChart.name]: currentStudentChart.grammar,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.grammar || currentStudentChart.grammar || 0,
     },
     {
       area: 'Говоріння',
-      [currentStudentChart.name]: currentStudentChart.speaking,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.speaking || currentStudentChart.speaking || 0,
     },
-    { area: 'Лексика', [currentStudentChart.name]: currentStudentChart.lexis },
+    {
+      area: 'Лексика',
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.lexis || currentStudentChart.lexis || 0,
+    },
     {
       area: 'Слухання',
-      [currentStudentChart.name]: currentStudentChart.listening,
+      [currentStudentChart.name]:
+        currentStudentChart.feedback[0]?.listening || currentStudentChart.listening || 0,
     },
   ];
 
