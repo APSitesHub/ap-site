@@ -87,7 +87,7 @@ export const TeacherQuizContainer = ({
 
       emitQuizEnd();
     } catch (e) {
-      alert('Помилка збередження відповідей. Спробуйте ще раз.');
+      alert('Помилка збереження відповідей. Спробуйте ще раз.');
       console.log(e);
     }
   };
