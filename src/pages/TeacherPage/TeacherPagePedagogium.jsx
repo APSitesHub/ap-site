@@ -63,6 +63,8 @@ const TeacherPagePedagogium = () => {
   };
 
   const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
+    setIsNameInputOpen(isOpen => (isOpen = false));
+
     if (
       localStorage.getItem('groupName') === group &&
       localStorage.getItem('teacherName') === nameValue &&
@@ -77,7 +79,6 @@ const TeacherPagePedagogium = () => {
           ...{ name: nameValue, lesson: lessonValue, level: levelValue },
         })
     );
-    setIsNameInputOpen(isOpen => (isOpen = false));
 
     try {
       const response = await axios.post(
@@ -272,12 +273,12 @@ const TeacherPagePedagogium = () => {
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
       </TeacherButtonBoxHideSwitch>
 
-      {/* <ViewerUni
+      <ViewerUni
         page={`pedagogium_${group}`}
         sectionWidth={width}
         isViewerOpen={isViewerOpen}
         isOpenedLast={isOpenedLast}
-      /> */}
+      />
 
       <Platform
         page={group}

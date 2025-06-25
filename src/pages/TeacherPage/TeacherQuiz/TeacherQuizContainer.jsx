@@ -187,9 +187,11 @@ export const TeacherQuizContainer = ({
           </TeacherQuizCorrectListUsers>
           {isQuizActive && (
             <TeacherQuizCorrectListEndQuizBtnBox>
-              <TeacherChartResetBtn type="button" onClick={saveAnswers}>
-                Save & End
-              </TeacherChartResetBtn>
+              {page.includes('logistics') && (
+                <TeacherChartResetBtn type="button" onClick={saveAnswers}>
+                  Save & End
+                </TeacherChartResetBtn>
+              )}
               <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
                 End
               </TeacherChartResetBtn>
