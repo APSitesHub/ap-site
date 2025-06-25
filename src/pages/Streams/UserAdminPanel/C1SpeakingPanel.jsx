@@ -4,6 +4,7 @@ import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
 import * as yup from 'yup';
 import { TeacherTable } from '../TeacherAdminPanel/TeacherAdminPanel.styled';
 import {
@@ -20,6 +21,7 @@ import {
   UserHeadCell,
 } from './UserAdminPanel.styled';
 import { UserEditForm } from './UserEditForm/UserEditForm';
+import { LabelDatePickerText, SpeakingLabel, StudentDateInputNote, StyledDatePicker } from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -205,21 +207,24 @@ const C1SpeakingPanel = () => {
           <TeacherTable>
             <UserDBCaption>
               Юзери з додатково придбаними спікінгами від{' '}
-              <button
-                onClick={() =>
-                  setDate(date =>
-                    date === '06.01.2025'
-                      ? '05.11.2024'
-                      : date === '30.06.2025'
-                      ? '17.03.2025'
-                      : date === '17.03.2025'
-                      ? '06.01.2025'
-                      : '30.06.2025'
-                  )
-                }
-              >
-                {date}
-              </button>
+              <SpeakingLabel>
+                <LabelDatePickerText>Оберіть дату заняття</LabelDatePickerText>
+              </SpeakingLabel>
+              <StyledDatePicker
+                // className={errors.startDate ? 'error' : undefined}
+                selected={changeDateFormat(date)}
+                dateFormat="dd.MM.yyyy"
+                onChange={date => {
+                  setDate(date);
+                  // date && setErrors(errors => (errors = { ...errors, startDate: false }));
+                }}
+                calendarStartDay={1}
+                shouldCloseOnSelect={true}
+                maxDate={new Date()}
+              />
+              {/* {errors.startDate && (
+                <StudentDateInputNote> Обов'язкове поле! </StudentDateInputNote>
+              )} */}
             </UserDBCaption>
             <thead>
               <UserDBRow>
