@@ -32,7 +32,7 @@ const C1SpeakingPanel = () => {
   const [users, setUsers] = useState([]);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState({});
-  const [date, setDate] = useState('17.03.2025');
+  const [date, setDate] = useState('30.06.2025');
 
   useEffect(() => {
     document.title = 'User Admin Panel | AP Education';
@@ -210,9 +210,11 @@ const C1SpeakingPanel = () => {
                   setDate(date =>
                     date === '06.01.2025'
                       ? '05.11.2024'
+                      : date === '30.06.2025'
+                      ? '17.03.2025'
                       : date === '17.03.2025'
                       ? '06.01.2025'
-                      : '17.03.2025'
+                      : '30.06.2025'
                   )
                 }
               >
