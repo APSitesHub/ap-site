@@ -66,6 +66,32 @@ export const TeacherQuizContainer = ({
     setIsConfirmationOpen(true);
   };
 
+  const saveAnswers = async () => {
+    try {
+      await axios.post(
+        `https://ap-server-8qi1.onrender.com/pedagogium-lessons/question/${localStorage.getItem(
+          'lessonId'
+        )}`,
+        {
+          questionId: questionID,
+          correctAnswrer: correctAnswer.current.toLowerCase(),
+          answers: list.current.data.map(ans => {
+            return {
+              userId: ans.userID,
+              userName: ans.username,
+              answer: ans.answer,
+            };
+          }),
+        }
+      );
+
+      emitQuizEnd();
+    } catch (e) {
+      alert('Помилка збередження відповідей. Спробуйте ще раз.');
+      console.log(e);
+    }
+  };
+
   const sendConfirmedAnswer = async () => {
     console.log(answers, 'answers before sendConfirmedAnswer');
     console.log(correctAnswer.current, 'correctAnswer.current');
@@ -161,6 +187,9 @@ export const TeacherQuizContainer = ({
           </TeacherQuizCorrectListUsers>
           {isQuizActive && (
             <TeacherQuizCorrectListEndQuizBtnBox>
+              <TeacherChartResetBtn type="button" onClick={saveAnswers}>
+                Save & End
+              </TeacherChartResetBtn>
               <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
                 End
               </TeacherChartResetBtn>

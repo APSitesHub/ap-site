@@ -1,6 +1,8 @@
+import { useLocation } from 'react-router-dom';
 import { NameInputBox, TeacherInfoInput } from './NameInput.styled';
 
 export const NameInput = ({ isNameInputOpen, changeTeacherInfo }) => {
+  const location = useLocation();
   const setValuesAndUpdateTeacherInfo = () => {
     const name = document.querySelector('input[name="nameValue"]').value;
     const lesson = document.querySelector('input[name="lessonValue"]').value;
@@ -21,7 +23,9 @@ export const NameInput = ({ isNameInputOpen, changeTeacherInfo }) => {
       <TeacherInfoInput
         type="text"
         name="levelValue"
-        placeholder="Рівень"
+        placeholder={`${
+          location.pathname.includes('pedagogium') ? 'Назва уроку' : 'Рівень'
+        }`}
       ></TeacherInfoInput>
       <TeacherInfoInput
         type="text"
