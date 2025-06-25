@@ -27,6 +27,7 @@ import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 import { ViewerUni } from './Viewer/ViewerUni';
 import { HostKahootsPedagogium } from './HostKahoots/HostKahootsPedagogium';
+import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 
 const group = 'logistics_2';
 
@@ -238,6 +239,13 @@ const TeacherPagePedagogium = () => {
         page={`pedagogium_${group}`}
         sectionWidth={width}
         isViewerOpen={isViewerOpen}
+        isOpenedLast={isOpenedLast}
+      />
+
+      <WhiteBoard
+        page={`pedagogium_${group}`}
+        sectionWidth={width}
+        isWhiteBoardOpen={isWhiteBoardOpen}
         isOpenedLast={isOpenedLast}
       />
 
