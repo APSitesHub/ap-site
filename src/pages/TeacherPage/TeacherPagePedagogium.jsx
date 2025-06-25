@@ -98,7 +98,7 @@ const TeacherPagePedagogium = () => {
       localStorage.setItem('lessonName', levelValue);
       localStorage.setItem('lessonNumber', lessonValue);
     } catch (e) {
-      alert('Помилка створення уроку: ' + e.response.data);
+      alert('Error creating a lesson: ' + e.response.data);
       console.error(e.response.data);
     }
   };
@@ -314,6 +314,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <TeacherQuizOptions
         page={group}
@@ -325,6 +326,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <TeacherQuizTrueFalse
         page={group}
@@ -336,6 +338,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <QRCodeModal
         onClose={toggleQROPen}
@@ -345,6 +348,7 @@ const TeacherPagePedagogium = () => {
       <NameInput
         isNameInputOpen={isNameInputOpen}
         changeTeacherInfo={changeTeacherInfo}
+        uni={true}
       />
     </>
   );
