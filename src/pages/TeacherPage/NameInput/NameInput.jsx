@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { NameInputBox, TeacherInfoInput } from './NameInput.styled';
 import { useEffect, useState } from 'react';
 
-export const NameInput = ({ isNameInputOpen, changeTeacherInfo }) => {
+export const NameInput = ({ isNameInputOpen, changeTeacherInfo, uni }) => {
   const [isPedagogium, setIsPedagogium] = useState(false);
   const location = useLocation();
   const setValuesAndUpdateTeacherInfo = () => {
@@ -32,17 +32,21 @@ export const NameInput = ({ isNameInputOpen, changeTeacherInfo }) => {
       <TeacherInfoInput
         type="text"
         name="nameValue"
-        placeholder="Ім'я викладача"
+        placeholder={uni ? 'Teacher name' : "Ім'я викладача"}
       ></TeacherInfoInput>
       <TeacherInfoInput
         type="text"
         name="levelValue"
-        placeholder={`${isPedagogium ? 'Назва уроку' : 'Рівень'}`}
+        placeholder={
+          uni
+            ? `${isPedagogium ? 'Назва уроку' : 'Рівень'}`
+            : `${isPedagogium ? 'Lesson' : 'Level'}`
+        }
       ></TeacherInfoInput>
       <TeacherInfoInput
         type="text"
         name="lessonValue"
-        placeholder="Номер уроку"
+        placeholder={uni ? 'Lesson number' : 'Номер уроку'}
       ></TeacherInfoInput>
       <button onClick={setValuesAndUpdateTeacherInfo}>OK</button>
     </NameInputBox>
