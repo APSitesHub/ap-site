@@ -63,6 +63,14 @@ const TeacherPagePedagogium = () => {
   };
 
   const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
+    if (
+      localStorage.getItem('groupName') === group &&
+      localStorage.getItem('teacherName') === nameValue &&
+      localStorage.getItem('lessonName') === levelValue &&
+      localStorage.getItem('lessonNumber') === lessonValue
+    ) {
+      return;
+    }
     setTeacherInfo(
       teacherInfo =>
         (teacherInfo = {
@@ -83,6 +91,10 @@ const TeacherPagePedagogium = () => {
       );
 
       localStorage.setItem('lessonId', response.data.lessonId);
+      localStorage.setItem('groupName', group);
+      localStorage.setItem('teacherName', nameValue);
+      localStorage.setItem('lessonName', levelValue);
+      localStorage.setItem('lessonNumber', lessonValue);
     } catch (e) {
       alert('Помилка створення уроку: ' + e.response.data);
       console.error(e.response.data);
@@ -91,6 +103,14 @@ const TeacherPagePedagogium = () => {
 
   useEffect(() => {
     document.title = `Teacher ${group.toLocaleUpperCase()} | AP Education`;
+
+    if (localStorage.getItem('groupName') === group) {
+      setTeacherInfo({
+        name: localStorage.getItem('teacherName'),
+        lesson: localStorage.getItem('lessonNumber'),
+        level: localStorage.getItem('lessonName'),
+      });
+    }
   }, []);
 
   const toggleViewer = () => {

@@ -74,7 +74,7 @@ export const TeacherQuizContainer = ({
         )}`,
         {
           questionId: questionID,
-          correctAnswrer: correctAnswer.current.toLowerCase(),
+          correctAnswer: correctAnswer.current.toLowerCase(),
           answers: list.current.data.map(ans => {
             return {
               userId: ans.userID,
@@ -113,7 +113,7 @@ export const TeacherQuizContainer = ({
       socket.on('answer:acquired', (answer, answerPage) => {
         if (page === answerPage) {
           const answerNumbers = answers.hasOwnProperty(answer) ? answers[answer] + 1 : 1;
-          setAnswers(answers => (answers = { ...answers, [answer]: answerNumbers }));
+          setAnswers(prev => (prev = { ...prev, [answer]: answerNumbers }));
         }
       });
   }, [socket, answers, page]);
