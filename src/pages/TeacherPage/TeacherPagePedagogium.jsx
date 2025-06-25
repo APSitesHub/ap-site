@@ -27,6 +27,7 @@ import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 import { ViewerUni } from './Viewer/ViewerUni';
 import { HostKahootsPedagogium } from './HostKahoots/HostKahootsPedagogium';
+import axios from 'axios';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 
 const group = 'logistics_2';
@@ -62,18 +63,56 @@ const TeacherPagePedagogium = () => {
     questionID.current = nanoid(5);
   };
 
-  const changeTeacherInfo = (nameValue, lessonValue, levelValue) => {
+  const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
+    setIsNameInputOpen(isOpen => (isOpen = false));
+
+    if (
+      localStorage.getItem('groupName') === group &&
+      localStorage.getItem('teacherName') === nameValue &&
+      localStorage.getItem('lessonName') === levelValue &&
+      localStorage.getItem('lessonNumber') === lessonValue
+    ) {
+      return;
+    }
     setTeacherInfo(
       teacherInfo =>
         (teacherInfo = {
           ...{ name: nameValue, lesson: lessonValue, level: levelValue },
         })
     );
-    setIsNameInputOpen(isOpen => (isOpen = false));
+
+    try {
+      const response = await axios.post(
+        'https://ap-server-8qi1.onrender.com/pedagogium-lessons',
+        {
+          page: group,
+          teacherName: nameValue,
+          lessonName: levelValue,
+          lessonNumber: lessonValue,
+        }
+      );
+
+      localStorage.setItem('lessonId', response.data.lessonId);
+      localStorage.setItem('groupName', group);
+      localStorage.setItem('teacherName', nameValue);
+      localStorage.setItem('lessonName', levelValue);
+      localStorage.setItem('lessonNumber', lessonValue);
+    } catch (e) {
+      alert('Помилка створення уроку: ' + e.response.data);
+      console.error(e.response.data);
+    }
   };
 
   useEffect(() => {
     document.title = `Teacher ${group.toLocaleUpperCase()} | AP Education`;
+
+    if (localStorage.getItem('groupName') === group) {
+      setTeacherInfo({
+        name: localStorage.getItem('teacherName'),
+        lesson: localStorage.getItem('lessonNumber'),
+        level: localStorage.getItem('lessonName'),
+      });
+    }
   }, []);
 
   const toggleViewer = () => {

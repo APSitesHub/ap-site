@@ -66,6 +66,32 @@ export const TeacherQuizContainer = ({
     setIsConfirmationOpen(true);
   };
 
+  const saveAnswers = async () => {
+    try {
+      await axios.post(
+        `https://ap-server-8qi1.onrender.com/pedagogium-lessons/question/${localStorage.getItem(
+          'lessonId'
+        )}`,
+        {
+          questionId: questionID,
+          correctAnswer: correctAnswer.current.toLowerCase(),
+          answers: list.current.data.map(ans => {
+            return {
+              userId: ans.userID,
+              userName: ans.username,
+              answer: ans.answer,
+            };
+          }),
+        }
+      );
+
+      emitQuizEnd();
+    } catch (e) {
+      alert('Помилка збереження відповідей. Спробуйте ще раз.');
+      console.log(e);
+    }
+  };
+
   const sendConfirmedAnswer = async () => {
     console.log(answers, 'answers before sendConfirmedAnswer');
     console.log(correctAnswer.current, 'correctAnswer.current');
@@ -87,7 +113,7 @@ export const TeacherQuizContainer = ({
       socket.on('answer:acquired', (answer, answerPage) => {
         if (page === answerPage) {
           const answerNumbers = answers.hasOwnProperty(answer) ? answers[answer] + 1 : 1;
-          setAnswers(answers => (answers = { ...answers, [answer]: answerNumbers }));
+          setAnswers(prev => (prev = { ...prev, [answer]: answerNumbers }));
         }
       });
   }, [socket, answers, page]);
@@ -161,6 +187,11 @@ export const TeacherQuizContainer = ({
           </TeacherQuizCorrectListUsers>
           {isQuizActive && (
             <TeacherQuizCorrectListEndQuizBtnBox>
+              {page.includes('logistics') && (
+                <TeacherChartResetBtn type="button" onClick={saveAnswers}>
+                  Save & End
+                </TeacherChartResetBtn>
+              )}
               <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
                 End
               </TeacherChartResetBtn>
