@@ -12,17 +12,14 @@ import {
   LinksForm,
   LoginForm,
 } from './CollectionsAdminPanel.styled';
-import {
-  LinksFieldGroup,
-  LinksFieldGroupTitle,
-} from '../AdminPanel/AdminPanel.styled';
+import { LinksFieldGroup, LinksFieldGroupTitle } from '../AdminPanel/AdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const CollectionsAdminPanel = () => {
+const CollectionsAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
 
@@ -219,11 +216,7 @@ export const CollectionsAdminPanel = () => {
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -241,59 +234,31 @@ export const CollectionsAdminPanel = () => {
               <LinksFieldGroup>
                 <LinksFieldGroupTitle>English, дорослі</LinksFieldGroupTitle>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a0"
-                    placeholder="A0 collection"
-                  />
+                  <AdminInput type="text" name="a0" placeholder="A0 collection" />
                   <AdminInputNote component="p" name="a0" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a0_2"
-                    placeholder="A0_2 collection"
-                  />
+                  <AdminInput type="text" name="a0_2" placeholder="A0_2 collection" />
                   <AdminInputNote component="p" name="a0_2" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a1"
-                    placeholder="A1 collection"
-                  />
+                  <AdminInput type="text" name="a1" placeholder="A1 collection" />
                   <AdminInputNote component="p" name="a1" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="a2"
-                    placeholder="A2 collection"
-                  />
+                  <AdminInput type="text" name="a2" placeholder="A2 collection" />
                   <AdminInputNote component="p" name="a2" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="b1"
-                    placeholder="B1 collection"
-                  />
+                  <AdminInput type="text" name="b1" placeholder="B1 collection" />
                   <AdminInputNote component="p" name="b1" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="b2"
-                    placeholder="B2 collection"
-                  />
+                  <AdminInput type="text" name="b2" placeholder="B2 collection" />
                   <AdminInputNote component="p" name="b2" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="c1"
-                    placeholder="C1 collection"
-                  />
+                  <AdminInput type="text" name="c1" placeholder="C1 collection" />
                   <AdminInputNote component="p" name="c1" />
                 </Label>
                 <Label>
@@ -686,3 +651,5 @@ export const CollectionsAdminPanel = () => {
     </>
   );
 };
+
+export default CollectionsAdminPanel;
