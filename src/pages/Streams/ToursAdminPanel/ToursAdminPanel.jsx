@@ -154,7 +154,7 @@ export const ToursAdminPanel = () => {
     setIsLoading(isLoading => (isLoading = true));
 
     try {
-      const response = await axios.delete(`http://localhost:5000/tours/${id}`);
+      const response = await axios.delete(`/tours/${id}`);
       console.log(response);
       alert('Урок видалено');
       setTours(tours => (tours = tours.filter(tour => tour._id !== id)));
