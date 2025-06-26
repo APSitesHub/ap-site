@@ -50,6 +50,8 @@ const TeacherPageUni = () => {
   const [teacherInfo, setTeacherInfo] = useState({});
   const questionID = useRef(nanoid(5));
 
+  console.log(location);
+
   const closeInputs = () => {
     setIsQuizInputOpen(false);
     setIsQuizOptionsOpen(false);
@@ -289,7 +291,11 @@ const TeacherPageUni = () => {
         changeTeacherInfo={changeTeacherInfo}
       />
 
-      <QRCodeModal onClose={toggleQROPen} isOpen={isQROpen} />
+      <QRCodeModal
+        onClose={toggleQROPen}
+        isOpen={isQROpen}
+        url={`https://${location}.ap.education/lesson/logistics`}
+      />
     </>
   );
 };
