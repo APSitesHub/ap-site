@@ -6,6 +6,9 @@ import { Formik } from 'formik';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
+  AdminFormBtn,
+  AdminInputNote,
+  AdminPanelSection,
   UserCell,
   UserDBCaption,
   UserDBRow,
@@ -13,12 +16,10 @@ import {
   UserDeleteButton,
   UserEditButton,
   UserHeadCell,
-  AdminInputNote,
-  AdminPanelSection,
-  AdminFormBtn,
 } from '../UserAdminPanel/UserAdminPanel.styled';
 import { TourEditForm } from './TourEditForm';
 import { AdminInput, LinksForm, LoginForm } from './ToursAdminPanel.styled';
+const linksRegex = /\b(?:https?|ftp):\/\/\S+\b/g;
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 const setAuthToken = token => {
@@ -227,7 +228,17 @@ export const ToursAdminPanel = () => {
               {tours.map(tour => (
                 <UserDBRow key={tour._id}>
                   <UserCell>{tour.page}</UserCell>
-                  <UserCell>{tour.link}</UserCell>
+                  <UserCell
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        typeof tour.link === 'string'
+                          ? tour.link.replace(
+                              linksRegex,
+                              match => `<a href="${match}" target="_blank">${match}</a>`
+                            )
+                          : '',
+                    }}
+                  ></UserCell>
 
                   <UserCell>
                     <UserEditButton onClick={() => handleEdit(tour._id)}>
