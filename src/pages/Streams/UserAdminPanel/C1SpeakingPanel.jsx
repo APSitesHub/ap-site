@@ -3,11 +3,7 @@ import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
-import {
-  LabelDatePickerText,
-  SpeakingLabel,
-  StyledDatePicker,
-} from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
+import { StyledDatePicker } from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
 import { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import * as yup from 'yup';
