@@ -25,7 +25,7 @@ export const NameInput = ({ isNameInputOpen, changeTeacherInfo, uni }) => {
     document.querySelector('input[name="levelValue"]').value = isPedagogiumCheck
       ? localStorage.getItem('lessonName') || ''
       : '';
-  }, []);
+  }, [location.pathname]);
 
   return (
     <NameInputBox className={isNameInputOpen ? 'shown' : 'hidden'}>
