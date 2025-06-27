@@ -211,9 +211,6 @@ const C1SpeakingPanel = () => {
           <TeacherTable>
             <UserDBCaption>
               Юзери з додатково придбаними спікінгами від{' '}
-              <SpeakingLabel>
-                <LabelDatePickerText>Оберіть дату заняття</LabelDatePickerText>
-              </SpeakingLabel>
               <StyledDatePicker
                 selected={date}
                 dateFormat="dd.MM.yyyy"
