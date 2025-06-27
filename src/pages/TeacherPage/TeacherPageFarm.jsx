@@ -54,13 +54,8 @@ const TeacherPageFarm = () => {
   const toggleViewer = () => {
     !isOpenedLast
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)
-      : isOpenedLast === 'viewer' &&
-        setIsViewerOpen(isViewerOpen => !isViewerOpen);
-    isWhiteBoardOpen ||
-    isPlatformOpen ||
-    isKahootOpen ||
-    isCowFarmOpen ||
-    isPigFarmOpen
+      : isOpenedLast === 'viewer' && setIsViewerOpen(isViewerOpen => !isViewerOpen);
+    isWhiteBoardOpen || isPlatformOpen || isKahootOpen || isCowFarmOpen || isPigFarmOpen
       ? setIsOpenedLast(isOpenedLast => 'viewer')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -69,37 +64,23 @@ const TeacherPageFarm = () => {
       ? setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen)
       : isOpenedLast === 'whiteboard' &&
         setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen);
-    isViewerOpen ||
-    isPlatformOpen ||
-    isKahootOpen ||
-    isCowFarmOpen ||
-    isPigFarmOpen
+    isViewerOpen || isPlatformOpen || isKahootOpen || isCowFarmOpen || isPigFarmOpen
       ? setIsOpenedLast(isOpenedLast => 'whiteboard')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleCowFarm = () => {
     !isOpenedLast
       ? setIsCowFarmOpen(isCowFarmOpen => !isCowFarmOpen)
-      : isOpenedLast === 'cowfarm' &&
-        setIsCowFarmOpen(isCowFarmOpen => !isCowFarmOpen);
-    isViewerOpen ||
-    isPlatformOpen ||
-    isKahootOpen ||
-    isWhiteBoardOpen ||
-    isPigFarmOpen
+      : isOpenedLast === 'cowfarm' && setIsCowFarmOpen(isCowFarmOpen => !isCowFarmOpen);
+    isViewerOpen || isPlatformOpen || isKahootOpen || isWhiteBoardOpen || isPigFarmOpen
       ? setIsOpenedLast(isOpenedLast => 'cowfarm')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const togglePigFarm = () => {
     !isOpenedLast
       ? setIsPigFarmOpen(isPigFarmOpen => !isPigFarmOpen)
-      : isOpenedLast === 'pigfarm' &&
-        setIsPigFarmOpen(isPigFarmOpen => !isPigFarmOpen);
-    isViewerOpen ||
-    isPlatformOpen ||
-    isKahootOpen ||
-    isWhiteBoardOpen ||
-    isCowFarmOpen
+      : isOpenedLast === 'pigfarm' && setIsPigFarmOpen(isPigFarmOpen => !isPigFarmOpen);
+    isViewerOpen || isPlatformOpen || isKahootOpen || isWhiteBoardOpen || isCowFarmOpen
       ? setIsOpenedLast(isOpenedLast => 'pigfarm')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -108,24 +89,15 @@ const TeacherPageFarm = () => {
       ? setIsPlatformOpen(isPlatformOpen => !isPlatformOpen)
       : isOpenedLast === 'platform' &&
         setIsPlatformOpen(isPlatformOpen => !isPlatformOpen);
-    isViewerOpen ||
-    isWhiteBoardOpen ||
-    isKahootOpen ||
-    isCowFarmOpen ||
-    isPigFarmOpen
+    isViewerOpen || isWhiteBoardOpen || isKahootOpen || isCowFarmOpen || isPigFarmOpen
       ? setIsOpenedLast(isOpenedLast => 'platform')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleKahoot = () => {
     !isOpenedLast
       ? setIsKahootOpen(isKahootOpen => !isKahootOpen)
-      : isOpenedLast === 'kahoot' &&
-        setIsKahootOpen(isKahootOpen => !isKahootOpen);
-    isPlatformOpen ||
-    isWhiteBoardOpen ||
-    isViewerOpen ||
-    isCowFarmOpen ||
-    isPigFarmOpen
+      : isOpenedLast === 'kahoot' && setIsKahootOpen(isKahootOpen => !isKahootOpen);
+    isPlatformOpen || isWhiteBoardOpen || isViewerOpen || isCowFarmOpen || isPigFarmOpen
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -160,10 +132,7 @@ const TeacherPageFarm = () => {
           <KahootLogo />
         </KahootBtn>
       </TeacherFarmButtonBox>
-      <TeacherFarmButtonBoxHideSwitch
-        id="no-transform"
-        onClick={toggleButtonBox}
-      >
+      <TeacherFarmButtonBoxHideSwitch id="no-transform" onClick={toggleButtonBox}>
         {isButtonBoxOpen ? <BoxHideRightSwitch /> : <BoxHideLeftSwitch />}
       </TeacherFarmButtonBoxHideSwitch>
 

@@ -2,7 +2,6 @@ import TelegramHRRedirect from 'pages/HR/TelegramHRRedirect/TelegramHRRedirect';
 import ViberHRRedirect from 'pages/HR/ViberHRRedirect/ViberHRRedirect';
 import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
-import { CollectionsAdminPanel } from 'pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel';
 import { StreamDeutschA2Free } from 'pages/Streams/Deutsch A2/StreamDeutschA2Free';
 import { StreamDeutschFree } from 'pages/Streams/Deutsch/StreamDeutschFree';
 import { HostKahootAdminPanel } from 'pages/Streams/HostKahootAdminPanel/HostKahootAdminPanel';
@@ -308,9 +307,19 @@ const UniAdminPanel = lazy(() =>
     /* webpackChunkName: "Pl University Links Admin Panel page" */ '../pages/Streams/AdminPanel/UniAdminPanel'
   )
 );
+const CollectionsAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Collections Admin Panel page" */ '../pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel'
+  )
+);
 const UniCollectionsAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Pl University Collections Admin Panel page" */ '../pages/Streams/CollectionsAdminPanel/UniCollectionsAdminPanel'
+  )
+);
+const ToursAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Tours Admin Panel page" */ '../pages/Streams/ToursAdminPanel/ToursAdminPanel'
   )
 );
 const UniKahootAdminPanel = lazy(() =>
@@ -438,11 +447,11 @@ const TeacherPageFarm = lazy(() =>
 //     /* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouse'
 //   )
 // );
-const TeacherPageWarehouseHotel = lazy(() =>
-  import(
-    /* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouseHotel'
-  )
-);
+// const TeacherPageWarehouseHotel = lazy(() =>
+//   import(
+//     /* webpackChunkName: "Teacher Page Warehouse" */ '../pages/TeacherPage/TeacherPageWarehouseHotel'
+//   )
+// );
 const TeacherPageWarehouseHotelTrialPL = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page Warehouse For Polski Trial Lesson" */ '../pages/TeacherPage/TeacherPageWarehouseHotelTrialPL'
@@ -879,6 +888,7 @@ export const App = () => {
               element={<UniCollectionsAdminPanel />}
               noindex={true}
             />
+            <Route path="tour-admin-panel" element={<ToursAdminPanel />} noindex={true} />
             <Route path="ratings" element={<WebinarsRatings />} noindex={true} />
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>
@@ -1115,7 +1125,11 @@ export const App = () => {
             <Route path="trials-kids" element={<TeacherTrialPage />} noindex={true} />
             <Route path="trials-pl" element={<TeacherTrialPage />} noindex={true} />
             <Route path="trials-de" element={<TeacherTrialPage />} noindex={true} />
-            <Route path="pedagogium-2" element={<TeacherPagePedagogium />} noindex={true} />
+            <Route
+              path="pedagogium-2"
+              element={<TeacherPagePedagogium />}
+              noindex={true}
+            />
             <Route path="wstijo" element={<TeacherPageUni />} noindex={true} />
             <Route path="wsbmir" element={<TeacherPage />} noindex={true} />
             <Route path="kubrak" element={<TeacherPageIndividual />} noindex={true} />

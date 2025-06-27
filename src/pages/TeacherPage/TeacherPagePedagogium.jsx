@@ -1,7 +1,11 @@
 import useSize from '@react-hook/size';
+import axios from 'axios';
 import { InputBtn, KahootBtn, KahootLogo } from 'components/Stream/Stream.styled';
 import { nanoid } from 'nanoid';
 import { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import logo from '../../img/svg/supportIcons/tourLogo.png';
+import { HostKahootsPedagogium } from './HostKahoots/HostKahootsPedagogium';
 import { NameInput } from './NameInput/NameInput';
 import { LessonInfoBox, NameInputBtn } from './NameInput/NameInput.styled';
 import { Platform } from './Platform/Platform';
@@ -11,26 +15,27 @@ import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
   BoxHideUpSwitch,
-  ViewerBtn,
-  ViewerLogo,
-  WhiteBoardBtn,
-  WhiteBoardLogo,
   InputButtonBox,
   PlatformBtn,
   PlatformLogo,
   TeacherButtonBox,
   TeacherButtonBoxHideSwitch,
+  ViewerBtn,
+  ViewerLogo,
+  WhiteBoardBtn,
+  WhiteBoardLogo,
 } from './TeacherPage.styled';
+import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
 import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
 import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
-import { QRCodeModal } from './TeacherQuiz/TeacherQR';
+import { TourViewer } from './TourViewer/TourViewer';
+import { TourBtn, TourLogo } from './TourViewer/TourViewer.styled';
 import { ViewerUni } from './Viewer/ViewerUni';
-import { HostKahootsPedagogium } from './HostKahoots/HostKahootsPedagogium';
-import axios from 'axios';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 
 const group = 'logistics_2';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
 const TeacherPagePedagogium = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -50,6 +55,9 @@ const TeacherPagePedagogium = () => {
   const [width, height] = useSize(document.body);
   const [isNameInputOpen, setIsNameInputOpen] = useState(true);
   const [teacherInfo, setTeacherInfo] = useState({});
+  const [isTourOpen, setIsTourOpen] = useState(false);
+  const [tour, setTour] = useState('');
+  const location = useLocation().pathname.split('/teacher/')[1];
   const questionID = useRef(nanoid(5));
 
   const closeInputs = () => {
@@ -82,15 +90,12 @@ const TeacherPagePedagogium = () => {
     );
 
     try {
-      const response = await axios.post(
-        'https://ap-server-8qi1.onrender.com/pedagogium-lessons',
-        {
-          page: group,
-          teacherName: nameValue,
-          lessonName: levelValue,
-          lessonNumber: lessonValue,
-        }
-      );
+      const response = await axios.post('/pedagogium-lessons', {
+        page: group,
+        teacherName: nameValue,
+        lessonName: levelValue,
+        lessonNumber: lessonValue,
+      });
 
       localStorage.setItem('lessonId', response.data.lessonId);
       localStorage.setItem('groupName', group);
@@ -98,13 +103,28 @@ const TeacherPagePedagogium = () => {
       localStorage.setItem('lessonName', levelValue);
       localStorage.setItem('lessonNumber', lessonValue);
     } catch (e) {
-      alert('Помилка створення уроку: ' + e.response.data);
+      alert('Error creating a lesson: ' + e.response.data);
       console.error(e.response.data);
     }
   };
 
   useEffect(() => {
     document.title = `Teacher ${group.toLocaleUpperCase()} | AP Education`;
+
+    const getTour = async () => {
+      try {
+        const tours = await axios.get('/tours');
+        const teacherPageTour = tours.data.find(tour => tour.page === location);
+        if (teacherPageTour) {
+          setTour(prev => (prev = teacherPageTour.link));
+        } else {
+          throw new Error('Tour not found');
+        }
+      } catch (error) {
+        console.error('Error fetching tour data:', error);
+      }
+    };
+    getTour();
 
     if (localStorage.getItem('groupName') === group) {
       setTeacherInfo({
@@ -113,8 +133,23 @@ const TeacherPagePedagogium = () => {
         level: localStorage.getItem('lessonName'),
       });
     }
-  }, []);
+  }, [location]);
 
+  const toggleTourViewer = () => {
+    !isOpenedLast
+      ? setIsTourOpen(isTourOpen => !isTourOpen)
+      : isOpenedLast === 'tour' && setIsTourOpen(isTourOpen => !isTourOpen);
+    isWhiteBoardOpen ||
+    isPlatformOpen ||
+    isKahootOpen ||
+    isViewerOpen ||
+    isQuizInputOpen ||
+    isQuizOptionsOpen ||
+    isQuizTrueFalseOpen ||
+    isQuizFeedbackOpen
+      ? setIsOpenedLast(isOpenedLast => 'tour')
+      : setIsOpenedLast(isOpenedLast => '');
+  };
   const toggleViewer = () => {
     !isOpenedLast
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)
@@ -122,6 +157,7 @@ const TeacherPagePedagogium = () => {
     isWhiteBoardOpen ||
     isPlatformOpen ||
     isKahootOpen ||
+    isTourOpen ||
     isQuizInputOpen ||
     isQuizOptionsOpen ||
     isQuizTrueFalseOpen ||
@@ -137,6 +173,7 @@ const TeacherPagePedagogium = () => {
     isViewerOpen ||
     isPlatformOpen ||
     isKahootOpen ||
+    isTourOpen ||
     isQuizInputOpen ||
     isQuizOptionsOpen ||
     isQuizTrueFalseOpen ||
@@ -152,6 +189,7 @@ const TeacherPagePedagogium = () => {
     isViewerOpen ||
     isWhiteBoardOpen ||
     isKahootOpen ||
+    isTourOpen ||
     isQuizInputOpen ||
     isQuizOptionsOpen ||
     isQuizTrueFalseOpen ||
@@ -170,6 +208,7 @@ const TeacherPagePedagogium = () => {
     isPlatformOpen ||
     isWhiteBoardOpen ||
     isViewerOpen ||
+    isTourOpen ||
     isQuizInputOpen ||
     isQuizOptionsOpen ||
     isQuizTrueFalseOpen ||
@@ -245,6 +284,11 @@ const TeacherPagePedagogium = () => {
         {teacherInfo.level} {teacherInfo.lesson}
       </LessonInfoBox>
       <TeacherButtonBox className={!isButtonBoxOpen ? 'hidden' : ''}>
+        {tour && (
+          <TourBtn onClick={toggleTourViewer}>
+            <TourLogo src={logo} alt="Tour logo" />
+          </TourBtn>
+        )}
         <ViewerBtn onClick={toggleViewer}>
           <ViewerLogo />
         </ViewerBtn>
@@ -281,6 +325,15 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
       />
 
+      {tour && (
+        <TourViewer
+          tour={tour}
+          sectionWidth={width}
+          isTourOpen={isTourOpen}
+          isOpenedLast={isOpenedLast}
+        />
+      )}
+
       <WhiteBoard
         page={`pedagogium_${group}`}
         sectionWidth={width}
@@ -314,6 +367,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <TeacherQuizOptions
         page={group}
@@ -325,6 +379,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <TeacherQuizTrueFalse
         page={group}
@@ -336,6 +391,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
+        uni={true}
       />
       <QRCodeModal
         onClose={toggleQROPen}
@@ -345,6 +401,7 @@ const TeacherPagePedagogium = () => {
       <NameInput
         isNameInputOpen={isNameInputOpen}
         changeTeacherInfo={changeTeacherInfo}
+        uni={true}
       />
     </>
   );

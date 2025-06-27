@@ -110,7 +110,6 @@ export const AdminInputNote = styled(InputNote)`
 
 export const UserDBTable = styled.table`
   max-width: 50vw;
-  min-height: 80vh;
   margin: 0 auto;
 
   table-layout: auto;

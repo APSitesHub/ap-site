@@ -87,7 +87,11 @@ export const TeacherQuizContainer = ({
 
       emitQuizEnd();
     } catch (e) {
-      alert('Помилка збереження відповідей. Спробуйте ще раз.');
+      alert(
+        uni
+          ? 'Error saving answers. Try again.'
+          : 'Помилка збереження відповідей. Спробуйте ще раз.'
+      );
       console.log(e);
     }
   };
