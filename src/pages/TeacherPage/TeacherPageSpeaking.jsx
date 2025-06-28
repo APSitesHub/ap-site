@@ -119,15 +119,18 @@ const TeacherPageSpeaking = () => {
 
   const updateFeedback = (id, values) => {
     const userToUpdate = users.find(user => user._id === id);
+
     userToUpdate.successRate = values.successRate;
     userToUpdate.temperament = values.temperament;
-    userToUpdate.feedback[0].grammar = values.feedback.grammar;
-    userToUpdate.feedback[0].lexis = values.feedback.lexis;
-    userToUpdate.feedback[0].speaking = values.feedback.speaking;
-    userToUpdate.feedback[0].listening = values.feedback.listening;
-    userToUpdate.feedback[0].activity = values.feedback.activity;
-    userToUpdate.feedback[0].text = values.feedback.text;
-    userToUpdate.feedback[0].grade = values.feedback.grade;
+    userToUpdate.feedback.push({
+      grammar: values.feedback.grammar,
+      lexis: values.feedback.lexis,
+      speaking: values.feedback.speaking,
+      listening: values.feedback.listening,
+      activity: values.feedback.activity,
+      text: values.feedback.text,
+      grade: values.feedback.grade,
+    });
 
     setUsers(users => (users = [...users.filter(user => user._id !== id), userToUpdate]));
   };

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import {
   StudentQuizBox,
@@ -6,7 +7,6 @@ import {
   StudentQuizForm,
   StudentQuizSubmitBtn,
 } from './StudentInput.styled';
-import axios from 'axios';
 
 export const StudentInput = ({
   isInputOpen,
