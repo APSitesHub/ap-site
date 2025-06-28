@@ -188,9 +188,6 @@ export const TeacherPageSpeakingEditForm = ({
   ];
 
   const handleEditStudentSubmit = async values => {
-    console.log(169, values);
-    console.log(startDate);
-
     const hasErrors = validations
       .map(field => {
         if (!field.value) {
@@ -215,7 +212,7 @@ export const TeacherPageSpeakingEditForm = ({
             ? '0' + (startDate.getMonth() + 1)
             : startDate.getMonth() + 1
         }.${startDate.getFullYear()}:
-${new Date().toLocaleString('uk-UA', { timeZone: '+02:00' })}:
+${new Date().toLocaleString('uk-UA')}:
 ${values.feedback}`,
         date: startDate,
         activity: activityValue,
@@ -226,7 +223,6 @@ ${values.feedback}`,
         grade: gradeValue,
       },
     };
-    console.log('scValues', scValues);
 
     setIsLoading(isLoading => (isLoading = true));
     try {
