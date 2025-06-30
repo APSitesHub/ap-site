@@ -412,9 +412,6 @@ function Room({ isAdmin, lang }) {
                 startScreenSharing: false,
                 enableEmailInStats: false,
                 disableSelfViewSettings: true,
-                filmstrip: {
-                  disabled: true,
-                },
                 constraints: {
                   video: {
                     height: {
