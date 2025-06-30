@@ -8,6 +8,7 @@ import { TeacherChat } from './TeacherChat/TeacherChat';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
+  Clock,
   CowLogo,
   FarmBtn,
   PigLogo,
@@ -25,6 +26,12 @@ import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 import { CowFarm } from './Farm/CowFarm';
 import { PigFarm } from './Farm/PigFarm';
 
+const getTime = () =>
+  new Date().toLocaleTimeString('uk-UA', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
 const TeacherPageFarm = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
@@ -35,6 +42,7 @@ const TeacherPageFarm = () => {
   const [isPigFarmOpen, setIsPigFarmOpen] = useState(false);
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [width, height] = useSize(document.body);
+  const [time, setTime] = useState(getTime);
   const location = useLocation().pathname.split('/teacher/')[1];
 
   const getLocation = location => {
@@ -49,6 +57,22 @@ const TeacherPageFarm = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()} | AP Education`;
+
+    const now = new Date();
+    const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    let interval;
+
+    const timeout = setTimeout(() => {
+      setTime(getTime());
+      interval = setInterval(() => {
+        setTime(getTime());
+      }, 60_000);
+    }, msToNextMinute);
+
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
   }, [page]);
 
   const toggleViewer = () => {
@@ -175,6 +199,7 @@ const TeacherPageFarm = () => {
         isOpenedLast={isOpenedLast}
       />
       <TeacherChat page={page} />
+      <Clock>{time}</Clock>
     </>
   );
 };

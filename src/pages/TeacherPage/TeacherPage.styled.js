@@ -327,3 +327,17 @@ export const InputButtonBox = styled.div`
     pointer-events: none;
   }
 `;
+
+export const Clock = styled.div`
+  position: fixed;
+  bottom: 80px;
+  left: 25px;
+  opacity: 0.7;
+  z-index: 0;
+  pointer-events: none;
+  color: #000;
+  font-size: 28px;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 8px;
+`;

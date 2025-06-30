@@ -15,6 +15,7 @@ import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
   BoxHideUpSwitch,
+  Clock,
   InputButtonBox,
   PlatformBtn,
   PlatformLogo,
@@ -37,6 +38,12 @@ import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 const group = 'logistics_2';
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
+const getTime = () =>
+  new Date().toLocaleTimeString('uk-UA', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
 const TeacherPagePedagogium = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
@@ -52,6 +59,7 @@ const TeacherPagePedagogium = () => {
   const [isOpenedLast, setIsOpenedLast] = useState('');
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   // eslint-disable-next-line
+  const [time, setTime] = useState(getTime);
   const [width, height] = useSize(document.body);
   const [isNameInputOpen, setIsNameInputOpen] = useState(true);
   const [teacherInfo, setTeacherInfo] = useState({});
@@ -133,6 +141,22 @@ const TeacherPagePedagogium = () => {
         level: localStorage.getItem('lessonName'),
       });
     }
+
+    const now = new Date();
+    const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    let interval;
+
+    const timeout = setTimeout(() => {
+      setTime(getTime());
+      interval = setInterval(() => {
+        setTime(getTime());
+      }, 60_000);
+    }, msToNextMinute);
+
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
   }, [location]);
 
   const toggleTourViewer = () => {
@@ -403,6 +427,7 @@ const TeacherPagePedagogium = () => {
         changeTeacherInfo={changeTeacherInfo}
         uni={true}
       />
+      <Clock>{time}</Clock>
     </>
   );
 };

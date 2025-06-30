@@ -13,6 +13,7 @@ import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
   BoxHideUpSwitch,
+  Clock,
   InputButtonBox,
   PlatformBtn,
   PlatformLogo,
@@ -29,6 +30,12 @@ import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { ViewerIndividual } from './Viewer/ViewerIndividual';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 
+const getTime = () =>
+  new Date().toLocaleTimeString('uk-UA', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
 const TeacherPageIndividual = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
@@ -41,6 +48,7 @@ const TeacherPageIndividual = () => {
   const [isOpenedLast, setIsOpenedLast] = useState('');
   // eslint-disable-next-line
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
+  const [time, setTime] = useState(getTime);
   const [width, height] = useSize(document.body);
   const page = useLocation().pathname.split('/teacher/')[1];
   const [isNameInputOpen, setIsNameInputOpen] = useState(false);
@@ -68,6 +76,22 @@ const TeacherPageIndividual = () => {
     document.title = `Teacher ${
       page.charAt(0).toUpperCase() + page.slice(1)
     } | AP Education`;
+
+    const now = new Date();
+    const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    let interval;
+
+    const timeout = setTimeout(() => {
+      setTime(getTime());
+      interval = setInterval(() => {
+        setTime(getTime());
+      }, 60_000);
+    }, msToNextMinute);
+
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
   }, [page]);
 
   const toggleViewer = () => {
@@ -266,6 +290,7 @@ const TeacherPageIndividual = () => {
         isNameInputOpen={isNameInputOpen}
         changeTeacherInfo={changeTeacherInfo}
       />
+      <Clock>{time}</Clock>
     </>
   );
 };

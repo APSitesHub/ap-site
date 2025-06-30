@@ -23,6 +23,7 @@ import {
   WhiteBoardBtn,
   WhiteBoardLogo,
   QRBtn,
+  Clock,
 } from './TeacherPage.styled';
 import { TeacherQuizInput } from './TeacherQuiz/TeacherQuizInput';
 import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
@@ -30,6 +31,12 @@ import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { ViewerUni } from './Viewer/ViewerUni';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 import { QRCodeModal } from './TeacherQuiz/TeacherQR';
+
+const getTime = () =>
+  new Date().toLocaleTimeString('uk-UA', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 
 const TeacherPageUni = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -45,6 +52,7 @@ const TeacherPageUni = () => {
   // eslint-disable-next-line
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
+  const [time, setTime] = useState(getTime);
   const location = useLocation().pathname.split('/teacher/')[1];
   const [isNameInputOpen, setIsNameInputOpen] = useState(false);
   const [teacherInfo, setTeacherInfo] = useState({});
@@ -85,6 +93,22 @@ const TeacherPageUni = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()}`;
+
+    const now = new Date();
+    const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    let interval;
+
+    const timeout = setTimeout(() => {
+      setTime(getTime());
+      interval = setInterval(() => {
+        setTime(getTime());
+      }, 60_000);
+    }, msToNextMinute);
+
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
   }, [page]);
 
   const toggleViewer = () => {
@@ -296,6 +320,7 @@ const TeacherPageUni = () => {
         isOpen={isQROpen}
         url={`https://${location}.ap.education/lesson/logistics`}
       />
+      <Clock>{time}</Clock>
     </>
   );
 };
