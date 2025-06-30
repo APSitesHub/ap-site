@@ -7,6 +7,7 @@ import { PlatformTrial } from './Platform/PlatformTrial';
 import {
   BoxHideDownSwitch,
   BoxHideUpSwitch,
+  Clock,
   PlatformBtn,
   PlatformLogo,
   TeacherButtonBox,
@@ -22,6 +23,12 @@ import { LoaderWrapper } from 'components/SharedLayout/Loaders/Loader.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import axios from 'axios';
 
+const getTime = () =>
+  new Date().toLocaleTimeString('uk-UA', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
 const TeacherTrialPage = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
@@ -33,6 +40,7 @@ const TeacherTrialPage = () => {
   const [collection, setCollection] = useState({});
   // eslint-disable-next-line
   const [width, height] = useSize(document.body);
+  const [time, setTime] = useState(getTime);
   const location = useLocation().pathname.split('/teacher/')[1];
 
   const getLocation = location => {
@@ -63,13 +71,27 @@ const TeacherTrialPage = () => {
       }
     };
     getCollectionsRequest();
+
+    const now = new Date();
+    const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+
+    const timeout = setTimeout(() => {
+      setTime(getTime());
+
+      const interval = setInterval(() => {
+        setTime(getTime());
+      }, 60_000);
+
+      return () => clearInterval(interval);
+    }, msToNextMinute);
+
+    return () => clearTimeout(timeout);
   }, [page]);
 
   const toggleViewer = () => {
     !isOpenedLast
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)
-      : isOpenedLast === 'viewer' &&
-        setIsViewerOpen(isViewerOpen => !isViewerOpen);
+      : isOpenedLast === 'viewer' && setIsViewerOpen(isViewerOpen => !isViewerOpen);
     isWhiteBoardOpen || isPlatformOpen || isKahootOpen
       ? setIsOpenedLast(isOpenedLast => 'viewer')
       : setIsOpenedLast(isOpenedLast => '');
@@ -95,8 +117,7 @@ const TeacherTrialPage = () => {
   const toggleKahoot = () => {
     !isOpenedLast
       ? setIsKahootOpen(isKahootOpen => !isKahootOpen)
-      : isOpenedLast === 'kahoot' &&
-        setIsKahootOpen(isKahootOpen => !isKahootOpen);
+      : isOpenedLast === 'kahoot' && setIsKahootOpen(isKahootOpen => !isKahootOpen);
     isPlatformOpen || isWhiteBoardOpen || isViewerOpen
       ? setIsOpenedLast(isOpenedLast => 'kahoot')
       : setIsOpenedLast(isOpenedLast => '');
@@ -160,6 +181,7 @@ const TeacherTrialPage = () => {
           <Loader />
         </LoaderWrapper>
       )}
+      <Clock>{time}</Clock>
     </>
   );
 };
