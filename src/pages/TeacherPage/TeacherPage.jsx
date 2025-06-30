@@ -102,6 +102,13 @@ const TeacherPage = () => {
   const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
     setIsNameInputOpen(isOpen => (isOpen = false));
 
+    setTeacherInfo(
+      teacherInfo =>
+        (teacherInfo = {
+          ...{ name: nameValue, lesson: lessonValue, level: levelValue },
+        })
+    );
+
     if (
       localStorage.getItem('groupName') === page &&
       localStorage.getItem('teacherName') === nameValue &&
@@ -110,12 +117,6 @@ const TeacherPage = () => {
     ) {
       return;
     }
-    setTeacherInfo(
-      teacherInfo =>
-        (teacherInfo = {
-          ...{ name: nameValue, lesson: lessonValue, level: levelValue },
-        })
-    );
 
     try {
       const response = await axios.post('/lesson-results', {

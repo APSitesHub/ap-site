@@ -24,7 +24,7 @@ export const NameInput = ({ isNameInputOpen, changeTeacherInfo, uni }) => {
 
     document.querySelector('input[name="levelValue"]').value =
       localStorage.getItem('lessonName') || '';
-  }, []);
+  }, [location.pathname]);
 
   return (
     <NameInputBox className={isNameInputOpen ? 'shown' : 'hidden'}>
@@ -38,8 +38,8 @@ export const NameInput = ({ isNameInputOpen, changeTeacherInfo, uni }) => {
         name="levelValue"
         placeholder={
           uni
-            ? `${isPedagogium ? 'Назва уроку' : 'Рівень'}`
-            : `${isPedagogium ? 'Lesson' : 'Level'}`
+            ? `${isPedagogium ? 'Lesson' : 'Level'}`
+            : `${isPedagogium ? 'Назва уроку' : 'Рівень'}`
         }
       ></TeacherInfoInput>
       <TeacherInfoInput
