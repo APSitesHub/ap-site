@@ -338,6 +338,16 @@ const C1SpeakingPanel = lazy(() =>
     /* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel'
   )
 );
+const LessonResultsPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Lesson Results Panel page" */ '../pages/Streams/LessonResultsPanel/LessonResultsPanel'
+  )
+);
+const UniLessonResultsPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Uni Lesson Results Panel page" */ '../pages/Streams/LessonResultsPanel/UniLessonResultsPanel'
+  )
+);
 const TeacherAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Admin Panel page" */ '../pages/Streams/TeacherAdminPanel/TeacherAdminPanel'
@@ -837,6 +847,16 @@ export const App = () => {
             <Route
               path="teacher-teamlead-panel"
               element={<TeacherAdminPanel />}
+              noindex={true}
+            />
+            <Route
+              path="lesson-results-panel"
+              element={<LessonResultsPanel />}
+              noindex={true}
+            />
+            <Route
+              path="uni-lesson-results-panel"
+              element={<UniLessonResultsPanel />}
               noindex={true}
             />
             <Route path="tcp" element={<TeacherControlPage />} noindex={true} />

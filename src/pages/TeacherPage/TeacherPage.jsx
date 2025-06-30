@@ -28,6 +28,10 @@ import { TeacherQuizOptions } from './TeacherQuiz/TeacherQuizOptions';
 import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { Viewer } from './Viewer/Viewer';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+// axios.defaults.baseURL = 'http://localhost:3001';
 
 const TeacherPage = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -55,14 +59,6 @@ const TeacherPage = () => {
 
   const changeQuestionID = () => {
     questionID.current = nanoid(5);
-  };
-
-  const changeTeacherInfo = (nameValue, lessonValue, levelValue) => {
-    setTeacherInfo(
-      teacherInfo =>
-        (teacherInfo = { ...{ name: nameValue, lesson: lessonValue, level: levelValue } })
-    );
-    setIsNameInputOpen(isOpen => (isOpen = false));
   };
 
   const getLocation = location => {
@@ -102,6 +98,43 @@ const TeacherPage = () => {
     }
   };
   const page = getLocation(location);
+
+  const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
+    setIsNameInputOpen(isOpen => (isOpen = false));
+
+    if (
+      localStorage.getItem('groupName') === page &&
+      localStorage.getItem('teacherName') === nameValue &&
+      localStorage.getItem('lessonName') === levelValue &&
+      localStorage.getItem('lessonNumber') === lessonValue
+    ) {
+      return;
+    }
+    setTeacherInfo(
+      teacherInfo =>
+        (teacherInfo = {
+          ...{ name: nameValue, lesson: lessonValue, level: levelValue },
+        })
+    );
+
+    try {
+      const response = await axios.post('/lesson-results', {
+        page: page,
+        teacherName: nameValue,
+        lessonName: levelValue,
+        lessonNumber: lessonValue,
+      });
+
+      localStorage.setItem('lessonId', response.data.lessonId);
+      localStorage.setItem('groupName', page);
+      localStorage.setItem('teacherName', nameValue);
+      localStorage.setItem('lessonName', levelValue);
+      localStorage.setItem('lessonNumber', lessonValue);
+    } catch (e) {
+      alert('Error creating a lesson: ' + e.response.data);
+      console.error(e.response.data);
+    }
+  };
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()} | AP Education`;

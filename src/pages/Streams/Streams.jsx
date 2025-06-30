@@ -234,7 +234,8 @@ const Streams = () => {
         !location.pathname.includes('-chat') &&
         !location.pathname.includes('tcp') &&
         !location.pathname.includes('speaking-panel') &&
-        !location.pathname.includes('free') ? (
+        !location.pathname.includes('free') &&
+        !location.pathname.includes('lesson-results') ? (
           <Formik
             initialValues={initialLoginValues}
             onSubmit={handleLoginSubmit}

@@ -30,6 +30,7 @@ import { TeacherQuizTrueFalse } from './TeacherQuiz/TeacherQuizTrueFalse';
 import { ViewerUni } from './Viewer/ViewerUni';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 import { QRCodeModal } from './TeacherQuiz/TeacherQR';
+import axios from 'axios';
 
 const TeacherPageUni = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -62,13 +63,6 @@ const TeacherPageUni = () => {
     questionID.current = nanoid(5);
   };
 
-  const changeTeacherInfo = (nameValue, lessonValue, levelValue) => {
-    setTeacherInfo(
-      teacherInfo =>
-        (teacherInfo = { ...{ name: nameValue, lesson: lessonValue, level: levelValue } })
-    );
-  };
-
   const getLocation = location => {
     switch (location) {
       case 'pedagogium-1':
@@ -82,6 +76,44 @@ const TeacherPageUni = () => {
     }
   };
   const page = getLocation(location);
+
+  const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
+    setIsNameInputOpen(isOpen => (isOpen = false));
+
+    if (
+      localStorage.getItem('groupName') === page &&
+      localStorage.getItem('teacherName') === nameValue &&
+      localStorage.getItem('lessonName') === levelValue &&
+      localStorage.getItem('lessonNumber') === lessonValue
+    ) {
+      return;
+    }
+    setTeacherInfo(
+      teacherInfo =>
+        (teacherInfo = {
+          ...{ name: nameValue, lesson: lessonValue, level: levelValue },
+        })
+    );
+
+    try {
+      const response = await axios.post('/uni-lesson-results', {
+        page: page,
+        uniName: location,
+        teacherName: nameValue,
+        lessonName: levelValue,
+        lessonNumber: lessonValue,
+      });
+
+      localStorage.setItem('lessonId', response.data.lessonId);
+      localStorage.setItem('groupName', page);
+      localStorage.setItem('teacherName', nameValue);
+      localStorage.setItem('lessonName', levelValue);
+      localStorage.setItem('lessonNumber', lessonValue);
+    } catch (e) {
+      alert('Error creating a lesson: ' + e.response.data);
+      console.error(e.response.data);
+    }
+  };
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()}`;
@@ -262,7 +294,7 @@ const TeacherPageUni = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
-        uni={true}
+        uni={location}
       />
       <TeacherQuizOptions
         page={page}
@@ -273,7 +305,7 @@ const TeacherPageUni = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
-        uni={true}
+        uni={location}
       />
       <TeacherQuizTrueFalse
         page={page}
@@ -284,7 +316,7 @@ const TeacherPageUni = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
-        uni={true}
+        uni={location}
       />
       <NameInput
         isNameInputOpen={isNameInputOpen}
