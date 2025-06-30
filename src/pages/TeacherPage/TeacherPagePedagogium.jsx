@@ -144,18 +144,19 @@ const TeacherPagePedagogium = () => {
 
     const now = new Date();
     const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    let interval;
 
     const timeout = setTimeout(() => {
       setTime(getTime());
-
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         setTime(getTime());
       }, 60_000);
-
-      return () => clearInterval(interval);
     }, msToNextMinute);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
   }, [location]);
 
   const toggleTourViewer = () => {
