@@ -407,7 +407,6 @@ function Room({ isAdmin, lang }) {
                 followMeEnabled: isAdmin,
                 disableDeepLinking: true,
                 startWithAudioMuted: true,
-                disableInitialGUM: !isAdmin,
                 disableModeratorIndicator: true,
                 disableReactions: true,
                 startScreenSharing: false,
@@ -416,11 +415,14 @@ function Room({ isAdmin, lang }) {
                 constraints: {
                   video: {
                     height: {
-                      ideal: isAdmin ? 1080 : 720,
+                      ideal: 1080,
                       max: 1080,
                       min: 480,
                     },
                   },
+                },
+                p2p: {
+                  enabled: false,
                 },
                 prejoinConfig: {
                   enabled: true,
@@ -499,13 +501,11 @@ function Room({ isAdmin, lang }) {
                 hideParticipantsStats: true,
                 disabledNotifications: [
                   'connection.CONNFAIL', // shown when the connection fails,
-                  'dialog.cameraConstraintFailedError', // shown when the camera failed
                   'dialog.cameraNotSendingData', // shown when there's no feed from user's camera
                   'dialog.kickTitle', // shown when user has been kicked
                   'dialog.liveStreaming', // livestreaming notifications (pending, on, off, limits)
                   'dialog.lockTitle', // shown when setting conference password fails
                   'dialog.maxUsersLimitReached', // shown when maximmum users limit has been reached
-                  'dialog.micNotSendingData', // shown when user's mic is not sending any audio
                   'dialog.passwordNotSupportedTitle', // shown when setting conference password fails due to password format
                   'dialog.recording', // recording notifications (pending, on, off, limits)
                   'dialog.remoteControlTitle', // remote control notifications (allowed, denied, start, stop, error)
@@ -523,7 +523,6 @@ function Room({ isAdmin, lang }) {
                   'liveStreaming.unavailableTitle', // shown when livestreaming service is not reachable
                   'lobby.joinRejectedMessage', // shown when while in a lobby, user's request to join is rejected
                   'lobby.notificationTitle', // shown when lobby is toggled and when join requests are allowed / denied
-                  'notify.audioUnmuteBlockedTitle', // shown when mic unmute blocked
                   'notify.chatMessages', // shown when receiving chat messages while the chat window is closed
                   'notify.connectedOneMember', // show when a participant joined
                   'notify.connectedThreePlusMembers', // show when more than 2 participants joined simultaneously

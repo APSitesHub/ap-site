@@ -2,7 +2,6 @@ import TelegramHRRedirect from 'pages/HR/TelegramHRRedirect/TelegramHRRedirect';
 import ViberHRRedirect from 'pages/HR/ViberHRRedirect/ViberHRRedirect';
 import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
-import { CollectionsAdminPanel } from 'pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel';
 import { StreamDeutschA2Free } from 'pages/Streams/Deutsch A2/StreamDeutschA2Free';
 import { StreamDeutschFree } from 'pages/Streams/Deutsch/StreamDeutschFree';
 import { HostKahootAdminPanel } from 'pages/Streams/HostKahootAdminPanel/HostKahootAdminPanel';
@@ -308,9 +307,19 @@ const UniAdminPanel = lazy(() =>
     /* webpackChunkName: "Pl University Links Admin Panel page" */ '../pages/Streams/AdminPanel/UniAdminPanel'
   )
 );
+const CollectionsAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Collections Admin Panel page" */ '../pages/Streams/CollectionsAdminPanel/CollectionsAdminPanel'
+  )
+);
 const UniCollectionsAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Pl University Collections Admin Panel page" */ '../pages/Streams/CollectionsAdminPanel/UniCollectionsAdminPanel'
+  )
+);
+const ToursAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Tours Admin Panel page" */ '../pages/Streams/ToursAdminPanel/ToursAdminPanel'
   )
 );
 const UniKahootAdminPanel = lazy(() =>
@@ -899,6 +908,7 @@ export const App = () => {
               element={<UniCollectionsAdminPanel />}
               noindex={true}
             />
+            <Route path="tour-admin-panel" element={<ToursAdminPanel />} noindex={true} />
             <Route path="ratings" element={<WebinarsRatings />} noindex={true} />
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>

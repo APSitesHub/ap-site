@@ -6,7 +6,6 @@ import {
   AttendanceArrowLeft,
   AttendanceArrowRight,
   AttendanceBox,
-  AttendanceBoxTrial,
   AttendanceBtn,
   AttendanceDebugList,
   AttendanceFlex,

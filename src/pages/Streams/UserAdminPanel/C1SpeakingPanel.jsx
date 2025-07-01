@@ -3,7 +3,9 @@ import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
+import { StyledDatePicker } from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
 import { useEffect, useState } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
 import * as yup from 'yup';
 import { TeacherTable } from '../TeacherAdminPanel/TeacherAdminPanel.styled';
 import {
@@ -32,7 +34,7 @@ const C1SpeakingPanel = () => {
   const [users, setUsers] = useState([]);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState({});
-  const [date, setDate] = useState('30.06.2025');
+  const [date, setDate] = useState(new Date('06/30/2025'));
 
   useEffect(() => {
     document.title = 'User Admin Panel | AP Education';
@@ -205,21 +207,16 @@ const C1SpeakingPanel = () => {
           <TeacherTable>
             <UserDBCaption>
               Юзери з додатково придбаними спікінгами від{' '}
-              <button
-                onClick={() =>
-                  setDate(date =>
-                    date === '06.01.2025'
-                      ? '05.11.2024'
-                      : date === '30.06.2025'
-                      ? '17.03.2025'
-                      : date === '17.03.2025'
-                      ? '06.01.2025'
-                      : '30.06.2025'
-                  )
-                }
-              >
-                {date}
-              </button>
+              <StyledDatePicker
+                selected={date}
+                dateFormat="dd.MM.yyyy"
+                onChange={date => {
+                  setDate(date);
+                }}
+                calendarStartDay={1}
+                shouldCloseOnSelect={true}
+                maxDate={new Date()}
+              />
             </UserDBCaption>
             <thead>
               <UserDBRow>
@@ -229,8 +226,12 @@ const C1SpeakingPanel = () => {
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Номер марафону</UserHeadCell>
-                <UserHeadCell>{`Відвідини після ${date}`}</UserHeadCell>
-                <UserHeadCell>{`Кількість візитів після ${date}`}</UserHeadCell>
+                <UserHeadCell>{`Відвідини після ${new Date(date).toLocaleDateString(
+                  'uk-UA'
+                )}`}</UserHeadCell>
+                <UserHeadCell>{`Кількість візитів після ${new Date(
+                  date
+                ).toLocaleDateString('uk-UA')}`}</UserHeadCell>
                 <UserHeadCell>Мова</UserHeadCell>
                 <UserHeadCell>Потік</UserHeadCell>
                 <UserHeadCell>Знання</UserHeadCell>
@@ -267,7 +268,7 @@ const C1SpeakingPanel = () => {
                   <UserCell
                     style={
                       user.visited.filter(
-                        visit => changeDateFormat(visit) >= changeDateFormat(date)
+                        visit => changeDateFormat(visit) >= Date.parse(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,
@@ -277,7 +278,7 @@ const C1SpeakingPanel = () => {
                     }
                   >
                     {user.visited
-                      .filter(visit => changeDateFormat(visit) >= changeDateFormat(date))
+                      .filter(visit => changeDateFormat(visit) >= Date.parse(date))
                       .map(visit => (
                         <p>{visit}</p>
                       ))}
@@ -286,7 +287,7 @@ const C1SpeakingPanel = () => {
                   <UserCell
                     style={
                       user.visited.filter(
-                        visit => changeDateFormat(visit) >= changeDateFormat(date)
+                        visit => changeDateFormat(visit) >= Date.parse(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,
@@ -297,7 +298,7 @@ const C1SpeakingPanel = () => {
                   >
                     {
                       user.visited.filter(
-                        visit => changeDateFormat(visit) >= changeDateFormat(date)
+                        visit => changeDateFormat(visit) >= Date.parse(date)
                       ).length
                     }
                   </UserCell>
@@ -309,7 +310,7 @@ const C1SpeakingPanel = () => {
                   <UserCell
                     style={
                       user.visited.filter(
-                        visit => changeDateFormat(visit) >= changeDateFormat(date)
+                        visit => changeDateFormat(visit) >= Date.parse(date)
                       ).length >= parseInt(user.package)
                         ? {
                             fontWeight: 700,
