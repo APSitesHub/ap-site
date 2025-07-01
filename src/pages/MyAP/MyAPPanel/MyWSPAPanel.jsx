@@ -18,7 +18,7 @@ import { MyAPStudentChartPl } from 'pages/TeacherPage/StudentChart/MyAPStudentCh
 import { AttendanceWSPA } from '../Attendance/AttendanceWSPA';
 import { LessonFinderWSPA } from '../LessonFinder/LessonFinderWSPA';
 import { PointsWSPA } from '../Points/PointsWSPA';
-import { TimetableWSPA } from '../Timetable.jsx/TimetableWSPA';
+import { TimetableWSPA } from '../Timetable/TimetableWSPA';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 

@@ -170,7 +170,7 @@ export const Timetable = ({
         <>
           <TimetableBody>
             {(!user.package.includes('sc') ||
-              !user.package.includes(`${language}_sc`)) && (
+              (isMultipleLanguages && !user.package.includes(`${language}_sc`))) && (
               <TimetableWebinars>
                 <TimetableWebinarsHead>
                   <TimetableLessonType>Теоретичні заняття</TimetableLessonType>
