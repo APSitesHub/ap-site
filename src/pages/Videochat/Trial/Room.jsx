@@ -28,6 +28,7 @@ import { ColorRing } from 'react-loader-spinner';
 
 const supportedLanguages = ['uk', 'en', 'pl', 'de'];
 const browserLanguage = navigator.language.split('-')[0];
+const wstijoRoomId = 'e9f591ef-4d7f-4970-9c66-4843d362801a';
 
 const debug = true;
 
@@ -399,7 +400,9 @@ function Room({ isAdmin, lang }) {
             }}
           >
             <JitsiMeeting
-              domain="videohost.ap.education"
+              domain={
+                roomID === wstijoRoomId ? 'dev2.ap.education' : 'videohost.ap.education'
+              }
               roomName={roomID}
               configOverwrite={{
                 disableTileEnlargement: true,
