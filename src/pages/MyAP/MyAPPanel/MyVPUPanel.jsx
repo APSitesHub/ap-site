@@ -18,7 +18,7 @@ import { MyAPStudentChartPl } from 'pages/TeacherPage/StudentChart/MyAPStudentCh
 import { AttendanceVPU } from '../Attendance/AttendanceVPU';
 import { LessonFinderVPU } from '../LessonFinder/LessonFinderVPU';
 import { PointsVPU } from '../Points/PointsVPU';
-import { TimetableVPU } from '../Timetable.jsx/TimetableVPU';
+import { TimetableVPU } from '../Timetable/TimetableVPU';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 

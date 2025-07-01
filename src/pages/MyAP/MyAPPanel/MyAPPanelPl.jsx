@@ -19,7 +19,7 @@ import { MyAPStudentChartPl } from 'pages/TeacherPage/StudentChart/MyAPStudentCh
 import { AttendancePl } from '../Attendance/AttendancePl';
 import { LessonFinderPl } from '../LessonFinder/LessonFinderPl';
 import { PointsPl } from '../Points/PointsPl';
-import { TimetablePl } from '../Timetable.jsx/TimetablePl';
+import { TimetablePl } from '../Timetable/TimetablePl';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 

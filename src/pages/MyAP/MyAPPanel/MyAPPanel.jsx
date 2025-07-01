@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Attendance } from '../Attendance/Attendance';
 import { LessonFinder } from '../LessonFinder/LessonFinder';
 import { Points } from '../Points/Points';
-import { Timetable } from '../Timetable.jsx/Timetable';
+import { Timetable } from '../Timetable/Timetable';
 import {
   APPanel,
   APPanelBtn,

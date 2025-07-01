@@ -18,7 +18,7 @@ import { MyAPStudentChartSk } from 'pages/TeacherPage/StudentChart/MyAPStudentCh
 import { AttendanceISMPO } from '../Attendance/AttendanceISMPO';
 import { LessonFinderISMPO } from '../LessonFinder/LessonFinderISMPO';
 import { PointsISMPO } from '../Points/PointsISMPO';
-import { TimetableISMPO } from '../Timetable.jsx/TimetableISMPO';
+import { TimetableISMPO } from '../Timetable/TimetableISMPO';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 

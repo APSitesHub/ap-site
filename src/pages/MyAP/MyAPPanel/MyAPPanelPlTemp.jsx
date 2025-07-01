@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { AttendanceTrial } from '../Attendance/AttendanceTrial';
 import { LessonFinderTrial } from '../LessonFinder/LessonFinderTrial';
 import { PointsTrial } from '../Points/PointsTrial';
-import { TimetableTrial } from '../Timetable.jsx/TimetableTrial';
+import { TimetableTrial } from '../Timetable/TimetableTrial';
 import {
   APPanelBtn,
   APPanelTrial,

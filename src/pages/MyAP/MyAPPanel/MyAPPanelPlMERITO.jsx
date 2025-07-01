@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { AttendanceTrialPl } from '../Attendance/AttendanceTrialPl';
 import { LessonFinderPl } from '../LessonFinder/LessonFinderPl';
 import { PointsPl } from '../Points/PointsPl';
-import { TimetablePl } from '../Timetable.jsx/TimetablePl';
+import { TimetablePl } from '../Timetable/TimetablePl';
 import {
   APPanelBtn,
   APPanelTrial,
@@ -351,7 +351,10 @@ export const MyAPPanelPlMERITO = ({
         />
       )}
       {console.log(353, timetable)}
-      {console.log(354, timetable.map(lesson => lesson.day))}
+      {console.log(
+        354,
+        timetable.map(lesson => lesson.day)
+      )}
       {isCalendarShown && (
         <AttendanceTrialPl
           user={user}
