@@ -239,6 +239,10 @@ const TimeTableAdminPanel = () => {
 
   const courseEnglishOptions = [
     {
+      label: '01 (C1)',
+      value: '01',
+    },
+    {
       label: '10 (Спікінги)',
       value: '10',
     },
@@ -361,6 +365,10 @@ const TimeTableAdminPanel = () => {
   ];
 
   const courseDeutschOptions = [
+    {
+      label: '01 (C1)',
+      value: '01',
+    },
     {
       label: '10 (Спікінги)',
       value: '10',
