@@ -16,15 +16,14 @@ export const NameInput = ({ isNameInputOpen, changeTeacherInfo, uni }) => {
     const isPedagogiumCheck = location.pathname.includes('pedagogium');
     setIsPedagogium(isPedagogiumCheck);
 
-    document.querySelector('input[name="nameValue"]').value = isPedagogiumCheck
-      ? localStorage.getItem('teacherName') || ''
-      : '';
-    document.querySelector('input[name="lessonValue"]').value = isPedagogiumCheck
-      ? localStorage.getItem('lessonNumber') || ''
-      : '';
-    document.querySelector('input[name="levelValue"]').value = isPedagogiumCheck
-      ? localStorage.getItem('lessonName') || ''
-      : '';
+    document.querySelector('input[name="nameValue"]').value =
+      localStorage.getItem('teacherName') || '';
+
+    document.querySelector('input[name="lessonValue"]').value =
+      localStorage.getItem('lessonNumber') || '';
+
+    document.querySelector('input[name="levelValue"]').value =
+      localStorage.getItem('lessonName') || '';
   }, [location.pathname]);
 
   return (
@@ -39,8 +38,8 @@ export const NameInput = ({ isNameInputOpen, changeTeacherInfo, uni }) => {
         name="levelValue"
         placeholder={
           uni
-            ? `${isPedagogium ? 'Назва уроку' : 'Рівень'}`
-            : `${isPedagogium ? 'Lesson' : 'Level'}`
+            ? `${isPedagogium ? 'Lesson' : 'Level'}`
+            : `${isPedagogium ? 'Назва уроку' : 'Рівень'}`
         }
       ></TeacherInfoInput>
       <TeacherInfoInput

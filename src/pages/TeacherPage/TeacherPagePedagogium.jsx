@@ -367,7 +367,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
-        uni={true}
+        uni={'pedagogium'}
       />
       <TeacherQuizOptions
         page={group}
@@ -379,7 +379,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
-        uni={true}
+        uni={'pedagogium'}
       />
       <TeacherQuizTrueFalse
         page={group}
@@ -391,7 +391,7 @@ const TeacherPagePedagogium = () => {
         isOpenedLast={isOpenedLast}
         questionID={questionID.current}
         changeQuestionID={changeQuestionID}
-        uni={true}
+        uni={'pedagogium'}
       />
       <QRCodeModal
         onClose={toggleQROPen}

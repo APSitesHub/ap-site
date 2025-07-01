@@ -5,6 +5,7 @@ import {
   TeacherChartBtn,
   TeacherChartBtnBox,
   TeacherChartResetBtn,
+  TeacherChartSaveBtn,
 } from '../StudentChart/StudentChart.styled';
 import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
 import {
@@ -21,6 +22,9 @@ import {
   TeacherQuizCorrectListUserNumber,
   TeacherQuizCorrectListUsers,
 } from './TeacherQuiz.styled';
+
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+// axios.defaults.baseURL = 'http://localhost:3001';
 
 export const TeacherQuizContainer = ({
   page,
@@ -68,25 +72,41 @@ export const TeacherQuizContainer = ({
 
   const saveAnswers = async () => {
     try {
-      await axios.post(
-        `https://ap-server-8qi1.onrender.com/pedagogium-lessons/question/${localStorage.getItem(
-          'lessonId'
-        )}`,
-        {
-          questionId: questionID,
-          correctAnswer: correctAnswer.current.toLowerCase(),
-          answers: list.current.data.map(ans => {
-            return {
-              userId: ans.userID,
-              userName: ans.username,
-              answer: ans.answer,
-            };
-          }),
-        }
-      );
+      const endpointBase = uni ? `/uni-lesson-results` : '/lesson-results';
+      const lessonId = localStorage.getItem('lessonId');
+
+      if (!lessonId) {
+        throw new Error('Lesson not found');
+      }
+
+      await axios.post(`${endpointBase}/question/${localStorage.getItem('lessonId')}`, {
+        questionId: questionID,
+        correctAnswer: correctAnswer.current.toLowerCase(),
+        answers: list.current.data.map(ans => {
+          return {
+            userId: ans.userID,
+            userName: ans.username,
+            answer: ans.answer,
+          };
+        }),
+      });
 
       emitQuizEnd();
     } catch (e) {
+      console.log(e.message);
+
+      if (
+        e.response?.data?.error === 'Lesson not found' ||
+        e.message === 'Lesson not found'
+      ) {
+        alert(
+          uni
+            ? "Lesson not found! Fill in the lesson details at the top of the page and click 'OK'"
+            : "Уроку не знайдено! Заповніть дані про урок зверху сторінки та натисніть 'OK'"
+        );
+
+        return;
+      }
       alert(
         uni
           ? 'Error saving answers. Try again.'
@@ -99,9 +119,7 @@ export const TeacherQuizContainer = ({
   const sendConfirmedAnswer = async () => {
     console.log(answers, 'answers before sendConfirmedAnswer');
     console.log(correctAnswer.current, 'correctAnswer.current');
-    list.current = await axios.get(
-      `https://ap-server-8qi1.onrender.com/answers/${questionID}`
-    );
+    list.current = await axios.get(`/answers/${questionID}`);
     console.log(
       list.current.data.filter(
         item => item.answer.toLowerCase() === correctAnswer.current.toLowerCase()
@@ -191,13 +209,11 @@ export const TeacherQuizContainer = ({
           </TeacherQuizCorrectListUsers>
           {isQuizActive && (
             <TeacherQuizCorrectListEndQuizBtnBox>
-              {page.includes('logistics') && (
-                <TeacherChartResetBtn type="button" onClick={saveAnswers}>
-                  Save & End
-                </TeacherChartResetBtn>
-              )}
+              <TeacherChartSaveBtn type="button" onClick={saveAnswers}>
+                Save & End
+              </TeacherChartSaveBtn>
               <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
-                End
+                Exit
               </TeacherChartResetBtn>
             </TeacherQuizCorrectListEndQuizBtnBox>
           )}
@@ -217,7 +233,7 @@ export const TeacherQuizContainer = ({
         )}
         {isQuizActive && (
           <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
-            End
+            Exit
           </TeacherChartResetBtn>
         )}
       </TeacherChartBtnBox>
