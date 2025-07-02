@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as ArrowPrevious } from '../../../img/svg/arrow-left.svg';
 import { ReactComponent as ArrowNext } from '../../../img/svg/arrow-right.svg';
+import { ReactComponent as CloseCircle } from '../../../img/svg/close-circle.svg';
 
 export const StudentChartArea = styled.div`
   position: fixed;
@@ -119,10 +120,13 @@ export const TeacherChartSaveBtn = styled(TeacherChartBtn)`
   border: 2px solid #0f645b;
 `;
 
-export const TeacherChartResetBtn = styled(TeacherChartBtn)`
-  background: #dd6464;
-  color: #000;
-  border: 2px solid #7e2828;
+export const TeacherChartResetBtn = styled.button`
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 `;
 
 export const TeacherChartArea = styled.div`
@@ -239,6 +243,11 @@ export const PreviousFeedbackButton = styled(ArrowPrevious)`
 export const NextFeedbackButton = styled(ArrowNext)`
   width: 24px;
   height: 24px;
+`;
+
+export const CloseIcon = styled(CloseCircle)`
+  width: 56px;
+  height: 56px;
 `;
 
 export const FeedbackButton = styled.button`
