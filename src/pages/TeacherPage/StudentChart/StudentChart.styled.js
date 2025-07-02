@@ -120,13 +120,10 @@ export const TeacherChartSaveBtn = styled(TeacherChartBtn)`
   border: 2px solid #0f645b;
 `;
 
-export const TeacherChartResetBtn = styled.button`
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+export const TeacherChartResetBtn = styled(TeacherChartBtn)`
+  background: #dd6464;
+  color: #000;
+  border: 2px solid #7e2828;
 `;
 
 export const TeacherChartArea = styled.div`
