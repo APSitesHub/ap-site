@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { CloseIcon, FormCloseBtn } from 'components/LeadForm/LeadForm.styled';
+import { FormCloseBtn } from 'components/LeadForm/LeadForm.styled';
 import { useEffect, useRef, useState } from 'react';
 import {
   TeacherChartBtn,
   TeacherChartBtnBox,
   TeacherChartResetBtn,
   TeacherChartSaveBtn,
+  CloseIcon,
 } from '../StudentChart/StudentChart.styled';
 import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
 import {
@@ -22,6 +23,7 @@ import {
   TeacherQuizCorrectListUserNumber,
   TeacherQuizCorrectListUsers,
 } from './TeacherQuiz.styled';
+import toast from 'react-hot-toast';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 // axios.defaults.baseURL = 'http://localhost:3001';
@@ -99,20 +101,22 @@ export const TeacherQuizContainer = ({
         e.response?.data?.error === 'Lesson not found' ||
         e.message === 'Lesson not found'
       ) {
-        alert(
+        toast.error(
           uni
             ? "Lesson not found! Fill in the lesson details at the top of the page and click 'OK'"
-            : "Уроку не знайдено! Заповніть дані про урок зверху сторінки та натисніть 'OK'"
+            : "Уроку не знайдено! Заповніть дані про урок зверху сторінки та натисніть 'OK'",
+          { duration: 5000, position: 'bottom-left' }
         );
 
         return;
       }
-      alert(
+
+      toast.error(
         uni
           ? 'Error saving answers. Try again.'
-          : 'Помилка збереження відповідей. Спробуйте ще раз.'
+          : 'Помилка збереження відповідей. Спробуйте ще раз.',
+        { duration: 5000, position: 'bottom-left' }
       );
-      console.log(e);
     }
   };
 
@@ -212,11 +216,11 @@ export const TeacherQuizContainer = ({
               <TeacherChartSaveBtn type="button" onClick={saveAnswers}>
                 Save & End
               </TeacherChartSaveBtn>
-              <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
-                Exit
-              </TeacherChartResetBtn>
             </TeacherQuizCorrectListEndQuizBtnBox>
           )}
+          <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
+            <CloseIcon />
+          </TeacherChartResetBtn>
         </TeacherQuizCorrectList>
       )}
       <TeacherAnswersChart
@@ -231,12 +235,12 @@ export const TeacherQuizContainer = ({
             Start
           </TeacherChartBtn>
         )}
-        {isQuizActive && (
-          <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
-            Exit
-          </TeacherChartResetBtn>
-        )}
       </TeacherChartBtnBox>
+      {isQuizActive && (
+        <TeacherChartResetBtn type="button" onClick={emitQuizEnd}>
+          <CloseIcon />
+        </TeacherChartResetBtn>
+      )}
     </TeacherChatPageContainer>
   );
 };
