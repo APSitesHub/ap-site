@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { CloseIcon, FormCloseBtn } from 'components/LeadForm/LeadForm.styled';
+import { FormCloseBtn } from 'components/LeadForm/LeadForm.styled';
 import { useEffect, useRef, useState } from 'react';
 import {
   TeacherChartBtn,
   TeacherChartBtnBox,
   TeacherChartResetBtn,
   TeacherChartSaveBtn,
+  CloseIcon,
 } from '../StudentChart/StudentChart.styled';
 import { TeacherAnswersChart } from '../StudentChart/TeacherAnswersChart';
 import {

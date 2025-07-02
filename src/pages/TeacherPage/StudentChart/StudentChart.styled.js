@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as ArrowPrevious } from '../../../img/svg/arrow-left.svg';
 import { ReactComponent as ArrowNext } from '../../../img/svg/arrow-right.svg';
-import { ReactComponent as CloseCircle } from '../../../img/svg/close-circle.svg';
+import { ReactComponent as CloseCircle } from '../../../img/svg/close-circle-red.svg';
 
 export const StudentChartArea = styled.div`
   position: fixed;
