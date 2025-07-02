@@ -175,7 +175,7 @@ export const HiddenInput = styled(Field)`
 
 export const FormCloseBtn = styled.button`
   position: absolute;
-  top: 10px;
+  top: 20px;
   right: 20px;
   background-color: transparent;
   border: 2px solid var(--secondary-color);
