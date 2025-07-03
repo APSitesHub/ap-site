@@ -401,7 +401,7 @@ function Room({ isAdmin, lang }) {
           >
             <JitsiMeeting
               domain={
-                roomID === wstijoRoomId ? 'dev2.ap.education' : 'videohost.ap.education'
+                roomID === 'dev2.ap.education'
               }
               roomName={roomID}
               configOverwrite={{

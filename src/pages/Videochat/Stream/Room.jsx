@@ -391,7 +391,7 @@ function Room({ isAdmin }) {
             }}
           >
             <JitsiMeeting
-              domain="videohost.ap.education"
+              domain="dev2.ap.education"
               roomName={roomID}
               configOverwrite={{
                 disableTileEnlargement: true,
