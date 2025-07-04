@@ -28,6 +28,7 @@ const TeacherControlPageDe = () => {
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [teachers, setTeachers] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [fullReviews, setFullReviews] = useState(false);
 
   useEffect(() => {
     document.title = 'Teacher Admin Panel | AP Education';
@@ -144,7 +145,10 @@ const TeacherControlPageDe = () => {
         {isUserAdmin && teachers.length && (
           <TeacherTable>
             <UserDBCaption>
-              Список акаунтів тічерів з доступом до табличок відгуків
+              Список акаунтів тічерів з доступом до табличок відгуків{' '}
+              <button onClick={() => setFullReviews(fullReviews => !fullReviews)}>
+                Full
+              </button>
             </UserDBCaption>
             <thead>
               <UserDBRow>

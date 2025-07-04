@@ -28,6 +28,7 @@ const TeacherControlPageEn = () => {
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [teachers, setTeachers] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [fullReviews, setFullReviews] = useState(false);
 
   useEffect(() => {
     document.title = 'Teacher Admin Panel | AP Education';
@@ -144,7 +145,10 @@ const TeacherControlPageEn = () => {
         {isUserAdmin && teachers.length && (
           <TeacherTable>
             <UserDBCaption>
-              Список акаунтів тічерів з доступом до табличок відгуків
+              Список акаунтів тічерів з доступом до табличок відгуків{' '}
+              <button onClick={() => setFullReviews(fullReviews => !fullReviews)}>
+                Full
+              </button>
             </UserDBCaption>
             <thead>
               <UserDBRow>
@@ -208,9 +212,9 @@ const TeacherControlPageEn = () => {
 
                           return parsedDateB.localeCompare(parsedDateA); // Sort in descending order
                         })
-                        .map(text => (
-                          <Feedback>
-                            {text.length > 200
+                        .map((text, i) => (
+                          <Feedback className={fullReviews && 'full'} key={i}>
+                            {!fullReviews
                               ? `(Відгук від ${text.match(regex)} ${text.slice(
                                   0,
                                   200

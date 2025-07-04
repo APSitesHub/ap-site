@@ -200,8 +200,19 @@ export const FilterPickerButton = styled.button`
 
 export const Feedback = styled.p`
   font-size: 10px;
-  margin-bottom: 3px;
   text-align: start;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+
+  &:not(:last-child) {
+    padding-bottom: 3px;
+    margin-bottom: 3px;
+    border-bottom: 0.2px solid rgba(0, 0, 0, 0.14);
+  }
+
+  &.full {
+    max-width: 85vw;
+  }
 `;
 
 export const TeacherTable = styled(UserDBTable)`
