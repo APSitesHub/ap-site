@@ -2,6 +2,10 @@ import axios from 'axios';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
+import {
+  LabelText,
+  SpeakingLabel,
+} from 'pages/TeacherPage/TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm.styled';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
@@ -9,6 +13,9 @@ import {
   AdminInput,
   AdminInputNote,
   AdminPanelSection,
+  DateInputBox,
+  DateInputLabel,
+  DateInputSelect,
   Feedback,
   LoginForm,
   TeacherTable,
@@ -28,18 +35,40 @@ const TeacherControlPageDe = () => {
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [teachers, setTeachers] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [fullReviews, setFullReviews] = useState(false);
+  const [month, setMonth] = useState(new Date(Date.now()).getMonth() + 1);
+  const [year, setYear] = useState(new Date(Date.now()).getFullYear());
+
+  const yearOptions = [
+    { label: '2024', value: '2024' },
+    { label: '2025', value: '2025' },
+    { label: '2026', value: '2026' },
+  ];
+
+  const monthOptions = [
+    { label: 'Січень', value: '1' },
+    { label: 'Лютий', value: '2' },
+    { label: 'Березень', value: '3' },
+    { label: 'Квітень', value: '4' },
+    { label: 'Травень', value: '5' },
+    { label: 'Червень', value: '6' },
+    { label: 'Липень', value: '7' },
+    { label: 'Серпень', value: '8' },
+    { label: 'Вересень', value: '9' },
+    { label: 'Жовтень', value: '10' },
+    { label: 'Листопад', value: '11' },
+    { label: 'Грудень', value: '12' },
+  ];
 
   useEffect(() => {
     document.title = 'Teacher Admin Panel | AP Education';
 
     const refreshToken = async () => {
-      console.log('token refresher');
       setIsLoading(isLoading => (isLoading = true));
       try {
         if (localStorage.getItem('isAdmin')) {
           const res = await axios.post('admins/refresh/teachers/', {});
           setAuthToken(res.data.newToken);
-          console.log(res);
           setIsUserAdmin(isAdmin => (isAdmin = true));
         }
       } catch (error) {
@@ -93,15 +122,15 @@ const TeacherControlPageDe = () => {
 
   const regex = /\d{1,2}\.\d{2}\.\d{4}/;
 
-  // const changeDateFormat = dateString => {
-  //   if (dateString) {
-  //     const dateArray = dateString.split('.');
-  //     return dateArray.length > 2
-  //       ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
-  //       : Date.parse(dateString);
-  //   }
-  //   return;
-  // };
+  const changeDateFormat = dateString => {
+    if (dateString) {
+      const dateArray = dateString.split('.');
+      return dateArray.length > 2
+        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
+        : Date.parse(dateString);
+    }
+    return;
+  };
 
   const handleLoginSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
@@ -144,7 +173,68 @@ const TeacherControlPageDe = () => {
         {isUserAdmin && teachers.length && (
           <TeacherTable>
             <UserDBCaption>
-              Список акаунтів тічерів з доступом до табличок відгуків
+              Список тічерів та їх відгуків (німецька) за
+              <DateInputBox>
+                <DateInputLabel>
+                  {month && <LabelText>Місяць</LabelText>}
+                  <DateInputSelect
+                    options={monthOptions}
+                    styles={{
+                      control: baseStyles => ({
+                        ...baseStyles,
+                        border: 'none',
+                        borderRadius: '50px',
+                        minHeight: '34px',
+                      }),
+                      menu: baseStyles => ({
+                        ...baseStyles,
+                        position: 'absolute',
+                        zIndex: '2',
+                        top: '36px',
+                      }),
+                      dropdownIndicator: baseStyles => ({
+                        ...baseStyles,
+                        padding: '7px',
+                      }),
+                    }}
+                    placeholder="Місяць"
+                    name="month"
+                    onChange={month => setMonth(+month.value)}
+                    defaultValue={monthOptions.find(option => +option.value === month)}
+                  />
+                </DateInputLabel>
+                <SpeakingLabel>
+                  {year && <LabelText>Рік</LabelText>}
+                  <DateInputSelect
+                    options={yearOptions}
+                    styles={{
+                      control: baseStyles => ({
+                        ...baseStyles,
+                        border: 'none',
+                        borderRadius: '50px',
+                        minHeight: '34px',
+                      }),
+                      menu: baseStyles => ({
+                        ...baseStyles,
+                        position: 'absolute',
+                        zIndex: '2',
+                        top: '36px',
+                      }),
+                      dropdownIndicator: baseStyles => ({
+                        ...baseStyles,
+                        padding: '7px',
+                      }),
+                    }}
+                    placeholder="Рік"
+                    name="year"
+                    onChange={year => setYear(+year.value)}
+                    defaultValue={yearOptions.find(option => +option.value === year)}
+                  />
+                </SpeakingLabel>
+                <button onClick={() => setFullReviews(fullReviews => !fullReviews)}>
+                  {fullReviews ? 'Згорнути' : 'Розгорнути'}
+                </button>
+              </DateInputBox>
             </UserDBCaption>
             <thead>
               <UserDBRow>
@@ -156,7 +246,7 @@ const TeacherControlPageDe = () => {
               {teachers
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((teacher, i) => (
-                  <UserDBRow>
+                  <UserDBRow key={teacher._id}>
                     <UserCell key={'Тічер' + teacher._id}>{teacher.name}</UserCell>
                     <UserCell key={`Відгук ${i} ${teacher._id}`}>
                       {reviews
@@ -177,10 +267,18 @@ const TeacherControlPageDe = () => {
                               name: user.name,
                               feedback: user.feedback.filter(
                                 feedbackObj =>
-                                  feedbackObj.text.includes(teacher.name) ||
-                                  feedbackObj.text.includes(
-                                    teacher.name.split(' ').reverse().join(' ')
-                                  )
+                                  (feedbackObj.text.includes(teacher.name) ||
+                                    feedbackObj.text.includes(
+                                      teacher.name.split(' ').reverse().join(' ')
+                                    )) &&
+                                  new Date(
+                                    changeDateFormat(feedbackObj.date)
+                                  ).getMonth() +
+                                    1 ===
+                                    month &&
+                                  new Date(
+                                    changeDateFormat(feedbackObj.date)
+                                  ).getFullYear() === year
                               ),
                             })
                         )
@@ -208,9 +306,9 @@ const TeacherControlPageDe = () => {
 
                           return parsedDateB.localeCompare(parsedDateA); // Sort in descending order
                         })
-                        .map(text => (
-                          <Feedback>
-                            {text.length > 200
+                        .map((text, i) => (
+                          <Feedback className={fullReviews && 'full'} key={i}>
+                            {!fullReviews
                               ? `(Відгук від ${text.match(regex)} ${text.slice(
                                   0,
                                   200
