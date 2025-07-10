@@ -170,7 +170,7 @@ const yearOptions = [
           </Formik>
         )}
 
-        {isUserAdmin && teachers.length && (
+        {isUserAdmin && teachers.length > 0 && (
           <TeacherTable>
             <UserDBCaption>
               Список тічерів та їх відгуків (англійська) за

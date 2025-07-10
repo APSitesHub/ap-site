@@ -170,7 +170,7 @@ const TeacherControlPagePl = () => {
           </Formik>
         )}
 
-        {isUserAdmin && teachers.length && (
+        {isUserAdmin && teachers.length > 0 && (
           <TeacherTable>
             <UserDBCaption>
               Список тічерів та їх відгуків (польська) за
