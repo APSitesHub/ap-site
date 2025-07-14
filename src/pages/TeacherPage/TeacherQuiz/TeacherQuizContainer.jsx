@@ -74,8 +74,21 @@ export const TeacherQuizContainer = ({
 
   const saveAnswers = async () => {
     try {
-      const endpointBase = uni ? `/uni-lesson-results` : '/lesson-results';
       const lessonId = localStorage.getItem('lessonId');
+      let endpointBase;
+
+      switch (uni) {
+        case 'pedagogium':
+          endpointBase = '/pedagogium-lessons';
+          break;
+
+        case undefined:
+          endpointBase = '/lesson-results';
+          break;
+
+        default:
+          endpointBase = `/uni-lesson-results`;
+      }
 
       if (!lessonId) {
         throw new Error('Lesson not found');
