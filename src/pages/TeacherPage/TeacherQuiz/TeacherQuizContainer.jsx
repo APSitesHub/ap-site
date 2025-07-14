@@ -75,19 +75,14 @@ export const TeacherQuizContainer = ({
   const saveAnswers = async () => {
     try {
       const lessonId = localStorage.getItem('lessonId');
-      let endpointBase;
+      let endpointBase = `/uni-lesson-results`;
 
-      switch (uni) {
-        case 'pedagogium':
-          endpointBase = '/pedagogium-lessons';
-          break;
+      if (!uni) {
+        endpointBase = '/lesson-results';
+      }
 
-        case undefined:
-          endpointBase = '/lesson-results';
-          break;
-
-        default:
-          endpointBase = `/uni-lesson-results`;
+      if (uni === 'pedagogium') {
+        endpointBase = '/pedagogium-lessons';
       }
 
       if (!lessonId) {
