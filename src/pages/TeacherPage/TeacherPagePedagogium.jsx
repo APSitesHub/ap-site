@@ -33,6 +33,7 @@ import { TourViewer } from './TourViewer/TourViewer';
 import { TourBtn, TourLogo } from './TourViewer/TourViewer.styled';
 import { ViewerUni } from './Viewer/ViewerUni';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
+import toast from 'react-hot-toast';
 
 const group = 'logistics_2';
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -102,6 +103,11 @@ const TeacherPagePedagogium = () => {
       localStorage.setItem('teacherName', nameValue);
       localStorage.setItem('lessonName', levelValue);
       localStorage.setItem('lessonNumber', lessonValue);
+
+      toast.success('Урок успішно створено!', {
+        duration: 10000,
+        position: 'bottom-left',
+      });
     } catch (e) {
       alert('Error creating a lesson: ' + e.response.data);
       console.error(e.response.data);

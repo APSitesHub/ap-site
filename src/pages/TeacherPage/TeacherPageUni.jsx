@@ -31,6 +31,7 @@ import { ViewerUni } from './Viewer/ViewerUni';
 import { WhiteBoard } from './WhiteBoard/WhiteBoard';
 import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const TeacherPageUni = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
@@ -47,7 +48,7 @@ const TeacherPageUni = () => {
   const [isInputButtonBoxOpen, setIsInputButtonBoxOpen] = useState(false);
   const [width, height] = useSize(document.body);
   const location = useLocation().pathname.split('/teacher/')[1];
-  const [isNameInputOpen, setIsNameInputOpen] = useState(false);
+  const [isNameInputOpen, setIsNameInputOpen] = useState(true);
   const [teacherInfo, setTeacherInfo] = useState({});
   const questionID = useRef(nanoid(5));
 
@@ -109,6 +110,11 @@ const TeacherPageUni = () => {
       localStorage.setItem('teacherName', nameValue);
       localStorage.setItem('lessonName', levelValue);
       localStorage.setItem('lessonNumber', lessonValue);
+
+      toast.success('Урок успішно створено!', {
+        duration: 10000,
+        position: 'bottom-left',
+      });
     } catch (e) {
       alert('Error creating a lesson: ' + e.response.data);
       console.error(e.response.data);
