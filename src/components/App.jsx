@@ -677,22 +677,14 @@ export const App = () => {
           <Route path="videochat" element={<Videochat />} noindex={true} />
           <Route path="room" element={<TestInApp />}>
             <Route path=":slug/:id" element={<VideochatRoom />} noindex={true} />
+            <Route path="trial/:slug/:id" element={<TrialVideoRoom />} noindex={true} />
+            <Route path="stream/:slug/:id" element={<StreamVideoRoom />} noindex={true} />
+            <Route
+              path="individual/:id"
+              element={<IndividualVideoRoom />}
+              noindex={true}
+            />
           </Route>
-          <Route
-            path="room/trial/:slug/:id"
-            element={<TrialVideoRoom />}
-            noindex={true}
-          />
-          <Route
-            path="room/stream/:slug/:id"
-            element={<StreamVideoRoom />}
-            noindex={true}
-          />
-          <Route
-            path="room/individual/:id"
-            element={<IndividualVideoRoom />}
-            noindex={true}
-          />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="end-call-pl" element={<EndCallPl />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
