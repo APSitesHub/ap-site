@@ -39,6 +39,7 @@ const TeacherPage = () => {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
+  const [isKahootWasOpened, setIsKahootWasOpened] = useState(false);
   const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
   const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
@@ -101,6 +102,11 @@ const TeacherPage = () => {
   const page = getLocation(location);
 
   const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
+    if (!nameValue || !lessonValue || !levelValue) {
+      alert('Fill in all fields');
+      return;
+    }
+
     setIsNameInputOpen(isOpen => (isOpen = false));
 
     setTeacherInfo(
@@ -145,6 +151,14 @@ const TeacherPage = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()} | AP Education`;
+
+    if (localStorage.getItem('groupName') === page) {
+      setTeacherInfo({
+        name: localStorage.getItem('teacherName'),
+        lesson: localStorage.getItem('lessonNumber'),
+        level: localStorage.getItem('lessonName'),
+      });
+    }
   }, [page]);
 
   const toggleViewer = () => {
@@ -189,6 +203,10 @@ const TeacherPage = () => {
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleKahoot = () => {
+    if (!isKahootWasOpened) {
+      setIsKahootWasOpened(true);
+    }
+
     !isOpenedLast
       ? setIsKahootOpen(isKahootOpen => !isKahootOpen)
       : isOpenedLast === 'kahoot' && setIsKahootOpen(isKahootOpen => !isKahootOpen);
@@ -301,13 +319,15 @@ const TeacherPage = () => {
         isPlatformOpen={isPlatformOpen}
         isOpenedLast={isOpenedLast}
       />
-      <HostKahoots
-        page={page}
-        sectionWidth={width}
-        sectionHeight={height}
-        isKahootOpen={isKahootOpen}
-        isOpenedLast={isOpenedLast}
-      />
+      {isKahootWasOpened && (
+        <HostKahoots
+          page={page}
+          sectionWidth={width}
+          sectionHeight={height}
+          isKahootOpen={isKahootOpen}
+          isOpenedLast={isOpenedLast}
+        />
+      )}
       <TeacherChat page={page} />
       <TeacherQuizInput
         page={page}

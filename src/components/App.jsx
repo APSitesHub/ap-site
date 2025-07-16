@@ -1147,8 +1147,12 @@ export const App = () => {
               element={<TeacherPagePedagogium />}
               noindex={true}
             />
-            <Route path="wstijo" element={<TeacherPageUni />} noindex={true} />
-            <Route path="wskm" element={<TeacherPageUni />} noindex={true} />
+            <Route
+              path="wstijo"
+              element={<TeacherPageUni group="logistics" />}
+              noindex={true}
+            />
+            <Route path="wskm" element={<TeacherPageUni group="cnc" />} noindex={true} />
             <Route path="wsbmir" element={<TeacherPage />} noindex={true} />
             <Route path="kubrak" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="bulavka" element={<TeacherPageIndividual />} noindex={true} />

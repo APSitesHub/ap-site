@@ -73,7 +73,19 @@ const TeacherPagePedagogium = () => {
   };
 
   const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
+    if (!nameValue || !lessonValue || !levelValue) {
+      alert('Fill in all fields');
+      return;
+    }
+
     setIsNameInputOpen(isOpen => (isOpen = false));
+
+    setTeacherInfo(
+      teacherInfo =>
+        (teacherInfo = {
+          ...{ name: nameValue, lesson: lessonValue, level: levelValue },
+        })
+    );
 
     if (
       localStorage.getItem('groupName') === group &&
@@ -83,12 +95,6 @@ const TeacherPagePedagogium = () => {
     ) {
       return;
     }
-    setTeacherInfo(
-      teacherInfo =>
-        (teacherInfo = {
-          ...{ name: nameValue, lesson: lessonValue, level: levelValue },
-        })
-    );
 
     try {
       const response = await axios.post('/pedagogium-lessons', {

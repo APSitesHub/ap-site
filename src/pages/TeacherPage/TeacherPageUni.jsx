@@ -33,11 +33,12 @@ import { QRCodeModal } from './TeacherQuiz/TeacherQR';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const TeacherPageUni = () => {
+const TeacherPageUni = ({ group = 'logistics' }) => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
   const [isKahootOpen, setIsKahootOpen] = useState(false);
+  const [isKahootWasOpened, setIsKahootWasOpened] = useState(false);
   const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
   const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
@@ -73,7 +74,7 @@ const TeacherPageUni = () => {
       case 'wstijo':
         return 'wstijo_logistics';
       case 'wskm':
-        return 'wskm_logistics';
+        return `wskm_${group}`;
       default:
         return location;
     }
@@ -81,7 +82,19 @@ const TeacherPageUni = () => {
   const page = getLocation(location);
 
   const changeTeacherInfo = async (nameValue, lessonValue, levelValue) => {
+    if (!nameValue || !lessonValue || !levelValue) {
+      alert('Fill in all fields');
+      return;
+    }
+
     setIsNameInputOpen(isOpen => (isOpen = false));
+
+    setTeacherInfo(
+      teacherInfo =>
+        (teacherInfo = {
+          ...{ name: nameValue, lesson: lessonValue, level: levelValue },
+        })
+    );
 
     if (
       localStorage.getItem('groupName') === page &&
@@ -91,12 +104,6 @@ const TeacherPageUni = () => {
     ) {
       return;
     }
-    setTeacherInfo(
-      teacherInfo =>
-        (teacherInfo = {
-          ...{ name: nameValue, lesson: lessonValue, level: levelValue },
-        })
-    );
 
     try {
       const response = await axios.post('/uni-lesson-results', {
@@ -125,6 +132,14 @@ const TeacherPageUni = () => {
 
   useEffect(() => {
     document.title = `Teacher ${page.toLocaleUpperCase()}`;
+
+    if (localStorage.getItem('groupName') === page) {
+      setTeacherInfo({
+        name: localStorage.getItem('teacherName'),
+        lesson: localStorage.getItem('lessonNumber'),
+        level: localStorage.getItem('lessonName'),
+      });
+    }
   }, [page]);
 
   const toggleViewer = () => {
@@ -169,6 +184,10 @@ const TeacherPageUni = () => {
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleKahoot = () => {
+    if (!isKahootWasOpened) {
+      setIsKahootWasOpened(true);
+    }
+
     !isOpenedLast
       ? setIsKahootOpen(isKahootOpen => !isKahootOpen)
       : isOpenedLast === 'kahoot' && setIsKahootOpen(isKahootOpen => !isKahootOpen);
@@ -285,13 +304,15 @@ const TeacherPageUni = () => {
         isPlatformOpen={isPlatformOpen}
         isOpenedLast={isOpenedLast}
       />
-      <HostKahootsUni
-        page={page}
-        sectionWidth={width}
-        sectionHeight={height}
-        isKahootOpen={isKahootOpen}
-        isOpenedLast={isOpenedLast}
-      />
+      {isKahootWasOpened && (
+        <HostKahootsUni
+          page={page}
+          sectionWidth={width}
+          sectionHeight={height}
+          isKahootOpen={isKahootOpen}
+          isOpenedLast={isOpenedLast}
+        />
+      )}
       <TeacherChat page={page} />
       <TeacherQuizInput
         page={page}
@@ -334,7 +355,7 @@ const TeacherPageUni = () => {
       <QRCodeModal
         onClose={toggleQROPen}
         isOpen={isQROpen}
-        url={`https://${location}.ap.education/lesson/logistics`}
+        url={`https://${location}.ap.education/lesson/${group}`}
       />
     </>
   );
