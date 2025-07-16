@@ -72,6 +72,8 @@ const TeacherPageUni = () => {
         return 'pedagogium_logistics_2';
       case 'wstijo':
         return 'wstijo_logistics';
+      case 'wskm':
+        return 'wskm_logistics';
       default:
         return location;
     }
