@@ -50,7 +50,8 @@ export const TeacherChat = ({ page }) => {
       ? '/streams-kids/' + page
       : page.includes('wstijo') ||
         page.includes('pedagogium') ||
-        page.includes('logistics')
+        page.includes('logistics') ||
+        page.includes('wskm')
       ? page
       : '/streams/' + page;
 
