@@ -36,23 +36,28 @@ function TestInApp() {
           }}
         >
           <LargeText>Для коректної роботи відеозв'язку перейдіть в браузер</LargeText>
-          <AdminFormBtn>
-            {os === 'ios' ? (
-              <>
+          {os === 'ios' ? (
+            <>
+              <AdminFormBtn>
                 <LinkBase
-                  href={`"googlechromes://${window.location.href.split('://')[1]}`}
+                  href={`googlechromes://${window.location.href.split('://')[1]}`}
                   target="_blank"
                 >
                   Відкрити в Chrome
                 </LinkBase>
+              </AdminFormBtn>
+
+              <AdminFormBtn>
                 <LinkBase
                   href={`x-safari-https://${window.location.href.split('://')[1]}`}
                   target="_blank"
                 >
                   Відкрити в Safari
                 </LinkBase>
-              </>
-            ) : (
+              </AdminFormBtn>
+            </>
+          ) : (
+            <AdminFormBtn>
               <LinkBase
                 href={`intent://${
                   window.location.href.split('://')[1]
@@ -61,8 +66,8 @@ function TestInApp() {
               >
                 Відкрити в браузері
               </LinkBase>
-            )}
-          </AdminFormBtn>
+            </AdminFormBtn>
+          )}
         </div>
       </GradientBackground>
     </PageContainer>
