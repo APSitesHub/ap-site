@@ -513,6 +513,11 @@ export const LargeText = styled.p`
   }
 `;
 
+export const LinkBase = styled.a`
+  color: inherit;
+  text-decoration: none;
+`;
+
 export const GradientBackground = styled.div`
   height: 100%;
   width: 100%;
