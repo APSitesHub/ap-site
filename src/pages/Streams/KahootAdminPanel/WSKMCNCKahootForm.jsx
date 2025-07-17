@@ -21,25 +21,25 @@ import {
   WarningText,
 } from './KahootAdminPanel.styled';
 
-export const WSKMPrepKahootForm = ({ destination }) => {
+export const WSKMCNCKahootForm = ({ destination }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
 
   const initialLinksValues = {
-    wskm_prep_1: '',
-    wskm_prep_2: '',
-    wskm_prep_3: '',
-    wskm_prep_4: '',
-    wskm_prep_5: '',
+    wskm_cnc_1: '',
+    wskm_cnc_2: '',
+    wskm_cnc_3: '',
+    wskm_cnc_4: '',
+    wskm_cnc_5: '',
     replace: true,
   };
 
   const linksSchema = yup.object().shape({
-    wskm_prep_1: yup.string().optional(),
-    wskm_prep_2: yup.string().optional(),
-    wskm_prep_3: yup.string().optional(),
-    wskm_prep_4: yup.string().optional(),
-    wskm_prep_5: yup.string().optional(),
+    wskm_cnc_1: yup.string().optional(),
+    wskm_cnc_2: yup.string().optional(),
+    wskm_cnc_3: yup.string().optional(),
+    wskm_cnc_4: yup.string().optional(),
+    wskm_cnc_5: yup.string().optional(),
     replace: yup.bool().required(),
   });
 
@@ -81,16 +81,16 @@ export const WSKMPrepKahootForm = ({ destination }) => {
       );
 
     if (!emptyValues || confirmation) {
-      const wskm_preplinks = { wskm_prep: { links: {} } };
+      const wskm_cnclinks = { wskm_cnc: { links: {} } };
       for (const [key, value] of Object.entries(values)) {
         if (value && key !== 'replace') {
-          wskm_preplinks.wskm_prep.links[key] = value;
+          wskm_cnclinks.wskm_cnc.links[key] = value;
         } else {
-          wskm_preplinks.wskm_prep.replace = value;
+          wskm_cnclinks.wskm_cnc.replace = value;
         }
       }
       try {
-        const response = await axios.patch(destination, wskm_preplinks);
+        const response = await axios.patch(destination, wskm_cnclinks);
         console.log(response);
         resetForm();
         alert('Лінки замінилися, молодець');
@@ -109,7 +109,7 @@ export const WSKMPrepKahootForm = ({ destination }) => {
   return (
     <>
       <AdminPanelSection>
-        <FormTitle>WSKM Prep</FormTitle>
+        <FormTitle>WSKM Logistics</FormTitle>
         <Formik
           initialValues={initialLinksValues}
           onSubmit={handleLinksSubmit}
@@ -119,41 +119,41 @@ export const WSKMPrepKahootForm = ({ destination }) => {
             <Label>
               <AdminInput
                 type="text"
-                name="wskm_prep_1"
+                name="wskm_cnc_1"
                 autoComplete="off"
-                placeholder="Перший кахут для WSKM Prep"
+                placeholder="Перший кахут для WSKM Logisitics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wskm_prep_2"
+                name="wskm_cnc_2"
                 autoComplete="off"
-                placeholder="Другий кахут для WSKM Prep"
+                placeholder="Другий кахут для WSKM Logisitics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wskm_prep_3"
+                name="wskm_cnc_3"
                 autoComplete="off"
-                placeholder="Третій кахут для WSKM Prep"
+                placeholder="Третій кахут для WSKM Logisitics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wskm_prep_4"
+                name="wskm_cnc_4"
                 autoComplete="off"
-                placeholder="Четвертий кахут для WSKM Prep"
+                placeholder="Четвертий кахут для WSKM Logisitics"
               />
             </Label>
             <Label>
               <AdminInput
                 type="text"
-                name="wskm_prep_5"
+                name="wskm_cnc_5"
                 autoComplete="off"
-                placeholder="П'ятий кахут для WSKM Prep"
+                placeholder="П'ятий кахут для WSKM Logisitics"
               />
             </Label>
             <LabelCheckBox>

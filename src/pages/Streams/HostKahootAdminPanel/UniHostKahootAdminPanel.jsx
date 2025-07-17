@@ -29,8 +29,7 @@ import { SSWKahootForm } from '../KahootAdminPanel/SSWKahootForm';
 import { WSBMIRLogisticsKahootForm } from '../KahootAdminPanel/WSBMIRLogisticsKahootForm';
 import { WSBMIRPrepKahootForm } from '../KahootAdminPanel/WSBMIRPrepKahootForm';
 import { WSEPrepKahootForm } from '../KahootAdminPanel/WSEPrepKahootForm';
-import { WSKMLogisticsKahootForm } from '../KahootAdminPanel/WSKMLogisticsKahootForm';
-import { WSKMPrepKahootForm } from '../KahootAdminPanel/WSKMPrepKahootForm';
+import { WSKMCNCKahootForm } from '../KahootAdminPanel/WSKMCNCKahootForm';
 import { WSSiPLogisticsKahootForm } from '../KahootAdminPanel/WSSiPLogisticsKahootForm';
 import { WSSiPPrepKahootForm } from '../KahootAdminPanel/WSSiPPrepKahootForm';
 import { WSTIJOLogisticsKahootForm } from '../KahootAdminPanel/WSTIJOLogisticsKahootForm';
@@ -168,11 +167,8 @@ const UniHostKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('wstih_prep')}>
               WSTiH Prep
             </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wskm_logistics')}>
-              WSKM Logistics
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wskm_prep')}>
-              WSKM Prep
+            <KahootLvlBtn onClick={() => handleBtnClick('wskm_cnc')}>
+              WSKM CNC
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('wssip_logistics')}>
               WSSiP Logistics
@@ -235,12 +231,7 @@ const UniHostKahootAdminPanel = () => {
           {levels.includes('wstih_prep') && (
             <WSTiHPrepKahootForm destination={destination} />
           )}
-          {levels.includes('wskm_logistics') && (
-            <WSKMLogisticsKahootForm destination={destination} />
-          )}
-          {levels.includes('wskm_prep') && (
-            <WSKMPrepKahootForm destination={destination} />
-          )}
+          {levels.includes('wskm_cnc') && <WSKMCNCKahootForm destination={destination} />}
           {levels.includes('wssip_logistics') && (
             <WSSiPLogisticsKahootForm destination={destination} />
           )}
