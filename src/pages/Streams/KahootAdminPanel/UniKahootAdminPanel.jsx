@@ -30,8 +30,7 @@ import { SSWKahootForm } from './SSWKahootForm';
 import { WSBMIRLogisticsKahootForm } from './WSBMIRLogisticsKahootForm';
 import { WSBMIRPrepKahootForm } from './WSBMIRPrepKahootForm';
 import { WSEPrepKahootForm } from './WSEPrepKahootForm';
-import { WSKMLogisticsKahootForm } from './WSKMLogisticsKahootForm';
-import { WSKMPrepKahootForm } from './WSKMPrepKahootForm';
+import { WSKMCNCKahootForm } from './WSKMCNCKahootForm';
 import { WSSiPLogisticsKahootForm } from './WSSiPLogisticsKahootForm';
 import { WSSiPPrepKahootForm } from './WSSiPPrepKahootForm';
 import { WSTIJOLogisticsKahootForm } from './WSTIJOLogisticsKahootForm';
@@ -168,11 +167,8 @@ const UniKahootAdminPanel = () => {
             <KahootLvlBtn onClick={() => handleBtnClick('wstih_prep')}>
               WSTiH Prep
             </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wskm_logistics')}>
+            <KahootLvlBtn onClick={() => handleBtnClick('wskm_cnc')}>
               WSKM Logistics
-            </KahootLvlBtn>
-            <KahootLvlBtn onClick={() => handleBtnClick('wskm_prep')}>
-              WSKM Prep
             </KahootLvlBtn>
             <KahootLvlBtn onClick={() => handleBtnClick('wssip_logistics')}>
               WSSiP Logistics
@@ -235,12 +231,7 @@ const UniKahootAdminPanel = () => {
           {levels.includes('wstih_prep') && (
             <WSTiHPrepKahootForm destination={destination} />
           )}
-          {levels.includes('wskm_logistics') && (
-            <WSKMLogisticsKahootForm destination={destination} />
-          )}
-          {levels.includes('wskm_prep') && (
-            <WSKMPrepKahootForm destination={destination} />
-          )}
+          {levels.includes('wskm_cnc') && <WSKMCNCKahootForm destination={destination} />}
           {levels.includes('wssip_logistics') && (
             <WSSiPLogisticsKahootForm destination={destination} />
           )}

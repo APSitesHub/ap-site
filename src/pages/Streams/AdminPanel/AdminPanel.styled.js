@@ -30,6 +30,7 @@ export const LinksForm = styled(Form)`
 
 export const LinksFieldGroup = styled.div`
   margin: 0 auto;
+  width: 450px;
 
   display: flex;
   flex-direction: column;
@@ -60,7 +61,7 @@ export const AdminInputNote = styled(InputNote)`
 `;
 
 export const AdminInputWSPA = styled(Input)`
-  border: 2px solid #E40521;
+  border: 2px solid #e40521;
   max-width: 600px;
 `;
 
@@ -76,7 +77,7 @@ export const AdminInputISMPO = styled(Input)`
 
 export const AdminInputNoteWSPA = styled(InputNote)`
   position: static;
-  color: #E40521;
+  color: #e40521;
   font-size: 14px;
   bottom: -1.1em;
 `;

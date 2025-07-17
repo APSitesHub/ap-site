@@ -81,8 +81,7 @@ const UniCollectionsAdminPanel = () => {
     merito_automation: '',
     wstih_logistics: '',
     wstih_prep: '',
-    wskm_logistics: '',
-    wskm_prep: '',
+    wskm_cnc: '',
     wssip_logistics: '',
     wssip_prep: '',
     wspa_logistics: '',
@@ -109,8 +108,7 @@ const UniCollectionsAdminPanel = () => {
     merito_automation: yup.string().optional(),
     wstih_logistics: yup.string().optional(),
     wstih_prep: yup.string().optional(),
-    wskm_logistics: yup.string().optional(),
-    wskm_prep: yup.string().optional(),
+    wskm_cnc: yup.string().optional(),
     wssip_logistics: yup.string().optional(),
     wssip_prep: yup.string().optional(),
     wspa_logistics: yup.string().optional(),
@@ -326,18 +324,10 @@ const UniCollectionsAdminPanel = () => {
                 <Label>
                   <AdminInput
                     type="text"
-                    name="wskm_logistics"
-                    placeholder="WSKM Logistics Collection"
+                    name="wskm_cnc"
+                    placeholder="WSKM CNC Collection"
                   />
-                  <AdminInputNote component="p" name="wskm_logistics" />
-                </Label>
-                <Label>
-                  <AdminInput
-                    type="text"
-                    name="wskm_prep"
-                    placeholder="WSKM Preparation Course Collection"
-                  />
-                  <AdminInputNote component="p" name="wskm_prep" />
+                  <AdminInputNote component="p" name="wskm_cnc" />
                 </Label>
               </LinksFieldGroup>
               <LinksFieldGroup>
