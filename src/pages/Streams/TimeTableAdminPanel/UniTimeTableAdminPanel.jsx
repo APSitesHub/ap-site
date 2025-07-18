@@ -307,12 +307,8 @@ const UniTimeTableAdminPanel = () => {
 
   const wskmMarathonOptions = [
     {
-      label: 'Logistics (WSKM)',
-      value: '83751',
-    },
-    {
-      label: 'Kurs Przygotowawczy (WSKM)',
-      value: '83752',
+      label: 'CNC (WSKM)',
+      value: '85683',
     },
   ];
 
@@ -631,11 +627,8 @@ const UniTimeTableAdminPanel = () => {
                         timetable.marathon === '83568'
                       ? `Preparation Course ${timetable.marathon}`
                       : timetable.university.includes('WSKM') &&
-                        timetable.marathon === '83751'
-                      ? `Logistics ${timetable.marathon}`
-                      : timetable.university.includes('WSKM') &&
-                        timetable.marathon === '83752'
-                      ? `Preparation Course ${timetable.marathon}`
+                        timetable.marathon === '85683'
+                      ? `CNC ${timetable.marathon}`
                       : timetable.university.includes('WSSiP') &&
                         timetable.marathon === '83761'
                       ? `Logistics ${timetable.marathon}`
