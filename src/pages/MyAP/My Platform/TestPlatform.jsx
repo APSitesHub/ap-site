@@ -21,8 +21,8 @@ export const TestPlatform = ({ platformLink, handleExit }) => {
       !platformLink && !location
         ? setSrc('https://online.ap.education/school/')
         : !location
-          ? setSrc(platformLink)
-          : setSrc(location);
+        ? setSrc(platformLink)
+        : setSrc(location);
     };
 
     setIframeSRC();
@@ -33,10 +33,7 @@ export const TestPlatform = ({ platformLink, handleExit }) => {
     const updateTimeLeft = () => {
       const kyivTime = new Date();
       const kyivTimeInZone = toZonedTime(kyivTime, 'Europe/Kiev'); // Поточний час в Києві
-      const timeDifferenceInSeconds = differenceInSeconds(
-        targetDate,
-        kyivTimeInZone
-      ); // Різниця в секундах
+      const timeDifferenceInSeconds = differenceInSeconds(targetDate, kyivTimeInZone); // Різниця в секундах
 
       setTimeLeft(timeDifferenceInSeconds);
 
@@ -67,7 +64,10 @@ export const TestPlatform = ({ platformLink, handleExit }) => {
   return (
     <MyAPBackground>
       <TestPlatformSpoiler>
-        <div style={{marginLeft: "20px", fontWeight: "700"}}>Time Left: {formatTime(timeLeft)}</div> {/* Відображаємо таймер */}
+        <div style={{ marginLeft: '20px', fontWeight: '700' }}>
+          Time Left: {formatTime(timeLeft)}
+        </div>{' '}
+        {/* Відображаємо таймер */}
         <TestLogo />
       </TestPlatformSpoiler>
       <MyPlatformBox>
@@ -77,7 +77,8 @@ export const TestPlatform = ({ platformLink, handleExit }) => {
           src={src}
           width="100%"
           height="100%"
-          allow="microphone *"
+          allow="microphone *; fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
         ></iframe>
       </MyPlatformBox>
     </MyAPBackground>
