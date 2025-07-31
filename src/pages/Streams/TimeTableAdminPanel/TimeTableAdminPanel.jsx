@@ -216,6 +216,10 @@ const TimeTableAdminPanel = () => {
       value: 'a0',
     },
     {
+      label: 'A0_1',
+      value: 'a0_1',
+    },
+    {
       label: 'A1',
       value: 'a1',
     },
@@ -355,8 +359,16 @@ const TimeTableAdminPanel = () => {
       value: '44',
     },
     {
+      label: '44_1',
+      value: '44_1',
+    },
+    {
       label: '51',
       value: '51',
+    },
+    {
+      label: '51_1',
+      value: '51_1',
     },
     {
       label: '52',
@@ -430,8 +442,16 @@ const TimeTableAdminPanel = () => {
       value: '44',
     },
     {
+      label: '44_1',
+      value: '44_1',
+    },
+    {
       label: '51',
       value: '51',
+    },
+    {
+      label: '51_1',
+      value: '51_1',
     },
     {
       label: '52',
@@ -481,8 +501,16 @@ const TimeTableAdminPanel = () => {
       value: '44',
     },
     {
+      label: '44_1',
+      value: '44_1',
+    },
+    {
       label: '51',
       value: '51',
+    },
+    {
+      label: '51_1',
+      value: '51_1',
     },
     {
       label: '52',
@@ -529,6 +557,10 @@ const TimeTableAdminPanel = () => {
     {
       label: 'A0',
       value: 'a0',
+    },
+    {
+      label: 'A0_1',
+      value: 'a0_1',
     },
     {
       label: 'A1',
