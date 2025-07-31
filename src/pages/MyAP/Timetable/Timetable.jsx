@@ -73,14 +73,18 @@ export const Timetable = ({
     // }
 
     const baseStreamUrl = 'https://academy.ap.education/streams/';
-    const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';
+    const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';    
 
-    return language === 'en'
+    return language === 'en' && personalTimetable?.course.includes('_1')
+      ? baseStreamUrl + personalTimetable?.level.replace('_1', '')
+      : language === 'en'
       ? baseStreamUrl + personalTimetable?.level
       : language === 'enkids' && personalTimetable?.course.includes('high')
       ? baseKidsStreamUrl + 'high'
       : language === 'enkids'
       ? baseKidsStreamUrl + personalTimetable?.level
+      : language === 'de' && personalTimetable?.course.includes('_1')
+      ? baseStreamUrl + 'deutsch' + personalTimetable?.level.replace('_1', '')
       : language === 'de' && personalTimetable?.level.includes('b2')
       ? baseStreamUrl + 'deutschb2'
       : language === 'de' && personalTimetable?.level !== 'a1'
@@ -100,8 +104,12 @@ export const Timetable = ({
   const getSpeakingLink = () => {
     const baseStreamUrl = 'https://academy.ap.education/streams/';
     const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';
-    return language === 'en'
+    return language === 'en' && personalTimetable?.course.includes('_1')
+      ? baseStreamUrl + personalTimetable?.level.replace('_1', '') + 'sc'
+      : language === 'en'
       ? baseStreamUrl + personalTimetable?.level + 'sc'
+      : language === 'de' && personalTimetable?.course.includes('_1')
+      ? baseStreamUrl + 'de' + personalTimetable?.level.replace('_1', '') + 'sc'
       : language === 'enkids' && personalTimetable?.course.includes('high')
       ? baseKidsStreamUrl + 'highsc'
       : language === 'enkids'

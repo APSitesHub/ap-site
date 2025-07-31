@@ -25,7 +25,6 @@ const StreamSpeakingClub = () => {
   const location = useLocation().pathname;
 
   const page = location.replace('/streams/', '').replace('sc', '');
-  console.log(28, page);
 
   const link = page.includes('dea1')
     ? page.replace('dea1', 'deutsch')
@@ -36,8 +35,6 @@ const StreamSpeakingClub = () => {
     : page.includes('pl')
     ? page.replace('pl', 'polski')
     : page;
-
-  console.log(40, link);
 
   useLayoutEffect(() => {
     const getLinksRequest = async () => {
@@ -151,6 +148,7 @@ const StreamSpeakingClub = () => {
             (lang === user.lang ||
               user.lang?.split('/').some(singleLang => singleLang === lang))) ||
           (page.includes('deb2') && user.course?.includes('24')) ||
+          (page.includes('a0') && user.course?.includes('_1')) ||
           user.name === 'Dev Acc' ||
           user.course === '10' ||
           user.course === '11' ||
@@ -211,6 +209,7 @@ const StreamSpeakingClub = () => {
             ((user.course === '11' ||
               user.course?.split('/').some(singleCourse => singleCourse === '11')) &&
               isApproved) ||
+            (page.includes('a0') && user.course?.includes('_1')) ||
             (user.name === 'Тічер' && isApproved)) &&
             redirectLink !== undefined &&
             redirectLink !== '1' &&
