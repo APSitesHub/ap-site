@@ -98,7 +98,6 @@ const MyAP = () => {
       console.log('lessons getter');
       try {
         const res = await axios.get('/lessons');
-        console.log(res);
         setLessons(lessons => (lessons = [...res.data]));
       } catch (error) {
         console.log(error);
@@ -122,7 +121,6 @@ const MyAP = () => {
       console.log('timetable getter');
       try {
         const res = await axios.get('/timetable');
-        console.log(res);
         setTimetable(timetable => (timetable = res.data));
       } catch (error) {
         console.log(error);

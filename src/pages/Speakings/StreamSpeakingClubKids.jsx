@@ -21,6 +21,7 @@ const StreamSpeakingClubKids = () => {
   const [user, setUser] = useState({});
   const [course, setCourse] = useState('');
   const [level, setLevel] = useState('');
+  const [isHoliday, setIsHoliday] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
   const location = useLocation().pathname;
 
@@ -104,6 +105,18 @@ const StreamSpeakingClubKids = () => {
                   !timetable.course.includes('high')
               )[0].course
         );
+        setIsHoliday(
+          page.includes('high')
+            ? (await axios.get('/timetable')).data.filter(
+                timetable => timetable.course.includes('high') && lang === timetable.lang
+              )[0].isHoliday
+            : (await axios.get('/timetable')).data.filter(
+                timetable =>
+                  page.includes(timetable.level) &&
+                  lang === timetable.lang &&
+                  !timetable.course.includes('high')
+              )[0].isHoliday
+        );
 
         setLevel(
           user.course === '10' || user.course === '11'
@@ -127,7 +140,7 @@ const StreamSpeakingClubKids = () => {
           ? await axios.post('/speakingusers/new', user)
           : await axios.put(`/speakingusers/${user.userId}`, user);
 
-        res.data._id && setIsApproved(true);
+        res.data._id && !isHoliday && setIsApproved(true);
       } catch (error) {
         console.log(error);
       }
@@ -152,6 +165,17 @@ const StreamSpeakingClubKids = () => {
                 Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
                 правильним посиланням або спробуйте пізніше.
               </StreamPlaceHolderText>
+            </StreamPlaceHolder>
+          )}
+          {isHoliday && (
+            <StreamPlaceHolder>
+              <StreamPlaceHolderText>
+                Привіт! Сьогодні у вас канікули! <br />
+              </StreamPlaceHolderText>
+              <StreamRefreshText>
+                Слідкуйте за оновленнями розкладу у нашому Telegram-каналі, або зверніться
+                до вашого менеджера, щоб не пропустити нові заняття!
+              </StreamRefreshText>
             </StreamPlaceHolder>
           )}
           {((course === user.course ||
