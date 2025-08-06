@@ -235,14 +235,15 @@ const StreamPolski = () => {
     };
   }, [currentUser, room]);
 
-useEffect(() => {
+  useEffect(() => {
     const getHolidayStatus = async () => {
       try {
         const { data } = await axios.get('/timetable');
 
         const personalTimetable = data?.find(
           timetable =>
-            room.includes(timetable.level) &&
+            `${room}a1`.includes(timetable.level) &&
+            room.replace('polski', 'pl').includes(timetable.lang) &&
             (user.lang === timetable.lang ||
               user.lang.split('/').includes(timetable.lang))
         );

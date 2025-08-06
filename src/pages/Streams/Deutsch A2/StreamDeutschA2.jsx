@@ -243,6 +243,7 @@ const StreamDeutschA2 = () => {
         const personalTimetable = data?.find(
           timetable =>
             room.includes(timetable.level) &&
+            room.includes(timetable.lang) &&
             (user.lang === timetable.lang ||
               user.lang.split('/').includes(timetable.lang))
         );

@@ -235,7 +235,6 @@ const StreamDeutsch = () => {
     };
   }, [currentUser, room]);
 
-
   useEffect(() => {
     const getHolidayStatus = async () => {
       try {
@@ -243,7 +242,8 @@ const StreamDeutsch = () => {
 
         const personalTimetable = data?.find(
           timetable =>
-            room.includes(timetable.level) &&
+            `${room}a1`.includes(timetable.level) &&
+            room.includes(timetable.lang) &&
             (user.lang === timetable.lang ||
               user.lang.split('/').includes(timetable.lang))
         );

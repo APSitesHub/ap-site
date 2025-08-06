@@ -56,8 +56,6 @@ const StreamA1 = () => {
   const [isHoliday, setIsHoliday] = useState(false);
   const questionID = useRef('');
 
-  console.log(56, user);
-
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
     isChatOpen || isSupportOpen
@@ -285,8 +283,8 @@ const StreamA1 = () => {
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
-                Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
-                правильним посиланням або спробуйте пізніше.
+            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
+            правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (

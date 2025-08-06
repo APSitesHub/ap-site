@@ -182,7 +182,6 @@ const StreamB2 = () => {
       );
     });
 
-
     socketRef.current.on('user:banned', async (userID, userIP) => {
       console.log(userID);
       console.log(userIP);
@@ -235,7 +234,6 @@ const StreamB2 = () => {
     };
   }, [currentUser, room]);
 
-
   useEffect(() => {
     const getHolidayStatus = async () => {
       try {
@@ -274,7 +272,6 @@ const StreamB2 = () => {
         </StreamPlaceHolder>
       )}
       {(links.b2 === undefined || links.b2[0] < 10) && !isLoading ? (
-
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
