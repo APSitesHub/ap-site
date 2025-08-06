@@ -148,6 +148,9 @@ const RecordLinkTree = lazy(() =>
 const Service = lazy(() =>
   import(/* webpackChunkName: "Service page" */ '../pages/Service/Service')
 );
+const ServiceFeedback = lazy(() =>
+  import(/* webpackChunkName: "Service Feedback page" */ '../pages/Service/ServiceFeedback')
+);
 const HR = lazy(() => import(/* webpackChunkName: "HR page" */ '../pages/HR/HR'));
 const StreamsKids = lazy(() =>
   import(/* webpackChunkName: "Streams Kids page" */ '../pages/StreamsKids/StreamsKids')
@@ -991,6 +994,7 @@ export const App = () => {
             <Route path="viber" element={<ViberRedirect />} noindex={true} />
             <Route path="tg" element={<TelegramRedirect />} noindex={true} />
           </Route>
+          <Route path="service-feedback/:crmId" element={<ServiceFeedback />} noindex={true} />
           <Route path="marathon" element={<Service />} noindex={true}>
             <Route path="viber" element={<ViberMarathonRedirect />} noindex={true} />
             <Route path="tg" element={<TelegramMarathonRedirect />} noindex={true} />
