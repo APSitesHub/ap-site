@@ -24,6 +24,7 @@ import {
   MoldingNoClickSecondary,
   StreamPlaceHolder,
   StreamPlaceHolderText,
+  StreamRefreshText,
   StreamSection,
   SupportArrow,
   SupportBtn,
@@ -52,6 +53,7 @@ const StreamDeutsch = () => {
   const [isQuizInputOpen, setIsQuizInputOpen] = useState(false);
   const [isQuizOptionsOpen, setIsQuizOptionsOpen] = useState(false);
   const [isQuizTrueFalseOpen, setIsQuizTrueFalseOpen] = useState(false);
+  const [isHoliday, setIsHoliday] = useState(false);
   const questionID = useRef('');
 
   const toggleKahoot = e => {
@@ -233,8 +235,44 @@ const StreamDeutsch = () => {
     };
   }, [currentUser, room]);
 
+  useEffect(() => {
+    const getHolidayStatus = async () => {
+      try {
+        const { data } = await axios.get('/timetable');
+
+        const personalTimetable = data?.find(
+          timetable =>
+            `${room}a1`.includes(timetable.level) &&
+            room.includes(timetable.lang) &&
+            (user.lang === timetable.lang ||
+              user.lang.split('/').includes(timetable.lang))
+        );
+
+        const holidayStatus = personalTimetable?.isHoliday ?? false;
+
+        setIsHoliday(holidayStatus);
+        console.log('Holiday status:', holidayStatus);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getHolidayStatus();
+  }, [user, room]);
+
   return (
     <>
+      {isHoliday && (
+        <StreamPlaceHolder>
+          <StreamPlaceHolderText>
+            Привіт! Сьогодні у вас канікули! <br />
+          </StreamPlaceHolderText>
+          <StreamRefreshText>
+            Слідкуйте за оновленнями розкладу у нашому Telegram-каналі, або зверніться до
+            вашого менеджера, щоб не пропустити нові заняття!
+          </StreamRefreshText>
+        </StreamPlaceHolder>
+      )}
       {(links.deutsch === undefined || links.deutsch[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>

@@ -1,4 +1,5 @@
 import eyesImg from '../../../img/quiz/eyes.png';
+import holidayImg from '../../../img/quiz/holiday.png';
 import de from '../../../img/svg/myap/langs/de.png';
 import en from '../../../img/svg/myap/langs/en.png';
 import pl from '../../../img/svg/myap/langs/pl.png';
@@ -57,6 +58,8 @@ export const Timetable = ({
       : timeline.lang === language && timeline.course === course
   );
 
+  console.log('personalTimetable', personalTimetable);
+
   // const getRoomId = roomLevel => {
   //   const roomMapping = {
   //     b2: '2505c0a8-9136-4c13-8a5d-272a33a2d87b',
@@ -73,7 +76,7 @@ export const Timetable = ({
     // }
 
     const baseStreamUrl = 'https://academy.ap.education/streams/';
-    const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';    
+    const baseKidsStreamUrl = 'https://academy.ap.education/streams-kids/';
 
     return language === 'en' && personalTimetable?.course.includes('_1')
       ? baseStreamUrl + personalTimetable?.level.replace('_1', '')
@@ -172,6 +175,16 @@ export const Timetable = ({
           </PointsPlaceHolderText>
           <PointsPlaceHolderText>
             Але він з'явиться, коли у вас розпочнуться заняття!
+          </PointsPlaceHolderText>
+        </PointsPlaceHolder>
+      ) : personalTimetable.isHoliday ? (
+        <PointsPlaceHolder>
+          <EyesEmoji src={holidayImg} alt="Holiday emoji" width="80" />
+          <PointsPlaceHolderText>
+            Сьогодні у вас канікули!
+          </PointsPlaceHolderText>
+          <PointsPlaceHolderText>
+            Слідкуйте за оновленнями розкладу у нашому Telegram-каналі, або зверніться до вашого менеджера, щоб не пропустити нові заняття!
           </PointsPlaceHolderText>
         </PointsPlaceHolder>
       ) : (

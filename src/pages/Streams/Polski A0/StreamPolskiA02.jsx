@@ -20,6 +20,7 @@ import {
   MoldingNoClickSecondary,
   StreamPlaceHolder,
   StreamPlaceHolderText,
+  StreamRefreshText,
   StreamSection,
   VideoBox,
 } from '../../../components/Stream/Stream.styled';
@@ -37,6 +38,7 @@ const StreamPolskiA02 = () => {
   const [width, height] = useSize(document.body);
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [isHoliday, setIsHoliday] = useState(false);
   const questionID = useRef('');
 
   const toggleChat = () => {
@@ -197,8 +199,44 @@ const StreamPolskiA02 = () => {
     };
   }, [currentUser, room]);
 
+  useEffect(() => {
+    const getHolidayStatus = async () => {
+      try {
+        const { data } = await axios.get('/timetable');
+
+        const personalTimetable = data?.find(
+          timetable =>
+            room.includes(timetable.level) &&
+            room.replace('polski', 'pl').includes(timetable.lang) &&
+            (user.lang === timetable.lang ||
+              user.lang.split('/').includes(timetable.lang))
+        );
+
+        const holidayStatus = personalTimetable?.isHoliday ?? false;
+
+        setIsHoliday(holidayStatus);
+        console.log('Holiday status:', holidayStatus);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getHolidayStatus();
+  }, [user, room]);
+
   return (
     <>
+      {isHoliday && (
+        <StreamPlaceHolder>
+          <StreamPlaceHolderText>
+            Привіт! Сьогодні у вас канікули! <br />
+          </StreamPlaceHolderText>
+          <StreamRefreshText>
+            Слідкуйте за оновленнями розкладу у нашому Telegram-каналі, або зверніться до
+            вашого менеджера, щоб не пропустити нові заняття!
+          </StreamRefreshText>
+        </StreamPlaceHolder>
+      )}
       {(links.polskia0_2 === undefined || links.polskia0_2[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>

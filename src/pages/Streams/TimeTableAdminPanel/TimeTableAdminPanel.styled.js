@@ -69,6 +69,11 @@ export const ScheduleHeading = styled.h2`
   font-size: 32px;
   text-align: center;
   margin-bottom: 12px;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ScheduleItem = styled.li`
@@ -81,6 +86,20 @@ export const ScheduleInfo = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  position: relative;
+    
+  &.holiday::before {
+    content: 'КАНІКУЛИ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: var(--main-color);
+    background-color: var(--secondary-burnt-color);
+    opacity: 0.95;
+  }
 `;
 
 export const ScheduleData = styled.li`

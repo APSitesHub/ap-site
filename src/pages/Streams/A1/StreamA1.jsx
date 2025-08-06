@@ -24,6 +24,7 @@ import {
   MoldingNoClickSecondary,
   StreamPlaceHolder,
   StreamPlaceHolderText,
+  StreamRefreshText,
   StreamSection,
   SupportArrow,
   SupportBtn,
@@ -52,9 +53,8 @@ const StreamA1 = () => {
   const [width, height] = useSize(document.body);
   const [isBanned, setIsBanned] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [isHoliday, setIsHoliday] = useState(false);
   const questionID = useRef('');
-
-  console.log(56, user);
 
   const toggleKahoot = e => {
     setIsKahootOpen(isKahootOpen => !isKahootOpen);
@@ -242,14 +242,49 @@ const StreamA1 = () => {
     };
   }, [currentUser, room]);
 
+  useEffect(() => {
+    const getHolidayStatus = async () => {
+      try {
+        const { data } = await axios.get('/timetable');
+
+        const personalTimetable = data?.find(
+          timetable =>
+            room.includes(timetable.level) &&
+            (user.lang === timetable.lang ||
+              user.lang.split('/').includes(timetable.lang))
+        );
+
+        const holidayStatus = personalTimetable?.isHoliday ?? false;
+
+        setIsHoliday(holidayStatus);
+        console.log('Holiday status:', holidayStatus);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getHolidayStatus();
+  }, [user, room]);
+
   return (
     <>
+      {isHoliday && (
+        <StreamPlaceHolder>
+          <StreamPlaceHolderText>
+            Привіт! Сьогодні у вас канікули! <br />
+          </StreamPlaceHolderText>
+          <StreamRefreshText>
+            Слідкуйте за оновленнями розкладу у нашому Telegram-каналі, або зверніться до
+            вашого менеджера, щоб не пропустити нові заняття!
+          </StreamRefreshText>
+        </StreamPlaceHolder>
+      )}
       {(links.a1 === undefined || links.a1[0] < 10) && !isLoading ? (
         <StreamPlaceHolder>
           <StreamPlaceHolderText>
             Привіт! <br />
-                Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
-                правильним посиланням або спробуйте пізніше.
+            Наразі урок на цій сторінці не проводиться! Перевірте, чи ви перейшли за
+            правильним посиланням або спробуйте пізніше.
           </StreamPlaceHolderText>
         </StreamPlaceHolder>
       ) : currentUser.isBanned || isBanned ? (
