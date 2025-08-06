@@ -29,8 +29,8 @@ import {
 import { TimeTableEditForm } from './TimeTableEditForm/TimeTableEditForm';
 import { TimeTableCourseLevelEditForm } from './TimeTableCourseLevelEditForm/TimeTableCourseLevelEditForm';
 
-// axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
@@ -756,7 +756,9 @@ const TimeTableAdminPanel = () => {
   const handleCourseHolidayEdit = async id => {
     const timetableToEditHoliday = lessons.find(timetable => timetable._id === id);
     const areYouSure = window.confirm(
-      `Точно ${timetableToEditHoliday.isHoliday ? 'завершити' : 'розпочати'} канікули для ${timetableToEditHoliday.lang.toUpperCase()} ${timetableToEditHoliday.level.toUpperCase()} ${
+      `Точно ${
+        timetableToEditHoliday.isHoliday ? 'завершити' : 'розпочати'
+      } канікули для ${timetableToEditHoliday.lang.toUpperCase()} ${timetableToEditHoliday.level.toUpperCase()} ${
         timetableToEditHoliday.course
       }?`
     );
@@ -766,24 +768,28 @@ const TimeTableAdminPanel = () => {
       return;
     } else {
       try {
-        console.log(769, timetableToEditHoliday.isHoliday, 'isHoliday');
-        
-        const response = await axios.patch(`/timetable/course/holiday/${id}`, {isHoliday: !timetableToEditHoliday.isHoliday});
+        const response = await axios.patch(`/timetable/course/holiday/${id}`, {
+          isHoliday: !timetableToEditHoliday.isHoliday,
+        });
         console.log(response);
         alert(`Канікули ${timetableToEditHoliday.isHoliday ? 'завершено' : 'розпочато'}`);
       } catch (error) {
         console.error(error);
         alert('Десь якась проблема - роби скрін консолі, відправляй Кирилу');
       } finally {
-        console.log(778, lessons.map(lesson => lesson._id === id ? {...lesson, isHoliday: !timetableToEditHoliday.isHoliday}: lesson));
-        
-        setLessons(lessons => lessons.map(lesson => lesson._id === id ? {...lesson, isHoliday: !timetableToEditHoliday.isHoliday}: lesson));
+        setLessons(lessons =>
+          lessons.map(lesson =>
+            lesson._id === id
+              ? { ...lesson, isHoliday: !timetableToEditHoliday.isHoliday }
+              : lesson
+          )
+        );
         setIsLoading(isLoading => (isLoading = false));
       }
     }
   };
 
-  const handleTimetableDelete = async id => { 
+  const handleTimetableDelete = async id => {
     setIsLoading(isLoading => (isLoading = true));
     const timetableToDelete = lessons.find(timetable => timetable._id === id);
     const areYouSure = window.confirm(
@@ -998,7 +1004,9 @@ const TimeTableAdminPanel = () => {
                     >
                       Del
                     </UserDeleteButton>
-                    <UserEditButton onClick={() => handleCourseHolidayEdit(timetable._id)}>
+                    <UserEditButton
+                      onClick={() => handleCourseHolidayEdit(timetable._id)}
+                    >
                       Канікули
                     </UserEditButton>
                   </ScheduleHeading>
@@ -1007,7 +1015,7 @@ const TimeTableAdminPanel = () => {
                     {timetable.schedule
                       .sort((a, b) => a.day - b.day)
                       .map(schedule => (
-                        <ScheduleData key={schedule._id} >
+                        <ScheduleData key={schedule._id}>
                           <ScheduleDataDayText>
                             {DAYS[schedule.day - 1] || DAYS[DAYS.length - 1]}
                           </ScheduleDataDayText>
