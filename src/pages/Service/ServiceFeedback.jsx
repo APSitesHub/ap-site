@@ -41,7 +41,7 @@ const ServiceFeedback = () => {
 
     try {
       const res = await axios.post(
-        'https://visually-wanted-vulture.ngrok-free.app/service-feedback',
+        'https://ap-server-8qi1.onrender.com/service-feedback',
         payload
       );
 
