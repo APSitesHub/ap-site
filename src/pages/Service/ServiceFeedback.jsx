@@ -148,7 +148,7 @@ const ServiceFeedback = () => {
                       />
                     </FormLabel>
                   </FormArea>
-                  <FeedbackButton type="submit">Наділсати</FeedbackButton>
+                  <FeedbackButton type="submit">Надіслати</FeedbackButton>
                 </FeedbackFormContainer>
               </LoginForm>
             )}
