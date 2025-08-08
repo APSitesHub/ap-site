@@ -149,7 +149,9 @@ const Service = lazy(() =>
   import(/* webpackChunkName: "Service page" */ '../pages/Service/Service')
 );
 const ServiceFeedback = lazy(() =>
-  import(/* webpackChunkName: "Service Feedback page" */ '../pages/Service/ServiceFeedback')
+  import(
+    /* webpackChunkName: "Service Feedback page" */ '../pages/Service/ServiceFeedback'
+  )
 );
 const HR = lazy(() => import(/* webpackChunkName: "HR page" */ '../pages/HR/HR'));
 const StreamsKids = lazy(() =>
@@ -323,6 +325,11 @@ const UniCollectionsAdminPanel = lazy(() =>
 const ToursAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Tours Admin Panel page" */ '../pages/Streams/ToursAdminPanel/ToursAdminPanel'
+  )
+);
+const AppointmentsAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Appointments Admin Panel page" */ '../pages/Streams/AppointmentsAdminPanel/AppointmentsAdminPanel'
   )
 );
 const UniKahootAdminPanel = lazy(() =>
@@ -909,6 +916,11 @@ export const App = () => {
               noindex={true}
             />
             <Route path="tour-admin-panel" element={<ToursAdminPanel />} noindex={true} />
+            <Route
+              path="appointments-admin-panel"
+              element={<AppointmentsAdminPanel />}
+              noindex={true}
+            />
             <Route path="ratings" element={<WebinarsRatings />} noindex={true} />
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>
@@ -994,7 +1006,11 @@ export const App = () => {
             <Route path="viber" element={<ViberRedirect />} noindex={true} />
             <Route path="tg" element={<TelegramRedirect />} noindex={true} />
           </Route>
-          <Route path="service-feedback/:crmId" element={<ServiceFeedback />} noindex={true} />
+          <Route
+            path="service-feedback/:crmId"
+            element={<ServiceFeedback />}
+            noindex={true}
+          />
           <Route path="marathon" element={<Service />} noindex={true}>
             <Route path="viber" element={<ViberMarathonRedirect />} noindex={true} />
             <Route path="tg" element={<TelegramMarathonRedirect />} noindex={true} />

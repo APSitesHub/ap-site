@@ -49,7 +49,7 @@ const Streams = () => {
   const wbUserTrack = useCallback(
     async body => {
       try {
-        if (!room.match(/sc$/) && body.id) {
+        if (!room.match(/sc$/) && !room.match(/panel$/) && body.id) {
           const wbUser = await axios.get('/webinarusers/', {
             params: { userId: body.id },
           });

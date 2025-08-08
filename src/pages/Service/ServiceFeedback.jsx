@@ -40,10 +40,7 @@ const ServiceFeedback = () => {
     };
 
     try {
-      const res = await axios.post(
-        'https://ap-server-8qi1.onrender.com/service-feedback',
-        payload
-      );
+      await axios.post('https://ap-server-8qi1.onrender.com/service-feedback', payload);
 
       setIsSent(true);
     } catch (err) {
