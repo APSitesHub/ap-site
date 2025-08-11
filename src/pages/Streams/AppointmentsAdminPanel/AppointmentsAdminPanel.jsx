@@ -11,7 +11,6 @@ import {
   AdminFormBtn,
   AdminInputNote,
   AdminPanelSection,
-  UserCell,
   UserDBRow,
   UserHeadCell,
 } from '../UserAdminPanel/UserAdminPanel.styled';
@@ -20,10 +19,13 @@ import {
   AppointmentCaption,
   AppointmentCell,
   AppointmentDBTable,
+  AppointmentHead,
   AppointmentSpan,
+  BodyCell,
   CheckboxContainer,
   CheckboxInput,
   CheckboxLabel,
+  HeaderCellBody,
 } from './AppointmentsAdminPanel.styled';
 
 // axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -215,15 +217,17 @@ export const AppointmentsAdminPanel = () => {
                 </CheckboxLabel>
               </CheckboxContainer>
             </AppointmentCaption>
-            <thead>
+            <AppointmentHead>
               <UserDBRow>
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Altegio ID</UserHeadCell>
                 <UserHeadCell>CRM ID</UserHeadCell>
                 <UserHeadCell>Сума записів</UserHeadCell>
-                <UserHeadCell>Записи</UserHeadCell>
+                <UserHeadCell>Очікує / проведено / не проведено занять</UserHeadCell>
+                <UserHeadCell>Сума студентів</UserHeadCell>
+                <UserHeadCell>Записані студенти</UserHeadCell>
               </UserDBRow>
-            </thead>
+            </AppointmentHead>
             <tbody>
               {teachers
                 .filter(teacher =>
@@ -235,8 +239,8 @@ export const AppointmentsAdminPanel = () => {
                 )
                 .map(teacher => (
                   <UserDBRow key={teacher._id}>
-                    <UserCell>{teacher.name}</UserCell>
-                    <UserCell>
+                    <BodyCell componentWidth="12em">{teacher.name}</BodyCell>
+                    <BodyCell componentWidth="6em">
                       <a
                         href={`https://apeducation.kommo.com/leads/detail/${teacher.crmId}`}
                         target="_blank"
@@ -244,8 +248,8 @@ export const AppointmentsAdminPanel = () => {
                       >
                         {teacher.crmId}
                       </a>
-                    </UserCell>
-                    <UserCell>
+                    </BodyCell>
+                    <BodyCell componentWidth="6em">
                       <a
                         href={`https://app.alteg.io/timetable/761978#master_id=${teacher.altegioId}`}
                         target="_blank"
@@ -253,7 +257,7 @@ export const AppointmentsAdminPanel = () => {
                       >
                         {teacher.altegioId}
                       </a>
-                    </UserCell>
+                    </BodyCell>
                     {(() => {
                       const filteredAppointments = appointments
                         .filter(appointment =>
@@ -262,27 +266,91 @@ export const AppointmentsAdminPanel = () => {
                             : appointment.teacherId === String(teacher.altegioId) &&
                               !appointment.isDeleted
                         )
-                        .sort(
-                          (a, b) => new Date(a.startDateTime) - new Date(b.startDateTime)
-                        );
+                        .sort((a, b) => {
+                          const nameA = a.leadName ?? '';
+                          const nameB = b.leadName ?? '';
+                          const nameCompare = nameA.localeCompare(nameB, undefined, {
+                            sensitivity: 'base',
+                          });
 
+                          return nameCompare !== 0
+                            ? nameCompare
+                            : new Date(a.startDateTime) - new Date(b.startDateTime);
+                        });
                       return (
                         <>
-                          <UserCell>{filteredAppointments.length}</UserCell>
+                          <BodyCell componentWidth="6em">
+                            {filteredAppointments.length}
+                          </BodyCell>
+                          <BodyCell componentWidth="8em">
+                            {
+                              filteredAppointments.filter(
+                                appointment =>
+                                  appointment.status === '0' || appointment.status === '2'
+                              ).length
+                            }{' '}
+                            /{' '}
+                            {
+                              filteredAppointments.filter(
+                                appointment => appointment.status === '1'
+                              ).length
+                            }{' '}
+                            /{' '}
+                            {
+                              filteredAppointments.filter(
+                                appointment => appointment.status === '-1'
+                              ).length
+                            }
+                          </BodyCell>
+                          <BodyCell componentWidth="6em">
+                            {
+                              [
+                                ...new Set(
+                                  filteredAppointments.map(
+                                    appointment => appointment.leadName
+                                  )
+                                ),
+                              ].length
+                            }
+                          </BodyCell>
                           <AppointmentCell>
+                            <HeaderCellBody>
+                              {/* <AppointmentSpan componentWidth="6em">
+                                ID Запису
+                              </AppointmentSpan> */}
+                              <AppointmentSpan componentWidth="15em">
+                                Ім'я студента
+                              </AppointmentSpan>
+                              {/* <AppointmentSpan componentWidth="15em">
+                                Дата і час запису
+                              </AppointmentSpan> */}
+                              <AppointmentSpan componentWidth="5em">
+                                CRM ID
+                              </AppointmentSpan>
+                              {/* <AppointmentSpan componentWidth="8em">
+                                Статус запису
+                              </AppointmentSpan> */}
+                            </HeaderCellBody>
+                            {/* {console.log([
+                              ...new Set(
+                                filteredAppointments.map(
+                                  appointment => appointment.leadName
+                                )
+                              ),
+                            ])} */}
                             {filteredAppointments.map(appointment => (
                               <AppointmentBody
                                 dataStatus={appointment.status}
                                 deleted={appointment.isDeleted}
                                 key={appointment._id}
                               >
-                                <AppointmentSpan componentWidth="6em">
+                                {/* <AppointmentSpan componentWidth="6em">
                                   {appointment.appointmentId}
-                                </AppointmentSpan>
+                                </AppointmentSpan> */}
                                 <AppointmentSpan componentWidth="15em">
                                   {appointment.leadName}
                                 </AppointmentSpan>
-                                <AppointmentSpan componentWidth="15em">
+                                {/* <AppointmentSpan componentWidth="15em">
                                   {(() => {
                                     const str = new Date(
                                       appointment.startDateTime
@@ -301,7 +369,7 @@ export const AppointmentsAdminPanel = () => {
                                     'uk-UA',
                                     { hour: '2-digit', minute: '2-digit' }
                                   )}
-                                </AppointmentSpan>
+                                </AppointmentSpan> */}
                                 <AppointmentSpan componentWidth="5em">
                                   <a
                                     href={`https://apeducation.kommo.com/leads/detail/${appointment.leadId}`}
@@ -311,9 +379,9 @@ export const AppointmentsAdminPanel = () => {
                                     {appointment.leadId}
                                   </a>
                                 </AppointmentSpan>
-                                <AppointmentSpan componentWidth="7em">
+                                {/* <AppointmentSpan componentWidth="8em">
                                   {getStatusLabel(appointment.status)}
-                                </AppointmentSpan>
+                                </AppointmentSpan> */}
                               </AppointmentBody>
                             ))}
                           </AppointmentCell>

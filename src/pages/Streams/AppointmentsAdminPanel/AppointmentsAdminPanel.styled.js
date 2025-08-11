@@ -28,10 +28,24 @@ export const AppointmentCaption = styled(UserDBCaption)`
   position: sticky;
   top: 0;
   z-index: 1;
+  height: 120px;
 
   background: linear-gradient(#ffffff 75%, #ffffff80);
   padding: 12px;
   padding-bottom: 36px;
+`;
+
+export const BodyCell = styled.td`
+  border: 1px solid #000;
+  padding: 3px;
+  height: 3em;
+  width: ${props => props.componentWidth || 'auto'};
+`;
+
+export const AppointmentHead = styled.thead`
+  /* position: sticky;
+  top: 100px;
+  z-index: 1; */
 `;
 
 export const CheckboxLabel = styled(Label)`
@@ -50,12 +64,23 @@ export const AppointmentCell = styled.td`
   height: 3em;
 `;
 
+export const HeaderCellBody = styled.p`
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  flex-basis: 100%;
+  border-radius: 6px;
+  gap: 1.5em;
+  margin: 0 0.5em;
+  font-weight: 400;
+  color: #000000b7;
+`;
+
 export const AppointmentBody = styled.p`
   padding: 6px;
   display: flex;
   align-items: center;
   flex-basis: 100%;
-  background-color: aliceblue;
   border-radius: 6px;
   gap: 1.5em;
   margin: 0.5em;
@@ -93,3 +118,5 @@ export const AppointmentSpan = styled.span`
   text-align: start;
   width: ${props => props.componentWidth || 'auto'};
 `;
+
+export const AppointmentHeaderSpan = styled(AppointmentSpan)``;
