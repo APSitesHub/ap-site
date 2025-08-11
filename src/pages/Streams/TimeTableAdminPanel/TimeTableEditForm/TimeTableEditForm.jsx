@@ -59,6 +59,7 @@ export const TimeTableEditForm = ({
     time: yup.string(),
     lessonNumber: yup.string(),
     teacher: yup.string(),
+    isHoliday: yup.boolean(),
   });
 
   const handleEditTimetableSubmit = async values => {
@@ -76,6 +77,7 @@ export const TimeTableEditForm = ({
           teacher: values.teacher,
         },
       ],
+      isHoliday: false,
     };
 
     console.log(values);

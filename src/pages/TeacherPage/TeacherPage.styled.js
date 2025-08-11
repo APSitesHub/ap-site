@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as ViewerIcon } from '../../img/svg/viewerIcon.svg';
 import { ReactComponent as WhiteBoardIcon } from '../../img/svg/whiteBoardIcon.svg';
 import { ReactComponent as PlatformIcon } from '../../img/svg/myap/logo-short.svg';
+import { ReactComponent as PDFIcon } from '../../img/svg/pdf-icon.svg';
 import { ReactComponent as Warehouse } from '../../img/svg/warehouse.svg';
 import { ReactComponent as Hotel } from '../../img/svg/hotel.svg';
 import { ReactComponent as Workshop } from '../../img/svg/workshop.svg';
@@ -263,11 +264,18 @@ export const WhiteBoardLogo = styled(WhiteBoardIcon)`
 `;
 
 export const PlatformBtn = styled(ChatBtn)``;
+export const PDFBtn = styled(ChatBtn)``;
 export const QRBtn = styled(ChatBtn)``;
 export const PlatformLogo = styled(PlatformIcon)`
   z-index: 5;
   width: 48px;
   height: 48px;
+`;
+
+export const PDFLogo = styled(PDFIcon)`
+  z-index: 5;
+  width: 36px;
+  height: 36px;
 `;
 
 export const StudentTextArea = styled(AdminTextArea)`

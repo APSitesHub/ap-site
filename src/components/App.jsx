@@ -149,7 +149,9 @@ const Service = lazy(() =>
   import(/* webpackChunkName: "Service page" */ '../pages/Service/Service')
 );
 const ServiceFeedback = lazy(() =>
-  import(/* webpackChunkName: "Service Feedback page" */ '../pages/Service/ServiceFeedback')
+  import(
+    /* webpackChunkName: "Service Feedback page" */ '../pages/Service/ServiceFeedback'
+  )
 );
 const HR = lazy(() => import(/* webpackChunkName: "HR page" */ '../pages/HR/HR'));
 const StreamsKids = lazy(() =>
@@ -438,6 +440,11 @@ const TeacherPageUni = lazy(() =>
 const TeacherPageIndividual = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page for Individual Lessons" */ '../pages/TeacherPage/TeacherPageIndividual'
+  )
+);
+const TeacherPageIndividualPartners = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page for Individual Lessons with embedded Partners presentation" */ '../pages/TeacherPage/TeacherPageIndividualPartners'
   )
 );
 const TeacherPagePedagogium = lazy(() =>
@@ -994,7 +1001,11 @@ export const App = () => {
             <Route path="viber" element={<ViberRedirect />} noindex={true} />
             <Route path="tg" element={<TelegramRedirect />} noindex={true} />
           </Route>
-          <Route path="service-feedback/:crmId" element={<ServiceFeedback />} noindex={true} />
+          <Route
+            path="service-feedback/:crmId"
+            element={<ServiceFeedback />}
+            noindex={true}
+          />
           <Route path="marathon" element={<Service />} noindex={true}>
             <Route path="viber" element={<ViberMarathonRedirect />} noindex={true} />
             <Route path="tg" element={<TelegramMarathonRedirect />} noindex={true} />
@@ -1167,7 +1178,7 @@ export const App = () => {
             <Route path="heinz" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="doloka" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="lyasota" element={<TeacherPageIndividual />} noindex={true} />
-            <Route path="shvets" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="shvets" element={<TeacherPageIndividualPartners />} noindex={true} />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route
