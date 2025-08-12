@@ -12,7 +12,7 @@ import {
   FormArea,
   FreeAnswerArea,
   StarsContainer,
-} from './SpeackingFeedback';
+} from './SpeakingFeedback';
 import { EditFormHeader } from 'pages/TeacherPage/TeacherPage.styled';
 import { useState } from 'react';
 import axios from 'axios';
@@ -40,10 +40,7 @@ const ServiceFeedback = () => {
     };
 
     try {
-      const res = await axios.post(
-        'https://ap-server-8qi1.onrender.com/service-feedback',
-        payload
-      );
+      await axios.post('https://ap-server-8qi1.onrender.com/service-feedback', payload);
 
       setIsSent(true);
     } catch (err) {
