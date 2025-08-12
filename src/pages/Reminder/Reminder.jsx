@@ -1,27 +1,19 @@
+import { AdminFormBtn } from 'pages/Streams/AdminPanel/AdminPanel.styled';
 import {
   GradientBackground,
-  LargeText,
   LinkBase,
   PageContainer,
 } from '../Videochat/Videochat.styled';
-import { AdminFormBtn } from 'pages/Streams/AdminPanel/AdminPanel.styled';
+import { ReminderContainer, ReminderText } from './Reminder.styled';
 
 function Reminder() {
   return (
     <PageContainer>
       <GradientBackground>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '20px',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-          }}
-        >
-          <LargeText>
-            Оберіть месенджер, де Вам буде зручніше отримувати сповіщення
-          </LargeText>
+        <ReminderContainer>
+          <ReminderText>
+            Оберіть месенджер, в якому Вам буде зручніше отримувати сповіщення
+          </ReminderText>
           <AdminFormBtn>
             <LinkBase href="viber://pa?chatURI=agropracticepartnerss" target="_blank">
               Viber
@@ -33,7 +25,7 @@ function Reminder() {
               Telegram
             </LinkBase>
           </AdminFormBtn>
-        </div>
+        </ReminderContainer>
       </GradientBackground>
     </PageContainer>
   );

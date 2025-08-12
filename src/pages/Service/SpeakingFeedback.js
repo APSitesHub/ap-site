@@ -1,4 +1,3 @@
-import { Field, Form } from 'formik';
 import styled from 'styled-components';
 import { ReactComponent as ApStarIcon } from '../../img/svg/ap-star.svg';
 import { ReactComponent as ApStarGrayIcon } from '../../img/svg/ap-star-gray.svg';
