@@ -14,17 +14,13 @@ function Reminder() {
           <ReminderText>
             Оберіть месенджер, в якому Вам буде зручніше отримувати сповіщення
           </ReminderText>
-          <AdminFormBtn>
-            <LinkBase href="viber://pa?chatURI=agropracticepartnerss" target="_blank">
-              Viber
-            </LinkBase>
-          </AdminFormBtn>
+          <LinkBase href="viber://pa?chatURI=agropracticepartnerss" target="_blank">
+            <AdminFormBtn>Viber</AdminFormBtn>
+          </LinkBase>
 
-          <AdminFormBtn>
-            <LinkBase href="https://t.me/ap_notification_lesson_bot" target="_blank">
-              Telegram
-            </LinkBase>
-          </AdminFormBtn>
+          <LinkBase href="https://t.me/ap_notification_lesson_bot" target="_blank">
+            <AdminFormBtn>Telegram</AdminFormBtn>
+          </LinkBase>
         </ReminderContainer>
       </GradientBackground>
     </PageContainer>
