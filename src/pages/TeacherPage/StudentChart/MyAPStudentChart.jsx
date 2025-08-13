@@ -25,7 +25,7 @@ const linksRegex = /\b(?:https?|ftp):\/\/\S+\b/g;
 
 export const MyAPStudentChart = ({ currentStudentChart }) => {
   const [feedbackIndex, setFeedbackIndex] = useState(
-    currentStudentChart.feedback.length - 1
+    !!currentStudentChart.feedback && currentStudentChart.feedback.length - 1
   );
 
   const getPreviousFeedback = async () => {
@@ -36,43 +36,45 @@ export const MyAPStudentChart = ({ currentStudentChart }) => {
     setFeedbackIndex(feedbackIndex => feedbackIndex + 1);
   };
 
-  const data = [
-    {
-      area: 'Активність',
-      [currentStudentChart.name]:
-        currentStudentChart.feedback[feedbackIndex]?.activity ||
-        currentStudentChart.activity ||
-        0,
-    },
-    {
-      area: 'Граматика',
-      [currentStudentChart.name]:
-        currentStudentChart.feedback[feedbackIndex]?.grammar ||
-        currentStudentChart.grammar ||
-        0,
-    },
-    {
-      area: 'Говоріння',
-      [currentStudentChart.name]:
-        currentStudentChart.feedback[feedbackIndex]?.speaking ||
-        currentStudentChart.speaking ||
-        0,
-    },
-    {
-      area: 'Лексика',
-      [currentStudentChart.name]:
-        currentStudentChart.feedback[feedbackIndex]?.lexis ||
-        currentStudentChart.lexis ||
-        0,
-    },
-    {
-      area: 'Слухання',
-      [currentStudentChart.name]:
-        currentStudentChart.feedback[feedbackIndex]?.listening ||
-        currentStudentChart.listening ||
-        0,
-    },
-  ];
+  const data = currentStudentChart.feedback
+    ? [
+        {
+          area: 'Активність',
+          [currentStudentChart.name]:
+            currentStudentChart.feedback[feedbackIndex]?.activity ||
+            currentStudentChart.activity ||
+            0,
+        },
+        {
+          area: 'Граматика',
+          [currentStudentChart.name]:
+            currentStudentChart.feedback[feedbackIndex]?.grammar ||
+            currentStudentChart.grammar ||
+            0,
+        },
+        {
+          area: 'Говоріння',
+          [currentStudentChart.name]:
+            currentStudentChart.feedback[feedbackIndex]?.speaking ||
+            currentStudentChart.speaking ||
+            0,
+        },
+        {
+          area: 'Лексика',
+          [currentStudentChart.name]:
+            currentStudentChart.feedback[feedbackIndex]?.lexis ||
+            currentStudentChart.lexis ||
+            0,
+        },
+        {
+          area: 'Слухання',
+          [currentStudentChart.name]:
+            currentStudentChart.feedback[feedbackIndex]?.listening ||
+            currentStudentChart.listening ||
+            0,
+        },
+      ]
+    : null;
 
   const MyResponsiveRadar = ({ data }) => (
     <ResponsiveRadar
@@ -116,7 +118,7 @@ export const MyAPStudentChart = ({ currentStudentChart }) => {
   return (
     <>
       <MyAPStudentChartArea>
-        {!currentStudentChart.feedback.length ? (
+        {!currentStudentChart.feedback?.length ? (
           <PointsPlaceHolder>
             <EyesEmoji src={eyesImg} alt="Eyes emoji" width="80" />
             <PointsPlaceHolderText>Схоже, поки що відгуків немає.</PointsPlaceHolderText>

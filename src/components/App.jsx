@@ -447,6 +447,11 @@ const TeacherPageIndividual = lazy(() =>
     /* webpackChunkName: "Teacher Page for Individual Lessons" */ '../pages/TeacherPage/TeacherPageIndividual'
   )
 );
+const TeacherPageIndividualPartners = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Page for Individual Lessons with embedded Partners presentation" */ '../pages/TeacherPage/TeacherPageIndividualPartners'
+  )
+);
 const TeacherPagePedagogium = lazy(() =>
   import(
     /* webpackChunkName: "Teacher Page for Pedagogium" */ '../pages/TeacherPage/TeacherPagePedagogium'
@@ -520,6 +525,9 @@ const TeacherLogin = lazy(() =>
 );
 const TeacherAP = lazy(() =>
   import(/* webpackChunkName: "TeacherAP" */ '../pages/TeacherAP/TeacherAP')
+);
+const Reminder = lazy(() =>
+  import(/* webpackChunkName: "Reminder" */ '../pages/Reminder/Reminder')
 );
 const Videochat = lazy(() =>
   import(/* webpackChunkName: "Videochat" */ '../pages/Videochat/Videochat')
@@ -682,6 +690,7 @@ export const App = () => {
             element={<TrialLesson />}
             noindex={true}
           />
+          <Route path="reminder" element={<Reminder />} noindex={true} />
           <Route path="teacher-login" element={<TeacherLogin />} noindex={true} />
           <Route path="teacher-ap" element={<TeacherAP />} noindex={true} />
           <Route path="videochat" element={<Videochat />} noindex={true} />
@@ -1183,7 +1192,7 @@ export const App = () => {
             <Route path="heinz" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="doloka" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="lyasota" element={<TeacherPageIndividual />} noindex={true} />
-            <Route path="shvets" element={<TeacherPageIndividual />} noindex={true} />
+            <Route path="shvets" element={<TeacherPageIndividualPartners />} noindex={true} />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route
