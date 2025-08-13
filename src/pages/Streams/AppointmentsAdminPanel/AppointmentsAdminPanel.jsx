@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
@@ -27,6 +28,7 @@ import {
   CheckboxLabel,
   HeaderCellBody,
 } from './AppointmentsAdminPanel.styled';
+import { AppointmentStudentModal } from './AppointmentStudentModal';
 
 // axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 axios.defaults.baseURL = 'http://localhost:5000/';
@@ -50,6 +52,9 @@ export const AppointmentsAdminPanel = () => {
   const [showDeleted, setShowDeleted] = useState(false);
   const [showTeachersWithoutAppointments, setShowTeachersWithoutAppointments] =
     useState(false);
+  const [studentAppointments, setStudentAppointments] = useState([]);
+  const [isStudentAppointmentsShown, setIsStudentAppointmentsShown] = useState(false);
+  const [chosenTeacher, setChosenTeacher] = useState({});
 
   useEffect(() => {
     document.title = 'Altegio Appointments Admin Panel | AP Education';
@@ -139,16 +144,33 @@ export const AppointmentsAdminPanel = () => {
     }
   };
 
-  const getStatusLabel = status => {
-    switch (status) {
-      case '0':
-        return 'Очікує';
-      case '1':
-        return 'Проведено';
-      case '-1':
-        return "Не з'явився";
-      default:
-        return '';
+  const openStudentAppointments = async (leadId, teacherId) => {
+    const endOfDay = new Date(endOfRange);
+    endOfDay.setHours(26, 59, 59, 999);
+
+    const studentAppointments = await axios.get('/appointments/student', {
+      params: {
+        leadId: leadId,
+        start: startOfRange,
+        end: endOfDay,
+      },
+    });
+
+    setChosenTeacher(
+      chosenTeacher =>
+        (chosenTeacher = teachers.find(teacher => teacherId === teacher.altegioId))
+    );
+    setStudentAppointments(appointments => (appointments = studentAppointments.data));
+    setIsStudentAppointmentsShown(true);
+  };
+
+  const closeStudentAppointments = e => {
+    setIsStudentAppointmentsShown(false);
+  };
+
+  const closeStudentAppointmentsOnClick = e => {
+    if (e.target.id === 'close-on-click') {
+      setIsStudentAppointmentsShown(false);
     }
   };
 
@@ -277,30 +299,26 @@ export const AppointmentsAdminPanel = () => {
                             ? nameCompare
                             : new Date(a.startDateTime) - new Date(b.startDateTime);
                         });
+
+                      const pendingAppointments = filteredAppointments.filter(
+                        appointment =>
+                          appointment.status === '0' || appointment.status === '2'
+                      );
+                      const completedAppointments = filteredAppointments.filter(
+                        appointment => appointment.status === '1'
+                      );
+                      const noShowAppointments = filteredAppointments.filter(
+                        appointment => appointment.status === '-1'
+                      );
+
                       return (
                         <>
                           <BodyCell componentWidth="6em">
                             {filteredAppointments.length}
                           </BodyCell>
                           <BodyCell componentWidth="8em">
-                            {
-                              filteredAppointments.filter(
-                                appointment =>
-                                  appointment.status === '0' || appointment.status === '2'
-                              ).length
-                            }{' '}
-                            /{' '}
-                            {
-                              filteredAppointments.filter(
-                                appointment => appointment.status === '1'
-                              ).length
-                            }{' '}
-                            /{' '}
-                            {
-                              filteredAppointments.filter(
-                                appointment => appointment.status === '-1'
-                              ).length
-                            }
+                            {pendingAppointments.length} / {completedAppointments.length}{' '}
+                            / {noShowAppointments.length}
                           </BodyCell>
                           <BodyCell componentWidth="6em">
                             {
@@ -315,62 +333,68 @@ export const AppointmentsAdminPanel = () => {
                           </BodyCell>
                           <AppointmentCell>
                             <HeaderCellBody>
-                              {/* <AppointmentSpan componentWidth="6em">
-                                ID Запису
-                              </AppointmentSpan> */}
                               <AppointmentSpan componentWidth="15em">
                                 Ім'я студента
                               </AppointmentSpan>
-                              {/* <AppointmentSpan componentWidth="15em">
-                                Дата і час запису
-                              </AppointmentSpan> */}
-                              <AppointmentSpan componentWidth="5em">
+                              <AppointmentSpan componentWidth="6em">
                                 CRM ID
                               </AppointmentSpan>
-                              {/* <AppointmentSpan componentWidth="8em">
-                                Статус запису
-                              </AppointmentSpan> */}
+                              <AppointmentSpan componentWidth="6em">
+                                Записів
+                              </AppointmentSpan>
                             </HeaderCellBody>
-                            {/* {console.log([
-                              ...new Set(
-                                filteredAppointments.map(
-                                  appointment => appointment.leadName
-                                )
-                              ),
-                            ])} */}
-                            {filteredAppointments.map(appointment => (
+                            {[
+                              ...new Map(
+                                filteredAppointments.map(appointment => [
+                                  appointment.leadId,
+                                  appointment,
+                                ])
+                              ).values(),
+                            ].map(appointment => (
                               <AppointmentBody
-                                dataStatus={appointment.status}
+                                gradient={[
+                                  (pendingAppointments.filter(
+                                    studentAppointment =>
+                                      appointment.leadId === studentAppointment.leadId
+                                  ).length /
+                                    filteredAppointments.filter(
+                                      studentAppointment =>
+                                        appointment.leadId === studentAppointment.leadId
+                                    ).length) *
+                                    100,
+                                  (completedAppointments.filter(
+                                    studentAppointment =>
+                                      appointment.leadId === studentAppointment.leadId
+                                  ).length /
+                                    filteredAppointments.filter(
+                                      studentAppointment =>
+                                        appointment.leadId === studentAppointment.leadId
+                                    ).length) *
+                                    100,
+                                  (noShowAppointments.filter(
+                                    studentAppointment =>
+                                      appointment.leadId === studentAppointment.leadId
+                                  ).length /
+                                    filteredAppointments.filter(
+                                      studentAppointment =>
+                                        appointment.leadId === studentAppointment.leadId
+                                    ).length) *
+                                    100,
+                                ]}
                                 deleted={appointment.isDeleted}
                                 key={appointment._id}
+                                onClick={() =>
+                                  openStudentAppointments(
+                                    appointment.leadId,
+                                    teacher.altegioId
+                                  )
+                                }
                               >
-                                {/* <AppointmentSpan componentWidth="6em">
-                                  {appointment.appointmentId}
-                                </AppointmentSpan> */}
                                 <AppointmentSpan componentWidth="15em">
                                   {appointment.leadName}
                                 </AppointmentSpan>
-                                {/* <AppointmentSpan componentWidth="15em">
-                                  {(() => {
-                                    const str = new Date(
-                                      appointment.startDateTime
-                                    ).toLocaleString('uk-UA', {
-                                      weekday: 'short',
-                                      year: 'numeric',
-                                      month: 'numeric',
-                                      day: 'numeric',
-                                      hour: '2-digit',
-                                      minute: '2-digit',
-                                    });
-                                    return str[0].toUpperCase() + str.slice(1);
-                                  })()}{' '}
-                                  -{' '}
-                                  {new Date(appointment.endDateTime).toLocaleTimeString(
-                                    'uk-UA',
-                                    { hour: '2-digit', minute: '2-digit' }
-                                  )}
-                                </AppointmentSpan> */}
-                                <AppointmentSpan componentWidth="5em">
+
+                                <AppointmentSpan componentWidth="6em">
                                   <a
                                     href={`https://apeducation.kommo.com/leads/detail/${appointment.leadId}`}
                                     target="_blank"
@@ -379,9 +403,14 @@ export const AppointmentsAdminPanel = () => {
                                     {appointment.leadId}
                                   </a>
                                 </AppointmentSpan>
-                                {/* <AppointmentSpan componentWidth="8em">
-                                  {getStatusLabel(appointment.status)}
-                                </AppointmentSpan> */}
+                                <AppointmentSpan componentWidth="6em">
+                                  {
+                                    filteredAppointments.filter(
+                                      studentAppointment =>
+                                        appointment.leadId === studentAppointment.leadId
+                                    ).length
+                                  }
+                                </AppointmentSpan>
                               </AppointmentBody>
                             ))}
                           </AppointmentCell>
@@ -392,6 +421,16 @@ export const AppointmentsAdminPanel = () => {
                 ))}
             </tbody>
           </AppointmentDBTable>
+        )}
+        {isStudentAppointmentsShown && (
+          <Backdrop onMouseDown={closeStudentAppointmentsOnClick} id="close-on-click">
+            <AppointmentStudentModal
+              studentAppointments={studentAppointments}
+              closeStudentAppointments={closeStudentAppointments}
+              teachers={teachers}
+              chosenTeacher={chosenTeacher}
+            />
+          </Backdrop>
         )}
         {isLoading && <Loader />}
       </AdminPanelSection>
