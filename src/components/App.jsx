@@ -327,6 +327,11 @@ const ToursAdminPanel = lazy(() =>
     /* webpackChunkName: "Tours Admin Panel page" */ '../pages/Streams/ToursAdminPanel/ToursAdminPanel'
   )
 );
+const AppointmentsAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Appointments Admin Panel page" */ '../pages/Streams/AppointmentsAdminPanel/AppointmentsAdminPanel'
+  )
+);
 const UniKahootAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Pl University Kahoots Admin Panel page" */ '../pages/Streams/KahootAdminPanel/UniKahootAdminPanel'
@@ -920,6 +925,11 @@ export const App = () => {
               noindex={true}
             />
             <Route path="tour-admin-panel" element={<ToursAdminPanel />} noindex={true} />
+            <Route
+              path="appointments-admin-panel"
+              element={<AppointmentsAdminPanel />}
+              noindex={true}
+            />
             <Route path="ratings" element={<WebinarsRatings />} noindex={true} />
           </Route>
           <Route path="streams-kids" element={<StreamsKids />} noindex={true}>
