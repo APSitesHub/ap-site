@@ -30,8 +30,8 @@ import {
 } from './AppointmentsAdminPanel.styled';
 import { AppointmentStudentModal } from './AppointmentStudentModal';
 
-// axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
-axios.defaults.baseURL = 'http://localhost:5000/';
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+
 const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
