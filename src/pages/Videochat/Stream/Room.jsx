@@ -91,11 +91,34 @@ function Room({ isAdmin }) {
       : setIsOpenedLast(isOpenedLast => '');
   };
 
-  const toggleFullScreen = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      document.documentElement.requestFullscreen();
+  const toggleFullScreen = async () => {
+    const element = document.documentElement;
+
+    try {
+      if (
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+      ) {
+        const exitMethod =
+          document.exitFullscreen ||
+          document.webkitExitFullscreen ||
+          document.mozCancelFullScreen ||
+          document.msExitFullscreen;
+
+        if (exitMethod) await exitMethod.call(document);
+      } else {
+        const requestMethod =
+          element.requestFullscreen ||
+          element.webkitRequestFullscreen ||
+          element.mozRequestFullScreen ||
+          element.msRequestFullscreen;
+
+        if (requestMethod) await requestMethod.call(element);
+      }
+    } catch (error) {
+      console.error('Помилка fullscreen:', error);
     }
   };
 
