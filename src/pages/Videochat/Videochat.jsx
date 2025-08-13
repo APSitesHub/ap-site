@@ -125,10 +125,10 @@ function Videochat() {
 
         <RoomListContainer>
           {Object.values(ROOM_TYPES).map(type => (
-            <>
-              <RoomList>
-                <SubTitle>{type}</SubTitle>
-                {rooms
+            <RoomList key={type}>
+              <SubTitle>{type}</SubTitle>
+              {rooms &&
+                rooms
                   .filter(room => room.type === type)
                   .map(room => (
                     <RoomItem key={room.id}>
@@ -145,8 +145,7 @@ function Videochat() {
                       </JoinButton>
                     </RoomItem>
                   ))}
-              </RoomList>
-            </>
+            </RoomList>
           ))}
         </RoomListContainer>
       </Container>
