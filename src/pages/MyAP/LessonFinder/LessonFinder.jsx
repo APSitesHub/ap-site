@@ -196,6 +196,18 @@ export const LessonFinder = ({
       ? setIsAnswerOpen(isOpen => !isOpen)
       : openAnswer(i);
 
+  const normalizeVideoUrl = url => {
+    const regex =
+      /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/;
+    const match = url.match(regex);
+
+    if (match) {
+      return `https://www.youtube.com/watch?v=${match[1]}`;
+    }
+
+    return url;
+  };
+
   useEffect(() => {
     setVisibleLessons(lessonsFound.slice(0, 5));
   }, [lessonsFound]);
@@ -311,14 +323,14 @@ export const LessonFinder = ({
                         }}
                         width="100%"
                         height="100%"
-                        url={lesson.video[0]}
+                        url={normalizeVideoUrl(lesson.video[0])}
                       />
                     </LessonVideoBox>
                   )}
                   {lesson.pdf.length > 0 && (
                     <PdfBox onMouseLeave={closePdfPreviewOnMouseOut}>
                       {lesson.pdf.map((pdf, i) => (
-                        <>
+                        <div key={i}>
                           <PdfWrapper
                             key={pdf}
                             id={pdf}
@@ -352,7 +364,7 @@ export const LessonFinder = ({
                               ></PdfPreview>
                             )}
                           </PdfPreviewBackground>
-                        </>
+                        </div>
                       ))}
                     </PdfBox>
                   )}
