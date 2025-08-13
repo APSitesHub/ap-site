@@ -12,7 +12,7 @@ import {
   FormArea,
   FreeAnswerArea,
   StarsContainer,
-} from './SpeackingFeedback';
+} from './SpeakingFeedback';
 import { EditFormHeader } from 'pages/TeacherPage/TeacherPage.styled';
 import { useState } from 'react';
 import axios from 'axios';
