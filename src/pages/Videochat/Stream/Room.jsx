@@ -25,6 +25,7 @@ import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 import { JitsiMeeting } from '@jitsi/react-sdk';
 import { ColorRing } from 'react-loader-spinner';
+import * as Sentry from '@sentry/react';
 
 const supportedLanguages = ['uk', 'en', 'pl', 'de'];
 const browserLanguage = navigator.language.split('-')[0];
@@ -183,6 +184,16 @@ function Room({ isAdmin }) {
         setIsConferenceStarted(false);
         setisLoading(false);
       }
+
+      Sentry.captureMessage('Jitsi Error', {
+        extra: error,
+      });
+    });
+
+    externalApi.addListener('audioOnlyChanged', obj => {
+      Sentry.captureMessage('Jitsi audioOnlyChanged', {
+        extra: obj,
+      });
     });
 
     externalApi.addEventListener('videoConferenceLeft', () => {

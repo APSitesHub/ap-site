@@ -25,6 +25,7 @@ import { StudentOptions } from 'components/Stream/StudentInput/StudentOptions';
 import { StudentTrueFalse } from 'components/Stream/StudentInput/StudentTrueFalse';
 import { JitsiMeeting } from '@jitsi/react-sdk';
 import { ColorRing } from 'react-loader-spinner';
+import * as Sentry from '@sentry/react';
 
 const supportedLanguages = ['uk', 'en', 'pl', 'de'];
 const browserLanguage = navigator.language.split('-')[0];
@@ -182,6 +183,16 @@ function Room({ isAdmin, lang }) {
         setIsConferenceStarted(false);
         setisLoading(false);
       }
+
+      Sentry.captureMessage('Jitsi Error', {
+        extra: error,
+      });
+    });
+
+    externalApi.addListener('audioOnlyChanged', obj => {
+      Sentry.captureMessage('Jitsi audioOnlyChanged', {
+        extra: obj,
+      });
     });
 
     externalApi.addEventListener('videoConferenceLeft', () => {
@@ -426,6 +437,10 @@ function Room({ isAdmin, lang }) {
               domain="dev2.ap.education"
               roomName={roomID}
               configOverwrite={{
+                channelLastN: -1,
+                disableSimulcast: false,
+                disableNS: true,
+                disableAP: true,
                 disableTileEnlargement: true,
                 startWithVideoMuted: !isAdmin,
                 followMeEnabled: isAdmin,
@@ -494,7 +509,7 @@ function Room({ isAdmin, lang }) {
                   // 'stats',
                   // 'tileview',
                   'toggle-camera',
-                  'videoquality',
+                  // 'videoquality',
                   // 'whiteboard',
                 ],
                 disabledSounds: [
@@ -605,6 +620,7 @@ function Room({ isAdmin, lang }) {
                 MAXIMUM_ZOOMING_COEFFICIENT: 1,
                 SETTINGS_SECTIONS: ['devices', 'more', 'language', 'moderator'],
                 SHOW_CHROME_EXTENSION_BANNER: false,
+                VIDEO_QUALITY_LABEL_DISABLED: true,
               }}
               userInfo={{
                 displayName: localStorage.getItem('userName'),
