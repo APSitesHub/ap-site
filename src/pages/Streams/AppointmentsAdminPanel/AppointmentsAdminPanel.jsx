@@ -27,6 +27,7 @@ import {
   CheckboxInput,
   CheckboxLabel,
   HeaderCellBody,
+  TeacherFilterInput,
 } from './AppointmentsAdminPanel.styled';
 import { AppointmentStudentModal } from './AppointmentStudentModal';
 
@@ -52,6 +53,7 @@ export const AppointmentsAdminPanel = () => {
   const [showDeleted, setShowDeleted] = useState(false);
   const [showTeachersWithoutAppointments, setShowTeachersWithoutAppointments] =
     useState(false);
+  const [teacherFilter, setTeacherFilter] = useState('');
   const [studentAppointments, setStudentAppointments] = useState([]);
   const [isStudentAppointmentsShown, setIsStudentAppointmentsShown] = useState(false);
   const [chosenTeacher, setChosenTeacher] = useState({});
@@ -237,6 +239,15 @@ export const AppointmentsAdminPanel = () => {
                     }
                   />
                 </CheckboxLabel>
+                <CheckboxLabel>
+                  <TeacherFilterInput
+                    type="text"
+                    name="teacherFilter"
+                    value={teacherFilter}
+                    onChange={e => setTeacherFilter(e.target.value)}
+                    placeholder="Почніть вводити прізвище викладача..."
+                  />
+                </CheckboxLabel>
               </CheckboxContainer>
             </AppointmentCaption>
             <AppointmentHead>
@@ -245,180 +256,199 @@ export const AppointmentsAdminPanel = () => {
                 <UserHeadCell>Altegio ID</UserHeadCell>
                 <UserHeadCell>CRM ID</UserHeadCell>
                 <UserHeadCell>Сума записів</UserHeadCell>
-                <UserHeadCell>Очікує / проведено / не проведено занять</UserHeadCell>
+                <UserHeadCell>Очікує</UserHeadCell>
+                <UserHeadCell>Проведено</UserHeadCell>
+                <UserHeadCell>Не проведено</UserHeadCell>
                 <UserHeadCell>Сума студентів</UserHeadCell>
                 <UserHeadCell>Записані студенти</UserHeadCell>
               </UserDBRow>
             </AppointmentHead>
             <tbody>
-              {teachers
-                .filter(teacher =>
-                  showTeachersWithoutAppointments
-                    ? teacher
-                    : appointments.some(
-                        appointment => Number(appointment.teacherId) === teacher.altegioId
-                      )
-                )
-                .map(teacher => (
-                  <UserDBRow key={teacher._id}>
-                    <BodyCell componentWidth="12em">{teacher.name}</BodyCell>
-                    <BodyCell componentWidth="6em">
-                      <a
-                        href={`https://apeducation.kommo.com/leads/detail/${teacher.crmId}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {teacher.crmId}
-                      </a>
-                    </BodyCell>
-                    <BodyCell componentWidth="6em">
-                      <a
-                        href={`https://app.alteg.io/timetable/761978#master_id=${teacher.altegioId}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {teacher.altegioId}
-                      </a>
-                    </BodyCell>
-                    {(() => {
-                      const filteredAppointments = appointments
-                        .filter(appointment =>
-                          showDeleted
-                            ? appointment.teacherId === String(teacher.altegioId)
-                            : appointment.teacherId === String(teacher.altegioId) &&
-                              !appointment.isDeleted
+              {(() => {
+                const foundTeachers = teacherFilter
+                  ? teachers.filter(teacher =>
+                      teacher.name
+                        .toLowerCase()
+                        .includes(teacherFilter.toLowerCase().trim())
+                    )
+                  : [...teachers];
+
+                return foundTeachers
+                  .filter(teacher =>
+                    showTeachersWithoutAppointments
+                      ? teacher
+                      : appointments.some(
+                          appointment =>
+                            Number(appointment.teacherId) === teacher.altegioId &&
+                            !appointment.isDeleted
                         )
-                        .sort((a, b) => {
-                          const nameA = a.leadName ?? '';
-                          const nameB = b.leadName ?? '';
-                          const nameCompare = nameA.localeCompare(nameB, undefined, {
-                            sensitivity: 'base',
+                  )
+                  .map(teacher => (
+                    <UserDBRow key={teacher._id}>
+                      <BodyCell componentWidth="12em">{teacher.name}</BodyCell>
+                      <BodyCell componentWidth="6em">
+                        <a
+                          href={`https://apeducation.kommo.com/leads/detail/${teacher.crmId}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {teacher.crmId}
+                        </a>
+                      </BodyCell>
+                      <BodyCell componentWidth="6em">
+                        <a
+                          href={`https://app.alteg.io/timetable/761978#master_id=${teacher.altegioId}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {teacher.altegioId}
+                        </a>
+                      </BodyCell>
+                      {(() => {
+                        const filteredAppointments = appointments
+                          .filter(appointment =>
+                            showDeleted
+                              ? appointment.teacherId === String(teacher.altegioId)
+                              : appointment.teacherId === String(teacher.altegioId) &&
+                                !appointment.isDeleted
+                          )
+                          .sort((a, b) => {
+                            const nameA = a.leadName ?? '';
+                            const nameB = b.leadName ?? '';
+                            const nameCompare = nameA.localeCompare(nameB, undefined, {
+                              sensitivity: 'base',
+                            });
+
+                            return nameCompare !== 0
+                              ? nameCompare
+                              : new Date(a.startDateTime) - new Date(b.startDateTime);
                           });
 
-                          return nameCompare !== 0
-                            ? nameCompare
-                            : new Date(a.startDateTime) - new Date(b.startDateTime);
-                        });
+                        const pendingAppointments = filteredAppointments.filter(
+                          appointment =>
+                            appointment.status === '0' || appointment.status === '2'
+                        );
+                        const completedAppointments = filteredAppointments.filter(
+                          appointment => appointment.status === '1'
+                        );
+                        const noShowAppointments = filteredAppointments.filter(
+                          appointment => appointment.status === '-1'
+                        );
 
-                      const pendingAppointments = filteredAppointments.filter(
-                        appointment =>
-                          appointment.status === '0' || appointment.status === '2'
-                      );
-                      const completedAppointments = filteredAppointments.filter(
-                        appointment => appointment.status === '1'
-                      );
-                      const noShowAppointments = filteredAppointments.filter(
-                        appointment => appointment.status === '-1'
-                      );
-
-                      return (
-                        <>
-                          <BodyCell componentWidth="6em">
-                            {filteredAppointments.length}
-                          </BodyCell>
-                          <BodyCell componentWidth="8em">
-                            {pendingAppointments.length} / {completedAppointments.length}{' '}
-                            / {noShowAppointments.length}
-                          </BodyCell>
-                          <BodyCell componentWidth="6em">
-                            {
-                              [
-                                ...new Set(
-                                  filteredAppointments.map(
-                                    appointment => appointment.leadName
-                                  )
-                                ),
-                              ].length
-                            }
-                          </BodyCell>
-                          <AppointmentCell>
-                            <HeaderCellBody>
-                              <AppointmentSpan componentWidth="15em">
-                                Ім'я студента
-                              </AppointmentSpan>
-                              <AppointmentSpan componentWidth="6em">
-                                CRM ID
-                              </AppointmentSpan>
-                              <AppointmentSpan componentWidth="6em">
-                                Записів
-                              </AppointmentSpan>
-                            </HeaderCellBody>
-                            {[
-                              ...new Map(
-                                filteredAppointments.map(appointment => [
-                                  appointment.leadId,
-                                  appointment,
-                                ])
-                              ).values(),
-                            ].map(appointment => (
-                              <AppointmentBody
-                                gradient={[
-                                  (pendingAppointments.filter(
-                                    studentAppointment =>
-                                      appointment.leadId === studentAppointment.leadId
-                                  ).length /
-                                    filteredAppointments.filter(
-                                      studentAppointment =>
-                                        appointment.leadId === studentAppointment.leadId
-                                    ).length) *
-                                    100,
-                                  (completedAppointments.filter(
-                                    studentAppointment =>
-                                      appointment.leadId === studentAppointment.leadId
-                                  ).length /
-                                    filteredAppointments.filter(
-                                      studentAppointment =>
-                                        appointment.leadId === studentAppointment.leadId
-                                    ).length) *
-                                    100,
-                                  (noShowAppointments.filter(
-                                    studentAppointment =>
-                                      appointment.leadId === studentAppointment.leadId
-                                  ).length /
-                                    filteredAppointments.filter(
-                                      studentAppointment =>
-                                        appointment.leadId === studentAppointment.leadId
-                                    ).length) *
-                                    100,
-                                ]}
-                                deleted={appointment.isDeleted}
-                                key={appointment._id}
-                                onClick={() =>
-                                  openStudentAppointments(
-                                    appointment.leadId,
-                                    teacher.altegioId
-                                  )
-                                }
-                              >
+                        return (
+                          <>
+                            <BodyCell componentWidth="7em">
+                              {filteredAppointments.length}
+                            </BodyCell>
+                            <BodyCell componentWidth="7em">
+                              {pendingAppointments.length}
+                            </BodyCell>
+                            <BodyCell componentWidth="7em">
+                              {completedAppointments.length}
+                            </BodyCell>
+                            <BodyCell componentWidth="7em">
+                              {noShowAppointments.length}
+                            </BodyCell>
+                            <BodyCell componentWidth="6em">
+                              {
+                                [
+                                  ...new Set(
+                                    filteredAppointments.map(
+                                      appointment => appointment.leadName
+                                    )
+                                  ),
+                                ].length
+                              }
+                            </BodyCell>
+                            <AppointmentCell>
+                              <HeaderCellBody>
                                 <AppointmentSpan componentWidth="15em">
-                                  {appointment.leadName}
-                                </AppointmentSpan>
-
-                                <AppointmentSpan componentWidth="6em">
-                                  <a
-                                    href={`https://apeducation.kommo.com/leads/detail/${appointment.leadId}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                  >
-                                    {appointment.leadId}
-                                  </a>
+                                  Ім'я студента
                                 </AppointmentSpan>
                                 <AppointmentSpan componentWidth="6em">
-                                  {
-                                    filteredAppointments.filter(
+                                  CRM ID
+                                </AppointmentSpan>
+                                <AppointmentSpan componentWidth="6em">
+                                  Записів
+                                </AppointmentSpan>
+                              </HeaderCellBody>
+                              {[
+                                ...new Map(
+                                  filteredAppointments.map(appointment => [
+                                    appointment.leadId,
+                                    appointment,
+                                  ])
+                                ).values(),
+                              ].map(appointment => (
+                                <AppointmentBody
+                                  gradient={[
+                                    (pendingAppointments.filter(
                                       studentAppointment =>
                                         appointment.leadId === studentAppointment.leadId
-                                    ).length
+                                    ).length /
+                                      filteredAppointments.filter(
+                                        studentAppointment =>
+                                          appointment.leadId === studentAppointment.leadId
+                                      ).length) *
+                                      100,
+                                    (completedAppointments.filter(
+                                      studentAppointment =>
+                                        appointment.leadId === studentAppointment.leadId
+                                    ).length /
+                                      filteredAppointments.filter(
+                                        studentAppointment =>
+                                          appointment.leadId === studentAppointment.leadId
+                                      ).length) *
+                                      100,
+                                    (noShowAppointments.filter(
+                                      studentAppointment =>
+                                        appointment.leadId === studentAppointment.leadId
+                                    ).length /
+                                      filteredAppointments.filter(
+                                        studentAppointment =>
+                                          appointment.leadId === studentAppointment.leadId
+                                      ).length) *
+                                      100,
+                                  ]}
+                                  deleted={appointment.isDeleted}
+                                  key={appointment._id}
+                                  onClick={() =>
+                                    openStudentAppointments(
+                                      appointment.leadId,
+                                      teacher.altegioId
+                                    )
                                   }
-                                </AppointmentSpan>
-                              </AppointmentBody>
-                            ))}
-                          </AppointmentCell>
-                        </>
-                      );
-                    })()}
-                  </UserDBRow>
-                ))}
+                                >
+                                  <AppointmentSpan componentWidth="15em">
+                                    {appointment.leadName}
+                                  </AppointmentSpan>
+
+                                  <AppointmentSpan componentWidth="6em">
+                                    <a
+                                      href={`https://apeducation.kommo.com/leads/detail/${appointment.leadId}`}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                    >
+                                      {appointment.leadId}
+                                    </a>
+                                  </AppointmentSpan>
+                                  <AppointmentSpan componentWidth="6em">
+                                    {
+                                      filteredAppointments.filter(
+                                        studentAppointment =>
+                                          appointment.leadId === studentAppointment.leadId
+                                      ).length
+                                    }
+                                  </AppointmentSpan>
+                                </AppointmentBody>
+                              ))}
+                            </AppointmentCell>
+                          </>
+                        );
+                      })()}
+                    </UserDBRow>
+                  ));
+              })()}
             </tbody>
           </AppointmentDBTable>
         )}

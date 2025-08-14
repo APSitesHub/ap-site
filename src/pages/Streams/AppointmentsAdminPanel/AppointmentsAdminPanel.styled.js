@@ -16,6 +16,14 @@ export const AppointmentDBTable = styled(UserDBTable)`
   position: relative;
 `;
 
+export const TeacherFilterInput = styled.input`
+  width: 350px;
+  max-height: 38px;
+
+  padding: 10px;
+  border: 2px solid var(--main-color);
+`;
+
 export const CheckboxContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,7 +36,7 @@ export const AppointmentCaption = styled(UserDBCaption)`
   position: sticky;
   top: 0;
   z-index: 1;
-  height: 120px;
+  height: 175px;
 
   background: linear-gradient(#ffffff 75%, #ffffff80);
   padding: 12px;
