@@ -8,6 +8,7 @@ import {
 } from '../Videochat.styled';
 import { JitsiMeeting } from '@jitsi/react-sdk';
 import { ColorRing } from 'react-loader-spinner';
+import * as Sentry from '@sentry/react';
 
 const supportedLanguages = ['uk', 'en', 'pl', 'de'];
 const browserLanguage = navigator.language.split('-')[0];
@@ -75,6 +76,16 @@ function Room({ isAdmin, lang }) {
         setIsIframeOpen(false);
         setisLoading(false);
       }
+
+      Sentry.captureMessage('Jitsi Error', {
+        extra: error,
+      });
+    });
+
+    externalApi.addListener('audioOnlyChanged', obj => {
+      Sentry.captureMessage('Jitsi audioOnlyChanged', {
+        extra: obj,
+      });
     });
 
     return () => {
