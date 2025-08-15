@@ -31,7 +31,7 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const LessonsAdminPanel = () => {
+const LessonsAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [lessons, setLessons] = useState([]);
@@ -627,3 +627,5 @@ export const LessonsAdminPanel = () => {
     </>
   );
 };
+
+export default LessonsAdminPanel;

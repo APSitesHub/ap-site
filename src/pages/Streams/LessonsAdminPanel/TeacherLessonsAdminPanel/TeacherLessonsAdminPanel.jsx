@@ -30,7 +30,7 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const TeacherLessonsAdminPanel = () => {
+const TeacherLessonsAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [lessons, setLessons] = useState([]);
@@ -149,9 +149,7 @@ export const TeacherLessonsAdminPanel = () => {
   const answerSchema = yup.object().shape({
     exercise: yup
       .string()
-      .required(
-        "Необхідно вказати розділ та вправу, наприклад: 'Слухання 1.2'"
-      ),
+      .required("Необхідно вказати розділ та вправу, наприклад: 'Слухання 1.2'"),
     question: yup
       .string()
       .required(
@@ -178,9 +176,7 @@ export const TeacherLessonsAdminPanel = () => {
       alert('Відповідь додано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -225,9 +221,7 @@ export const TeacherLessonsAdminPanel = () => {
       : setLessons(
           lessons =>
             (lessons = [
-              ...persistentLessons.current.filter(
-                lesson => lesson.lang === current
-              ),
+              ...persistentLessons.current.filter(lesson => lesson.lang === current),
             ])
         );
 
@@ -241,9 +235,7 @@ export const TeacherLessonsAdminPanel = () => {
       : setLessons(
           lessons =>
             (lessons = [
-              ...persistentLessons.current.filter(
-                lesson => lesson.level === current
-              ),
+              ...persistentLessons.current.filter(lesson => lesson.level === current),
             ])
         );
 
@@ -266,11 +258,7 @@ export const TeacherLessonsAdminPanel = () => {
                 <AdminInputNote component="p" name="login" />
               </Label>
               <Label>
-                <AdminInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                />
+                <AdminInput type="password" name="password" placeholder="Password" />
                 <AdminInputNote component="p" name="password" />
               </Label>
               <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
@@ -442,11 +430,7 @@ export const TeacherLessonsAdminPanel = () => {
                   <AdminInputNote component="p" name="question" />
                 </Label>
                 <Label>
-                  <AdminInput
-                    type="text"
-                    name="answer"
-                    placeholder="Відповідь"
-                  />
+                  <AdminInput type="text" name="answer" placeholder="Відповідь" />
                   <AdminInputNote component="p" name="answer" />
                 </Label>
                 <AdminFormBtn type="submit">Додати відповідь</AdminFormBtn>
@@ -459,3 +443,5 @@ export const TeacherLessonsAdminPanel = () => {
     </>
   );
 };
+
+export default TeacherLessonsAdminPanel;
