@@ -274,6 +274,11 @@ export const AppointmentsAdminPanel = () => {
                   : [...teachers];
 
                 return foundTeachers
+                  .sort((a, b) =>
+                    a.name.localeCompare(b.name, 'uk', {
+                      sensitivity: 'base',
+                    })
+                  )
                   .filter(teacher =>
                     showTeachersWithoutAppointments
                       ? teacher
