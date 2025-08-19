@@ -134,7 +134,7 @@ export const AppointmentModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60vw;
+  width: 80vw;
   min-height: 500px;
   max-height: 60vh;
   background-color: #fff;
@@ -160,6 +160,16 @@ export const StudentInfoText = styled.p`
 
 export const StudentInfoTextHighlight = styled.span`
   font-weight: 700;
+`;
+
+export const StudentCoursePurchased = styled.span`
+  &.yes {
+    color: green;
+  }
+
+  &.no {
+    color: red;
+  }
 `;
 
 export const StudentAppointmentBox = styled.div`
@@ -214,4 +224,11 @@ export const StudentAppointmentBody = styled.p`
     background-color: #000;
     display: ${props => (props.deleted ? 'block' : 'none')};
   }
+`;
+
+export const PurchasedCourse = styled.span`
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 16px;
+  color: green;
 `;
