@@ -38,6 +38,18 @@ export const UsersForm = styled(Form)`
   gap: 20px;
 `;
 
+export const UsersDBForm = styled(Form)`
+  margin: 0 auto;
+  padding-top: 20px;
+
+  position: sticky;
+  top: 0%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
 export const UsersEditForm = styled(Form)`
   position: absolute;
   top: 50%;
@@ -235,4 +247,70 @@ export const FilterPicker = styled.div`
 export const FilterPickerButton = styled.button`
   width: 100%;
   text-transform: capitalize;
+`;
+
+export const SliceUsersButtonBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+`;
+
+export const SliceUsersButton = styled.button`
+  width: 60px;
+  height: 24px;
+
+  padding: 2px;
+  font-size: 16px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  border-radius: 5px;
+  border: none;
+  background: linear-gradient(322deg, #0f645b 23.22%, #09c6cc 110.01%), #0f645b;
+
+  flex-shrink: 0;
+  cursor: pointer;
+  overflow: hidden;
+
+  outline: transparent;
+
+  position: relative;
+
+  &.active {
+    border: var(--accent-color) solid 2px;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+
+    background: linear-gradient(322deg, #09c6cc 23.22%, #0f645b 110.01%), #09c6cc;
+
+    transition: opacity var(--animation-global);
+  }
+
+  &:hover,
+  &:focus {
+    &::before {
+      opacity: 1;
+    }
+  }
+`;
+
+export const SliceUsersButtonText = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 2;
 `;

@@ -6,6 +6,10 @@ import { Formik } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as yup from 'yup';
 import {
+  CheckboxLabel,
+  TeacherFilterInput,
+} from '../AppointmentsAdminPanel/AppointmentsAdminPanel.styled';
+import {
   AdminFormBtn,
   AdminInput,
   AdminInputNote,
@@ -15,7 +19,9 @@ import {
   FilterPickerButton,
   Filterable,
   LoginForm,
-  UserBanButton,
+  SliceUsersButton,
+  SliceUsersButtonBox,
+  SliceUsersButtonText,
   UserCell,
   UserDBCaption,
   UserDBRow,
@@ -23,7 +29,7 @@ import {
   UserDeleteButton,
   UserEditButton,
   UserHeadCell,
-  UsersForm,
+  UsersDBForm,
 } from './UserAdminPanel.styled';
 import { UserEditForm } from './UserEditForm/UserEditForm';
 
@@ -44,6 +50,7 @@ const UserAdminPanel = () => {
     level: '',
     days: '',
   });
+  const [slicer, setSlicer] = useState(100);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState({});
   const [isManagerPickerOpen, setIsManagerPickerOpen] = useState(false);
@@ -51,10 +58,9 @@ const UserAdminPanel = () => {
   const [isDaysPickerOpen, setIsDaysPickerOpen] = useState(false);
   const [isLevelPickerOpen, setIsLevelPickerOpen] = useState(false);
   const [isCoursePickerOpen, setIsCoursePickerOpen] = useState(false);
+  const [studentFilter, setStudentFilter] = useState('');
 
   const persistentUsers = useRef([]);
-  const sortedUsers = useRef([]);
-  const filteredUsers = useRef([]);
 
   useEffect(() => {
     document.title = 'User Admin Panel | AP Education';
@@ -99,9 +105,17 @@ const UserAdminPanel = () => {
     };
   }, [isUserAdmin]);
 
-  const displayedUsers = useMemo(() => {
-    console.log(104, users);
+  const changeDateFormat = dateString => {
+    if (dateString) {
+      const dateArray = dateString.split('.');
+      return dateArray.length > 2
+        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
+        : Date.parse(dateString);
+    }
+    return;
+  };
 
+  const displayedUsers = useMemo(() => {
     let list = users;
 
     if (filters.manager) {
@@ -125,16 +139,12 @@ const UserAdminPanel = () => {
     }
 
     return list;
-  }, [filters]);
+  }, [filters, users]);
 
   const managers = useMemo(() => [...new Set(users.map(u => u.manager))].sort(), [users]);
   const courses = useMemo(() => [...new Set(users.map(u => u.course))].sort(), [users]);
   const langs = useMemo(() => [...new Set(users.map(u => u.lang))].sort(), [users]);
   const levels = useMemo(() => [...new Set(users.map(u => u.knowledge))].sort(), [users]);
-
-  console.log(133, filters);
-  console.log(134, users);
-  console.log(135, displayedUsers);
 
   const initialLoginValues = {
     login: '',
@@ -145,190 +155,6 @@ const UserAdminPanel = () => {
     login: yup.string().required('Вкажіть логін!'),
     password: yup.string().required('Введіть пароль!'),
   });
-
-  // const calculateDaysFilter = current => {
-  //   setDaysAfterLastLogin(
-  //     days =>
-  //       (days = DAYS_SET[DAYS_SET.findIndex(days => current === days) + 1])
-  //   );
-
-  //   sortedUsers.current = [
-  //     ...users.sort(
-  //       (a, b) =>
-  //         (changeDateFormat(a.visited[a.visited.length - 1]) || 0) -
-  //         (changeDateFormat(b.visited[b.visited.length - 1]) || 0)
-  //     ),
-  //   ];
-  //   console.log(sortedUsers.current);
-  //   setUsers(users => (users = [...sortedUsers.current]));
-  // };
-
-  const changeDateFormat = dateString => {
-    if (dateString) {
-      const dateArray = dateString.split('.');
-      return dateArray.length > 2
-        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
-        : Date.parse(dateString);
-    }
-    return;
-  };
-
-  // const filterByManager = current => {
-  //   if (current === '' && sortedUsers.current.length === 0) {
-  //     setUsers(users => (users = [...persistentUsers.current]));
-  //     sortedUsers.current = [];
-  //   } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
-  //     setUsers(
-  //       users =>
-  //         (users = [...sortedUsers.current.filter(user => user.manager === current)])
-  //     );
-  //     filteredUsers.current = [
-  //       ...sortedUsers.current.filter(user => user.manager === current),
-  //     ];
-  //   } else {
-  //     console.log('managers else');
-  //     console.log(filteredUsers);
-  //     setUsers(
-  //       users =>
-  //         (users = [...persistentUsers.current.filter(user => user.manager === current)])
-  //     );
-  //     sortedUsers.current = [
-  //       ...persistentUsers.current.filter(user => user.manager === current),
-  //     ];
-  //     filteredUsers.current = [
-  //       ...persistentUsers.current.filter(user => user.manager === current),
-  //     ];
-  //     console.log(filteredUsers);
-  //   }
-  // };
-
-  // const filterByCourse = current => {
-  //   if (current === '' && sortedUsers.current.length === 0) {
-  //     setUsers(users => (users = [...persistentUsers.current]));
-  //     sortedUsers.current = [];
-  //   } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
-  //     setUsers(
-  //       users =>
-  //         (users = [...sortedUsers.current.filter(user => user.course === current)])
-  //     );
-  //     filteredUsers.current = [
-  //       ...sortedUsers.current.filter(user => user.course === current),
-  //     ];
-  //   } else {
-  //     setUsers(
-  //       users =>
-  //         (users = [...persistentUsers.current.filter(user => user.course === current)])
-  //     );
-  //     sortedUsers.current = [
-  //       ...persistentUsers.current.filter(user => user.course === current),
-  //     ];
-  //     filteredUsers.current = [
-  //       ...persistentUsers.current.filter(user => user.course === current),
-  //     ];
-  //   }
-  // };
-
-  // const filterByLang = current => {
-  //   if (current === '' && sortedUsers.current.length === 0) {
-  //     setUsers(users => (users = [...persistentUsers.current]));
-  //     sortedUsers.current = [];
-  //   } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
-  //     setUsers(
-  //       users => (users = [...sortedUsers.current.filter(user => user.lang === current)])
-  //     );
-  //     filteredUsers.current = [
-  //       ...sortedUsers.current.filter(user => user.lang === current),
-  //     ];
-  //   } else {
-  //     setUsers(
-  //       users =>
-  //         (users = [...persistentUsers.current.filter(user => user.lang === current)])
-  //     );
-  //     sortedUsers.current = [
-  //       ...persistentUsers.current.filter(user => user.lang === current),
-  //     ];
-  //     filteredUsers.current = [
-  //       ...persistentUsers.current.filter(user => user.lang === current),
-  //     ];
-  //   }
-  // };
-
-  // const filterByDays = current => {
-  //   if (current === '' && sortedUsers.current.length === 0) {
-  //     console.log("current === '' && sortedUsers.current.length === 0");
-  //     setUsers(users => (users = [...persistentUsers.current]));
-  //     sortedUsers.current = [];
-  //   } else if (filteredUsers.current.length > 0) {
-  //     setUsers(
-  //       users =>
-  //         (users = [
-  //           ...filteredUsers.current
-  //             .filter(user =>
-  //               user.visited.length > 0
-  //                 ? (Date.now() -
-  //                     changeDateFormat(user.visited[user.visited.length - 1])) /
-  //                     86400000 >
-  //                   current
-  //                 : 0
-  //             )
-  //             .sort(
-  //               (a, b) =>
-  //                 (changeDateFormat(a.visited[a.visited.length - 1]) || 0) -
-  //                 (changeDateFormat(b.visited[b.visited.length - 1]) || 0)
-  //             ),
-  //         ])
-  //     );
-  //   } else {
-  //     console.log('else');
-  //     setUsers(
-  //       users =>
-  //         (users = [
-  //           ...persistentUsers.current
-  //             .filter(user =>
-  //               user.visited.length > 0
-  //                 ? (Date.now() -
-  //                     changeDateFormat(user.visited[user.visited.length - 1])) /
-  //                     86400000 >
-  //                   current
-  //                 : 0
-  //             )
-  //             .sort(
-  //               (a, b) =>
-  //                 (changeDateFormat(b.visited[b.visited.length - 1]) || 0) -
-  //                 (changeDateFormat(a.visited[a.visited.length - 1]) || 0)
-  //             ),
-  //         ])
-  //     );
-  //   }
-  // };
-
-  // const filterByLevel = current => {
-  //   if (current === '' && sortedUsers.current.length === 0) {
-  //     setUsers(users => (users = [...persistentUsers.current]));
-  //     sortedUsers.current = [];
-  //   } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
-  //     setUsers(
-  //       users =>
-  //         (users = [...sortedUsers.current.filter(user => user.knowledge === current)])
-  //     );
-  //     filteredUsers.current = [
-  //       ...sortedUsers.current.filter(user => user.knowledge === current),
-  //     ];
-  //   } else {
-  //     setUsers(
-  //       users =>
-  //         (users = [
-  //           ...persistentUsers.current.filter(user => user.knowledge === current),
-  //         ])
-  //     );
-  //     sortedUsers.current = [
-  //       ...persistentUsers.current.filter(user => user.knowledge === current),
-  //     ];
-  //     filteredUsers.current = [
-  //       ...persistentUsers.current.filter(user => user.knowledge === current),
-  //     ];
-  //   }
-  // };
 
   const filterByManager = value =>
     setFilters(filters => (filters = { ...filters, manager: value }));
@@ -438,7 +264,6 @@ const UserAdminPanel = () => {
     values.manager = values.manager.toLowerCase().trim().trimStart();
     try {
       const response = await axios.post('/users/new', values);
-      console.log(response.data);
       setUsers(users => [response.data, ...users]);
       resetForm();
       alert('Юзера додано');
@@ -482,8 +307,6 @@ const UserAdminPanel = () => {
     userToUpdate.course = values.course;
     userToUpdate.knowledge = values.knowledge;
     userToUpdate.manager = values.manager;
-
-    console.log(userToUpdate);
 
     setUsers(
       users =>
@@ -537,24 +360,6 @@ const UserAdminPanel = () => {
     }
   };
 
-  const handleBan = async (id, isBanned) => {
-    setIsLoading(isLoading => (isLoading = true));
-
-    try {
-      const response = await axios.patch(
-        `/users/${id}`,
-        isBanned ? { isBanned: false } : { isBanned: true }
-      );
-      console.log(response);
-      isBanned ? alert('Юзера розблоковано') : alert('Юзера заблоковано');
-    } catch (error) {
-      console.error(error);
-      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
-    } finally {
-      setIsLoading(isLoading => (isLoading = false));
-    }
-  };
-
   return (
     <>
       <AdminPanelSection>
@@ -584,7 +389,7 @@ const UserAdminPanel = () => {
             onSubmit={handleUserSubmit}
             validationSchema={usersSchema}
           >
-            <UsersForm>
+            <UsersDBForm>
               <Label>
                 <AdminInput type="text" name="name" placeholder="Прізвище та ім'я" />
                 <AdminInputNote component="p" name="name" />
@@ -666,12 +471,50 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="manager" />
               </Label>
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
-            </UsersForm>
+            </UsersDBForm>
           </Formik>
         )}
         {isUserAdmin && users && (
           <UserDBTable>
-            <UserDBCaption>Список юзерів з доступом до уроків</UserDBCaption>
+            <UserDBCaption>
+              Список юзерів з доступом до уроків
+              <SliceUsersButtonBox>
+                Максимум користувачів на сторінці:
+                <SliceUsersButton
+                  className={slicer === 50 && 'active'}
+                  onClick={() => setSlicer(50)}
+                >
+                  <SliceUsersButtonText>50</SliceUsersButtonText>
+                </SliceUsersButton>
+                <SliceUsersButton
+                  className={slicer === 100 && 'active'}
+                  onClick={() => setSlicer(100)}
+                >
+                  <SliceUsersButtonText>100</SliceUsersButtonText>
+                </SliceUsersButton>
+                <SliceUsersButton
+                  className={slicer === 500 && 'active'}
+                  onClick={() => setSlicer(500)}
+                >
+                  <SliceUsersButtonText>500</SliceUsersButtonText>
+                </SliceUsersButton>
+                <SliceUsersButton
+                  className={slicer === users.length && 'active'}
+                  onClick={() => setSlicer(users.length)}
+                >
+                  <SliceUsersButtonText>Всі</SliceUsersButtonText>
+                </SliceUsersButton>
+              </SliceUsersButtonBox>
+              <CheckboxLabel>
+                <TeacherFilterInput
+                  type="text"
+                  name="studentFilter"
+                  value={studentFilter}
+                  onChange={e => setStudentFilter(e.target.value)}
+                  placeholder="Почніть вводити ім'я чи пошту"
+                />
+              </CheckboxLabel>
+            </UserDBCaption>
             <thead>
               <UserDBRow>
                 <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
@@ -834,95 +677,100 @@ const UserAdminPanel = () => {
                 </UserHeadCell>
                 <UserHeadCell>Edit</UserHeadCell>
                 <UserHeadCell>Delete</UserHeadCell>
-                <UserHeadCell>Ban</UserHeadCell>
               </UserDBRow>
             </thead>
             <tbody>
-              {/* {displayedUsers.slice(0, 100).map(user => ( */}
-              {displayedUsers.map(user => (
-                <UserDBRow key={user._id}>
-                  <UserCell>
-                    <a
-                      href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {user.crmId}
-                    </a>{' '}
-                    <a
-                      href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {user.contactId}
-                    </a>
-                  </UserCell>
-                  <UserCell>{user.name}</UserCell>
-                  <UserCell>{user.mail}</UserCell>
-                  <UserCell>{user.zoomMail}</UserCell>
-                  <UserCell>{user.password}</UserCell>
-                  <UserCell>{user.pupilId}</UserCell>
-                  <UserCell>{user.marathonNumber}</UserCell>
-                  <UserCell>
-                    {new Date(user.createdAt).toLocaleDateString('uk-UA')}
-                  </UserCell>
-                  <UserCell
-                    className={
-                      Math.floor(
-                        (Date.now() -
-                          changeDateFormat(user.visited[user.visited.length - 1])) /
-                          86400000
-                      ) > filters.days
-                        ? 'attention'
-                        : ''
-                    }
-                  >
-                    {user.visited[user.visited.length - 1]}
-                  </UserCell>
-                  <UserCell>
-                    {!user.visitedTime[user.visitedTime.length - 1]
-                      ? ''
-                      : user.visitedTime[user.visitedTime.length - 1].match('^202')
-                      ? new Date(
-                          user.visitedTime[user.visitedTime.length - 1]
-                        ).toLocaleString('uk-UA')
-                      : new Date(
-                          changeDateFormat(user.visitedTime[user.visitedTime.length - 1])
-                        ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
-                  </UserCell>
-                  <UserCell>{user.lang}</UserCell>
-                  <UserCell>{user.course}</UserCell>
-                  <UserCell className={user.knowledge?.includes('а') && 'error'}>
-                    {user.knowledge}
-                  </UserCell>
-                  <UserCell>{user.package}</UserCell>
-                  <UserCell className="last-name">{user.manager}</UserCell>
-                  <UserCell>
-                    {user.name === 'Dev Acc' ? null : (
-                      <UserEditButton onClick={() => handleEdit(user._id)}>
-                        Edit
-                      </UserEditButton>
-                    )}
-                  </UserCell>
-                  <UserCell>
-                    {user.name === 'Dev Acc' ? null : (
-                      <UserDeleteButton onClick={() => handleDelete(user._id)}>
-                        Del
-                      </UserDeleteButton>
-                    )}
-                  </UserCell>
-                  <UserCell>
-                    {user.name === 'Dev Acc' ? null : (
-                      <UserBanButton
-                        className={user.isBanned ? 'banned' : 'not_banned'}
-                        onClick={() => handleBan(user._id, user.isBanned)}
+              {(() => {
+                const foundUsers = studentFilter
+                  ? displayedUsers.filter(user =>
+                      user.name
+                        .toLowerCase()
+                        .includes(
+                          studentFilter.toLowerCase().trim() ||
+                            user.mail
+                              .toLowerCase()
+                              .includes(studentFilter.toLowerCase().trim())
+                        )
+                    )
+                  : [...displayedUsers];
+
+                return foundUsers.slice(0, slicer).map(user => (
+                  <UserDBRow key={user._id}>
+                    <UserCell>
+                      <a
+                        href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        {user.isBanned ? 'Unban' : 'Ban'}
-                      </UserBanButton>
-                    )}
-                  </UserCell>
-                </UserDBRow>
-              ))}
+                        {user.crmId}
+                      </a>{' '}
+                      <a
+                        href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {user.contactId}
+                      </a>
+                    </UserCell>
+                    <UserCell>{user.name}</UserCell>
+                    <UserCell>{user.mail}</UserCell>
+                    <UserCell>{user.zoomMail}</UserCell>
+                    <UserCell>{user.password}</UserCell>
+                    <UserCell>{user.pupilId}</UserCell>
+                    <UserCell>{user.marathonNumber}</UserCell>
+                    <UserCell>
+                      {new Date(user.createdAt).toLocaleDateString('uk-UA')}
+                    </UserCell>
+                    <UserCell
+                      className={
+                        Math.floor(
+                          (Date.now() -
+                            changeDateFormat(user.visited[user.visited.length - 1])) /
+                            86400000
+                        ) > filters.days
+                          ? 'attention'
+                          : ''
+                      }
+                    >
+                      {user.visited[user.visited.length - 1]}
+                    </UserCell>
+                    <UserCell>
+                      {!user.visitedTime[user.visitedTime.length - 1]
+                        ? ''
+                        : user.visitedTime[user.visitedTime.length - 1].match('^202')
+                        ? new Date(
+                            user.visitedTime[user.visitedTime.length - 1]
+                          ).toLocaleString('uk-UA')
+                        : new Date(
+                            changeDateFormat(
+                              user.visitedTime[user.visitedTime.length - 1]
+                            )
+                          ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
+                    </UserCell>
+                    <UserCell>{user.lang}</UserCell>
+                    <UserCell>{user.course}</UserCell>
+                    <UserCell className={user.knowledge?.includes('а') && 'error'}>
+                      {user.knowledge}
+                    </UserCell>
+                    <UserCell>{user.package}</UserCell>
+                    <UserCell className="last-name">{user.manager}</UserCell>
+                    <UserCell>
+                      {user.name === 'Dev Acc' ? null : (
+                        <UserEditButton onClick={() => handleEdit(user._id)}>
+                          Edit
+                        </UserEditButton>
+                      )}
+                    </UserCell>
+                    <UserCell>
+                      {user.name === 'Dev Acc' ? null : (
+                        <UserDeleteButton onClick={() => handleDelete(user._id)}>
+                          Del
+                        </UserDeleteButton>
+                      )}
+                    </UserCell>
+                  </UserDBRow>
+                ));
+              })()}
             </tbody>
           </UserDBTable>
         )}
