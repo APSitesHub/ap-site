@@ -4,10 +4,6 @@ import TelegramRedirect from 'pages/Service/TelegramRedirect/TelegramRedirect';
 import ViberRedirect from 'pages/Service/ViberRedirect/ViberRedirect';
 import { StreamDeutschA2Free } from 'pages/Streams/Deutsch A2/StreamDeutschA2Free';
 import { StreamDeutschFree } from 'pages/Streams/Deutsch/StreamDeutschFree';
-import { HostKahootAdminPanel } from 'pages/Streams/HostKahootAdminPanel/HostKahootAdminPanel';
-import { KahootAdminPanel } from 'pages/Streams/KahootAdminPanel/KahootAdminPanel';
-import { LessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/LessonsAdminPanel';
-import { TeacherLessonsAdminPanel } from 'pages/Streams/LessonsAdminPanel/TeacherLessonsAdminPanel/TeacherLessonsAdminPanel';
 import { StreamPolskiFree } from 'pages/Streams/Polski/StreamPolskiFree';
 import { StreamTest } from 'pages/Streams/Test/StreamTest';
 import { KidsA1Free } from 'pages/StreamsKids/KidsA1/KidsA1Free';
@@ -332,6 +328,16 @@ const AppointmentsAdminPanel = lazy(() =>
     /* webpackChunkName: "Appointments Admin Panel page" */ '../pages/Streams/AppointmentsAdminPanel/AppointmentsAdminPanel'
   )
 );
+const KahootAdminPanel = lazy(() =>
+  import(
+    /*webpackChunkName: "Kahoots Admin Panel page"*/ '../pages/Streams/KahootAdminPanel/KahootAdminPanel'
+  )
+);
+const HostKahootAdminPanel = lazy(() =>
+  import(
+    /*webpackChunkName: "Host Kahoots Admin Panel page"*/ '../pages/Streams/HostKahootAdminPanel/HostKahootAdminPanel'
+  )
+);
 const UniKahootAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Pl University Kahoots Admin Panel page" */ '../pages/Streams/KahootAdminPanel/UniKahootAdminPanel'
@@ -355,6 +361,16 @@ const UniUserAdminPanel = lazy(() =>
 const C1SpeakingPanel = lazy(() =>
   import(
     /* webpackChunkName: "C1 Speaking Control Panel page" */ '../pages/Streams/UserAdminPanel/C1SpeakingPanel'
+  )
+);
+const LessonsAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Lessons Admin Panel page" */ '../pages/Streams/LessonsAdminPanel/LessonsAdminPanel'
+  )
+);
+const TeacherLessonsAdminPanel = lazy(() =>
+  import(
+    /* webpackChunkName: "Teacher Lessons Admin Panel page" */ '../pages/Streams/LessonsAdminPanel/TeacherLessonsAdminPanel/TeacherLessonsAdminPanel'
   )
 );
 const LessonResultsPanel = lazy(() =>
@@ -1192,7 +1208,11 @@ export const App = () => {
             <Route path="heinz" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="doloka" element={<TeacherPageIndividual />} noindex={true} />
             <Route path="lyasota" element={<TeacherPageIndividual />} noindex={true} />
-            <Route path="shvets" element={<TeacherPageIndividualPartners />} noindex={true} />
+            <Route
+              path="shvets"
+              element={<TeacherPageIndividualPartners />}
+              noindex={true}
+            />
           </Route>
           <Route path="thankyou" element={<ThankYouPage />} noindex={true} />
           <Route

@@ -3,8 +3,12 @@ import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Label } from 'components/LeadForm/LeadForm.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as yup from 'yup';
+import {
+  CheckboxLabel,
+  TeacherFilterInput,
+} from '../AppointmentsAdminPanel/AppointmentsAdminPanel.styled';
 import {
   AdminFormBtn,
   AdminInput,
@@ -15,7 +19,9 @@ import {
   FilterPickerButton,
   Filterable,
   LoginForm,
-  UserBanButton,
+  SliceUsersButton,
+  SliceUsersButtonBox,
+  SliceUsersButtonText,
   UserCell,
   UserDBCaption,
   UserDBRow,
@@ -23,7 +29,7 @@ import {
   UserDeleteButton,
   UserEditButton,
   UserHeadCell,
-  UsersForm,
+  UsersDBForm,
 } from './UserAdminPanel.styled';
 import { UserEditForm } from './UserEditForm/UserEditForm';
 
@@ -37,22 +43,24 @@ const UserAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [users, setUsers] = useState([]);
-  const [managers, setManagers] = useState([]);
-  const [levels, setLevels] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const [langs, setLangs] = useState([]);
+  const [filters, setFilters] = useState({
+    manager: '',
+    course: '',
+    lang: '',
+    level: '',
+    days: '',
+  });
+  const [slicer, setSlicer] = useState(100);
   const [isEditFormOpen, setIsEditFormOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState({});
-  const [daysAfterLastLogin, setDaysAfterLastLogin] = useState(7);
   const [isManagerPickerOpen, setIsManagerPickerOpen] = useState(false);
   const [isLangPickerOpen, setIsLangPickerOpen] = useState(false);
   const [isDaysPickerOpen, setIsDaysPickerOpen] = useState(false);
   const [isLevelPickerOpen, setIsLevelPickerOpen] = useState(false);
   const [isCoursePickerOpen, setIsCoursePickerOpen] = useState(false);
+  const [studentFilter, setStudentFilter] = useState('');
 
   const persistentUsers = useRef([]);
-  const sortedUsers = useRef([]);
-  const filteredUsers = useRef([]);
 
   useEffect(() => {
     document.title = 'User Admin Panel | AP Education';
@@ -77,42 +85,6 @@ const UserAdminPanel = () => {
           const response = await axios.get('/users/admin/');
           setUsers(users => (users = [...response.data.reverse()]));
           persistentUsers.current = [...response.data.reverse()];
-          setManagers(
-            managers =>
-              (managers = [
-                ...response.data
-                  .map(user => user.manager)
-                  .filter((manager, i, arr) => arr.indexOf(manager) === i)
-                  .sort(),
-              ])
-          );
-          setLevels(
-            levels =>
-              (levels = [
-                ...response.data
-                  .map(user => user.knowledge)
-                  .filter((level, i, arr) => arr.indexOf(level) === i)
-                  .sort(),
-              ])
-          );
-          setCourses(
-            courses =>
-              (courses = [
-                ...response.data
-                  .map(user => user.course)
-                  .filter((course, i, arr) => arr.indexOf(course) === i)
-                  .sort(),
-              ])
-          );
-          setLangs(
-            langs =>
-              (langs = [
-                ...response.data
-                  .map(user => user.lang)
-                  .filter((lang, i, arr) => arr.indexOf(lang) === i)
-                  .sort(),
-              ])
-          );
         }
       } catch (error) {
         console.error(error);
@@ -133,6 +105,47 @@ const UserAdminPanel = () => {
     };
   }, [isUserAdmin]);
 
+  const changeDateFormat = dateString => {
+    if (dateString) {
+      const dateArray = dateString.split('.');
+      return dateArray.length > 2
+        ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/'))
+        : Date.parse(dateString);
+    }
+    return;
+  };
+
+  const displayedUsers = useMemo(() => {
+    let list = users;
+
+    if (filters.manager) {
+      list = list.filter(u => u.manager === filters.manager);
+    }
+    if (filters.course) {
+      list = list.filter(u => u.course === filters.course);
+    }
+    if (filters.lang) {
+      list = list.filter(u => u.lang === filters.lang);
+    }
+    if (filters.level) {
+      list = list.filter(u => u.knowledge === filters.level);
+    }
+    if (filters.days) {
+      list = list.filter(u =>
+        u.visited.length > 0
+          ? (Date.now() - changeDateFormat(u.visited.at(-1))) / 86400000 > filters.days
+          : false
+      );
+    }
+
+    return list;
+  }, [filters, users]);
+
+  const managers = useMemo(() => [...new Set(users.map(u => u.manager))].sort(), [users]);
+  const courses = useMemo(() => [...new Set(users.map(u => u.course))].sort(), [users]);
+  const langs = useMemo(() => [...new Set(users.map(u => u.lang))].sort(), [users]);
+  const levels = useMemo(() => [...new Set(users.map(u => u.knowledge))].sort(), [users]);
+
   const initialLoginValues = {
     login: '',
     password: '',
@@ -143,120 +156,16 @@ const UserAdminPanel = () => {
     password: yup.string().required('Введіть пароль!'),
   });
 
-  // const calculateDaysFilter = current => {
-  //   setDaysAfterLastLogin(
-  //     days =>
-  //       (days = DAYS_SET[DAYS_SET.findIndex(days => current === days) + 1])
-  //   );
-
-  //   sortedUsers.current = [
-  //     ...users.sort(
-  //       (a, b) =>
-  //         (changeDateFormat(a.visited[a.visited.length - 1]) || 0) -
-  //         (changeDateFormat(b.visited[b.visited.length - 1]) || 0)
-  //     ),
-  //   ];
-  //   console.log(sortedUsers.current);
-  //   setUsers(users => (users = [...sortedUsers.current]));
-  // };
-
-  const changeDateFormat = dateString => {
-    if (dateString) {
-      const dateArray = dateString.split('.');
-      return dateArray.length > 2 ? Date.parse([dateArray[1], dateArray[0], dateArray[2]].join('/')) : Date.parse(dateString);
-    }
-    return;
-  };
-
-  const filterByManager = current => {
-    if (current === '' && sortedUsers.current.length === 0) {
-      setUsers(users => (users = [...persistentUsers.current]));
-      sortedUsers.current = [];
-    } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
-      setUsers(users => (users = [...sortedUsers.current.filter(user => user.manager === current)]));
-      filteredUsers.current = [...sortedUsers.current.filter(user => user.manager === current)];
-    } else {
-      console.log('managers else');
-      console.log(filteredUsers);
-      setUsers(users => (users = [...persistentUsers.current.filter(user => user.manager === current)]));
-      sortedUsers.current = [...persistentUsers.current.filter(user => user.manager === current)];
-      filteredUsers.current = [...persistentUsers.current.filter(user => user.manager === current)];
-      console.log(filteredUsers);
-    }
-  };
-
-  const filterByCourse = current => {
-    if (current === '' && sortedUsers.current.length === 0) {
-      setUsers(users => (users = [...persistentUsers.current]));
-      sortedUsers.current = [];
-    } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
-      setUsers(users => (users = [...sortedUsers.current.filter(user => user.course === current)]));
-      filteredUsers.current = [...sortedUsers.current.filter(user => user.course === current)];
-    } else {
-      setUsers(users => (users = [...persistentUsers.current.filter(user => user.course === current)]));
-      sortedUsers.current = [...persistentUsers.current.filter(user => user.course === current)];
-      filteredUsers.current = [...persistentUsers.current.filter(user => user.course === current)];
-    }
-  };
-
-  const filterByLang = current => {
-    if (current === '' && sortedUsers.current.length === 0) {
-      setUsers(users => (users = [...persistentUsers.current]));
-      sortedUsers.current = [];
-    } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
-      setUsers(users => (users = [...sortedUsers.current.filter(user => user.lang === current)]));
-      filteredUsers.current = [...sortedUsers.current.filter(user => user.lang === current)];
-    } else {
-      setUsers(users => (users = [...persistentUsers.current.filter(user => user.lang === current)]));
-      sortedUsers.current = [...persistentUsers.current.filter(user => user.lang === current)];
-      filteredUsers.current = [...persistentUsers.current.filter(user => user.lang === current)];
-    }
-  };
-
-  const filterByDays = current => {
-    if (current === '' && sortedUsers.current.length === 0) {
-      console.log("current === '' && sortedUsers.current.length === 0");
-      setUsers(users => (users = [...persistentUsers.current]));
-      sortedUsers.current = [];
-    } else if (filteredUsers.current.length > 0) {
-      setUsers(
-        users =>
-          (users = [
-            ...filteredUsers.current
-              .filter(user =>
-                user.visited.length > 0 ? (Date.now() - changeDateFormat(user.visited[user.visited.length - 1])) / 86400000 > current : 0
-              )
-              .sort((a, b) => (changeDateFormat(a.visited[a.visited.length - 1]) || 0) - (changeDateFormat(b.visited[b.visited.length - 1]) || 0)),
-          ])
-      );
-    } else {
-      console.log('else');
-      setUsers(
-        users =>
-          (users = [
-            ...persistentUsers.current
-              .filter(user =>
-                user.visited.length > 0 ? (Date.now() - changeDateFormat(user.visited[user.visited.length - 1])) / 86400000 > current : 0
-              )
-              .sort((a, b) => (changeDateFormat(b.visited[b.visited.length - 1]) || 0) - (changeDateFormat(a.visited[a.visited.length - 1]) || 0)),
-          ])
-      );
-    }
-  };
-
-  const filterByLevel = current => {
-    if (current === '' && sortedUsers.current.length === 0) {
-      setUsers(users => (users = [...persistentUsers.current]));
-      sortedUsers.current = [];
-    } else if (sortedUsers.current.length > 0 && filteredUsers.current.length === 0) {
-      setUsers(users => (users = [...sortedUsers.current.filter(user => user.knowledge === current)]));
-      filteredUsers.current = [...sortedUsers.current.filter(user => user.knowledge === current)];
-    } else {
-      setUsers(users => (users = [...persistentUsers.current.filter(user => user.knowledge === current)]));
-      sortedUsers.current = [...persistentUsers.current.filter(user => user.knowledge === current)];
-      filteredUsers.current = [...persistentUsers.current.filter(user => user.knowledge === current)];
-    }
-  };
+  const filterByManager = value =>
+    setFilters(filters => (filters = { ...filters, manager: value }));
+  const filterByCourse = value =>
+    setFilters(filters => (filters = { ...filters, course: value }));
+  const filterByLang = value =>
+    setFilters(filters => (filters = { ...filters, lang: value }));
+  const filterByLevel = value =>
+    setFilters(filters => (filters = { ...filters, level: value }));
+  const filterByDays = value =>
+    setFilters(filters => (filters = { ...filters, days: value }));
 
   const handleLoginSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
@@ -292,7 +201,11 @@ const UserAdminPanel = () => {
   };
 
   const usersSchema = yup.object().shape({
-    name: yup.string().required("Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"),
+    name: yup
+      .string()
+      .required(
+        "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"
+      ),
     mail: yup.string().required("Пошта - обов'язкове поле!"),
     zoomMail: yup.string(),
     password: yup.string().required("Пароль - обов'язкове поле!"),
@@ -304,13 +217,24 @@ const UserAdminPanel = () => {
       .max(7, 'Не більше 7 цифр')
       .matches(/^\d{1,7}$/, 'Лише цифри')
       .required("Обов'язкове поле, дивитись на платформі"),
-    marathonNumber: yup.string().max(1, 'Не більше 1 цифри').matches(/[12]/, 'Лише цифри 1 або 2'),
-    age: yup.string().required("Вік - обов'язкове поле, якщо віку з якоїсь причини ми не знаємо, введіть N/A"),
+    marathonNumber: yup
+      .string()
+      .max(1, 'Не більше 1 цифри')
+      .matches(/[12]/, 'Лише цифри 1 або 2'),
+    age: yup
+      .string()
+      .required(
+        "Вік - обов'язкове поле, якщо віку з якоїсь причини ми не знаємо, введіть N/A"
+      ),
     lang: yup
       .string()
       .required("Мова - обов'язкове поле")
       .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
-    course: yup.string().required("Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"),
+    course: yup
+      .string()
+      .required(
+        "Обов'язкове поле, для тестових юзерів або нерозподілених користувачів введіть 0"
+      ),
     package: yup.string().optional(),
     // .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
     knowledge: yup
@@ -327,7 +251,9 @@ const UserAdminPanel = () => {
     values.zoomMail = values.zoomMail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.crmId = values.crmId ? +values.crmId.trim().trimStart() : undefined;
-    values.contactId = values.contactId ? +values.contactId.trim().trimStart() : undefined;
+    values.contactId = values.contactId
+      ? +values.contactId.trim().trimStart()
+      : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
     values.marathonNumber = values.marathonNumber.trim().trimStart();
     values.age = values.age.trim().trimStart();
@@ -338,7 +264,6 @@ const UserAdminPanel = () => {
     values.manager = values.manager.toLowerCase().trim().trimStart();
     try {
       const response = await axios.post('/users/new', values);
-      console.log(response.data);
       setUsers(users => [response.data, ...users]);
       resetForm();
       alert('Юзера додано');
@@ -383,9 +308,12 @@ const UserAdminPanel = () => {
     userToUpdate.knowledge = values.knowledge;
     userToUpdate.manager = values.manager;
 
-    console.log(userToUpdate);
-
-    setUsers(users => (users = users.map((user, i) => (i === users.findIndex(user => user._id === id) ? userToUpdate : user))));
+    setUsers(
+      users =>
+        (users = users.map((user, i) =>
+          i === users.findIndex(user => user._id === id) ? userToUpdate : user
+        ))
+    );
   };
 
   const toggleDaysSinceLastVisitPicker = () => {
@@ -410,7 +338,9 @@ const UserAdminPanel = () => {
 
   const handleDelete = async id => {
     setIsLoading(isLoading => (isLoading = true));
-    const areYouSure = window.confirm(`Точно видалити ${users.find(user => user._id === id).name}?`);
+    const areYouSure = window.confirm(
+      `Точно видалити ${users.find(user => user._id === id).name}?`
+    );
 
     if (!areYouSure) {
       setIsLoading(isLoading => (isLoading = false));
@@ -430,26 +360,15 @@ const UserAdminPanel = () => {
     }
   };
 
-  const handleBan = async (id, isBanned) => {
-    setIsLoading(isLoading => (isLoading = true));
-
-    try {
-      const response = await axios.patch(`/users/${id}`, isBanned ? { isBanned: false } : { isBanned: true });
-      console.log(response);
-      isBanned ? alert('Юзера розблоковано') : alert('Юзера заблоковано');
-    } catch (error) {
-      console.error(error);
-      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
-    } finally {
-      setIsLoading(isLoading => (isLoading = false));
-    }
-  };
-
   return (
     <>
       <AdminPanelSection>
         {!isUserAdmin && (
-          <Formik initialValues={initialLoginValues} onSubmit={handleLoginSubmit} validationSchema={loginSchema}>
+          <Formik
+            initialValues={initialLoginValues}
+            onSubmit={handleLoginSubmit}
+            validationSchema={loginSchema}
+          >
             <LoginForm>
               <Label>
                 <AdminInput type="text" name="login" placeholder="Login" />
@@ -465,18 +384,30 @@ const UserAdminPanel = () => {
         )}
 
         {isUserAdmin && (
-          <Formik initialValues={initialUserValues} onSubmit={handleUserSubmit} validationSchema={usersSchema}>
-            <UsersForm>
+          <Formik
+            initialValues={initialUserValues}
+            onSubmit={handleUserSubmit}
+            validationSchema={usersSchema}
+          >
+            <UsersDBForm>
               <Label>
                 <AdminInput type="text" name="name" placeholder="Прізвище та ім'я" />
                 <AdminInputNote component="p" name="name" />
               </Label>
               <Label>
-                <AdminInput type="email" name="mail" placeholder="Електронна пошта (логін)" />
+                <AdminInput
+                  type="email"
+                  name="mail"
+                  placeholder="Електронна пошта (логін)"
+                />
                 <AdminInputNote component="p" name="mail" />
               </Label>
               <Label>
-                <AdminInput type="email" name="zoomMail" placeholder="Електронна пошта (Zoom)" />
+                <AdminInput
+                  type="email"
+                  name="zoomMail"
+                  placeholder="Електронна пошта (Zoom)"
+                />
                 <AdminInputNote component="p" name="zoomMail" />
               </Label>
               <Label>
@@ -488,15 +419,27 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="crmId" />
               </Label>
               <Label>
-                <AdminInput type="text" name="contactId" placeholder="ID контакту в CRM" />
+                <AdminInput
+                  type="text"
+                  name="contactId"
+                  placeholder="ID контакту в CRM"
+                />
                 <AdminInputNote component="p" name="contactId" />
               </Label>
               <Label>
-                <AdminInput type="text" name="pupilId" placeholder="ID учня на платформі" />
+                <AdminInput
+                  type="text"
+                  name="pupilId"
+                  placeholder="ID учня на платформі"
+                />
                 <AdminInputNote component="p" name="pupilId" />
               </Label>
               <Label>
-                <AdminInput type="text" name="marathonNumber" placeholder="№ марафону на платформі" />
+                <AdminInput
+                  type="text"
+                  name="marathonNumber"
+                  placeholder="№ марафону на платформі"
+                />
                 <AdminInputNote component="p" name="marathonNumber" />
               </Label>
               <Label>
@@ -520,16 +463,58 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="knowledge" />
               </Label>
               <Label>
-                <AdminInput type="text" name="manager" placeholder="Прізвище відповідального менеджера" />
+                <AdminInput
+                  type="text"
+                  name="manager"
+                  placeholder="Прізвище відповідального менеджера"
+                />
                 <AdminInputNote component="p" name="manager" />
               </Label>
               <AdminFormBtn type="submit">Додати юзера</AdminFormBtn>
-            </UsersForm>
+            </UsersDBForm>
           </Formik>
         )}
         {isUserAdmin && users && (
           <UserDBTable>
-            <UserDBCaption>Список юзерів з доступом до уроків</UserDBCaption>
+            <UserDBCaption>
+              Список юзерів з доступом до уроків
+              <SliceUsersButtonBox>
+                Максимум користувачів на сторінці:
+                <SliceUsersButton
+                  className={slicer === 50 && 'active'}
+                  onClick={() => setSlicer(50)}
+                >
+                  <SliceUsersButtonText>50</SliceUsersButtonText>
+                </SliceUsersButton>
+                <SliceUsersButton
+                  className={slicer === 100 && 'active'}
+                  onClick={() => setSlicer(100)}
+                >
+                  <SliceUsersButtonText>100</SliceUsersButtonText>
+                </SliceUsersButton>
+                <SliceUsersButton
+                  className={slicer === 500 && 'active'}
+                  onClick={() => setSlicer(500)}
+                >
+                  <SliceUsersButtonText>500</SliceUsersButtonText>
+                </SliceUsersButton>
+                <SliceUsersButton
+                  className={slicer === users.length && 'active'}
+                  onClick={() => setSlicer(users.length)}
+                >
+                  <SliceUsersButtonText>Всі</SliceUsersButtonText>
+                </SliceUsersButton>
+              </SliceUsersButtonBox>
+              <CheckboxLabel>
+                <TeacherFilterInput
+                  type="text"
+                  name="studentFilter"
+                  value={studentFilter}
+                  onChange={e => setStudentFilter(e.target.value)}
+                  placeholder="Почніть вводити ім'я чи пошту"
+                />
+              </CheckboxLabel>
+            </UserDBCaption>
             <thead>
               <UserDBRow>
                 <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
@@ -551,7 +536,6 @@ const UserAdminPanel = () => {
                             key={i}
                             onClick={() => {
                               filterByDays(days);
-                              setDaysAfterLastLogin(days);
                               toggleDaysSinceLastVisitPicker();
                             }}
                           >
@@ -561,7 +545,6 @@ const UserAdminPanel = () => {
                         <FilterPickerButton
                           onClick={() => {
                             filterByDays('');
-                            setDaysAfterLastLogin(7);
                             toggleDaysSinceLastVisitPicker();
                           }}
                         >
@@ -569,7 +552,7 @@ const UserAdminPanel = () => {
                         </FilterPickerButton>
                       </FilterPicker>
                     )}
-                    {daysAfterLastLogin}
+                    {filters.days}
                   </Filterable>
                 </UserHeadCell>
                 <UserHeadCell>
@@ -694,67 +677,110 @@ const UserAdminPanel = () => {
                 </UserHeadCell>
                 <UserHeadCell>Edit</UserHeadCell>
                 <UserHeadCell>Delete</UserHeadCell>
-                <UserHeadCell>Ban</UserHeadCell>
               </UserDBRow>
             </thead>
             <tbody>
-              {users.map(user => (
-                <UserDBRow key={user._id}>
-                  <UserCell>
-                    <a href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`} target="_blank" rel="noreferrer">
-                      {user.crmId}
-                    </a>{' '}
-                    <a href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`} target="_blank" rel="noreferrer">
-                      {user.contactId}
-                    </a>
-                  </UserCell>
-                  <UserCell>{user.name}</UserCell>
-                  <UserCell>{user.mail}</UserCell>
-                  <UserCell>{user.zoomMail}</UserCell>
-                  <UserCell>{user.password}</UserCell>
-                  <UserCell>{user.pupilId}</UserCell>
-                  <UserCell>{user.marathonNumber}</UserCell>
-                  <UserCell>{new Date(user.createdAt).toLocaleDateString('uk-UA')}</UserCell>
-                  <UserCell
-                    className={
-                      Math.floor((Date.now() - changeDateFormat(user.visited[user.visited.length - 1])) / 86400000) > daysAfterLastLogin
-                        ? 'attention'
-                        : ''
-                    }
-                  >
-                    {user.visited[user.visited.length - 1]}
-                  </UserCell>
-                  <UserCell>
-                    {!user.visitedTime[user.visitedTime.length - 1]
-                      ? ''
-                      : user.visitedTime[user.visitedTime.length - 1].match('^202')
-                      ? new Date(user.visitedTime[user.visitedTime.length - 1]).toLocaleString('uk-UA')
-                      : new Date(changeDateFormat(user.visitedTime[user.visitedTime.length - 1])).toLocaleString('uk-UA', { timeZone: '+06:00' })}
-                  </UserCell>
-                  <UserCell>{user.lang}</UserCell>
-                  <UserCell>{user.course}</UserCell>
-                  <UserCell className={user.knowledge?.includes('а') && 'error'}>{user.knowledge}</UserCell>
-                  <UserCell>{user.package}</UserCell>
-                  <UserCell className="last-name">{user.manager}</UserCell>
-                  <UserCell>{user.name === 'Dev Acc' ? null : <UserEditButton onClick={() => handleEdit(user._id)}>Edit</UserEditButton>}</UserCell>
-                  <UserCell>
-                    {user.name === 'Dev Acc' ? null : <UserDeleteButton onClick={() => handleDelete(user._id)}>Del</UserDeleteButton>}
-                  </UserCell>
-                  <UserCell>
-                    {user.name === 'Dev Acc' ? null : (
-                      <UserBanButton className={user.isBanned ? 'banned' : 'not_banned'} onClick={() => handleBan(user._id, user.isBanned)}>
-                        {user.isBanned ? 'Unban' : 'Ban'}
-                      </UserBanButton>
-                    )}
-                  </UserCell>
-                </UserDBRow>
-              ))}
+              {(() => {
+                const foundUsers = studentFilter
+                  ? displayedUsers.filter(user =>
+                      user.name
+                        .toLowerCase()
+                        .includes(
+                          studentFilter.toLowerCase().trim() ||
+                            user.mail
+                              .toLowerCase()
+                              .includes(studentFilter.toLowerCase().trim())
+                        )
+                    )
+                  : [...displayedUsers];
+
+                return foundUsers.slice(0, slicer).map(user => (
+                  <UserDBRow key={user._id}>
+                    <UserCell>
+                      <a
+                        href={`https://apeducation.kommo.com/leads/detail/${user.crmId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {user.crmId}
+                      </a>{' '}
+                      <a
+                        href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {user.contactId}
+                      </a>
+                    </UserCell>
+                    <UserCell>{user.name}</UserCell>
+                    <UserCell>{user.mail}</UserCell>
+                    <UserCell>{user.zoomMail}</UserCell>
+                    <UserCell>{user.password}</UserCell>
+                    <UserCell>{user.pupilId}</UserCell>
+                    <UserCell>{user.marathonNumber}</UserCell>
+                    <UserCell>
+                      {new Date(user.createdAt).toLocaleDateString('uk-UA')}
+                    </UserCell>
+                    <UserCell
+                      className={
+                        Math.floor(
+                          (Date.now() -
+                            changeDateFormat(user.visited[user.visited.length - 1])) /
+                            86400000
+                        ) > filters.days
+                          ? 'attention'
+                          : ''
+                      }
+                    >
+                      {user.visited[user.visited.length - 1]}
+                    </UserCell>
+                    <UserCell>
+                      {!user.visitedTime[user.visitedTime.length - 1]
+                        ? ''
+                        : user.visitedTime[user.visitedTime.length - 1].match('^202')
+                        ? new Date(
+                            user.visitedTime[user.visitedTime.length - 1]
+                          ).toLocaleString('uk-UA')
+                        : new Date(
+                            changeDateFormat(
+                              user.visitedTime[user.visitedTime.length - 1]
+                            )
+                          ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
+                    </UserCell>
+                    <UserCell>{user.lang}</UserCell>
+                    <UserCell>{user.course}</UserCell>
+                    <UserCell className={user.knowledge?.includes('а') && 'error'}>
+                      {user.knowledge}
+                    </UserCell>
+                    <UserCell>{user.package}</UserCell>
+                    <UserCell className="last-name">{user.manager}</UserCell>
+                    <UserCell>
+                      {user.name === 'Dev Acc' ? null : (
+                        <UserEditButton onClick={() => handleEdit(user._id)}>
+                          Edit
+                        </UserEditButton>
+                      )}
+                    </UserCell>
+                    <UserCell>
+                      {user.name === 'Dev Acc' ? null : (
+                        <UserDeleteButton onClick={() => handleDelete(user._id)}>
+                          Del
+                        </UserDeleteButton>
+                      )}
+                    </UserCell>
+                  </UserDBRow>
+                ));
+              })()}
             </tbody>
           </UserDBTable>
         )}
         {isEditFormOpen && (
           <Backdrop onMouseDown={closeEditFormOnClick} id="close-on-click">
-            <UserEditForm userToEdit={userToEdit} updateUser={updateUser} closeEditForm={closeEditForm} />
+            <UserEditForm
+              userToEdit={userToEdit}
+              updateUser={updateUser}
+              closeEditForm={closeEditForm}
+            />
           </Backdrop>
         )}
         {isLoading && <Loader />}

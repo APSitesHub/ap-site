@@ -88,7 +88,7 @@ const setAuthToken = token => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
-export const KahootAdminPanel = () => {
+const KahootAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [levels, setLevels] = useState([]);
@@ -425,3 +425,5 @@ export const KahootAdminPanel = () => {
     </>
   );
 };
+
+export default KahootAdminPanel;
