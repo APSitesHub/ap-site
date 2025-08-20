@@ -6,6 +6,7 @@ import {
   StudentAppointmentBox,
   StudentAppointmentList,
   StudentAppointmentListItem,
+  StudentCoursePurchased,
   StudentInfo,
   StudentInfoText,
   StudentInfoTextHighlight,
@@ -16,6 +17,7 @@ export const AppointmentStudentModal = ({
   closeStudentAppointments,
   teachers,
   chosenTeacher,
+  showTrialsOnly,
 }) => {
   const getStatusLabel = status => {
     switch (status) {
@@ -119,10 +121,69 @@ export const AppointmentStudentModal = ({
             }
           </StudentInfoTextHighlight>
         </StudentInfoText>
+        {showTrialsOnly && (
+          <>
+            <StudentInfoText>
+              Курс придбав(-ла):{' '}
+              <StudentInfoTextHighlight>
+                {studentAppointments.some(
+                  studentAppointment => studentAppointment.courseePurchaseDate
+                ) ? (
+                  <StudentCoursePurchased className="yes">Так</StudentCoursePurchased>
+                ) : (
+                  <StudentCoursePurchased className="no">Ні</StudentCoursePurchased>
+                )}
+              </StudentInfoTextHighlight>
+            </StudentInfoText>
+
+            {(() => {
+              const purchasedCourses = studentAppointments.filter(
+                studentAppointment => studentAppointment.leadPurchasedCourse
+              );
+
+              return purchasedCourses.length > 0 ? (
+                <>
+                  <StudentInfoText>
+                    Дата придбання:{' '}
+                    {purchasedCourses.map(appointment => (
+                      <StudentInfoTextHighlight>
+                        {new Date(appointment.courseePurchaseDate).toLocaleString(
+                          'uk-UA',
+                          {
+                            year: 'numeric',
+                            month: 'numeric',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          }
+                        )}
+                      </StudentInfoTextHighlight>
+                    ))}
+                  </StudentInfoText>
+                  <StudentInfoText>
+                    У викладача(-ів):{' '}
+                    {teachers
+                      .filter(teacher =>
+                        purchasedCourses
+                          .map(appointment => appointment.teacherId)
+                          .includes(String(teacher.altegioId))
+                      )
+                      .map(teacher => (
+                        <StudentInfoTextHighlight>
+                          {teacher.name}
+                        </StudentInfoTextHighlight>
+                      ))}
+                  </StudentInfoText>
+                </>
+              ) : null;
+            })()}
+          </>
+        )}
       </StudentInfo>
       <StudentAppointmentBox>
         <HeaderCellBody>
           <AppointmentSpan componentWidth="6em">ID Запису</AppointmentSpan>
+          <AppointmentSpan componentWidth="8em">Тип</AppointmentSpan>
           <AppointmentSpan componentWidth="15em">Дата і час запису</AppointmentSpan>
           <AppointmentSpan componentWidth="15em">Тічер</AppointmentSpan>
           <AppointmentSpan componentWidth="8em">Статус запису</AppointmentSpan>
@@ -138,6 +199,9 @@ export const AppointmentStudentModal = ({
                 >
                   <AppointmentSpan componentWidth="6em">
                     {appointment.appointmentId}
+                  </AppointmentSpan>
+                  <AppointmentSpan componentWidth="8em">
+                    {appointment.IsTrial ? 'Пробне' : 'Індивідуальне'}
                   </AppointmentSpan>
                   <AppointmentSpan componentWidth="15em">
                     {(() => {

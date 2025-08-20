@@ -27,6 +27,7 @@ import {
   CheckboxInput,
   CheckboxLabel,
   HeaderCellBody,
+  PurchasedCourse,
   TeacherFilterInput,
 } from './AppointmentsAdminPanel.styled';
 import { AppointmentStudentModal } from './AppointmentStudentModal';
@@ -51,6 +52,7 @@ export const AppointmentsAdminPanel = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUserAdmin, setIsUserAdmin] = useState(false);
   const [showDeleted, setShowDeleted] = useState(false);
+  const [showTrialsOnly, setShowTrialsOnly] = useState(false);
   const [showTeachersWithoutAppointments, setShowTeachersWithoutAppointments] =
     useState(false);
   const [teacherFilter, setTeacherFilter] = useState('');
@@ -151,11 +153,19 @@ export const AppointmentsAdminPanel = () => {
     endOfDay.setHours(26, 59, 59, 999);
 
     const studentAppointments = await axios.get('/appointments/student', {
-      params: {
-        leadId: leadId,
-        start: startOfRange,
-        end: endOfDay,
-      },
+      params: showTrialsOnly
+        ? {
+            leadId: leadId,
+            start: startOfRange,
+            end: endOfDay,
+            IsTrial: true,
+          }
+        : {
+            leadId: leadId,
+            start: startOfRange,
+            end: endOfDay,
+            IsTrial: false,
+          },
     });
 
     setChosenTeacher(
@@ -228,6 +238,18 @@ export const AppointmentsAdminPanel = () => {
                   />
                 </CheckboxLabel>
                 <CheckboxLabel>
+                  Показати лише пробні записи
+                  <CheckboxInput
+                    type="checkbox"
+                    name="showTrialsOnly"
+                    id="showTrialsOnly"
+                    checked={showTrialsOnly}
+                    onChange={() =>
+                      setShowTrialsOnly(setShowTrialsOnly => !setShowTrialsOnly)
+                    }
+                  />
+                </CheckboxLabel>
+                <CheckboxLabel>
                   Показати тічерів без актуальних записів
                   <CheckboxInput
                     type="checkbox"
@@ -259,6 +281,8 @@ export const AppointmentsAdminPanel = () => {
                 <UserHeadCell>Очікує</UserHeadCell>
                 <UserHeadCell>Проведено</UserHeadCell>
                 <UserHeadCell>Не проведено</UserHeadCell>
+                {showDeleted && <UserHeadCell>Видалено</UserHeadCell>}
+                {showTrialsOnly && <UserHeadCell>Продажів</UserHeadCell>}
                 <UserHeadCell>Сума студентів</UserHeadCell>
                 <UserHeadCell>Записані студенти</UserHeadCell>
               </UserDBRow>
@@ -274,12 +298,25 @@ export const AppointmentsAdminPanel = () => {
                   : [...teachers];
 
                 return foundTeachers
+                  .sort((a, b) =>
+                    a.name.localeCompare(b.name, 'uk', {
+                      sensitivity: 'base',
+                    })
+                  )
                   .filter(teacher =>
                     showTeachersWithoutAppointments
                       ? teacher
+                      : showTrialsOnly
+                      ? appointments
+                          .filter(appointment => appointment.IsTrial)
+                          .some(
+                            appointment =>
+                              appointment.teacherId === String(teacher.altegioId) &&
+                              !appointment.isDeleted
+                          )
                       : appointments.some(
                           appointment =>
-                            Number(appointment.teacherId) === teacher.altegioId &&
+                            appointment.teacherId === String(teacher.altegioId) &&
                             !appointment.isDeleted
                         )
                   )
@@ -306,6 +343,9 @@ export const AppointmentsAdminPanel = () => {
                       </BodyCell>
                       {(() => {
                         const filteredAppointments = appointments
+                          .filter(appointment =>
+                            showTrialsOnly ? appointment.IsTrial : !appointment.IsTrial
+                          )
                           .filter(appointment =>
                             showDeleted
                               ? appointment.teacherId === String(teacher.altegioId)
@@ -334,6 +374,12 @@ export const AppointmentsAdminPanel = () => {
                         const noShowAppointments = filteredAppointments.filter(
                           appointment => appointment.status === '-1'
                         );
+                        const deletedAppointments = filteredAppointments.filter(
+                          appointment => appointment.isDeleted === true
+                        );
+                        const courseSoldAppointments = filteredAppointments.filter(
+                          appointment => appointment.leadPurchasedCourse === true
+                        );
 
                         return (
                           <>
@@ -349,6 +395,16 @@ export const AppointmentsAdminPanel = () => {
                             <BodyCell componentWidth="7em">
                               {noShowAppointments.length}
                             </BodyCell>
+                            {showDeleted && (
+                              <BodyCell componentWidth="7em">
+                                {deletedAppointments.length}
+                              </BodyCell>
+                            )}
+                            {showTrialsOnly && (
+                              <BodyCell componentWidth="7em">
+                                {courseSoldAppointments.length}
+                              </BodyCell>
+                            )}
                             <BodyCell componentWidth="6em">
                               {
                                 [
@@ -371,6 +427,11 @@ export const AppointmentsAdminPanel = () => {
                                 <AppointmentSpan componentWidth="6em">
                                   Записів
                                 </AppointmentSpan>
+                                {showTrialsOnly && (
+                                  <AppointmentSpan componentWidth="8em">
+                                    Курс придбано
+                                  </AppointmentSpan>
+                                )}
                               </HeaderCellBody>
                               {[
                                 ...new Map(
@@ -440,6 +501,19 @@ export const AppointmentsAdminPanel = () => {
                                       ).length
                                     }
                                   </AppointmentSpan>
+                                  {showTrialsOnly && (
+                                    <AppointmentSpan componentWidth="8em">
+                                      {filteredAppointments.some(
+                                        studentAppointment =>
+                                          studentAppointment.leadPurchasedCourse &&
+                                          appointment.leadId === studentAppointment.leadId
+                                      ) ? (
+                                        <PurchasedCourse>+</PurchasedCourse>
+                                      ) : (
+                                        ''
+                                      )}
+                                    </AppointmentSpan>
+                                  )}
                                 </AppointmentBody>
                               ))}
                             </AppointmentCell>
@@ -459,6 +533,7 @@ export const AppointmentsAdminPanel = () => {
               closeStudentAppointments={closeStudentAppointments}
               teachers={teachers}
               chosenTeacher={chosenTeacher}
+              showTrialsOnly={showTrialsOnly}
             />
           </Backdrop>
         )}
