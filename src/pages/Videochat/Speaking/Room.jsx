@@ -124,6 +124,7 @@ function Room({ isAdmin, roomId }) {
             }}
           >
             <JitsiMeeting
+              key={roomId}
               domain="dev2.ap.education"
               roomName={roomId}
               configOverwrite={{

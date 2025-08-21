@@ -2,19 +2,22 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 import { useEffect, useRef, useState } from 'react';
 import { ColorRing } from 'react-loader-spinner';
-import { Page } from '../Videochat.styled';
+import { Page, SpeakingAdminPanelTimer } from '../Videochat.styled';
 import Room from './Room';
 import Login from './Login';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function SpeakingMain() {
+  const navigate = useNavigate();
   const { slug } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isUserLogined, setIsUserLogined] = useState(false);
   const [isAdmin, setIsAdmin] = useState(null);
+  const [isAdminInRoom, setIsAdminInRoom] = useState(false);
   const [roomNumber, setRoomNumber] = useState(null);
-  const [isGeneralRoom, setIsGeneralRoom] = useState(true);
   const socketRef = useRef(null);
+  const [timer, setTimer] = useState(null);
+  const timerInterval = useRef(null);
 
   const connectToWaitingRoom = async () => {
     if (socketRef.current) {
@@ -41,13 +44,36 @@ function SpeakingMain() {
       role,
       login,
       userId,
+      disconnected: false,
     });
 
+    socket.on('is-admin-in-room', handleIsAdminInRoom);
     socket.on('redirect-to-room', handleRedirectToRoom);
+    socket.on('end-lesson', handleEndLesson);
+  };
+
+  const handleIsAdminInRoom = ({ isAdminInRoom }) => {
+    setIsAdminInRoom(isAdminInRoom);
   };
 
   const handleRedirectToRoom = ({ roomNumber }) => {
     setRoomNumber(roomNumber);
+  };
+
+  const handleEndLesson = () => {
+    setTimer(60);
+    timerInterval.current && clearInterval(timerInterval.current);
+
+    timerInterval.current = setInterval(() => {
+      setTimer(prev => {
+        if (prev === 1) {
+          clearInterval(timerInterval.current);
+          isAdmin ? navigate('../../teacher-ap') : navigate('../../end-call');
+          return 0;
+        }
+        return prev > 0 ? prev - 1 : 0;
+      });
+    }, 1000);
   };
 
   useEffect(() => {
@@ -109,6 +135,19 @@ function SpeakingMain() {
     connectToWaitingRoom();
   };
 
+  const renderTimer = () => {
+    if (timer === null || timer === undefined) return null;
+    const min = Math.floor(timer / 60)
+      .toString()
+      .padStart(2, '0');
+    const sec = (timer % 60).toString().padStart(2, '0');
+    return (
+      <SpeakingAdminPanelTimer>
+        {min}:{sec}
+      </SpeakingAdminPanelTimer>
+    );
+  };
+
   return (
     <Page>
       {isLoading ? (
@@ -129,15 +168,17 @@ function SpeakingMain() {
         />
       ) : !isUserLogined ? (
         <Login logined={handleLogin} />
-      ) : !roomNumber ? (
+      ) : !isAdminInRoom ? (
         <div>
           <h1>
-            Ви в кімнаті очікування, щойно урок розпочнеться Вас буде перенаправлено
+            За цим посиланням наразі немає заннятя. Можливо, воно скоро розпочнеться
           </h1>
-          <p>{socketRef.current.id}</p>
         </div>
       ) : (
-        <Room isAdmin={isAdmin} roomId={`${slug}-${roomNumber}`} />
+        <>
+          <Room isAdmin={isAdmin} roomId={`${slug}-${roomNumber || 'general'}`} />
+          {timer && renderTimer()}
+        </>
       )}
     </Page>
   );

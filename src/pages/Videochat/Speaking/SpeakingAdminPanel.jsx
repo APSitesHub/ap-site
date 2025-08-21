@@ -1,6 +1,25 @@
 import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
+import {
+  SpeakingAdminPanelContainer,
+  SpeakingAdminPanelTitle,
+  SpeakingAdminPanelTopBar,
+  SpeakingAdminPanelButton,
+  SpeakingAdminPanelMain,
+  SpeakingAdminPanelUsersBlock,
+  SpeakingAdminPanelTeachersBlock,
+  SpeakingAdminPanelBlockTitle,
+  SpeakingAdminPanelUserList,
+  SpeakingAdminPanelUserItem,
+  SpeakingAdminPanelDivider,
+  SpeakingAdminPanelRoomsBlock,
+  SpeakingAdminPanelRoomCard,
+  SpeakingAdminPanelRoomHeader,
+  SpeakingAdminPanelRoomUsersTitle,
+  SpeakingAdminPanelRoomUsersList,
+  SpeakingAdminPanelRoomUserItem,
+} from '../Videochat.styled';
 
 function SpeakingAdminPanel() {
   const { room } = useParams();
@@ -35,35 +54,131 @@ function SpeakingAdminPanel() {
 
     socket.on('users-in-room', updatedUsers => {
       setUsers(updatedUsers);
+
+      // Використовуємо функціональне оновлення, щоб отримати актуальний стан
+      setRooms(prevRooms => {
+        // Створюємо нову копію масиву кімнат
+        let newRooms = [...prevRooms];
+
+        updatedUsers.forEach(user => {
+          if (user.roomNumber) {
+            // Знаходимо індекс існуючої кімнати
+            const roomIndex = newRooms.findIndex(
+              room => room.roomNumber === user.roomNumber
+            );
+
+            if (roomIndex !== -1) {
+              // Якщо кімната знайдена, створюємо її копію і оновлюємо
+              const roomToUpdate = { ...newRooms[roomIndex] };
+
+              // Додаємо користувача, якщо його ще немає в кімнаті
+              const userExists = roomToUpdate.users.some(u => u.userId === user.userId);
+              if (!userExists) {
+                roomToUpdate.users = [...roomToUpdate.users, user];
+              }
+              newRooms[roomIndex] = roomToUpdate;
+            } else {
+              // Якщо кімнати не існує, створюємо її та додаємо до нового масиву
+              newRooms.push({
+                roomNumber: user.roomNumber,
+                users: [user],
+              });
+            }
+          }
+        });
+
+        return newRooms; // Повертаємо новий масив для оновлення стану
+      });
     });
+
     socket.on('teachers-in-room', updatedTeachers => {
       setTeachers(updatedTeachers);
-    });
-    socket.on('new-user', user => {
-      console.log('New user joined:', user);
 
+      // Використовуємо функціональне оновлення, щоб отримати актуальний стан
+      setRooms(prevRooms => {
+        let newRooms = [...prevRooms];
+
+        updatedTeachers.forEach(teacher => {
+          if (teacher.roomNumber) {
+            const roomIndex = newRooms.findIndex(
+              room => room.roomNumber === teacher.roomNumber
+            );
+
+            if (roomIndex !== -1) {
+              // Створюємо копію кімнати і оновлюємо викладача
+              const roomToUpdate = { ...newRooms[roomIndex] };
+              roomToUpdate.teacher = teacher;
+              newRooms[roomIndex] = roomToUpdate;
+            } else {
+              // Якщо кімнати не існує, створюємо її та додаємо викладача
+              newRooms.push({
+                roomNumber: teacher.roomNumber,
+                teacher,
+                users: [], // Важливо ініціалізувати масив користувачів
+              });
+            }
+          }
+        });
+
+        return newRooms; // Повертаємо новий масив для оновлення стану
+      });
+    });
+
+    socket.on('new-user', user => {
       if (user.role === 'teacher') {
         setTeachers(prevTeachers => [...prevTeachers, user]);
       } else {
         setUsers(prevUsers => [...prevUsers, user]);
       }
     });
+
     socket.on('user-disconnected', user => {
       if (user.role === 'teacher') {
-        setTeachers(prevTeachers => prevTeachers.map(t => (t.disconnected = true)));
+        setTeachers(prevTeachers =>
+          prevTeachers.map(t =>
+            t.userId === user.userId ? { ...t, disconnected: true } : t
+          )
+        );
       } else {
-        setUsers(prevUsers => prevUsers.map(u => (u.disconnected = true)));
+        setUsers(prevUsers =>
+          prevUsers.map(u =>
+            u.userId === user.userId ? { ...u, disconnected: true } : u
+          )
+        );
       }
     });
+
     socket.on('user-reconnected', user => {
       if (user.role === 'teacher') {
-        setTeachers(prevTeachers => prevTeachers.map(t => (t.disconnected = false)));
+        setTeachers(prevTeachers =>
+          prevTeachers.map(t =>
+            t.userId === user.userId ? { ...t, disconnected: false } : t
+          )
+        );
       } else {
-        setUsers(prevUsers => prevUsers.map(u => (u.disconnected = false)));
+        setUsers(prevUsers =>
+          prevUsers.map(u =>
+            u.userId === user.userId ? { ...u, disconnected: false } : u
+          )
+        );
       }
     });
 
     setIsConnected(true);
+  };
+
+  const distributeToGeneralRoom = () => {
+    users.forEach(user => {
+      user.roomNumber = null;
+    });
+
+    teachers.forEach(teacher => {
+      teacher.roomNumber = null;
+    });
+
+    setRooms([]);
+    setUsers([...users]);
+    setTeachers([...teachers]);
   };
 
   const distributeUsers = () => {
@@ -123,245 +238,194 @@ function SpeakingAdminPanel() {
   };
 
   const saveChanges = () => {
-    if (rooms.length === 0) return;
-
     socketRef.current.emit('save-rooms', { room, users: [...teachers, ...users] });
-
-    console.log('Changes saved:', rooms);
   };
 
   const startLesson = () => {
+    saveChanges();
     socketRef.current.emit('start-lesson', { room });
   };
 
-  return (
-    <div style={{ height: '100vh' }}>
-      <h1
-        style={{
-          textAlign: 'center',
-          marginTop: '20px',
-          color: '#333',
-          borderBottom: '2px solid #ccc',
-          paddingBottom: '10px',
-        }}
-      >
-        Speaking Admin Panel <strong>({room})</strong>
-      </h1>
-      {!isConnected ? (
-        <button onClick={connectToAdminPanel}>CONNECT</button>
-      ) : (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-          }}
-        >
-          <div
-            style={{
-              height: '50px',
-              backgroundColor: '#f8f9fa',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderBottom: '2px solid #ccc',
-              gap: '20px',
-            }}
-          >
-            <button
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#244d9b',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-              }}
-              onClick={distributeUsers}
-            >
-              Розприділити
-            </button>
-            <button
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#145e20',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-              }}
-              onClick={saveChanges}
-            >
-              Зберегти
-            </button>
-            <button
-              style={{
-                padding: '10px 20px',
-                backgroundColor: '#17a194',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-              }}
-              onClick={startLesson}
-            >
-              Розпочати урок
-            </button>
-          </div>
+  const endLesson = () => {
+    socketRef.current.emit('end-lesson', { room });
+    setIsConnected(false);
+    setRooms([]);
+    setUsers([]);
+    setTeachers([]);
+    socketRef.current.disconnect();
+  };
 
-          <div
-            style={{
-              display: 'flex',
-              gap: '20px',
-              flex: 1,
-              borderBottom: '2px solid #ccc',
-            }}
-          >
-            <div style={{ flex: 3, padding: '20px' }}>
-              <h2
-                style={{
-                  paddingBottom: '10px',
-                  borderBottom: '2px solid #ccc',
-                }}
-              >
+  // drag and drop functionality
+  const handleDragStart = (e, user) => {
+    e.dataTransfer.setData('text/plain', JSON.stringify(user));
+  };
+
+  const handleDragOver = e => {
+    e.preventDefault();
+  };
+
+  const handleDropUser = (e, targetRoomNumber) => {
+    e.preventDefault();
+    const user = JSON.parse(e.dataTransfer.getData('text/plain'));
+
+    // Оновлюємо users та rooms
+    setUsers(prevUsers =>
+      prevUsers.map(u =>
+        u.userId === user.userId ? { ...u, roomNumber: targetRoomNumber } : u
+      )
+    );
+
+    setRooms(prevRooms => {
+      const newRooms = prevRooms.map(r => {
+        // Видаляємо користувача з будь-якої іншої кімнати
+        const updatedUsers = r.users.filter(u => u.userId !== user.userId);
+        return { ...r, users: updatedUsers };
+      });
+
+      const roomToUpdateIndex = newRooms.findIndex(
+        r => r.roomNumber === targetRoomNumber
+      );
+      if (roomToUpdateIndex !== -1) {
+        const roomToUpdate = { ...newRooms[roomToUpdateIndex] };
+        roomToUpdate.users = [...roomToUpdate.users, user];
+        newRooms[roomToUpdateIndex] = roomToUpdate;
+      }
+      return newRooms;
+    });
+  };
+
+  const handleDropToMainUsers = e => {
+    e.preventDefault();
+    const user = JSON.parse(e.dataTransfer.getData('text/plain'));
+
+    setUsers(prevUsers =>
+      prevUsers.map(u => (u.userId === user.userId ? { ...u, roomNumber: null } : u))
+    );
+
+    setRooms(prevRooms =>
+      prevRooms.map(r => {
+        const updatedUsers = r.users.filter(u => u.userId !== user.userId);
+        return { ...r, users: updatedUsers };
+      })
+    );
+  };
+
+  return (
+    <SpeakingAdminPanelContainer>
+      <SpeakingAdminPanelTitle>
+        Speaking Admin Panel <strong>({room})</strong>
+      </SpeakingAdminPanelTitle>
+      {!isConnected ? (
+        <SpeakingAdminPanelButton onClick={connectToAdminPanel}>
+          CONNECT
+        </SpeakingAdminPanelButton>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <SpeakingAdminPanelTopBar>
+            <SpeakingAdminPanelButton onClick={distributeToGeneralRoom}>
+              Скинути кімнати
+            </SpeakingAdminPanelButton>
+            <SpeakingAdminPanelButton onClick={distributeUsers}>
+              Розподілити
+            </SpeakingAdminPanelButton>
+            <SpeakingAdminPanelButton $color={'red'} onClick={endLesson}>
+              Закінчити урок
+            </SpeakingAdminPanelButton>
+            <SpeakingAdminPanelButton $color={'green'} onClick={startLesson}>
+              Редірект
+            </SpeakingAdminPanelButton>
+          </SpeakingAdminPanelTopBar>
+
+          <SpeakingAdminPanelMain>
+            <SpeakingAdminPanelUsersBlock
+              onDragOver={handleDragOver}
+              onDrop={handleDropToMainUsers}
+            >
+              <SpeakingAdminPanelBlockTitle>
                 Users in Room {room} - {users.length}:
-              </h2>
-              <ul
-                style={{
-                  paddingTop: '10px',
-                  listStyleType: 'none',
-                  display: 'flex',
-                  gap: '10px',
-                  flexWrap: 'wrap',
-                }}
-              >
+              </SpeakingAdminPanelBlockTitle>
+              <SpeakingAdminPanelUserList>
                 {users
                   .filter(user => !user.roomNumber)
                   .map(user => (
-                    <li
+                    <SpeakingAdminPanelUserItem
                       key={user.socketId}
-                      style={{
-                        padding: '6px 10px',
-                        borderRadius: '14px',
-                        backgroundColor: '#f8d7da',
-                        color: '#842029',
-                      }}
+                      $disconnected={user.disconnected}
+                      draggable
+                      onDragStart={e => handleDragStart(e, user)}
                     >
                       <span>{user.userName}</span>
-                    </li>
+                    </SpeakingAdminPanelUserItem>
                   ))}
-              </ul>
-            </div>
+              </SpeakingAdminPanelUserList>
+            </SpeakingAdminPanelUsersBlock>
 
-            <div
-              style={{
-                height: '100%',
-                width: '1px',
-                backgroundColor: 'gray',
-              }}
-            ></div>
+            <SpeakingAdminPanelDivider />
 
-            <div style={{ flex: 1, padding: '20px' }}>
-              <h2
-                style={{
-                  paddingBottom: '10px',
-                  borderBottom: '2px solid #ccc',
-                }}
-              >
+            <SpeakingAdminPanelTeachersBlock>
+              <SpeakingAdminPanelBlockTitle>
                 Teachers in Room {room} - {teachers.length}:
-              </h2>
-              <ul
-                style={{
-                  paddingTop: '10px',
-                  listStyleType: 'none',
-                  display: 'flex',
-                  gap: '10px',
-                  flexWrap: 'wrap',
-                }}
-              >
+              </SpeakingAdminPanelBlockTitle>
+              <SpeakingAdminPanelUserList>
                 {teachers
                   .filter(teacher => !teacher.roomNumber)
                   .map(teacher => (
-                    <li
+                    <SpeakingAdminPanelUserItem
                       key={teacher.socketId}
-                      style={{
-                        padding: '6px 10px',
-                        borderRadius: '14px',
-                        backgroundColor: '#d1e7dd',
-                        color: '#0f5132',
-                      }}
+                      $disconnected={teacher.disconnected}
                     >
                       <span>{teacher.userName}</span>
-                    </li>
+                    </SpeakingAdminPanelUserItem>
                   ))}
-              </ul>
-            </div>
-          </div>
+              </SpeakingAdminPanelUserList>
+            </SpeakingAdminPanelTeachersBlock>
+          </SpeakingAdminPanelMain>
 
-          <div
-            style={{
-              flex: 3,
-              padding: '10px',
-              backgroundColor: '#f8f9fa',
-              display: 'flex',
-              gap: '20px',
-              flexWrap: 'wrap',
-            }}
-          >
-            {rooms.map(room => (
-              <div
-                key={room.roomNumber}
-                style={{
-                  padding: '8px',
-                  borderRadius: '8px',
-                  backgroundColor: '#e9ecef',
-                  border: '1px solid #ced4da',
-                  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-                  maxHeight: '400px',
-                  overflowY: 'auto',
-                }}
-              >
-                <div
-                  style={{
-                    fontWeight: 'bold',
-                    paddingBottom: '10px',
-                    borderBottom: '2px solid #ccc',
-                  }}
+          <SpeakingAdminPanelRoomsBlock>
+            {rooms &&
+              rooms.map(room => (
+                <SpeakingAdminPanelRoomCard
+                  key={room.roomNumber}
+                  onDragOver={handleDragOver}
+                  onDrop={e => handleDropUser(e, room.roomNumber)}
                 >
-                  <p>{room.roomNumber}</p>
-                  <p>Teacher: {room.teacher.userName}</p>
-                </div>
-                <div style={{ marginTop: '10px' }}>
-                  <p
-                    style={{
-                      fontWeight: 'bold',
-                      marginBottom: '10px',
-                    }}
-                  >
-                    Users:
-                  </p>
-                  <ul style={{ listStyleType: 'none', paddingLeft: '0' }}>
-                    {room.users.map(user => (
-                      <li
-                        style={{
-                          padding: '6px 10px',
-                          borderRadius: '14px',
-                          backgroundColor: user.disconnected ? '#e7d1d1' : '#d1e7dd',
-                          color: user.disconnected ? '#842029' : '#0f5132',
-                          marginBottom: '6px',
-                        }}
-                      >
-                        <span>{user.userName}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
+                  <SpeakingAdminPanelRoomHeader>
+                    {teachers
+                      .filter(teacher => teacher.login === room.teacher?.login)
+                      .map(teacher => (
+                        <SpeakingAdminPanelRoomUserItem
+                          key={teacher.userId}
+                          $disconnected={teacher.disconnected}
+                        >
+                          <span>{teacher.userName}</span>
+                        </SpeakingAdminPanelRoomUserItem>
+                      ))}
+                  </SpeakingAdminPanelRoomHeader>
+                  <div style={{ marginTop: '10px' }}>
+                    <SpeakingAdminPanelRoomUsersTitle>
+                      Users:
+                    </SpeakingAdminPanelRoomUsersTitle>
+                    <SpeakingAdminPanelRoomUsersList>
+                      {users
+                        .filter(user => user.roomNumber === room.roomNumber)
+                        .map(user => (
+                          <SpeakingAdminPanelRoomUserItem
+                            key={user.userId}
+                            $disconnected={user.disconnected}
+                            draggable
+                            onDragStart={e => handleDragStart(e, user)}
+                          >
+                            <span>{user.userName}</span>
+                          </SpeakingAdminPanelRoomUserItem>
+                        ))}
+                    </SpeakingAdminPanelRoomUsersList>
+                  </div>
+                </SpeakingAdminPanelRoomCard>
+              ))}
+          </SpeakingAdminPanelRoomsBlock>
         </div>
       )}
-    </div>
+    </SpeakingAdminPanelContainer>
   );
 }
 
