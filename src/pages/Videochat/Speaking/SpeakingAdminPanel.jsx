@@ -241,9 +241,14 @@ function SpeakingAdminPanel() {
     socketRef.current.emit('save-rooms', { room, users: [...teachers, ...users] });
   };
 
-  const startLesson = () => {
+  const redirect = () => {
     saveChanges();
     socketRef.current.emit('start-lesson', { room });
+  };
+
+  const redirectWithDelay = () => {
+    saveChanges();
+    socketRef.current.emit('start-lesson', { room, withDelay: true });
   };
 
   const endLesson = () => {
@@ -331,8 +336,11 @@ function SpeakingAdminPanel() {
             <SpeakingAdminPanelButton $color={'red'} onClick={endLesson}>
               Закінчити урок
             </SpeakingAdminPanelButton>
-            <SpeakingAdminPanelButton $color={'green'} onClick={startLesson}>
+            <SpeakingAdminPanelButton $color={'green'} onClick={redirect}>
               Редірект
+            </SpeakingAdminPanelButton>
+            <SpeakingAdminPanelButton $color={'green'} onClick={redirectWithDelay}>
+              Редірект з затримкою
             </SpeakingAdminPanelButton>
           </SpeakingAdminPanelTopBar>
 

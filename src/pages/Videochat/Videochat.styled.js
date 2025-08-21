@@ -745,23 +745,23 @@ export const SpeakingAdminPanelTitle = styled.h1`
 `;
 
 export const SpeakingAdminPanelTopBar = styled.div`
-  height: 50px;
+  padding: 12px;
   background-color: #f8f9fa;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   border-bottom: 2px solid #ccc;
   gap: 20px;
 `;
 
 export const SpeakingAdminPanelButton = styled.button`
-  margin: 16px auto;
   padding: 10px 32px;
   background-color: ${({ $color }) =>
     $color === 'green' ? '#17a194' : $color === 'red' ? '#722727' : '#244d9b'};
   color: #fff;
   font-size: 1.3rem;
-  font-weight: 600;;
+  font-weight: 600;
   border: none;
   border-radius: 5px;
   cursor: pointer;

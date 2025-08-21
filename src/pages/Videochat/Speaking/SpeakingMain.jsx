@@ -56,8 +56,27 @@ function SpeakingMain() {
     setIsAdminInRoom(isAdminInRoom);
   };
 
-  const handleRedirectToRoom = ({ roomNumber }) => {
-    setRoomNumber(roomNumber);
+  const handleRedirectToRoom = ({ roomNumber, withDelay }) => {
+    if (withDelay) {
+      setTimer(60);
+      timerInterval.current && clearInterval(timerInterval.current);
+
+      timerInterval.current = setInterval(() => {
+        setTimer(prev => {
+          if (prev === 1) {
+            clearInterval(timerInterval.current);
+            setRoomNumber(roomNumber);
+
+            return 0;
+          }
+          return prev > 0 ? prev - 1 : 0;
+        });
+      }, 1000);
+    } else {
+      clearInterval(timerInterval.current);
+      setTimer(null);
+      setRoomNumber(roomNumber);
+    }
   };
 
   const handleEndLesson = () => {

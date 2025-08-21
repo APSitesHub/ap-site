@@ -161,7 +161,7 @@ function Room({ isAdmin, roomId }) {
                 defaultLanguage: browserLanguage,
                 toolbarButtons: [
                   'camera',
-                  // 'chat',
+                  'chat',
                   // 'closedcaptions',
                   'desktop',
                   // 'download',
