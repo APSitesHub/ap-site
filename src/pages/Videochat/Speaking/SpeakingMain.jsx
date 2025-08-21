@@ -24,7 +24,7 @@ function SpeakingMain() {
       return;
     }
 
-    const socket = io(`ws://localhost:3001/speaking`, {
+    const socket = io(`wss://ap-server-8qi1.onrender.com/speaking`, {
       'force new connection': true,
       reconnectionAttempts: 'Infinity',
       timeout: 10000,
