@@ -190,9 +190,11 @@ function Room({ isAdmin, lang }) {
     });
 
     externalApi.addListener('audioOnlyChanged', obj => {
-      Sentry.captureMessage('Jitsi audioOnlyChanged', {
-        extra: obj,
-      });
+      if (obj.enabled === true) {
+        Sentry.captureMessage('Jitsi audioOnlyChanged', {
+          extra: obj,
+        });
+      }
     });
 
     externalApi.addEventListener('videoConferenceLeft', () => {
