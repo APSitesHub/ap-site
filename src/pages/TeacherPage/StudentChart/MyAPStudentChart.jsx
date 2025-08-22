@@ -25,7 +25,7 @@ const linksRegex = /\b(?:https?|ftp):\/\/\S+\b/g;
 
 export const MyAPStudentChart = ({ currentStudentChart }) => {
   const [feedbackIndex, setFeedbackIndex] = useState(
-    !!currentStudentChart.feedback && currentStudentChart.feedback.length - 1
+    !!currentStudentChart?.feedback && currentStudentChart.feedback.length - 1
   );
 
   const getPreviousFeedback = async () => {
