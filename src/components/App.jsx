@@ -571,6 +571,16 @@ const IndividualVideoRoom = lazy(() =>
     /* webpackChunkName: "Individual Videochat Room" */ '../pages/Videochat/Individual/IndividualMain'
   )
 );
+const SpeakingVideoRoom = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Videochat Room" */ '../pages/Videochat/Speaking/SpeakingMain'
+  )
+);
+const SpeakingAdminPanelNew = lazy(() =>
+  import(
+    /* webpackChunkName: "Speaking Videochat Room" */ '../pages/Videochat/Speaking/SpeakingAdminPanel'
+  )
+);
 const EndCall = lazy(() =>
   import(/* webpackChunkName: "End Call" */ '../pages/Videochat/EndCall')
 );
@@ -719,7 +729,9 @@ export const App = () => {
               element={<IndividualVideoRoom />}
               noindex={true}
             />
+            <Route path="speaking/:slug" element={<SpeakingVideoRoom />} noindex={true} />
           </Route>
+          <Route path="speaking/admin/:room" element={<SpeakingAdminPanelNew />} noindex={true} />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="end-call-pl" element={<EndCallPl />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
