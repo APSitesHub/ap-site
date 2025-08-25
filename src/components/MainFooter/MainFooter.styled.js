@@ -1,7 +1,7 @@
 import { LeadBtn, Logo } from 'components/Menu/Menu.styled';
 import styled from 'styled-components';
 
-import { PiMapPinDuotone } from 'react-icons/pi';
+// import { PiMapPinDuotone } from 'react-icons/pi';
 import { Link, NavLink } from 'react-router-dom';
 import { ReactComponent as LogoNewIcon } from '../../img/svg/logoNewWhite.svg';
 import { ReactComponent as LogoSchoolWhite } from '../../img/svg/logoSchoolWhite.svg';
@@ -674,10 +674,10 @@ export const FooterLinkNew = styled.a`
   }
 `;
 
-export const MapPointer = styled(PiMapPinDuotone)`
-  width: 30px;
-  height: 30px;
-`;
+// export const MapPointer = styled(PiMapPinDuotone)`
+//   width: 30px;
+//   height: 30px;
+// `;
 
 export const FooterCopyright = styled.p`
   color: var(--main-color);

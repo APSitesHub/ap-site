@@ -586,21 +586,21 @@ const MyAPPl = lazy(() =>
 const MyAPPlTemp = lazy(() =>
   import(/* webpackChunkName: "My AP Temp Page" */ '../pages/MyAP/MyAPPlTemp')
 );
-const MyWSPA = lazy(() =>
-  import(/* webpackChunkName: "My WSPA Page" */ '../pages/MyAP/MyWSPA')
-);
-const MyVPU = lazy(() =>
-  import(/* webpackChunkName: "My VPU Page" */ '../pages/MyAP/MyVPU')
-);
-const MyISMPO = lazy(() =>
-  import(/* webpackChunkName: "My ISMPO Page" */ '../pages/MyAP/MyISMPO')
-);
+// const MyWSPA = lazy(() =>
+//   import(/* webpackChunkName: "My WSPA Page" */ '../pages/MyAP/MyWSPA')
+// );
+// const MyVPU = lazy(() =>
+//   import(/* webpackChunkName: "My VPU Page" */ '../pages/MyAP/MyVPU')
+// );
+// const MyISMPO = lazy(() =>
+//   import(/* webpackChunkName: "My ISMPO Page" */ '../pages/MyAP/MyISMPO')
+// );
 const TrialLesson = lazy(() =>
   import(/* webpackChunkName: "Trial Lesson Page" */ '../pages/TrialLesson/TrialLesson')
 );
-const ConferenceTest = lazy(() =>
-  import(/* webpackChunkName: "AP Conference Test Page" */ '../pages/MyAP/ConferenceTest')
-);
+// const ConferenceTest = lazy(() =>
+//   import(/* webpackChunkName: "AP Conference Test Page" */ '../pages/MyAP/ConferenceTest')
+// );
 const HRCalc = lazy(() =>
   import(/* webpackChunkName: "HR Salary Calculator Page" */ '../pages/HR/HRCalc/HRCalc')
 );
@@ -726,10 +726,10 @@ export const App = () => {
           {/* <Route path="my-ap-hl" element={<MyAP />} noindex={true} /> */}
           <Route path="my-ap-pl" element={<MyAPPl />} noindex={true} />
           <Route path="my-ap-ts" element={<MyAPPlTemp />} noindex={true} />
-          <Route path="my-wspa" element={<MyWSPA />} noindex={true} />
-          <Route path="my-vpu" element={<MyVPU />} noindex={true} />
-          <Route path="my-ismpo" element={<MyISMPO />} noindex={true} />
-          <Route path="c-test" element={<ConferenceTest />} noindex={true} />
+          {/* <Route path="my-wspa" element={<MyWSPA />} noindex={true} /> */}
+          {/* <Route path="my-vpu" element={<MyVPU />} noindex={true} /> */}
+          {/* <Route path="my-ismpo" element={<MyISMPO />} noindex={true} /> */}
+          {/* <Route path="c-test" element={<ConferenceTest />} noindex={true} /> */}
           <Route path="my-marathon" element={<MyAP />} noindex={true} />
           <Route path="streams" element={<Streams />} noindex={true}>
             <Route path="a0" element={<StreamA0 />} noindex={true} />

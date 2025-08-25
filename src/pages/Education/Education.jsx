@@ -1,6 +1,6 @@
 import { AboutUs } from 'components/AboutUs/AboutUs';
 import { BackgroundWrapper } from 'components/BackgroundWrapper/BackgroundWrappers';
-import { Consent } from 'components/Consent/Consent';
+// import { Consent } from 'components/Consent/Consent';
 import { EdCenter } from 'components/EdCenter/EdCenter';
 import { ExamCenter } from 'components/ExamCenter/ExamCenter';
 import { Hero } from 'components/Hero/Hero';
@@ -51,7 +51,7 @@ const Education = ({ utms }) => {
       <Translations utms={utms} />
       <ExamCenter toggleModal={toggleModal} closeModal={closeModal} />
       <AboutUs />
-      <Consent />
+      {/* <Consent /> */}
       {isOpenModal && <LeadForm closeModal={closeModal} utms={utms} />}
     </>
   );

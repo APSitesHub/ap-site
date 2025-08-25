@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Consent } from 'components/Consent/Consent';
+// import { Consent } from 'components/Consent/Consent';
 import { LeadForm } from 'components/LeadForm/LeadForm';
 import { MainFooterNew } from 'components/MainFooter/MainFooterNew';
 import { MenuNew } from 'components/Menu/MenuNew';
@@ -104,7 +104,7 @@ export const SharedLayout = ({ utms }) => {
       ) : (
         <MainFooterNew toggleModal={toggleModal} />
       )}
-      <Consent />
+      {/* <Consent /> */}
       <UpButton />
 
       {isOpenModal && <LeadForm closeModal={closeModal} utms={utms} />}
