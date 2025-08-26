@@ -682,15 +682,14 @@ const UserAdminPanel = () => {
             <tbody>
               {(() => {
                 const foundUsers = studentFilter
-                  ? displayedUsers.filter(user =>
-                      user.name
-                        .toLowerCase()
-                        .includes(
-                          studentFilter.toLowerCase().trim() ||
-                            user.mail
-                              .toLowerCase()
-                              .includes(studentFilter.toLowerCase().trim())
-                        )
+                  ? displayedUsers.filter(
+                      user =>
+                        user.name
+                          .toLowerCase()
+                          .includes(studentFilter.toLowerCase().trim()) ||
+                        user.mail
+                          .toLowerCase()
+                          .includes(studentFilter.toLowerCase().trim())
                     )
                   : [...displayedUsers];
 

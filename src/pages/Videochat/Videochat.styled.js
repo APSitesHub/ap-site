@@ -727,3 +727,149 @@ export const LoginSelect = styled.select`
   border: none;
   border-radius: 8px;
 `;
+
+// SpeakingAdminPanel
+
+export const SpeakingAdminPanelContainer = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const SpeakingAdminPanelTitle = styled.h1`
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+`;
+
+export const SpeakingAdminPanelTopBar = styled.div`
+  padding: 12px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #ccc;
+  gap: 20px;
+`;
+
+export const SpeakingAdminPanelButton = styled.button`
+  padding: 10px 32px;
+  background-color: ${({ $color }) =>
+    $color === 'green' ? '#17a194' : $color === 'red' ? '#722727' : '#244d9b'};
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const SpeakingAdminPanelMain = styled.div`
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  border-bottom: 2px solid #ccc;
+`;
+
+export const SpeakingAdminPanelUsersBlock = styled.div`
+  flex: 3;
+  padding: 20px;
+`;
+
+export const SpeakingAdminPanelTeachersBlock = styled.div`
+  flex: 1;
+  padding: 20px;
+`;
+
+export const SpeakingAdminPanelBlockTitle = styled.h2`
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ccc;
+`;
+
+export const SpeakingAdminPanelUserList = styled.ul`
+  padding-top: 10px;
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+`;
+
+export const SpeakingAdminPanelUserItem = styled.li`
+  cursor: grab;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background-color: ${({ $disconnected }) => ($disconnected ? '#f8d7da' : '#d1e7dd')};
+  color: ${({ $disconnected }) => ($disconnected ? '#842029' : '#0f5132')};
+`;
+
+export const SpeakingAdminPanelDivider = styled.div`
+  height: 100%;
+  width: 1px;
+  background-color: gray;
+`;
+
+export const SpeakingAdminPanelRoomsBlock = styled.div`
+  flex: 3;
+  padding: 10px;
+  /* background-color: #f8f9fa; */
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+`;
+
+export const SpeakingAdminPanelRoomCard = styled.div`
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-height: 400px;
+  overflow-y: auto;
+`;
+
+export const SpeakingAdminPanelRoomHeader = styled.div`
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ccc;
+`;
+
+export const SpeakingAdminPanelRoomUsersTitle = styled.p`
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+export const SpeakingAdminPanelRoomUsersList = styled.ul`
+  list-style-type: none;
+  padding-left: 0;
+`;
+
+export const SpeakingAdminPanelRoomUserItem = styled.li`
+  cursor: grab;
+  list-style: none;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background-color: ${({ $disconnected }) => ($disconnected ? '#f8d7da' : '#d1e7dd')};
+  color: ${({ $disconnected }) => ($disconnected ? '#842029' : '#0f5132')};
+  margin-bottom: 6px;
+`;
+
+export const SpeakingAdminPanelTimer = styled.div`
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  background: rgba(15, 100, 91, 0.9);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+`;
