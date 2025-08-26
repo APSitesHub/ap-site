@@ -408,11 +408,11 @@ const TeacherControlPagePl = lazy(() =>
     /* webpackChunkName: "Teacher Control Polski page" */ '../pages/Streams/TeacherAdminPanel/TeacherControlPagePl'
   )
 );
-const UserJsonPanel = lazy(() =>
-  import(
-    /* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'
-  )
-);
+// const UserJsonPanel = lazy(() =>
+//   import(
+//     /* webpackChunkName: "User Json Panel page" */ '../pages/Streams/UserAdminPanel/UserJsonPanel'
+//   )
+// );
 const RatingsAdminPanel = lazy(() =>
   import(
     /* webpackChunkName: "Ratings Admin Panel page" */ '../pages/Streams/RatingsAdminPanel/RatingsAdminPanel'
@@ -904,7 +904,7 @@ export const App = () => {
             <Route path="tcp-en" element={<TeacherControlPageEn />} noindex={true} />
             <Route path="tcp-de" element={<TeacherControlPageDe />} noindex={true} />
             <Route path="tcp-pl" element={<TeacherControlPagePl />} noindex={true} />
-            <Route path="user-json-panel" element={<UserJsonPanel />} noindex={true} />
+            {/* <Route path="user-json-panel" element={<UserJsonPanel />} noindex={true} /> */}
             <Route
               path="ratings-admin-panel"
               element={<RatingsAdminPanel />}
