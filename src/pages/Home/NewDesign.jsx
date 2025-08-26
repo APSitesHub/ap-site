@@ -1,7 +1,7 @@
 import { APCourses } from 'components/APCourses/APCourses';
 import { APSchool } from 'components/APSchool/APSchool';
 import { APUniversity } from 'components/APUniversity/APUniversity';
-import { Consent } from 'components/Consent/Consent';
+// import { Consent } from 'components/Consent/Consent';
 import { HeroNew } from 'components/Hero/HeroNew';
 import { HowItWorksNew } from 'components/HowItWorks/HowItWorksNew';
 import { LeadForm } from 'components/LeadForm/LeadForm';
@@ -75,7 +75,7 @@ const NewDesign = ({ utms }) => {
       <ReviewsNew />
       <PageFormNew utms={utms} />
       {/* <ExamCenter toggleModal={toggleModal} closeModal={closeModal} /> */}
-      <Consent />
+      {/* <Consent /> */}
       {isOpenModal && <LeadForm closeModal={closeModal} utms={utms} />}
       {isOpenTrialModal && (
         <LeadTrialForm closeTrialModal={closeTrialModal} utms={utms} />

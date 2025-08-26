@@ -1,5 +1,5 @@
 import { BackgroundWrapper } from 'components/BackgroundWrapper/BackgroundWrappers';
-import { Consent } from 'components/Consent/Consent';
+// import { Consent } from 'components/Consent/Consent';
 import { LeadForm } from 'components/LeadForm/LeadForm';
 import { Reviews } from 'components/Reviews/Reviews';
 import { useEffect, useState } from 'react';
@@ -41,7 +41,7 @@ const AllReviews = ({ utms }) => {
         <Reviews toggleModal={toggleModal} closeModal={closeModal} />
       </BackgroundWrapper>
 
-      <Consent />
+      {/* <Consent /> */}
       {isOpenModal && <LeadForm closeModal={closeModal} utms={utms} />}
     </>
   );

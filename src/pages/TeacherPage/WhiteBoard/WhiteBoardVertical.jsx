@@ -7,7 +7,7 @@ export const WhiteBoardVertical = ({
   sectionWidth,
 }) => {
   const BOARDS = {
-    record: 'http://go.limnu.com/chestnut-eatable',
+    record: 'https://limnu.com/d/draw.html?b=B_2jL8BzBbR1yp0m&',
   };
 
   const supportBoxStylesHandler = () => {

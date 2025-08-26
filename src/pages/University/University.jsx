@@ -1,4 +1,4 @@
-import { Consent } from 'components/Consent/Consent';
+// import { Consent } from 'components/Consent/Consent';
 import { ExperienceUniversity } from 'components/Experience/ExperienceUniversity';
 import { HeroUniversity } from 'components/Hero/HeroUniversity';
 import { WhyWeUniversity } from 'components/HowItWorks/WhyWeUniversity';
@@ -72,7 +72,7 @@ const University = ({ utms }) => {
 
       <ReviewsNew />
       <PageFormUniversity utms={utms} />
-      <Consent />
+      {/* <Consent /> */}
       {isOpenModal && <LeadForm closeModal={closeModal} utms={utms} />}
       {isOpenTrialModal && (
         <LeadTrialForm closeTrialModal={closeTrialModal} utms={utms} />
