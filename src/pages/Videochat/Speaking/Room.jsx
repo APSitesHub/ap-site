@@ -68,7 +68,7 @@ function Room({ isAdmin, roomId }) {
       if (isConferenceStarted) {
         navigate('../../end-call');
       } else {
-        window.location.reload();
+        // window.location.reload();
       }
     });
 

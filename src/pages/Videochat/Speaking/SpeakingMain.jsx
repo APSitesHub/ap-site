@@ -187,7 +187,7 @@ function SpeakingMain() {
         />
       ) : !isUserLogined ? (
         <Login logined={handleLogin} />
-      ) : !isAdminInRoom ? (
+      ) : !isAdminInRoom || !isAdmin ? (
         <div>
           <h1>
             За цим посиланням наразі немає заняття. Можливо, воно скоро розпочнеться
