@@ -16,9 +16,17 @@ import { QuestionHeader } from '../TeacherPage.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
 
-export const TeacherAnswersChart = ({ answers, quizType, isQuizActive, setAndSendAnswer }) => {
+export const TeacherAnswersChart = ({
+  answers,
+  quizType,
+  isQuizActive,
+  setAndSendAnswer,
+}) => {
   const data = Object.keys(answers).map(key => {
-    return { answer: key, [key]: answers[key] };
+    // differentiate numeric and string keys to avoid sorting issues in the chart
+    const normalizedKey = Number.isNaN(Number(key)) && key !== 'answer' ? key : key + '|';
+
+    return { answer: key, [normalizedKey]: answers[key] };
   });
 
   const theme = {
@@ -53,7 +61,7 @@ export const TeacherAnswersChart = ({ answers, quizType, isQuizActive, setAndSen
       keys={data.map(dataObj => Object.keys(dataObj)[1]) || ['answer']}
       indexBy="answer"
       groupMode="stacked"
-      layout='vertical'
+      layout="vertical"
       margin={{ top: 30, right: 30, bottom: 30, left: 30 }}
       padding={0}
       colors={{ scheme: 'dark2' }}
@@ -83,11 +91,11 @@ export const TeacherAnswersChart = ({ answers, quizType, isQuizActive, setAndSen
         console.log(barData);
         // direct state change rerenders the chart, not the best option as for user experience
         // setCorrectAnswer(correctAnswer => (correctAnswer = barData.data.answer));
-        
+
         // variable to be used in request does not rerender the chart but maybe it is better to move it to parent component
         // const correct = barData.data.answer;
         // console.log(correct);
-        
+
         setAndSendAnswer(barData.data.answer);
       }}
     />
