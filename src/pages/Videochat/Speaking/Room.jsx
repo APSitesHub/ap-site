@@ -87,17 +87,19 @@ function Room({ isAdmin, roomId }) {
           width: '100%',
         }}
       >
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            color: 'white',
-            zIndex: 1000,
-          }}
-        >
-          {roomId}
-        </div>
+        {debug && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              color: 'white',
+              zIndex: 1000,
+            }}
+          >
+            {roomId}
+          </div>
+        )}
         <PageContainer
           style={{
             width: '100%',
