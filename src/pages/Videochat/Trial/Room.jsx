@@ -441,8 +441,6 @@ function Room({ isAdmin, lang }) {
               configOverwrite={{
                 channelLastN: -1,
                 disableSimulcast: false,
-                disableNS: true,
-                disableAP: true,
                 disableTileEnlargement: true,
                 startWithVideoMuted: !isAdmin,
                 followMeEnabled: isAdmin,
