@@ -68,7 +68,7 @@ function Room({ isAdmin, roomId }) {
       if (isConferenceStarted) {
         navigate('../../end-call');
       } else {
-        window.location.reload();
+        // window.location.reload();
       }
     });
 
@@ -87,6 +87,19 @@ function Room({ isAdmin, roomId }) {
           width: '100%',
         }}
       >
+        {debug && (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              color: 'white',
+              zIndex: 1000,
+            }}
+          >
+            {roomId}
+          </div>
+        )}
         <PageContainer
           style={{
             width: '100%',

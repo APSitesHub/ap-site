@@ -758,7 +758,13 @@ export const SpeakingAdminPanelTopBar = styled.div`
 export const SpeakingAdminPanelButton = styled.button`
   padding: 10px 32px;
   background-color: ${({ $color }) =>
-    $color === 'green' ? '#17a194' : $color === 'red' ? '#722727' : '#244d9b'};
+    $color === 'green'
+      ? '#17a194'
+      : $color === 'red'
+      ? '#722727'
+      : $color === 'violet'
+      ? '#682375'
+      : '#244d9b'};
   color: #fff;
   font-size: 1.3rem;
   font-weight: 600;
@@ -803,7 +809,7 @@ export const SpeakingAdminPanelUserList = styled.ul`
 `;
 
 export const SpeakingAdminPanelUserItem = styled.li`
-  cursor: grab;
+  cursor: ${({ $draggable }) => ($draggable ? 'grab' : 'default')};
   padding: 6px 10px;
   border-radius: 14px;
   background-color: ${({ $disconnected }) => ($disconnected ? '#f8d7da' : '#d1e7dd')};
@@ -852,7 +858,7 @@ export const SpeakingAdminPanelRoomUsersList = styled.ul`
 `;
 
 export const SpeakingAdminPanelRoomUserItem = styled.li`
-  cursor: grab;
+  cursor: ${({ $draggable }) => ($draggable ? 'grab' : 'default')};
   list-style: none;
   padding: 6px 10px;
   border-radius: 14px;

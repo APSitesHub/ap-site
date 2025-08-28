@@ -1,6 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
+import * as yup from 'yup';
+import axios from 'axios';
+import { Formik } from 'formik';
+import { Label } from 'components/LeadForm/LeadForm.styled';
 import {
   SpeakingAdminPanelContainer,
   SpeakingAdminPanelTitle,
@@ -20,6 +24,19 @@ import {
   SpeakingAdminPanelRoomUsersList,
   SpeakingAdminPanelRoomUserItem,
 } from '../Videochat.styled';
+import {
+  AdminFormBtn,
+  AdminInput,
+  AdminInputNote,
+  LoginForm,
+} from '../../Streams/AdminPanel/AdminPanel.styled';
+import { Loader } from 'components/SharedLayout/Loaders/Loader';
+import toast from 'react-hot-toast';
+
+axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
+const setAuthToken = token => {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+};
 
 function SpeakingAdminPanel() {
   const { room } = useParams();
@@ -28,6 +45,52 @@ function SpeakingAdminPanel() {
   const [rooms, setRooms] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
   const socketRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUserAdmin, setIsUserAdmin] = useState(false);
+  const [isLessonStarted, setIsLessonStarted] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Speaking Admin Panel | AP Education';
+
+    const refreshToken = async () => {
+      try {
+        if (localStorage.getItem('isAdmin')) {
+          const res = await axios.post('admins/refresh/', {});
+          setIsUserAdmin(true);
+          setAuthToken(res.data.newToken);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    refreshToken();
+  }, [isUserAdmin]);
+
+  const initialLoginValues = {
+    login: '',
+    password: '',
+  };
+
+  const loginSchema = yup.object().shape({
+    login: yup.string().required('Вкажіть логін!'),
+    password: yup.string().required('Введіть пароль!'),
+  });
+
+  const handleLoginSubmit = async (values, { resetForm }) => {
+    setIsLoading(isLoading => (isLoading = true));
+
+    try {
+      const response = await axios.post('/admins/login', values);
+      setAuthToken(response.data.token);
+      setIsUserAdmin(true);
+      localStorage.setItem('isAdmin', true);
+      resetForm();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(isLoading => (isLoading = false));
+    }
+  };
 
   const connectToAdminPanel = async () => {
     const socket = io(`wss://ap-server-8qi1.onrender.com/speaking`, {
@@ -128,6 +191,18 @@ function SpeakingAdminPanel() {
       if (user.role === 'teacher') {
         setTeachers(prevTeachers => [...prevTeachers, user]);
       } else {
+        if (isLessonStarted) {
+          user.roomNumber = getRoomNumberForNewUser();
+          setUsers(prevUsers => {
+            const newUsers = [...prevUsers, user];
+            saveChanges(newUsers);
+            redirect();
+            return newUsers;
+          });
+
+          return;
+        }
+
         setUsers(prevUsers => [...prevUsers, user]);
       }
     });
@@ -167,18 +242,56 @@ function SpeakingAdminPanel() {
     setIsConnected(true);
   };
 
+  const getRoomNumberForNewUser = () => {
+    if (rooms.length === 0) return 1;
+
+    // Знаходимо кімнату з найменшою кількістю користувачів
+    let targetRoom = rooms[0];
+    rooms.forEach(room => {
+      if (room.users.length < targetRoom.users.length) {
+        targetRoom = room;
+      }
+    });
+
+    return targetRoom.roomNumber;
+  };
+
   const distributeToGeneralRoom = () => {
-    users.forEach(user => {
-      user.roomNumber = null;
-    });
-
-    teachers.forEach(teacher => {
-      teacher.roomNumber = null;
-    });
-
-    setRooms([]);
-    setUsers([...users]);
-    setTeachers([...teachers]);
+    toast(
+      t => (
+        <span>
+          <span>
+            <strong>Ви впевнені, що хочете закрити всі кімнати?</strong>
+          </span>
+          <div style={{ marginTop: 16, display: 'flex', gap: 8 }}>
+            <SpeakingAdminPanelButton
+              $color={'green'}
+              onClick={() => {
+                users.forEach(user => {
+                  user.roomNumber = null;
+                });
+                teachers.forEach(teacher => {
+                  teacher.roomNumber = null;
+                });
+                setRooms([]);
+                setUsers([...users]);
+                setTeachers([...teachers]);
+                saveChanges();
+                redirectWithDelay();
+                setIsLessonStarted(false);
+                toast.dismiss(t.id);
+              }}
+            >
+              Так
+            </SpeakingAdminPanelButton>
+            <SpeakingAdminPanelButton $color={'red'} onClick={() => toast.dismiss(t.id)}>
+              Скасувати
+            </SpeakingAdminPanelButton>
+          </div>
+        </span>
+      ),
+      { duration: 10000 }
+    );
   };
 
   const distributeUsers = () => {
@@ -237,27 +350,57 @@ function SpeakingAdminPanel() {
     setRooms(newRooms);
   };
 
-  const saveChanges = () => {
-    socketRef.current.emit('save-rooms', { room, users: [...teachers, ...users] });
+  const saveChanges = customUsers => {
+    if (customUsers) {
+      socketRef.current.emit('save-rooms', {
+        room,
+        users: [...teachers, ...customUsers],
+      });
+      return;
+    } else {
+      socketRef.current.emit('save-rooms', { room, users: [...teachers, ...users] });
+    }
   };
 
   const redirect = () => {
-    saveChanges();
+    setIsLessonStarted(true);
     socketRef.current.emit('start-lesson', { room });
   };
 
   const redirectWithDelay = () => {
-    saveChanges();
     socketRef.current.emit('start-lesson', { room, withDelay: true });
   };
 
   const endLesson = () => {
-    socketRef.current.emit('end-lesson', { room });
-    setIsConnected(false);
-    setRooms([]);
-    setUsers([]);
-    setTeachers([]);
-    socketRef.current.disconnect();
+    toast(
+      t => (
+        <span>
+          <span>
+            <strong>Ви впевнені, що хочете закінчити урок?</strong>
+          </span>
+          <div style={{ marginTop: 16, display: 'flex', gap: 8 }}>
+            <SpeakingAdminPanelButton
+              $color={'green'}
+              onClick={() => {
+                socketRef.current.emit('end-lesson', { room });
+                setIsConnected(false);
+                setRooms([]);
+                setUsers([]);
+                setTeachers([]);
+                socketRef.current.disconnect();
+                toast.dismiss(t.id);
+              }}
+            >
+              Так
+            </SpeakingAdminPanelButton>
+            <SpeakingAdminPanelButton $color={'red'} onClick={() => toast.dismiss(t.id)}>
+              Скасувати
+            </SpeakingAdminPanelButton>
+          </div>
+        </span>
+      ),
+      { duration: 10000 }
+    );
   };
 
   // drag and drop functionality
@@ -317,122 +460,157 @@ function SpeakingAdminPanel() {
 
   return (
     <SpeakingAdminPanelContainer>
-      <SpeakingAdminPanelTitle>
-        Speaking Admin Panel <strong>({room})</strong>
-      </SpeakingAdminPanelTitle>
-      {!isConnected ? (
-        <SpeakingAdminPanelButton onClick={connectToAdminPanel}>
-          CONNECT
-        </SpeakingAdminPanelButton>
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <SpeakingAdminPanelTopBar>
-            <SpeakingAdminPanelButton onClick={distributeToGeneralRoom}>
-              Скинути кімнати
-            </SpeakingAdminPanelButton>
-            <SpeakingAdminPanelButton onClick={distributeUsers}>
-              Розподілити
-            </SpeakingAdminPanelButton>
-            <SpeakingAdminPanelButton $color={'red'} onClick={endLesson}>
-              Закінчити урок
-            </SpeakingAdminPanelButton>
-            <SpeakingAdminPanelButton $color={'green'} onClick={redirect}>
-              Редірект
-            </SpeakingAdminPanelButton>
-            <SpeakingAdminPanelButton $color={'green'} onClick={redirectWithDelay}>
-              Редірект з затримкою
-            </SpeakingAdminPanelButton>
-          </SpeakingAdminPanelTopBar>
+      {!isUserAdmin && (
+        <Formik
+          initialValues={initialLoginValues}
+          onSubmit={handleLoginSubmit}
+          validationSchema={loginSchema}
+        >
+          <LoginForm>
+            <Label>
+              <AdminInput type="text" name="login" placeholder="Login" />
+              <AdminInputNote component="p" name="login" />
+            </Label>
+            <Label>
+              <AdminInput type="password" name="password" placeholder="Password" />
+              <AdminInputNote component="p" name="password" />
+            </Label>
+            <AdminFormBtn type="submit">Залогінитись</AdminFormBtn>
+          </LoginForm>
+        </Formik>
+      )}
 
-          <SpeakingAdminPanelMain>
-            <SpeakingAdminPanelUsersBlock
-              onDragOver={handleDragOver}
-              onDrop={handleDropToMainUsers}
-            >
-              <SpeakingAdminPanelBlockTitle>
-                Users in Room {room} - {users.length}:
-              </SpeakingAdminPanelBlockTitle>
-              <SpeakingAdminPanelUserList>
-                {users
-                  .filter(user => !user.roomNumber)
-                  .map(user => (
-                    <SpeakingAdminPanelUserItem
-                      key={user.socketId}
-                      $disconnected={user.disconnected}
-                      draggable
-                      onDragStart={e => handleDragStart(e, user)}
-                    >
-                      <span>{user.userName}</span>
-                    </SpeakingAdminPanelUserItem>
-                  ))}
-              </SpeakingAdminPanelUserList>
-            </SpeakingAdminPanelUsersBlock>
-
-            <SpeakingAdminPanelDivider />
-
-            <SpeakingAdminPanelTeachersBlock>
-              <SpeakingAdminPanelBlockTitle>
-                Teachers in Room {room} - {teachers.length}:
-              </SpeakingAdminPanelBlockTitle>
-              <SpeakingAdminPanelUserList>
-                {teachers
-                  .filter(teacher => !teacher.roomNumber)
-                  .map(teacher => (
-                    <SpeakingAdminPanelUserItem
-                      key={teacher.socketId}
-                      $disconnected={teacher.disconnected}
-                    >
-                      <span>{teacher.userName}</span>
-                    </SpeakingAdminPanelUserItem>
-                  ))}
-              </SpeakingAdminPanelUserList>
-            </SpeakingAdminPanelTeachersBlock>
-          </SpeakingAdminPanelMain>
-
-          <SpeakingAdminPanelRoomsBlock>
-            {rooms &&
-              rooms.map(room => (
-                <SpeakingAdminPanelRoomCard
-                  key={room.roomNumber}
-                  onDragOver={handleDragOver}
-                  onDrop={e => handleDropUser(e, room.roomNumber)}
+      {isUserAdmin && (
+        <>
+          <SpeakingAdminPanelTitle>
+            Speaking Admin Panel <strong>({room})</strong>
+          </SpeakingAdminPanelTitle>
+          {!isConnected ? (
+            <SpeakingAdminPanelButton onClick={connectToAdminPanel}>
+              CONNECT
+            </SpeakingAdminPanelButton>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <SpeakingAdminPanelTopBar>
+                <SpeakingAdminPanelButton onClick={distributeUsers}>
+                  Розподілити
+                </SpeakingAdminPanelButton>
+                <SpeakingAdminPanelButton
+                  $color={'green'}
+                  onClick={() => {
+                    saveChanges();
+                    redirect();
+                  }}
                 >
-                  <SpeakingAdminPanelRoomHeader>
+                  Редірект
+                </SpeakingAdminPanelButton>
+                <SpeakingAdminPanelButton
+                  $color={'violet'}
+                  onClick={distributeToGeneralRoom}
+                >
+                  Закрити кімнати
+                </SpeakingAdminPanelButton>
+                <SpeakingAdminPanelButton $color={'red'} onClick={endLesson}>
+                  Закінчити урок
+                </SpeakingAdminPanelButton>
+              </SpeakingAdminPanelTopBar>
+
+              <SpeakingAdminPanelMain>
+                <SpeakingAdminPanelUsersBlock
+                  onDragOver={handleDragOver}
+                  onDrop={handleDropToMainUsers}
+                >
+                  <SpeakingAdminPanelBlockTitle>
+                    Users in Room {room} - {users.length}:
+                  </SpeakingAdminPanelBlockTitle>
+                  <SpeakingAdminPanelUserList>
+                    {users
+                      .filter(user => !user.roomNumber)
+                      .map(user => (
+                        <SpeakingAdminPanelUserItem
+                          key={user.socketId}
+                          $disconnected={user.disconnected}
+                          $draggable={true}
+                          draggable
+                          onDragStart={e => handleDragStart(e, user)}
+                        >
+                          <span>{user.userName}</span>
+                        </SpeakingAdminPanelUserItem>
+                      ))}
+                  </SpeakingAdminPanelUserList>
+                </SpeakingAdminPanelUsersBlock>
+
+                <SpeakingAdminPanelDivider />
+
+                <SpeakingAdminPanelTeachersBlock>
+                  <SpeakingAdminPanelBlockTitle>
+                    Teachers in Room {room} - {teachers.length}:
+                  </SpeakingAdminPanelBlockTitle>
+                  <SpeakingAdminPanelUserList>
                     {teachers
-                      .filter(teacher => teacher.login === room.teacher?.login)
+                      .filter(teacher => !teacher.roomNumber)
                       .map(teacher => (
-                        <SpeakingAdminPanelRoomUserItem
-                          key={teacher.userId}
+                        <SpeakingAdminPanelUserItem
+                          key={teacher.socketId}
+                          $draggable={false}
                           $disconnected={teacher.disconnected}
                         >
                           <span>{teacher.userName}</span>
-                        </SpeakingAdminPanelRoomUserItem>
+                        </SpeakingAdminPanelUserItem>
                       ))}
-                  </SpeakingAdminPanelRoomHeader>
-                  <div style={{ marginTop: '10px' }}>
-                    <SpeakingAdminPanelRoomUsersTitle>
-                      Users:
-                    </SpeakingAdminPanelRoomUsersTitle>
-                    <SpeakingAdminPanelRoomUsersList>
-                      {users
-                        .filter(user => user.roomNumber === room.roomNumber)
-                        .map(user => (
-                          <SpeakingAdminPanelRoomUserItem
-                            key={user.userId}
-                            $disconnected={user.disconnected}
-                            draggable
-                            onDragStart={e => handleDragStart(e, user)}
-                          >
-                            <span>{user.userName}</span>
-                          </SpeakingAdminPanelRoomUserItem>
-                        ))}
-                    </SpeakingAdminPanelRoomUsersList>
-                  </div>
-                </SpeakingAdminPanelRoomCard>
-              ))}
-          </SpeakingAdminPanelRoomsBlock>
-        </div>
+                  </SpeakingAdminPanelUserList>
+                </SpeakingAdminPanelTeachersBlock>
+              </SpeakingAdminPanelMain>
+
+              <SpeakingAdminPanelRoomsBlock>
+                {rooms &&
+                  rooms.map(room => (
+                    <SpeakingAdminPanelRoomCard
+                      key={room.roomNumber}
+                      onDragOver={handleDragOver}
+                      onDrop={e => handleDropUser(e, room.roomNumber)}
+                    >
+                      <SpeakingAdminPanelRoomHeader>
+                        {teachers
+                          .filter(teacher => teacher.login === room.teacher?.login)
+                          .map(teacher => (
+                            <SpeakingAdminPanelRoomUserItem
+                              $draggable={false}
+                              key={teacher.userId}
+                              $disconnected={teacher.disconnected}
+                            >
+                              <span>{teacher.userName}</span>
+                            </SpeakingAdminPanelRoomUserItem>
+                          ))}
+                      </SpeakingAdminPanelRoomHeader>
+                      <div style={{ marginTop: '10px' }}>
+                        <SpeakingAdminPanelRoomUsersTitle>
+                          Users:
+                        </SpeakingAdminPanelRoomUsersTitle>
+                        <SpeakingAdminPanelRoomUsersList>
+                          {users
+                            .filter(user => user.roomNumber === room.roomNumber)
+                            .map(user => (
+                              <SpeakingAdminPanelRoomUserItem
+                                key={user.userId}
+                                $disconnected={user.disconnected}
+                                $draggable={true}
+                                draggable
+                                onDragStart={e => handleDragStart(e, user)}
+                              >
+                                <span>{user.userName}</span>
+                              </SpeakingAdminPanelRoomUserItem>
+                            ))}
+                        </SpeakingAdminPanelRoomUsersList>
+                      </div>
+                    </SpeakingAdminPanelRoomCard>
+                  ))}
+              </SpeakingAdminPanelRoomsBlock>
+            </div>
+          )}
+        </>
       )}
+      {isLoading && <Loader />}
     </SpeakingAdminPanelContainer>
   );
 }
