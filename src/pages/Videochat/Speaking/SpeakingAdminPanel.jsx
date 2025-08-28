@@ -53,7 +53,6 @@ function SpeakingAdminPanel() {
     document.title = 'Speaking Admin Panel | AP Education';
 
     const refreshToken = async () => {
-      console.log('token refresher');
       try {
         if (localStorage.getItem('isAdmin')) {
           const res = await axios.post('admins/refresh/', {});
