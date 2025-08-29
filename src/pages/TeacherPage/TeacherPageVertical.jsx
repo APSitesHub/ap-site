@@ -125,9 +125,9 @@ const TeacherPageVertical = () => {
           <PlatformLogo />
         </PlatformBtn>
 
-        {/* <PDFBtn onClick={togglePDF}>
+        <PDFBtn onClick={togglePDF}>
           <PDFLogo />
-        </PDFBtn> */}
+        </PDFBtn>
       </TeacherButtonBoxVertical>
       <TeacherButtonBoxHideSwitchVertical
         id="no-transform"
@@ -151,10 +151,10 @@ const TeacherPageVertical = () => {
         isPlatformOpen={isPlatformOpen}
         isOpenedLast={isOpenedLast}
       />
-      {/* <PlatformVerticalPDF
+      <PlatformVerticalPDF
         isPDFOpen={isPDFOpen}
         isOpenedLast={isOpenedLast}
-      /> */}
+      />
     </>
   );
 };
