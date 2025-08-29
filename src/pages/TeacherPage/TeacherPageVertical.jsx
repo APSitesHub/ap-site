@@ -2,9 +2,12 @@ import useSize from '@react-hook/size';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { PlatformVertical } from './Platform/PlatformVertical';
+import { PlatformVerticalPDF } from './Platform/PlatformVerticalPDF';
 import {
   BoxHideLeftSwitch,
   BoxHideRightSwitch,
+  PDFBtn,
+  PDFLogo,
   PlatformBtn,
   PlatformLogo,
   TeacherButtonBoxHideSwitchVertical,
@@ -21,10 +24,11 @@ const TeacherPageVertical = () => {
   const [isWhiteBoardOpen, setIsWhiteBoardOpen] = useState(false);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [isPlatformOpen, setIsPlatformOpen] = useState(false);
+  const [isPDFOpen, setIsPDFOpen] = useState(false);
 
   const [isButtonBoxOpen, setIsButtonBoxOpen] = useState(true);
   const [isOpenedLast, setIsOpenedLast] = useState('');
-  
+
   // eslint-disable-next-line
   const [width, height] = useSize(document.body);
   const location = useLocation().pathname.split('/teacher/')[1];
@@ -70,7 +74,7 @@ const TeacherPageVertical = () => {
       ? setIsViewerOpen(isViewerOpen => !isViewerOpen)
       : isOpenedLast === 'viewer' &&
         setIsViewerOpen(isViewerOpen => !isViewerOpen);
-    isWhiteBoardOpen || isPlatformOpen
+    isWhiteBoardOpen || isPlatformOpen || isPDFOpen
       ? setIsOpenedLast(isOpenedLast => 'viewer')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -79,7 +83,7 @@ const TeacherPageVertical = () => {
       ? setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen)
       : isOpenedLast === 'whiteboard' &&
         setIsWhiteBoardOpen(isWhiteBoardOpen => !isWhiteBoardOpen);
-    isViewerOpen || isPlatformOpen
+    isViewerOpen || isPlatformOpen || isPDFOpen
       ? setIsOpenedLast(isOpenedLast => 'whiteboard')
       : setIsOpenedLast(isOpenedLast => '');
   };
@@ -88,8 +92,18 @@ const TeacherPageVertical = () => {
       ? setIsPlatformOpen(isPlatformOpen => !isPlatformOpen)
       : isOpenedLast === 'platform' &&
         setIsPlatformOpen(isPlatformOpen => !isPlatformOpen);
-    isViewerOpen || isWhiteBoardOpen
+    isViewerOpen || isWhiteBoardOpen || isPDFOpen
       ? setIsOpenedLast(isOpenedLast => 'platform')
+      : setIsOpenedLast(isOpenedLast => '');
+  };
+
+  const togglePDF = () => {
+    !isOpenedLast
+      ? setIsPDFOpen(isPDFOpen => !isPDFOpen)
+      : isOpenedLast === 'pdf' &&
+        setIsPDFOpen(isPDFOpen => !isPDFOpen);
+    isViewerOpen || isWhiteBoardOpen || isPlatformOpen
+      ? setIsOpenedLast(isOpenedLast => 'pdf')
       : setIsOpenedLast(isOpenedLast => '');
   };
   const toggleButtonBox = () => {
@@ -110,6 +124,10 @@ const TeacherPageVertical = () => {
         <PlatformBtn onClick={togglePlatform}>
           <PlatformLogo />
         </PlatformBtn>
+
+        {/* <PDFBtn onClick={togglePDF}>
+          <PDFLogo />
+        </PDFBtn> */}
       </TeacherButtonBoxVertical>
       <TeacherButtonBoxHideSwitchVertical
         id="no-transform"
@@ -133,6 +151,10 @@ const TeacherPageVertical = () => {
         isPlatformOpen={isPlatformOpen}
         isOpenedLast={isOpenedLast}
       />
+      {/* <PlatformVerticalPDF
+        isPDFOpen={isPDFOpen}
+        isOpenedLast={isOpenedLast}
+      /> */}
     </>
   );
 };

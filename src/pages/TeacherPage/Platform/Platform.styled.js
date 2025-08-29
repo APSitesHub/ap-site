@@ -50,7 +50,7 @@ export const PlatformBoxTrialLesson = styled(PlatformBox)`
 
 export const PlatformBoxVertical = styled.div`
   height: 40%;
-  width: 100%;
+  width: 50%;
 
   scrollbar-width: thin;
   scrollbar-gutter: stable;
@@ -146,5 +146,42 @@ export const PlatformBackground = styled(StreamsBackgroundWrapper)`
 
   .minimized & {
     background: unset;
+  }
+`;
+
+export const PlatformBoxVerticalPDF = styled.div`
+  height: 40%;
+  width: 45%;
+
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+
+  background-color: white;
+  position: absolute;
+  border-radius: 20px;
+  bottom: 60px;
+  right: 20px;
+
+  font-family: var(--streams-font-family);
+
+  transition: transform var(--animation-global);
+
+  &.hidden {
+    transform: translateY(calc(100% + 60px));
+  }
+
+  &.shown {
+    transform: translateY(0);
+  }
+
+  & > iframe {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 20px;
   }
 `;
