@@ -18,7 +18,7 @@ export const PlatformVertical = ({ isPlatformOpen, isOpenedLast }) => {
           id="platform-window"
           title="platform-pin"
           src="https://wheelofnames.com/uk/uek-zq4"
-          width="58.82%"
+          width="100%"
           height="100%"
            style={{
     transform: 'scale(0.8)',
