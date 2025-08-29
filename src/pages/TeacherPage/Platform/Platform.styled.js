@@ -151,7 +151,7 @@ export const PlatformBackground = styled(StreamsBackgroundWrapper)`
 
 export const PlatformBoxVerticalPDF = styled.div`
   height: 40%;
-  width: 45%;
+  width: 100%;
 
   scrollbar-width: thin;
   scrollbar-gutter: stable;
