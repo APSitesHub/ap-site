@@ -50,7 +50,7 @@ export const PlatformBoxTrialLesson = styled(PlatformBox)`
 
 export const PlatformBoxVertical = styled.div`
   height: 40%;
-  width: 50%;
+  width: 100%;
 
   scrollbar-width: thin;
   scrollbar-gutter: stable;
