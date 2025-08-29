@@ -17,9 +17,16 @@ export const PlatformVertical = ({ isPlatformOpen, isOpenedLast }) => {
           className={'active'}
           id="platform-window"
           title="platform-pin"
-          src="https://online.ap.education/school/"
+          src="https://wheelofnames.com/uk/uek-zq4"
           width="58.82%"
-          height="58.82%"
+          height="100%"
+           style={{
+    transform: 'scale(0.8)',
+    transformOrigin: 'top left',
+    width: '125%',
+    height: '125%',
+    border: 'none',
+  }}
         ></iframe>
       </PlatformBoxVertical>
     </>
