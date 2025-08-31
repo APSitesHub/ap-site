@@ -191,6 +191,7 @@ const TeacherControlPagePl = () => {
                         position: 'absolute',
                         zIndex: '2',
                         top: '36px',
+                        backgroundColor: 'white',
                       }),
                       dropdownIndicator: baseStyles => ({
                         ...baseStyles,
@@ -219,6 +220,7 @@ const TeacherControlPagePl = () => {
                         position: 'absolute',
                         zIndex: '2',
                         top: '36px',
+                        backgroundColor: 'white',
                       }),
                       dropdownIndicator: baseStyles => ({
                         ...baseStyles,
@@ -284,7 +286,10 @@ const TeacherControlPagePl = () => {
                         )
                         .flatMap(user =>
                           user.feedback.map(
-                            feedbackObj => `для ${user.name}) ${feedbackObj.text}`
+                            feedbackObj =>
+                              `для ${user.name}) ${
+                                feedbackObj.isOverdue ? 'ПРОТЕРМІНОВАНО' : ''
+                              } ${feedbackObj.text}`
                           )
                         )
                         .sort((a, b) => {
@@ -307,13 +312,20 @@ const TeacherControlPagePl = () => {
                           return parsedDateB.localeCompare(parsedDateA); // Sort in descending order
                         })
                         .map((text, i) => (
-                          <Feedback className={fullReviews && 'full'} key={i}>
+                          <Feedback
+                            className={fullReviews && 'full'}
+                            key={i}
+                            isOverdue={text.includes('ПРОТЕРМІНОВАНО')}
+                          >
                             {!fullReviews
                               ? `(Відгук від ${text.match(regex)} ${text.slice(
                                   0,
                                   200
-                                )}...`
-                              : `(Відгук від ${text.match(regex)} ${text}`}
+                                )}...`.replace('ПРОТЕРМІНОВАНО', '')
+                              : `(Відгук від ${text.match(regex)} ${text}`.replace(
+                                  'ПРОТЕРМІНОВАНО',
+                                  ''
+                                )}
                           </Feedback>
                         ))}
                     </UserCell>

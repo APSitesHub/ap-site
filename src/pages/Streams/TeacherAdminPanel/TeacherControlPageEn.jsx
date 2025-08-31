@@ -39,7 +39,7 @@ const TeacherControlPageEn = () => {
   const [month, setMonth] = useState(new Date(Date.now()).getMonth() + 1);
   const [year, setYear] = useState(new Date(Date.now()).getFullYear());
 
-const yearOptions = [
+  const yearOptions = [
     { label: '2024', value: '2024' },
     { label: '2025', value: '2025' },
     { label: '2026', value: '2026' },
@@ -191,6 +191,7 @@ const yearOptions = [
                         position: 'absolute',
                         zIndex: '2',
                         top: '36px',
+                        backgroundColor: 'white',
                       }),
                       dropdownIndicator: (baseStyles, state) => ({
                         ...baseStyles,
@@ -219,6 +220,7 @@ const yearOptions = [
                         position: 'absolute',
                         zIndex: '2',
                         top: '36px',
+                        backgroundColor: 'white',
                       }),
                       dropdownIndicator: (baseStyles, state) => ({
                         ...baseStyles,
@@ -284,7 +286,10 @@ const yearOptions = [
                         )
                         .flatMap(user =>
                           user.feedback.map(
-                            feedbackObj => `для ${user.name}) ${feedbackObj.text}`
+                            feedbackObj =>
+                              `для ${user.name}) ${
+                                feedbackObj.isOverdue ? 'ПРОТЕРМІНОВАНО' : ''
+                              } ${feedbackObj.text}`
                           )
                         )
                         .sort((a, b) => {
@@ -307,13 +312,20 @@ const yearOptions = [
                           return parsedDateB.localeCompare(parsedDateA); // Sort in descending order
                         })
                         .map((text, i) => (
-                          <Feedback className={fullReviews && 'full'} key={i}>
+                          <Feedback
+                            className={fullReviews && 'full'}
+                            key={i}
+                            isOverdue={text.includes('ПРОТЕРМІНОВАНО')}
+                          >
                             {!fullReviews
                               ? `(Відгук від ${text.match(regex)} ${text.slice(
                                   0,
                                   200
-                                )}...`
-                              : `(Відгук від ${text.match(regex)} ${text}`}
+                                )}...`.replace('ПРОТЕРМІНОВАНО', '')
+                              : `(Відгук від ${text.match(regex)} ${text}`.replace(
+                                  'ПРОТЕРМІНОВАНО',
+                                  ''
+                                )}
                           </Feedback>
                         ))}
                     </UserCell>

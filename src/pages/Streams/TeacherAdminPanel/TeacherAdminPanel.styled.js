@@ -203,6 +203,8 @@ export const Feedback = styled.p`
   text-align: start;
   white-space: pre-wrap;
   word-wrap: break-word;
+  position: relative;
+  z-index: -1;
 
   &:not(:last-child) {
     padding-bottom: 3px;
@@ -212,6 +214,17 @@ export const Feedback = styled.p`
 
   &.full {
     max-width: 85vw;
+  }
+
+  &::after {
+    content: '${props => (props.isOverdue ? ' ПРОТЕРМІНОВАНО ' : undefined)}';
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    font-size: 10px;
+    color: red;
+    font-weight: 700;
   }
 `;
 
