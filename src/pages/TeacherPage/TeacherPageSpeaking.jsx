@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Backdrop } from 'components/LeadForm/Backdrop/Backdrop.styled';
 import { Loader } from 'components/SharedLayout/Loaders/Loader';
+import { CheckboxLabel } from 'pages/Streams/AppointmentsAdminPanel/AppointmentsAdminPanel.styled';
 import {
   UserCell,
   UserCellLeft,
@@ -12,9 +13,13 @@ import {
 } from 'pages/Streams/UserAdminPanel/UserAdminPanel.styled';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useOutletContext } from 'react-router-dom';
-import { TeacherSpeakingDBSection, TeacherSpeakingDBTable } from './TeacherPage.styled';
-import { TeacherPageSpeakingEditForm } from './TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm';
 import { StudentChart } from './StudentChart/StudentChart';
+import {
+  SpeakingStudentFilterInput,
+  TeacherSpeakingDBSection,
+  TeacherSpeakingDBTable,
+} from './TeacherPage.styled';
+import { TeacherPageSpeakingEditForm } from './TeacherPageSpeakingEditForm/TeacherPageSpeakingEditForm';
 
 const TeacherPageSpeaking = () => {
   const location = useLocation().pathname.split('/speakings/')[1];
@@ -28,6 +33,7 @@ const TeacherPageSpeaking = () => {
   const [isStudentChartOpen, setIsStudentChartOpen] = useState(false);
   const linksRegex = /\b(?:https?|ftp):\/\/\S+\b/g;
   const [currentUser] = useOutletContext();
+  const [studentFilter, setStudentFilter] = useState('');
 
   const closeStudentEditForm = e => {
     setIsEditStudentFormOpen(false);
@@ -203,7 +209,18 @@ const TeacherPageSpeaking = () => {
   return (
     <TeacherSpeakingDBSection>
       <TeacherSpeakingDBTable>
-        <UserDBCaption>Список студентів, що відвідали заняття</UserDBCaption>
+        <UserDBCaption>
+          Список студентів, що відвідали заняття
+          <CheckboxLabel>
+            <SpeakingStudentFilterInput
+              type="text"
+              name="studentFilter"
+              value={studentFilter}
+              onChange={e => setStudentFilter(e.target.value)}
+              placeholder="Почніть вводити ім'я або прізвище студента..."
+            />
+          </CheckboxLabel>
+        </UserDBCaption>
         <thead>
           <UserDBRow>
             <UserHeadCell>№</UserHeadCell>
@@ -226,28 +243,38 @@ const TeacherPageSpeaking = () => {
           </UserDBRow>
         </thead>
         <tbody>
-          {users
-            .filter(user =>
-              page === 'deb2sc'
-                ? new Date() -
-                    new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
-                    4 * 86400000 &&
-                  (lang.current === user.lang ||
-                    user.lang.split('/').some(userLang => lang.current === userLang)) &&
-                  (user.course.includes('24') ||
-                    user.course
-                      .split('/')
-                      .some(usersCourse => usersCourse.includes('24')))
-                : new Date() -
-                    new Date(changeDateFormat(user.visited[user.visited.length - 1])) <=
-                    4 * 86400000 &&
-                  (lang === user.lang ||
-                    user.lang.split('/').some(userLang => lang.current === userLang)) &&
-                  (course.current === user.course ||
-                    user.course
-                      .split('/')
-                      .some(userCourse => course.current === userCourse))
-            )
+          {(() => {
+            return studentFilter
+              ? users.filter(user =>
+                  user.name
+                    .toLowerCase()
+                    .trim()
+                    .includes(studentFilter.toLowerCase().trim())
+                )
+              : users.filter(user =>
+                  page === 'deb2sc'
+                    ? new Date() - new Date(changeDateFormat(user.visited.at(-1))) <=
+                        4 * 86400000 &&
+                      (lang.current === user.lang ||
+                        user.lang
+                          .split('/')
+                          .some(userLang => lang.current === userLang)) &&
+                      (user.course.includes('24') ||
+                        user.course
+                          .split('/')
+                          .some(usersCourse => usersCourse.includes('24')))
+                    : new Date() - new Date(changeDateFormat(user.visited.at(-1))) <=
+                        4 * 86400000 &&
+                      (lang === user.lang ||
+                        user.lang
+                          .split('/')
+                          .some(userLang => lang.current === userLang)) &&
+                      (course.current === user.course ||
+                        user.course
+                          .split('/')
+                          .some(userCourse => course.current === userCourse))
+                );
+          })()
             .sort((a, b) => Intl.Collator('uk').compare(a.name, b.name))
             .map((user, i) => (
               <UserDBRow key={user._id}>

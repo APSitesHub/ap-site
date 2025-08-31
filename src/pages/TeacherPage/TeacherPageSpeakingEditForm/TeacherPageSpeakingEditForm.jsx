@@ -161,6 +161,7 @@ export const TeacherPageSpeakingEditForm = ({
     activity: '',
     feedback: '',
     grade: '',
+    isOverdue: false,
   };
 
   const studentSchema = yup.object().shape({
@@ -173,6 +174,7 @@ export const TeacherPageSpeakingEditForm = ({
     activity: yup.number(),
     feedback: yup.string().required("Фідбек - обов'язкове поле, без нього ніяк"),
     grade: yup.number(),
+    isOverdue: yup.boolean(),
   });
 
   const validations = [
@@ -221,6 +223,7 @@ ${values.feedback}`,
         speaking: speakingValue,
         listening: listeningValue,
         grade: gradeValue,
+        isOverdue: new Date() - startDate > 4 * 86400000,
       },
     };
 

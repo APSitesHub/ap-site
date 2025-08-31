@@ -335,3 +335,11 @@ export const InputButtonBox = styled.div`
     pointer-events: none;
   }
 `;
+
+export const SpeakingStudentFilterInput = styled.input`
+  width: 450px;
+  max-height: 38px;
+
+  padding: 10px;
+  border: 2px solid var(--main-color);
+`;

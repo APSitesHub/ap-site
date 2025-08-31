@@ -508,11 +508,6 @@ const TeacherPageSpeaking = lazy(() =>
     /* webpackChunkName: "Speaking Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking'
   )
 );
-const TeacherPageSpeaking13 = lazy(() =>
-  import(
-    /* webpackChunkName: "Speaking Course 13 Teacher Page" */ '../pages/TeacherPage/TeacherPageSpeaking13'
-  )
-);
 const FormsLinkTree = lazy(() =>
   import(
     /* webpackChunkName: "Forms Linktree Page" */ '../pages/FormsLinkTree/FormsLinkTree'
@@ -731,7 +726,11 @@ export const App = () => {
             />
             <Route path="speaking/:slug" element={<SpeakingVideoRoom />} noindex={true} />
           </Route>
-          <Route path="speaking/admin/:room" element={<SpeakingAdminPanelNew />} noindex={true} />
+          <Route
+            path="speaking/admin/:room"
+            element={<SpeakingAdminPanelNew />}
+            noindex={true}
+          />
           <Route path="end-call" element={<EndCall />} noindex={true} />
           <Route path="end-call-pl" element={<EndCallPl />} noindex={true} />
           <Route path="my-ap" element={<MyAP />} noindex={true} />
@@ -1065,7 +1064,6 @@ export const App = () => {
             <Route path="a2sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="b1sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="b2sc" element={<TeacherPageSpeaking />} noindex={true} />
-            <Route path="13" element={<TeacherPageSpeaking13 />} noindex={true} />
             <Route path="c1sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="dea0sc" element={<TeacherPageSpeaking />} noindex={true} />
             <Route path="dea0_2sc" element={<TeacherPageSpeaking />} noindex={true} />
