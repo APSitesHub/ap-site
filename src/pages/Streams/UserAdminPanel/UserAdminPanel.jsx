@@ -132,7 +132,7 @@ const UserAdminPanel = () => {
     }
     if (filters.days) {
       list = list.filter(u =>
-        u.visited.length > 0
+        u.visited && u.visited.length > 0
           ? (Date.now() - changeDateFormat(u.visited.at(-1))) / 86400000 > filters.days
           : false
       );
@@ -185,10 +185,8 @@ const UserAdminPanel = () => {
   const initialUserValues = {
     name: '',
     mail: '',
-    zoomMail: '',
     password: '',
     crmId: '',
-    contactId: '',
     pupilId: '',
     marathonNumber: '',
     age: '',
@@ -207,10 +205,8 @@ const UserAdminPanel = () => {
         "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"
       ),
     mail: yup.string().required("Пошта - обов'язкове поле!"),
-    zoomMail: yup.string(),
     password: yup.string().required("Пароль - обов'язкове поле!"),
     crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
-    contactId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
     pupilId: yup
       .string()
       .min(6, 'Не менше 6 цифр')
@@ -248,18 +244,18 @@ const UserAdminPanel = () => {
     setIsLoading(isLoading => (isLoading = true));
     values.name = values.name.trim().trimStart();
     values.mail = values.mail.toLowerCase().trim().trimStart();
-    values.zoomMail = values.zoomMail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.crmId = values.crmId ? +values.crmId.trim().trimStart() : undefined;
-    values.contactId = values.contactId
-      ? +values.contactId.trim().trimStart()
-      : undefined;
     values.pupilId = values.pupilId.trim().trimStart();
-    values.marathonNumber = values.marathonNumber.trim().trimStart();
     values.age = values.age.trim().trimStart();
     values.adult = +values.age >= 18 ? true : false;
     values.lang = values.lang.toLowerCase().trim().trimStart();
     values.package = values.package.toLowerCase().trim().trimStart();
+    values.marathonNumber =
+      (values.lang === 'en' || values.lang === 'enkids') &&
+      !values.marathonNumber.trim().trimStart()
+        ? '2'
+        : values.marathonNumber.trim().trimStart();
     values.knowledge = values.knowledge.toLowerCase().trim().trimStart();
     values.manager = values.manager.toLowerCase().trim().trimStart();
     try {
@@ -294,16 +290,14 @@ const UserAdminPanel = () => {
     const userToUpdate = users.find(user => user._id === id);
     userToUpdate.name = values.name;
     userToUpdate.mail = values.mail;
-    userToUpdate.zoomMail = values.zoomMail;
     userToUpdate.password = values.password;
     userToUpdate.pupilId = values.pupilId;
-    userToUpdate.marathonNumber = values.marathonNumber;
     userToUpdate.crmId = values.crmId;
-    userToUpdate.contactId = values.contactId;
     userToUpdate.age = values.age;
     userToUpdate.adult = values.adult;
     userToUpdate.lang = values.lang;
     userToUpdate.package = values.package;
+    userToUpdate.marathonNumber = values.marathonNumber;
     userToUpdate.course = values.course;
     userToUpdate.knowledge = values.knowledge;
     userToUpdate.manager = values.manager;
@@ -403,14 +397,6 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="mail" />
               </Label>
               <Label>
-                <AdminInput
-                  type="email"
-                  name="zoomMail"
-                  placeholder="Електронна пошта (Zoom)"
-                />
-                <AdminInputNote component="p" name="zoomMail" />
-              </Label>
-              <Label>
                 <AdminInput type="text" name="password" placeholder="Пароль" />
                 <AdminInputNote component="p" name="password" />
               </Label>
@@ -421,30 +407,10 @@ const UserAdminPanel = () => {
               <Label>
                 <AdminInput
                   type="text"
-                  name="contactId"
-                  placeholder="ID контакту в CRM"
-                />
-                <AdminInputNote component="p" name="contactId" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
                   name="pupilId"
                   placeholder="ID учня на платформі"
                 />
                 <AdminInputNote component="p" name="pupilId" />
-              </Label>
-              <Label>
-                <AdminInput
-                  type="text"
-                  name="marathonNumber"
-                  placeholder="№ марафону на платформі"
-                />
-                <AdminInputNote component="p" name="marathonNumber" />
-              </Label>
-              <Label>
-                <AdminInput type="text" name="age" placeholder="Вік" />
-                <AdminInputNote component="p" name="age" />
               </Label>
               <Label>
                 <AdminInput type="text" name="lang" placeholder="Мова" />
@@ -455,12 +421,24 @@ const UserAdminPanel = () => {
                 <AdminInputNote component="p" name="course" />
               </Label>
               <Label>
+                <AdminInput
+                  type="text"
+                  name="marathonNumber"
+                  placeholder="№ марафону на платформі"
+                />
+                <AdminInputNote component="p" name="marathonNumber" />
+              </Label>
+              <Label>
                 <AdminInput type="text" name="package" placeholder="Пакет послуг" />
                 <AdminInputNote component="p" name="package" />
               </Label>
               <Label>
                 <AdminInput type="text" name="knowledge" placeholder="Рівень знань" />
                 <AdminInputNote component="p" name="knowledge" />
+              </Label>
+              <Label>
+                <AdminInput type="text" name="age" placeholder="Вік" />
+                <AdminInputNote component="p" name="age" />
               </Label>
               <Label>
                 <AdminInput
@@ -517,15 +495,14 @@ const UserAdminPanel = () => {
             </UserDBCaption>
             <thead>
               <UserDBRow>
-                <UserHeadCell>CRM&nbsp;Лід Контакт</UserHeadCell>
+                <UserHeadCell>CRM&nbsp;Лід</UserHeadCell>
                 <UserHeadCell>Ім'я</UserHeadCell>
                 <UserHeadCell>Пошта (логін)</UserHeadCell>
-                <UserHeadCell>Zoom-пошта</UserHeadCell>
                 <UserHeadCell>Пароль</UserHeadCell>
                 <UserHeadCell>ID на платформі</UserHeadCell>
                 <UserHeadCell>Номер марафону</UserHeadCell>
                 <UserHeadCell>Юзера створено</UserHeadCell>
-                <UserHeadCell>
+                <UserHeadCell filterValue={filters.days}>
                   <Filterable>
                     Вхід на урок
                     <FilterButton onClick={toggleDaysSinceLastVisitPicker}></FilterButton>
@@ -558,7 +535,7 @@ const UserAdminPanel = () => {
                 <UserHeadCell>
                   <Filterable>Вхід на плат.</Filterable>
                 </UserHeadCell>
-                <UserHeadCell>
+                <UserHeadCell filterValue={filters.lang}>
                   <Filterable>
                     Мова
                     <FilterButton onClick={toggleLangPicker}></FilterButton>
@@ -587,7 +564,7 @@ const UserAdminPanel = () => {
                     )}
                   </Filterable>
                 </UserHeadCell>
-                <UserHeadCell>
+                <UserHeadCell filterValue={filters.course}>
                   <Filterable>
                     Потік
                     <FilterButton onClick={toggleCoursePicker}></FilterButton>
@@ -616,7 +593,7 @@ const UserAdminPanel = () => {
                     )}
                   </Filterable>
                 </UserHeadCell>
-                <UserHeadCell>
+                <UserHeadCell filterValue={filters.level}>
                   <Filterable>
                     Знання
                     <FilterButton onClick={toggleLevelPicker}></FilterButton>
@@ -646,7 +623,7 @@ const UserAdminPanel = () => {
                   </Filterable>
                 </UserHeadCell>
                 <UserHeadCell>Пакет послуг</UserHeadCell>
-                <UserHeadCell className="filterable">
+                <UserHeadCell filterValue={filters.manager} className="filterable">
                   <Filterable>
                     Менеджер
                     <FilterButton onClick={toggleManagerPicker}></FilterButton>
@@ -703,17 +680,9 @@ const UserAdminPanel = () => {
                       >
                         {user.crmId}
                       </a>{' '}
-                      <a
-                        href={`https://apeducation.kommo.com/contacts/detail/${user.contactId}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {user.contactId}
-                      </a>
                     </UserCell>
                     <UserCell>{user.name}</UserCell>
                     <UserCell>{user.mail}</UserCell>
-                    <UserCell>{user.zoomMail}</UserCell>
                     <UserCell>{user.password}</UserCell>
                     <UserCell>{user.pupilId}</UserCell>
                     <UserCell>{user.marathonNumber}</UserCell>
@@ -722,29 +691,27 @@ const UserAdminPanel = () => {
                     </UserCell>
                     <UserCell
                       className={
+                        user.visited &&
+                        user.visited.length > 0 &&
                         Math.floor(
-                          (Date.now() -
-                            changeDateFormat(user.visited[user.visited.length - 1])) /
-                            86400000
+                          (Date.now() - changeDateFormat(user.visited?.at(-1))) / 86400000
                         ) > filters.days
                           ? 'attention'
                           : ''
                       }
                     >
-                      {user.visited[user.visited.length - 1]}
+                      {user.visited &&
+                        user.visited.length > 0 &&
+                        user.visited[user.visited.length - 1]}
                     </UserCell>
                     <UserCell>
-                      {!user.visitedTime[user.visitedTime.length - 1]
-                        ? ''
-                        : user.visitedTime[user.visitedTime.length - 1].match('^202')
-                        ? new Date(
-                            user.visitedTime[user.visitedTime.length - 1]
-                          ).toLocaleString('uk-UA')
-                        : new Date(
-                            changeDateFormat(
-                              user.visitedTime[user.visitedTime.length - 1]
-                            )
-                          ).toLocaleString('uk-UA', { timeZone: '+06:00' })}
+                      {user.visitedTime?.length
+                        ? user.visitedTime.at(-1).match('^202')
+                          ? new Date(user.visitedTime.at(-1)).toLocaleString('uk-UA')
+                          : new Date(
+                              changeDateFormat(user.visitedTime.at(-1))
+                            ).toLocaleString('uk-UA', { timeZone: '+06:00' })
+                        : ''}
                     </UserCell>
                     <UserCell>{user.lang}</UserCell>
                     <UserCell>{user.course}</UserCell>

@@ -211,9 +211,14 @@ const TimeTableAdminPanel = () => {
       label: 'Польська, діти',
       value: 'plkids',
     },
+    {
+      label: 'НМТ',
+      value: 'nmt',
+    },
   ];
 
   const levelOptions = [
+    { label: '-', value: '-' },
     {
       label: 'A0',
       value: 'a0',
@@ -518,6 +523,29 @@ const TimeTableAdminPanel = () => {
     {
       label: '52',
       value: '52',
+    },
+  ];
+
+  const nmtCourseOptions = [
+    {
+      label: 'Українська мова (ua)',
+      value: 'ua',
+    },
+    {
+      label: 'Математика (mat)',
+      value: 'mat',
+    },
+    {
+      label: 'Англійська мова (en)',
+      value: 'en',
+    },
+    {
+      label: 'Історія (his)',
+      value: 'his',
+    },
+    {
+      label: 'Німецька мова (de)',
+      value: 'de',
     },
   ];
 
@@ -910,6 +938,8 @@ const TimeTableAdminPanel = () => {
                     ? courseEnglishOptions
                     : langValue === 'de'
                     ? courseDeutschOptions
+                    : langValue === 'nmt'
+                    ? nmtCourseOptions
                     : courseOptions
                 }
                 styles={{
@@ -1050,6 +1080,7 @@ const TimeTableAdminPanel = () => {
               scheduleToEdit={scheduleToEdit}
               languageOptions={languageOptions}
               courseOptions={courseOptions}
+              nmtCourseOptions={nmtCourseOptions}
               courseEnglishOptions={courseEnglishOptions}
               courseDeutschOptions={courseDeutschOptions}
               levelOptions={levelOptions}
@@ -1068,6 +1099,7 @@ const TimeTableAdminPanel = () => {
               lessonToEdit={lessonToEdit}
               languageOptions={languageOptions}
               courseOptions={courseOptions}
+              nmtCourseOptions={nmtCourseOptions}
               courseEnglishOptions={courseEnglishOptions}
               courseDeutschOptions={courseDeutschOptions}
               levelOptions={levelOptions}

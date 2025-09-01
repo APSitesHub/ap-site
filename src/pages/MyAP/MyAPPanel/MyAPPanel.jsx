@@ -354,7 +354,7 @@ export const MyAPPanel = ({
           </APPanelMarathonBtn>
         </IframeMarathonLinkPanel>
       )} */}
-      <APPanel className={isButtonBoxShown ? '' : 'hidden'}>
+      <APPanel className={isButtonBoxShown ? '' : 'hidden'} nmt={user.lang === 'nmt'}>
         {isMultipleLanguages && (
           <IframeResetLinkButton className={isMultipleLanguages ? 'multiple' : ''}>
             {/* <APPanelResetBtn
@@ -429,7 +429,7 @@ export const MyAPPanel = ({
             <CupBtnIcon id="rating-btn" className={isRatingShown && 'active'} />
           </APPanelBtn>
         )}
-        {user.package !== 'online' && (
+        {user.package !== 'online' && user.lang !== 'nmt' && (
           <APPanelBtn
             onClick={toggleFeedback}
             onMouseEnter={e => toggleTooltip(e)}

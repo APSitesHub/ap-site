@@ -148,6 +148,22 @@ export const UserDBRow = styled.tr`
 export const UserHeadCell = styled.th`
   border: 1px solid #000;
   padding: 3px;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    content: ${props =>
+      props.filterValue ? JSON.stringify('💡' + props.filterValue) : null};
+    text-transform: capitalize;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    color: var(--main-color);
+  }
 `;
 
 export const Filterable = styled.div`

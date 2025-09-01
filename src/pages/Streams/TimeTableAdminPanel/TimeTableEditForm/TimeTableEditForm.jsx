@@ -22,6 +22,7 @@ export const TimeTableEditForm = ({
   levelOptionsWithBeginners,
   levelOptionsForDe,
   courseOptions,
+  nmtCourseOptions,
   courseEnglishOptions,
   courseDeutschOptions,
   daysOptions,
@@ -92,9 +93,7 @@ export const TimeTableEditForm = ({
       alert('Урок відредаговано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -145,15 +144,11 @@ export const TimeTableEditForm = ({
             placeholder="Рівень"
             name="level"
             defaultValue={
-              levelOptions.find(
-                option => option.value === lessonToEdit.level
-              ) ||
+              levelOptions.find(option => option.value === lessonToEdit.level) ||
               levelOptionsWithBeginners.find(
                 option => option.value === lessonToEdit.level
               ) ||
-              levelOptionsForDe.find(
-                option => option.value === lessonToEdit.level
-              )
+              levelOptionsForDe.find(option => option.value === lessonToEdit.level)
             }
             isDisabled
             onChange={level => {
@@ -166,6 +161,8 @@ export const TimeTableEditForm = ({
                 ? courseEnglishOptions
                 : langValue === 'de'
                 ? courseDeutschOptions
+                : langValue === 'nmt'
+                ? nmtCourseOptions
                 : courseOptions
             }
             styles={{
@@ -178,12 +175,10 @@ export const TimeTableEditForm = ({
             placeholder="Потік"
             name="course"
             defaultValue={
-              courseOptions.find(
-                option => option.value === lessonToEdit.course
-              ) ||
-              courseEnglishOptions.find(
-                option => option.value === lessonToEdit.course
-              )
+              courseOptions.find(option => option.value === lessonToEdit.course) ||
+              courseEnglishOptions.find(option => option.value === lessonToEdit.course) ||
+              courseDeutschOptions.find(option => option.value === lessonToEdit.course) ||
+              nmtCourseOptions.find(option => option.value === lessonToEdit.course)
             }
             isDisabled
             onChange={course => {
@@ -249,11 +244,7 @@ export const TimeTableEditForm = ({
             <AdminInputNote component="p" name="time" />
           </Label>
           <Label>
-            <AdminInput
-              type="text"
-              name="lessonNumber"
-              placeholder="Номер уроку"
-            />
+            <AdminInput type="text" name="lessonNumber" placeholder="Номер уроку" />
             <AdminInputNote component="p" name="lessonNumber" />
           </Label>
           <Label>
