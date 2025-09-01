@@ -64,51 +64,45 @@ const TeacherControlPageDe = () => {
     document.title = 'Teacher Admin Panel | AP Education';
 
     const refreshToken = async () => {
-      setIsLoading(isLoading => (isLoading = true));
+      setIsLoading(true);
       try {
         if (localStorage.getItem('isAdmin')) {
           const res = await axios.post('admins/refresh/teachers/', {});
           setAuthToken(res.data.newToken);
-          setIsUserAdmin(isAdmin => (isAdmin = true));
+          setIsUserAdmin(true);
         }
       } catch (error) {
         console.log(error);
       } finally {
-        setIsLoading(isLoading => (isLoading = false));
+        setIsLoading(false);
       }
     };
     refreshToken();
+  }, []);
 
-    const getTeachers = async () => {
-      setIsLoading(isLoading => (isLoading = true));
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true);
       try {
         if (isUserAdmin) {
-          const response = await axios.get('/teachers/de');
-          setTeachers(teachers => (teachers = [...response.data.reverse()]));
+          const teachers = await axios.get('/teachers/de');
+          setTeachers(teachers.data.reverse());
+          const reviews = await axios.get('/speakingusers/admin/de', {
+            params: {
+              month,
+              year,
+            },
+          });
+          setReviews(reviews.data);
         }
       } catch (error) {
         console.error(error);
       } finally {
-        setIsLoading(isLoading => (isLoading = false));
+        setIsLoading(false);
       }
     };
-    getTeachers();
-
-    const getReviews = async () => {
-      setIsLoading(isLoading => (isLoading = true));
-      try {
-        if (isUserAdmin) {
-          const response = await axios.get('/speakingusers/admin/de');
-          setReviews(reviews => (reviews = [...response.data]));
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(isLoading => (isLoading = false));
-      }
-    };
-    getReviews();
-  }, [isUserAdmin]);
+    getData();
+  }, [isUserAdmin, month, year]);
 
   const initialLoginValues = {
     login: '',
@@ -133,7 +127,7 @@ const TeacherControlPageDe = () => {
   };
 
   const handleLoginSubmit = async (values, { resetForm }) => {
-    setIsLoading(isLoading => (isLoading = true));
+    setIsLoading(true);
     try {
       const response = await axios.post('/admins/login/teachers', values);
       setAuthToken(response.data.token);
@@ -143,7 +137,7 @@ const TeacherControlPageDe = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(isLoading => (isLoading = false));
+      setIsLoading(false);
     }
   };
 
@@ -248,9 +242,9 @@ const TeacherControlPageDe = () => {
               {teachers
                 .sort((a, b) => a.name.localeCompare(b.name))
                 .map((teacher, i) => (
-                  <UserDBRow key={teacher._id}>
-                    <UserCell key={'Тічер' + teacher._id}>{teacher.name}</UserCell>
-                    <UserCell key={`Відгук ${i} ${teacher._id}`}>
+                  <UserDBRow key={'Тічер' + teacher._id}>
+                    <UserCell>{teacher.name}</UserCell>
+                    <UserCell>
                       {reviews
                         .filter(user =>
                           user.feedback.some(
