@@ -3,10 +3,7 @@ import { Loader } from 'components/SharedLayout/Loaders/Loader';
 import { Formik } from 'formik';
 import { useState } from 'react';
 import * as yup from 'yup';
-import {
-  AdminFormBtn,
-  UsersEditForm,
-} from '../../UserAdminPanel/UserAdminPanel.styled';
+import { AdminFormBtn, UsersEditForm } from '../../UserAdminPanel/UserAdminPanel.styled';
 import { FormSelect } from '../TimeTableAdminPanel.styled';
 
 axios.defaults.baseURL = 'https://ap-server-8qi1.onrender.com';
@@ -18,6 +15,7 @@ export const TimeTableCourseLevelEditForm = ({
   levelOptionsWithBeginners,
   levelOptionsForDe,
   courseOptions,
+  nmtCourseOptions,
   courseEnglishOptions,
   courseDeutschOptions,
   closeCourseLevelEditForm,
@@ -51,18 +49,13 @@ export const TimeTableCourseLevelEditForm = ({
     console.log(values);
     setIsLoading(isLoading => (isLoading = true));
     try {
-      const response = await axios.patch(
-        `/timetable/course/${lessonToEdit._id}`,
-        values
-      );
+      const response = await axios.patch(`/timetable/course/${lessonToEdit._id}`, values);
       console.log(response);
       closeCourseLevelEditForm();
       alert('Відредаговано');
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -113,15 +106,11 @@ export const TimeTableCourseLevelEditForm = ({
             placeholder="Рівень"
             name="level"
             defaultValue={
-              levelOptions.find(
-                option => option.value === lessonToEdit.level
-              ) ||
+              levelOptions.find(option => option.value === lessonToEdit.level) ||
               levelOptionsWithBeginners.find(
                 option => option.value === lessonToEdit.level
               ) ||
-              levelOptionsForDe.find(
-                option => option.value === lessonToEdit.level
-              )
+              levelOptionsForDe.find(option => option.value === lessonToEdit.level)
             }
             onChange={level => {
               setLevelValue(level.value);
@@ -133,6 +122,8 @@ export const TimeTableCourseLevelEditForm = ({
                 ? courseEnglishOptions
                 : langValue === 'de'
                 ? courseDeutschOptions
+                : langValue === 'nmt'
+                ? nmtCourseOptions
                 : courseOptions
             }
             styles={{
@@ -145,15 +136,10 @@ export const TimeTableCourseLevelEditForm = ({
             placeholder="Потік"
             name="course"
             defaultValue={
-              courseOptions.find(
-                option => option.value === lessonToEdit.course
-              ) ||
-              courseEnglishOptions.find(
-                option => option.value === lessonToEdit.course
-              ) ||
-              courseDeutschOptions.find(
-                option => option.value === lessonToEdit.course
-              )
+              courseOptions.find(option => option.value === lessonToEdit.course) ||
+              nmtCourseOptions.find(option => option.value === lessonToEdit.course) ||
+              courseEnglishOptions.find(option => option.value === lessonToEdit.course) ||
+              courseDeutschOptions.find(option => option.value === lessonToEdit.course)
             }
             onChange={course => {
               setCourseValue(course.value);

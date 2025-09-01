@@ -41,7 +41,7 @@ export const APPanel = styled.div`
   padding: 6px 4px;
 
   position: absolute;
-  top: 145px;
+  top: ${props => (props.nmt ? '187px' : '145px')};
   right: 14px;
   z-index: 5;
   border-radius: 8px;

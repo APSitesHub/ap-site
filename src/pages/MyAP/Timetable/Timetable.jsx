@@ -180,11 +180,10 @@ export const Timetable = ({
       ) : personalTimetable.isHoliday ? (
         <PointsPlaceHolder>
           <EyesEmoji src={holidayImg} alt="Holiday emoji" width="80" />
+          <PointsPlaceHolderText>Сьогодні у вас канікули!</PointsPlaceHolderText>
           <PointsPlaceHolderText>
-            Сьогодні у вас канікули!
-          </PointsPlaceHolderText>
-          <PointsPlaceHolderText>
-            Слідкуйте за оновленнями розкладу у нашому Telegram-каналі, або зверніться до вашого менеджера, щоб не пропустити нові заняття!
+            Слідкуйте за оновленнями розкладу у нашому Telegram-каналі, або зверніться до
+            вашого менеджера, щоб не пропустити нові заняття!
           </PointsPlaceHolderText>
         </PointsPlaceHolder>
       ) : (
@@ -242,7 +241,7 @@ export const Timetable = ({
                 </TimetableTable>
               </TimetableWebinars>
             )}
-            {!user.package.match(/(?<=\d)t/) && (
+            {!user.package.match(/(?<=\d)t/) && user.lang !== 'nmt' && (
               <TimetableSpeakings>
                 <TimetableWebinarsHead>
                   <TimetableLessonType>Практичні заняття</TimetableLessonType>

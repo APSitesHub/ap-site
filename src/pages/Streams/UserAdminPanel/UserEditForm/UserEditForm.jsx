@@ -18,10 +18,8 @@ export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
 
   const initialUserValues = {
     crmId: userToEdit.crmId || '',
-    contactId: userToEdit.contactId || '',
     name: userToEdit.name,
     mail: userToEdit.mail,
-    zoomMail: userToEdit.zoomMail || '',
     password: userToEdit.password,
     pupilId: userToEdit.pupilId,
     marathonNumber: userToEdit.marathonNumber || '',
@@ -41,10 +39,8 @@ export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
         "Ім'я - обов'язкове поле, якщо імені з якоїсь причини ми не знаємо, введіть N/A"
       ),
     mail: yup.string().required("Пошта - обов'язкове поле!"),
-    zoomMail: yup.string(),
     password: yup.string().required("Пароль - обов'язкове поле!"),
     crmId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
-    contactId: yup.string().matches(/^[0-9]*$/, 'Лише цифри'),
     pupilId: yup
       .string()
       .min(6, 'Не менше 6 цифр')
@@ -75,16 +71,13 @@ export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
       .string()
       .optional()
       .matches(/^[A-Za-z0-9/]+$/, 'Лише латинські літери'),
-    manager: yup
-      .string()
-      .required("Менеджер - обов'язкове поле, введіть прізвище"),
+    manager: yup.string().required("Менеджер - обов'язкове поле, введіть прізвище"),
   });
 
   const handleUserSubmit = async (values, { resetForm }) => {
     setIsLoading(isLoading => (isLoading = true));
     values.name = values.name.trim().trimStart();
     values.mail = values.mail.toLowerCase().trim().trimStart();
-    values.zoomMail = values.zoomMail.toLowerCase().trim().trimStart();
     values.password = values.password.trim().trimStart();
     values.pupilId = values.pupilId.trim().trimStart();
     values.marathonNumber = values.marathonNumber.trim().trimStart();
@@ -94,23 +87,13 @@ export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
         : typeof values.crmId === 'number'
         ? values.crmId
         : undefined;
-    values.contactId =
-      values.contactId && typeof values.contactId !== 'number'
-        ? +values.contactId.trim().trimStart()
-        : typeof values.contactId === 'number'
-        ? values.contactId
-        : undefined;
     values.age = values.age.trim().trimStart();
     values.adult = +values.age > 18 ? true : false;
     values.lang = values.lang.toLowerCase().trim().trimStart();
     values.package =
-      values.package === undefined
-        ? ''
-        : values.package.toLowerCase().trim().trimStart();
+      values.package === undefined ? '' : values.package.toLowerCase().trim().trimStart();
     values.course =
-      values.course === undefined
-        ? ''
-        : values.course.toLowerCase().trim().trimStart();
+      values.course === undefined ? '' : values.course.toLowerCase().trim().trimStart();
     values.knowledge =
       values.knowledge === undefined
         ? ''
@@ -125,9 +108,7 @@ export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
       closeEditForm();
     } catch (error) {
       console.error(error);
-      alert(
-        'Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу'
-      );
+      alert('Десь якась проблема - клацай F12, роби скрін консолі, відправляй Кирилу');
     } finally {
       setIsLoading(isLoading => (isLoading = false));
     }
@@ -142,24 +123,12 @@ export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
       >
         <UsersEditForm>
           <Label>
-            <AdminInput
-              type="text"
-              name="name"
-              placeholder="Прізвище та ім'я"
-            />
+            <AdminInput type="text" name="name" placeholder="Прізвище та ім'я" />
             <AdminInputNote component="p" name="name" />
           </Label>
           <Label>
-            <AdminInput
-              type="email"
-              name="mail"
-              placeholder="Електронна пошта (логін)"
-            />
+            <AdminInput type="email" name="mail" placeholder="Електронна пошта (логін)" />
             <AdminInputNote component="p" name="mail" />
-          </Label>
-          <Label>
-            <AdminInput type="email" name="zoomMail" placeholder="Zoom-пошта" />
-            <AdminInputNote component="p" name="zoomMail" />
           </Label>
           <Label>
             <AdminInput type="text" name="password" placeholder="Пароль" />
@@ -170,19 +139,7 @@ export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
             <AdminInputNote component="p" name="crmId" />
           </Label>
           <Label>
-            <AdminInput
-              type="text"
-              name="contactId"
-              placeholder="ID контакту в CRM"
-            />
-            <AdminInputNote component="p" name="contactId" />
-          </Label>
-          <Label>
-            <AdminInput
-              type="text"
-              name="pupilId"
-              placeholder="ID учня на платформі"
-            />
+            <AdminInput type="text" name="pupilId" placeholder="ID учня на платформі" />
             <AdminInputNote component="p" name="pupilId" />
           </Label>
           <Label>
@@ -210,11 +167,7 @@ export const UserEditForm = ({ userToEdit, updateUser, closeEditForm }) => {
             <AdminInputNote component="p" name="package" />
           </Label>
           <Label>
-            <AdminInput
-              type="text"
-              name="knowledge"
-              placeholder="Рівень знань"
-            />
+            <AdminInput type="text" name="knowledge" placeholder="Рівень знань" />
             <AdminInputNote component="p" name="knowledge" />
           </Label>
           <Label>
