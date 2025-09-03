@@ -28,6 +28,8 @@ import {
   CheckboxLabel,
   HeaderCellBody,
   PurchasedCourse,
+  RadioGroup,
+  RadioLabel,
   TeacherFilterInput,
 } from './AppointmentsAdminPanel.styled';
 import { AppointmentStudentModal } from './AppointmentStudentModal';
@@ -237,18 +239,32 @@ export const AppointmentsAdminPanel = () => {
                     onChange={() => setShowDeleted(showDeleted => !showDeleted)}
                   />
                 </CheckboxLabel>
-                <CheckboxLabel>
-                  Показати лише пробні записи
-                  <CheckboxInput
-                    type="checkbox"
-                    name="showTrialsOnly"
-                    id="showTrialsOnly"
-                    checked={showTrialsOnly}
-                    onChange={() =>
-                      setShowTrialsOnly(setShowTrialsOnly => !setShowTrialsOnly)
-                    }
-                  />
-                </CheckboxLabel>
+                <RadioGroup>
+                  Показано записи лише на:
+                  <RadioLabel>
+                    пробні
+                    <CheckboxInput
+                      type="radio"
+                      name="lessonType"
+                      id="lessonTypeTrial"
+                      value="trial"
+                      checked={showTrialsOnly}
+                      onChange={e => setShowTrialsOnly(e.target.value === 'trial')}
+                    />
+                  </RadioLabel>
+                  <RadioLabel>
+                    індивідуальні
+                    <CheckboxInput
+                      type="radio"
+                      name="lessonType"
+                      id="lessonTypeIndividual"
+                      value="individual"
+                      checked={!showTrialsOnly}
+                      onChange={e => setShowTrialsOnly(e.target.value === 'trial')}
+                    />
+                  </RadioLabel>
+                </RadioGroup>
+
                 <CheckboxLabel>
                   Показати тічерів без актуальних записів
                   <CheckboxInput
@@ -275,8 +291,8 @@ export const AppointmentsAdminPanel = () => {
             <AppointmentHead>
               <UserDBRow>
                 <UserHeadCell>Ім'я</UserHeadCell>
-                <UserHeadCell>Altegio ID</UserHeadCell>
                 <UserHeadCell>CRM ID</UserHeadCell>
+                <UserHeadCell>Altegio ID</UserHeadCell>
                 <UserHeadCell>Сума записів</UserHeadCell>
                 <UserHeadCell>Очікує</UserHeadCell>
                 <UserHeadCell>Проведено</UserHeadCell>

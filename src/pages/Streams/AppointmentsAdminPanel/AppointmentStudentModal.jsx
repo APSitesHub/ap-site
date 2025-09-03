@@ -198,7 +198,13 @@ export const AppointmentStudentModal = ({
                   deleted={appointment.isDeleted}
                 >
                   <AppointmentSpan componentWidth="6em">
-                    {appointment.appointmentId}
+                    <a
+                      href={`https://app.alteg.io/timetable/761978#open_modal_by_record_id=${appointment.appointmentId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {appointment.appointmentId}
+                    </a>
                   </AppointmentSpan>
                   <AppointmentSpan componentWidth="8em">
                     {appointment.IsTrial ? 'Пробне' : 'Індивідуальне'}
