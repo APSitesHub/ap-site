@@ -27,7 +27,6 @@ export const TeacherFilterInput = styled.input`
 export const CheckboxContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: end;
   gap: 6px;
 `;
@@ -56,9 +55,22 @@ export const AppointmentHead = styled.thead`
   z-index: 1; */
 `;
 
+export const RadioGroup = styled.div`
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+`;
+
 export const CheckboxLabel = styled(Label)`
   flex-direction: row;
   margin-left: auto;
+`;
+
+export const RadioLabel = styled(Label)`
+  flex-direction: row;
+  width: auto;
 `;
 
 export const CheckboxInput = styled.input`
