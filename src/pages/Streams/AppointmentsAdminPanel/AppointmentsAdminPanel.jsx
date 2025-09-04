@@ -424,9 +424,11 @@ export const AppointmentsAdminPanel = () => {
                             )}
                             {showTrialsOnly && (
                               <BodyCell componentWidth="7em">
-                                {(courseSoldAppointments.length /
-                                  (completedAppointments.length || 1)) *
-                                  (100.0).toFixed(2)}
+                                {(
+                                  (courseSoldAppointments.length /
+                                    (completedAppointments.length || 1)) *
+                                  100.0
+                                ).toFixed(2)}
                                 %
                               </BodyCell>
                             )}
