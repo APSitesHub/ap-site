@@ -299,6 +299,7 @@ export const AppointmentsAdminPanel = () => {
                 <UserHeadCell>Не проведено</UserHeadCell>
                 {showDeleted && <UserHeadCell>Видалено</UserHeadCell>}
                 {showTrialsOnly && <UserHeadCell>Продажів</UserHeadCell>}
+                {showTrialsOnly && <UserHeadCell>Конверсія проведених</UserHeadCell>}
                 <UserHeadCell>Сума студентів</UserHeadCell>
                 <UserHeadCell>Записані студенти</UserHeadCell>
               </UserDBRow>
@@ -421,6 +422,14 @@ export const AppointmentsAdminPanel = () => {
                                 {courseSoldAppointments.length}
                               </BodyCell>
                             )}
+                            {showTrialsOnly && (
+                              <BodyCell componentWidth="7em">
+                                {(courseSoldAppointments.length /
+                                  (completedAppointments.length || 1)) *
+                                  (100.0).toFixed(2)}
+                                %
+                              </BodyCell>
+                            )}
                             <BodyCell componentWidth="6em">
                               {
                                 [
@@ -441,8 +450,13 @@ export const AppointmentsAdminPanel = () => {
                                   CRM ID
                                 </AppointmentSpan>
                                 <AppointmentSpan componentWidth="6em">
-                                  Записів
+                                  Актуальних записів
                                 </AppointmentSpan>
+                                {showDeleted && (
+                                  <AppointmentSpan componentWidth="6em">
+                                    Видалених записів
+                                  </AppointmentSpan>
+                                )}
                                 {showTrialsOnly && (
                                   <AppointmentSpan componentWidth="8em">
                                     Курс придбано
@@ -487,7 +501,6 @@ export const AppointmentsAdminPanel = () => {
                                       ).length) *
                                       100,
                                   ]}
-                                  deleted={appointment.isDeleted}
                                   key={appointment._id}
                                   onClick={() =>
                                     openStudentAppointments(
@@ -513,10 +526,23 @@ export const AppointmentsAdminPanel = () => {
                                     {
                                       filteredAppointments.filter(
                                         studentAppointment =>
-                                          appointment.leadId === studentAppointment.leadId
+                                          appointment.leadId ===
+                                            studentAppointment.leadId &&
+                                          !studentAppointment.isDeleted
                                       ).length
                                     }
                                   </AppointmentSpan>
+                                  {showDeleted && (
+                                    <AppointmentSpan componentWidth="6em">
+                                      {
+                                        deletedAppointments.filter(
+                                          studentAppointment =>
+                                            appointment.leadId ===
+                                            studentAppointment.leadId
+                                        ).length
+                                      }
+                                    </AppointmentSpan>
+                                  )}
                                   {showTrialsOnly && (
                                     <AppointmentSpan componentWidth="8em">
                                       {filteredAppointments.some(
